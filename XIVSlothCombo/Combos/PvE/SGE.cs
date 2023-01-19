@@ -2,10 +2,9 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
-using XIVSlothCombo.Core;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -119,7 +118,8 @@ namespace XIVSlothCombo.Combos.PvE
             #region Healing
             internal static UserBool
                 SGE_ST_Heal_Adv = new("SGE_ST_Heal_Adv"),
-                SGE_ST_Heal_UIMouseOver = new("SGE_ST_Heal_UIMouseOver");
+                SGE_ST_Heal_UIMouseOver = new("SGE_ST_Heal_UIMouseOver"),
+                SGE_AoE_Heal_KeracholeTrait = new("SGE_AoE_Heal_KeracholeTrait");
             internal static UserInt
                 SGE_ST_Heal_Zoe = new("SGE_ST_Heal_Zoe"),
                 SGE_ST_Heal_Haima = new("SGE_ST_Heal_Haima"),
@@ -128,11 +128,17 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_Heal_Soteria = new("SGE_ST_Heal_Soteria"),
                 SGE_ST_Heal_Diagnosis = new("SGE_ST_Heal_Diagnosis"),
                 SGE_ST_Heal_Druochole = new("SGE_ST_Heal_Druochole"),
-                SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole");
+                SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole");                
             #endregion
 
             internal static UserInt
                 SGE_Eukrasia_Mode = new("SGE_Eukrasia_Mode");
+        }
+
+        internal static class Traits
+        {
+            internal const ushort 
+                EnhancedKerachole = 375;
         }
 
 
@@ -488,7 +494,9 @@ namespace XIVSlothCombo.Combos.PvE
                         !Gauge.HasAddersgall())
                         return Rhizomata;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && ActionReady(Kerachole) &&
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) &&
+                        ActionReady(Kerachole) &&
+                        (!Config.SGE_AoE_Heal_KeracholeTrait || (Config.SGE_AoE_Heal_KeracholeTrait && TraitLevelChecked(Traits.EnhancedKerachole))) &&
                         Gauge.HasAddersgall())
                         return Kerachole;
 
