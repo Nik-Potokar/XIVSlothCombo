@@ -1629,6 +1629,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.RDM_AoE_Lucid)
                 UserConfig.DrawSliderInt(0, 10000, RDM.Config.RDM_AoE_Lucid_Threshold, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
 
+            if (preset is CustomComboPreset.RDM_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, RDM.Config.RDM_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region SAGE
