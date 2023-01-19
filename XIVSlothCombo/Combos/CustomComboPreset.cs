@@ -422,7 +422,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AdvancedMode)]
         [ConflictingCombos(BLM_Adv_CastMovement_Xeno)]
-        [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.\nWill only work on lvl 90.", BLM.JobID, -9, "", "")]
         BLM_Adv_Transpose_Lines = 2045,
 
         #endregion
@@ -442,7 +442,7 @@ namespace XIVSlothCombo.Combos
         BLM_AoEUmbralSoul = 2049,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Manafont", "Add Manafont for an extra Flare in AstralFire", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Manafont", "Add Manafont to AoE feature for an extra flare.", BLM.JobID, 0, "", "")]
         BLM_AoE_Simple_Manafont = 2052,
 
         #endregion
@@ -485,12 +485,12 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(BLM.Fire)]
         [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "", "")]
         BLM_Fire_1to3 = 2005,
-      
+
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
         BLM_AetherialManipulation = 2046,
 
-        // Last value = 2051
+        // Last value = 2052
 
 
         #endregion
