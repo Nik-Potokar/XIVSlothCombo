@@ -33,7 +33,7 @@
                 fontOfMagic = 2332,
                 lostBravery2 = 2341,
                 fontOfPower = 2346,
-                pureEdler = 2435,
+                pureElder = 2435,
                 pureFiendhunter = 2437,
                 lostAethershield = 2443,
                 lostDervish = 2444,
