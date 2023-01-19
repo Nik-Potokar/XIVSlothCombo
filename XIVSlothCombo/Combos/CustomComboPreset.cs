@@ -1,6 +1,7 @@
 ﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos
 {
@@ -2095,124 +2096,233 @@ namespace XIVSlothCombo.Combos
 
         #region PALADIN
 
-        [ReplaceSkill(PLD.GoringBlade)]
-        [CustomComboInfo("Goring Blade Combo", "Replace Goring Blade with its combo chain.", PLD.JobID, 0, "", "")]
-        PLD_GoringBladeCombo = 11000,
+        //[ReplaceSkill(PLD.GoringBlade)]
+        //[CustomComboInfo("Goring Blade Combo", "Replace Goring Blade with its combo chain.", PLD.JobID, 0, "", "")]
+        //PLD_GoringBladeCombo = 11000,
 
-        [ReplaceSkill(PLD.RoyalAuthority, PLD.RageOfHalone)]
-        [CustomComboInfo("Royal Authority Combo", "All-in-one main combo adds Royal Authority/Rage of Halone.\nToggle all sub-options on to make this a 1 button rotation", PLD.JobID, 0, "", "")]
-        PLD_ST_RoyalAuth = 11001,
+        //[ReplaceSkill(PLD.RoyalAuthority, PLD.RageOfHalone)]
+        //[CustomComboInfo("Royal Authority Combo", "All-in-one main combo adds Royal Authority/Rage of Halone.\nToggle all sub-options on to make this a 1 button rotation", PLD.JobID, 0, "", "")]
+        //PLD_ST_RoyalAuth = 11001,
 
-        [ParentCombo(PLD_ST_RoyalAuth_Atonement)]
-        [CustomComboInfo("Atonement drop Feature", "Will drop the last Atonement charge right before FoF comes back off cooldown.\nPlease note that this assumes you use both FoF and Req according to the full FoF opener and standard loop\nRequires a GCD speed of 2.40-2.45s", PLD.JobID, 1, "", "")]
-        PLD_AtonementDrop = 11002,
+        //[ParentCombo(PLD_ST_RoyalAuth_Atonement)]
+        //[CustomComboInfo("Atonement drop Feature", "Will drop the last Atonement charge right before FoF comes back off cooldown.\nPlease note that this assumes you use both FoF and Req according to the full FoF opener and standard loop\nRequires a GCD speed of 2.40-2.45s", PLD.JobID, 1, "", "")]
+        //PLD_AtonementDrop = 11002,
 
-        [ReplaceSkill(PLD.Prominence)]
-        [CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "", "")]
-        PLD_AoE_Prominence = 11003,
+        //[ReplaceSkill(PLD.Prominence)]
+        //[CustomComboInfo("Prominence Combo", "Replace Prominence with its combo chain.", PLD.JobID, 0, "", "")]
+        //PLD_AoE_Prominence = 11003,
 
-        [ParentCombo(PLD_ST_RoyalAuth_Requiescat)]
-        [CustomComboInfo("Holy Spirit Feature", "Replaces Royal Authority combo with Holy Spirit if you don't have the Fight or Flight buff", PLD.JobID, 0, "", "")]
-        PLD_RoyalAuth_Requiescat_HolySpirit = 11004,
+        //[ParentCombo(PLD_ST_RoyalAuth_Requiescat)]
+        //[CustomComboInfo("Holy Spirit Feature", "Replaces Royal Authority combo with Holy Spirit if you don't have the Fight or Flight buff", PLD.JobID, 0, "", "")]
+        //PLD_RoyalAuth_Requiescat_HolySpirit = 11004,
 
-        [ParentCombo(PLD_ST_RoyalAuth_Requiescat)]
-        [CustomComboInfo("Confiteor Combo Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID, 0, "", "")]
-        PLD_RoyalAuth_Requiescat_Confiteor = 11005,
+        //[ParentCombo(PLD_ST_RoyalAuth_Requiescat)]
+        //[CustomComboInfo("Confiteor Combo Feature", "Replace Holy Spirit/Circle with Confiteor when Requiescat is up and MP is under 2000 or only one stack remains \nand adds Faith/Truth/Valor Combo after Confiteor.", PLD.JobID, 0, "", "")]
+        //PLD_RoyalAuth_Requiescat_Confiteor = 11005,
 
-        [ReplaceSkill(PLD.SpiritsWithin, PLD.CircleOfScorn)]
-        [CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, 0, "", "")]
-        PLD_ScornfulSpirits = 11006,
+        //[ReplaceSkill(PLD.SpiritsWithin, PLD.CircleOfScorn)]
+        //[CustomComboInfo("Scornful Spirits Feature", "Replace Spirits Within and Circle of Scorn with whichever is available soonest.", PLD.JobID, 0, "", "")]
+        //PLD_ScornfulSpirits = 11006,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Goring Blade Feature", "Insert Goring Blade into the main combo when appropriate.", PLD.JobID, 0, "", "")]
-        PLD_ST_RoyalAuth_Goring = 11007,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Goring Blade Feature", "Insert Goring Blade into the main combo when appropriate.", PLD.JobID, 0, "", "")]
+        //PLD_ST_RoyalAuth_Goring = 11007,
 
-        [ReplaceSkill(PLD.HolySpirit)]
-        [CustomComboInfo("Standalone Holy Spirit Feature", "Replaces Holy Spirit with Confiteor and Confiteor combo", PLD.JobID, 0, "", "")]
-        PLD_HolySpirit_Standalone = 11008,
+        //[ReplaceSkill(PLD.HolySpirit)]
+        //[CustomComboInfo("Standalone Holy Spirit Feature", "Replaces Holy Spirit with Confiteor and Confiteor combo", PLD.JobID, 0, "", "")]
+        //PLD_HolySpirit_Standalone = 11008,
 
-        [ReplaceSkill(PLD.HolyCircle)]
-        [CustomComboInfo("Standalone Holy Circle Feature", "Replaces Holy Circle with Confiteor and Confiteor combo", PLD.JobID, 0, "", "")]
-        PLD_HolyCircle_Standalone = 11009,
+        //[ReplaceSkill(PLD.HolyCircle)]
+        //[CustomComboInfo("Standalone Holy Circle Feature", "Replaces Holy Circle with Confiteor and Confiteor combo", PLD.JobID, 0, "", "")]
+        //PLD_HolyCircle_Standalone = 11009,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Intervene Feature", "Adds Intervene onto main combo whenever it's available.", PLD.JobID, 4, "", "")]
-        PLD_ST_RoyalAuth_Intervene = 11010,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Intervene Feature", "Adds Intervene onto main combo whenever it's available.", PLD.JobID, 4, "", "")]
+        //PLD_ST_RoyalAuth_Intervene = 11010,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Uptime Feature", "Replace main combo with Shield Lob/Holy Spirit when out of range.\nWill use Holy Spirit if you're not moving or have the Requiescat buff\nOtherwise will use Shield lob when moving and if you don't have the Requiescat buff.", PLD.JobID, 4, "", "")]
-        PLD_ST_RoyalAuth_RangedUptime = 11012,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Uptime Feature", "Replace main combo with Shield Lob/Holy Spirit when out of range.\nWill use Holy Spirit if you're not moving or have the Requiescat buff\nOtherwise will use Shield lob when moving and if you don't have the Requiescat buff.", PLD.JobID, 4, "", "")]
+        //PLD_ST_RoyalAuth_RangedUptime = 11012,
 
-        // This is a parent of itself? Bruh moment. I don't 'do' PLD, so I'm just leaving this note here. - K
-        [ParentCombo(PLD_FoF_MainCombo)]
-        [ConflictingCombos(PLD_ST_RoyalAuth_FoF)]
-        [CustomComboInfo("Fight or Flight", "Adds Fight or Flight onto the main combo (Testing).", PLD.JobID, 0, "", "")]
-        PLD_FoF_MainCombo = 11013,
+        //// This is a parent of itself? Bruh moment. I don't 'do' PLD, so I'm just leaving this note here. - K
+        //[ParentCombo(PLD_FoF_MainCombo)]
+        //[ConflictingCombos(PLD_ST_RoyalAuth_FoF)]
+        //[CustomComboInfo("Fight or Flight", "Adds Fight or Flight onto the main combo (Testing).", PLD.JobID, 0, "", "")]
+        //PLD_FoF_MainCombo = 11013,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Requiescat Feature", "Requiescat gets added onto the main combo when the Fight or Flight buff has 17 seconds remaining or less.", PLD.JobID, 2, "", "")]
-        PLD_ST_RoyalAuth_Requiescat = 11014,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Requiescat Feature", "Requiescat gets added onto the main combo when the Fight or Flight buff has 17 seconds remaining or less.", PLD.JobID, 2, "", "")]
+        //PLD_ST_RoyalAuth_Requiescat = 11014,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Fight or Flight Feature", "Adds Fight or Flight onto the main combo with a delayed weave.", PLD.JobID, 2, "", "")]
-        PLD_ST_RoyalAuth_FoF = 11017,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Fight or Flight Feature", "Adds Fight or Flight onto the main combo with a delayed weave.", PLD.JobID, 2, "", "")]
+        //PLD_ST_RoyalAuth_FoF = 11017,
 
-        [ParentCombo(PLD_AoE_Prominence)]
-        [CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
-        PLD_AoE_Prominence_HolyCircle = 11020,
+        //[ParentCombo(PLD_AoE_Prominence)]
+        //[CustomComboInfo("Holy Circle Feature", "Replaces AoE combo with Holy Circle when Requiescat is active.", PLD.JobID, 1, "", "")]
+        //PLD_AoE_Prominence_HolyCircle = 11020,
 
-        [ParentCombo(PLD_AoE_Prominence_HolyCircle)]
-        [CustomComboInfo("AoE Confiteor Feature", "Replaces AoE combo with Confiteor when Requiescat is active and appropiate.", PLD.JobID, 2, "", "")]
-        PLD_AoE_Prominence_HolyCircle_Confiteor = 11021,
+        //[ParentCombo(PLD_AoE_Prominence_HolyCircle)]
+        //[CustomComboInfo("AoE Confiteor Feature", "Replaces AoE combo with Confiteor when Requiescat is active and appropiate.", PLD.JobID, 2, "", "")]
+        //PLD_AoE_Prominence_HolyCircle_Confiteor = 11021,
 
-        [ParentCombo(PLD_AoE_Prominence_HolyCircle)]
-        [CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.", PLD.JobID, 0, "", "")]
-        PLD_AoE_Prominence_HolyCircle_Requiescat = 11022,
+        //[ParentCombo(PLD_AoE_Prominence_HolyCircle)]
+        //[CustomComboInfo("AoE Requiescat Feature", "Replaces AoE combo with Requiescat when it's off cooldown.", PLD.JobID, 0, "", "")]
+        //PLD_AoE_Prominence_HolyCircle_Requiescat = 11022,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main combo during weave windows", PLD.JobID, 0, "", "")]
-        PLD_RoyalAuth_ExpiacionScorn = 11023,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Expiacion and Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main combo during weave windows", PLD.JobID, 0, "", "")]
+        //PLD_RoyalAuth_ExpiacionScorn = 11023,
 
-        [ParentCombo(PLD_AoE_Prominence)]
-        [CustomComboInfo("AoE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AoE combo during weave windows", PLD.JobID, 0, "", "")]
-        PLD_AoE_Prominence_ExpiacionScorn = 11024,
+        //[ParentCombo(PLD_AoE_Prominence)]
+        //[CustomComboInfo("AoE Expiacion / Circle of Scorn Feature", "Adds Expiacion and Circle of Scorn onto the main AoE combo during weave windows", PLD.JobID, 0, "", "")]
+        //PLD_AoE_Prominence_ExpiacionScorn = 11024,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "")]
-        PLD_ST_RoyalAuth_Atonement = 11025,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("Atonement Feature", "Replace Royal Authority with Atonement when under the effect of Sword Oath.", PLD.JobID, 1, "", "")]
+        //PLD_ST_RoyalAuth_Atonement = 11025,
 
-        [ParentCombo(PLD_ST_RoyalAuth_Intervene)]
-        [CustomComboInfo("Melee Intervene Option", "Uses Intervene when under Fight or Flight and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", PLD.JobID, 4, "", "")]
-        PLD_ST_RoyalAuth_Intervene_Melee = 11026,
+        //[ParentCombo(PLD_ST_RoyalAuth_Intervene)]
+        //[CustomComboInfo("Melee Intervene Option", "Uses Intervene when under Fight or Flight and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", PLD.JobID, 4, "", "")]
+        //PLD_ST_RoyalAuth_Intervene_Melee = 11026,
 
-        [ParentCombo(PLD_RoyalAuth_ExpiacionScorn)]
-        [CustomComboInfo("Expiacion and Circle of Scorn Option", "Uses Circle of Scorn and Expiacion when under Fight or Flight or when Fight or Flight is on cooldown", PLD.JobID, 4, "", "")]
-        PLD_RoyalAuth_ExpiacionScorn_FoFOption = 11027,
+        //[ParentCombo(PLD_RoyalAuth_ExpiacionScorn)]
+        //[CustomComboInfo("Expiacion and Circle of Scorn Option", "Uses Circle of Scorn and Expiacion when under Fight or Flight or when Fight or Flight is on cooldown", PLD.JobID, 4, "", "")]
+        //PLD_RoyalAuth_ExpiacionScorn_FoFOption = 11027,
 
-        [ParentCombo(PLD_ST_RoyalAuth)]
-        [CustomComboInfo("FoF Opener Feature", "Adds the FoF opener to the main combo.\nWill execute the full FoF opener by default, but if FoF is activated 18s pre-pull, the 18s pre-pull opener will be executed. Requires Lv68.", PLD.JobID, 0, "", "")]
-        PLD_ST_RoyalAuth_FoFOpener = 11028,
+        //[ParentCombo(PLD_ST_RoyalAuth)]
+        //[CustomComboInfo("FoF Opener Feature", "Adds the FoF opener to the main combo.\nWill execute the full FoF opener by default, but if FoF is activated 18s pre-pull, the 18s pre-pull opener will be executed. Requires Lv68.", PLD.JobID, 0, "", "")]
+        //PLD_ST_RoyalAuth_FoFOpener = 11028,
 
-        [ParentCombo(PLD_ST_RoyalAuth_FoFOpener)]
-        [CustomComboInfo("Intervene Option", "Adds Intervene to the Fight or Flight opener.", PLD.JobID, 0, "", "")]
-        PLD_ST_RoyalAuth_FoFOpener_Intervene = 11029,
+        //[ParentCombo(PLD_ST_RoyalAuth_FoFOpener)]
+        //[CustomComboInfo("Intervene Option", "Adds Intervene to the Fight or Flight opener.", PLD.JobID, 0, "", "")]
+        //PLD_ST_RoyalAuth_FoFOpener_Intervene = 11029,
+
+        //// Last value = 11032
+
+        [ConflictingCombos(PLD_ST_AdvancedMode)]
+        [ReplaceSkill(PLD.FastBlade)]
+        [CustomComboInfo("Simple Mode - Single Target", $"Replaces Fast Blade with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PLD.JobID)]
+        PLD_ST_SimpleMode = 11000,
+
+        [ConflictingCombos(PLD_AoE_AdvancedMode)]
+        [ReplaceSkill(PLD.TotalEclipse)]
+        [CustomComboInfo("Simple Mode - AoE", $"Replaces Total Eclipse with a one-button full AoE rotation.\nThis is ideal for newcomers to the job.", PLD.JobID)]
+        PLD_AoE_SimpleMode = 11001,
+
+        [ConflictingCombos(PLD_ST_SimpleMode)]
+        [ReplaceSkill(PLD.FastBlade)]
+        [CustomComboInfo("Advanced Mode - Single Target", $"Replaces Fast Blade with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", PLD.JobID)]
+        PLD_ST_AdvancedMode = 11002,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.", PLD.JobID)]
+        PLD_ST_AdvancedMode_FoF = 11003,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Shield Lob Option", "Adds Shield Lob to Advanced Mode if out of range.", PLD.JobID)]
+        PLD_ST_AdvancedMode_ShieldLob = 11004,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Circle of Scorn Option", "Adds Circle of Scorn to Advanced Mode.", PLD.JobID)]
+        PLD_ST_AdvancedMode_CircleOfScorn = 11005,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Spirits Within / Expiacion Option", "Adds Spirits Within / Expiacion to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_SpiritsWithin = 11006,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Sheltron / Holy Sheltron Option", "Adds Sheltron / Holy Sheltron to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_Sheltron = 11007,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Goring Blade Option", "Adds Goring Blade to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_GoringBlade = 11008,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Holy Spirit Option", "Adds Holy Spirit to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_HolySpirit = 11009,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Requiescat Option", "Adds Requiescat to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_Requiescat = 11010,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Intervene Option", "Adds Intervene to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_Intervene = 11011,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Atonement Option", "Adds Atonement to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_Atonement = 11012,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_Confiteor = 11013,
+
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Blades of Faith/Truth/Valor Option", "Adds Blades of Faith/Truth/Valor to Advanced Mode", PLD.JobID)]
+        PLD_ST_AdvancedMode_Blades = 11014,
+
+        [ConflictingCombos(PLD_AoE_SimpleMode)]
+        [ReplaceSkill(PLD.TotalEclipse)]
+        [CustomComboInfo("Advanced Mode - AoE", $"Replaces Total Eclipse with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", PLD.JobID)]
+        PLD_AoE_AdvancedMode = 11015,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.", PLD.JobID)]
+        PLD_AoE_AdvancedMode_FoF = 11016,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Spirits Within / Expiacion Option", "Adds Spirits Within / Expiacion to Advanced Mode", PLD.JobID)]
+        PLD_AoE_AdvancedMode_SpiritsWithin = 11017,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Circle of Scorn Option", "Adds Circle of Scorn to Advanced Mode.", PLD.JobID)]
+        PLD_AoE_AdvancedMode_CircleOfScorn = 11018,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Requiescat Option", "Adds Requiescat to Advanced Mode.", PLD.JobID)]
+        PLD_AoE_AdvancedMode_Requiescat = 11019,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Holy Circle Option", "Adds Holy Circle to Advanced Mode.", PLD.JobID)]
+        PLD_AoE_AdvancedMode_HolyCircle = 11020,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode", PLD.JobID)]
+        PLD_AoE_AdvancedMode_Confiteor = 11021,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Blades of Faith/Truth/Valor Option", "Adds Blades of Faith/Truth/Valor to Advanced Mode", PLD.JobID)]
+        PLD_AoE_AdvancedMode_Blades = 11022,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Sheltron / Holy Sheltron Option", "Adds Sheltron / Holy Sheltron to Advanced Mode", PLD.JobID)]
+        PLD_AoE_AdvancedMode_Sheltron = 11023,
+
+
+        [ReplaceSkill(PLD.Requiescat)]
+        [CustomComboInfo("Requiescat Spender Option", "Replaces Requiescat with the selected option while having stacks of \"Requiescat\"", PLD.JobID)]
+        PLD_Requiescat_Options = 11024,
+
+        [ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion)]
+        [CustomComboInfo("Spirits Within / Expiacion / Circle of Scorn Feature", "Replaces Spirits Within / Expiacion with Circle of Scorn when off cooldown.", PLD.JobID)]
+        PLD_SpiritsWithin = 11025,
 
         [Variant]
-        [VariantParent(PLD_ST_RoyalAuth, PLD_AoE_Prominence)]
+        [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", PLD.JobID)]
         PLD_Variant_SpiritDart = 11030,
 
         [Variant]
-        [VariantParent(PLD_ST_RoyalAuth, PLD_AoE_Prominence)]
+        [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", PLD.JobID)]
         PLD_Variant_Cure = 11031,
 
         [Variant]
-        [VariantParent(PLD_ST_RoyalAuth, PLD_AoE_Prominence)]
+        [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
-
-        // Last value = 11032
 
         #endregion
 
@@ -3594,19 +3704,19 @@ namespace XIVSlothCombo.Combos
         #region Medica Feature
 
         [ReplaceSkill(WHM.Medica2)]
-        [CustomComboInfo("Medica Feature", "Replaces Medica II with Medica whenever you are under Medica II's regen.", WHM.JobID, 60, "", "")]
+        [CustomComboInfo("Medica II Feature", "Replaces Medica II with Medica whenever you are under Medica II's regen effect or below Lv.50.", WHM.JobID, 60, "", "")]
         WHM_Medica = 19007,
 
             [ParentCombo(WHM_Medica)]
-            [CustomComboInfo("Afflatus Rapture on Medica Option", "Adds Afflatus Rapture to the Medica Feature when available.", WHM.JobID, 61, "", "")]
+            [CustomComboInfo("Afflatus Rapture Option", "Adds Afflatus Rapture when available.", WHM.JobID, 61, "", "")]
             WHM_Medica_Rapture = 19011,
 
             [ParentCombo(WHM_Medica)]
-            [CustomComboInfo("Afflatus Misery on Medica Option", "Adds Afflatus Misery to the Medica Feature when Misery is ready to be used.", WHM.JobID, 62, "", "")]
+            [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery when available.", WHM.JobID, 62, "", "")]
             WHM_Medica_Misery = 19010,
 
             [ParentCombo(WHM_Medica)]
-            [CustomComboInfo("Thin Air on Medica Option", "Adds Thin Air to the Medica Feature when available.", WHM.JobID, 63, "", "")]
+            [CustomComboInfo("Thin Air Option", "Adds Thin Air when available.", WHM.JobID, 63, "", "")]
             WHM_Medica_ThinAir = 19200,
 
         #endregion
