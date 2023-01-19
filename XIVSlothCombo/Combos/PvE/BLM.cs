@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
@@ -146,7 +145,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Opener for BLM
-                    // F3 OPENER DOUBLE TRANSPOSE VARIATION 
+                    // Standard opener
                     if (IsEnabled(CustomComboPreset.BLM_Simple_Opener) && level >= 90)
                     {
                         if (openerSelection is 0 or 1)
@@ -306,7 +305,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 inOpener = false;
                             }
                         }
-
+                        //F3 OPENER DOUBLE TRANSPOSE VARIATION 
                         if (openerSelection is 2)
                         {
                             // Check to start opener
@@ -1207,7 +1206,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                         Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
+                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
                                             return dot;
                                     }
                                 }
@@ -1247,7 +1246,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
                                         Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
+                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
                                             return dot; //Use appropriate DoT Action
                                     }
                                 }
@@ -1588,7 +1587,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 uint dot = OriginalHook(Thunder2); //Grab the appropriate DoT Action
                                 Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                                if (dotDebuff is null || dotDebuff?.RemainingTime <= 5)
+                                if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
                                     return dot; //Use appropriate DoT Action
                             }
                         }
