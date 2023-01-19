@@ -6,14 +6,11 @@ using ImGuiNET;
 using System;
 using System.Linq;
 using System.Numerics;
-using System.Xml.XPath;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
-using Dalamud.Interface;
-using Dalamud.Interface.Style;
 
 namespace XIVSlothCombo.Window.Functions
 {
