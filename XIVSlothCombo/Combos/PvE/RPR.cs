@@ -97,6 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool enshrouded = HasEffect(Buffs.Enshrouded);
                 bool soulReaver = HasEffect(Buffs.SoulReaver);
                 bool bannerOverride = false;
+                bool hasfont = false;
                 bool deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
                 double playerHP = PlayerHealthPercentageHp();
                 double enemyHP = GetTargetHPPercent();
@@ -116,10 +117,10 @@ namespace XIVSlothCombo.Combos.PvE
                 // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
                 if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                 {
-                    if ((IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.Buffs.fontOfPower)) ||
-                    HasEffect(Bozja.Buffs.fontOfPower) ||
-                    (!IsEnabled(Bozja.fontOfPower)))
+                    if (IsEnabled(Bozja.fontOfPower) || HasEffect(Bozja.Buffs.fontOfPower))
+
                     {
+                        hasfont = true;
                         bannerOverride = true;
                     }
                 }
@@ -223,7 +224,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.fontOfPower))
                             return Bozja.fontOfPower;
 
-                        if (bannerOverride)
+                        if (!bannerOverride || hasfont)
                         {
                             if (IsEnabled(Bozja.bannerOfHonoredSacrifice) && IsOffCooldown(Bozja.bannerOfHonoredSacrifice))
                                 return Bozja.bannerOfHonoredSacrifice;
