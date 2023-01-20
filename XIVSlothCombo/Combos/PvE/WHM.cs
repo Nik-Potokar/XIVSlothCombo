@@ -211,6 +211,7 @@ namespace XIVSlothCombo.Combos.PvE
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool openerDelayComplete = glare3Count >= 3;
                     int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_ST_Lucid);
+                    bool thinAirReady = !HasEffect(Buffs.ThinAir) && LevelChecked(ThinAir) && HasCharges(ThinAir);
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);
@@ -229,12 +230,17 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(Bozja.LostSeraphStrike) && IsOffCooldown(Bozja.LostSeraphStrike) &&
                         HasBattleTarget())
                     {
-                        //thin air?????? Lunaaaaaaa thin air?!? - Riley
-                        if (HasEffect(Bozja.Buffs.FontOfMagic) && CanWeave(actionID))
-                            return Bozja.LostSeraphStrike;
+                        //Thin air added may be jank but yea, it may work? - Riley
+                        if (HasEffect(Bozja.Buffs.FontOfMagic))
+                            //return IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && thinAirReady
+                            return thinAirReady
+                            ? ThinAir
+                            : Bozja.LostSeraphStrike;
 
                         if (!IsEnabled(Bozja.FontOfMagic) && CanWeave(actionID))
-                            return Bozja.LostSeraphStrike;
+                            return thinAirReady
+                            ? ThinAir
+                            : Bozja.LostSeraphStrike;
                     }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
