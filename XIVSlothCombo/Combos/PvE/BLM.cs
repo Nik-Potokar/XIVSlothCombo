@@ -124,7 +124,6 @@ namespace XIVSlothCombo.Combos.PvE
                     float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Simple_OpenerSelection);
-                    int pooledPolyglotStacks = IsEnabled(CustomComboPreset.BLM_Simple_Movement_Xeno) ? 1 : 0;
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
@@ -505,39 +504,35 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsMoving)
                             {
-                                if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
-                                    return Fire3;
+                                if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
+                                    return Sharpcast;
 
                                 if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast))
                                 {
-                                    if (!ThunderList.ContainsKey(lastComboMove) && //Is not 1 2 3 or 4
-                                        !TargetHasEffect(Debuffs.Thunder2) && !TargetHasEffect(Debuffs.Thunder4))
-                                    {
-                                        uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
-                                        Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-
-                                        if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
-                                            return dot;
-                                    }
+                                    uint dot = OriginalHook(Thunder); //Grab the appropriate DoT Action
+                                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                                    if (dotDebuff is null || dotDebuff?.RemainingTime <= 10)
+                                        return dot; //Use appropriate DoT Action
                                 }
+
+                                if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire && LevelChecked(Fire3))
+                                    return Fire3;
 
                                 if (LevelChecked(Paradox) && Gauge.IsParadoxActive && Gauge.InUmbralIce)
                                     return Paradox;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Simple_Movement_Xeno) &&
-                                    (IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
-                                    LevelChecked(Xenoglossy) && Gauge.HasPolyglotStacks())
+                                if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks is 2 &&
+                                    ((Gauge.EnochianTimer <= 3000 && Gauge.InAstralFire) || (Gauge.EnochianTimer <= 20000 && Gauge.InUmbralIce)))
                                     return Xenoglossy;
 
                                 if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
-                                    ActionReady(All.Swiftcast))
+                                    ActionReady(All.Swiftcast) && GetBuffStacks(Buffs.Triplecast) is 0)
                                     return All.Swiftcast;
 
-                                if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0)
+                                if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Simple_Movement_Scathe) &&
-                                    (GetBuffStacks(Buffs.Triplecast) is 0) && !Gauge.HasPolyglotStacks())
+                                if (IsEnabled(CustomComboPreset.BLM_Simple_Movement_Scathe) && (GetBuffStacks(Buffs.Triplecast) is 0))
                                     return Scathe;
                             }
                         }
@@ -718,21 +713,19 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (LevelChecked(Xenoglossy))
                                 {
-                                    if (Gauge.PolyglotStacks > pooledPolyglotStacks)
-                                    {
-                                        if (IsEnabled(CustomComboPreset.BLM_Simple_Buffs_LeyLines) && ActionReady(LeyLines))
-                                            return Xenoglossy;
+                                    if (IsEnabled(CustomComboPreset.BLM_Simple_Buffs_LeyLines) && ActionReady(LeyLines))
+                                        return Xenoglossy;
 
-                                        if (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
-                                            (IsNotEnabled(CustomComboPreset.BLM_Simple_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1))
-                                            return Xenoglossy;
+                                    if (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
+                                        (IsNotEnabled(CustomComboPreset.BLM_Simple_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1))
+                                        return Xenoglossy;
 
-                                        if (ActionReady(Manafont) && currentMP < MP.AllMPSpells)
-                                            return Xenoglossy;
+                                    if (ActionReady(Manafont) && currentMP < MP.AllMPSpells)
+                                        return Xenoglossy;
 
-                                        if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))
-                                            return Xenoglossy;
-                                    }
+                                    if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))
+                                        return Xenoglossy;
+
                                 }
                             }
 

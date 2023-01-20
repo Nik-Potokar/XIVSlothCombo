@@ -333,11 +333,13 @@ namespace XIVSlothCombo.Combos
         BLM_SimpleMode = 2012,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement.", BLM.JobID, 0, "", "")]
         BLM_Simple_Triplecast_Pooling = 2016,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use instant casts when moving.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
+            "\nWill use firestarter proc in Astralfire.\nWill use Paradox when lvl 90 and in Umbralice." +
+            "\nWill use Thundercloud proc.\nWill use Xenoglossy when moving and about to overcap.", BLM.JobID, 0, "", "")]
         BLM_Simple_Movement = 2026,
 
         [ParentCombo(BLM_SimpleMode)]
@@ -345,12 +347,11 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_UmbralSoul = 2031,
 
         [ParentCombo(BLM_SimpleMode)]
-        [ConflictingCombos(BLM_Simple_Movement_Xeno)]
         [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
         BLM_Simple_Transpose_Rotation = 2048,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Simple Blm feature.", BLM.JobID, -5, "", "")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines in the rotation.", BLM.JobID, -5, "", "")]
         BLM_Simple_Buffs_LeyLines = 2050,
 
         [ParentCombo(BLM_SimpleMode)]
@@ -358,13 +359,8 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_Opener = 2051,
 
         [ParentCombo(BLM_Simple_Movement)]
-        [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving and no triplecast or xenoglossy charges left.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Scathe Moving Option", "will use Scathe when moving when no other options left.", BLM.JobID, 0, "", "")]
         BLM_Simple_Movement_Scathe = 2028,
-
-        [ParentCombo(BLM_Simple_Movement)]
-        [ConflictingCombos(BLM_Simple_Transpose_Rotation)]
-        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, -1, "", "")]
-        BLM_Simple_Movement_Xeno = 2047,
 
         #endregion
 
@@ -406,19 +402,19 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Movement_Sharpcast = 2053,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Advanced BLM feature.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
         BLM_Adv_Casts = 2039,
 
         [ParentCombo(BLM_Adv_Casts)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement.", BLM.JobID, 0, "", "")]
         BLM_Adv_Triplecast_Pooling = 2040,
 
         [ParentCombo(BLM_Adv_Cooldowns)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced Blm feature.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the rotation.", BLM.JobID, 0, "", "")]
         BLM_Adv_Cooldowns_LeyLines = 2041,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the Advanced Blm feature.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the rotation.", BLM.JobID, -8, "", "")]
         BLM_Adv_Cooldowns = 2042,
 
         [ParentCombo(BLM_AdvancedMode)]
