@@ -183,12 +183,29 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class WHM_ST_MainCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
             internal static uint glare3Count = 0;
             internal static bool usedGlare3 = false;
+            private bool bannerOverride = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                //Checks if font of magic is up, if so uses banners with font
+                if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix))
+                {
+                    if (IsEnabled(Bozja.fontOfMagic))
+                    {
+                        bannerOverride = true;
+
+                        if (HasEffect(Bozja.Buffs.fontOfMagic))
+                        {
+                            bannerOverride = false;
+                        }
+                    }
+
+
+                }
+
                 if (actionID is Glare3 or Glare1 or Stone1 or Stone2 or Stone3 or Stone4)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
@@ -197,6 +214,48 @@ namespace XIVSlothCombo.Combos.PvE
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);
+
+                    //Bozja stuff - Riley (Luna)
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
+                        IsEnabled(Bozja.lostIncense) && IsOffCooldown(Bozja.lostIncense) &&
+                        HasBattleTarget())
+                    {
+                        //Congrats your a tank now, good luck!
+                        return Bozja.lostIncense;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) &&
+                        IsEnabled(Bozja.lostSeraphStrike) && IsOffCooldown(Bozja.lostSeraphStrike) &&
+                        HasBattleTarget())
+                    {
+                        //thin air?????? Lunaaaaaaa thin air?!? - Riley
+                        if (HasEffect(Bozja.Buffs.fontOfMagic))
+                            return Bozja.lostSeraphStrike;
+
+                        if (CanWeave(actionID))
+                            return Bozja.lostSeraphStrike;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
+                    {
+                        if (IsEnabled(Bozja.fontOfMagic) && IsOffCooldown(Bozja.fontOfMagic))
+                            return Bozja.fontOfMagic;
+
+                        if (!bannerOverride)
+                        {
+                            if (IsEnabled(Bozja.bannerOfHonoredSacrifice) && IsOffCooldown(Bozja.bannerOfHonoredSacrifice))
+                                return Bozja.bannerOfHonoredSacrifice;
+
+                            if (IsEnabled(Bozja.bannerOfNobleEnds) && IsOffCooldown(Bozja.bannerOfNobleEnds))
+                                return Bozja.bannerOfNobleEnds;
+
+                            if (IsEnabled(Bozja.lostChainspell) && IsOffCooldown(Bozja.lostChainspell))
+                                return Bozja.lostChainspell;
+
+                            //Other devs could we check for chainspell before using swiftcast?
+                        }
+                    }
 
                     // No-Swift Opener
                     // Counter reset
@@ -368,6 +427,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && LevelChecked(AfflatusMisery) &&
                         gauge.BloodLily >= 3 && HasBattleTarget())
                         return AfflatusMisery;
+
+                    //Bozja AOE stuffs
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
+                        IsEnabled(Bozja.lostBanish3) && HasBattleTarget())
+                        return Bozja.lostBanish3;
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
+                        IsEnabled(Bozja.lostBurst))
+                        return Bozja.lostBurst;
                 }
 
                 return actionID;

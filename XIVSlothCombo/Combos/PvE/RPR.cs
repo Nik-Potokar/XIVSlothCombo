@@ -173,10 +173,15 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // This action MUST hard clip as Bozja actions with Haste need to clip... need to add a menu to turn this on or off...
-                    // If they dont have Beast dont clip, if they do clip. But only after Gibbet / Gallows is done due to the way RPR gage works.
-                    // SAM will need code like this to make sure it does not eat their buff... I asked around and DRG may need some code to not bust combo?
-                    // There is a gap closer that gives the foes a weakness up... Bozja.Rend... but idk how it would be best to add that.
+                    // Bozja Stuffs - Riley (Luna)
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
+                        IsEnabled(Bozja.lostIncense) && IsOffCooldown(Bozja.lostIncense) &&
+                        HasBattleTarget())
+                    {
+                        //Congrats your a tank now, good luck!
+                        return Bozja.lostIncense;
+                    }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal)) 
                     {

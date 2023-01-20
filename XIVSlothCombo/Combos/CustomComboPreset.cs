@@ -170,17 +170,17 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_Bozja_Menu)]
-        [CustomComboInfo("Actions on Phy DPS Option", "Use Font of Power, Lost Excellence, \nBanner of Honored Sacrifice, and Banner of Noble Ends on cooldown.", ADV.JobID)]
+        [CustomComboInfo("Actions on Phy Classes Option", "Use Font of Power, Lost Excellence, \nBanner of Honored Sacrifice, and Banner of Noble Ends on cooldown.", ADV.JobID)]
         ALL_BozjaDPS = 20000101,
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_Bozja_Menu)]
-        [CustomComboInfo("Actions on Magic DPS Option", "Use Font of Magic, Lost Excellence, \nBanner of Honored Sacrifice, and Banner of Noble Ends, \nLost Seraph Strike, Lost Chainspell on cooldown.", ADV.JobID)]
+        [CustomComboInfo("Actions on Magic Classes Option", "Use Font of Magic, Lost Excellence, \nBanner of Honored Sacrifice, and Banner of Noble Ends, \nLost Seraph Strike, Lost Chainspell on cooldown.", ADV.JobID)]
         ALL_BozjaMagicDPS = 20000102,
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaMagicDPS)]
-        [CustomComboInfo("Hold Banners (Magic)", "Hold Banners to line up with Font of Magic, giving a really big dps buff.", ADV.JobID)]
+        [CustomComboInfo("Hold Buffs (Magic)", "Hold Banners and chainspell to line up with Font of Magic, giving a really big dps buff.", ADV.JobID)]
         ALL_BozjaHoldBannerMagix = 20000103,
 
         [ReplaceSkill(All.Sprint)]
@@ -190,7 +190,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaMagicDPS)]
-        [CustomComboInfo("Lost Banish AOE", "Changes your AOE to Lost Banish. If both banish and burst are slotted, will use banish.", ADV.JobID)]
+        [CustomComboInfo("Lost Banish AOE", "If you have a target changes your AOE to Lost Banish. If both banish and burst are slotted, will use banish.", ADV.JobID)]
         ALL_BozjaMagicbanAOE = 200001033,
 
         [ReplaceSkill(All.Sprint)]
@@ -200,7 +200,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaDPS)]
-        [CustomComboInfo("Hold Banners (Phys)", "Hold Banners to line up with Font of Power, giving a really big dps buff.", ADV.JobID)]
+        [CustomComboInfo("Hold Buffs (Phys)", "Hold Banners to line up with Font of Power, giving a really big dps buff.", ADV.JobID)]
         ALL_BozjaHoldBannerPhys = 20000105,
 
         [ReplaceSkill(All.Sprint)]
@@ -257,6 +257,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(ALL_BozjaRoleActions)]
         [CustomComboInfo("Tanks - Blood Rage", "Will try to use blood rage, will switch your GCD to your GAPCLOSER 3s before blood rage runs out.", ADV.JobID)]
         ALL_BozjaBloodRage = 20000114,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_Bozja_Menu)]
+        [CustomComboInfo("Farm Mode", "Changes ALL TYPE OF DAMAGE to one UNUSEABLE to your class (IE fire on melee, IR on casters), \nMUST use burst or rampage for ALL DAMAGE, removes SELF BUFFS AND PARTY BUFFS", ADV.JobID)]
+        ALL_BozjaFarmMode = 20000115,
         #endregion
 
         //Non-gameplay Features
