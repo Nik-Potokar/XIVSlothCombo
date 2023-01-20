@@ -3,11 +3,14 @@
     internal static class Bozja
     {
         public const uint
+            lostBanish3 = 20702,
             fontOfMagic = 20715,
             fontOfPower = 20717,
             bannerOfNobleEnds = 20720,
             bannerOfHonoredSacrifice = 20721,
+            lostCure = 20726,
             lostCure2 = 20727,
+            lostCure3 = 20728,
             lostCure4 = 20729,
             lostIncense = 20731,
             lostFlareStar = 22352,
@@ -30,7 +33,10 @@
                 fontOfMagic = 2332,
                 lostBravery2 = 2341,
                 fontOfPower = 2346,
+                pureElder = 2435,
+                pureFiendhunter = 2437,
                 lostAethershield = 2443,
+                lostDervish = 2444,
                 clericStance = 2484,
                 lostChainspell = 2560,
                 lostExcellence = 2564,
