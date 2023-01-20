@@ -114,11 +114,11 @@ namespace XIVSlothCombo.Combos.PvE
                 // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
                 if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                 {
-                    if (IsEnabled(Bozja.fontOfPower))
+                    if (IsEnabled(Bozja.FontOfPower))
                     {
                         bannerOverride = true;
 
-                        if (HasEffect(Bozja.Buffs.fontOfPower))
+                        if (HasEffect(Bozja.Buffs.FontOfPower))
                         {
                             bannerOverride = false;
                         }
@@ -176,68 +176,68 @@ namespace XIVSlothCombo.Combos.PvE
                     // Bozja Stuffs - Riley (Luna)
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
-                        IsEnabled(Bozja.lostIncense) && IsOffCooldown(Bozja.lostIncense) &&
+                        IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
                         HasBattleTarget())
                     {
                         //Congrats your a tank now, good luck!
-                        return Bozja.lostIncense;
+                        return Bozja.LostIncense;
                     }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal)) 
                     {
-                        if (IsEnabled(Bozja.lostCure4) &&
+                        if (IsEnabled(Bozja.LostCure4) &&
                         PlayerHealthPercentageHp() <= 0.5f &&
                         CanWeave(actionID))
-                        return Bozja.lostCure4;
+                        return Bozja.LostCure4;
 
-                        if (IsEnabled(Bozja.lostCure3) &&
+                        if (IsEnabled(Bozja.LostCure3) &&
                         PlayerHealthPercentageHp() <= 0.5f)
-                            return Bozja.lostCure3;
+                            return Bozja.LostCure3;
 
-                        if (IsEnabled(Bozja.lostCure2) &&
+                        if (IsEnabled(Bozja.LostCure2) &&
                         PlayerHealthPercentageHp() <= 0.5f &&
                         CanWeave(actionID))
-                            return Bozja.lostCure2;
+                            return Bozja.LostCure2;
 
-                        if (IsEnabled(Bozja.lostCure) &&
+                        if (IsEnabled(Bozja.LostCure) &&
                         PlayerHealthPercentageHp() <= 0.5f)
-                            return Bozja.lostCure;
+                            return Bozja.LostCure;
                     }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
-                        IsEnabled(Bozja.lostRendArmor) && IsOffCooldown(Bozja.lostRendArmor) &&
-                        HasBattleTarget() && !HasEffect(Buffs.SoulReaver) && !TargetHasEffect(Bozja.Debuffs.lostRendArmor))
+                        IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
+                        HasBattleTarget() && !HasEffect(Buffs.SoulReaver) && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
                     {
-                            return Bozja.lostRendArmor;
+                            return Bozja.LostRendArmor;
                     }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
-                        IsEnabled(Bozja.lostAssassination) && IsOffCooldown(Bozja.lostAssassination) &&
+                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
                         HasBattleTarget() && !HasEffect(Buffs.SoulReaver))
                     {
-                        if (!HasEffect(Bozja.Buffs.fontOfPower) && HasEffect(Bozja.Buffs.beastEssence))
-                            return Bozja.lostAssassination;
+                        if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
+                            return Bozja.LostAssassination;
 
                         if (CanWeave(actionID))
-                            return Bozja.lostAssassination;
+                            return Bozja.LostAssassination;
                     }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
                     {
 
-                        if (IsEnabled(Bozja.lostExcellence) && IsOffCooldown(Bozja.lostExcellence))
-                            return Bozja.lostExcellence;
+                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                            return Bozja.LostExcellence;
 
-                        if (IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.fontOfPower))
-                            return Bozja.fontOfPower;
+                        if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
+                            return Bozja.FontOfPower;
 
                         if (!bannerOverride)
                         {
-                            if (IsEnabled(Bozja.bannerOfHonoredSacrifice) && IsOffCooldown(Bozja.bannerOfHonoredSacrifice))
-                                return Bozja.bannerOfHonoredSacrifice;
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                return Bozja.BannerOfHonoredSacrifice;
 
-                            if (IsEnabled(Bozja.bannerOfNobleEnds) && IsOffCooldown(Bozja.bannerOfNobleEnds))
-                                return Bozja.bannerOfNobleEnds;
+                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                return Bozja.BannerOfNobleEnds;
                         }
                     }
 
@@ -463,8 +463,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return WhorlOfDeath;
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.lostRampage) && !soulReaver && !enshrouded)
-                        return Bozja.lostRampage;
+                        IsEnabled(Bozja.LostRampage) && !soulReaver && !enshrouded)
+                        return Bozja.LostRampage;
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_ScytheCombo_ArcaneCircle) && InCombat())
                     {
