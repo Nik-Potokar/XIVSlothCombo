@@ -3763,7 +3763,7 @@ namespace XIVSlothCombo.Combos
 
         #region ASTROLOGIAN
         [SecretCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Malefic into an all-in-one damage button.", AST.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Fall Malefic into an all-in-one damage button.", AST.JobID)]
         ASTPvP_Burst = 111000,
 
         [ParentCombo(ASTPvP_Burst)]
@@ -3779,7 +3779,6 @@ namespace XIVSlothCombo.Combos
         ASTPvP_Heal = 111003,
 
         // Last value = 111003
-
         #endregion
 
         #region BLACK MAGE
