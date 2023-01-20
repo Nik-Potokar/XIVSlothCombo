@@ -138,7 +138,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_Simple_UmbralSoul) &&
-                        CurrentTarget is null && Gauge.IsEnochianActive)
+                        CurrentTarget is null && Gauge.ElementTimeRemaining > 0)
                     {
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
@@ -684,15 +684,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Paradox instead of hardcasting Fire if we can
                             if (Gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.Fire)
-                            {
-                                if (LevelChecked(Paradox))
-                                    return Gauge.IsParadoxActive
-                                        ? Paradox
-                                        : Fire;
-                                //  return Fire;
-                            }
+                                return LevelChecked(Paradox) && Gauge.IsParadoxActive
+                                    ? Paradox
+                                    : Fire;
 
-                            if (ActionReady(Manafont) && WasLastAction(Despair) && CanSpellWeave(actionID))
+                            if (ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
                             // Cast Fire 4 after Manafont
@@ -819,7 +815,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_Adv_UmbralSoul) &&
-                        CurrentTarget is null && Gauge.IsEnochianActive)
+                        CurrentTarget is null && Gauge.ElementTimeRemaining > 0)
                     {
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
@@ -1260,18 +1256,18 @@ namespace XIVSlothCombo.Combos.PvE
 
                                     if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs_LeyLines) && ActionReady(LeyLines))
                                         return LeyLines;
+                                }
 
-                                    // Transpose Lines Ice phase
-                                    if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
-                                        Gauge.InUmbralIce && Gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
-                                    {
-                                        if (Gauge.UmbralIceStacks < 3 &&
-                                            ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
-                                            return All.LucidDreaming;
+                                // Transpose Lines Ice phase
+                                if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
+                                    Gauge.InUmbralIce && Gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
+                                {
+                                    if (Gauge.UmbralIceStacks < 3 &&
+                                        ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
+                                        return All.LucidDreaming;
 
-                                        if (HasEffect(All.Buffs.LucidDreaming) && ActionReady(All.Swiftcast))
-                                            return All.Swiftcast;
-                                    }
+                                    if (HasEffect(All.Buffs.LucidDreaming) && ActionReady(All.Swiftcast))
+                                        return All.Swiftcast;
                                 }
                             }
                         }
@@ -1368,16 +1364,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Paradox instead of hardcasting Fire if we can
                             if (Gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.Fire)
-                            {
-                                if (LevelChecked(Paradox))
-                                    return Gauge.IsParadoxActive
-                                        ? Paradox
-                                        : Fire;
-                                // return Fire;
-                            }
+                                return LevelChecked(Paradox) && Gauge.IsParadoxActive
+                                    ? Paradox
+                                    : Fire;
 
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Buffs)
-                                && ActionReady(Manafont) && WasLastAction(Despair) && CanSpellWeave(actionID))
+                                && ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
                             // Cast Fire 4 after Manafont
@@ -1489,7 +1481,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
-                        CurrentTarget is null && Gauge.IsEnochianActive)
+                        CurrentTarget is null && Gauge.ElementTimeRemaining > 0)
                     {
                         if (Gauge.InAstralFire && LevelChecked(Transpose))
                             return Transpose;
