@@ -376,11 +376,11 @@ namespace XIVSlothCombo.Combos
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Thundercloud Option", "Adds Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available to Advanced BLM.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thundercloud Option", "Adds Thunder when the debuff isn't present or expiring and Thundercloud is available.", BLM.JobID, 0, "", "")]
         BLM_Adv_Thunder = 2029,
 
         [ParentCombo(BLM_Adv_Thunder)]
-        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Advanced BLM.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
         BLM_Adv_Thunder_Uptime = 2030,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -388,17 +388,22 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_UmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Moving Options", "Use Triplecast when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use instant casts when moving.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
+            "\nWill use firestarter proc in Astralfire.\nWill use Paradox when lvl 90 and in Umbralice." +
+            "\nWill use Thundercloud proc.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement = 2036,
 
         [ParentCombo(BLM_Adv_Movement)]
-        [ConflictingCombos(BLM_Adv_Transpose_Rotation)]
-        [CustomComboInfo("Xenoglossy Moving Option", "Also use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Xenoglossy Moving Option", "will use Xenoglossy when moving and about to overcap.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement_Xeno = 2037,
 
         [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving and no triplecast or xenoglossy charges left.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Scathe Moving Option", "will use Scathe when moving when no other options left.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement_Scathe = 2038,
+
+        [ParentCombo(BLM_Adv_Movement)]
+        [CustomComboInfo("Sharpcast moving Option", "will use Sharpcast when moving when it has charges and buff is not present.", BLM.JobID, -1, "", "")]
+        BLM_Adv_Movement_Sharpcast = 2053,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Advanced BLM feature.", BLM.JobID, -8, "", "")]
@@ -408,20 +413,19 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced Blm feature.", BLM.JobID, 0, "", "")]
         BLM_Adv_Triplecast_Pooling = 2040,
 
-        [ParentCombo(BLM_Adv_Buffs)]
+        [ParentCombo(BLM_Adv_Cooldowns)]
         [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced Blm feature.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Buffs_LeyLines = 2041,
+        BLM_Adv_Cooldowns_LeyLines = 2041,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the Advanced Blm feature.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Buffs = 2042,
+        BLM_Adv_Cooldowns = 2042,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Opener", "Adds the lvl 90 opener.\nChoose which one u want to use.\nIf nothing selected will default to Standard opener.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [ConflictingCombos(BLM_Adv_Movement_Xeno)]
         [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.\nWill only work on lvl 90.", BLM.JobID, -9, "", "")]
         BLM_Adv_Transpose_Rotation = 2045,
 
@@ -490,7 +494,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
         BLM_Aetherial_Manipulation = 2046,
 
-        // Last value = 2052
+        // Last value = 2053
 
 
         #endregion
