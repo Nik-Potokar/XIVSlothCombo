@@ -3725,21 +3725,22 @@ namespace XIVSlothCombo.Combos
         #region PvP GLOBAL FEATURES
         [SecretCustomCombo]
         [CustomComboInfo("Emergency Heals Feature", "Uses Recuperate when your HP is under the set threshold and you have sufficient MP.", ADV.JobID, 1)]
-        PvP_EmergencyHeals = 110000,
+        PvP_EmergencyHeals = 1100000,
 
         [SecretCustomCombo]
         [CustomComboInfo("Emergency Guard Feature", "Uses Guard when your HP is under the set threshold.", ADV.JobID, 2)]
-        PvP_EmergencyGuard = 110001,
+        PvP_EmergencyGuard = 1100010,
 
         [SecretCustomCombo]
         [CustomComboInfo("Quick Purify Feature", "Uses Purify when afflicted with any selected debuff.", ADV.JobID, 4)]
-        PvP_QuickPurify = 110002,
+        PvP_QuickPurify = 1100020,
 
         [SecretCustomCombo]
         [CustomComboInfo("Prevent Mash Cancelling Feature", "Stops you cancelling your guard if you're pressing buttons quickly.", ADV.JobID, 3)]
-        PvP_MashCancel = 110003,
+        PvP_MashCancel = 1100030,
 
-        // Last value = 110003
+        // Last value = 1100030
+        // Extra 0 on the end keeps things working the way they should be. Nothing to see here.
 
         #endregion
 
