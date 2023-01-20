@@ -35,6 +35,8 @@
                 FontOfPower = 2346,
                 PureElder = 2435,
                 PureFiendhunter = 2437,
+                PureIndomitable = 2438,
+                PureDivine = 2439,
                 LostAethershield = 2443,
                 LostDervish = 2444,
                 ClericStance = 2484,
