@@ -256,14 +256,14 @@ namespace XIVSlothCombo.Combos.PvE
                                             !IsMoving)
                                             return OriginalHook(Jump);
 
-                                        //Mirage Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
-                                            return MirageDive;
-
                                         //Geirskogul and Nastrond Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) &&
                                             IsOnCooldown(OriginalHook(Jump)))
                                             return OriginalHook(Geirskogul);
+
+                                        //Mirage Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady) && IsOnCooldown(OriginalHook(Geirskogul)))
+                                            return MirageDive;
 
                                         //Wyrmwind Thrust Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
@@ -387,18 +387,16 @@ namespace XIVSlothCombo.Combos.PvE
                                     return DragonSight;
                             }
 
-                            //Geirskogul and Nastrond AoE Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) &&
-                                !HasEffect(Buffs.LifeSurge) && IsOnCooldown(OriginalHook(Jump)))
-                                return OriginalHook(Geirskogul);
-
                             //(High) Jump AoE Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) && ActionReady(OriginalHook(Jump)) &&
-                                CanWeave(actionID, 1) && !IsMoving)
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) && ActionReady(OriginalHook(Jump)) && !IsMoving)
                                 return OriginalHook(Jump);
 
+                            //Geirskogul and Nastrond AoE Feature
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_GeirskogulNastrond) && ActionReady(OriginalHook(Geirskogul)) && IsOnCooldown(OriginalHook(Jump)))
+                                return OriginalHook(Geirskogul);
+
                             //Mirage Dive Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Mirage) && HasEffect(Buffs.DiveReady))
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Mirage) && HasEffect(Buffs.DiveReady) && IsOnCooldown(OriginalHook(Geirskogul)))
                                 return MirageDive;
 
                             //Life Surge AoE Feature
