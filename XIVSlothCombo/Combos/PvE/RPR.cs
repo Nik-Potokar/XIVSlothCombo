@@ -82,8 +82,6 @@ namespace XIVSlothCombo.Combos.PvE
                 RPR_SoDRefreshRange = "RPRSoDRefreshRange",
                 RPR_OpenerChoice = "RPR_OpenerChoice",
                 RPR_SoulsowOptions = "RPRSoulsowOptions",
-                RPR_BozjaAssassinationDPS = "RPRBozjaBanner",
-                RPR_BozjaDPS = "RPRBozjaDPS",
                 RPR_VariantCure = "RPRVariantCure";
         }
 
@@ -116,12 +114,17 @@ namespace XIVSlothCombo.Combos.PvE
                 // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
                 if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                 {
-                    if ((IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.Buffs.fontOfPower)) ||
-                    HasEffect(Bozja.Buffs.fontOfPower) ||
-                    (!IsEnabled(Bozja.fontOfPower)))
+                    if (IsEnabled(Bozja.fontOfPower))
                     {
                         bannerOverride = true;
+
+                        if (HasEffect(Bozja.Buffs.fontOfPower))
+                        {
+                            bannerOverride = false;
+                        }
                     }
+
+                    
                 }
                 
 
@@ -223,7 +226,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(Bozja.fontOfPower) && IsOffCooldown(Bozja.fontOfPower))
                             return Bozja.fontOfPower;
 
-                        if (bannerOverride)
+                        if (!bannerOverride)
                         {
                             if (IsEnabled(Bozja.bannerOfHonoredSacrifice) && IsOffCooldown(Bozja.bannerOfHonoredSacrifice))
                                 return Bozja.bannerOfHonoredSacrifice;
