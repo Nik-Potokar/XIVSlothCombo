@@ -230,10 +230,10 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget())
                     {
                         //thin air?????? Lunaaaaaaa thin air?!? - Riley
-                        if (HasEffect(Bozja.Buffs.fontOfMagic))
+                        if (HasEffect(Bozja.Buffs.fontOfMagic) && CanWeave(actionID))
                             return Bozja.lostSeraphStrike;
 
-                        if (CanWeave(actionID))
+                        if (!IsEnabled(Bozja.fontOfMagic) && CanWeave(actionID))
                             return Bozja.lostSeraphStrike;
                     }
 
