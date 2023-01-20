@@ -144,7 +144,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(RiotBlade);
                             }
 
-                            if (lastComboActionID == OriginalHook(RiotBlade) && RoyalAuthority.LevelChecked())
+                            if (lastComboActionID == OriginalHook(RiotBlade) && OriginalHook(RoyalAuthority).LevelChecked())
                             {
                                 return OriginalHook(RoyalAuthority);
                             }
@@ -377,7 +377,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (lastComboActionID == OriginalHook(RiotBlade) &&
-                                RoyalAuthority.LevelChecked())
+                                OriginalHook(RoyalAuthority).LevelChecked())
                             {
                                 return OriginalHook(RoyalAuthority);
                             }
