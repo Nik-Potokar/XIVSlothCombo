@@ -13,7 +13,7 @@
             LostCure3 = 20728,
             LostCure4 = 20729,
             LostIncense = 20731,
-            lostFlareStar = 22352,
+            LostFlareStar = 22352,
             LostRendArmor = 22353,
             LostSeraphStrike = 22354,
             LostDervish = 22356,
@@ -46,7 +46,7 @@
         public static class Debuffs
         {
             public const ushort
-                lostFlareStar = 2440,
+                LostFlareStar = 2440,
                 LostRendArmor = 2441;
         }
     }

@@ -18,7 +18,6 @@ namespace XIVSlothCombo.Combos.PvP
             Macrocosmos = 29253,
             Microcosmos = 29254;
 
-
         internal class Buffs
         {
             internal const ushort
@@ -97,14 +96,10 @@ namespace XIVSlothCombo.Combos.PvP
 
                 protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
-                    if (actionID is AspectedBenefic)
-                    {
-                        if (CanWeave(actionID))
-                        {
-                            if (lastComboMove == AspectedBenefic && HasCharges(DoubleCast))
-                                return OriginalHook(DoubleCast);
-                        }
-                    }
+                    if (actionID is AspectedBenefic && CanWeave(actionID) &&
+                        lastComboMove == AspectedBenefic &&
+                        HasCharges(DoubleCast))
+                        return OriginalHook(DoubleCast);
 
                     return actionID;
                 }
