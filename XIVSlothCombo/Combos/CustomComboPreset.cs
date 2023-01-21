@@ -337,9 +337,9 @@ namespace XIVSlothCombo.Combos
         BLM_Simple_Triplecast_Pooling = 2016,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Moving Options", "Use instant casts when moving.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
+        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
             "\nWill use firestarter proc in Astralfire.\nWill use Paradox when lvl 90 and in Umbralice." +
-            "\nWill use Thundercloud proc.\nWill use Xenoglossy when moving and about to overcap.", BLM.JobID, 0, "", "")]
+            "\nWill use Thundercloud proc.\nWill use Xenoglossy when moving. It will save 1 charge for rotation.", BLM.JobID, 0, "", "")]
         BLM_Simple_Movement = 2026,
 
         [ParentCombo(BLM_SimpleMode)]
@@ -384,13 +384,13 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_UmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Moving Options", "Use instant casts when moving.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
+        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
             "\nWill use firestarter proc in Astralfire.\nWill use Paradox when lvl 90 and in Umbralice." +
             "\nWill use Thundercloud proc.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement = 2036,
 
         [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Xenoglossy Moving Option", "will use Xenoglossy when moving and about to overcap.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Xenoglossy Moving Option", "adds Xenoglossy when moving. It will save 1 charge for rotation.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement_Xeno = 2037,
 
         [ParentCombo(BLM_Adv_Movement)]
