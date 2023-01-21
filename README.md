@@ -198,19 +198,19 @@
     <img src="/res/team_sloth_images/Members/damolitionn.png" width="40" /></a>
   
   <a href="https://github.com/Taurenkey" alt="Taurenkey">
-    <img src="/res/team_sloth_images/Members/Taurenkey.webp" width="40" /></a>
+    <img src="/res/team_sloth_images/Members/Taurenkey.png" width="40" /></a>
   
   <a href="https://github.com/augporto" alt="Augporto">
     <img src="/res/team_sloth_images/Members/Augporto.jpg" width="40" /></a>
   
   <a href="https://github.com/grimgal" alt="grimgal">
-    <img src="/res/team_sloth_images/Members/grimgal.webp" width="40" /></a>
+    <img src="/res/team_sloth_images/Members/grimgal.png" width="40" /></a>
   
   <a href="https://github.com/Genesis-Nova" alt="Genesis-Nova">
     <img src="/res/team_sloth_images/Members/Genesis-Nova.png" width="40" /></a>
   
   <a href="https://github.com/Tartarga" alt="Tartarga">
-    <img src="/res/team_sloth_images/Members/Tartarga.jpg" width="40" /></a>
+    <img src="/res/team_sloth_images/Members/Tartarga.png" width="40" /></a>
   <br><br>
   And many other <a href="https://github.com/Nik-Potokar/XIVSlothCombo/graphs/contributors" alt="Contributors">contributors</a>!
 </p>
