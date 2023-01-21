@@ -502,7 +502,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Handle movement
                         if (IsEnabled(CustomComboPreset.BLM_Simple_Movement))
                         {
-                            if (IsMoving)
+                            if (IsMoving && InCombat())
                             {
                                 if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
                                     return Sharpcast;
@@ -521,8 +521,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(Paradox) && Gauge.IsParadoxActive && Gauge.InUmbralIce)
                                     return Paradox;
 
-                                if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks is 2 &&
-                                    ((Gauge.EnochianTimer <= 3000 && Gauge.InAstralFire) || (Gauge.EnochianTimer <= 20000 && Gauge.InUmbralIce)))
+                                if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 1)
                                     return Xenoglossy;
 
                                 if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
@@ -1173,7 +1172,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Handle movement
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Movement))
                         {
-                            if (IsMoving)
+                            if (IsMoving && InCombat())
                             {
                                 if (IsEnabled(CustomComboPreset.BLM_Adv_Movement_Sharpcast) &&
                                     !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
@@ -1194,8 +1193,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Paradox;
 
                                 if (IsEnabled(CustomComboPreset.BLM_Adv_Movement_Xeno) &&
-                                    LevelChecked(Xenoglossy) && Gauge.PolyglotStacks is 2 &&
-                                    ((Gauge.EnochianTimer <= 3000 && Gauge.InAstralFire) || (Gauge.EnochianTimer <= 20000 && Gauge.InUmbralIce)))
+                                    LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 1)
                                     return Xenoglossy;
 
                                 if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
@@ -1232,13 +1230,13 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
-                                if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) && 
-                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
-                                ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
-                                (Gauge.InAstralFire || Gauge.UmbralHearts is 3) &&
-                                currentMP >= MP.Fire * 2)
-                                    return Triplecast;
-                            
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
+                            (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
+                            ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
+                            (Gauge.InAstralFire || Gauge.UmbralHearts is 3) &&
+                            currentMP >= MP.Fire * 2)
+                                return Triplecast;
+
                             // Weave Buffs
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns))
                             {
@@ -1264,7 +1262,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return All.Swiftcast;
                             }
                         }
-                        
+
                         // Handle initial cast
                         if (Gauge.ElementTimeRemaining <= 0)
                         {
