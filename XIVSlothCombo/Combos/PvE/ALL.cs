@@ -1,9 +1,10 @@
 ﻿using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class All
+    internal class All
     {
         public const byte JobID = 99;
 
@@ -63,6 +64,18 @@ namespace XIVSlothCombo.Combos.PvE
                 Reprisal = 1193,
                 Feint = 1195;
         }
+
+        /// <summary>
+        /// Quick Level, Offcooldown, spellweave, and MP check of Lucid Dreaming
+        /// </summary>
+        /// <param name="actionID">action id to check weave</param>
+        /// <param name="MPThreshold">Player MP less than Threshold check</param>
+        /// <param name="weave">Spell Weave check by default</param>
+        /// <returns></returns>
+        public static bool CanUseLucid(uint actionID, int MPThreshold, bool weave = true) =>
+            CustomComboFunctions.ActionReady(LucidDreaming)
+            && CustomComboFunctions.LocalPlayer.CurrentMp <= MPThreshold
+            && (weave && CustomComboFunctions.CanSpellWeave(actionID));
 
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
