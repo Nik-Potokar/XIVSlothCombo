@@ -133,9 +133,95 @@ namespace XIVSlothCombo.Combos.PvE
                 int blackmana = Gauge.BlackMana;
                 int whitemana = Gauge.WhiteMana;
                 //END_MAIN_COMBO_VARIABLES
+                bool bannerOverride = false;
+
+                //Checks if font of magic is up, if so uses banners with font
+                if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix))
+                {
+                    if (IsEnabled(Bozja.FontOfMagic))
+                    {
+                        bannerOverride = true;
+
+                        if (HasEffect(Bozja.Buffs.FontOfMagic))
+                        {
+                            bannerOverride = false;
+                        }
+                    }
+
+
+                }
 
                 if (actionID is Jolt or Jolt2)
                 {
+                    //Bozja stuff - Riley (Luna)
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
+                        IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
+                        HasBattleTarget())
+                    {
+                        //Congrats your a tank now, good luck!
+                        return Bozja.LostIncense;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
+                    {
+                        if (IsEnabled(Bozja.LostCure4) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure4;
+
+                        if (IsEnabled(Bozja.LostCure3) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.LostCure3;
+
+                        if (IsEnabled(Bozja.LostCure2) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure2;
+
+                        if (IsEnabled(Bozja.LostCure) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.LostCure;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaCure4Caster))
+                    {
+                        if (IsEnabled(Bozja.LostCure4) &&
+                        !HasEffect(Bozja.Buffs.LostBravery2) &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure4;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
+                    {
+                        if (IsEnabled(Bozja.FontOfMagic) && IsOffCooldown(Bozja.FontOfMagic))
+                            return Bozja.FontOfMagic;
+
+                        if (!bannerOverride)
+                        {
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                return Bozja.BannerOfHonoredSacrifice;
+
+                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                return Bozja.BannerOfNobleEnds;
+
+                            if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
+                                return Bozja.LostChainspell;
+
+                            //Other devs could we check for chainspell before using swiftcast?
+                        }
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaFlareStar))
+                    {
+                        if (ActionReady(All.LucidDreaming))
+                            return All.LucidDreaming;
+
+                        if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
+                            (LocalPlayer.CurrentMp >= 9000))
+                            return Bozja.LostFlareStar;
+                    }
+
                     //RDM_BALANCE_OPENER
                     if (IsEnabled(CustomComboPreset.RDM_Balance_Opener) && level >= 90)
                     {
@@ -594,8 +680,23 @@ namespace XIVSlothCombo.Combos.PvE
                     && RDMLucid.SafetoUse(lastComboMove))
                     return All.LucidDreaming;
 
-                //RDM_OGCD
-                if (IsEnabled(CustomComboPreset.RDM_AoE_oGCD)
+                //Bozja AOE stuffs
+
+                if (actionID is Scatter or Impact)
+
+                {
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
+                    IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
+                        return Bozja.LostBanish3;
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
+                    IsEnabled(Bozja.LostBurst))
+                        return Bozja.LostBurst;
+
+                }
+
+                    //RDM_OGCD
+                    if (IsEnabled(CustomComboPreset.RDM_AoE_oGCD)
                     && LevelChecked(Corpsacorps) &&
                     actionID is Scatter or Impact &&
                     OGCDHelper.CanUse(actionID, false, out uint oGCDAction)) return oGCDAction;
