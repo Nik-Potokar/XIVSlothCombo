@@ -667,7 +667,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Xenoglossy overcap protection
                             if ((Gauge.PolyglotStacks is 2 && (Gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
-                                (Gauge.PolyglotStacks is 1 && (Gauge.EnochianTimer <= 3000) && !TraitLevelChecked(Traits.EnhancedPolyGlot)))
+                                (Gauge.PolyglotStacks is 1 && (Gauge.EnochianTimer <= 6000) && !TraitLevelChecked(Traits.EnhancedPolyGlot)))
                                 return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
@@ -1344,7 +1344,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Xenoglossy overcap protection
                             if ((Gauge.PolyglotStacks is 2 && (Gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
-                                (Gauge.PolyglotStacks is 1 && (Gauge.EnochianTimer <= 3000) && !TraitLevelChecked(Traits.EnhancedPolyGlot)))
+                                (Gauge.PolyglotStacks is 1 && (Gauge.EnochianTimer <= 6000) && !TraitLevelChecked(Traits.EnhancedPolyGlot)))
                                 return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
