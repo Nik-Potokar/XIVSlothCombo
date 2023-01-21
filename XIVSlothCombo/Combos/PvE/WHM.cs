@@ -232,7 +232,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Thin air added may be jank but yea, it may work? - Riley
                         if (HasEffect(Bozja.Buffs.FontOfMagic))
-                            //return IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && thinAirReady
+                            //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
                             return thinAirReady
                             ? ThinAir
                             : Bozja.LostSeraphStrike;

@@ -150,8 +150,24 @@ namespace XIVSlothCombo.Combos.PvE
                     var executeThreshold = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_ExecuteThreshold);
                     var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
+                    bool bannerOverride = false;
 
-                    
+                    // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                    {
+                        if (IsEnabled(Bozja.FontOfPower))
+                        {
+                            bannerOverride = true;
+
+                            if (HasEffect(Bozja.Buffs.FontOfPower))
+                            {
+                                bannerOverride = false;
+                            }
+                        }
+
+
+                    }
+
                     if (!InCombat())
                     {
                         hasDied = false;
@@ -196,6 +212,74 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
+                        // Bozja Stuffs - Riley (Luna)
+
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
+                            IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
+                            HasBattleTarget())
+                        {
+                            //Congrats your a tank now, good luck!
+                            return Bozja.LostIncense;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
+                        {
+                            if (IsEnabled(Bozja.LostCure4) &&
+                            PlayerHealthPercentageHp() <= 0.5f &&
+                            CanWeave(actionID))
+                                return Bozja.LostCure4;
+
+                            if (IsEnabled(Bozja.LostCure3) &&
+                            PlayerHealthPercentageHp() <= 0.5f)
+                                return Bozja.LostCure3;
+
+                            if (IsEnabled(Bozja.LostCure2) &&
+                            PlayerHealthPercentageHp() <= 0.5f &&
+                            CanWeave(actionID))
+                                return Bozja.LostCure2;
+
+                            if (IsEnabled(Bozja.LostCure) &&
+                            PlayerHealthPercentageHp() <= 0.5f)
+                                return Bozja.LostCure;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
+                            IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
+                            HasBattleTarget() && !HasEffect(Buffs.MeikyoShisui) && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
+                        {
+                            return Bozja.LostRendArmor;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
+                            IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
+                            HasBattleTarget() && !HasEffect(Buffs.MeikyoShisui))
+                        {
+                            if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
+                                return Bozja.LostAssassination;
+
+                            if (CanWeave(actionID))
+                                return Bozja.LostAssassination;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
+                        {
+
+                            if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                                return Bozja.LostExcellence;
+
+                            if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
+                                return Bozja.FontOfPower;
+
+                            if (!bannerOverride)
+                            {
+                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                    return Bozja.BannerOfHonoredSacrifice;
+
+                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                    return Bozja.BannerOfNobleEnds;
+                            }
+                        }
+
                         if (inOpener && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener) && OgiNamikiri.LevelChecked() && !hasDied && !nonOpener)
                         {
                             //oGCDs
@@ -768,6 +852,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.SAM_AoE_Overcap) && IsNotEnabled(CustomComboPreset.SAM_AoE_OkaCombo_TwoTarget) && gauge.Kenki >= SamAOEKenkiOvercapAmount && Kyuten.LevelChecked() && CanWeave(actionID))
                         return Kyuten;
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
+                        IsEnabled(Bozja.LostRampage) && !HasEffect(Buffs.MeikyoShisui))
+                        return Bozja.LostRampage;
 
                     if (HasEffect(Buffs.MeikyoShisui) && IsNotEnabled(CustomComboPreset.SAM_AoE_OkaCombo_TwoTarget))
                         return Oka;
