@@ -210,7 +210,7 @@
     <img src="/res/team_sloth_images/Members/Genesis-Nova.png" width="40" /></a>
   
   <a href="https://github.com/Tartarga" alt="Tartarga">
-    <img src="/res/team_sloth_images/Members/Tartarga.jpg" width="40" /></a>
+    <img src="/res/team_sloth_images/Members/Tartarga.png" width="40" /></a>
   <br><br>
   And many other <a href="https://github.com/Nik-Potokar/XIVSlothCombo/graphs/contributors" alt="Contributors">contributors</a>!
 </p>
