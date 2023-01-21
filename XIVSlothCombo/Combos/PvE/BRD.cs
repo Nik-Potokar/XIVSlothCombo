@@ -92,6 +92,92 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HeavyShot or BurstShot)
                 {
+                    #region Bozja Actioons
+                    // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
+                    bool bannerOverride = false;
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                    {
+                        if (IsEnabled(Bozja.FontOfPower))
+                        {
+                            bannerOverride = true;
+
+                            if (HasEffect(Bozja.Buffs.FontOfPower))
+                            {
+                                bannerOverride = false;
+                            }
+                        }
+
+
+                    }
+
+                    // Bozja Stuffs - Riley (Luna)
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
+                        IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
+                        HasBattleTarget())
+                    {
+                        //Congrats your a tank now, good luck!
+                        return Bozja.LostIncense;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
+                    {
+                        if (IsEnabled(Bozja.LostCure4) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure4;
+
+                        if (IsEnabled(Bozja.LostCure3) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.LostCure3;
+
+                        if (IsEnabled(Bozja.LostCure2) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure2;
+
+                        if (IsEnabled(Bozja.LostCure) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.LostCure;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysDerv) &&
+                        IsEnabled(Bozja.LostDervish) && IsOffCooldown(Bozja.LostDervish) && !HasEffect(Bozja.Buffs.LostDervish))
+                    {
+                        return Bozja.LostDervish;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
+                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
+                        HasBattleTarget())
+                    {
+                        if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
+                            return Bozja.LostAssassination;
+
+                        if (CanWeave(actionID))
+                            return Bozja.LostAssassination;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
+                    {
+
+                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                            return Bozja.LostExcellence;
+
+                        if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
+                            return Bozja.FontOfPower;
+
+                        if (!bannerOverride)
+                        {
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                return Bozja.BannerOfHonoredSacrifice;
+
+                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                return Bozja.BannerOfNobleEnds;
+                        }
+                    }
+                    #endregion
+
                     if (IsEnabled(CustomComboPreset.BRD_Apex))
                     {
                         BRDGauge? gauge = GetJobGauge<BRDGauge>();
@@ -332,6 +418,10 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(Variant.VariantRampart) &&
                         canWeave)
                         return Variant.VariantRampart;
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
+                        IsEnabled(Bozja.LostRampage))
+                        return Bozja.LostRampage;
 
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
                     {

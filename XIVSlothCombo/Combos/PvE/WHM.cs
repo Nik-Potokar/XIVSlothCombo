@@ -237,7 +237,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ? ThinAir
                             : Bozja.LostSeraphStrike;
 
-                        if (!IsEnabled(Bozja.FontOfMagic) && CanWeave(actionID))
+                        if (!IsEnabled(Bozja.FontOfMagic))
                             return thinAirReady
                             ? ThinAir
                             : Bozja.LostSeraphStrike;
