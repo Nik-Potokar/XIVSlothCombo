@@ -258,6 +258,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Tanks - Blood Rage", "Will try to use blood rage, will switch your GCD to your GAPCLOSER 3s before blood rage runs out.", ADV.JobID)]
         ALL_BozjaBloodRage = 20000114,
 
+        [ReplaceSkill(All.Rampart)]
+        [ParentCombo(ALL_BozjaRoleActions)]
+        [CustomComboInfo("Tanks - Lost Aethershield", "Will change Rampart to Aethershield", ADV.JobID)]
+        ALL_BozjaAetherShield = 20000116,
+
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_Bozja_Menu)]
         [CustomComboInfo("Farm Mode", "Changes ALL TYPE OF DAMAGE to one UNUSEABLE to your class (IE fire on melee, IR on casters), \nMUST use burst or rampage for ALL DAMAGE, removes SELF BUFFS AND PARTY BUFFS", ADV.JobID)]

@@ -65,6 +65,18 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+
+                if (actionID is 7531)
+                //Rampart 
+                {
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaAetherShield))
+                    {
+
+                        if (IsEnabled(Bozja.LostAethershield) && IsOffCooldown(Bozja.LostAethershield))
+                            return Bozja.LostAethershield;
+                    }
+                }
+
                 if (actionID == Souleater)
                 {
                     var gauge = GetJobGauge<DRKGauge>();
@@ -76,6 +88,75 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && LevelChecked(Unmend) && !InMeleeRange() && HasBattleTarget())
                         return Unmend;
+
+                    #region Bozja Actioons
+                    // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
+                    bool bannerOverride = false;
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                    {
+                        if (IsEnabled(Bozja.FontOfPower))
+                        {
+                            bannerOverride = true;
+
+                            if (HasEffect(Bozja.Buffs.FontOfPower))
+                            {
+                                bannerOverride = false;
+                            }
+                        }
+
+
+                    }
+
+                    // Bozja Stuffs - Riley (Luna)
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
+                    {
+                        if (IsEnabled(Bozja.LostCure4) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure4;
+
+                        if (IsEnabled(Bozja.LostCure3) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.LostCure3;
+
+                        if (IsEnabled(Bozja.LostCure2) &&
+                        PlayerHealthPercentageHp() <= 0.5f &&
+                        CanWeave(actionID))
+                            return Bozja.LostCure2;
+
+                        if (IsEnabled(Bozja.LostCure) &&
+                        PlayerHealthPercentageHp() <= 0.5f)
+                            return Bozja.LostCure;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
+                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
+                        HasBattleTarget())
+                    {
+                        if (CanWeave(actionID))
+                            return Bozja.LostAssassination;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
+                    {
+
+                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                            return Bozja.LostExcellence;
+
+                        if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
+                            return Bozja.FontOfPower;
+
+                        if (!bannerOverride)
+                        {
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                return Bozja.BannerOfHonoredSacrifice;
+
+                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                return Bozja.BannerOfNobleEnds;
+                        }
+                    }
+                    #endregion
 
                     if (InCombat())
                     {
@@ -239,6 +320,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Shadowbringer;
                         }
                     }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
+                        IsEnabled(Bozja.LostRampage))
+                        return Bozja.LostRampage;
 
                     if (IsEnabled(CustomComboPreset.DRK_Delirium))
                     {
