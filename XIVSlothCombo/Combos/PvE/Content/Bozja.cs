@@ -3,45 +3,53 @@
     internal static class Bozja
     {
         public const uint
-            fontOfMagic = 20715,
-            fontOfPower = 20717,
-            bannerOfNobleEnds = 20720,
-            bannerOfHonoredSacrifice = 20721,
-            lostCure2 = 20727,
-            lostCure4 = 20729,
-            lostIncense = 20731,
-            lostFlareStar = 22352,
-            lostRendArmor = 22353,
-            lostSeraphStrike = 22354,
-            lostDervish = 22356,
-            lostBurst = 23909,
-            lostRampage = 23910,
-            lostChainspell = 23913,
-            lostAssassination = 23914,
-            lostExcellence = 23919,
-            lostBloodRage = 23921;
+            LostBanish3 = 20702,
+            FontOfMagic = 20715,
+            FontOfPower = 20717,
+            BannerOfNobleEnds = 20720,
+            BannerOfHonoredSacrifice = 20721,
+            LostCure = 20726,
+            LostCure2 = 20727,
+            LostCure3 = 20728,
+            LostCure4 = 20729,
+            LostIncense = 20731,
+            LostFlareStar = 22352,
+            LostRendArmor = 22353,
+            LostSeraphStrike = 22354,
+            LostDervish = 22356,
+            LostBurst = 23909,
+            LostRampage = 23910,
+            LostChainspell = 23913,
+            LostAssassination = 23914,
+            LostExcellence = 23919,
+            LostBloodRage = 23921;
 
         public static class Buffs
         {
             public const ushort
-                beastEssence = 2324,
-                bannerOfNobleEnds = 2326,
-                bannerOfHonoredSacrifice = 2327,
-                fontOfMagic = 2332,
-                lostBravery2 = 2341,
-                fontOfPower = 2346,
-                lostAethershield = 2443,
-                clericStance = 2484,
-                lostChainspell = 2560,
-                lostExcellence = 2564,
-                lostBloodRage = 2566;
+                BeastEssence = 2324,
+                BannerOfNobleEnds = 2326,
+                BannerOfHonoredSacrifice = 2327,
+                FontOfMagic = 2332,
+                LostBravery2 = 2341,
+                FontOfPower = 2346,
+                PureElder = 2435,
+                PureFiendhunter = 2437,
+                PureIndomitable = 2438,
+                PureDivine = 2439,
+                LostAethershield = 2443,
+                LostDervish = 2444,
+                ClericStance = 2484,
+                LostChainspell = 2560,
+                LostExcellence = 2564,
+                LostBloodRage = 2566;
         }
 
         public static class Debuffs
         {
             public const ushort
-                lostFlareStar = 2440,
-                lostRendArmor = 2441;
+                LostFlareStar = 2440,
+                LostRendArmor = 2441;
         }
     }
 }

@@ -1,1 +1,1 @@
-Welcome to XIVSlothCombo v3.0.18.0! - PLD is not yet updated for 6.3 changes, please turn off all features relating to Goring Blade for partial functionality.
+Welcome to XIVSlothCombo v3.0.18.1!
