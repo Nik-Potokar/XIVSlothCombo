@@ -184,6 +184,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Bozja AOE stuffs
 
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaFlareStar))
+                    {
+                        if (ActionReady(All.LucidDreaming))
+                            return All.LucidDreaming;
+
+                        if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
+                            (LocalPlayer.CurrentMp >= 9000))
+                            return Bozja.LostFlareStar;
+                    }
+
                     if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
                         IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
                         return Bozja.LostBanish3;
