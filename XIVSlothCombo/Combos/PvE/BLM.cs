@@ -515,46 +515,44 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!inOpener)
                     {
                         // Handle movement
-                        if (IsEnabled(CustomComboPreset.BLM_Simple_Movement))
+                        if (IsEnabled(CustomComboPreset.BLM_Simple_Movement) && IsMoving && InCombat())
                         {
-                            if (IsMoving && InCombat())
-                            {
-                                if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
-                                    return Sharpcast;
+                            if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
+                                return Sharpcast;
 
-                                if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
-                                    (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
-                                    return dot; // Use appropriate DoT Action
+                            if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
+                                return dot; // Use appropriate DoT Action
 
-                                if (HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
-                                    return Fire3;
+                            if (HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
+                                return Fire3;
 
-                                if (LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.InUmbralIce)
-                                    return Paradox;
+                            if (LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.InUmbralIce)
+                                return Paradox;
 
-                                if (LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
-                                    return Xenoglossy;
+                            if (LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
+                                return Xenoglossy;
 
-                                if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
-                                    ActionReady(All.Swiftcast) && GetBuffStacks(Buffs.Triplecast) is 0)
-                                    return All.Swiftcast;
+                            if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
+                                ActionReady(All.Swiftcast) && GetBuffStacks(Buffs.Triplecast) is 0)
+                                return All.Swiftcast;
 
-                                if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
-                                    return Triplecast;
+                            if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
+                                return Triplecast;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Simple_Movement_Scathe) && (GetBuffStacks(Buffs.Triplecast) is 0))
-                                    return Scathe;
-                            }
+                            if (IsEnabled(CustomComboPreset.BLM_Simple_Movement_Scathe) && (GetBuffStacks(Buffs.Triplecast) is 0))
+                                return Scathe;
+
                         }
 
                         // Use under Fire or Ice
                         if (gauge.ElementTimeRemaining > 0)
                         {
                             // Thunder uptime
-                            if (gauge.ElementTimeRemaining >= astralFireRefresh
-                                && !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
+                            if (gauge.ElementTimeRemaining >= astralFireRefresh && 
+                                !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) && 
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return dot; // Use appropriate DoT Action
 
@@ -649,8 +647,8 @@ namespace XIVSlothCombo.Combos.PvE
                             (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)))
                         {
                             // Check leylines and triplecast cooldown
-                            if (gauge.PolyglotStacks is 2 && GetCooldown(LeyLines).CooldownRemaining >= 20 &&
-                                GetCooldown(Triplecast).ChargeCooldownRemaining >= 20 && LevelChecked(Xenoglossy))
+                            if (gauge.PolyglotStacks is 2 && GetCooldownRemainingTime(LeyLines) >= 20 &&
+                                GetCooldownRemainingTime(Triplecast) >= 20 && LevelChecked(Xenoglossy))
                             {
                                 if (IsNotEnabled(CustomComboPreset.BLM_Simple_Triplecast_Pooling) ||
                                     (IsEnabled(CustomComboPreset.BLM_Simple_Triplecast_Pooling) && !HasCharges(Triplecast)))
@@ -687,7 +685,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
-                            // Double Transpose Line during normal rotation every min Swiftcast is up!
+                            // Double Transpose Line rotation
                             if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) && level >= 90
                                 && currentMP < MP.Fire && !WasLastAction(Manafont) && IsOnCooldown(Manafont) &&
                                 ActionReady(All.Swiftcast) && (gauge.PolyglotStacks is 2))
@@ -743,11 +741,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
                             {
-                                // Transpose lines will use 2 xenoglossy stacks and then transpose
+                                // Transpose lines will use all xenoglossy stacks and then transpose
                                 if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     return Xenoglossy;
 
-                                if (!gauge.HasPolyglotStacks() && lastComboMove is Xenoglossy)
+                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy))
                                     return Transpose;
                             }
 
@@ -1305,8 +1303,8 @@ namespace XIVSlothCombo.Combos.PvE
                             (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)))
                         {
                             // Check leylines and triplecast cooldown
-                            if (gauge.PolyglotStacks is 2 && GetCooldown(LeyLines).CooldownRemaining >= 20 &&
-                                GetCooldown(Triplecast).ChargeCooldownRemaining >= 20 && LevelChecked(Xenoglossy))
+                            if (gauge.PolyglotStacks is 2 && GetCooldownRemainingTime(LeyLines) >= 20 &&
+                                GetCooldownRemainingTime(Triplecast) >= 20 && LevelChecked(Xenoglossy))
                             {
                                 if (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) ||
                                     IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))
@@ -1344,7 +1342,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
-                            // Double Transpose Line during normal rotation every min Swiftcast is up!
+                            // Double Transpose Line rotation
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 &&
                                 currentMP < MP.Fire && !WasLastAction(Manafont) && IsOnCooldown(Manafont) &&
                                 ActionReady(All.Swiftcast) && (gauge.PolyglotStacks is 2))
@@ -1404,7 +1402,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
                             {
-                                // Transpose lines will use 2 xenoglossy stacks and then transpose
+                                // Transpose lines will use all xenoglossy stacks and then transpose
                                 if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     return Xenoglossy;
 
@@ -1434,6 +1432,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
+                    uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
+                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
@@ -1510,14 +1510,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) &&
                             !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove) &&
-                            ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder))
-                        {
-                            uint dot = OriginalHook(Thunder2);                      // Grab the appropriate DoT Action
-                            Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
-
-                            if (dotDebuff is null || dotDebuff?.RemainingTime <= 4)
-                                return dot; // Use appropriate DoT Action
-                        }
+                            ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                            (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                            return dot; // Use appropriate DoT Action
 
                         if (gauge.UmbralHearts is 3)
                             return OriginalHook(Fire2);
