@@ -534,7 +534,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Xenoglossy;
 
                             if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
-                                ActionReady(All.Swiftcast) && GetBuffStacks(Buffs.Triplecast) is 0)
+                                ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
                                 return All.Swiftcast;
 
                             if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
@@ -561,7 +561,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (CanSpellWeave(actionID))
                             {
                                 if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Triplecast_Pooling) ||
-                                    GetRemainingCharges(Triplecast) is 2) && ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) &&
+                                    GetRemainingCharges(Triplecast) is 2) && ActionReady(Triplecast) && 
+                                    (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)) &&
                                     (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
                                     currentMP >= MP.Fire * 2)
                                     return Triplecast;
@@ -572,20 +573,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsEnabled(CustomComboPreset.BLM_Simple_Buffs_LeyLines) &&
                                     ActionReady(LeyLines))
                                     return LeyLines;
-                            }
-
-                            // Transpose Lines Ice phase
-                            if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) &&
-                                gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
-                            {
-                                // Hold Lucid until Swiftcast is ready
-                                if (gauge.UmbralIceStacks < 3 &&
-                                    ActionReady(All.LucidDreaming))
-                                    return All.LucidDreaming;
-
-                                // Swiftcast after Lucid
-                                if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
-                                    return All.Swiftcast;
                             }
                         }
 
@@ -685,16 +672,15 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
-                            // Double Transpose Line rotation
+                            // Transpose lines fire phase
                             if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) && level >= 90
-                                && currentMP < MP.Fire && !WasLastAction(Manafont) && IsOnCooldown(Manafont) &&
+                                && currentMP < MP.Fire && WasLastAction(Despair) && IsOnCooldown(Manafont) &&
                                 ActionReady(All.Swiftcast) && (gauge.PolyglotStacks is 2))
                             {
-                                if (WasLastAction(Despair))
-                                    return Transpose;
-
                                 if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast))
                                     return Thunder3;
+
+                                return Transpose;
                             }
 
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
@@ -739,13 +725,21 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(Paradox) && gauge.IsParadoxActive)
                                 return Paradox;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
+                            // Transpose lines ice phase
+                            if (IsEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) && level >= 90 &&
+                                HasEffect(All.Buffs.LucidDreaming) && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast))
                             {
-                                // Transpose lines will use all xenoglossy stacks and then transpose
+                                if (gauge.UmbralIceStacks < 3 &&
+                                    ActionReady(All.LucidDreaming))
+                                    return All.LucidDreaming;
+
                                 if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     return Xenoglossy;
 
-                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy) && HasEffect(All.Buffs.Swiftcast))
+                                if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
+                                    return All.Swiftcast;
+
+                                if (!gauge.HasPolyglotStacks() && HasEffect(All.Buffs.Swiftcast))
                                     return Transpose;
                             }
 
@@ -1190,7 +1184,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Xenoglossy;
 
                             if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                                ActionReady(All.Swiftcast) && GetBuffStacks(Buffs.Triplecast) is 0)
+                                ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
                                 return All.Swiftcast;
 
                             if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
@@ -1216,7 +1210,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
                                 (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
-                                LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) &&
+                                LevelChecked(Triplecast) && (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)) &&
                                 (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
                                 currentMP >= MP.Fire * 2)
                                 return Triplecast;
@@ -1229,18 +1223,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns_LeyLines) && ActionReady(LeyLines))
                                     return LeyLines;
-                            }
-
-                            // Transpose Lines Ice phase
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
-                                gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
-                            {
-                                if (gauge.UmbralIceStacks < 3 &&
-                                    ActionReady(All.LucidDreaming))
-                                    return All.LucidDreaming;
-
-                                if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
-                                    return All.Swiftcast;
                             }
                         }
 
@@ -1342,16 +1324,15 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
-                            // Double Transpose Line rotation
+                            // Transpose lines fire phase
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 &&
-                                currentMP < MP.Fire && !WasLastAction(Manafont) && IsOnCooldown(Manafont) &&
+                                currentMP < MP.Fire && WasLastAction(Despair) && IsOnCooldown(Manafont) &&
                                 ActionReady(All.Swiftcast) && (gauge.PolyglotStacks is 2))
                             {
-                                if (WasLastAction(Despair))
-                                    return Transpose;
-
                                 if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast))
                                     return Thunder3;
+
+                                return Transpose;
                             }
 
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
@@ -1400,13 +1381,22 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(Paradox) && gauge.IsParadoxActive)
                                 return Paradox;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
+
+                            // Transpose lines ice phase
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && 
+                                HasEffect(All.Buffs.LucidDreaming) && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast))
                             {
-                                // Transpose lines will use all xenoglossy stacks and then transpose
+                                if (gauge.UmbralIceStacks < 3 &&
+                                    ActionReady(All.LucidDreaming))
+                                    return All.LucidDreaming;
+
                                 if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     return Xenoglossy;
 
-                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy) && HasEffect(All.Buffs.Swiftcast))
+                                if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
+                                    return All.Swiftcast;
+
+                                if (!gauge.HasPolyglotStacks() && HasEffect(All.Buffs.Swiftcast))
                                     return Transpose;
                             }
 
