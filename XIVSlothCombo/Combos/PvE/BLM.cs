@@ -549,10 +549,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.ElementTimeRemaining > 0)
                         {
                             // Thunder uptime
-                            if (gauge.ElementTimeRemaining >= astralFireRefresh && 
+                            if (gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) && 
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return dot; // Use appropriate DoT Action
 
@@ -584,7 +584,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return All.LucidDreaming;
 
                                 // Swiftcast after Lucid
-                                if (HasEffect(All.Buffs.LucidDreaming))
+                                if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
                                     return All.Swiftcast;
                             }
                         }
@@ -745,7 +745,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     return Xenoglossy;
 
-                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy))
+                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy) && HasEffect(All.Buffs.Swiftcast))
                                     return Transpose;
                             }
 
@@ -1239,7 +1239,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     ActionReady(All.LucidDreaming))
                                     return All.LucidDreaming;
 
-                                if (HasEffect(All.Buffs.LucidDreaming))
+                                if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
                                     return All.Swiftcast;
                             }
                         }
@@ -1406,7 +1406,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                     return Xenoglossy;
 
-                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy))
+                                if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy) && HasEffect(All.Buffs.Swiftcast))
                                     return Transpose;
                             }
 
