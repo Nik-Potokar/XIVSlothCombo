@@ -1468,23 +1468,29 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections." +
+            "\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD." +
+            "\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
         MCH_ST_SimpleMode = 8020,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 99, "", "")]
+        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 97, "", "")]
         MCH_ST_Simple_Interrupt = 8021,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.", MCH.JobID, -10, "", "")]
+        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.\nWill prevent overcapping.", MCH.JobID, -11, "", "")]
         MCH_ST_Simple_GaussRicochet = 8024,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -7, "", "")]
-        MCH_ST_Simple_WildCharge = 8025,
+        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -5, "", "")]
+        MCH_ST_Simple_WildFire = 8025,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, -8, "", "")]
+        [CustomComboInfo("Simple Hypercharge Option", "Adds Hypercharge to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -6, "", "")]
+        MCH_ST_Simple_Hypercharge = 8048,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, -4, "", "")]
         MCH_ST_Simple_Stabilizer = 8026,
 
         [ParentCombo(MCH_ST_Simple_Stabilizer)]
@@ -1492,7 +1498,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Simple_Stabilizer_Wildfire_Only = 8035,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 98, "", "")]
         MCH_ST_SecondWind = 8037,
 
         [ParentCombo(MCH_ST_SimpleMode)]
@@ -1500,23 +1506,23 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Opener = 8041,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Turret/Queen Option", "Adds AutoTurret/Automaton Queen to the rotation.\nUses battery values of The Balance.", MCH.JobID, -1, "", "")]
+        [CustomComboInfo("Turret/Queen Option", "Adds AutoTurret/Automaton Queen to the rotation.\nUses battery values of The Balance.\nUses turret/queen at 100 battery below lvl 90.", MCH.JobID, -1, "", "")]
         MCH_Simple_QueenUsage = 8043,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.\nWill be used on Chainsaw and Airanchor.\nWill be used on Drill below lvl 76.", MCH.JobID, -9, "", "")]
+        [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.\nWill be used on Chainsaw and Airanchor.\nWill be used on Drill below lvl 76.", MCH.JobID, -7, "", "")]
         MCH_ST_Simple_Reassembled = 8044,
 
-        [ParentCombo(MCH_ST_Simple_Reassembled)]
-        [CustomComboInfo("Drill option", "Adds Drill to the rotation.", MCH.JobID, 0, "", "")]
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Drill option", "Adds Drill to the rotation.", MCH.JobID, -10, "", "")]
         MCH_ST_Simple_Drill = 8045,
 
-        [ParentCombo(MCH_ST_Simple_Reassembled)]
-        [CustomComboInfo("Air Anchor option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID, 0, "", "")]
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Air Anchor option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID, -9, "", "")]
         MCH_ST_Simple_AirAnchor = 8046,
 
-        [ParentCombo(MCH_ST_Simple_Reassembled)]
-        [CustomComboInfo("Chainsaw option", "Adds Chainsaw to the rotation.", MCH.JobID, 0, "", "")]
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Chainsaw option", "Adds Chainsaw to the rotation.", MCH.JobID, -8, "", "")]
         MCH_ST_Simple_ChainSaw = 8047,
 
         #endregion
@@ -1632,7 +1638,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID, 50, "", "")]
         All_PRanged_Dismantle = 8042,
 
-        // Last value = 8047
+        // Last value = 8048
 
         #endregion
 
