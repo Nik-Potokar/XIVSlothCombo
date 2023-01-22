@@ -94,7 +94,6 @@ namespace XIVSlothCombo.Combos.PvE
                 RPRGauge? gauge = GetJobGauge<RPRGauge>();
                 bool enshrouded = HasEffect(Buffs.Enshrouded);
                 bool soulReaver = HasEffect(Buffs.SoulReaver);
-                bool bannerOverride = false;
                 bool deathsDesign = TargetHasEffect(Debuffs.DeathsDesign);
                 double playerHP = PlayerHealthPercentageHp();
                 double enemyHP = GetTargetHPPercent();
@@ -110,23 +109,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2) {
                     trueNorthReadyDyn = false;
                 }
-
-                // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
-                if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                {
-                    if (IsEnabled(Bozja.FontOfPower))
-                    {
-                        bannerOverride = true;
-
-                        if (HasEffect(Bozja.Buffs.FontOfPower))
-                        {
-                            bannerOverride = false;
-                        }
-                    }
-
-                    
-                }
-                
 
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && LevelChecked(Gibbet))
@@ -211,17 +193,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return Bozja.LostRendArmor;
                     }
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
-                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
-                        HasBattleTarget() && !HasEffect(Buffs.SoulReaver))
-                    {
-                        if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
-                            return Bozja.LostAssassination;
-
-                        if (CanWeave(actionID))
-                            return Bozja.LostAssassination;
-                    }
-
                     if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
                     {
 
@@ -231,7 +202,31 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
                             return Bozja.FontOfPower;
 
-                        if (!bannerOverride)
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
+                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
+                        HasBattleTarget() && !HasEffect(Buffs.SoulReaver))
+                        {
+                            if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
+                                return Bozja.LostAssassination;
+
+                            if (CanWeave(actionID))
+                                return Bozja.LostAssassination;
+                        }
+
+                        // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                        {
+                            if (HasEffect(Bozja.Buffs.FontOfPower))
+                            {
+                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                    return Bozja.BannerOfHonoredSacrifice;
+
+                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                    return Bozja.BannerOfNobleEnds;
+                            }
+                        }
+
+                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                         {
                             if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
                                 return Bozja.BannerOfHonoredSacrifice;

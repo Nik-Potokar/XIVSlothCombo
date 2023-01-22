@@ -93,23 +93,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is HeavyShot or BurstShot)
                 {
                     #region Bozja Actioons
-                    // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
-                    bool bannerOverride = false;
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                    {
-                        if (IsEnabled(Bozja.FontOfPower))
-                        {
-                            bannerOverride = true;
-
-                            if (HasEffect(Bozja.Buffs.FontOfPower))
-                            {
-                                bannerOverride = false;
-                            }
-                        }
-
-
-                    }
-
+                    
                     // Bozja Stuffs - Riley (Luna)
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
@@ -147,17 +131,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bozja.LostDervish;
                     }
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
-                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
-                        HasBattleTarget())
-                    {
-                        if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
-                            return Bozja.LostAssassination;
-
-                        if (CanWeave(actionID))
-                            return Bozja.LostAssassination;
-                    }
-
                     if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
                     {
 
@@ -167,7 +140,31 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
                             return Bozja.FontOfPower;
 
-                        if (!bannerOverride)
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
+                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
+                        HasBattleTarget())
+                        {
+                            if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
+                                return Bozja.LostAssassination;
+
+                            if (CanWeave(actionID))
+                                return Bozja.LostAssassination;
+                        }
+
+                        // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                        {
+                            if (HasEffect(Bozja.Buffs.FontOfPower))
+                            {
+                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                    return Bozja.BannerOfHonoredSacrifice;
+
+                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                    return Bozja.BannerOfNobleEnds;
+                            }
+                        }
+
+                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                         {
                             if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
                                 return Bozja.BannerOfHonoredSacrifice;

@@ -186,25 +186,9 @@ namespace XIVSlothCombo.Combos.PvE
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
             internal static uint glare3Count = 0;
             internal static bool usedGlare3 = false;
-            private bool bannerOverride = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                //Checks if font of magic is up, if so uses banners with font
-                if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix))
-                {
-                    if (IsEnabled(Bozja.FontOfMagic))
-                    {
-                        bannerOverride = true;
-
-                        if (HasEffect(Bozja.Buffs.FontOfMagic))
-                        {
-                            bannerOverride = false;
-                        }
-                    }
-
-
-                }
 
                 if (actionID is Glare3 or Glare1 or Stone1 or Stone2 or Stone3 or Stone4)
                 {
@@ -245,10 +229,31 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
                     {
+                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                            return Bozja.LostExcellence;
+
                         if (IsEnabled(Bozja.FontOfMagic) && IsOffCooldown(Bozja.FontOfMagic))
                             return Bozja.FontOfMagic;
 
-                        if (!bannerOverride)
+                        // Checks to see if you have Font of Magic, and lines up Banners to Font
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                        {
+                            if (HasEffect(Bozja.Buffs.FontOfMagic))
+                            {
+                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                    return Bozja.BannerOfHonoredSacrifice;
+
+                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                    return Bozja.BannerOfNobleEnds;
+
+                                if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
+                                    return Bozja.LostChainspell;
+
+                                //Other devs could we check for chainspell before using swiftcast?
+                            }
+                        }
+
+                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                         {
                             if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
                                 return Bozja.BannerOfHonoredSacrifice;
@@ -258,8 +263,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
                                 return Bozja.LostChainspell;
-
-                            //Other devs could we check for chainspell before using swiftcast?
                         }
                     }
 
