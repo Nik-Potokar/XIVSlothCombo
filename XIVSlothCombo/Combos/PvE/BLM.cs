@@ -1329,8 +1329,30 @@ namespace XIVSlothCombo.Combos.PvE
                             return Variant.VariantRampart;
                     }
 
-                    if (LevelChecked(Flare))
+                    if (!LevelChecked(Flare))
                     {
+                        if (gauge.InAstralFire)
+                        {
+                            if (currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)))
+                                return Fire2;
+
+                            if (currentMP < MP.FireAoE && LevelChecked(OriginalHook(Blizzard2)))
+                                return Blizzard2;
+                        }
+
+                        if (gauge.InUmbralIce)
+                        {
+                            if (currentMP == MP.MaxMP)
+                                return Fire2;
+
+                            return ((currentMP >= MP.Thunder) && (dotDebuff is null || dotDebuff?.RemainingTime <= 4) && LevelChecked(Thunder2))
+                                ? Thunder2
+                                : Blizzard2;
+                        }
+                    }
+
+                    else
+                    { 
                         // Fire phase
                         if (gauge.InAstralFire)
                         {
@@ -1379,25 +1401,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (gauge.UmbralHearts is 3)
                                 return OriginalHook(Fire2);
-                        }
-                    }
-
-                    // Low level rotation
-                    else
-                    {
-                        if (gauge.InAstralFire)
-                            return currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)) && LevelChecked(OriginalHook(Blizzard2))
-                                ? Fire2
-                                : Blizzard2;
-
-                        if (gauge.InUmbralIce)
-                        {
-                            if (currentMP == MP.MaxMP)
-                                return Fire2;
-
-                            return ((currentMP >= MP.Thunder) && (dotDebuff is null || dotDebuff?.RemainingTime <= 4) && LevelChecked(Thunder2))
-                                ? Thunder2
-                                : Blizzard2;
                         }
                     }
                 }
