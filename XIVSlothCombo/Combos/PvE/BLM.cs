@@ -1271,7 +1271,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
-                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
+                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder2)]); // Match DoT with its debuff ID, and check for the debuff
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) &&
@@ -1351,7 +1351,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return OriginalHook(Thunder);
+                                return OriginalHook(Thunder2);
 
                             if (gauge.UmbralHearts is 3)
                                 return OriginalHook(Fire2);
@@ -1359,7 +1359,15 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     else
                     {
+                        if (gauge.InAstralFire)
+                            return currentMP >= MP.FireAoE
+                                ? Fire2
+                                : Blizzard2;
 
+                        if (gauge.InUmbralIce)
+                            return currentMP == MP.MaxMP
+                                ? Fire2
+                                : Thunder;
                     }
                 }
 
