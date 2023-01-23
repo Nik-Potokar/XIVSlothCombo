@@ -1208,6 +1208,7 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
                     }
+
                     if (LevelChecked(Flare))
                     {
                         // Fire phase
@@ -1258,6 +1259,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Fire2);
                         }
                     }
+
+                    // Low level rotation
                     else
                     {
                         if (gauge.InAstralFire)
@@ -1327,6 +1330,7 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
                     }
+
                     if (LevelChecked(Flare))
                     {
                         // Fire phase
@@ -1379,6 +1383,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Fire2);
                         }
                     }
+
+                    // Low level rotation
                     else
                     {
                         if (gauge.InAstralFire)
