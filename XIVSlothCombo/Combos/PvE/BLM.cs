@@ -1045,15 +1045,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Polyglot stacks if we don't need it for a future weave
                             // Only when we're not using Transpose lines
-                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || (level < 90 &&
-                                IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns)) &&
-                                IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) ||
+                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                                IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
+                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) ||
                                 IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast)) &&
                                 gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
                                 GetCooldownRemainingTime(LeyLines) >= 20 &&
                                 GetCooldownRemainingTime(Triplecast) >= 20)
-                                return (LevelChecked(Xenoglossy))
+                                return LevelChecked(Xenoglossy)
                                         ? Xenoglossy
                                         : Foul;
                         }
