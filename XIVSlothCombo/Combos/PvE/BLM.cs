@@ -1084,8 +1084,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Transpose lines fire phase
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 &&
-                                currentMP < MP.Fire && !WasLastAction(Manafont) && IsOnCooldown(Manafont) &&
-                                ActionReady(All.Swiftcast) && gauge.PolyglotStacks is 2)
+                                !WasLastAction(Manafont) && IsOnCooldown(Manafont) && ActionReady(All.Swiftcast) &&
+                                currentMP < MP.Fire && gauge.PolyglotStacks is 2)
                             {
                                 if (WasLastAction(Despair))
                                     return Transpose;
@@ -1113,6 +1113,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Despair
                                     : Blizzard3;
                             }
+
                             return Fire4;
                         }
                     }
@@ -1130,7 +1131,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Sharpcast
                         if (Config.BLM_Adv_Cooldowns_Choice[1] &&
-                            ActionReady(Sharpcast) && !WasLastAction(Thunder3) && !HasEffect(Buffs.Sharpcast) && CanSpellWeave(actionID))
+                            ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                            !WasLastAction(Thunder3) && CanSpellWeave(actionID))
                             return Sharpcast;
 
                         // Use Paradox when available
@@ -1141,8 +1143,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Transpose lines ice phase
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && ActionReady(All.Swiftcast))
                         {
-                            if (gauge.UmbralIceStacks < 3 &&
-                                ActionReady(All.LucidDreaming))
+                            if (gauge.UmbralIceStacks < 3 && ActionReady(All.LucidDreaming))
                                 return All.LucidDreaming;
 
                             if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
@@ -1161,6 +1162,7 @@ namespace XIVSlothCombo.Combos.PvE
                             : Blizzard4;
                     }
                 }
+
                 return actionID;
             }
         }
@@ -1217,7 +1219,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(Manafont) && currentMP is 0)
                             return Manafont;
 
-                        // Use flare after manafont
+                        // Use Flare after Manafont
                         if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                             return Flare;
 
@@ -1230,7 +1232,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
 
                             if (currentMP > MP.FireAoE)
@@ -1247,8 +1250,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3)
                             return Freeze;
 
-                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) &&
-                            !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove) &&
+                        if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                            !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                             ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                             (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                             return dot; // Use appropriate DoT Action
@@ -1316,7 +1319,7 @@ namespace XIVSlothCombo.Combos.PvE
                             currentMP is 0)
                             return Manafont;
 
-                        // Use flare after manafont
+                        // Use Flare after Manafont
                         if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                             return Flare;
 
@@ -1330,7 +1333,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
 
                             if (currentMP > MP.FireAoE)
@@ -1347,8 +1351,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3)
                             return Freeze;
 
-                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) &&
-                            !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove) &&
+                        if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                            !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                             ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                             (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                             return dot; // Use appropriate DoT Action
