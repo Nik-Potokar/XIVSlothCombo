@@ -1270,7 +1270,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.InUmbralIce)
                         {
-                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                            if (LevelChecked(OriginalHook(Thunder2)) && !ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
@@ -1394,7 +1394,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.InUmbralIce)
                         {
-                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                            if (LevelChecked(OriginalHook(Thunder2)) &&!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
