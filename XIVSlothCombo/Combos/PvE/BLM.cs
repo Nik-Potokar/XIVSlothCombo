@@ -998,7 +998,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Blizzard3;
 
                             return (currentMP >= MP.Fire)
-                                ? Fire
+                                ? Thunder
                                 : Blizzard;
                         }
 
@@ -1305,55 +1305,61 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
                     }
-
-                    // Fire phase
-                    if (gauge.InAstralFire)
+                    if (LevelChecked(Flare))
                     {
-                        // Manafont weave
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Manafont) && ActionReady(Manafont) &&
-                            currentMP is 0)
-                            return Manafont;
-
-                        // Use Flare after Manafont
-                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
-                            return Flare;
-
-                        // Polyglot usage 
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
-                            LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
-                            return Foul;
-
-                        if (currentMP >= MP.AllMPSpells)
+                        // Fire phase
+                        if (gauge.InAstralFire)
                         {
-                            if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                                return Transpose;
+                            // Manafont weave
+                            if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Manafont) && ActionReady(Manafont) &&
+                                currentMP is 0)
+                                return Manafont;
 
-                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                            // Use Flare after Manafont
+                            if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Flare;
 
-                            if (currentMP > MP.FireAoE)
-                                return OriginalHook(Fire2);
+                            // Polyglot usage 
+                            if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
+                                LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
+                                return Foul;
+
+                            if (currentMP >= MP.AllMPSpells)
+                            {
+                                if (!TraitLevelChecked(Traits.AspectMasteryIII))
+                                    return Transpose;
+
+                                if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                    (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                    return Flare;
+
+                                if (currentMP > MP.FireAoE)
+                                    return OriginalHook(Fire2);
+                            }
+
+                            if (currentMP is 0)
+                                return Transpose;
                         }
 
-                        if (currentMP is 0)
-                            return Transpose;
+                        // Ice phase
+                        if (gauge.InUmbralIce)
+                        {
+                            if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
+                                return Freeze;
+
+                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                return OriginalHook(Thunder);
+
+                            if (gauge.UmbralHearts is 3)
+                                return OriginalHook(Fire2);
+                        }
                     }
-
-                    // Ice phase
-                    if (gauge.InUmbralIce)
+                    else
                     {
-                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
-                            return Freeze;
 
-                        if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
-                            !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                            ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
-                            (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                            return OriginalHook(Thunder);
-
-                        if (gauge.UmbralHearts is 3)
-                            return OriginalHook(Fire2);
                     }
                 }
 
