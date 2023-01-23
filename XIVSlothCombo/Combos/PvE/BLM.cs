@@ -1183,7 +1183,104 @@ namespace XIVSlothCombo.Combos.PvE
                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
 
                     // Spam Umbral Soul/Transpose when there's no target
-                    if (IsEnabled(CustomComboPreset.BLM_AoEUmbralSoul) &&
+                    if (CurrentTarget is null && gauge.ElementTimeRemaining > 0)
+                    {
+                        if (gauge.InAstralFire && LevelChecked(Transpose))
+                            return Transpose;
+
+                        if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                            return UmbralSoul;
+                    }
+
+                    //2xHF2 Transpose with Freeze [A7]
+                    if (!InCombat())
+                    {
+                        return (gauge.UmbralHearts is 3)
+                            ? OriginalHook(Fire2)
+                            : OriginalHook(Blizzard2);
+                    }
+
+                    if (gauge.ElementTimeRemaining > 0)
+                    {
+                        if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
+                            IsEnabled(Variant.VariantCure) &&
+                            PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                            return Variant.VariantCure;
+
+                        if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            CanSpellWeave(actionID))
+                            return Variant.VariantRampart;
+                    }
+
+                    // Fire phase
+                    if (gauge.InAstralFire)
+                    {
+                        // Manafont weave
+                        if (ActionReady(Manafont) && currentMP is 0)
+                            return Manafont;
+
+                        // Use flare after manafont
+                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
+                            return Flare;
+
+                        // Polyglot usage 
+                        if (LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
+                            return Foul;
+
+                        if (currentMP >= MP.AllMPSpells)
+                        {
+                            if (!TraitLevelChecked(Traits.AspectMasteryIII))
+                                return Transpose;
+
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                return Flare;
+
+                            if (currentMP > MP.FireAoE)
+                                return OriginalHook(Fire2);
+                        }
+
+                        if (currentMP is 0)
+                            return Transpose;
+                    }
+
+                    // Ice phase
+                    if (gauge.InUmbralIce)
+                    {
+                        if (gauge.UmbralHearts < 3)
+                            return Freeze;
+
+                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) &&
+                            !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(lastComboMove) &&
+                            ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                            (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                            return dot; // Use appropriate DoT Action
+
+                        if (gauge.UmbralHearts is 3)
+                            return OriginalHook(Fire2);
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class BLM_AoE_AdvancedMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AoE_AdvancedMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Blizzard2)
+                {
+                    uint currentMP = LocalPlayer.CurrentMp;
+                    BLMGauge? gauge = GetJobGauge<BLMGauge>();
+                    uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
+                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+
+                    // Spam Umbral Soul/Transpose when there's no target
+                    if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) &&
                         CurrentTarget is null && gauge.ElementTimeRemaining > 0)
                     {
                         if (gauge.InAstralFire && LevelChecked(Transpose))
@@ -1219,7 +1316,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.InAstralFire)
                     {
                         // Manafont weave
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Manafont) && ActionReady(Manafont) &&
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Simple_Manafont) && ActionReady(Manafont) &&
                             currentMP is 0)
                             return Manafont;
 
@@ -1228,7 +1325,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Flare;
 
                         // Polyglot usage 
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) &&
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Simple_Foul) &&
                             LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
                             return Foul;
 

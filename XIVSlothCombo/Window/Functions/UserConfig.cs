@@ -1141,7 +1141,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
             {
                 ImGui.Indent();
-                ImGui.Spacing();//Not sure why I need this, indenting did not work without it
+                ImGui.Spacing();// Not sure why I need this, indenting did not work without it
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Manafont", "Add Manafont to the rotation.", 4, 0);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Sharpcast", "Add Sharpcast to the rotation.", 4, 1);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Amplifier", "Add Amplifier to the rotation.", 4, 2);
