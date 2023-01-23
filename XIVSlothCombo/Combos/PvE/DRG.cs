@@ -99,6 +99,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany);
                 var diveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_ST_DiveOptions);
                 var openerOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_OpenerOptions);
+                bool canuseaction = false;
 
                 Status? ChaosDoTDebuff;
                 if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
@@ -114,6 +115,13 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Congrats your a tank now, good luck!
                         return Bozja.LostIncense;
+                    }
+
+                    if (!HasEffect(Buffs.SharperFangAndClaw) && !HasEffect(Buffs.EnhancedWheelingThrust) 
+                        && !HasEffect(Buffs.DraconianFire)
+                        )
+                    {
+                        canuseaction = true;
                     }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
@@ -139,7 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
                         IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
-                        HasBattleTarget() && !HasEffect(Buffs.SharperFangAndClaw) && !HasEffect(Buffs.EnhancedWheelingThrust) && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
+                        HasBattleTarget() && canuseaction && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
                     {
                         return Bozja.LostRendArmor;
                     }
@@ -155,7 +163,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
                         IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
-                        HasBattleTarget() && !HasEffect(Buffs.EnhancedWheelingThrust) && !HasEffect(Buffs.SharperFangAndClaw))
+                        HasBattleTarget() && canuseaction)
                         {
                             if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
                                 return Bozja.LostAssassination;
