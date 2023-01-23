@@ -350,26 +350,8 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_UmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat." +
-            "\nWill use (pooled) Triplecast." +
-            "\nWill use Swiftcast when not using Transpose rotation." +
-            "\nWill use Firestarter in Astral Fire." +
-            "\nWill use Paradox when Lv.90 and in Umbral Ice." +
-            "\nWill use Thundercloud.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Choose which options u want to use for movement.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement = 2036,
-
-        [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Xenoglossy Movement Option", "Adds Xenoglossy when moving." +
-            "\nOne charge will be held for rotation.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Movement_Xeno = 2037,
-
-        [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Scathe Movement Option", "Will use Scathe when moving and no other options are available.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Movement_Scathe = 2038,
-
-        [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Sharpcast Movement Option", "Uses Sharpcast when it has charges, its buff is not present and you are moving.", BLM.JobID, -1, "", "")]
-        BLM_Adv_Movement_Sharpcast = 2053,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Triplecast/Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
@@ -380,7 +362,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Triplecast_Pooling = 2040,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast and Amplifier to the rotation.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, -8, "", "")]
         BLM_Adv_Cooldowns = 2042,
 
         [ParentCombo(BLM_AdvancedMode)]

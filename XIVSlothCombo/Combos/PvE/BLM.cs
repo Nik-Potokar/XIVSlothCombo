@@ -109,7 +109,8 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_Adv_Cooldowns = "BLM_Adv_Cooldowns";
 
         internal static UserBoolArray
-            BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice");
+            BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
+            BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
         }
         internal class BLM_SimpleMode : CustomCombo
         {
@@ -467,9 +468,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Fire4;
 
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
-                            if ((ActionReady(LeyLines)) || (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && GetRemainingCharges(Triplecast) > 1) ||
+                            if ((ActionReady(LeyLines) || (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && GetRemainingCharges(Triplecast) > 1) ||
                                (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) &&
+                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))) &&
                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
@@ -531,7 +532,7 @@ namespace XIVSlothCombo.Combos.PvE
                     float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_OpenerSelection);
-                    int pooledPolyglotStacks = IsEnabled(CustomComboPreset.BLM_Adv_Movement_Xeno) ? 1 : 0;
+                    int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
                     uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
                     Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
@@ -979,32 +980,37 @@ namespace XIVSlothCombo.Combos.PvE
                             // Handle movement
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Movement) && IsMoving && InCombat())
                             {
-                                if (IsEnabled(CustomComboPreset.BLM_Adv_Movement_Sharpcast) &&
+                                if (Config.BLM_Adv_Movement_Choice[0] &&
                                     !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
                                     return Sharpcast;
 
-                                if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
+                                if (Config.BLM_Adv_Movement_Choice[1] &&
+                                    HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
                                     (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
                                     return dot; // Use appropriate DoT Action
 
-                                if (HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
+                                if (Config.BLM_Adv_Movement_Choice[2] &&
+                                    HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
                                     return Fire3;
 
-                                if (LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.InUmbralIce)
+                                if (Config.BLM_Adv_Movement_Choice[3] &&
+                                    LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.InUmbralIce)
                                     return Paradox;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Adv_Movement_Xeno) &&
+                                if (Config.BLM_Adv_Movement_Choice[4] &&
                                     LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
                                     return Xenoglossy;
 
                                 if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                                    Config.BLM_Adv_Movement_Choice[5] &&
                                     ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
                                     return All.Swiftcast;
 
-                                if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
+                                if (Config.BLM_Adv_Movement_Choice[6] &&
+                                    HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
-                                if (IsEnabled(CustomComboPreset.BLM_Adv_Movement_Scathe) && (GetBuffStacks(Buffs.Triplecast) is 0))
+                                if (Config.BLM_Adv_Movement_Choice[7] && (GetBuffStacks(Buffs.Triplecast) is 0))
                                     return Scathe;
                             }
 
@@ -1030,10 +1036,11 @@ namespace XIVSlothCombo.Combos.PvE
                             // Weave Buffs
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID))
                             {
-                                if (ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
+                                if (Config.BLM_Adv_Cooldowns_Choice[2] &&
+                                    ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
                                     return Amplifier;
 
-                                if (Config.BLM_Adv_Cooldowns_Choice[4] && ActionReady(LeyLines))
+                                if (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
                                     return LeyLines;
                             }
 
@@ -1071,8 +1078,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Paradox
                                     : Fire;
 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns)
-                                && ActionReady(Manafont) && WasLastAction(Despair))
+                            if (Config.BLM_Adv_Cooldowns_Choice[0] && 
+                                ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
                             // Cast Fire 4 after Manafont
@@ -1095,12 +1102,12 @@ namespace XIVSlothCombo.Combos.PvE
                             // only when we're not using Transpose Lines 
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                               (Config.BLM_Adv_Cooldowns_Choice[4] && ActionReady(LeyLines)) ||
+                               ((Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines)) ||
                                (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1)) ||
-                               (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) &&
+                               (Config.BLM_Adv_Cooldowns_Choice[0] && ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
+                               (Config.BLM_Adv_Cooldowns_Choice[1] && ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) &&
                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                               gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy))
+                               gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy)))
                                 return Xenoglossy;
                         }
 
@@ -1127,7 +1134,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Foul;
 
                         // Sharpcast
-                        if (ActionReady(Sharpcast) && !WasLastAction(Thunder3) && !HasEffect(Buffs.Sharpcast) && CanSpellWeave(actionID))
+                        if (Config.BLM_Adv_Cooldowns_Choice[1] && 
+                            ActionReady(Sharpcast) && !WasLastAction(Thunder3) && !HasEffect(Buffs.Sharpcast) && CanSpellWeave(actionID))
                             return Sharpcast;
 
                         // Use Paradox when available
