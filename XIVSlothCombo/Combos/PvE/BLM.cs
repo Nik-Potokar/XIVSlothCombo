@@ -681,10 +681,10 @@ namespace XIVSlothCombo.Combos.PvE
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
                             // only when we're not using Transpose Lines 
                             if ((IsNotEnabled(CustomComboPreset.BLM_Simple_Transpose_Rotation) || level < 90) &&
-                               (IsEnabled(CustomComboPreset.BLM_Simple_Buffs_LeyLines) && ActionReady(LeyLines)) ||
+                               ((IsEnabled(CustomComboPreset.BLM_Simple_Buffs_LeyLines) && ActionReady(LeyLines)) ||
                                (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && (IsNotEnabled(CustomComboPreset.BLM_Simple_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1)) ||
                                (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) &&
+                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))) &&
                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
@@ -1327,10 +1327,10 @@ namespace XIVSlothCombo.Combos.PvE
                             // only when we're not using Transpose Lines 
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                               (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns_LeyLines) && ActionReady(LeyLines)) ||
+                               ((IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns_LeyLines) && ActionReady(LeyLines)) ||
                                (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1)) ||
                                (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) &&
+                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))) &&
                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh &&
                                gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
