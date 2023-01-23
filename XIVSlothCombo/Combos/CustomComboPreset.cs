@@ -329,37 +329,42 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_AdvancedMode)]
-        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Simple Black Mage (Single Target) Feature", "Replaces Scathe with a full one-button rotation.", BLM.JobID, -10, "", "")]
         BLM_SimpleMode = 2012,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Pool Triplecast option", "Keep one triplecast usage for movement.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID, 0, "", "")]
         BLM_Simple_Triplecast_Pooling = 2016,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
-            "\nWill use firestarter proc in Astral Fire.\nWill use Paradox when lvl 90 and in Umbral Ice." +
-            "\nWill use Thundercloud proc.\nWill use Xenoglossy when moving. It will save 1 charge for rotation.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat." +
+            "\nWill use (pooled) Triplecast." +
+            "\nWill use Swiftcast when not using the Transpose rotation." +
+            "\nWill use Firestarter in Astral Fire." +
+            "\nWill use Paradox when Lv.90 and in Umbral Ice." +
+            "\nWill use Thundercloud." +
+            "\nWill use Xenoglossy when moving. One charge will be held for rotation.", BLM.JobID, 0, "", "")]
         BLM_Simple_Movement = 2026,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Umbral Soul", "Changes Single Target button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul Option", "Changes Single Target button to use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
         BLM_Simple_UmbralSoul = 2031,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Double Transpose Rotation Option", "Uses the Double Transpose rotation instead of the Standard rotation.", BLM.JobID, -9, "", "")]
         BLM_Simple_Transpose_Rotation = 2048,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines in the rotation.", BLM.JobID, -5, "", "")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines to the rotation.", BLM.JobID, -5, "", "")]
         BLM_Simple_Buffs_LeyLines = 2050,
 
         [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Opener", "Adds the lvl 90 opener.\nChoose which one u want to use.\nIf nothing selected will default to Standard opener.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
+            "\nWill default to the Standard Opener when nothing is selected.", BLM.JobID, -10, "", "")]
         BLM_Simple_Opener = 2051,
 
         [ParentCombo(BLM_Simple_Movement)]
-        [CustomComboInfo("Scathe Moving Option", "will use Scathe when moving when no other options left.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Scathe Movement Option", "Will use Scathe when moving and no other options are available.", BLM.JobID, 0, "", "")]
         BLM_Simple_Movement_Scathe = 2028,
 
         #endregion
@@ -368,7 +373,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_SimpleMode)]
-        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Advanced Black Mage (Single Target) Feature", "Replaces Scathe with a full one-button rotation.", BLM.JobID, -9, "", "")]
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -376,53 +381,59 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Thunder = 2029,
 
         [ParentCombo(BLM_Adv_Thunder)]
-        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thunder I/III Option", "Adds Thunder when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
         BLM_Adv_Thunder_Uptime = 2030,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul", "Changes Single target button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
         BLM_Adv_UmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
-            "\nWill use firestarter proc in Astral Fire.\nWill use Paradox when lvl 90 and in Umbral Ice." +
-            "\nWill use Thundercloud proc.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat." +
+            "\nWill use (pooled) Triplecast." +
+            "\nWill use Swiftcast when not using Transpose rotation." +
+            "\nWill use Firestarter in Astral Fire." +
+            "\nWill use Paradox when Lv.90 and in Umbral Ice." +
+            "\nWill use Thundercloud.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement = 2036,
 
         [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Xenoglossy Moving Option", "adds Xenoglossy when moving. It will save 1 charge for rotation.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Xenoglossy Movement Option", "Adds Xenoglossy when moving." +
+            "\nOne charge will be held for rotation.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement_Xeno = 2037,
 
         [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Scathe Moving Option", "will use Scathe when moving when no other options left.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Scathe Movement Option", "Will use Scathe when moving and no other options are available.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement_Scathe = 2038,
 
         [ParentCombo(BLM_Adv_Movement)]
-        [CustomComboInfo("Sharpcast moving Option", "will use Sharpcast when moving when it has charges and buff is not present.", BLM.JobID, -1, "", "")]
+        [CustomComboInfo("Sharpcast Movement Option", "Uses Sharpcast when it has charges, its buff is not present and you are moving.", BLM.JobID, -1, "", "")]
         BLM_Adv_Movement_Sharpcast = 2053,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Triplecast/Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
         BLM_Adv_Casts = 2039,
 
         [ParentCombo(BLM_Adv_Casts)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID, 0, "", "")]
         BLM_Adv_Triplecast_Pooling = 2040,
 
         [ParentCombo(BLM_Adv_Cooldowns)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the rotation.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines to the rotation.", BLM.JobID, 0, "", "")]
         BLM_Adv_Cooldowns_LeyLines = 2041,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast, Amplifier onto the rotation.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast and Amplifier to the rotation.", BLM.JobID, -8, "", "")]
         BLM_Adv_Cooldowns = 2042,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Opener", "Adds the lvl 90 opener.\nChoose which one u want to use.\nIf nothing selected will default to Standard opener.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
+            "\nWill default to the Standard Opener when nothing is selected.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Double Transpose rotation", "Uses Double Transpose rotation instead of Standard rotation.\nNote: This will use Swiftcast and Lucid Dreaming.\nWill only work on lvl 90.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Double Transpose Option", "Uses the Double Transpose rotation instead of the Standard rotation." +
+            "\nWill only work at Lv.90.", BLM.JobID, -9, "", "")]
         BLM_Adv_Transpose_Rotation = 2045,
 
         #endregion
@@ -430,7 +441,7 @@ namespace XIVSlothCombo.Combos
         #region Simple AoE
 
         [ReplaceSkill(BLM.Blizzard2)]
-        [CustomComboInfo("Simple AoE Feature", "Replaces Blizzard2 with a full one button rotation.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Simple Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
@@ -438,11 +449,11 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_Simple_Foul = 2044,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Umbral Soul", "Change AoE button to use transpose/umbral soul when no target selected", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul", "Change AoE button to use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
         BLM_AoEUmbralSoul = 2049,
 
         [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Manafont", "Add Manafont to AoE feature for an extra flare.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Manafont", "Add Manafont to the AoE combo for an extra Flare use.", BLM.JobID, 0, "", "")]
         BLM_AoE_Simple_Manafont = 2052,
 
         #endregion
@@ -474,7 +485,8 @@ namespace XIVSlothCombo.Combos
         BLM_Between_The_LeyLines = 2002,
 
         [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
-        [CustomComboInfo("Blizzard 1/3 Feature", "Replaces Blizzard 1 with Blizzard 3 when out of Umbral Ice. Replaces Freeze with Blizzard 2 when synced.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Blizzard I/III Feature", "Replaces Blizzard I with Blizzard III when out of Umbral Ice." +
+            "\nReplaces Freeze with Blizzard II when synced below Lv.40.", BLM.JobID, 0, "", "")]
         BLM_Blizzard_1to3 = 2003,
 
         [ReplaceSkill(BLM.Scathe)]
@@ -483,7 +495,7 @@ namespace XIVSlothCombo.Combos
         BLM_Scathe_Xeno = 2004,
 
         [ReplaceSkill(BLM.Fire)]
-        [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Fire I/III Feature", "Replaces Fire I with Fire III outside of Astral Fire or when Firestarter is up.", BLM.JobID, 0, "", "")]
         BLM_Fire_1to3 = 2005,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
@@ -491,7 +503,6 @@ namespace XIVSlothCombo.Combos
         BLM_Aetherial_Manipulation = 2046,
 
         // Last value = 2053
-
 
         #endregion
 
