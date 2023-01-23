@@ -128,8 +128,7 @@ namespace XIVSlothCombo.Combos.PvE
                     float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Simple_OpenerSelection);
-                    uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
-                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
@@ -384,7 +383,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
                                     (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
-                                    return dot; // Use appropriate DoT Action
+                                    return OriginalHook(Thunder);
 
                                 if (HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
                                     return Fire3;
@@ -411,7 +410,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return dot; // Use appropriate DoT Action
+                                return OriginalHook(Thunder);
 
                             // Weave Buffs
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
@@ -533,8 +532,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_OpenerSelection);
                     int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
-                    uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
-                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
@@ -987,7 +985,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (Config.BLM_Adv_Movement_Choice[1] &&
                                     HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
                                     (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
-                                    return dot; // Use appropriate DoT Action
+                                    return OriginalHook(Thunder);
 
                                 if (Config.BLM_Adv_Movement_Choice[2] &&
                                     HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
@@ -1022,7 +1020,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return dot; // Use appropriate DoT Action
+                                return OriginalHook(Thunder);
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
@@ -1177,8 +1175,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
-                    uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
-                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (CurrentTarget is null && gauge.ElementTimeRemaining > 0)
@@ -1254,7 +1251,7 @@ namespace XIVSlothCombo.Combos.PvE
                             !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                             ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                             (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                            return dot; // Use appropriate DoT Action
+                            return OriginalHook(Thunder);
 
                         if (gauge.UmbralHearts is 3)
                             return OriginalHook(Fire2);
@@ -1275,8 +1272,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
-                    uint dot = OriginalHook(Thunder);                       // Grab the appropriate DoT Action
-                    Status? dotDebuff = FindTargetEffect(ThunderList[dot]); // Match it with it's Debuff ID, and check for the Debuff
+                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
 
                     // Spam Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) &&
@@ -1355,7 +1351,7 @@ namespace XIVSlothCombo.Combos.PvE
                             !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                             ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                             (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                            return dot; // Use appropriate DoT Action
+                            return OriginalHook(Thunder);
 
                         if (gauge.UmbralHearts is 3)
                             return OriginalHook(Fire2);
