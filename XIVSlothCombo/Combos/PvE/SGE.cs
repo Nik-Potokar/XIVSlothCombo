@@ -226,6 +226,16 @@ namespace XIVSlothCombo.Combos.PvE
                         LocalPlayer.CurrentMp <= Config.SGE_AoE_DPS_Lucid)
                         return All.LucidDreaming;
 
+                    //Bozja AOE stuffs
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
+                        IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
+                        return Bozja.LostBanish3;
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
+                        IsEnabled(Bozja.LostBurst))
+                        return Bozja.LostBurst;
+
                     // Rhizomata
                     if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Rhizo) && CanSpellWeave(Dosis) &&
                         ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_AoE_DPS_Rhizo)
@@ -291,6 +301,68 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
+
+                    //Bozja stuff - Riley (Luna)
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
+                        IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
+                        HasBattleTarget())
+                    {
+                        //Congrats your a tank now, good luck!
+                        return Bozja.LostIncense;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) &&
+                        IsEnabled(Bozja.LostSeraphStrike) && IsOffCooldown(Bozja.LostSeraphStrike) &&
+                        HasBattleTarget())
+                    {
+                        //Thin air added may be jank but yea, it may work? - Riley
+                        if (HasEffect(Bozja.Buffs.FontOfMagic))
+                            //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
+                            return Bozja.LostSeraphStrike;
+
+                        if (!IsEnabled(Bozja.FontOfMagic))
+                            return Bozja.LostSeraphStrike;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
+                    {
+                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                            return Bozja.LostExcellence;
+
+                        if (IsEnabled(Bozja.FontOfMagic) && IsOffCooldown(Bozja.FontOfMagic))
+                            return Bozja.FontOfMagic;
+
+                        // Checks to see if you have Font of Magic, and lines up Banners to Font
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                        {
+                            if (HasEffect(Bozja.Buffs.FontOfMagic))
+                            {
+                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                    return Bozja.BannerOfHonoredSacrifice;
+
+                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                    return Bozja.BannerOfNobleEnds;
+
+                                if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
+                                    return Bozja.LostChainspell;
+
+                                //Other devs could we check for chainspell before using swiftcast?
+                            }
+                        }
+
+                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                        {
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                                return Bozja.BannerOfHonoredSacrifice;
+
+                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                                return Bozja.BannerOfNobleEnds;
+
+                            if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
+                                return Bozja.LostChainspell;
+                        }
+                    }
 
                     // Rhizomata
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Rhizo) && CanSpellWeave(actionID) &&
