@@ -255,7 +255,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaRoleActions)]
-        [CustomComboInfo("Tanks - Blood Rage", "Will try to use blood rage, will switch your GCD to your GAPCLOSER 3s before blood rage runs out.", ADV.JobID)]
+        [CustomComboInfo("Tanks - Blood Rage", "This action is not working. Working on a fix. \nWill try to use blood rage, will switch your GCD to your GAPCLOSER 3s before blood rage runs out.", ADV.JobID)]
         ALL_BozjaBloodRage = 20000114,
 
         [ReplaceSkill(All.Rampart)]
