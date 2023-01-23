@@ -338,7 +338,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_SimpleMode)]
         [CustomComboInfo("Moving Options", "Use instant casts when moving in combat.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
-            "\nWill use firestarter proc in Astralfire.\nWill use Paradox when lvl 90 and in Umbralice." +
+            "\nWill use firestarter proc in Astral Fire.\nWill use Paradox when lvl 90 and in Umbral Ice." +
             "\nWill use Thundercloud proc.\nWill use Xenoglossy when moving. It will save 1 charge for rotation.", BLM.JobID, 0, "", "")]
         BLM_Simple_Movement = 2026,
 
@@ -385,7 +385,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Moving Options", "Use instant casts when moving in combat.\nWill use (pooled) triplecast.\nWill use Swiftcast when not using transpose rotation." +
-            "\nWill use firestarter proc in Astralfire.\nWill use Paradox when lvl 90 and in Umbralice." +
+            "\nWill use firestarter proc in Astral Fire.\nWill use Paradox when lvl 90 and in Umbral Ice." +
             "\nWill use Thundercloud proc.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement = 2036,
 
