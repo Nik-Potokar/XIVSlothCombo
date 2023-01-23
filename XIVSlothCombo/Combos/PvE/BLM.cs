@@ -108,9 +108,9 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_Advanced_OpenerSelection = "BLM_Advanced_OpenerSelection";
             internal const string BLM_Adv_Cooldowns = "BLM_Adv_Cooldowns";
 
-        internal static UserBoolArray
-            BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
-            BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
+            internal static UserBoolArray
+                BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
+                BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
         }
         internal class BLM_SimpleMode : CustomCombo
         {
@@ -435,7 +435,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
                                 GetCooldownRemainingTime(LeyLines) >= 20 &&
                                 GetCooldownRemainingTime(Triplecast) >= 20)
-                                return (LevelChecked(Xenoglossy))
+                                return LevelChecked(Xenoglossy)
                                         ? Xenoglossy
                                         : Foul;
                         }
@@ -1077,7 +1077,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Paradox
                                     : Fire;
 
-                            if (Config.BLM_Adv_Cooldowns_Choice[0] && 
+                            if (Config.BLM_Adv_Cooldowns_Choice[0] &&
                                 ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
@@ -1133,7 +1133,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Foul;
 
                         // Sharpcast
-                        if (Config.BLM_Adv_Cooldowns_Choice[1] && 
+                        if (Config.BLM_Adv_Cooldowns_Choice[1] &&
                             ActionReady(Sharpcast) && !WasLastAction(Thunder3) && !HasEffect(Buffs.Sharpcast) && CanSpellWeave(actionID))
                             return Sharpcast;
 
