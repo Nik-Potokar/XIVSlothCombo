@@ -177,7 +177,7 @@ namespace XIVSlothCombo.Combos.PvE
                             else
                             { readyOpener = false; }
 
-                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast)) ||
                                 (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) ||
                                 (InCombat() && inOpener && gauge.ElementTimeRemaining <= 0))
@@ -334,7 +334,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Blizzard;
                         }
 
-                        // Before Blizzard 3; Fire until 0 MP, then Blizzard until max MP.
+                        // Before Blizzard III; Fire until 0 MP, then Blizzard until max MP.
                         if (!LevelChecked(Blizzard3))
                         {
                             if (gauge.InAstralFire)
@@ -348,7 +348,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Blizzard;
                         }
 
-                        // Before Fire4; Fire until 0 MP (w/ Firestarter), then Blizzard 3 and Blizzard/Blizzard4 until max MP.
+                        // Before Fire IV; Fire until 0 MP (w/ Firestarter), then Blizzard III and Blizzard/Blizzard IV until max MP.
                         if (!LevelChecked(Fire4))
                         {
                             if (gauge.InAstralFire)
@@ -429,7 +429,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return LeyLines;
                             }
 
-                            // Use polyglot stacks if we don't need it for a future weave
+                            // Use Polyglot stacks if we don't need it for a future weave
                             if (!HasCharges(Triplecast) && gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
                                 GetCooldownRemainingTime(LeyLines) >= 20 &&
@@ -449,7 +449,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Xenoglossy
                                     : Foul;
 
-                            // F3 proc or swiftcast F3 during transpose lines(< 3 astral fire stacks)
+                            // Fire III proc or Swiftcast Fire III during Transpose lines(< 3 Astral Fire stacks)
                             if (gauge.AstralFireStacks < 3 || (gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
                                 return Fire3;
 
@@ -462,7 +462,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
-                            // Cast Fire 4 after Manafont
+                            // Cast Fire IV after Manafont
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
@@ -473,7 +473,7 @@ namespace XIVSlothCombo.Combos.PvE
                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
-                            // Blizzard3/Despair when below Fire 4 + Despair MP
+                            // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
                             {
                                 return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
@@ -503,7 +503,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(Paradox) && gauge.IsParadoxActive)
                                 return Paradox;
 
-                            // Fire3 when at max umbral hearts
+                            // Fire III when at max Umbral Hearts
                             return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.Thunder)
                                 ? Fire3
                                 : Blizzard4;
@@ -582,7 +582,7 @@ namespace XIVSlothCombo.Combos.PvE
                             else
                             { readyOpener = false; }
 
-                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast)) ||
                                 (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) ||
                                 (InCombat() && inOpener && gauge.ElementTimeRemaining <= 0))
@@ -747,7 +747,7 @@ namespace XIVSlothCombo.Combos.PvE
                             else
                             { readyOpener = false; }
 
-                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
                             if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast)) ||
                                 (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) ||
                                 (InCombat() && inOpener && gauge.ElementTimeRemaining <= 0)) inOpener = false;
@@ -934,7 +934,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Blizzard;
                         }
 
-                        // Before Blizzard 3; Fire until 0 MP, then Blizzard until max MP.
+                        // Before Blizzard III; Fire until 0 MP, then Blizzard until max MP.
                         if (!LevelChecked(Blizzard3))
                         {
                             if (gauge.InAstralFire)
@@ -948,7 +948,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Blizzard;
                         }
 
-                        // Before Fire4; Fire until 0 MP (w/ Firestarter), then Blizzard 3 and Blizzard/Blizzard4 until max MP.
+                        // Before Fire IV; Fire until 0 MP (w/ Firestarter), then Blizzard III and Blizzard/Blizzard IV until max MP.
                         if (!LevelChecked(Fire4))
                         {
                             if (gauge.InAstralFire)
@@ -1052,7 +1052,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         ? Xenoglossy
                                         : Foul;
                         }
-                        // Normal Fire Phase
+                        // Normal Fire phase
                         if (gauge.InAstralFire)
                         {
                             // Xenoglossy overcap protection
@@ -1062,7 +1062,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Xenoglossy
                                     : Foul;
 
-                            // F3 proc or swiftcast F3 during transpose lines(< 3 astral fire stacks)
+                            // Fire III proc or Swiftcast Fire III during Transpose lines(< 3 Astral Fire stacks)
                             if (gauge.AstralFireStacks < 3 || (gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
                                 return Fire3;
 
@@ -1076,11 +1076,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
-                            // Cast Fire 4 after Manafont
+                            // Cast Fire IV after Manafont
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
-                            // Transpose lines fire phase
+                            // Transpose lines Fire phase
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 &&
                                 !WasLastAction(Manafont) && IsOnCooldown(Manafont) && ActionReady(All.Swiftcast) &&
                                 currentMP < MP.Fire && gauge.PolyglotStacks is 2)
@@ -1093,7 +1093,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
-                            // only when we're not using Transpose Lines 
+                            // Only when we're not using Transpose lines 
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
                                 ((Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines)) ||
                                 (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1)) ||
@@ -1104,7 +1104,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Xenoglossy;
 
 
-                            // Blizzard3/Despair when below Fire 4 + Despair MP
+                            // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
                             {
                                 return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
@@ -1116,7 +1116,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Normal Ice Phase
+                    // Normal Ice phase
                     if (gauge.InUmbralIce)
                     {
                         // Xenoglossy overcap protection
@@ -1138,7 +1138,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
 
 
-                        // Transpose lines ice phase
+                        // Transpose lines Ice phase
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && ActionReady(All.Swiftcast))
                         {
                             if (gauge.UmbralIceStacks < 3 && ActionReady(All.LucidDreaming))
@@ -1154,7 +1154,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Transpose;
                         }
 
-                        // Fire3 when at max umbral hearts
+                        // Fire III when at max Umbral Hearts
                         return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.Thunder)
                             ? Fire3
                             : Blizzard4;
@@ -1187,7 +1187,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return UmbralSoul;
                     }
 
-                    //2xHF2 Transpose with Freeze [A7]
+                    // 2xHF2 Transpose with Freeze [A7]
                     if (!InCombat())
                     {
                         return (gauge.UmbralHearts is 3)
@@ -1285,7 +1285,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return UmbralSoul;
                     }
 
-                    //2xHF2 Transpose with Freeze [A7]
+                    // 2xHF2 Transpose with Freeze [A7]
                     if (!InCombat())
                     {
                         return (gauge.UmbralHearts is 3)
