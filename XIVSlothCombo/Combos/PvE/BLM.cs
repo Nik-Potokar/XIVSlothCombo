@@ -321,57 +321,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inOpener)
                     {
-                        // Handle initial cast
-                        if (gauge.ElementTimeRemaining <= 0)
-                        {
-                            if (LevelChecked(Fire3))
-                                return (currentMP >= MP.Fire3)
-                                    ? Fire3
-                                    : Blizzard3;
-
-                            return (currentMP >= MP.Fire)
-                                ? Fire
-                                : Blizzard;
-                        }
-
-                        // Before Blizzard III; Fire until 0 MP, then Blizzard until max MP.
-                        if (!LevelChecked(Blizzard3))
-                        {
-                            if (gauge.InAstralFire)
-                                return (currentMP < MP.Fire)
-                                    ? Transpose
-                                    : Fire;
-
-                            if (gauge.InUmbralIce)
-                                return (currentMP >= MP.MaxMP - MP.Thunder)
-                                    ? Transpose
-                                    : Blizzard;
-                        }
-
-                        // Before Fire IV; Fire until 0 MP (w/ Firestarter), then Blizzard III and Blizzard/Blizzard IV until max MP.
-                        if (!LevelChecked(Fire4))
-                        {
-                            if (gauge.InAstralFire)
-                            {
-                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.Fire)
-                                    return Fire3;
-
-                                return (currentMP < MP.Fire)
-                                    ? Blizzard3
-                                    : Fire;
-                            }
-
-                            if (gauge.InUmbralIce)
-                            {
-                                if (LevelChecked(Blizzard4) && gauge.UmbralHearts < 3)
-                                    return Blizzard4;
-
-                                return (currentMP >= MP.MaxMP || gauge.UmbralHearts is 3)
-                                    ? Fire3
-                                    : Blizzard;
-                            }
-                        }
-
                         // Use under Fire or Ice
                         if (gauge.ElementTimeRemaining > 0)
                         {
@@ -428,16 +377,67 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (ActionReady(LeyLines))
                                     return LeyLines;
                             }
-
-                            // Use Polyglot stacks if we don't need it for a future weave
-                            if (!HasCharges(Triplecast) && gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
-                                GetCooldownRemainingTime(LeyLines) >= 20 &&
-                                GetCooldownRemainingTime(Triplecast) >= 20)
-                                return LevelChecked(Xenoglossy)
-                                        ? Xenoglossy
-                                        : Foul;
                         }
+                        // Handle initial cast
+                        if (gauge.ElementTimeRemaining <= 0)
+                        {
+                            if (LevelChecked(Fire3))
+                                return (currentMP >= MP.Fire3)
+                                    ? Fire3
+                                    : Blizzard3;
+
+                            return (currentMP >= MP.Fire)
+                                ? Thunder
+                                : Blizzard;
+                        }
+
+                        // Before Blizzard III; Fire until 0 MP, then Blizzard until max MP.
+                        if (!LevelChecked(Blizzard3))
+                        {
+                            if (gauge.InAstralFire)
+                                return (currentMP < MP.Fire)
+                                    ? Transpose
+                                    : Fire;
+
+                            if (gauge.InUmbralIce)
+                                return (currentMP >= MP.MaxMP - MP.Thunder)
+                                    ? Transpose
+                                    : Blizzard;
+                        }
+
+                        // Before Fire IV; Fire until 0 MP (w/ Firestarter), then Blizzard III and Blizzard/Blizzard IV until max MP.
+                        if (!LevelChecked(Fire4))
+                        {
+                            if (gauge.InAstralFire)
+                            {
+                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.Fire)
+                                    return Fire3;
+
+                                return (currentMP < MP.Fire)
+                                    ? Blizzard3
+                                    : Fire;
+                            }
+
+                            if (gauge.InUmbralIce)
+                            {
+                                if (LevelChecked(Blizzard4) && gauge.UmbralHearts < 3)
+                                    return Blizzard4;
+
+                                return (currentMP >= MP.MaxMP || gauge.UmbralHearts is 3)
+                                    ? Fire3
+                                    : Blizzard;
+                            }
+                        }
+
+                        // Use Polyglot stacks if we don't need it for a future weave
+                        if (!HasCharges(Triplecast) && gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                            (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
+                            GetCooldownRemainingTime(LeyLines) >= 20 &&
+                            GetCooldownRemainingTime(Triplecast) >= 20)
+                            return LevelChecked(Xenoglossy)
+                                    ? Xenoglossy
+                                    : Foul;
+
 
                         // Normal Fire Phase
                         if (gauge.InAstralFire)
@@ -989,6 +989,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return LeyLines;
                             }
                         }
+
                         // Handle initial cast
                         if (gauge.ElementTimeRemaining <= 0)
                         {
@@ -1207,53 +1208,74 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
                     }
-
-                    // Fire phase
-                    if (gauge.InAstralFire)
+                    if (LevelChecked(Flare))
                     {
-                        // Manafont weave
-                        if (ActionReady(Manafont) && currentMP is 0)
-                            return Manafont;
-
-                        // Use Flare after Manafont
-                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
-                            return Flare;
-
-                        // Polyglot usage 
-                        if (LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
-                            return Foul;
-
-                        if (currentMP >= MP.AllMPSpells)
+                        // Fire phase
+                        if (gauge.InAstralFire)
                         {
-                            if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                                return Transpose;
+                            // Manafont weave
+                            if (ActionReady(Manafont) && currentMP is 0)
+                                return Manafont;
 
-                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                            // Use Flare after Manafont
+                            if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Flare;
 
-                            if (currentMP > MP.FireAoE)
-                                return OriginalHook(Fire2);
+                            // Polyglot usage 
+                            if (LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
+                                return Foul;
+
+                            if (currentMP >= MP.AllMPSpells)
+                            {
+                                if (!TraitLevelChecked(Traits.AspectMasteryIII))
+                                    return Transpose;
+
+                                if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                    (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                    return Flare;
+
+                                if (currentMP > MP.FireAoE)
+                                    return OriginalHook(Fire2);
+                            }
+
+                            if (currentMP is 0)
+                                return Transpose;
                         }
 
-                        if (currentMP is 0)
-                            return Transpose;
+                        // Ice phase
+                        if (gauge.InUmbralIce)
+                        {
+                            if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
+                                return Freeze;
+
+                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                return OriginalHook(Thunder);
+
+                            if (gauge.UmbralHearts is 3)
+                                return OriginalHook(Fire2);
+                        }
                     }
-
-                    // Ice phase
-                    if (gauge.InUmbralIce)
+                    else
                     {
-                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
-                            return Freeze;
+                        if (gauge.InAstralFire)
+                            return currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)) && LevelChecked(OriginalHook(Blizzard2))
+                                ? Fire2
+                                : Blizzard2;
 
-                        if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
-                            !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                            ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
-                            (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                            return OriginalHook(Thunder);
+                        if (gauge.InUmbralIce)
+                        {
+                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                return OriginalHook(Thunder2);
 
-                        if (gauge.UmbralHearts is 3)
-                            return OriginalHook(Fire2);
+                            if (currentMP == MP.MaxMP)
+                                return Fire2;
+                        }
                     }
                 }
 
