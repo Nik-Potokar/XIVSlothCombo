@@ -921,6 +921,74 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inOpener)
                     {
+                        // Use under Fire or Ice
+                        if (gauge.ElementTimeRemaining > 0)
+                        {
+                            // Handle movement
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Movement) && IsMoving && InCombat())
+                            {
+                                if (Config.BLM_Adv_Movement_Choice[0] &&
+                                    !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
+                                    return Sharpcast;
+
+                                if (Config.BLM_Adv_Movement_Choice[1] &&
+                                    HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
+                                    (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
+                                    return OriginalHook(Thunder);
+
+                                if (Config.BLM_Adv_Movement_Choice[2] &&
+                                    HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
+                                    return Fire3;
+
+                                if (Config.BLM_Adv_Movement_Choice[3] &&
+                                    LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.InUmbralIce)
+                                    return Paradox;
+
+                                if (Config.BLM_Adv_Movement_Choice[4] &&
+                                    LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
+                                    return Xenoglossy;
+
+                                if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                                    Config.BLM_Adv_Movement_Choice[5] &&
+                                    ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
+                                    return All.Swiftcast;
+
+                                if (Config.BLM_Adv_Movement_Choice[6] &&
+                                    HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
+                                    return Triplecast;
+
+                                if (Config.BLM_Adv_Movement_Choice[7] && (GetBuffStacks(Buffs.Triplecast) is 0))
+                                    return Scathe;
+                            }
+
+                            // Thunder uptime
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Thunder) &&
+                                gauge.ElementTimeRemaining >= astralFireRefresh &&
+                                !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
+                                !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                return OriginalHook(Thunder);
+
+                            // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
+                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
+                                LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
+                                (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
+                                currentMP >= MP.Fire * 2)
+                                return Triplecast;
+
+                            // Weave Buffs
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID))
+                            {
+                                if (Config.BLM_Adv_Cooldowns_Choice[2] &&
+                                    ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
+                                    return Amplifier;
+
+                                if (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
+                                    return LeyLines;
+                            }
+                        }
                         // Handle initial cast
                         if (gauge.ElementTimeRemaining <= 0)
                         {
@@ -972,86 +1040,17 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Use under Fire or Ice
-                        if (gauge.ElementTimeRemaining > 0)
-                        {
-                            // Handle movement
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Movement) && IsMoving && InCombat())
-                            {
-                                if (Config.BLM_Adv_Movement_Choice[0] &&
-                                    !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
-                                    return Sharpcast;
+                        // Use Polyglot stacks if we don't need it for a future weave
+                        // Only when we're not using Transpose lines
+                        if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) && IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
+                            (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
+                            gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                            (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
+                            GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
+                            return LevelChecked(Xenoglossy)
+                                    ? Xenoglossy
+                                    : Foul;
 
-                                if (Config.BLM_Adv_Movement_Choice[1] &&
-                                    HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
-                                    (dotDebuff is null || dotDebuff?.RemainingTime <= 10))
-                                    return OriginalHook(Thunder);
-
-                                if (Config.BLM_Adv_Movement_Choice[2] &&
-                                    HasEffect(Buffs.Firestarter) && gauge.InAstralFire && LevelChecked(Fire3))
-                                    return Fire3;
-
-                                if (Config.BLM_Adv_Movement_Choice[3] &&
-                                    LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.InUmbralIce)
-                                    return Paradox;
-
-                                if (Config.BLM_Adv_Movement_Choice[4] &&
-                                    LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
-                                    return Xenoglossy;
-
-                                if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                                    Config.BLM_Adv_Movement_Choice[5] &&
-                                    ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
-                                    return All.Swiftcast;
-
-                                if (Config.BLM_Adv_Movement_Choice[6] &&
-                                    HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
-                                    return Triplecast;
-
-                                if (Config.BLM_Adv_Movement_Choice[7] && (GetBuffStacks(Buffs.Triplecast) is 0))
-                                    return Scathe;
-                            }
-
-
-                            // Thunder uptime
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Thunder) &&
-                                gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
-                                !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return OriginalHook(Thunder);
-
-                            // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
-                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
-                                LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                                (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
-                                currentMP >= MP.Fire * 2)
-                                return Triplecast;
-
-                            // Weave Buffs
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID))
-                            {
-                                if (Config.BLM_Adv_Cooldowns_Choice[2] &&
-                                    ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
-                                    return Amplifier;
-
-                                if (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
-                                    return LeyLines;
-                            }
-
-                            // Use Polyglot stacks if we don't need it for a future weave
-                            // Only when we're not using Transpose lines
-                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) && IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
-                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
-                                gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
-                                GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
-                                return LevelChecked(Xenoglossy)
-                                        ? Xenoglossy
-                                        : Foul;
-                        }
                         // Normal Fire phase
                         if (gauge.InAstralFire)
                         {
