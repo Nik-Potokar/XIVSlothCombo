@@ -111,10 +111,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var nadiNONE = gauge.Nadi == Nadi.NONE;
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                        return Bozja.LostRampage;
-
                     if (!inCombat)
                     {
                         if (gauge.Chakra < 5 && level >= Levels.Meditation)
@@ -179,6 +175,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 return RiddleOfWind;
                             }
                         }
+
+                        //LUNA BOZJA STUFF RIGHT HERE!
+
+                        if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
+                        IsEnabled(Bozja.LostRampage))
+                            return Bozja.LostRampage;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
                             level < Levels.TwinSnakes) && canWeaveChakra)
