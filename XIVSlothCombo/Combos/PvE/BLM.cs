@@ -387,7 +387,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Blizzard3;
 
                             return (currentMP >= MP.Fire)
-                                ? Thunder
+                                ? Fire
                                 : Blizzard;
                         }
 
@@ -999,7 +999,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Blizzard3;
 
                             return (currentMP >= MP.Fire)
-                                ? Thunder
+                                ? Fire
                                 : Blizzard;
                         }
 
@@ -1270,14 +1270,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.InUmbralIce)
                         {
-                            if (LevelChecked(OriginalHook(Thunder2)) && !ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
-                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return OriginalHook(Thunder2);
-
                             if (currentMP == MP.MaxMP)
                                 return Fire2;
+
+                            return ((currentMP >= MP.Thunder) && (dotDebuff is null || dotDebuff?.RemainingTime <= 4) && LevelChecked(Thunder2))
+                                ? Thunder2
+                                : Blizzard2;
                         }
                     }
                 }
@@ -1394,14 +1392,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.InUmbralIce)
                         {
-                            if (LevelChecked(OriginalHook(Thunder2)) &&!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
-                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return OriginalHook(Thunder2);
-
                             if (currentMP == MP.MaxMP)
                                 return Fire2;
+
+                            return ((currentMP >= MP.Thunder) && (dotDebuff is null || dotDebuff?.RemainingTime <= 4) && LevelChecked(Thunder2))
+                                ? Thunder2
+                                : Blizzard2;
                         }
                     }
                 }
