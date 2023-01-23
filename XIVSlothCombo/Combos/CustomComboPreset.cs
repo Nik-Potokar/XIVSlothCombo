@@ -325,49 +325,10 @@ namespace XIVSlothCombo.Combos
 
         #region BLACK MAGE
 
-        #region Simple ST
-
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_AdvancedMode)]
         [CustomComboInfo("Simple Black Mage (Single Target) Feature", "Replaces Scathe with a full one-button rotation.", BLM.JobID, -10, "", "")]
         BLM_SimpleMode = 2012,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Triplecast_Pooling = 2016,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Moving Options", "Use instant casts when moving in combat." +
-            "\nWill use (pooled) Triplecast." +
-            "\nWill use Swiftcast when not using the Transpose rotation." +
-            "\nWill use Firestarter in Astral Fire." +
-            "\nWill use Paradox when Lv.90 and in Umbral Ice." +
-            "\nWill use Thundercloud." +
-            "\nWill use Xenoglossy when moving. One charge will be held for rotation.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Movement = 2026,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Umbral Soul Option", "Changes Single Target button to use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
-        BLM_Simple_UmbralSoul = 2031,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Double Transpose Rotation Option", "Uses the Double Transpose rotation instead of the Standard rotation.", BLM.JobID, -9, "", "")]
-        BLM_Simple_Transpose_Rotation = 2048,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines to the rotation.", BLM.JobID, -5, "", "")]
-        BLM_Simple_Buffs_LeyLines = 2050,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
-            "\nWill default to the Standard Opener when nothing is selected.", BLM.JobID, -10, "", "")]
-        BLM_Simple_Opener = 2051,
-
-        [ParentCombo(BLM_Simple_Movement)]
-        [CustomComboInfo("Scathe Movement Option", "Will use Scathe when moving and no other options are available.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Movement_Scathe = 2028,
-
-        #endregion
 
         #region Advanced ST
 
@@ -417,10 +378,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BLM_Adv_Casts)]
         [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID, 0, "", "")]
         BLM_Adv_Triplecast_Pooling = 2040,
-
-        [ParentCombo(BLM_Adv_Cooldowns)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines to the rotation.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Cooldowns_LeyLines = 2041,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Cooldown Options", "Adds Manafont, Sharpcast and Amplifier to the rotation.", BLM.JobID, -8, "", "")]

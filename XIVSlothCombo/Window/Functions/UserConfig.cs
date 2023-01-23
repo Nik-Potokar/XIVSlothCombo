@@ -1138,10 +1138,17 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Double Transpose Opener", "Uses Fire III opener - Double Transpose variation.", 2);
             }
 
-            if (preset is CustomComboPreset.BLM_Simple_Opener && enabled)
+            if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Simple_OpenerSelection, "Standard Opener", "Uses Standard Opener. ", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Simple_OpenerSelection, "Double Transpose Opener", "Uses Fire III opener - Double Transpose variation.", 2);
+                ImGui.Indent();
+                ImGui.Spacing();//Not sure why I need this, indenting did not work without it
+                UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Manafont", "Add Manafont to the rotation.", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Sharpcast", "Add Sharpcast to the rotation.", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Amplifier", "Add Amplifier to the rotation.", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Leylines", "Add Leylines to the rotation.", 4, 0);
+                ImGui.Unindent();
+                
+                
             }
 
             #endregion
