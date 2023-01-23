@@ -1108,17 +1108,17 @@ namespace XIVSlothCombo.Combos.PvE
                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh &&
                                gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy)))
                                 return Xenoglossy;
-                        }
 
-                        // Blizzard3/Despair when below Fire 4 + Despair MP
-                        if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
-                        {
-                            return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
-                                ? Despair
-                                : Blizzard3;
-                        }
 
-                        return Fire4;
+                            // Blizzard3/Despair when below Fire 4 + Despair MP
+                            if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
+                            {
+                                return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
+                                    ? Despair
+                                    : Blizzard3;
+                            }
+                            return Fire4;
+                        }
                     }
 
                     // Normal Ice Phase
