@@ -1243,7 +1243,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Ice phase
                     if (gauge.InUmbralIce)
                     {
-                        if (gauge.UmbralHearts < 3)
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
                         if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
@@ -1343,7 +1343,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Ice phase
                     if (gauge.InUmbralIce)
                     {
-                        if (gauge.UmbralHearts < 3)
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
                         if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
