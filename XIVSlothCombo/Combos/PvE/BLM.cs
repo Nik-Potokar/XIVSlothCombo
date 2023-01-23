@@ -1360,14 +1360,21 @@ namespace XIVSlothCombo.Combos.PvE
                     else
                     {
                         if (gauge.InAstralFire)
-                            return currentMP >= MP.FireAoE
+                            return currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)) && LevelChecked(OriginalHook(Blizzard2))
                                 ? Fire2
                                 : Blizzard2;
 
                         if (gauge.InUmbralIce)
-                            return currentMP == MP.MaxMP
-                                ? Fire2
-                                : Thunder;
+                        {
+                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
+                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                return OriginalHook(Thunder2);
+
+                            if (currentMP == MP.MaxMP)
+                                return Fire2;
+                        }
                     }
                 }
 
