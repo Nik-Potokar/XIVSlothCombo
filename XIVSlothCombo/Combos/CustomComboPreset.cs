@@ -338,12 +338,8 @@ namespace XIVSlothCombo.Combos
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Thundercloud Option", "Adds Thunder when the debuff isn't present or expiring and Thundercloud is available.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Thunder = 2029,
-
-        [ParentCombo(BLM_Adv_Thunder)]
         [CustomComboInfo("Thunder I/III Option", "Adds Thunder when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Thunder_Uptime = 2030,
+        BLM_Adv_Thunder = 2029,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]

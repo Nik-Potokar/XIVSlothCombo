@@ -1020,7 +1020,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
-                                IsEnabled(CustomComboPreset.BLM_Adv_Thunder_Uptime) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return dot; // Use appropriate DoT Action
