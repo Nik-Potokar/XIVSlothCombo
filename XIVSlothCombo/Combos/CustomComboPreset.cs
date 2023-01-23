@@ -374,18 +374,20 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(BLM.Blizzard2)]
+        [ConflictingCombos(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
         #region Advanced AoE
 
         [ReplaceSkill(BLM.Blizzard2)]
+        [ConflictingCombos(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_AdvancedMode = 2054,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
-        BLM_AoE_Adv_Simple_Foul = 2044,
+        BLM_AoE_Adv_Foul = 2044,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Umbral Soul Option", "Change AoE button to use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
@@ -393,7 +395,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Manafont Option", "Add Manafont to the AoE combo for an extra Flare use.", BLM.JobID, 0, "", "")]
-        BLM_AoE_Adv_Simple_Manafont = 2052,
+        BLM_AoE_Adv_Manafont = 2052,
 
         #endregion
 

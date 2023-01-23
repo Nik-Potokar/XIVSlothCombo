@@ -1315,7 +1315,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.InAstralFire)
                     {
                         // Manafont weave
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Simple_Manafont) && ActionReady(Manafont) &&
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Manafont) && ActionReady(Manafont) &&
                             currentMP is 0)
                             return Manafont;
 
@@ -1324,7 +1324,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Flare;
 
                         // Polyglot usage 
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Simple_Foul) &&
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
                             LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
                             return Foul;
 
