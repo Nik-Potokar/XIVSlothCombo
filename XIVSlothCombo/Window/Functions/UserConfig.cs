@@ -1203,7 +1203,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Movement)
             {
-                ImGui.TextUnformatted("Current Kage");ImGui.NewLine();
+              /*  ImGui.TextUnformatted("Current Kage");ImGui.NewLine();
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Sharpcast", "Add Sharpcast for movement.\nWill only cast sharpcast when not present and has charges available.", 8, 0);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Thunder", "Add Thunder for movement.", 8, 1);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Firestarter proc", "Add Firestarter for movement when in Astral Fire.", 8, 2);
@@ -1212,7 +1212,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Xenoglossy", "Add Xenoglossy for movement.\nOne charge will be held for rotation.", 8, 4);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Swiftcast", "Add Swiftcast for movement.", 8, 5);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add (pooled) triplecast", "Add (pooled) Triplecast for movement.", 8, 6);
-                UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Scathe", "Add Scathe for movement.", 8, 7);
+                UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Scathe", "Add Scathe for movement.", 8, 7);*/
                 ImGui.TextUnformatted("New 4x Grid");
                 UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Movement_Choice,new string[,]{
                     {"Sharpcast", "Add Sharpcast for movement.\nWill only cast Sharpcast when not present and has charges available." },
