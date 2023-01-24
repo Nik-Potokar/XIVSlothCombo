@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
@@ -992,6 +993,18 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
                                     return LeyLines;
                             }
+
+                            // Start of Transpose Lines - tried to merge with ice part, but it won't behave..
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
+                                gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
+                            {
+                                if (gauge.UmbralIceStacks < 3 &&
+                                    ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
+                                    return All.LucidDreaming;
+
+                                if (HasEffect(All.Buffs.LucidDreaming) && ActionReady(All.Swiftcast))
+                                    return All.Swiftcast;
+                            }
                         }
 
                         // Handle initial cast
@@ -1141,18 +1154,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
 
                         // Transpose lines Ice phase
-                        if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && ActionReady(All.Swiftcast))
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
                         {
-                            if (gauge.UmbralIceStacks < 3 && ActionReady(All.LucidDreaming))
-                                return All.LucidDreaming;
-
+                            // Transpose lines will use 2 xenoglossy stacks and then transpose
                             if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
-                            if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.ThunderST)
-                                return All.Swiftcast;
-
-                            if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy) && HasEffect(All.Buffs.Swiftcast))
+                            if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy))
                                 return Transpose;
                         }
 
