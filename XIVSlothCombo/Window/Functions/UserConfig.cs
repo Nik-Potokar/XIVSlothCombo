@@ -466,6 +466,61 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Unindent();
         }
 
+        //4 Col Width Wide
+        public static void DrawMultiChoiceGrid(string config, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        {
+            int totalChoices = (nameAndDesc.GetLength(0));
+            if (totalChoices > 0)
+            {
+                ImGui.Indent();
+                if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
+                //ImGui.PushItemWidth(itemWidth);
+                //ImGui.SameLine();
+                //ImGui.Dummy(new Vector2(21, 0));
+                //ImGui.SameLine();
+                bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
+
+                //If new saved options or amount of choices changed, resize and save
+                if (values.Length == 0 || values.Length != totalChoices)
+                {
+                    Array.Resize(ref values, totalChoices);
+                    PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                    Service.Configuration.Save();
+                }
+
+                ImGui.BeginTable($"Grid###{config}", 4);
+                ImGui.TableNextRow();
+                //Convert the 2D array of names and descriptions into radio buttons
+                for (int idx = 0; idx < totalChoices; idx++)
+                {
+                    ImGui.TableNextColumn();
+                    string checkBoxName = nameAndDesc[idx, 0];
+                    string checkboxDescription = nameAndDesc[idx, 1];
+
+                    ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+                    if (ImGui.Checkbox($"{checkBoxName}###{config}{idx}", ref values[idx]))
+                    {
+                        PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                        Service.Configuration.Save();
+                    }
+
+                    if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.TextUnformatted(checkboxDescription);
+                        ImGui.EndTooltip();
+                    }
+
+                    ImGui.PopStyleColor();
+
+                    if (((idx + 1) % 4) == 0)
+                        ImGui.TableNextRow();
+                }
+                ImGui.EndTable();
+                ImGui.Unindent();
+            }
+        }
+
         public static void DrawPvPStatusMultiChoice(string config)
         {
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
@@ -1148,6 +1203,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Movement)
             {
+                ImGui.TextUnformatted("Current Kage");ImGui.NewLine();
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Sharpcast", "Add Sharpcast for movement.\nWill only cast sharpcast when not present and has charges available.", 8, 0);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Thunder", "Add Thunder for movement.", 8, 1);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Firestarter proc", "Add Firestarter for movement when in Astral Fire.", 8, 2);
@@ -1157,6 +1213,17 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Swiftcast", "Add Swiftcast for movement.", 8, 5);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add (pooled) triplecast", "Add (pooled) Triplecast for movement.", 8, 6);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Scathe", "Add Scathe for movement.", 8, 7);
+                ImGui.TextUnformatted("New 4x Grid");
+                UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Movement_Choice,new string[,]{
+                    {"Sharpcast", "Add Sharpcast for movement.\nWill only cast Sharpcast when not present and has charges available." },
+                    {"Thunder", "Add Thunder for movement." },
+                    {"Firestarter", "Add Fire III Firestarter for movement when in Astral Fire." },
+                    {"Paradox", "Add Paradox for movement when in Umbral Ice." },
+                    {"Xenoglossy", "Add Xenoglossy for movement.\nOne charge will be held for rotation." },
+                    {"Swiftcast", "Add Swiftcast for movement." },
+                    {"Triplecast", "Add (pooled) Triplecast for movement." },
+                    {"Scathe", "Add Scathe for movement." }
+                });
             }
 
             #endregion
