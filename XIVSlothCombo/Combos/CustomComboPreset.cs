@@ -346,7 +346,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_UmbralSoul = 2035,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Movevement Options", "Choose options to be used during movement.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Movement Options", "Choose options to be used during movement.", BLM.JobID, 0, "", "")]
         BLM_Adv_Movement = 2036,
 
         [ParentCombo(BLM_AdvancedMode)]

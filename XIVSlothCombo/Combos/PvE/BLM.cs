@@ -81,11 +81,12 @@ namespace XIVSlothCombo.Combos.PvE
             internal const int MaxMP = 10000;
 
             internal const int AllMPSpells = 800; //"ALL MP" spell. Only caring about the absolute minimum.
-            internal static int Thunder => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Thunder));
-            internal static int ThunderAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Thunder2));
-            internal static int Fire => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire));
-            internal static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire2));
-            internal static int Fire3 => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Fire3));
+            internal static int ThunderST => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder));
+            internal static int ThunderAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder2));
+            internal static int FireI => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire));
+            internal static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire2));
+            internal static int FireIII => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire3));
+            internal static int BlizzardAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Blizzard2));
         }
 
         // Debuff Pairs of Actions and Debuff
@@ -243,7 +244,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (step == 9)
                             {
-                                if (currentMP <= MP.Fire) step++;
+                                if (currentMP <= MP.FireI) step++;
                                 else return Fire4;
                             }
 
@@ -355,7 +356,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return OriginalHook(Thunder);
 
@@ -363,7 +364,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetRemainingCharges(Triplecast) is 2 &&
                                 LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
                                 (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
-                                currentMP >= MP.Fire * 2)
+                                currentMP >= MP.FireI * 2)
                                 return Triplecast;
 
                             // Weave Buffs
@@ -381,11 +382,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.ElementTimeRemaining <= 0)
                         {
                             if (LevelChecked(Fire3))
-                                return (currentMP >= MP.Fire3)
+                                return (currentMP >= MP.FireIII)
                                     ? Fire3
                                     : Blizzard3;
 
-                            return (currentMP >= MP.Fire)
+                            return (currentMP >= MP.FireI)
                                 ? Fire
                                 : Blizzard;
                         }
@@ -394,12 +395,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!LevelChecked(Blizzard3))
                         {
                             if (gauge.InAstralFire)
-                                return (currentMP < MP.Fire)
+                                return (currentMP < MP.FireI)
                                     ? Transpose
                                     : Fire;
 
                             if (gauge.InUmbralIce)
-                                return (currentMP >= MP.MaxMP - MP.Thunder)
+                                return (currentMP >= MP.MaxMP - MP.ThunderST)
                                     ? Transpose
                                     : Blizzard;
                         }
@@ -409,10 +410,10 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.InAstralFire)
                             {
-                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.Fire)
+                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.FireI)
                                     return Fire3;
 
-                                return (currentMP < MP.Fire)
+                                return (currentMP < MP.FireI)
                                     ? Blizzard3
                                     : Fire;
                             }
@@ -453,7 +454,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Fire3;
 
                             // Use Paradox instead of hardcasting Fire if we can
-                            if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.Fire)
+                            if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
                                 return LevelChecked(Paradox) && gauge.IsParadoxActive
                                     ? Paradox
                                     : Fire;
@@ -475,7 +476,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Xenoglossy;
 
                             // Blizzard III/Despair when below Fire IV + Despair MP
-                            if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
+                            if (currentMP < MP.FireI || gauge.ElementTimeRemaining <= 5000)
                             {
                                 return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
                                     ? Despair
@@ -508,7 +509,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
 
                         // Fire III when at max Umbral Hearts
-                        return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.Thunder)
+                        return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.ThunderST)
                             ? Fire3
                             : Blizzard4;
                     }
@@ -653,7 +654,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 9)
                                 {
-                                    if (currentMP <= MP.Fire) step++;
+                                    if (currentMP <= MP.FireI) step++;
                                     else return Fire4;
                                 }
 
@@ -907,7 +908,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (step == 24)
                                 {
-                                    if (currentMP <= MP.Fire) step++;
+                                    if (currentMP <= MP.FireI) step++;
                                     else return Fire4;
                                 }
 
@@ -969,7 +970,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(lastComboMove) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return OriginalHook(Thunder);
 
@@ -978,7 +979,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
                                 LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
                                 (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
-                                currentMP >= MP.Fire * 2)
+                                currentMP >= MP.FireI * 2)
                                 return Triplecast;
 
                             // Weave Buffs
@@ -997,11 +998,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.ElementTimeRemaining <= 0)
                         {
                             if (LevelChecked(Fire3))
-                                return (currentMP >= MP.Fire3)
+                                return (currentMP >= MP.FireIII)
                                     ? Fire3
                                     : Blizzard3;
 
-                            return (currentMP >= MP.Fire)
+                            return (currentMP >= MP.FireI)
                                 ? Fire
                                 : Blizzard;
                         }
@@ -1010,12 +1011,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!LevelChecked(Blizzard3))
                         {
                             if (gauge.InAstralFire)
-                                return (currentMP < MP.Fire)
+                                return (currentMP < MP.FireI)
                                     ? Transpose
                                     : Fire;
 
                             if (gauge.InUmbralIce)
-                                return (currentMP >= MP.MaxMP - MP.Thunder)
+                                return (currentMP >= MP.MaxMP - MP.ThunderST)
                                     ? Transpose
                                     : Blizzard;
                         }
@@ -1025,10 +1026,10 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.InAstralFire)
                             {
-                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.Fire)
+                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.FireI)
                                     return Fire3;
 
-                                return (currentMP < MP.Fire)
+                                return (currentMP < MP.FireI)
                                     ? Blizzard3
                                     : Fire;
                             }
@@ -1070,7 +1071,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Fire3;
 
                             // Use Paradox instead of hardcasting Fire if we can
-                            if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.Fire)
+                            if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
                                 return LevelChecked(Paradox) && gauge.IsParadoxActive
                                     ? Paradox
                                     : Fire;
@@ -1086,7 +1087,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // Transpose lines Fire phase
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 &&
                                 !WasLastAction(Manafont) && IsOnCooldown(Manafont) && ActionReady(All.Swiftcast) &&
-                                currentMP < MP.Fire && gauge.PolyglotStacks is 2)
+                                currentMP < MP.FireI && gauge.PolyglotStacks is 2)
                             {
                                 if (WasLastAction(Despair))
                                     return Transpose;
@@ -1107,7 +1108,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Xenoglossy;
 
                             // Blizzard III/Despair when below Fire IV + Despair MP
-                            if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
+                            if (currentMP < MP.FireI || gauge.ElementTimeRemaining <= 5000)
                             {
                                 return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
                                     ? Despair
@@ -1148,7 +1149,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
-                            if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.Thunder)
+                            if (HasEffect(All.Buffs.LucidDreaming) && currentMP >= MP.MaxMP - MP.ThunderST)
                                 return All.Swiftcast;
 
                             if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy) && HasEffect(All.Buffs.Swiftcast))
@@ -1156,7 +1157,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Fire III when at max Umbral Hearts
-                        return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.Thunder)
+                        return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.ThunderST)
                             ? Fire3
                             : Blizzard4;
                     }
@@ -1234,10 +1235,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP == MP.MaxMP && TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Fire2;
 
-                            if (currentMP == MP.MaxMP && !TraitLevelChecked(Traits.AspectMasteryIII))
+                            if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
+                            return ((currentMP >= MP.ThunderST) && LevelChecked(Thunder2) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 ? Thunder2
                                 : Blizzard2;
@@ -1287,7 +1288,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return OriginalHook(Thunder2);
 
@@ -1362,7 +1363,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return (currentMP < MP.FireAoE && LevelChecked(OriginalHook(Blizzard2)) && TraitLevelChecked(Traits.AspectMasteryIII))
                                 ? Blizzard2
                                 : Transpose;
-
                         }
 
                         if (gauge.InUmbralIce)
@@ -1370,10 +1370,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP == MP.MaxMP && TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Fire2;
 
-                            if (currentMP == MP.MaxMP && !TraitLevelChecked(Traits.AspectMasteryIII))
+                            if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
+                            return ((currentMP >= MP.ThunderST) && LevelChecked(Thunder2) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 ? Thunder2
                                 : Blizzard2;
@@ -1425,7 +1425,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return OriginalHook(Thunder2);
 
