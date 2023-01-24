@@ -155,167 +155,165 @@ namespace XIVSlothCombo.Combos.PvE
                     // Standard opener
                     if (level >= 90)
                     {
-                        if (openerSelection is 0 or 1)
+                        // Check to start opener
+                        if (openerStarted && HasEffect(Buffs.Sharpcast))
+                        { inOpener = true; openerStarted = false; readyOpener = false; }
+
+                        if ((readyOpener || openerStarted) && HasEffect(Buffs.Sharpcast) && !inOpener)
+                        { openerStarted = true; return Fire3; }
+                        else
+                        { openerStarted = false; }
+
+                        // Reset check for opener
+                        if (openerReady && !InCombat() && !inOpener && !openerStarted)
                         {
-                            // Check to start opener
-                            if (openerStarted && HasEffect(Buffs.Sharpcast))
-                            { inOpener = true; openerStarted = false; readyOpener = false; }
+                            readyOpener = true;
+                            inOpener = false;
+                            step = 0;
+                            return Sharpcast;
+                        }
+                        else
+                        { readyOpener = false; }
 
-                            if ((readyOpener || openerStarted) && HasEffect(Buffs.Sharpcast) && !inOpener)
-                            { openerStarted = true; return Fire3; }
-                            else
-                            { openerStarted = false; }
+                        // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
+                        if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast)) ||
+                            (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) ||
+                            (InCombat() && inOpener && gauge.ElementTimeRemaining <= 0))
+                            inOpener = false;
 
-                            // Reset check for opener
-                            if (openerReady && !InCombat() && !inOpener && !openerStarted)
+                        if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) &&
+                            level >= 90 && openerReady)
+                            inOpener = true;
+
+                        if (inOpener)
+                        {
+                            if (step == 0)
                             {
-                                readyOpener = true;
-                                inOpener = false;
-                                step = 0;
-                                return Sharpcast;
+                                if (lastComboMove == Fire3) step++;
+                                else return Fire3;
                             }
-                            else
-                            { readyOpener = false; }
 
-                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
-                            if ((step == 1 && lastComboMove is Fire3 && !HasEffect(Buffs.Sharpcast)) ||
-                                (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()) ||
-                                (InCombat() && inOpener && gauge.ElementTimeRemaining <= 0))
-                                inOpener = false;
-
-                            if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Sharpcast) && level >= 90 && openerReady)
-                                inOpener = true;
-
-                            if (inOpener)
+                            if (step == 1)
                             {
-                                if (step == 0)
-                                {
-                                    if (lastComboMove == Fire3) step++;
-                                    else return Fire3;
-                                }
-
-                                if (step == 1)
-                                {
-                                    if (lastComboMove == Thunder3) step++;
-                                    else return Thunder3;
-                                }
-
-                                if (step == 2)
-                                {
-                                    if (GetRemainingCharges(Triplecast) < 2) step++;
-                                    else return Triplecast;
-                                }
-
-                                if (step == 3)
-                                {
-                                    if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 2) step++;
-                                    else return Fire4;
-                                }
-
-                                if (step == 4)
-                                {
-                                    if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 1) step++;
-                                    else return Fire4;
-                                }
-
-                                if (step == 5)
-                                {
-                                    if (IsOnCooldown(Amplifier)) step++;
-                                    else return Amplifier;
-                                }
-
-                                if (step == 6)
-                                {
-                                    if (IsOnCooldown(LeyLines)) step++;
-                                    else return LeyLines;
-                                }
-
-                                if (step == 7)
-                                {
-                                    if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 0) step++;
-                                    else return Fire4;
-                                }
-
-                                if (step == 8)
-                                {
-                                    if (IsOnCooldown(All.Swiftcast)) step++;
-                                    else return All.Swiftcast;
-                                }
-
-                                if (step == 9)
-                                {
-                                    if (currentMP <= MP.Fire) step++;
-                                    else return Fire4;
-                                }
-
-                                if (step == 10)
-                                {
-                                    if (GetRemainingCharges(Triplecast) < 1) step++;
-                                    else return Triplecast;
-                                }
-
-                                if (step == 11)
-                                {
-                                    if ((lastComboMove == Despair) && GetBuffStacks(Buffs.Triplecast) is 2) step++;
-                                    else return Despair;
-                                }
-
-                                if (step == 12)
-                                {
-                                    if (IsOnCooldown(Manafont)) step++;
-                                    else return Manafont;
-                                }
-
-                                if (step == 13)
-                                {
-                                    if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 1) step++;
-                                    else return Fire4;
-                                }
-
-                                if (step == 14)
-                                {
-                                    if (HasEffect(Buffs.Sharpcast)) step++;
-                                    else return Sharpcast;
-                                }
-
-                                if (step == 15)
-                                {
-                                    if ((lastComboMove == Despair) && GetBuffStacks(Buffs.Triplecast) is 0) step++;
-                                    else return Despair;
-                                }
-
-                                if (step == 16)
-                                {
-                                    if (gauge.IsParadoxActive) step++;
-                                    else return Blizzard3;
-                                }
-
-                                if (step == 17)
-                                {
-                                    if (lastComboMove == Xenoglossy) step++;
-                                    else return Xenoglossy;
-                                }
-
-                                if (step == 18)
-                                {
-                                    if (lastComboMove == Paradox) step++;
-                                    else return Paradox;
-                                }
-
-                                if (step == 19)
-                                {
-                                    if (lastComboMove == Blizzard4) step++;
-                                    else return Blizzard4;
-                                }
-
-                                if (step == 20)
-                                {
-                                    if (lastComboMove == Thunder3) step++;
-                                    else return Thunder3;
-                                }
-
-                                inOpener = false;
+                                if (lastComboMove == Thunder3) step++;
+                                else return Thunder3;
                             }
+
+                            if (step == 2)
+                            {
+                                if (GetRemainingCharges(Triplecast) < 2) step++;
+                                else return Triplecast;
+                            }
+
+                            if (step == 3)
+                            {
+                                if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 2) step++;
+                                else return Fire4;
+                            }
+
+                            if (step == 4)
+                            {
+                                if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 1) step++;
+                                else return Fire4;
+                            }
+
+                            if (step == 5)
+                            {
+                                if (IsOnCooldown(Amplifier)) step++;
+                                else return Amplifier;
+                            }
+
+                            if (step == 6)
+                            {
+                                if (IsOnCooldown(LeyLines)) step++;
+                                else return LeyLines;
+                            }
+
+                            if (step == 7)
+                            {
+                                if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 0) step++;
+                                else return Fire4;
+                            }
+
+                            if (step == 8)
+                            {
+                                if (IsOnCooldown(All.Swiftcast)) step++;
+                                else return All.Swiftcast;
+                            }
+
+                            if (step == 9)
+                            {
+                                if (currentMP <= MP.Fire) step++;
+                                else return Fire4;
+                            }
+
+                            if (step == 10)
+                            {
+                                if (GetRemainingCharges(Triplecast) < 1) step++;
+                                else return Triplecast;
+                            }
+
+                            if (step == 11)
+                            {
+                                if ((lastComboMove == Despair) && GetBuffStacks(Buffs.Triplecast) is 2) step++;
+                                else return Despair;
+                            }
+
+                            if (step == 12)
+                            {
+                                if (IsOnCooldown(Manafont)) step++;
+                                else return Manafont;
+                            }
+
+                            if (step == 13)
+                            {
+                                if ((lastComboMove == Fire4) && GetBuffStacks(Buffs.Triplecast) is 1) step++;
+                                else return Fire4;
+                            }
+
+                            if (step == 14)
+                            {
+                                if (HasEffect(Buffs.Sharpcast)) step++;
+                                else return Sharpcast;
+                            }
+
+                            if (step == 15)
+                            {
+                                if ((lastComboMove == Despair) && GetBuffStacks(Buffs.Triplecast) is 0) step++;
+                                else return Despair;
+                            }
+
+                            if (step == 16)
+                            {
+                                if (gauge.IsParadoxActive) step++;
+                                else return Blizzard3;
+                            }
+
+                            if (step == 17)
+                            {
+                                if (lastComboMove == Xenoglossy) step++;
+                                else return Xenoglossy;
+                            }
+
+                            if (step == 18)
+                            {
+                                if (lastComboMove == Paradox) step++;
+                                else return Paradox;
+                            }
+
+                            if (step == 19)
+                            {
+                                if (lastComboMove == Blizzard4) step++;
+                                else return Blizzard4;
+                            }
+
+                            if (step == 20)
+                            {
+                                if (lastComboMove == Thunder3) step++;
+                                else return Thunder3;
+                            }
+
+                            inOpener = false;
                         }
                     }
 
@@ -349,7 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
-                                if (GetBuffStacks(Buffs.Triplecast) is 0 && LevelChecked(Scathe))
+                                if ((GetBuffStacks(Buffs.Triplecast) is 0) && LevelChecked(Scathe))
                                     return Scathe;
                             }
 
@@ -361,16 +359,16 @@ namespace XIVSlothCombo.Combos.PvE
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return OriginalHook(Thunder);
 
-                            // Weave Buffs
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
+                            if (GetRemainingCharges(Triplecast) is 2 &&
+                                LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
+                                (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
+                                currentMP >= MP.Fire * 2)
+                                return Triplecast;
+
+                            // Weave Buffs
                             if (CanSpellWeave(actionID))
                             {
-                                if (GetRemainingCharges(Triplecast) is 2 && ActionReady(Triplecast) &&
-                                    !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                                    (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
-                                    currentMP >= MP.Fire * 2)
-                                    return Triplecast;
-
                                 if (ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
                                     return Amplifier;
 
@@ -378,6 +376,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return LeyLines;
                             }
                         }
+
                         // Handle initial cast
                         if (gauge.ElementTimeRemaining <= 0)
                         {
@@ -423,22 +422,23 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(Blizzard4) && gauge.UmbralHearts < 3)
                                     return Blizzard4;
 
-                                return (currentMP >= MP.MaxMP || gauge.UmbralHearts is 3)
+                                return (currentMP == MP.MaxMP || gauge.UmbralHearts is 3)
                                     ? Fire3
                                     : Blizzard;
                             }
                         }
 
                         // Use Polyglot stacks if we don't need it for a future weave
-                        if (!HasCharges(Triplecast) && gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                        // Only when we're not using Transpose lines
+                        if (!HasCharges(Triplecast) &&
+                            gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
                             (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
-                            GetCooldownRemainingTime(LeyLines) >= 20 &&
-                            GetCooldownRemainingTime(Triplecast) >= 20)
+                            GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
                             return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
 
-                        // Normal Fire Phase
+                        // Normal Fire phase
                         if (gauge.InAstralFire)
                         {
                             // Xenoglossy overcap protection
@@ -458,7 +458,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Paradox
                                     : Fire;
 
-                            if (ActionReady(Manafont) && WasLastAction(Despair))
+                            if (Config.BLM_Adv_Cooldowns_Choice[0] &&
+                                ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
                             // Cast Fire IV after Manafont
@@ -467,9 +468,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
                             if ((ActionReady(LeyLines) || (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && GetRemainingCharges(Triplecast) > 1) ||
-                               (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                               (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))) &&
-                               !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh && LevelChecked(Xenoglossy))
+                                (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
+                                (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))) &&
+                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                                gauge.PolyglotStacks > 1 && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
                             // Blizzard III/Despair when below Fire IV + Despair MP
@@ -482,31 +484,33 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return Fire4;
                         }
+                    }
 
-                        // Normal Ice Phase
-                        if (gauge.InUmbralIce)
-                        {
-                            // Xenoglossy overcap protection
-                            if (gauge.EnochianTimer <= 20000 &&
-                                ((gauge.PolyglotStacks is 2 && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
-                                (gauge.PolyglotStacks is 1 && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
-                                return LevelChecked(Xenoglossy)
-                                    ? Xenoglossy
-                                    : Foul;
+                    // Normal Ice phase
+                    if (gauge.InUmbralIce)
+                    {
+                        // Xenoglossy overcap protection
+                        if (gauge.EnochianTimer <= 20000 &&
+                            ((gauge.PolyglotStacks is 2 && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
+                            (gauge.PolyglotStacks is 1 && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
+                            return LevelChecked(Xenoglossy)
+                                ? Xenoglossy
+                                : Foul;
 
-                            // Sharpcast
-                            if (ActionReady(Sharpcast) && !WasLastAction(Thunder3) && !HasEffect(Buffs.Sharpcast) && CanSpellWeave(actionID))
-                                return Sharpcast;
+                        // Sharpcast
+                        if (Config.BLM_Adv_Cooldowns_Choice[1] &&
+                            ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                            !WasLastAction(Thunder3) && CanSpellWeave(actionID))
+                            return Sharpcast;
 
-                            // Use Paradox when available
-                            if (LevelChecked(Paradox) && gauge.IsParadoxActive)
-                                return Paradox;
+                        // Use Paradox when available
+                        if (LevelChecked(Paradox) && gauge.IsParadoxActive)
+                            return Paradox;
 
-                            // Fire III when at max Umbral Hearts
-                            return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.Thunder)
-                                ? Fire3
-                                : Blizzard4;
-                        }
+                        // Fire III when at max Umbral Hearts
+                        return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.Thunder)
+                            ? Fire3
+                            : Blizzard4;
                     }
                 }
 
@@ -1185,11 +1189,16 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // 2xHF2 Transpose with Freeze [A7]
-                    if (!InCombat())
+                    if (gauge.ElementTimeRemaining <= 0)
                     {
-                        return (gauge.UmbralHearts is 3)
-                            ? OriginalHook(Fire2)
-                            : OriginalHook(Blizzard2);
+                        if (LevelChecked(Flare))
+                        {
+                            return gauge.UmbralHearts is 3
+                                ? OriginalHook(Fire2)
+                                : OriginalHook(Blizzard2);
+                        }
+                        else
+                            return Blizzard2;
                     }
 
                     if (gauge.ElementTimeRemaining > 0)
@@ -1206,7 +1215,37 @@ namespace XIVSlothCombo.Combos.PvE
                             return Variant.VariantRampart;
                     }
 
-                    if (LevelChecked(Flare))
+                    // Below Lv.50
+                    if (!LevelChecked(Flare))
+                    {
+                        if (gauge.InAstralFire)
+                        {
+                            if (currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)))
+                                return Fire2;
+
+                            return (currentMP < MP.FireAoE && LevelChecked(OriginalHook(Blizzard2)) && TraitLevelChecked(Traits.AspectMasteryIII))
+                                ? Blizzard2
+                                : Transpose;
+
+                        }
+
+                        if (gauge.InUmbralIce)
+                        {
+                            if (currentMP == MP.MaxMP && TraitLevelChecked(Traits.AspectMasteryIII))
+                                return Fire2;
+
+                            if (currentMP == MP.MaxMP && !TraitLevelChecked(Traits.AspectMasteryIII))
+                                return Transpose;
+
+                            return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                ? Thunder2
+                                : Blizzard2;
+                        }
+                    }
+
+                    // Above Lv.50
+                    else
                     {
                         // Fire phase
                         if (gauge.InAstralFire)
@@ -1250,30 +1289,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
                                 ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.Thunder) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return OriginalHook(Thunder);
+                                return OriginalHook(Thunder2);
 
                             if (gauge.UmbralHearts is 3)
                                 return OriginalHook(Fire2);
-                        }
-                    }
-
-                    // Low level rotation
-                    else
-                    {
-                        if (gauge.InAstralFire)
-                            return currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)) && LevelChecked(OriginalHook(Blizzard2))
-                                ? Fire2
-                                : Blizzard2;
-
-                        if (gauge.InUmbralIce)
-                        {
-                            if (currentMP == MP.MaxMP)
-                                return Fire2;
-
-                            return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                ? Thunder2
-                                : Blizzard2;
                         }
                     }
                 }
@@ -1306,11 +1325,16 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // 2xHF2 Transpose with Freeze [A7]
-                    if (!InCombat())
+                    if (gauge.ElementTimeRemaining <= 0)
                     {
-                        return (gauge.UmbralHearts is 3)
-                            ? OriginalHook(Fire2)
-                            : OriginalHook(Blizzard2);
+                        if (LevelChecked(Flare))
+                        {
+                            return gauge.UmbralHearts is 3
+                                ? OriginalHook(Fire2)
+                                : OriginalHook(Blizzard2);
+                        }
+                        else
+                            return Blizzard2;
                     }
 
                     if (gauge.ElementTimeRemaining > 0)
@@ -1335,14 +1359,19 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)))
                                 return Fire2;
 
-                            if (currentMP < MP.FireAoE && LevelChecked(OriginalHook(Blizzard2)))
-                                return Blizzard2;
+                            return (currentMP < MP.FireAoE && LevelChecked(OriginalHook(Blizzard2)) && TraitLevelChecked(Traits.AspectMasteryIII))
+                                ? Blizzard2
+                                : Transpose;
+
                         }
 
                         if (gauge.InUmbralIce)
                         {
-                            if (currentMP == MP.MaxMP)
+                            if (currentMP == MP.MaxMP && TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Fire2;
+
+                            if (currentMP == MP.MaxMP && !TraitLevelChecked(Traits.AspectMasteryIII))
+                                return Transpose;
 
                             return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
@@ -1353,7 +1382,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Above Lv.50
                     else
-                    { 
+                    {
                         // Fire phase
                         if (gauge.InAstralFire)
                         {
