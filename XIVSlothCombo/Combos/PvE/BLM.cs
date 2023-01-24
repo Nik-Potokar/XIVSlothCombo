@@ -1206,14 +1206,8 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
 
-                        if (LevelChecked(Flare))
-                        {
-                            return gauge.UmbralHearts is 3
-                                ? OriginalHook(Fire2)
-                                : OriginalHook(Blizzard2);
-                        }
-                        else
-                            return Blizzard2;
+                        if (gauge.UmbralHearts is 3)
+                            return OriginalHook(Fire2);
                     }
 
                     // Below Lv.50
@@ -1342,14 +1336,8 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
 
-                        if (LevelChecked(Flare))
-                        {
-                            return gauge.UmbralHearts is 3
-                                ? OriginalHook(Fire2)
-                                : OriginalHook(Blizzard2);
-                        }
-                        else
-                            return Blizzard2;
+                        if (gauge.UmbralHearts is 3)
+                            return OriginalHook(Fire2);
                     }
 
                     // Below Lv.50
