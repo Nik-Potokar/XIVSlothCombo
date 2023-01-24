@@ -141,7 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // Spam Umbral Soul/Transpose when there's no target
+                    // Umbral Soul/Transpose when there's no target
                     if (CurrentTarget is null && gauge.ElementTimeRemaining > 0)
                     {
                         if (gauge.InAstralFire && LevelChecked(Transpose))
@@ -544,7 +544,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // Spam Umbral Soul/Transpose when there's no target
+                    // Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_Adv_UmbralSoul) &&
                         CurrentTarget is null && gauge.ElementTimeRemaining > 0)
                     {
@@ -1174,7 +1174,7 @@ namespace XIVSlothCombo.Combos.PvE
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
 
-                    // Spam Umbral Soul/Transpose when there's no target
+                    // Umbral Soul/Transpose when there's no target
                     if (CurrentTarget is null && gauge.ElementTimeRemaining > 0)
                     {
                         if (gauge.InAstralFire && LevelChecked(Transpose))
@@ -1270,7 +1270,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP == MP.MaxMP)
                                 return Fire2;
 
-                            return ((currentMP >= MP.Thunder) && (dotDebuff is null || dotDebuff?.RemainingTime <= 4) && LevelChecked(Thunder2))
+                            return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 ? Thunder2
                                 : Blizzard2;
                         }
@@ -1293,7 +1294,7 @@ namespace XIVSlothCombo.Combos.PvE
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder2)]); // Match DoT with its debuff ID, and check for the debuff
 
-                    // Spam Umbral Soul/Transpose when there's no target
+                    // Umbral Soul/Transpose when there's no target
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) &&
                         CurrentTarget is null && gauge.ElementTimeRemaining > 0)
                     {
@@ -1326,6 +1327,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Variant.VariantRampart;
                     }
 
+                    // Below Lv.50
                     if (!LevelChecked(Flare))
                     {
                         if (gauge.InAstralFire)
@@ -1342,12 +1344,14 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP == MP.MaxMP)
                                 return Fire2;
 
-                            return ((currentMP >= MP.Thunder) && (dotDebuff is null || dotDebuff?.RemainingTime <= 4) && LevelChecked(Thunder2))
+                            return ((currentMP >= MP.Thunder) && LevelChecked(Thunder2) &&
+                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 ? Thunder2
                                 : Blizzard2;
                         }
                     }
 
+                    // Above Lv.50
                     else
                     { 
                         // Fire phase
