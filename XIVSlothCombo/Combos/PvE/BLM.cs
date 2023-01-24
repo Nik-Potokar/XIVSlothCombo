@@ -349,7 +349,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
-                                if (GetBuffStacks(Buffs.Triplecast) is 0)
+                                if (GetBuffStacks(Buffs.Triplecast) is 0 && LevelChecked(Scathe))
                                     return Scathe;
                             }
 
@@ -437,7 +437,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
-
 
                         // Normal Fire Phase
                         if (gauge.InAstralFire)
@@ -957,7 +956,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
-                                if (Config.BLM_Adv_Movement_Choice[7] && (GetBuffStacks(Buffs.Triplecast) is 0))
+                                if (Config.BLM_Adv_Movement_Choice[7] && (GetBuffStacks(Buffs.Triplecast) is 0) && LevelChecked(Scathe))
                                     return Scathe;
                             }
 
@@ -1103,7 +1102,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy))))
                                 return Xenoglossy;
 
-
                             // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.Fire || gauge.ElementTimeRemaining <= 5000)
                             {
@@ -1136,7 +1134,6 @@ namespace XIVSlothCombo.Combos.PvE
                         // Use Paradox when available
                         if (LevelChecked(Paradox) && gauge.IsParadoxActive)
                             return Paradox;
-
 
                         // Transpose lines Ice phase
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && ActionReady(All.Swiftcast))
