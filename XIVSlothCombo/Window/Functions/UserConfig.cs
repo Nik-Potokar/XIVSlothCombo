@@ -1140,31 +1140,23 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
             {
-                ImGui.Indent();
-                ImGui.Spacing();// Not sure why I need this, indenting did not work without it
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Manafont", "Add Manafont to the rotation.", 4, 0);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Sharpcast", "Add Sharpcast to the rotation.", 4, 1);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Amplifier", "Add Amplifier to the rotation.", 4, 2);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, "Add Leylines", "Add Leylines to the rotation.", 4, 3);
-                ImGui.Unindent();
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Movement)
             {
-                ImGui.Indent();
-                ImGui.Spacing();//Not sure why I need this, indenting did not work without it
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Sharpcast", "Add Sharpcast for movement.\nWill only cast sharpcast when not present and has charges available.", 8, 0);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Thunder", "Add Thunder for movement.", 8, 1);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Firestarter proc", "Add Firestarter for movement when in Astral Fire.", 8, 2);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Paradox", "Add Paradox for movement when in Umbral Ice.", 8, 3);
-                ImGui.Unindent();
-                ImGui.Indent();
-                ImGui.Spacing();
+                ImGui.NewLine();
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Xenoglossy", "Add Xenoglossy for movement.\nOne charge will be held for rotation.", 8, 4);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Swiftcast", "Add Swiftcast for movement.", 8, 5);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add (pooled) triplecast", "Add (pooled) Triplecast for movement.", 8, 6);
                 UserConfig.DrawHorizontalMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, "Add Scathe", "Add Scathe for movement.", 8, 7);
-                ImGui.Unindent();
             }
 
             #endregion
