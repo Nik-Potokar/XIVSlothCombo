@@ -186,8 +186,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaFlareStar))
                     {
-                        if (ActionReady(All.LucidDreaming))
-                            return All.LucidDreaming;
 
                         if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
                             (LocalPlayer.CurrentMp >= 9000))
@@ -415,9 +413,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaFlareStar))
                     {
-                        if (ActionReady(All.LucidDreaming))
-                            return All.LucidDreaming;
-
                         if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
                             (LocalPlayer.CurrentMp >= 9000))
                             return Bozja.LostFlareStar;
