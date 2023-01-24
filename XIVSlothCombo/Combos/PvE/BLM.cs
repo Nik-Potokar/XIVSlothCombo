@@ -1157,7 +1157,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Fire III when at max Umbral Hearts
-                        return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.ThunderST)
+                        return (gauge.UmbralHearts is 3 && currentMP == MP.MaxMP)
                             ? Fire3
                             : Blizzard4;
                     }
@@ -1191,16 +1191,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
-                    {
-                        if (LevelChecked(Flare))
-                        {
-                            return gauge.UmbralHearts is 3
-                                ? OriginalHook(Fire2)
-                                : OriginalHook(Blizzard2);
-                        }
-                        else
-                            return Blizzard2;
-                    }
+                        return OriginalHook(Blizzard2);
 
                     if (gauge.ElementTimeRemaining > 0)
                     {
@@ -1214,6 +1205,15 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(Variant.VariantRampart) &&
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
+
+                        if (LevelChecked(Flare))
+                        {
+                            return gauge.UmbralHearts is 3
+                                ? OriginalHook(Fire2)
+                                : OriginalHook(Blizzard2);
+                        }
+                        else
+                            return Blizzard2;
                     }
 
                     // Below Lv.50
@@ -1238,7 +1238,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            return ((currentMP >= MP.ThunderST) && LevelChecked(Thunder2) &&
+                            return ((currentMP >= MP.ThunderAoE) && LevelChecked(Thunder2) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 ? Thunder2
                                 : Blizzard2;
@@ -1327,16 +1327,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
-                    {
-                        if (LevelChecked(Flare))
-                        {
-                            return gauge.UmbralHearts is 3
-                                ? OriginalHook(Fire2)
-                                : OriginalHook(Blizzard2);
-                        }
-                        else
-                            return Blizzard2;
-                    }
+                        return OriginalHook(Blizzard2);
 
                     if (gauge.ElementTimeRemaining > 0)
                     {
@@ -1350,6 +1341,15 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(Variant.VariantRampart) &&
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
+
+                        if (LevelChecked(Flare))
+                        {
+                            return gauge.UmbralHearts is 3
+                                ? OriginalHook(Fire2)
+                                : OriginalHook(Blizzard2);
+                        }
+                        else
+                            return Blizzard2;
                     }
 
                     // Below Lv.50
@@ -1373,7 +1373,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            return ((currentMP >= MP.ThunderST) && LevelChecked(Thunder2) &&
+                            return ((currentMP >= MP.ThunderAoE) && LevelChecked(Thunder2) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 ? Thunder2
                                 : Blizzard2;
