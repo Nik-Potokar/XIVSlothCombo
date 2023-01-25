@@ -1241,10 +1241,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            return ((currentMP >= MP.ThunderAoE) && LevelChecked(Thunder2) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                ? Thunder2
-                                : Blizzard2;
+                            return (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(Thunder2) &&
+                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
+                                 currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                 ? Thunder2
+                                 : Blizzard2;
                         }
                     }
 
@@ -1291,7 +1292,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
+                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderAoE) &&
                                 (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                                 return OriginalHook(Thunder2);
 
@@ -1370,10 +1371,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
 
-                            return ((currentMP >= MP.ThunderAoE) && LevelChecked(Thunder2) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                ? Thunder2
-                                : Blizzard2;
+                            return (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(Thunder2) &&
+                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
+                                 currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                 ? Thunder2
+                                 : Blizzard2;
                         }
                     }
 
