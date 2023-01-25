@@ -984,6 +984,29 @@ namespace XIVSlothCombo.Combos.PvE
                                 currentMP >= MP.FireI * 2)
                                 return Triplecast;
 
+                            // Start of Transpose rotation - tried to merge with ice part, but it won't behave.. ( think its too low in the order to make this part work correctly if i merge in umbral ince)
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
+                                gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
+                            {
+                                if (gauge.UmbralIceStacks < 3 &&
+                                    ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
+                                    return All.LucidDreaming;
+
+                                if (HasEffect(All.Buffs.LucidDreaming) && ActionReady(All.Swiftcast))
+                                    return All.Swiftcast;
+                            }
+
+                            // Use Polyglot stacks if we don't need it for a future weave
+                            // Only when we're not using Transpose rotation
+                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) && IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
+                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
+                                gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                                (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
+                                GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
+                                return LevelChecked(Xenoglossy)
+                                        ? Xenoglossy
+                                        : Foul;
+
                             // Weave Buffs
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID))
                             {
@@ -1046,29 +1069,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Blizzard;
                             }
                         }
-
-                        // Start of Transpose rotation - tried to merge with ice part, but it won't behave.. ( think its too low in the order to make this part work correctly if i merge in umbral ince)
-                        if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
-                            gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
-                        {
-                            if (gauge.UmbralIceStacks < 3 &&
-                                ActionReady(All.LucidDreaming) && ActionReady(All.Swiftcast))
-                                return All.LucidDreaming;
-
-                            if (HasEffect(All.Buffs.LucidDreaming) && ActionReady(All.Swiftcast))
-                                return All.Swiftcast;
-                        }
-
-                        // Use Polyglot stacks if we don't need it for a future weave
-                        // Only when we're not using Transpose rotation
-                        if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) && IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
-                            (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
-                            gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                            (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
-                            GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
-                            return LevelChecked(Xenoglossy)
-                                    ? Xenoglossy
-                                    : Foul;
 
                         // Normal Fire phase
                         if (gauge.InAstralFire)
