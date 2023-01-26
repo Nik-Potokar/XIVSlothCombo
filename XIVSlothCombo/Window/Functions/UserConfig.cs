@@ -1222,7 +1222,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
             }
 
-
             if (preset is CustomComboPreset.BLM_Adv_Thunder)
             {
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_Adv_Thunder, "Seconds remaining before refreshing Thunder");
