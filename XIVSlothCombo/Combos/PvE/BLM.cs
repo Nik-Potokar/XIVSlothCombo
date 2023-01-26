@@ -1282,7 +1282,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
-                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder2)]); // Match DoT with its debuff ID, and check for the debuff
 
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
