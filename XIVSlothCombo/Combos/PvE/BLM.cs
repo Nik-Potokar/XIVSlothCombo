@@ -386,7 +386,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return LevelChecked(Xenoglossy)
                                         ? Xenoglossy
                                         : Foul;
-
                         }
 
                         // Handle initial cast
