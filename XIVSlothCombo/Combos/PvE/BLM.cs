@@ -1339,42 +1339,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return Variant.VariantRampart;
                     }
 
-                    // Below Lv.50
-                    if (!LevelChecked(Flare))
+                      // Astral Fire
+                    if (gauge.InAstralFire)
                     {
-                        if (gauge.InAstralFire)
+                        // Manafont to Flare
+                        if (LevelChecked(Flare))
                         {
-                            if (currentMP >= MP.FireAoE && LevelChecked(OriginalHook(Fire2)))
-                                return Fire2;
-
-                            return (currentMP < MP.FireAoE && LevelChecked(OriginalHook(Blizzard2)) && TraitLevelChecked(Traits.AspectMasteryIII))
-                                ? Blizzard2
-                                : Transpose;
-                        }
-
-                        if (gauge.InUmbralIce)
-                        {
-                            if (currentMP == MP.MaxMP && TraitLevelChecked(Traits.AspectMasteryIII))
-                                return Fire2;
-
-                            if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
-                                return Transpose;
-
-                            return (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(Thunder2) &&
-                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                ? Thunder2
-                                : Blizzard2;
-                        }
-                    }
-
-                    // Above Lv.50
-                    else
-                    {
-                        // Astral Fire
-                        if (gauge.InAstralFire)
-                        {
-                            // Manafont weave
                             if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Manafont) && ActionReady(Manafont) &&
                                 currentMP is 0)
                                 return Manafont;
@@ -1382,44 +1352,49 @@ namespace XIVSlothCombo.Combos.PvE
                             // Use Flare after Manafont
                             if (IsOnCooldown(Manafont))
                                 return Flare;
+                        }
 
-                            // Polyglot usage 
-                            if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
-                                LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Fire2)))
-                                return Foul;
+                        // Polyglot usage 
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
+                            LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
+                            return Foul;
 
-                            if (currentMP >= MP.AllMPSpells)
-                            {
-                                if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                                    return Transpose;
+                        if (currentMP >= MP.AllMPSpells)
+                        {
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                return Flare;
 
-                                if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                    (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
-                                    return Flare;
+                            if (currentMP > MP.FireAoE)
+                                return OriginalHook(Fire2);
 
-                                if (currentMP > MP.FireAoE)
-                                    return OriginalHook(Fire2);
-                            }
-
-                            if (currentMP is 0)
+                            if (!TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
                         }
 
-                        // Umbral Ice
-                        if (gauge.InUmbralIce)
-                        {
-                            if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
-                                return Freeze;
+                        if (currentMP is 0)
+                            return Transpose;
+                    }
 
-                            if (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(lastComboMove) &&
-                                !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                return OriginalHook(Thunder2);
+                    // Umbral Ice
+                    if (gauge.InUmbralIce)
+                    {
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
+                            return Freeze;
 
-                            if (gauge.UmbralHearts is 3)
-                                return OriginalHook(Fire2);
-                        }
+                        if (LevelChecked(OriginalHook(Thunder2)) && currentMP >= MP.ThunderAoE &&
+                           (!TargetHasEffect(Debuffs.Thunder2) || !TargetHasEffect(Debuffs.Thunder4)) &&
+                           (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                            return OriginalHook(Thunder2);
+
+                        if (LevelChecked(OriginalHook(Blizzard2)) && currentMP < MP.MaxMP)
+                            return OriginalHook(Blizzard2);
+
+                        if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
+                            return Transpose;
+
+                        if (gauge.UmbralHearts is 3 || currentMP == MP.MaxMP)
+                            return OriginalHook(Fire2);
                     }
                 }
 
