@@ -1231,20 +1231,19 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
                             return Foul;
 
-                        if (currentMP is 0)
+                        // Transpose to Umbral Ice
+                        if ((currentMP is 0 && WasLastAction(Flare)) || (currentMP < MP.FireAoE && !LevelChecked(Flare)))
                             return Transpose;
 
                         if (currentMP >= MP.AllMPSpells)
                         {
                             if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                (gauge.UmbralHearts is 1 || 
+                                currentMP < MP.FireAoE))
                                 return Flare;
 
                             if (currentMP > MP.FireAoE)
                                 return OriginalHook(Fire2);
-
-                            if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                                return Transpose;
                         }
                     }
 
@@ -1265,11 +1264,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
-                        if (gauge.UmbralHearts is 3 || currentMP == MP.MaxMP)
+                        if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) && TraitLevelChecked(Traits.AspectMasteryIII))
                             return OriginalHook(Fire2);
                     }
                 }
-
                 return actionID;
             }
         }
@@ -1333,20 +1331,20 @@ namespace XIVSlothCombo.Combos.PvE
                             LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
                             return Foul;
 
-                        if (currentMP is 0)
+                        // Transpose to Umbral Ice
+                        if ((currentMP is 0 && WasLastAction(Flare)) || 
+                            (currentMP < MP.FireAoE && !LevelChecked(Flare)))
                             return Transpose;
 
                         if (currentMP >= MP.AllMPSpells)
                         {
                             if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                (gauge.UmbralHearts is 1 || 
+                                currentMP < MP.FireAoE))
                                 return Flare;
 
                             if (currentMP > MP.FireAoE)
                                 return OriginalHook(Fire2);
-
-                            if (!TraitLevelChecked(Traits.AspectMasteryIII))
-                                return Transpose;
                         }
                     }
 
@@ -1367,7 +1365,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
-                        if (gauge.UmbralHearts is 3 || currentMP == MP.MaxMP)
+                        if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) && TraitLevelChecked(Traits.AspectMasteryIII))
                             return OriginalHook(Fire2);
                     }
                 }
