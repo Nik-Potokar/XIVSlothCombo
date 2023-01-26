@@ -1186,22 +1186,21 @@ namespace XIVSlothCombo.Combos.PvE
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
 
-                    // Umbral Soul/Transpose when there's no target
-                    if (CurrentTarget is null && gauge.ElementTimeRemaining > 0)
-                    {
-                        if (gauge.InAstralFire && LevelChecked(Transpose))
-                            return Transpose;
-
-                        if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
-                            return UmbralSoul;
-                    }
-
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
                         return OriginalHook(Blizzard2);
 
                     if (gauge.ElementTimeRemaining > 0)
                     {
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) && CurrentTarget is null)
+                        {
+                            if (gauge.InAstralFire && LevelChecked(Transpose))
+                                return Transpose;
+
+                            if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                                return UmbralSoul;
+                        }
+
                         if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                             IsEnabled(Variant.VariantCure) &&
                             PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
@@ -1212,9 +1211,6 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(Variant.VariantRampart) &&
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
-
-                        if (gauge.UmbralHearts is 3)
-                            return OriginalHook(Fire2);
                     }
 
                     // Below Lv.50
@@ -1250,7 +1246,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Above Lv.50
                     else
                     {
-                        // Fire phase
+                        // Astral Fire
                         if (gauge.InAstralFire)
                         {
                             // Manafont weave
@@ -1258,7 +1254,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Manafont;
 
                             // Use Flare after Manafont
-                            if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
+                            if (IsOnCooldown(Manafont))
                                 return Flare;
 
                             // Polyglot usage 
@@ -1282,7 +1278,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Transpose;
                         }
 
-                        // Ice phase
+                        // Umbral Ice
                         if (gauge.InUmbralIce)
                         {
                             if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
@@ -1316,23 +1312,21 @@ namespace XIVSlothCombo.Combos.PvE
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder2)]); // Match DoT with its debuff ID, and check for the debuff
 
-                    // Umbral Soul/Transpose when there's no target
-                    if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) &&
-                        CurrentTarget is null && gauge.ElementTimeRemaining > 0)
-                    {
-                        if (gauge.InAstralFire && LevelChecked(Transpose))
-                            return Transpose;
-
-                        if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
-                            return UmbralSoul;
-                    }
-
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
                         return OriginalHook(Blizzard2);
 
                     if (gauge.ElementTimeRemaining > 0)
                     {
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_UmbralSoul) && CurrentTarget is null)
+                        {
+                            if (gauge.InAstralFire && LevelChecked(Transpose))
+                                return Transpose;
+
+                            if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                                return UmbralSoul;
+                        }
+
                         if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                             IsEnabled(Variant.VariantCure) &&
                             PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
@@ -1343,9 +1337,6 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(Variant.VariantRampart) &&
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
-
-                        if (gauge.UmbralHearts is 3)
-                            return OriginalHook(Fire2);
                     }
 
                     // Below Lv.50
@@ -1380,7 +1371,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Above Lv.50
                     else
                     {
-                        // Fire phase
+                        // Astral Fire
                         if (gauge.InAstralFire)
                         {
                             // Manafont weave
@@ -1389,7 +1380,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Manafont;
 
                             // Use Flare after Manafont
-                            if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
+                            if (IsOnCooldown(Manafont))
                                 return Flare;
 
                             // Polyglot usage 
@@ -1414,7 +1405,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Transpose;
                         }
 
-                        // Ice phase
+                        // Umbral Ice
                         if (gauge.InUmbralIce)
                         {
                             if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
