@@ -16,6 +16,7 @@
             LostFlareStar = 22352,
             LostRendArmor = 22353,
             LostSeraphStrike = 22354,
+            LostAethershield = 22355,
             LostDervish = 22356,
             LostBurst = 23909,
             LostRampage = 23910,
