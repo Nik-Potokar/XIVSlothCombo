@@ -1386,7 +1386,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return Blizzard2;
 
                         if (LevelChecked(OriginalHook(Thunder2)) && currentMP >= MP.ThunderAoE &&
-                           (!TargetHasEffect(Debuffs.Thunder2) || !TargetHasEffect(Debuffs.Thunder4)) &&
                            (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                             return OriginalHook(Thunder2);
 
