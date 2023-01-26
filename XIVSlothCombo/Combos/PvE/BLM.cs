@@ -1350,7 +1350,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Manafont;
 
                             // Use Flare after Manafont
-                            if (IsOnCooldown(Manafont))
+                            if (WasLastAction(Manafont))
                                 return Flare;
                         }
 
@@ -1358,6 +1358,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
                             LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
                             return Foul;
+
+                        if (currentMP is 0)
+                            return Transpose;
 
                         if (currentMP >= MP.AllMPSpells)
                         {
@@ -1371,9 +1374,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!TraitLevelChecked(Traits.AspectMasteryIII))
                                 return Transpose;
                         }
-
-                        if (currentMP is 0)
-                            return Transpose;
                     }
 
                     // Umbral Ice
@@ -1382,13 +1382,13 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
+                        if (!LevelChecked(HighBlizzard2) && currentMP < MP.MaxMP)
+                            return Blizzard2;
+
                         if (LevelChecked(OriginalHook(Thunder2)) && currentMP >= MP.ThunderAoE &&
                            (!TargetHasEffect(Debuffs.Thunder2) || !TargetHasEffect(Debuffs.Thunder4)) &&
                            (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                             return OriginalHook(Thunder2);
-
-                        if (LevelChecked(OriginalHook(Blizzard2)) && currentMP < MP.MaxMP)
-                            return OriginalHook(Blizzard2);
 
                         if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
