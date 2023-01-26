@@ -109,6 +109,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_Advanced_OpenerSelection = "BLM_Advanced_OpenerSelection";
             internal const string BLM_Adv_Cooldowns = "BLM_Adv_Cooldowns";
             internal const string BLM_AoE_Adv_ThunderUptime = "BLM_AoE_Adv_ThunderUptime";
+            internal const string BLM_Adv_Thunder = "BLM_Adv_Thunder";
 
             internal static UserBoolArray
                 BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
@@ -353,13 +354,14 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Scathe;
                             }
 
-                            // Thunder uptime
-                            if (gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) &&
-                                !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(OriginalHook(Thunder)) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                            // Thunder I/III uptime
+                            if ((currentMP >= MP.ThunderST || HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) &&
+                                !ThunderList.ContainsKey(lastComboMove) && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                                LevelChecked(OriginalHook(Thunder)) &&
+                                    (!TargetHasEffect(Debuffs.Thunder) || !TargetHasEffect(Debuffs.Thunder3)) ||
+                                    GetDebuffRemainingTime(Debuffs.Thunder) <= 4 || GetDebuffRemainingTime(Debuffs.Thunder3) <= 4)
                                 return OriginalHook(Thunder);
+
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
                             if (GetRemainingCharges(Triplecast) is 2 &&
@@ -539,6 +541,7 @@ namespace XIVSlothCombo.Combos.PvE
                     int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
+                    int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Thunder);
 
                     if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
@@ -966,13 +969,13 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Scathe;
                             }
 
-                            // Thunder uptime
+                            // Thunder I/III uptime
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Thunder) &&
-                                gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                !ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder) &&
-                                !TargetHasEffect(Debuffs.Thunder3) && LevelChecked(OriginalHook(Thunder)) &&
-                                ((HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) || currentMP >= MP.ThunderST) &&
-                                (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                (currentMP >= MP.ThunderST || HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) &&
+                                !ThunderList.ContainsKey(lastComboMove) && gauge.ElementTimeRemaining >= astralFireRefresh &&
+                                LevelChecked(OriginalHook(Thunder)) &&
+                                    (!TargetHasEffect(Debuffs.Thunder) || !TargetHasEffect(Debuffs.Thunder3)) ||
+                                    GetDebuffRemainingTime(Debuffs.Thunder) <= thunderRefreshTime || GetDebuffRemainingTime(Debuffs.Thunder3) <= thunderRefreshTime)
                                 return OriginalHook(Thunder);
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
@@ -1185,7 +1188,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
-                    Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder2)]); // Match DoT with its debuff ID, and check for the debuff
 
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
@@ -1223,7 +1225,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(Manafont) && currentMP is 0)
                                 return Manafont;
 
-                            // Use Flare after Manafont
                             if (WasLastAction(Manafont))
                                 return Flare;
                         }
@@ -1233,14 +1234,26 @@ namespace XIVSlothCombo.Combos.PvE
                             return Foul;
 
                         // Transpose to Umbral Ice
-                        if ((currentMP is 0 && WasLastAction(Flare)) || (currentMP < MP.FireAoE && !LevelChecked(Flare)))
+                        if ((currentMP is 0 && WasLastAction(Flare)) ||
+                            (currentMP < MP.FireAoE && !LevelChecked(Flare)))
                             return Transpose;
 
                         if (currentMP >= MP.AllMPSpells)
                         {
+                            // Thunder II/IV uptime
+                            if (currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                            {
+                                if (LevelChecked(Thunder4) &&
+                                    (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
+                                    return Thunder4;
+
+                                if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
+                                    (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= 4))
+                                    return Thunder2;
+                            }
+
                             if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || 
-                                currentMP < MP.FireAoE))
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
 
                             if (currentMP > MP.FireAoE)
@@ -1254,21 +1267,30 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
-                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
-                            !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(OriginalHook(Thunder2)) &&
-                            currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                            return OriginalHook(Thunder2);
+                        // Thunder II/IV uptime
+                        if (currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                        {
+                            if (LevelChecked(Thunder4) &&
+                                (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
+                                return Thunder4;
+
+                            if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
+                                (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= 4))
+                                return Thunder2;
+                        }
 
                         if (!LevelChecked(HighBlizzard2) && currentMP < 9400)
                             return Blizzard2;
 
-                        if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
+                        if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
-                        if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) && TraitLevelChecked(Traits.AspectMasteryIII))
+                        if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) &&
+                            TraitLevelChecked(Traits.AspectMasteryIII))
                             return OriginalHook(Fire2);
                     }
                 }
+
                 return actionID;
             }
         }
@@ -1332,16 +1354,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return Foul;
 
                         // Transpose to Umbral Ice
-                        if ((currentMP is 0 && WasLastAction(Flare)) || 
+                        if ((currentMP is 0 && WasLastAction(Flare)) ||
                             (currentMP < MP.FireAoE && !LevelChecked(Flare)))
                             return Transpose;
 
                         if (currentMP >= MP.AllMPSpells)
                         {
-                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
-                                return Flare;
-
                             // Thunder II/IV uptime
                             if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_ThunderUptime_AstralFire) &&
                                 currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
@@ -1354,6 +1372,10 @@ namespace XIVSlothCombo.Combos.PvE
                                     (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
                                     return Thunder2;
                             }
+
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                                return Flare;
 
                             if (currentMP > MP.FireAoE)
                                 return OriginalHook(Fire2);

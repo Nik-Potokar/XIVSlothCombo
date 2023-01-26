@@ -338,7 +338,7 @@ namespace XIVSlothCombo.Combos
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Thunder I/III Option", "Adds Thunder when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thunder I/III Option", "Adds Thunder I / Thunder III when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
         BLM_Adv_Thunder = 2029,
 
         [ParentCombo(BLM_AdvancedMode)]

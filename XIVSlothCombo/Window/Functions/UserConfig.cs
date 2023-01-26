@@ -1205,7 +1205,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Movement)
             {
-                UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Movement_Choice,new string[,]{
+                UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Movement_Choice, new string[,]{
                     {"Sharpcast", "Add Sharpcast for movement.\nWill only cast Sharpcast when not present and has charges available." },
                     {"Thunder", "Add Thunder for movement." },
                     {"Firestarter", "Add Fire III Firestarter for movement when in Astral Fire." },
@@ -1220,6 +1220,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
             {
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
+            }
+
+
+            if (preset is CustomComboPreset.BLM_Adv_Thunder)
+            {
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_Adv_Thunder, "Seconds remaining before refreshing Thunder");
             }
 
             #endregion
