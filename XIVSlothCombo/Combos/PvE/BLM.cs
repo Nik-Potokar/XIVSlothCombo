@@ -1254,13 +1254,13 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
-                        if (!LevelChecked(HighBlizzard2) && currentMP < MP.MaxMP)
-                            return Blizzard2;
-
                         if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                             !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(OriginalHook(Thunder2)) &&
                             currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                             return OriginalHook(Thunder2);
+
+                        if (!LevelChecked(HighBlizzard2) && currentMP < 9400)
+                            return Blizzard2;
 
                         if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
@@ -1313,7 +1313,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Variant.VariantRampart;
                     }
 
-                      // Astral Fire
+                    // Astral Fire
                     if (gauge.InAstralFire)
                     {
                         // Manafont to Flare
@@ -1356,17 +1356,17 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
-                        if (!LevelChecked(HighBlizzard2) && currentMP < MP.MaxMP)
-                            return Blizzard2;
-
-                        if(!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
+                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
                             !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(OriginalHook(Thunder2)) &&
-                            currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))  
+                            currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
                             return OriginalHook(Thunder2);
+
+                        if (!LevelChecked(HighBlizzard2) && currentMP < 9400)
+                            return Blizzard2;
 
                         if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
-                        
+
                         if (gauge.UmbralHearts is 3 || currentMP == MP.MaxMP)
                             return OriginalHook(Fire2);
                     }
