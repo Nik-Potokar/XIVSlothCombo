@@ -108,6 +108,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_Simple_OpenerSelection = "BLM_Simple_OpenerSelection";
             internal const string BLM_Advanced_OpenerSelection = "BLM_Advanced_OpenerSelection";
             internal const string BLM_Adv_Cooldowns = "BLM_Adv_Cooldowns";
+            internal const string BLM_AoE_Adv_ThunderUptime = "BLM_AoE_Adv_ThunderUptime";
 
             internal static UserBoolArray
                 BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
@@ -1281,6 +1282,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Blizzard2)
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
+                    int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_AoE_Adv_ThunderUptime);
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
                     // 2xHF2 Transpose with Freeze [A7]
@@ -1325,8 +1327,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Polyglot usage 
-                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) &&
-                            LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Foul) && LevelChecked(Foul) &&
+                            gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
                             return Foul;
 
                         // Transpose to Umbral Ice
@@ -1337,9 +1339,21 @@ namespace XIVSlothCombo.Combos.PvE
                         if (currentMP >= MP.AllMPSpells)
                         {
                             if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                                (gauge.UmbralHearts is 1 || 
-                                currentMP < MP.FireAoE))
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
+
+                            // Thunder II/IV uptime
+                            if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_ThunderUptime_AstralFire) &&
+                                currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                            {
+                                if (LevelChecked(Thunder4) &&
+                                    (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
+                                    return Thunder4;
+
+                                if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
+                                    (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
+                                    return Thunder2;
+                            }
 
                             if (currentMP > MP.FireAoE)
                                 return OriginalHook(Fire2);
@@ -1353,14 +1367,15 @@ namespace XIVSlothCombo.Combos.PvE
                             return Freeze;
 
                         // Thunder II/IV uptime
-                        if (currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_ThunderUptime) &&
+                            currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
                         {
                             if (LevelChecked(Thunder4) &&
-                                (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
+                                (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
                                 return Thunder4;
 
                             if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= 4))
+                                (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
                                 return Thunder2;
                         }
 
@@ -1370,7 +1385,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
-                        if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) && TraitLevelChecked(Traits.AspectMasteryIII))
+                        if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) &&
+                            TraitLevelChecked(Traits.AspectMasteryIII))
                             return OriginalHook(Fire2);
                     }
                 }

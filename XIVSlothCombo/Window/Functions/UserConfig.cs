@@ -1217,6 +1217,11 @@ namespace XIVSlothCombo.Window.Functions
                 });
             }
 
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
+            {
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
+            }
+
             #endregion
             // ====================================================================================
             #region BLUE MAGE

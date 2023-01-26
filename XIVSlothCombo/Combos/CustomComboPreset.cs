@@ -386,15 +386,23 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_AdvancedMode = 2054,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II / Thunder IV during the Umbral Ice phase.", BLM.JobID, 1, "", "")]
+        BLM_AoE_Adv_ThunderUptime = 2055,
+
+        [ParentCombo(BLM_AoE_Adv_ThunderUptime)]
+        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during the Astral Fire phase.", BLM.JobID, 1, "", "")]
+        BLM_AoE_Adv_ThunderUptime_AstralFire = 2056,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 2, "", "")]
         BLM_AoE_Adv_Foul = 2044,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul Option", "Change AoE button to use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
+        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 3, "", "")]
         BLM_AoE_Adv_UmbralSoul = 2049,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Manafont Option", "Add Manafont to the AoE combo for an extra Flare use.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Manafont Option", "Adds Manafont to the AoE combo for an extra Flare use.", BLM.JobID, 4, "", "")]
         BLM_AoE_Adv_Manafont = 2052,
 
         #endregion
@@ -445,7 +453,7 @@ namespace XIVSlothCombo.Combos
         BLM_Aetherial_Manipulation = 2046,
         #endregion
 
-        // Last value = 2053
+        // Last value = 2056
 
         #endregion
 
