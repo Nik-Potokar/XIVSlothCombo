@@ -1321,7 +1321,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 currentMP is 0)
                                 return Manafont;
 
-                            // Use Flare after Manafont
                             if (WasLastAction(Manafont))
                                 return Flare;
                         }
@@ -1354,15 +1353,22 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
                             return Freeze;
 
-                        if (!ThunderList.ContainsKey(lastComboMove) && !TargetHasEffect(Debuffs.Thunder2) &&
-                            !TargetHasEffect(Debuffs.Thunder4) && LevelChecked(OriginalHook(Thunder2)) &&
-                            currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                            return OriginalHook(Thunder2);
+                        // Thunder II/IV uptime
+                        if (currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                        {
+                            if (LevelChecked(Thunder4) &&
+                                (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
+                                return Thunder4;
+
+                            if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
+                                (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= 4))
+                                return Thunder2;
+                        }
 
                         if (!LevelChecked(HighBlizzard2) && currentMP < 9400)
                             return Blizzard2;
 
-                        if (currentMP >= 9000 && !TraitLevelChecked(Traits.AspectMasteryIII))
+                        if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
                         if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) && TraitLevelChecked(Traits.AspectMasteryIII))
