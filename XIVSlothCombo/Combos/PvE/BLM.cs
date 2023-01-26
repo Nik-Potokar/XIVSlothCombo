@@ -1241,9 +1241,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                 currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                 ? Thunder2
-                                 : Blizzard2;
+                                currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                ? Thunder2
+                                : Blizzard2;
                         }
                     }
 
@@ -1371,9 +1371,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return (!ThunderList.ContainsKey(lastComboMove) && LevelChecked(Thunder2) &&
                                 !TargetHasEffect(Debuffs.Thunder) && !TargetHasEffect(Debuffs.Thunder3) &&
-                                 currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
-                                 ? Thunder2
-                                 : Blizzard2;
+                                currentMP >= MP.ThunderAoE && (dotDebuff is null || dotDebuff?.RemainingTime <= 4))
+                                ? Thunder2
+                                : Blizzard2;
                         }
                     }
 
