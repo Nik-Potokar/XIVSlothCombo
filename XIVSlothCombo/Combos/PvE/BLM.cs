@@ -17,41 +17,41 @@ namespace XIVSlothCombo.Combos.PvE
             Fire = 141,
             Blizzard = 142,
             Thunder = 144,
-            Blizzard2 = 25793,
-            Transpose = 149,
             Fire2 = 147,
+            Transpose = 149,
             Fire3 = 152,
             Thunder3 = 153,
-            Thunder2 = 7447,
-            Thunder4 = 7420,
             Blizzard3 = 154,
+            AetherialManipulation = 155,
             Scathe = 156,
+            Manafont = 158,
             Freeze = 159,
             Flare = 162,
-            AetherialManipulation = 155,
             LeyLines = 3573,
+            Sharpcast = 3574,
             Blizzard4 = 3576,
             Fire4 = 3577,
             BetweenTheLines = 7419,
+            Thunder4 = 7420,
+            Triplecast = 7421,
+            Foul = 7422,
+            Thunder2 = 7447,
             Despair = 16505,
             UmbralSoul = 16506,
-            Paradox = 25797,
-            Amplifier = 25796,
+            Xenoglossy = 16507,
+            Blizzard2 = 25793,
             HighFire2 = 25794,
             HighBlizzard2 = 25795,
-            Xenoglossy = 16507,
-            Foul = 7422,
-            Sharpcast = 3574,
-            Manafont = 158,
-            Triplecast = 7421;
+            Amplifier = 25796,
+            Paradox = 25797;
 
         internal static class Buffs
         {
             internal const ushort
                 Thundercloud = 164,
+                Firestarter = 165,
                 LeyLines = 737,
                 CircleOfPower = 738,
-                Firestarter = 165,
                 Sharpcast = 867,
                 Triplecast = 1211,
                 EnhancedFlare = 2960;
@@ -69,11 +69,11 @@ namespace XIVSlothCombo.Combos.PvE
         internal static class Traits
         {
             internal const uint
-                AspectMasteryIII = 459,
-                EnhancedManafont = 463,
                 EnhancedFreeze = 295,
                 EnhancedPolyGlot = 297,
-                EnhancedFoul = 461;
+                AspectMasteryIII = 459,
+                EnhancedFoul = 461,
+                EnhancedManafont = 463;
         }
 
         internal static class MP
