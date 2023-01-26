@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
@@ -100,7 +99,7 @@ namespace XIVSlothCombo.Combos.PvE
                 { Thunder4, Debuffs.Thunder4 }
             };
 
-        private static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
+        internal static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
 
         internal static class Config
         {
@@ -114,6 +113,7 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
                 BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
         }
+
         internal class BLM_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_SimpleMode;
@@ -129,7 +129,6 @@ namespace XIVSlothCombo.Combos.PvE
                     uint currentMP = LocalPlayer.CurrentMp;
                     float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
-                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Simple_OpenerSelection);
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
