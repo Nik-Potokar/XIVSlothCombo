@@ -105,8 +105,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             internal const string BLM_AstralFire_Refresh = "Blm_AstralFire_Refresh";
             internal const string BLM_VariantCure = "Blm_VariantCure";
-            internal const string BLM_Simple_OpenerSelection = "BLM_Simple_OpenerSelection";
             internal const string BLM_Advanced_OpenerSelection = "BLM_Advanced_OpenerSelection";
+            internal const string BLM_Advanced_RotationSelection = "BLM_Advanced_RotationSelection";
             internal const string BLM_Adv_Cooldowns = "BLM_Adv_Cooldowns";
             internal const string BLM_AoE_Adv_ThunderUptime = "BLM_AoE_Adv_ThunderUptime";
             internal const string BLM_Adv_Thunder = "BLM_Adv_Thunder";
@@ -383,16 +383,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (ActionReady(LeyLines))
                                     return LeyLines;
                             }
-
-                            // Use Polyglot stacks if we don't need it for a future weave
-                            // Only when we're not using Transpose lines
-                            if (!HasCharges(Triplecast) &&
-                                gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
-                                GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
-                                return LevelChecked(Xenoglossy)
-                                        ? Xenoglossy
-                                        : Foul;
                         }
 
                         // Handle initial cast
@@ -474,14 +464,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
                                 return Fire4;
 
-                            // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
-                            if ((ActionReady(LeyLines) || (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && GetRemainingCharges(Triplecast) > 1) ||
-                                (ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                                (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast))) &&
-                                !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                gauge.PolyglotStacks > 1 && LevelChecked(Xenoglossy))
-                                return Xenoglossy;
-
                             // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.FireI || gauge.ElementTimeRemaining <= 5000)
                             {
@@ -515,6 +497,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Paradox) && gauge.IsParadoxActive)
                             return Paradox;
 
+                        // Use Polyglot stacks on cooldown
+                        if (gauge.HasPolyglotStacks())
+                            return LevelChecked(Xenoglossy)
+                                    ? Xenoglossy
+                                    : Foul;
+
                         // Fire III when at max Umbral Hearts
                         return (gauge.UmbralHearts is 3 && currentMP >= MP.MaxMP - MP.ThunderST)
                             ? Fire3
@@ -542,6 +530,7 @@ namespace XIVSlothCombo.Combos.PvE
                     float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_OpenerSelection);
+                    int rotationSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_RotationSelection);
                     int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
@@ -959,7 +948,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
                                     return Xenoglossy;
 
-                                if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                                if ((rotationSelection is 0 or 1 || level < 90) &&
                                     Config.BLM_Adv_Movement_Choice[5] &&
                                     ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
                                     return All.Swiftcast;
@@ -987,7 +976,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Start of Transpose rotation - tried to merge with ice part, but it won't behave.. ( think its too low in the order to make this part work correctly if i merge in umbral ince)
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
+                            if (rotationSelection is 2 &&
                                 gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
                             {
                                 if (gauge.UmbralIceStacks < 3 &&
@@ -1098,7 +1087,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Fire4;
 
                             // Transpose rotation Fire phase
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 &&
+                            if (rotationSelection is 2 && level >= 90 &&
                                 !WasLastAction(Manafont) && IsOnCooldown(Manafont) && ActionReady(All.Swiftcast) &&
                                 currentMP < MP.FireI && gauge.PolyglotStacks is 2)
                             {
@@ -1143,7 +1132,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
 
                         // Transpose rotation Ice phase
-                        if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
+                        if (rotationSelection is 2 && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
                         {
                             // Transpose lines will use 2 xenoglossy stacks and then transpose
                             if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
@@ -1154,8 +1143,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Polyglot stacks when we're not using Transpose rotation
-                        if (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90)
-                            return LevelChecked(Xenoglossy)
+                        if (rotationSelection is 0 or 1 || level < 90)
+                            return gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
 

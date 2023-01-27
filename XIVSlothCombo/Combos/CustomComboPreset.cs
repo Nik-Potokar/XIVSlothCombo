@@ -367,9 +367,9 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Double Transpose Option", "Uses the Double Transpose rotation instead of the Standard rotation." +
-            "\nWill only work at Lv.90.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Transpose_Rotation = 2045,
+        [CustomComboInfo("Rotation Option", "Choose which rotation to use." +
+            "\nWill default to the Standard rotation when nothing is selected.", BLM.JobID, -9, "", "")]
+        BLM_Adv_Rotation = 2045,
 
         #endregion
 
