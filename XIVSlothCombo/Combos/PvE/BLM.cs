@@ -986,14 +986,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Thunder;
                             }
 
-                            // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
-                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
-                                LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                                (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
-                                currentMP >= MP.FireI * 2)
-                                return Triplecast;
-
                             // Start of Transpose rotation - tried to merge with ice part, but it won't behave.. ( think its too low in the order to make this part work correctly if i merge in umbral ince)
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) &&
                                 gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
@@ -1006,17 +998,13 @@ namespace XIVSlothCombo.Combos.PvE
                                     return All.Swiftcast;
                             }
 
-                            // Use Polyglot stacks if we don't need it for a future weave
-                            // Only when we're not using Transpose rotation
-                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                                IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
-                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
-                                gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
-                                GetCooldownRemainingTime(LeyLines) >= 20 && GetCooldownRemainingTime(Triplecast) >= 20)
-                                return LevelChecked(Xenoglossy)
-                                        ? Xenoglossy
-                                        : Foul;
+                            // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
+                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) is 2) &&
+                                LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
+                                (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
+                                currentMP >= MP.FireI * 2)
+                                return Triplecast;
 
                             // Weave Buffs
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID))
@@ -1123,13 +1111,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont is available to weave
                             // Only when we're not using Transpose rotation 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                                ((Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines)) ||
-                                (ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast) && (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1)) ||
-                                (Config.BLM_Adv_Cooldowns_Choice[0] && ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
-                                (Config.BLM_Adv_Cooldowns_Choice[1] && ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
+                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                                ((Config.BLM_Adv_Cooldowns_Choice[0] && ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||
+                                (Config.BLM_Adv_Cooldowns_Choice[1] && ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) ||
+                                (Config.BLM_Adv_Cooldowns_Choice[2] && ActionReady(Amplifier)) ||
+                                (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines)) ||
+                                ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1) &&
+                                ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast))) &&
                                 !WasLastAction(Xenoglossy) && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy))))
+                                gauge.PolyglotStacks > pooledPolyglotStacks && LevelChecked(Xenoglossy))
                                 return Xenoglossy;
 
                             // Blizzard III/Despair when below Fire IV + Despair MP
@@ -1175,6 +1166,20 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!gauge.HasPolyglotStacks() && WasLastAction(Xenoglossy))
                                 return Transpose;
                         }
+
+                        // Use Polyglot stacks if we don't need it for a future weave
+                        // Only when we're not using Transpose rotation
+                        if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                            (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
+                            gauge.PolyglotStacks is 2 &&
+                            GetCooldownRemainingTime(Triplecast) >= 20 &&
+                            Config.BLM_Adv_Cooldowns_Choice[0] && GetCooldownRemainingTime(Manafont) >= 20 &&
+                            Config.BLM_Adv_Cooldowns_Choice[1] && GetCooldownRemainingTime(Sharpcast) >= 20 &&
+                            Config.BLM_Adv_Cooldowns_Choice[2] && GetCooldownRemainingTime(Amplifier) >= 20 &&
+                            Config.BLM_Adv_Cooldowns_Choice[3] && GetCooldownRemainingTime(LeyLines) >= 20)
+                            return LevelChecked(Xenoglossy)
+                                    ? Xenoglossy
+                                    : Foul;
 
                         // Fire III when at max Umbral Hearts
                         return (gauge.UmbralHearts is 3 && currentMP == MP.MaxMP)
