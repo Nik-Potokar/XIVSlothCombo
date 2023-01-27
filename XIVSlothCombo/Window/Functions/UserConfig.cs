@@ -1196,7 +1196,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Adv_Rotation && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Standard Rotation", "Uses Standard Rotation.", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Double Transpose rotation", "Uses Fire III opener - Double Transpose variation.\nOnly works on lvl 90", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Double Transpose rotation", "Uses Double Transpose rotation.\nOnly works on lvl 90", 2);
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)

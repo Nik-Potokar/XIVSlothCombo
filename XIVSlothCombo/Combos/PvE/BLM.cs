@@ -1142,7 +1142,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Transpose;
                         }
 
-                        // Use Polyglot stacks when we're not using Transpose rotation
+                        // Use Polyglot stacks on cooldown when we're not using Transpose rotation
                         if (rotationSelection is 0 or 1 || level < 90)
                             return gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy)
                                     ? Xenoglossy
