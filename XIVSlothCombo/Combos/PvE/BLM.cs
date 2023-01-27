@@ -134,26 +134,6 @@ namespace XIVSlothCombo.Combos.PvE
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
-                        return Variant.VariantRampart;
-
-                    // Umbral Soul/Transpose when there's no target
-                    if (CurrentTarget is null && gauge.ElementTimeRemaining > 0)
-                    {
-                        if (gauge.InAstralFire && LevelChecked(Transpose))
-                            return Transpose;
-
-                        if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
-                            return UmbralSoul;
-                    }
-
                     // Opener for BLM
                     // Standard opener
                     if (level >= 90)
@@ -325,6 +305,26 @@ namespace XIVSlothCombo.Combos.PvE
                         // Use under Fire or Ice
                         if (gauge.ElementTimeRemaining > 0)
                         {
+                            // Umbral Soul/Transpose when there's no target
+                            if (CurrentTarget is null)
+                            {
+                                if (gauge.InAstralFire && LevelChecked(Transpose))
+                                    return Transpose;
+
+                                if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                                    return UmbralSoul;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
+                                IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                                return Variant.VariantCure;
+
+                            if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                                IsEnabled(Variant.VariantRampart) &&
+                                IsOffCooldown(Variant.VariantRampart) &&
+                                CanSpellWeave(actionID))
+                                return Variant.VariantRampart;
+
                             // Handle movement
                             if (IsMoving && InCombat())
                             {
@@ -355,12 +355,16 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Thunder I/III uptime
-                            if ((currentMP >= MP.ThunderST || HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) &&
-                                !ThunderList.ContainsKey(lastComboMove) && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                LevelChecked(OriginalHook(Thunder)) &&
-                                    (!TargetHasEffect(Debuffs.Thunder) || !TargetHasEffect(Debuffs.Thunder3)) ||
-                                    GetDebuffRemainingTime(Debuffs.Thunder) <= 4 || GetDebuffRemainingTime(Debuffs.Thunder3) <= 4)
-                                return OriginalHook(Thunder);
+                            if (!ThunderList.ContainsKey(lastComboMove) && (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
+                            {
+                                if (LevelChecked(Thunder3) &&
+                                    (!TargetHasEffect(Debuffs.Thunder3) || GetDebuffRemainingTime(Debuffs.Thunder3) <= 4))
+                                    return Thunder3;
+
+                                if (LevelChecked(Thunder) && !LevelChecked(Thunder3) &&
+                                    (!TargetHasEffect(Debuffs.Thunder) || GetDebuffRemainingTime(Debuffs.Thunder) <= 4))
+                                    return Thunder;
+                            }
 
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
@@ -542,27 +546,6 @@ namespace XIVSlothCombo.Combos.PvE
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Thunder);
-
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
-                        return Variant.VariantRampart;
-
-                    // Umbral Soul/Transpose when there's no target
-                    if (IsEnabled(CustomComboPreset.BLM_Adv_UmbralSoul) &&
-                        CurrentTarget is null && gauge.ElementTimeRemaining > 0)
-                    {
-                        if (gauge.InAstralFire && LevelChecked(Transpose))
-                            return Transpose;
-
-                        if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
-                            return UmbralSoul;
-                    }
 
                     // Opener for BLM
                     // Standard opener
@@ -932,6 +915,26 @@ namespace XIVSlothCombo.Combos.PvE
                         // Use under Fire or Ice
                         if (gauge.ElementTimeRemaining > 0)
                         {
+                            // Umbral Soul/Transpose when there's no target
+                            if (IsEnabled(CustomComboPreset.BLM_Adv_UmbralSoul) && CurrentTarget is null)
+                            {
+                                if (gauge.InAstralFire && LevelChecked(Transpose))
+                                    return Transpose;
+
+                                if (gauge.InUmbralIce && LevelChecked(UmbralSoul))
+                                    return UmbralSoul;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
+                                IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                                return Variant.VariantCure;
+
+                            if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                                IsEnabled(Variant.VariantRampart) &&
+                                IsOffCooldown(Variant.VariantRampart) &&
+                                CanSpellWeave(actionID))
+                                return Variant.VariantRampart;
+
                             // Handle movement
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Movement) && IsMoving && InCombat())
                             {
@@ -971,12 +974,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Thunder I/III uptime
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Thunder) &&
-                                (currentMP >= MP.ThunderST || HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast)) &&
-                                !ThunderList.ContainsKey(lastComboMove) && gauge.ElementTimeRemaining >= astralFireRefresh &&
-                                LevelChecked(OriginalHook(Thunder)) &&
-                                    (!TargetHasEffect(Debuffs.Thunder) || !TargetHasEffect(Debuffs.Thunder3)) ||
-                                    GetDebuffRemainingTime(Debuffs.Thunder) <= thunderRefreshTime || GetDebuffRemainingTime(Debuffs.Thunder3) <= thunderRefreshTime)
-                                return OriginalHook(Thunder);
+                                !ThunderList.ContainsKey(lastComboMove) &&
+                                (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
+                            {
+                                if (LevelChecked(Thunder3) &&
+                                    (!TargetHasEffect(Debuffs.Thunder3) || GetDebuffRemainingTime(Debuffs.Thunder3) <= thunderRefreshTime))
+                                    return Thunder3;
+
+                                if (LevelChecked(Thunder) && !LevelChecked(Thunder3) &&
+                                    (!TargetHasEffect(Debuffs.Thunder) || GetDebuffRemainingTime(Debuffs.Thunder) <= thunderRefreshTime))
+                                    return Thunder;
+                            }
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
@@ -1000,7 +1008,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Polyglot stacks if we don't need it for a future weave
                             // Only when we're not using Transpose rotation
-                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) && IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
+                            if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
+                                IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
                                 (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
                                 gauge.PolyglotStacks is 2 && gauge.ElementTimeRemaining >= astralFireRefresh &&
                                 (gauge.InUmbralIce || (gauge.InAstralFire && gauge.UmbralHearts is 0)) &&
@@ -1362,7 +1371,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // Thunder II/IV uptime
                             if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_ThunderUptime_AstralFire) &&
-                                currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                                !ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                             {
                                 if (LevelChecked(Thunder4) &&
                                     (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
@@ -1390,7 +1399,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Thunder II/IV uptime
                         if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_ThunderUptime) &&
-                            currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                           !ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                         {
                             if (LevelChecked(Thunder4) &&
                                 (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
