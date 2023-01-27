@@ -338,7 +338,7 @@ namespace XIVSlothCombo.Combos
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]
-        [CustomComboInfo("Thunder I/III Option", "Adds Thunder I / Thunder III when the debuff isn't present or expiring.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Thunder I/III Option", "Adds Thunder I/Thunder III when the debuff isn't present or is expiring.", BLM.JobID, 0, "", "")]
         BLM_Adv_Thunder = 2029,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -363,7 +363,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
-            "\nWill default to the Standard Opener when nothing is selected.", BLM.JobID, -10, "", "")]
+            "\nWill default to the Standard opener when nothing is selected.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2043,
 
         [ParentCombo(BLM_AdvancedMode)]
@@ -372,7 +372,7 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Rotation = 2045,
 
         [ParentCombo(BLM_Adv_Rotation)]
-        [CustomComboInfo("Xenoglossy burst option", "Saves Xenoglossy for every minute burst on Normal Rotation.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Xenoglossy Burst Option", "Saves Xenoglossy for every minute burst when using the normal rotation.", BLM.JobID, -9, "", "")]
         BLM_Adv_Xeno_Burst = 2057,
 
         #endregion
@@ -390,11 +390,11 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_AdvancedMode = 2054,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II / Thunder IV during the Umbral Ice phase.", BLM.JobID, 1, "", "")]
+        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II/Thunder IV during Umbral Ice.", BLM.JobID, 1, "", "")]
         BLM_AoE_Adv_ThunderUptime = 2055,
 
         [ParentCombo(BLM_AoE_Adv_ThunderUptime)]
-        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during the Astral Fire phase.", BLM.JobID, 1, "", "")]
+        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during Astral Fire.", BLM.JobID, 1, "", "")]
         BLM_AoE_Adv_ThunderUptime_AstralFire = 2056,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
@@ -453,7 +453,7 @@ namespace XIVSlothCombo.Combos
         BLM_Fire_1to3 = 2005,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
-        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
+        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when you are out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
         BLM_Aetherial_Manipulation = 2046,
         #endregion
 

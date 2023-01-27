@@ -1196,7 +1196,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Adv_Rotation && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Standard Rotation", "Uses Standard Rotation.", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Double Transpose rotation", "Uses Double Transpose rotation.\nOnly works on lvl 90", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Double Transpose rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 2);
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
@@ -1212,25 +1212,25 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Adv_Movement)
             {
                 UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Movement_Choice, new string[,]{
-                    {"Sharpcast", "Add Sharpcast for movement.\nWill only cast Sharpcast when not present and has charges available." },
-                    {"Thunder", "Add Thunder for movement." },
-                    {"Firestarter", "Add Fire III Firestarter for movement when in Astral Fire." },
-                    {"Paradox", "Add Paradox for movement when in Umbral Ice." },
-                    {"Xenoglossy", "Add Xenoglossy for movement.\nOne charge will be held for rotation." },
-                    {"Swiftcast", "Add Swiftcast for movement." },
-                    {"Triplecast", "Add (pooled) Triplecast for movement." },
-                    {"Scathe", "Add Scathe for movement." }
+                    {"Sharpcast", "Add Sharpcast." },
+                    {"Thunder", "Add Thunder I/Thunder III." },
+                    {"Firestarter", "Add Firestarter when in Astral Fire." },
+                    {"Paradox", "Add Paradox when in Umbral Ice." },
+                    {"Xenoglossy", "Add Xenoglossy.\nOne charge will be held for rotation." },
+                    {"Swiftcast", "Add Swiftcast." },
+                    {"Triplecast", "Add (pooled) Triplecast." },
+                    {"Scathe", "Add Scathe." }
                 });
-            }
-
-            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
-            {
-                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Thunder)
             {
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_Adv_Thunder, "Seconds remaining before refreshing Thunder");
+            }
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
+            {
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
             }
 
             #endregion
