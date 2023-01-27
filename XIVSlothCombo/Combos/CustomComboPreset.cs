@@ -371,6 +371,10 @@ namespace XIVSlothCombo.Combos
             "\nWill default to the Standard rotation when nothing is selected.", BLM.JobID, -9, "", "")]
         BLM_Adv_Rotation = 2045,
 
+        [ParentCombo(BLM_Adv_Rotation)]
+        [CustomComboInfo("Xenoglossy burst option", "Saves Xenoglossy for every minute burst on Normal Rotation.", BLM.JobID, -9, "", "")]
+        BLM_Adv_Xeno_Burst = 2057,
+
         #endregion
 
         [ReplaceSkill(BLM.Blizzard2)]
@@ -453,7 +457,7 @@ namespace XIVSlothCombo.Combos
         BLM_Aetherial_Manipulation = 2046,
         #endregion
 
-        // Last value = 2056
+        // Last value = 2057
 
         #endregion
 

@@ -1148,6 +1148,13 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Xenoglossy
                                     : Foul;
 
+                        // Use Polyglot stacks on cooldown when we're not using Transpose rotation
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Xeno_Burst) &&
+                            (rotationSelection is 0 or 1 || level < 90))
+                            return gauge.PolyglotStacks is 2 && LevelChecked(Xenoglossy)
+                                    ? Xenoglossy
+                                    : Foul;
+
                         // Fire III when at max Umbral Hearts
                         return (gauge.UmbralHearts is 3 && currentMP == MP.MaxMP)
                             ? Fire3
