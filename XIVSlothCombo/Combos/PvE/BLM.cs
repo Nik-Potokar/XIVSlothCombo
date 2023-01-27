@@ -1109,20 +1109,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Thunder3;
                             }
 
-                            // Use Xenoglossy if Amplifier/Triplecast/Leylines/Manafont/Sharpcast is available to weave
-                            // Only when we're not using Transpose rotation 
-                            if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
-                                (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                                LevelChecked(Xenoglossy) && !WasLastAction(Xenoglossy) &&                                                   // Basic Checks
-                                gauge.ElementTimeRemaining >= astralFireRefresh && gauge.PolyglotStacks > pooledPolyglotStacks &&           // Gauge Checks
-                                ((Config.BLM_Adv_Cooldowns_Choice[0] && ActionReady(Manafont) && currentMP < MP.AllMPSpells) ||             // Manafont
-                                (Config.BLM_Adv_Cooldowns_Choice[1] && ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast)) ||            // Sharpcast
-                                (Config.BLM_Adv_Cooldowns_Choice[2] && ActionReady(Amplifier)) ||                                           // Amplifier
-                                (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines)) ||                                            // Ley Lines
-                                ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || GetRemainingCharges(Triplecast) > 1) &&     // Triplecast
-                                ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast))))
-                                return Xenoglossy;
-
                             // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.FireI || gauge.ElementTimeRemaining <= 5000)
                             {
@@ -1167,16 +1153,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Transpose;
                         }
 
-                        // Use Polyglot stacks if we don't need it for a future weave
-                        // Only when we're not using Transpose rotation
-                        if ((IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90) &&
-                            (IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) || (IsEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && !HasCharges(Triplecast))) &&
-                            gauge.PolyglotStacks is 2 &&
-                            GetCooldownRemainingTime(Triplecast) >= 20 &&
-                            Config.BLM_Adv_Cooldowns_Choice[0] && GetCooldownRemainingTime(Manafont) >= 20 &&
-                            Config.BLM_Adv_Cooldowns_Choice[1] && GetCooldownRemainingTime(Sharpcast) >= 20 &&
-                            Config.BLM_Adv_Cooldowns_Choice[2] && GetCooldownRemainingTime(Amplifier) >= 20 &&
-                            Config.BLM_Adv_Cooldowns_Choice[3] && GetCooldownRemainingTime(LeyLines) >= 20)
+                        // Use Polyglot stacks when we're not using Transpose rotation
+                        if (IsNotEnabled(CustomComboPreset.BLM_Adv_Transpose_Rotation) || level < 90)
                             return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
