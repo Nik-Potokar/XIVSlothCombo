@@ -1255,7 +1255,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (currentMP >= MP.AllMPSpells)
                         {
                             // Thunder II/IV uptime
-                            if (currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                            if (!ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                             {
                                 if (LevelChecked(Thunder4) &&
                                     (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
@@ -1282,7 +1282,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Freeze;
 
                         // Thunder II/IV uptime
-                        if (currentMP >= MP.ThunderAoE && !ThunderList.ContainsKey(lastComboMove))
+                        if (!ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                         {
                             if (LevelChecked(Thunder4) &&
                                 (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
