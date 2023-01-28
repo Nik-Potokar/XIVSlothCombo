@@ -103,17 +103,23 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal static class Config
         {
-            internal const string BLM_AstralFire_Refresh = "Blm_AstralFire_Refresh";
-            internal const string BLM_VariantCure = "Blm_VariantCure";
-            internal const string BLM_Advanced_OpenerSelection = "BLM_Advanced_OpenerSelection";
-            internal const string BLM_Advanced_RotationSelection = "BLM_Advanced_RotationSelection";
-            internal const string BLM_Adv_Cooldowns = "BLM_Adv_Cooldowns";
-            internal const string BLM_AoE_Adv_ThunderUptime = "BLM_AoE_Adv_ThunderUptime";
-            internal const string BLM_Adv_Thunder = "BLM_Adv_Thunder";
+            internal static UserBool
+                BLM_Adv_Xeno_Burst = new("BLM_Adv_Xeno_Burst");
 
             internal static UserBoolArray
                 BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
                 BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
+
+            internal static UserInt
+                BLM_VariantCure = new("BLM_VariantCure"),
+                BLM_Adv_Cooldowns = new("BLM_Adv_Cooldowns"),
+                BLM_Adv_Thunder = new("BLM_Adv_Thunder"),
+                BLM_Adv_Rotation_Options = new("BLM_Adv_Rotation_Options"),              
+                BLM_Advanced_OpenerSelection = new("BLM_Advanced_OpenerSelection"),
+                BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime");
+                
+            internal static UserFloat
+                BLM_AstralFire_Refresh = new("BLM_AstralFire_Refresh");
         }
 
         internal class BLM_SimpleMode : CustomCombo
@@ -530,8 +536,8 @@ namespace XIVSlothCombo.Combos.PvE
                     float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_OpenerSelection);
-                    int rotationSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_RotationSelection);
-                    int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
+                    int rotationSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Rotation_Options);
+               //     int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Thunder);
@@ -1149,7 +1155,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Foul;
 
                         // Use Polyglot stacks on cooldown when we're not using Transpose rotation
-                        if (IsEnabled(CustomComboPreset.BLM_Adv_Xeno_Burst) &&
+                        if (Config.BLM_Adv_Xeno_Burst &&
                             (rotationSelection is 0 or 1 || level < 90))
                             return gauge.PolyglotStacks is 2 && LevelChecked(Xenoglossy)
                                     ? Xenoglossy

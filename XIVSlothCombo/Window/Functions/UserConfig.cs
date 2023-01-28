@@ -1187,7 +1187,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
 
-            if (preset is CustomComboPreset.BLM_Adv_Opener && enabled)
+            if (preset is CustomComboPreset.BLM_Adv_Opener)
             {
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Standard Opener", "Uses Standard Opener.", 1);
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Double Transpose Opener", "Uses Fire III opener - Double Transpose variation.", 2);
@@ -1195,8 +1195,15 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Rotation && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Standard Rotation", "Uses Standard Rotation.", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_RotationSelection, "Double Transpose rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 2);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 1);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 2);
+
+                if (BLM.Config.BLM_Adv_Rotation_Options == 1)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawAdditionalBoolChoice(BLM.Config.BLM_Adv_Xeno_Burst, "Use Xenoglossy for burst", "Will save Xenoglossy for every minute burst window.");
+                    ImGui.Unindent();
+                }
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
