@@ -545,7 +545,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Standard opener
                     if (IsEnabled(CustomComboPreset.BLM_Adv_Opener) && level >= 90)
                     {
-                        if (openerSelection is 0 or 1)
+                        if (openerSelection is 0)
                         {
                             // Check to start opener
                             if (openerStarted && HasEffect(Buffs.Sharpcast))
@@ -710,7 +710,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // F3 OPENER DOUBLE TRANSPOSE VARIATION 
-                        if (openerSelection is 2)
+                        if (openerSelection is 1)
                         {
                             // Check to start opener
                             if (openerStarted && HasEffect(Buffs.Sharpcast))
@@ -953,7 +953,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     LevelChecked(Xenoglossy) && gauge.PolyglotStacks > 1)
                                     return Xenoglossy;
 
-                                if ((rotationSelection is 0 or 1 || level < 90) &&
+                                if ((rotationSelection is 0 || level < 90) &&
                                     Config.BLM_Adv_Movement_Choice[5] &&
                                     ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
                                     return All.Swiftcast;
@@ -981,7 +981,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Start of Transpose rotation - tried to merge with ice part, but it won't behave.. ( think its too low in the order to make this part work correctly if i merge in umbral ince)
-                            if (rotationSelection is 2 &&
+                            if (rotationSelection is 1 &&
                                 gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
                             {
                                 if (gauge.UmbralIceStacks < 3 &&
@@ -1092,7 +1092,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Fire4;
 
                             // Transpose rotation Fire phase
-                            if (rotationSelection is 2 && level >= 90 &&
+                            if (rotationSelection is 1 && level >= 90 &&
                                 !WasLastAction(Manafont) && IsOnCooldown(Manafont) && ActionReady(All.Swiftcast) &&
                                 currentMP < MP.FireI && gauge.PolyglotStacks is 2)
                             {
@@ -1148,14 +1148,14 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Polyglot stacks on cooldown when we're not using Transpose rotation
-                        if (rotationSelection is 0 or 1 || level < 90)
+                        if (rotationSelection is 0 || level < 90)
                             return gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
 
                         // Use Polyglot stacks on cooldown when we're not using Transpose rotation
                         if (Config.BLM_Adv_Xeno_Burst &&
-                            (rotationSelection is 0 or 1 || level < 90))
+                            (rotationSelection is 0 || level < 90))
                             return gauge.PolyglotStacks is 2 && LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
