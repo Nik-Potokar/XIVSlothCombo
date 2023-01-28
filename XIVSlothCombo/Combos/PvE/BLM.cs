@@ -537,7 +537,6 @@ namespace XIVSlothCombo.Combos.PvE
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_OpenerSelection);
                     int rotationSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Rotation_Options);
-               //     int pooledPolyglotStacks = Config.BLM_Adv_Movement_Choice[5] ? 1 : 0;
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
                     int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Thunder);
