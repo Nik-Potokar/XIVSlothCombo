@@ -416,7 +416,7 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.PopStyleColor();
             }
 
-            //if (!isConditionalChoice)
+            //!isConditionalChoice
             ImGui.Unindent();
             ImGui.Spacing();
         }
@@ -466,8 +466,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Unindent();
         }
 
-        //4 Col Width Wide
-        public static void DrawMultiChoiceGrid(string config, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
         {
             int totalChoices = (nameAndDesc.GetLength(0));
             if (totalChoices > 0)
@@ -513,7 +512,7 @@ namespace XIVSlothCombo.Window.Functions
 
                     ImGui.PopStyleColor();
 
-                    if (((idx + 1) % 4) == 0)
+                    if (((idx + 1) % columns) == 0)
                         ImGui.TableNextRow();
                 }
                 ImGui.EndTable();
@@ -1195,20 +1194,19 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Rotation && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 1);
-                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 2);
-
-                if (BLM.Config.BLM_Adv_Rotation_Options == 1)
+                UserConfig.DrawRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 0);
+                if (BLM.Config.BLM_Adv_Rotation_Options == 0)
                 {
                     ImGui.Indent();
                     UserConfig.DrawAdditionalBoolChoice(BLM.Config.BLM_Adv_Xeno_Burst, "Use Xenoglossy for burst", "Will save Xenoglossy for every minute burst window.");
-                    ImGui.Unindent();
+                    ImGui.Unindent(); ImGui.Spacing();
                 }
+                UserConfig.DrawRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 1);
             }
 
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
             {
-                UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Cooldowns_Choice, new string[,]{
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, 4, new string[,]{
                     {"Manafont", "Add Manafont to the rotation." },
                     {"Sharpcast", "Add Sharpcast to the rotation." },
                     {"Amplifier", "Add Amplifier to the rotation." },
@@ -1218,7 +1216,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_Adv_Movement)
             {
-                UserConfig.DrawMultiChoiceGrid(BLM.Config.BLM_Adv_Movement_Choice, new string[,]{
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, 4, new string[,]{
                     {"Sharpcast", "Add Sharpcast." },
                     {"Thunder", "Add Thunder I/Thunder III." },
                     {"Firestarter", "Add Firestarter when in Astral Fire." },
