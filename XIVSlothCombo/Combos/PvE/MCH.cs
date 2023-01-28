@@ -129,21 +129,21 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
                     {
                         if (IsEnabled(Bozja.LostCure4) &&
-                        PlayerHealthPercentageHp() <= 0.5f * PlayerHealthPercentageHp() &&
+                        PlayerHealthPercentageHp() <= 50 &&
                         CanWeave(actionID))
                             return Bozja.LostCure4;
 
                         if (IsEnabled(Bozja.LostCure3) &&
-                        PlayerHealthPercentageHp() <= 0.5f * PlayerHealthPercentageHp())
+                        PlayerHealthPercentageHp() <= 50)
                             return Bozja.LostCure3;
 
                         if (IsEnabled(Bozja.LostCure2) &&
-                        PlayerHealthPercentageHp() <= 0.5f * PlayerHealthPercentageHp() &&
+                        PlayerHealthPercentageHp() <= 50 &&
                         CanWeave(actionID))
                             return Bozja.LostCure2;
 
                         if (IsEnabled(Bozja.LostCure) &&
-                        PlayerHealthPercentageHp() <= 0.5f * PlayerHealthPercentageHp())
+                        PlayerHealthPercentageHp() <= 50)
                             return Bozja.LostCure;
                     }
 
