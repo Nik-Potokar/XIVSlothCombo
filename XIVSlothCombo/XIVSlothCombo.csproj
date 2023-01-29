@@ -67,6 +67,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DalamudPackager" Version="2.1.8" />
+		<PackageReference Include="ECommons" Version="2.0.0.2" />
 		<PackageReference Include="ILRepack" Version="2.0.18" />
 	</ItemGroup>
 

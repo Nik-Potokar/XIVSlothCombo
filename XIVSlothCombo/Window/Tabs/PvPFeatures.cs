@@ -44,8 +44,13 @@ namespace XIVSlothCombo.Window.Tabs
                     foreach (var otherJob in groupedPresets.Keys.Where(x => x != jobName))
                     {
                         ImGui.GetStateStorage().SetInt(ImGui.GetID(otherJob), 0);
+                        
                     }
-
+                    if (jobName != groupedPresets.First().Key)
+                    {
+                        ImGui.GetStateStorage().SetInt(ImGui.GetID("All Jobs"), 0);
+                    }
+                    
                     DrawHeadingContents(jobName, i);
                 }
 

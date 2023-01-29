@@ -19,6 +19,7 @@ using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window;
 using XIVSlothCombo.Window.Tabs;
+using ECommons;
 
 namespace XIVSlothCombo
 {
@@ -28,7 +29,7 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow configWindow;
-
+        
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
 
@@ -63,7 +64,8 @@ namespace XIVSlothCombo
             Service.IconReplacer = new IconReplacer();
             ActionWatching.Enable();
 
-            configWindow = new();
+            ECommonsMain.Init(pluginInterface, this);
+            configWindow = new ConfigWindow(this);
 
             Service.Interface.UiBuilder.Draw += DrawUI;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;

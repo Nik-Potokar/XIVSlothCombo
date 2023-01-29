@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Plugin;
 using Dalamud.Utility;
 using ImGuiNET;
 using XIVSlothCombo.Attributes;
@@ -17,6 +18,7 @@ namespace XIVSlothCombo.Window
         internal static readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets = GetGroupedPresets();
         internal static readonly Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> presetChildren = GetPresetChildren();
 
+        private readonly IDalamudPlugin Plugin;
         internal static Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> GetGroupedPresets()
         {
             return Enum
@@ -30,7 +32,7 @@ namespace XIVSlothCombo.Window
             .GroupBy(tpl => tpl.Info.JobName)
             .ToDictionary(
                 tpl => tpl.Key,
-                tpl => tpl.ToList());
+                tpl => tpl.ToList())!;
         }
 
         internal static Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> GetPresetChildren()
@@ -50,7 +52,7 @@ namespace XIVSlothCombo.Window
                 kvp => kvp.Key,
                 kvp => kvp.Value
                     .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-                    .OrderBy(tpl => tpl.Info.Order).ToArray());
+                    .OrderBy(tpl => tpl.Info.Order).ToArray())!;
         }
 
         private bool visible = false;
@@ -68,12 +70,14 @@ namespace XIVSlothCombo.Window
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow() : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
+        public ConfigWindow(XIVSlothCombo plugin = null!) : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
         {
             RespectCloseHotkey = true;
 
             SizeCondition = ImGuiCond.FirstUseEver;
             Size = new Vector2(740, 490);
+
+            Plugin = plugin;
         }
 
         public override void Draw()
@@ -112,7 +116,7 @@ namespace XIVSlothCombo.Window
 
                     if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
                     {
-                        AboutUs.Draw();
+                        AboutUs.Draw(Plugin);
                         ImGui.EndTabItem();
                     }
 
