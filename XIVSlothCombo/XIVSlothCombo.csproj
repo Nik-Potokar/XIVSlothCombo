@@ -54,7 +54,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="..\res\xivslothcombo.png" Link="images\xivslothcombo.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+		<Content Include="..\res\plugin\xivslothcombo.png" Link="images\xivslothcombo.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
