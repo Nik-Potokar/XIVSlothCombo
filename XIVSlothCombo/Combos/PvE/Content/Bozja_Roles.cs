@@ -288,6 +288,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
                     if (IsEnabled(Bozja.LostCure4) &&
                     !HasEffect(Bozja.Buffs.LostBravery2) &&
+                    HasEffect(Bozja.Buffs.PureElder) &&
                     CanWeave(actionID))
                         return Bozja.LostCure4;
                 }
