@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 
@@ -135,7 +134,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Scathe)
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
-                    float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
+                    float astralFireRefresh = Config.BLM_AstralFire_Refresh * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
@@ -322,7 +321,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                                IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                                IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
                                 return Variant.VariantCure;
 
                             if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
@@ -533,13 +532,13 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Scathe)
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
-                    float astralFireRefresh = PluginConfiguration.GetCustomFloatValue(Config.BLM_AstralFire_Refresh) * 1000;
+                    float astralFireRefresh = Config.BLM_AstralFire_Refresh * 1000;
                     bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
-                    int openerSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Advanced_OpenerSelection);
-                    int rotationSelection = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Rotation_Options);
+                    int openerSelection = Config.BLM_Advanced_OpenerSelection;
+                    int rotationSelection = Config.BLM_Adv_Rotation_Options;
                     Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
-                    int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_Adv_Thunder);
+                    int thunderRefreshTime = Config.BLM_Adv_Thunder;
 
                     // Opener for BLM
                     // Standard opener
@@ -920,7 +919,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                                IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                                IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
                                 return Variant.VariantCure;
 
                             if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
@@ -1199,7 +1198,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                             IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                            PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
                             return Variant.VariantCure;
 
                         if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
@@ -1297,7 +1296,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Blizzard2)
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
-                    int thunderRefreshTime = PluginConfiguration.GetCustomIntValue(Config.BLM_AoE_Adv_ThunderUptime);
+                    int thunderRefreshTime = Config.BLM_AoE_Adv_ThunderUptime;
                     BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
                     // 2xHF2 Transpose with Freeze [A7]
@@ -1317,7 +1316,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                             IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                            PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
                             return Variant.VariantCure;
 
                         if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
