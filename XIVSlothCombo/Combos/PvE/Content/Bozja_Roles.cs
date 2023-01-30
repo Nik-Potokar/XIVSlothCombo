@@ -17,16 +17,29 @@ namespace XIVSlothCombo.Combos.PvE.Content
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             bool canuseaction = false;
+            bool canusebozjastuffs = false;
+            bool isphysranged = false;
 
             if (actionID is Slice or Bootshine or TrueThrust or Gekko or SpinningEdge)
             {
+                //Melees
+                canusebozjastuffs = true;
+            }
+
+            if (actionID is Cascade or HeavyShot or BurstShot || actionID == CleanShot || actionID == HeatedCleanShot || actionID == SplitShot || actionID == HeatedSplitShot)
+            {
+                //Phys ranged
+                canusebozjastuffs = true;
+                isphysranged = true;
+            }
+
+            if (canusebozjastuffs)
+            {
                 // Bozja Stuffs - Riley (Luna)
-                //Melee test code only...
 
                 if (!HasEffect(DRG.Buffs.SharperFangAndClaw) && !HasEffect(DRG.Buffs.EnhancedWheelingThrust)
                         && !HasEffect(DRG.Buffs.DraconianFire) && !HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(SAM.Buffs.MeikyoShisui)
-                        && !HasEffect(NIN.Buffs.Mudra)
-                        )
+                        && !HasEffect(NIN.Buffs.Mudra))
                 {
                     canuseaction = true;
                 }
@@ -62,9 +75,15 @@ namespace XIVSlothCombo.Combos.PvE.Content
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
                     IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
-                    HasBattleTarget() &&  canuseaction && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
+                    HasBattleTarget() &&  canuseaction && !isphysranged && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
                 {
                     return Bozja.LostRendArmor;
+                }
+
+                if (IsEnabled(CustomComboPreset.ALL_BozjaPhysDerv) && isphysranged &&
+                        IsEnabled(Bozja.LostDervish) && IsOffCooldown(Bozja.LostDervish) && !HasEffect(Bozja.Buffs.LostDervish))
+                {
+                    return Bozja.LostDervish;
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
