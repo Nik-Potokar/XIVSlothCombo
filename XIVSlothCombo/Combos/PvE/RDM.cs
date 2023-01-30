@@ -682,31 +682,6 @@ namespace XIVSlothCombo.Combos.PvE
                     && RDMLucid.SafetoUse(lastComboMove))
                     return All.LucidDreaming;
 
-                //Bozja AOE stuffs
-
-                if (actionID is Scatter or Impact)
-
-                {
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaFlareStar))
-                    {
-                        if (ActionReady(All.LucidDreaming))
-                            return All.LucidDreaming;
-
-                        if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
-                            (LocalPlayer.CurrentMp >= 9000))
-                            return Bozja.LostFlareStar;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
-                    IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
-                        return Bozja.LostBanish3;
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
-                    IsEnabled(Bozja.LostBurst))
-                        return Bozja.LostBurst;
-
-                }
-
                     //RDM_OGCD
                     if (IsEnabled(CustomComboPreset.RDM_AoE_oGCD)
                     && LevelChecked(Corpsacorps) &&

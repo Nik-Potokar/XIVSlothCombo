@@ -182,24 +182,6 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
 
-                    //Bozja AOE stuffs
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaFlareStar))
-                    {
-
-                        if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
-                            (LocalPlayer.CurrentMp >= 9000))
-                            return Bozja.LostFlareStar;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
-                        IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
-                        return Bozja.LostBanish3;
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
-                        IsEnabled(Bozja.LostBurst))
-                        return Bozja.LostBurst;
-
                     // Polyglot usage
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Manafont) && LevelChecked(Foul))
                     {
