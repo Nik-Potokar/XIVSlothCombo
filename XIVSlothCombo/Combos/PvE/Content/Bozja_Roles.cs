@@ -7,6 +7,10 @@ using static XIVSlothCombo.Combos.PvE.NIN;
 using static XIVSlothCombo.Combos.PvE.DNC;
 using static XIVSlothCombo.Combos.PvE.MCH;
 using static XIVSlothCombo.Combos.PvE.BRD;
+using static XIVSlothCombo.Combos.PvE.DRK;
+using static XIVSlothCombo.Combos.PvE.PLD;
+using static XIVSlothCombo.Combos.PvE.GNB;
+using static XIVSlothCombo.Combos.PvE.WAR;
 
 namespace XIVSlothCombo.Combos.PvE.Content
 {
@@ -19,6 +23,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
             bool canuseaction = false;
             bool canusebozjastuffs = false;
             bool isphysranged = false;
+            bool istank = false;
 
             if (actionID is Slice or Bootshine or TrueThrust or Gekko or SpinningEdge)
             {
@@ -26,11 +31,29 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 canusebozjastuffs = true;
             }
 
+            if (actionID is Souleater or KeenEdge or FastBlade or StormsPath)
+            {
+                //Tanks
+                canusebozjastuffs = true;
+                istank = true;
+            }
+
             if (actionID is Cascade or HeavyShot or BurstShot || actionID == CleanShot || actionID == HeatedCleanShot || actionID == SplitShot || actionID == HeatedSplitShot)
             {
                 //Phys ranged
                 canusebozjastuffs = true;
                 isphysranged = true;
+            }
+
+            if (actionID is 7531)
+            //Rampart 
+            {
+                if (IsEnabled(CustomComboPreset.ALL_BozjaAetherShield))
+                {
+
+                    if (IsEnabled(Bozja.LostAethershield) && IsOffCooldown(Bozja.LostAethershield))
+                        return Bozja.LostAethershield;
+                }
             }
 
             if (canusebozjastuffs)

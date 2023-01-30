@@ -176,12 +176,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        //LUNA BOZJA STUFF RIGHT HERE!
-
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                            return Bozja.LostRampage;
-
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
                             level < Levels.TwinSnakes) && canWeaveChakra)
                         {
