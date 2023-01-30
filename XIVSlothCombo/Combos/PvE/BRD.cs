@@ -334,10 +334,6 @@ namespace XIVSlothCombo.Combos.PvE
                         canWeave)
                         return Variant.VariantRampart;
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                        return Bozja.LostRampage;
-
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
                     {
                         int songTimerInSeconds = gauge.SongTimer / 1000;

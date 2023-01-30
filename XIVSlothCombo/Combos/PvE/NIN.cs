@@ -768,10 +768,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<NINGauge>();
                     var canWeave = CanWeave(GustSlash);
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                        return Bozja.LostRampage;
-
                     if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat())
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
 

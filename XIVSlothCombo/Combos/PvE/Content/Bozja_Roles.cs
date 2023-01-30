@@ -7,9 +7,34 @@ using static XIVSlothCombo.Combos.PvE.NIN;
 using static XIVSlothCombo.Combos.PvE.DNC;
 using static XIVSlothCombo.Combos.PvE.MCH;
 using static XIVSlothCombo.Combos.PvE.BRD;
+using static XIVSlothCombo.Combos.PvE.DRK;
+using static XIVSlothCombo.Combos.PvE.PLD;
+using static XIVSlothCombo.Combos.PvE.GNB;
+using static XIVSlothCombo.Combos.PvE.WAR;
 
 namespace XIVSlothCombo.Combos.PvE.Content
 {
+    internal class Bozja_Tank_Mit : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_BozjaAetherShield;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            if (actionID is 7531)
+            //Rampart 
+            {
+                if (IsEnabled(CustomComboPreset.ALL_BozjaAetherShield))
+                {
+
+                    if (IsEnabled(Bozja.LostAethershield) && IsOffCooldown(Bozja.LostAethershield))
+                        return Bozja.LostAethershield;
+                }
+            }
+
+            return actionID;
+        }
+
+    }
     internal class Bozja_Phys_DPS : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_BozjaDPS;
@@ -19,11 +44,19 @@ namespace XIVSlothCombo.Combos.PvE.Content
             bool canuseaction = false;
             bool canusebozjastuffs = false;
             bool isphysranged = false;
+            bool istank = false;
 
             if (actionID is Slice or Bootshine or TrueThrust or Gekko or SpinningEdge)
             {
                 //Melees
                 canusebozjastuffs = true;
+            }
+
+            if (actionID is Souleater or KeenEdge or FastBlade or StormsPath)
+            {
+                //Tanks
+                canusebozjastuffs = true;
+                istank = true;
             }
 
             if (actionID is Cascade or HeavyShot or BurstShot || actionID == CleanShot || actionID == HeatedCleanShot || actionID == SplitShot || actionID == HeatedSplitShot)
@@ -131,5 +164,47 @@ namespace XIVSlothCombo.Combos.PvE.Content
             }
             return actionID;
         }
+    }
+
+    internal class Bozja_Phys_AOE_DPS : CustomCombo
+    {
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_BozjaPhysAOE;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        {
+            bool canuseaction = false;
+            bool canusebozjastuffs = false;
+
+            if (actionID is SpinningScythe or DoomSpike or Oka or DeathBlossom || actionID == ArmOfTheDestroyer || actionID == ShadowOfTheDestroyer)
+            {
+                //Melees
+                canusebozjastuffs = true;
+            }
+
+            if (actionID is StalwartSoul or DemonSlice or TotalEclipse or Overpower)
+            {
+                //Tanks
+                canusebozjastuffs = true;
+            }
+
+            if (actionID is Windmill or Ladonsbite or QuickNock || actionID == SpreadShot || actionID == Scattergun)
+            {
+                //Phys ranged
+                canusebozjastuffs = true;
+            }
+
+            if (!HasEffect(DRG.Buffs.SharperFangAndClaw) && !HasEffect(DRG.Buffs.EnhancedWheelingThrust)
+                        && !HasEffect(DRG.Buffs.DraconianFire) && !HasEffect(RPR.Buffs.SoulReaver) && !HasEffect(SAM.Buffs.MeikyoShisui)
+                        && !HasEffect(NIN.Buffs.Mudra))
+            {
+                canuseaction = true;
+            }
+
+            if (canusebozjastuffs && IsEnabled(Bozja.LostRampage) && canuseaction)
+                return Bozja.LostRampage;
+
+            return actionID;
+        }
+
     }
 }

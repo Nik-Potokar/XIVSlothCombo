@@ -303,10 +303,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return RookAutoturret;
                     }
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                        return Bozja.LostRampage;
-
                     if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);

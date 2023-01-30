@@ -732,10 +732,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return StandardStep;
                     }
 
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                        return Bozja.LostRampage;
-
                     if (LevelChecked(Bloodshower) && flow)
                         return Bloodshower;
                     if (LevelChecked(RisingWindmill) && symmetry)
