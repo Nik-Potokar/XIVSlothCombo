@@ -66,6 +66,17 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 isphysranged = true;
             }
 
+            if (actionID is 7531)
+            //Rampart 
+            {
+                if (IsEnabled(CustomComboPreset.ALL_BozjaAetherShield))
+                {
+
+                    if (IsEnabled(Bozja.LostAethershield) && IsOffCooldown(Bozja.LostAethershield))
+                        return Bozja.LostAethershield;
+                }
+            }
+
             if (canusebozjastuffs)
             {
                 // Bozja Stuffs - Riley (Luna)
