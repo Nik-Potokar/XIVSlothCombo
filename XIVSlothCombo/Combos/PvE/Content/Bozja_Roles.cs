@@ -267,19 +267,14 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     return Bozja.LostIncense;
                 }
 
-                if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) &&
+                if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) && IsEnabled(CustomComboPreset.ALL_BozjaHealerSS) &&
                     IsEnabled(Bozja.LostSeraphStrike) && IsOffCooldown(Bozja.LostSeraphStrike) &&
                     HasBattleTarget())
                 {
                     //Thin air added may be jank but yea, it may work? - Riley
-                    if (HasEffect(Bozja.Buffs.FontOfMagic))
-                        //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
-                        return thinAirReady
-                        ? ThinAir
-                        : Bozja.LostSeraphStrike;
+                    //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
 
-                    if (!IsEnabled(Bozja.FontOfMagic))
-                        return thinAirReady
+                    return thinAirReady
                         ? ThinAir
                         : Bozja.LostSeraphStrike;
                 }
@@ -288,8 +283,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
                     if (IsEnabled(Bozja.LostCure4) &&
                     !HasEffect(Bozja.Buffs.LostBravery2) &&
-                    HasEffect(Bozja.Buffs.PureElder) &&
-                    CanWeave(actionID))
+                    HasEffect(Bozja.Buffs.PureElder))
                         return Bozja.LostCure4;
                 }
 

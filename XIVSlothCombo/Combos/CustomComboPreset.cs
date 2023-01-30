@@ -257,6 +257,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(ALL_BozjaRoleActions)]
         [CustomComboInfo("Tanks - Lost Aethershield", "Will change Rampart to Aethershield", ADV.JobID)]
         ALL_BozjaAetherShield = 101018,
+
+        [ReplaceSkill(All.Sprint)]
+        [ParentCombo(ALL_BozjaRoleActions)]
+        [CustomComboInfo("Healer - Seraph Strike", "Use Lost Seraph Strike on cooldown. \nIf on white mage will thin air before casting.", ADV.JobID)]
+        ALL_BozjaHealerSS = 101019,
         #endregion
 
         //Non-gameplay Features
