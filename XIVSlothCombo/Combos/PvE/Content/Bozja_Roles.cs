@@ -134,12 +134,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
                     if (TargetHasEffect(Bozja.Buffs.ProfaneEssence) || TargetHasEffect(Bozja.Buffs.IrregularEssence) || TargetHasEffect(Bozja.Buffs.PureElder))
                     {
-                        SetTarget();
-                        TargetObject(CurrentTarget);
-
-                        GetTarget = true;
-                        SelectedRandomMember = null;
-                        return OriginalHook(Bozja.LostCure2);
+                        return Bozja.LostCure2;
                     }
                 }
 
@@ -200,31 +195,6 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
             }
             return actionID;
-        }
-
-        private bool SetTarget()
-        {
-            if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
-            PartyTargets.Clear();
-            for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
-            {
-                if (GetPartySlot(i) is not BattleChara member) continue;
-                //GameObject? member = GetPartySlot(i);
-                if (member is null) continue; //Skip nulls/disconnected people
-
-                PartyTargets.Add(member);
-            }
-
-            if (SelectedRandomMember is not null)
-            {
-                if (PartyTargets.Any(x => x.ObjectId == SelectedRandomMember.ObjectId))
-                {
-                    TargetObject(SelectedRandomMember);
-                    GetTarget = false;
-                    return true;
-                }
-            }
-            return false;
         }
     }
 
