@@ -18,6 +18,11 @@ using static XIVSlothCombo.Combos.PvE.AST;
 using static XIVSlothCombo.Combos.PvE.SCH;
 using static XIVSlothCombo.Combos.PvE.SGE;
 using static XIVSlothCombo.Combos.PvE.SMN;
+using Dalamud.Game.ClientState.JobGauge.Enums;
+using System;
+using System.Collections.Generic;
+using Dalamud.Game.ClientState.Objects.Types;
+using System.Linq;
 
 namespace XIVSlothCombo.Combos.PvE.Content
 {
@@ -42,8 +47,18 @@ namespace XIVSlothCombo.Combos.PvE.Content
         }
 
     }
+
     internal class Bozja_Phys_DPS : CustomCombo
     {
+        private new bool GetTarget = true;
+
+        private new GameObject? CurrentTarget;
+
+        private readonly List<GameObject> PartyTargets = new();
+
+        private GameObject? SelectedRandomMember;
+        private bool haveCard;
+
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_BozjaDPS;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -113,6 +128,18 @@ namespace XIVSlothCombo.Combos.PvE.Content
                         return Bozja.LostCure;
                 }
 
+                if (IsEnabled(CustomComboPreset.ALL_BozjaCure2Phys) &&
+                    IsEnabled(Bozja.LostCure2) && IsOffCooldown(Bozja.LostCure2) &&
+                    isphysranged && !TargetHasEffect(Bozja.Buffs.MPRefresh) && !TargetHasEffect(Bozja.Buffs.MPRefresh2))
+                {
+                    SetTarget();
+                    TargetObject(CurrentTarget);
+
+                    GetTarget = true;
+                    SelectedRandomMember = null;
+                    return OriginalHook(Bozja.LostCure2);
+                }
+
                 if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
                     IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
                     HasBattleTarget() &&  canuseaction && !isphysranged && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
@@ -170,6 +197,36 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
             }
             return actionID;
+        }
+
+        private bool SetTarget()
+        {
+            if (GetTarget) CurrentTarget = LocalPlayer.TargetObject;
+            PartyTargets.Clear();
+            for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
+            {
+                if (GetPartySlot(i) is not BattleChara member) continue;
+                //GameObject? member = GetPartySlot(i);
+                if (member is null) continue; //Skip nulls/disconnected people
+
+                if (FindEffectOnMember(Bozja.Buffs.ProfaneEssence, member) is not null) continue;
+                if (FindEffectOnMember(Bozja.Buffs.IrregularEssence, member) is not null) continue;
+                if (FindEffectOnMember(Bozja.Buffs.PureElder, member) is not null) continue;
+
+
+                PartyTargets.Add(member);
+            }
+
+            if (SelectedRandomMember is not null)
+            {
+                if (PartyTargets.Any(x => x.ObjectId == SelectedRandomMember.ObjectId))
+                {
+                    TargetObject(SelectedRandomMember);
+                    GetTarget = false;
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

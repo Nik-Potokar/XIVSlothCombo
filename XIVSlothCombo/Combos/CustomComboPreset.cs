@@ -225,7 +225,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaCures)]
-        [CustomComboInfo("Phys Ranged - Cure 2", "Use Lost Cure 2 to make sure the focus target does not run out of mana, Only works in DRN / DRS", ADV.JobID)]
+        [CustomComboInfo("Phys Ranged - Cure 2", "Use Lost Cure 2 to make sure the profane healers, irreg darks, or casters does not run out of mana, Only works in DRN / DRS", ADV.JobID)]
         ALL_BozjaCure2Phys = 101012,
 
         [ReplaceSkill(All.Sprint)]
