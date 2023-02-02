@@ -205,12 +205,12 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaDPS)]
-        [CustomComboInfo("Lost Rampage AOE", "Changes your AOE to Lost Rampage. \nThis feature will ensure maintenance of Self dmg buffs", ADV.JobID)]
+        [CustomComboInfo("Lost Rampage AOE", "Changes your AOE to Lost Rampage.", ADV.JobID)]
         ALL_BozjaPhysAOE = 101008,
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_Bozja_Menu)]
-        [CustomComboInfo("DPS / Healer Auto Provoke", "Use Lost Incense on cooldown.", ADV.JobID)]
+        [CustomComboInfo("Incense Auto Provoke", "Use Lost Incense on cooldown.", ADV.JobID)]
         ALL_BozjaOffClassTankSct = 101009,
 
         [ReplaceSkill(All.Sprint)]
@@ -220,12 +220,12 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaCures)]
-        [CustomComboInfo("Self Heal", "Use Lost Cure 1, 2, 3, or 4. To heal yourself", ADV.JobID)]
+        [CustomComboInfo("Self Heal", "Use Lost Cure 1, 2, 3, or 4. To heal yourself if below 50% hp", ADV.JobID)]
         ALL_BozjaCureSelfheal = 101011,
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaCures)]
-        [CustomComboInfo("Phys Ranged - Cure 2", "Use Lost Cure 2 to make sure the profane healers, irreg darks, or casters does not run out of mana, Only works in DRN / DRS", ADV.JobID)]
+        [CustomComboInfo("Phys Ranged - Cure 2", "Use Lost Cure 2 to make sure the profane healers, irreg tanks, or casters does not run out of mana, Only works in DRN / DRS", ADV.JobID)]
         ALL_BozjaCure2Phys = 101012,
 
         [ReplaceSkill(All.Sprint)]

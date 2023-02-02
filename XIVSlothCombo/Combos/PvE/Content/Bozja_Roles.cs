@@ -132,12 +132,15 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     IsEnabled(Bozja.LostCure2) && IsOffCooldown(Bozja.LostCure2) && HasEffect(Bozja.Buffs.PureFiendhunter) &&
                     isphysranged && !TargetHasEffect(Bozja.Buffs.MPRefresh) && !TargetHasEffect(Bozja.Buffs.MPRefresh2))
                 {
-                    SetTarget();
-                    TargetObject(CurrentTarget);
+                    if (TargetHasEffect(Bozja.Buffs.ProfaneEssence) || TargetHasEffect(Bozja.Buffs.IrregularEssence) || TargetHasEffect(Bozja.Buffs.PureElder))
+                    {
+                        SetTarget();
+                        TargetObject(CurrentTarget);
 
-                    GetTarget = true;
-                    SelectedRandomMember = null;
-                    return OriginalHook(Bozja.LostCure2);
+                        GetTarget = true;
+                        SelectedRandomMember = null;
+                        return OriginalHook(Bozja.LostCure2);
+                    }
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
@@ -208,11 +211,6 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 if (GetPartySlot(i) is not BattleChara member) continue;
                 //GameObject? member = GetPartySlot(i);
                 if (member is null) continue; //Skip nulls/disconnected people
-
-                if (FindEffectOnMember(Bozja.Buffs.ProfaneEssence, member) is not null) continue;
-                if (FindEffectOnMember(Bozja.Buffs.IrregularEssence, member) is not null) continue;
-                if (FindEffectOnMember(Bozja.Buffs.PureElder, member) is not null) continue;
-
 
                 PartyTargets.Add(member);
             }
