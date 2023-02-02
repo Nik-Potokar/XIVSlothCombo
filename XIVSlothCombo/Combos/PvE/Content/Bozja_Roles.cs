@@ -50,15 +50,6 @@ namespace XIVSlothCombo.Combos.PvE.Content
 
     internal class Bozja_Phys_DPS : CustomCombo
     {
-        private new bool GetTarget = true;
-
-        private new GameObject? CurrentTarget;
-
-        private readonly List<GameObject> PartyTargets = new();
-
-        private GameObject? SelectedRandomMember;
-        private bool haveCard;
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_BozjaDPS;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
