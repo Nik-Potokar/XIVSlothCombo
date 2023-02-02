@@ -1337,8 +1337,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_ST_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_Simple_OpenerSelection, "General Purpose Opener", "Uses General Purpose Opener from 6.2. ", 1);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_Simple_OpenerSelection, "Delayed Tools Opener", "Uses Delayed Tools Opener starting from Heated Split Shot. ", 2);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_Simple_OpenerSelection, "General Purpose Opener", "Uses General Purpose Opener from 6.2. ", 0);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_Simple_OpenerSelection, "Delayed Tools Opener", "Uses Delayed Tools Opener starting from Heated Split Shot. ", 1);
             }
             #endregion
             // ====================================================================================
