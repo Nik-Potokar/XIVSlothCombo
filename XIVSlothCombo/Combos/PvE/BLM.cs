@@ -113,10 +113,10 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_VariantCure = new("BLM_VariantCure"),
                 BLM_Adv_Cooldowns = new("BLM_Adv_Cooldowns"),
                 BLM_Adv_Thunder = new("BLM_Adv_Thunder"),
-                BLM_Adv_Rotation_Options = new("BLM_Adv_Rotation_Options"),              
+                BLM_Adv_Rotation_Options = new("BLM_Adv_Rotation_Options"),
                 BLM_Advanced_OpenerSelection = new("BLM_Advanced_OpenerSelection"),
                 BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime");
-                
+
             internal static UserFloat
                 BLM_AstralFire_Refresh = new("BLM_AstralFire_Refresh");
         }
@@ -333,7 +333,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // Handle movement
                             if (IsMoving && InCombat())
                             {
-                                if (!HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
+                                if (!HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast))
                                     return Sharpcast;
 
                                 if (HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) &&
@@ -352,7 +352,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
                                     return All.Swiftcast;
 
-                                if (HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
+                                if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
                                 if ((GetBuffStacks(Buffs.Triplecast) is 0) && LevelChecked(Scathe))
@@ -932,7 +932,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.BLM_Adv_Movement) && IsMoving && InCombat())
                             {
                                 if (Config.BLM_Adv_Movement_Choice[0] &&
-                                    !HasEffect(Buffs.Sharpcast) && HasCharges(Sharpcast))
+                                    !HasEffect(Buffs.Sharpcast) && ActionReady(Sharpcast))
                                     return Sharpcast;
 
                                 if (Config.BLM_Adv_Movement_Choice[1] &&
@@ -958,7 +958,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return All.Swiftcast;
 
                                 if (Config.BLM_Adv_Movement_Choice[6] &&
-                                    HasCharges(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
+                                    ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) is 0 && !HasEffect(All.Buffs.Swiftcast))
                                     return Triplecast;
 
                                 if (Config.BLM_Adv_Movement_Choice[7] && (GetBuffStacks(Buffs.Triplecast) is 0) && LevelChecked(Scathe))
@@ -1256,7 +1256,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Umbral Ice
                     if (gauge.InUmbralIce)
                     {
-                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze))
                             return Freeze;
 
                         // Thunder II/IV uptime
@@ -1271,8 +1271,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (!LevelChecked(HighBlizzard2) && currentMP < 9400)
-                            return Blizzard2;
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze))
+                            return Freeze;
 
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
@@ -1377,7 +1377,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Umbral Ice
                     if (gauge.InUmbralIce)
                     {
-                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze))
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze))
                             return Freeze;
 
                         // Thunder II/IV uptime
@@ -1393,8 +1393,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (!LevelChecked(HighBlizzard2) && currentMP < 9400)
-                            return Blizzard2;
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze))
+                            return Freeze;
 
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
