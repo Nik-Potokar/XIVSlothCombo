@@ -1136,7 +1136,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Paradox;
 
                         // Transpose rotation Ice phase
-                        if (rotationSelection is 2 && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
+                        if (rotationSelection is 1 && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
                         {
                             // Transpose lines will use 2 xenoglossy stacks and then transpose
                             if (gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy))
