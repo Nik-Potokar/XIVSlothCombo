@@ -73,17 +73,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is 7531)
-                //Rampart 
-                {
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaAetherShield))
-                    {
-
-                        if (IsEnabled(Bozja.LostAethershield) && IsOffCooldown(Bozja.LostAethershield))
-                            return Bozja.LostAethershield;
-                    }
-                }
-
                 if (actionID is KeenEdge)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
@@ -98,75 +87,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.GNB_ST_RangedUptime) && !InMeleeRange() && LevelChecked(LightningShot) && HasBattleTarget())
                         return LightningShot;
-
-                    #region Bozja Actioons
-                    
-                    // Bozja Stuffs - Riley (Luna)
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
-                    {
-                        if (IsEnabled(Bozja.LostCure4) &&
-                        PlayerHealthPercentageHp() <= 50 &&
-                        CanWeave(actionID))
-                            return Bozja.LostCure4;
-
-                        if (IsEnabled(Bozja.LostCure3) &&
-                        PlayerHealthPercentageHp() <= 50)
-                            return Bozja.LostCure3;
-
-                        if (IsEnabled(Bozja.LostCure2) &&
-                        PlayerHealthPercentageHp() <= 50 &&
-                        CanWeave(actionID))
-                            return Bozja.LostCure2;
-
-                        if (IsEnabled(Bozja.LostCure) &&
-                        PlayerHealthPercentageHp() <= 50)
-                            return Bozja.LostCure;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
-                    {
-
-                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
-                            return Bozja.LostExcellence;
-
-                        if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
-                            return Bozja.FontOfPower;
-
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
-                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
-                        HasBattleTarget())
-                        {
-                            if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
-                                return Bozja.LostAssassination;
-
-                            if (CanWeave(actionID))
-                                return Bozja.LostAssassination;
-                        }
-
-                        // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                        {
-                            if (HasEffect(Bozja.Buffs.FontOfPower))
-                            {
-                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                    return Bozja.BannerOfHonoredSacrifice;
-
-                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                    return Bozja.BannerOfNobleEnds;
-                            }
-                        }
-
-                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                        {
-                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                return Bozja.BannerOfHonoredSacrifice;
-
-                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                return Bozja.BannerOfNobleEnds;
-                        }
-                    }
-                    #endregion
 
                     if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup) && IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
                     {
@@ -546,10 +466,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return (IsEnabled(CustomComboPreset.GNB_AOE_Overcap) && LevelChecked(FatedCircle) && gauge.Ammo == MaxCartridges(level)) ? FatedCircle : DemonSlaughter;
                     }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                        return Bozja.LostRampage;
 
                     return DemonSlice;
                 }

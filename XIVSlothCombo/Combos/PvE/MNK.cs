@@ -176,12 +176,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        //LUNA BOZJA STUFF RIGHT HERE!
-
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaPhysAOE) &&
-                        IsEnabled(Bozja.LostRampage))
-                            return Bozja.LostRampage;
-
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
                             level < Levels.TwinSnakes) && canWeaveChakra)
                         {
@@ -304,86 +298,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Bootshine)
                 {
-                    // Bozja Stuffs - Riley (Luna)
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
-                        IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
-                        HasBattleTarget())
-                    {
-                        //Congrats your a tank now, good luck!
-                        return Bozja.LostIncense;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal))
-                    {
-                        if (IsEnabled(Bozja.LostCure4) &&
-                        PlayerHealthPercentageHp() <= 50 &&
-                        CanWeave(actionID))
-                            return Bozja.LostCure4;
-
-                        if (IsEnabled(Bozja.LostCure3) &&
-                        PlayerHealthPercentageHp() <= 50)
-                            return Bozja.LostCure3;
-
-                        if (IsEnabled(Bozja.LostCure2) &&
-                        PlayerHealthPercentageHp() <= 50 &&
-                        CanWeave(actionID))
-                            return Bozja.LostCure2;
-
-                        if (IsEnabled(Bozja.LostCure) &&
-                        PlayerHealthPercentageHp() <= 50)
-                            return Bozja.LostCure;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
-                        IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
-                        HasBattleTarget() && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
-                    {
-                        return Bozja.LostRendArmor;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
-                    {
-
-                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
-                            return Bozja.LostExcellence;
-
-                        if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
-                            return Bozja.FontOfPower;
-
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
-                        IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
-                        HasBattleTarget())
-                        {
-                            if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
-                                return Bozja.LostAssassination;
-
-                            if (CanWeave(actionID))
-                                return Bozja.LostAssassination;
-                        }
-
-                        // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                        {
-                            if (HasEffect(Bozja.Buffs.FontOfPower))
-                            {
-                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                    return Bozja.BannerOfHonoredSacrifice;
-
-                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                    return Bozja.BannerOfNobleEnds;
-                            }
-                        }
-
-                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                        {
-                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                return Bozja.BannerOfHonoredSacrifice;
-
-                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                return Bozja.BannerOfNobleEnds;
-                        }
-                    }
 
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
                     {

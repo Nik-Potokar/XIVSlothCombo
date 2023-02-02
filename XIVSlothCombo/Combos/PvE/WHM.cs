@@ -200,72 +200,6 @@ namespace XIVSlothCombo.Combos.PvE
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);
 
-                    //Bozja stuff - Riley (Luna)
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
-                        IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
-                        HasBattleTarget())
-                    {
-                        //Congrats your a tank now, good luck!
-                        return Bozja.LostIncense;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) &&
-                        IsEnabled(Bozja.LostSeraphStrike) && IsOffCooldown(Bozja.LostSeraphStrike) &&
-                        HasBattleTarget())
-                    {
-                        //Thin air added may be jank but yea, it may work? - Riley
-                        if (HasEffect(Bozja.Buffs.FontOfMagic))
-                            //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
-                            return thinAirReady
-                            ? ThinAir
-                            : Bozja.LostSeraphStrike;
-
-                        if (!IsEnabled(Bozja.FontOfMagic))
-                            return thinAirReady
-                            ? ThinAir
-                            : Bozja.LostSeraphStrike;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
-                    {
-                        if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
-                            return Bozja.LostExcellence;
-
-                        if (IsEnabled(Bozja.FontOfMagic) && IsOffCooldown(Bozja.FontOfMagic))
-                            return Bozja.FontOfMagic;
-
-                        // Checks to see if you have Font of Magic, and lines up Banners to Font
-                        if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                        {
-                            if (HasEffect(Bozja.Buffs.FontOfMagic))
-                            {
-                                if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                    return Bozja.BannerOfHonoredSacrifice;
-
-                                if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                    return Bozja.BannerOfNobleEnds;
-
-                                if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
-                                    return Bozja.LostChainspell;
-
-                                //Other devs could we check for chainspell before using swiftcast?
-                            }
-                        }
-
-                        if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
-                        {
-                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                return Bozja.BannerOfHonoredSacrifice;
-
-                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                return Bozja.BannerOfNobleEnds;
-
-                            if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
-                                return Bozja.LostChainspell;
-                        }
-                    }
-
                     // No-Swift Opener
                     // Counter reset
                     if (!InCombat()) glare3Count = 0;
@@ -436,16 +370,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && LevelChecked(AfflatusMisery) &&
                         gauge.BloodLily >= 3 && HasBattleTarget())
                         return AfflatusMisery;
-
-                    //Bozja AOE stuffs
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
-                        IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
-                        return Bozja.LostBanish3;
-
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
-                        IsEnabled(Bozja.LostBurst))
-                        return Bozja.LostBurst;
                 }
 
                 return actionID;
