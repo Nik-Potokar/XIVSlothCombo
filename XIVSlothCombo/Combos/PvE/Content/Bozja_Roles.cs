@@ -129,7 +129,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaCure2Phys) &&
-                    IsEnabled(Bozja.LostCure2) && IsOffCooldown(Bozja.LostCure2) &&
+                    IsEnabled(Bozja.LostCure2) && IsOffCooldown(Bozja.LostCure2) && HasEffect(Bozja.Buffs.PureFiendhunter) &&
                     isphysranged && !TargetHasEffect(Bozja.Buffs.MPRefresh) && !TargetHasEffect(Bozja.Buffs.MPRefresh2))
                 {
                     SetTarget();
