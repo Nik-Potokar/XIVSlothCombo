@@ -1468,7 +1468,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections." +
+        [CustomComboInfo("Simple Machinist (Single Target) Feature", "Single button, single target machinist, including buffs and overcap protections." +
             "\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD." +
             "\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -4, "", "")]
         MCH_ST_SimpleMode = 8049,
@@ -1483,9 +1483,9 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Machinist Feature", "Single button, single target machinist, including buffs and overcap protections." +
+        [CustomComboInfo("Advanced Machinist (Single Target) Feature", "Single button, single target machinist, including buffs and overcap protections." +
             "\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD." +
-            "\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -3, "", "")]
+            "\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
         MCH_ST_AdvancedMode = 8020,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1546,7 +1546,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SpreadShot)]
         [ConflictingCombos(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -2, "", "")]
+        [CustomComboInfo("Simple Machinist (AoE) Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -4, "", "")]
         MCH_AoE_SimpleMode = 8050,
 
         [ParentCombo(MCH_AoE_SimpleMode)]
@@ -1559,12 +1559,12 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SpreadShot)]
         [ConflictingCombos(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Machinist AoE Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
+        [CustomComboInfo("Advanced Machinist (AoE) Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
         MCH_AoE_AdvancedMode = 8028,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Battery Overcap Option", "Adds overcharge protection to Spread Shot/Scattergun.", MCH.JobID, 0, "", "")]
-        MCH_AoE_OverCharge = 8010,
+        MCH_AoE_Queen = 8010,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Gauss Round Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo during Hypercharge.", MCH.JobID, 0, "", "")]
@@ -1580,7 +1580,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the AoE.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_Hypercharge = 8027,
+        MCH_AoE_Advanced_Hypercharge = 8027,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]

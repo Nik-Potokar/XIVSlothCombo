@@ -97,7 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool inOpener = false;
             internal static bool readyOpener = false;
             internal static bool openerStarted = false;
-            internal static byte openerstep = 0;
+            internal static byte step = 0;
             internal static byte evenBurstStep = 0;
             internal static byte oddBurstStep = 0;
             internal static bool inOddFiller = false;
@@ -129,15 +129,15 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             readyOpener = true;
                             inOpener = false;
-                            openerstep = 0;
+                            step = 0;
                             return Reassemble;
                         }
                         else
                         { readyOpener = false; }
 
-                        // Reset if opener is interrupted, requires openerstep 0 and 1 to be explicit since the inCombat check can be slow
-                        if ((openerstep == 1 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
-                            || (inOpener && openerstep >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                        // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                        if ((step == 1 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
+                            || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
 
 
                         if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
@@ -147,159 +147,159 @@ namespace XIVSlothCombo.Combos.PvE
                         if (inOpener)
                         {
                             //we do it in steps to be able to control it
-                            if (openerstep is 0)
+                            if (step is 0)
                             {
-                                if (IsOnCooldown(AirAnchor)) openerstep++;
+                                if (IsOnCooldown(AirAnchor)) step++;
                                 else return AirAnchor;
                             }
 
-                            if (openerstep == 1)
+                            if (step == 1)
                             {
-                                if (WasLastAction(GaussRound)) openerstep++;
+                                if (WasLastAction(GaussRound)) step++;
                                 else return GaussRound;
                             }
 
-                            if (openerstep == 2)
+                            if (step == 2)
                             {
-                                if (WasLastAction(Ricochet)) openerstep++;
+                                if (WasLastAction(Ricochet)) step++;
                                 else return Ricochet;
                             }
 
-                            if (openerstep == 3)
+                            if (step == 3)
                             {
-                                if (IsOnCooldown(Drill)) openerstep++;
+                                if (IsOnCooldown(Drill)) step++;
                                 else return Drill;
                             }
 
-                            if (openerstep == 4)
+                            if (step == 4)
                             {
-                                if (IsOnCooldown(BarrelStabilizer)) openerstep++;
+                                if (IsOnCooldown(BarrelStabilizer)) step++;
                                 else return BarrelStabilizer;
                             }
 
-                            if (openerstep == 5)
+                            if (step == 5)
                             {
-                                if (WasLastWeaponskill(HeatedSplitShot)) openerstep++;
+                                if (WasLastWeaponskill(HeatedSplitShot)) step++;
                                 else return HeatedSplitShot;
                             }
 
-                            if (openerstep == 6)
+                            if (step == 6)
                             {
-                                if (WasLastWeaponskill(HeatedSlugshot)) openerstep++;
+                                if (WasLastWeaponskill(HeatedSlugshot)) step++;
                                 else return HeatedSlugshot;
                             }
 
-                            if (openerstep == 7)
+                            if (step == 7)
                             {
-                                if (WasLastAction(GaussRound)) openerstep++;
+                                if (WasLastAction(GaussRound)) step++;
                                 else return GaussRound;
                             }
 
-                            if (openerstep == 8)
+                            if (step == 8)
                             {
-                                if (WasLastAction(Ricochet)) openerstep++;
+                                if (WasLastAction(Ricochet)) step++;
                                 else return Ricochet;
                             }
 
-                            if (openerstep == 9)
+                            if (step == 9)
                             {
-                                if (WasLastWeaponskill(HeatedCleanShot)) openerstep++;
+                                if (WasLastWeaponskill(HeatedCleanShot)) step++;
                                 else return HeatedCleanShot;
                             }
 
-                            if (openerstep == 10)
+                            if (step == 10)
                             {
-                                if (GetRemainingCharges(Reassemble) is 0) openerstep++;
+                                if (GetRemainingCharges(Reassemble) is 0) step++;
                                 else return Reassemble;
                             }
 
-                            if (openerstep == 11)
+                            if (step == 11)
                             {
-                                if (IsOnCooldown(Wildfire)) openerstep++;
+                                if (IsOnCooldown(Wildfire)) step++;
                                 else return Wildfire;
                             }
 
-                            if (openerstep == 12)
+                            if (step == 12)
                             {
-                                if (IsOnCooldown(ChainSaw)) openerstep++;
+                                if (IsOnCooldown(ChainSaw)) step++;
                                 else return ChainSaw;
                             }
 
-                            if (openerstep == 13)
+                            if (step == 13)
                             {
-                                if (IsOnCooldown(AutomatonQueen)) openerstep++;
+                                if (IsOnCooldown(AutomatonQueen)) step++;
                                 else return AutomatonQueen;
                             }
 
-                            if (openerstep == 14)
+                            if (step == 14)
                             {
-                                if (IsOnCooldown(Hypercharge)) openerstep++;
+                                if (IsOnCooldown(Hypercharge)) step++;
                                 else return Hypercharge;
                             }
 
-                            if (openerstep == 15)
+                            if (step == 15)
                             {
-                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 4) openerstep++;
+                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 4) step++;
                                 else return HeatBlast;
                             }
 
-                            if (openerstep == 16)
+                            if (step == 16)
                             {
-                                if (WasLastAction(Ricochet)) openerstep++;
+                                if (WasLastAction(Ricochet)) step++;
                                 else return Ricochet;
                             }
 
-                            if (openerstep == 17)
+                            if (step == 17)
                             {
-                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 3) openerstep++;
+                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 3) step++;
                                 else return HeatBlast;
                             }
 
-                            if (openerstep == 18)
+                            if (step == 18)
                             {
-                                if (WasLastAction(GaussRound)) openerstep++;
+                                if (WasLastAction(GaussRound)) step++;
                                 else return GaussRound;
                             }
 
-                            if (openerstep == 19)
+                            if (step == 19)
                             {
-                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 2) openerstep++;
+                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 2) step++;
                                 else return HeatBlast;
                             }
 
-                            if (openerstep == 20)
+                            if (step == 20)
                             {
-                                if (WasLastAction(Ricochet)) openerstep++;
+                                if (WasLastAction(Ricochet)) step++;
                                 else return Ricochet;
                             }
 
-                            if (openerstep == 21)
+                            if (step == 21)
                             {
-                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 1) openerstep++;
+                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 1) step++;
                                 else return HeatBlast;
                             }
 
-                            if (openerstep == 22)
+                            if (step == 22)
                             {
-                                if (WasLastAction(GaussRound)) openerstep++;
+                                if (WasLastAction(GaussRound)) step++;
                                 else return GaussRound;
                             }
 
-                            if (openerstep == 23)
+                            if (step == 23)
                             {
-                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 0) openerstep++;
+                                if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 0) step++;
                                 else return HeatBlast;
                             }
 
-                            if (openerstep == 24)
+                            if (step == 24)
                             {
-                                if (WasLastAction(Ricochet)) openerstep++;
+                                if (WasLastAction(Ricochet)) step++;
                                 else return Ricochet;
                             }
 
-                            if (openerstep == 25)
+                            if (step == 25)
                             {
-                                if (WasLastAction(Drill)) openerstep++;
+                                if (WasLastAction(Drill)) step++;
                                 else return Drill;
                             }
 
@@ -476,13 +476,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool inOpener = false;
             internal static bool readyOpener = false;
             internal static bool openerStarted = false;
-            internal static byte openerstep = 0;
-            internal static byte evenBurstStep = 0;
-            internal static byte oddBurstStep = 0;
-            internal static bool inOddFiller = false;
-            internal static bool inEvenFiller = false;
-            internal static bool fillerComplete = false;
-
+            internal static byte step = 0;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -491,8 +485,6 @@ namespace XIVSlothCombo.Combos.PvE
                     int openerSelection = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_Simple_OpenerSelection);
                     bool openerReady = ActionReady(ChainSaw) && ActionReady(Wildfire) && ActionReady(BarrelStabilizer) && GetRemainingCharges(Ricochet) == 3 && GetRemainingCharges(GaussRound) == 3;
                     float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
-                    bool oddMinute = CombatEngageDuration().Minutes % 2 == 1;
-                    bool evenMinute = CombatEngageDuration().Minutes % 2 == 0;
                     float hpTreshold = PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold);
                     MCHGauge? gauge = GetJobGauge<MCHGauge>();
 
@@ -501,24 +493,29 @@ namespace XIVSlothCombo.Combos.PvE
                         if (openerSelection is 0)
                         {
                             // Check to start opener
-                            if (openerStarted && HasEffect(Buffs.Reassembled)) { inOpener = true; openerStarted = false; readyOpener = false; }
-                            if ((readyOpener || openerStarted) && HasEffect(Buffs.Reassembled) && !inOpener) { openerStarted = true; return AirAnchor; } else { openerStarted = false; }
+                            if (openerStarted && HasEffect(Buffs.Reassembled))
+                            { inOpener = true; openerStarted = false; readyOpener = false; }
+
+                            if ((readyOpener || openerStarted) && HasEffect(Buffs.Reassembled) && !inOpener)
+                            { openerStarted = true; return AirAnchor; }
+                            else
+                            { openerStarted = false; }
 
                             // Reset check for opener
                             if (openerReady && !InCombat() && !inOpener && !openerStarted)
                             {
                                 readyOpener = true;
                                 inOpener = false;
-                                openerstep = 0;
+                                step = 0;
                                 return Reassemble;
                             }
                             else
                             { readyOpener = false; }
 
-                            // Reset if opener is interrupted, requires openerstep 0 and 1 to be explicit since the inCombat check can be slow
-                            if ((openerstep == 1 && lastComboMove is AirAnchor && !HasEffect(Buffs.Reassembled))
-                                || (inOpener && openerstep >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
-
+                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                            if ((step == 1 && WasLastAction(AirAnchor) && !HasEffect(Buffs.Reassembled)) ||
+                                (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
+                                inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
                                 IsEnabled(CustomComboPreset.MCH_ST_Advanced_Opener) && level >= 90 && openerReady)
@@ -527,159 +524,159 @@ namespace XIVSlothCombo.Combos.PvE
                             if (inOpener)
                             {
                                 //we do it in steps to be able to control it
-                                if (openerstep is 0)
+                                if (step is 0)
                                 {
-                                    if (IsOnCooldown(AirAnchor)) openerstep++;
+                                    if (IsOnCooldown(AirAnchor)) step++;
                                     else return AirAnchor;
                                 }
 
-                                if (openerstep == 1)
+                                if (step == 1)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 2)
+                                if (step == 2)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 3)
+                                if (step == 3)
                                 {
-                                    if (IsOnCooldown(Drill)) openerstep++;
+                                    if (IsOnCooldown(Drill)) step++;
                                     else return Drill;
                                 }
 
-                                if (openerstep == 4)
+                                if (step == 4)
                                 {
-                                    if (IsOnCooldown(BarrelStabilizer)) openerstep++;
+                                    if (IsOnCooldown(BarrelStabilizer)) step++;
                                     else return BarrelStabilizer;
                                 }
 
-                                if (openerstep == 5)
+                                if (step == 5)
                                 {
-                                    if (WasLastWeaponskill(HeatedSplitShot)) openerstep++;
+                                    if (WasLastWeaponskill(HeatedSplitShot)) step++;
                                     else return HeatedSplitShot;
                                 }
 
-                                if (openerstep == 6)
+                                if (step == 6)
                                 {
-                                    if (WasLastWeaponskill(HeatedSlugshot)) openerstep++;
+                                    if (WasLastWeaponskill(HeatedSlugshot)) step++;
                                     else return HeatedSlugshot;
                                 }
 
-                                if (openerstep == 7)
+                                if (step == 7)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 8)
+                                if (step == 8)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 9)
+                                if (step == 9)
                                 {
-                                    if (WasLastWeaponskill(HeatedCleanShot)) openerstep++;
+                                    if (WasLastWeaponskill(HeatedCleanShot)) step++;
                                     else return HeatedCleanShot;
                                 }
 
-                                if (openerstep == 10)
+                                if (step == 10)
                                 {
-                                    if (GetRemainingCharges(Reassemble) is 0) openerstep++;
+                                    if (GetRemainingCharges(Reassemble) is 0) step++;
                                     else return Reassemble;
                                 }
 
-                                if (openerstep == 11)
+                                if (step == 11)
                                 {
-                                    if (IsOnCooldown(Wildfire)) openerstep++;
+                                    if (IsOnCooldown(Wildfire)) step++;
                                     else return Wildfire;
                                 }
 
-                                if (openerstep == 12)
+                                if (step == 12)
                                 {
-                                    if (IsOnCooldown(ChainSaw)) openerstep++;
+                                    if (IsOnCooldown(ChainSaw)) step++;
                                     else return ChainSaw;
                                 }
 
-                                if (openerstep == 13)
+                                if (step == 13)
                                 {
-                                    if (IsOnCooldown(AutomatonQueen)) openerstep++;
+                                    if (IsOnCooldown(AutomatonQueen)) step++;
                                     else return AutomatonQueen;
                                 }
 
-                                if (openerstep == 14)
+                                if (step == 14)
                                 {
-                                    if (IsOnCooldown(Hypercharge)) openerstep++;
+                                    if (IsOnCooldown(Hypercharge)) step++;
                                     else return Hypercharge;
                                 }
 
-                                if (openerstep == 15)
+                                if (step == 15)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 4) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 4) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 16)
+                                if (step == 16)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 17)
+                                if (step == 17)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 3) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 3) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 18)
+                                if (step == 18)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 19)
+                                if (step == 19)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 2) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 2) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 20)
+                                if (step == 20)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 21)
+                                if (step == 21)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 1) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 1) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 22)
+                                if (step == 22)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 23)
+                                if (step == 23)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 0) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 0) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 24)
+                                if (step == 24)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 25)
+                                if (step == 25)
                                 {
-                                    if (WasLastAction(Drill)) openerstep++;
+                                    if (WasLastAction(Drill)) step++;
                                     else return Drill;
                                 }
 
@@ -690,24 +687,29 @@ namespace XIVSlothCombo.Combos.PvE
                         if (openerSelection is 1)
                         {
                             // Check to start opener
-                            if (openerStarted && WasLastAction(HeatedSplitShot)) { inOpener = true; openerStarted = false; readyOpener = false; }
-                            if ((readyOpener || openerStarted) && WasLastAction(HeatedSplitShot) && !inOpener) { openerStarted = true; return AirAnchor; } else { openerStarted = false; }
+                            if (openerStarted && WasLastAction(HeatedSplitShot))
+                            { inOpener = true; openerStarted = false; readyOpener = false; }
+
+                            if ((readyOpener || openerStarted) && WasLastAction(HeatedSplitShot) && !inOpener)
+                            { openerStarted = true; return AirAnchor; }
+                            else
+                            { openerStarted = false; }
 
                             // Reset check for opener
                             if (openerReady && !InCombat() && !inOpener && !openerStarted)
                             {
                                 readyOpener = true;
                                 inOpener = false;
-                                openerstep = 0;
+                                step = 0;
                                 return HeatedSplitShot;
                             }
                             else
                             { readyOpener = false; }
 
-                            // Reset if opener is interrupted, requires openerstep 0 and 1 to be explicit since the inCombat check can be slow
-                            if ((openerstep == 1 && WasLastAction(HeatedSplitShot))
-                                || (inOpener && openerstep >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
-
+                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
+                            if ((step == 1 && WasLastAction(HeatedSplitShot)) ||
+                                (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
+                                inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && WasLastAction(HeatedSplitShot) &&
                                 IsEnabled(CustomComboPreset.MCH_ST_Advanced_Opener) && level >= 90 && openerReady)
@@ -716,159 +718,159 @@ namespace XIVSlothCombo.Combos.PvE
                             if (inOpener)
                             {
                                 //we do it in steps to be able to control it
-                                if (openerstep == 0)
+                                if (step == 0)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 1)
+                                if (step == 1)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 2)
+                                if (step == 2)
                                 {
-                                    if (IsOnCooldown(Drill)) openerstep++;
+                                    if (IsOnCooldown(Drill)) step++;
                                     else return Drill;
                                 }
 
-                                if (openerstep == 3)
+                                if (step == 3)
                                 {
-                                    if (IsOnCooldown(BarrelStabilizer)) openerstep++;
+                                    if (IsOnCooldown(BarrelStabilizer)) step++;
                                     else return BarrelStabilizer;
                                 }
 
-                                if (openerstep == 4)
+                                if (step == 4)
                                 {
-                                    if (WasLastWeaponskill(HeatedSlugshot)) openerstep++;
+                                    if (WasLastWeaponskill(HeatedSlugshot)) step++;
                                     else return HeatedSlugshot;
                                 }
 
-                                if (openerstep == 5)
+                                if (step == 5)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 6)
+                                if (step == 6)
                                 {
-                                    if (WasLastWeaponskill(HeatedCleanShot)) openerstep++;
+                                    if (WasLastWeaponskill(HeatedCleanShot)) step++;
                                     else return HeatedCleanShot;
                                 }
 
-                                if (openerstep == 7)
+                                if (step == 7)
                                 {
-                                    if (GetRemainingCharges(Reassemble) is 1) openerstep++;
+                                    if (GetRemainingCharges(Reassemble) is 1) step++;
                                     else return Reassemble;
                                 }
 
-                                if (openerstep == 8)
+                                if (step == 8)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 9)
+                                if (step == 9)
                                 {
-                                    if (IsOnCooldown(AirAnchor)) openerstep++;
+                                    if (IsOnCooldown(AirAnchor)) step++;
                                     else return AirAnchor;
                                 }
 
-                                if (openerstep == 10)
+                                if (step == 10)
                                 {
-                                    if (GetRemainingCharges(Reassemble) is 0) openerstep++;
+                                    if (GetRemainingCharges(Reassemble) is 0) step++;
                                     else return Reassemble;
                                 }
 
-                                if (openerstep == 11)
+                                if (step == 11)
                                 {
-                                    if (IsOnCooldown(Wildfire)) openerstep++;
+                                    if (IsOnCooldown(Wildfire)) step++;
                                     else return Wildfire;
                                 }
 
-                                if (openerstep == 12)
+                                if (step == 12)
                                 {
-                                    if (IsOnCooldown(ChainSaw)) openerstep++;
+                                    if (IsOnCooldown(ChainSaw)) step++;
                                     else return ChainSaw;
                                 }
 
-                                if (openerstep == 13)
+                                if (step == 13)
                                 {
-                                    if (IsOnCooldown(AutomatonQueen)) openerstep++;
+                                    if (IsOnCooldown(AutomatonQueen)) step++;
                                     else return AutomatonQueen;
                                 }
 
-                                if (openerstep == 14)
+                                if (step == 14)
                                 {
-                                    if (IsOnCooldown(Hypercharge)) openerstep++;
+                                    if (IsOnCooldown(Hypercharge)) step++;
                                     else return Hypercharge;
                                 }
 
-                                if (openerstep == 15)
+                                if (step == 15)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 4) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 4) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 16)
+                                if (step == 16)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 17)
+                                if (step == 17)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 3) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 3) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 18)
+                                if (step == 18)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 19)
+                                if (step == 19)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 2) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 2) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 20)
+                                if (step == 20)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 21)
+                                if (step == 21)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 1) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 1) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 22)
+                                if (step == 22)
                                 {
-                                    if (WasLastAction(GaussRound)) openerstep++;
+                                    if (WasLastAction(GaussRound)) step++;
                                     else return GaussRound;
                                 }
 
-                                if (openerstep == 23)
+                                if (step == 23)
                                 {
-                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 0) openerstep++;
+                                    if (WasLastAction(HeatBlast) && GetBuffStacks(Buffs.Overheated) is 0) step++;
                                     else return HeatBlast;
                                 }
 
-                                if (openerstep == 24)
+                                if (step == 24)
                                 {
-                                    if (WasLastAction(Ricochet)) openerstep++;
+                                    if (WasLastAction(Ricochet)) step++;
                                     else return Ricochet;
                                 }
 
-                                if (openerstep == 25)
+                                if (step == 25)
                                 {
-                                    if (WasLastAction(Drill)) openerstep++;
+                                    if (WasLastAction(Drill)) step++;
                                     else return Drill;
                                 }
 
@@ -879,23 +881,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inOpener)
                     {
-                        //BS in even burst
-                        if (openerSelection is 0 && evenMinute && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
-                                gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && WasLastAction(HeatBlast) && gauge.IsOverheated && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
-                                IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only))))
-                            return BarrelStabilizer;
-
-                        if (openerSelection is 1 && evenMinute && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
-                            gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && WasLastAction(Drill) && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
-                            IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only))))
-                            return BarrelStabilizer;
-
-                        // General BS use
-                        if (level < 90 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
-                                gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
-                                IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only))))
-                            return BarrelStabilizer;
-
                         //gauss and ricochet overcap protection
                         if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_GaussRicochet) &&
                             CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire))
@@ -910,23 +895,22 @@ namespace XIVSlothCombo.Combos.PvE
                         //queen
                         if (IsEnabled(CustomComboPreset.MCH_Advanced_QueenUsage) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)))
                         {
-
-                            if (openerSelection is 0 && evenMinute && gauge.Battery == 100 && WasLastAction(Drill))
-                                return OriginalHook(RookAutoturret);
-
                             if (openerSelection is 0 && CombatEngageDuration().Minutes == 1 && gauge.Battery == 70 && ActionReady(ChainSaw))
                                 return OriginalHook(RookAutoturret);
 
-                            if (openerSelection is 0 && oddMinute && gauge.Battery >= 80 && gauge.Battery <= 90 && ActionReady(ChainSaw))
+                            if (openerSelection is 0 && CombatEngageDuration().Minutes % 2 == 0 && gauge.Battery == 100 && WasLastAction(Drill))
                                 return OriginalHook(RookAutoturret);
 
-                            if (openerSelection is 1 && evenMinute && gauge.Battery == 100 && GetCooldownRemainingTime(AirAnchor) == 2)
+                            if (openerSelection is 0 && CombatEngageDuration().Minutes % 2 == 1 && gauge.Battery >= 80 && gauge.Battery <= 90 && ActionReady(ChainSaw))
                                 return OriginalHook(RookAutoturret);
 
                             if (openerSelection is 1 && CombatEngageDuration().Minutes == 1 && gauge.Battery == 60)
                                 return OriginalHook(RookAutoturret);
 
-                            if (openerSelection is 1 && oddMinute && gauge.Battery >= 80 && gauge.Battery <= 90 && ActionReady(ChainSaw))
+                            if (openerSelection is 1 && CombatEngageDuration().Minutes % 2 == 0 && gauge.Battery == 100 && GetCooldownRemainingTime(AirAnchor) == 2)
+                                return OriginalHook(RookAutoturret);
+
+                            if (openerSelection is 1 && CombatEngageDuration().Minutes % 2 == 1 && gauge.Battery >= 80 && gauge.Battery <= 90 && ActionReady(ChainSaw))
                                 return OriginalHook(RookAutoturret);
 
                             if (level >= 80 && level < 90 && gauge.Battery == 100)
@@ -936,14 +920,31 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(RookAutoturret);
                         }
 
+                        //BS in even burst
+                        if (openerSelection is 0 && CombatEngageDuration().Minutes % 2 == 0 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
+                                gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && WasLastAction(HeatBlast) && gauge.IsOverheated && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
+                                IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only))))
+                            return BarrelStabilizer;
+
+                        if (openerSelection is 1 && CombatEngageDuration().Minutes % 2 == 0 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
+                            gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && WasLastAction(Drill) && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
+                            IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only))))
+                            return BarrelStabilizer;
+
+                        // General BS use
+                        if (level < 90 && CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
+                                gauge.Heat <= 55 && ActionReady(BarrelStabilizer) && (wildfireCDTime <= 9 || (wildfireCDTime >= 110 &&
+                                IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only))))
+                            return BarrelStabilizer;
+
                         // Wildfire
                         if (gauge.Heat >= 50 && ActionReady(Wildfire) &&
                             IsEnabled(CustomComboPreset.MCH_ST_Advanced_WildFire))
                         {
-                            if (openerSelection is 0 && WasLastAction(ChainSaw) && CanWeave(actionID) && evenMinute)
+                            if (openerSelection is 0 && WasLastAction(ChainSaw) && CanWeave(actionID) && CombatEngageDuration().Minutes % 2 == 0)
                                 return Wildfire;
 
-                            if (openerSelection is 1 && HasEffect(Buffs.Reassembled) && IsOffCooldown(ChainSaw) && (CanDelayedWeave(actionID)) && evenMinute)
+                            if (openerSelection is 1 && HasEffect(Buffs.Reassembled) && IsOffCooldown(ChainSaw) && (CanDelayedWeave(actionID)) && CombatEngageDuration().Minutes % 2 == 0)
                                 return Wildfire;
 
                             return Wildfire;
@@ -998,7 +999,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                             return HeatBlast;
                         }
-
 
                         // OGCD's
                         if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_Reassembled) &&
@@ -1132,6 +1132,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
         internal class MCH_AoE_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_AdvancedMode;
@@ -1152,7 +1153,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && !gauge.IsOverheated)
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Queen) && !gauge.IsOverheated)
                     {
                         if (gauge.Battery == 100)
                             return OriginalHook(RookAutoturret);
@@ -1170,12 +1171,13 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Hypercharge        
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_Hypercharge) &&
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Advanced_Hypercharge) &&
                         gauge.Heat >= 50 && LevelChecked(Hypercharge) && !gauge.IsOverheated)
                         return Hypercharge;
 
                     //Heatblast, Gauss, Rico
-                    if (gauge.IsOverheated && LevelChecked(AutoCrossbow))
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Advanced_Hypercharge) &&
+                        gauge.IsOverheated && LevelChecked(AutoCrossbow))
                     {
                         if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && WasLastAction(AutoCrossbow) && CanWeave(actionID))
                         {
@@ -1210,7 +1212,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HeatBlast)
                 {
-                    var heatBlastCD = GetCooldown(HeatBlast);
                     var gaussCD = GetCooldown(GaussRound);
                     var ricochetCD = GetCooldown(Ricochet);
                     MCHGauge? gauge = GetJobGauge<MCHGauge>();
@@ -1230,7 +1231,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!HasEffect(Buffs.Overheated) && LevelChecked(Hypercharge))
                         return Hypercharge;
 
-                    if (heatBlastCD.CooldownRemaining < 0.7 && LevelChecked(HeatBlast)) // Prioritize Heat Blast
+                    if (GetCooldownRemainingTime(HeatBlast) < 0.7 && LevelChecked(HeatBlast)) // Prioritize Heat Blast
                         return HeatBlast;
 
                     if (!LevelChecked(Ricochet))
