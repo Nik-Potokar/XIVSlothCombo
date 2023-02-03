@@ -1572,7 +1572,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_AoE_GaussRicochet)]
         [CustomComboInfo("Always Gauss Round/Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Gauss = 8012,
+        MCH_AoE_Always_Gauss_Ricochet = 8012,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 0, "", "")]
