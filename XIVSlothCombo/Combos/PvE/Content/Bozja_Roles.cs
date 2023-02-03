@@ -156,10 +156,10 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     HasBattleTarget() && canuseaction)
                     {
                         if (HasEffect(Bozja.Buffs.BeastEssence))
-                            return Bozja.LostAssassination;
-
+                        { return Bozja.LostAssassination; }
+                        
                         if (CanWeave(actionID))
-                            return Bozja.LostAssassination;
+                        { return Bozja.LostAssassination; }
                     }
 
                     // Checks to see if you have Lost Assassination or Font of Power, and lines up Banners to Font
