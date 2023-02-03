@@ -155,7 +155,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
                     HasBattleTarget() && canuseaction)
                     {
-                        if (!HasEffect(Bozja.Buffs.FontOfPower) && HasEffect(Bozja.Buffs.BeastEssence))
+                        if (HasEffect(Bozja.Buffs.BeastEssence))
                             return Bozja.LostAssassination;
 
                         if (CanWeave(actionID))
