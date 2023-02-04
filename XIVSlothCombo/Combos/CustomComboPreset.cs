@@ -1468,9 +1468,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Machinist (Single Target) Feature", "Single button, single target machinist, including buffs and overcap protections." +
-            "\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD." +
-            "\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -4, "", "")]
+        [CustomComboInfo("Simple Machinist (Single Target) Feature", "Replaces Splitshot with a full one - button rotation.", MCH.JobID, -4, "", "")]
         MCH_ST_SimpleMode = 8049,
 
         [ParentCombo(MCH_ST_SimpleMode)]
@@ -1483,33 +1481,31 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Machinist (Single Target) Feature", "Single button, single target machinist, including buffs and overcap protections." +
-            "\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD." +
-            "\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, -2, "", "")]
+        [CustomComboInfo("Advanced Machinist (Single Target) Feature", "Replaces Splitshot with a full one - button rotation.", MCH.JobID, -2, "", "")]
         MCH_ST_AdvancedMode = 8020,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 97, "", "")]
+        [CustomComboInfo("Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 97, "", "")]
         MCH_ST_Advanced_Interrupt = 8021,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Gauss Ricochet Option", "Adds Gauss Round and Ricochet uses to the feature.\nWill prevent overcapping.", MCH.JobID, -11, "", "")]
+        [CustomComboInfo("Gauss Ricochet Option", "Adds Gauss Round and Ricochet to the feature.\nWill prevent overcapping.", MCH.JobID, -11, "", "")]
         MCH_ST_Advanced_GaussRicochet = 8024,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Wildcharge Option", "Adds Hypercharge and Wildfire uses to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -5, "", "")]
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire uses to the feature.", MCH.JobID, -5, "", "")]
         MCH_ST_Advanced_WildFire = 8025,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Hypercharge Option", "Adds Hypercharge to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -6, "", "")]
+        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the feature.\nIt respects the 8 second rule of Drill, Air Anchor and Chainsaw.", MCH.JobID, -6, "", "")]
         MCH_ST_Advanced_Hypercharge = 8048,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWhen Heat Gauge < 50 and Wildfire is off cooldown or about to come off cooldown.", MCH.JobID, -4, "", "")]
+        [CustomComboInfo("Stabilizer Option", "Adds Barrel Stabilizer to the feature.\nWill be used when Heat Gauge < 50.", MCH.JobID, -4, "", "")]
         MCH_ST_Advanced_Stabilizer = 8026,
 
         [ParentCombo(MCH_ST_Advanced_Stabilizer)]
-        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire use in even minute burst.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Wildfire Only Option", "Only use it to prepare for Wildfire.", MCH.JobID, 0, "", "")]
         MCH_ST_Advanced_Stabilizer_Wildfire_Only = 8035,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1525,7 +1521,7 @@ namespace XIVSlothCombo.Combos
         MCH_Advanced_QueenUsage = 8043,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.\nWill be used on Chainsaw and Airanchor.\nWill be used on Drill below lvl 76.", MCH.JobID, -7, "", "")]
+        [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.\nWill be used on Chainsaw and Air Anchor.\nWill be used on Drill below lvl 76.", MCH.JobID, -7, "", "")]
         MCH_ST_Advanced_Reassembled = 8044,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1546,7 +1542,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SpreadShot)]
         [ConflictingCombos(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Machinist (AoE) Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -4, "", "")]
+        [CustomComboInfo("Simple Machinist (AoE) Feature", "Replaces Spreadshot with a full one - button rotation.", MCH.JobID, -4, "", "")]
         MCH_AoE_SimpleMode = 8050,
 
         [ParentCombo(MCH_AoE_SimpleMode)]
@@ -1559,7 +1555,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.SpreadShot)]
         [ConflictingCombos(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Machinist (AoE) Feature", "Spread Shot turns into Scattergun when Lv.82 or higher.\nBoth turn into Auto Crossbow when Overheated.\nBioblaster is used first whenever it is off cooldown.", MCH.JobID, -1, "", "")]
+        [CustomComboInfo("Advanced Machinist (AoE) Feature", "Replaces Spreadshot with a full one - button rotation.", MCH.JobID, -1, "", "")]
         MCH_AoE_AdvancedMode = 8028,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]

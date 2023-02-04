@@ -133,8 +133,8 @@ namespace XIVSlothCombo.Combos.PvE
                         { readyOpener = false; }
 
                         // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
-                        if ((step == 2 && WasLastAction(AirAnchor))
-                            || (inOpener && step >= 3 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
+                        if ((step == 1 && IsOffCooldown(AirAnchor))
+                            || (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat())) inOpener = false;
 
 
                         if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
@@ -472,8 +472,8 @@ namespace XIVSlothCombo.Combos.PvE
                             { readyOpener = false; }
 
                             // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the inCombat check can be slow
-                            if ((step == 2 && WasLastAction(AirAnchor)) ||
-                                (inOpener && step >= 3 && IsOffCooldown(actionID) && !InCombat()))
+                            if ((step == 1 && IsOffCooldown(AirAnchor)) ||
+                                (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
                                 inOpener = false;
 
                             if (InCombat() && CombatEngageDuration().TotalSeconds < 10 && HasEffect(Buffs.Reassembled) &&
