@@ -103,20 +103,20 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     if (IsEnabled(Bozja.LostCure4) &&
                     PlayerHealthPercentageHp() <= 50 &&
                     CanWeave(actionID))
-                        return Bozja.LostCure4;
+                    { return Bozja.LostCure4; }
 
                     if (IsEnabled(Bozja.LostCure3) &&
                     PlayerHealthPercentageHp() <= 50)
-                        return Bozja.LostCure3;
+                    { return Bozja.LostCure3; }
 
                     if (IsEnabled(Bozja.LostCure2) &&
                     PlayerHealthPercentageHp() <= 50 &&
                     CanWeave(actionID))
-                        return Bozja.LostCure2;
+                    { return Bozja.LostCure2; }
 
                     if (IsEnabled(Bozja.LostCure) &&
                     PlayerHealthPercentageHp() <= 50)
-                        return Bozja.LostCure;
+                    { return Bozja.LostCure; }
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaCure2Phys) &&
@@ -146,10 +146,10 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
 
                     if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
-                        return Bozja.LostExcellence;
+                    { return Bozja.LostExcellence; }
 
                     if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
-                        return Bozja.FontOfPower;
+                    { return Bozja.FontOfPower; }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
                     IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
@@ -168,20 +168,20 @@ namespace XIVSlothCombo.Combos.PvE.Content
                         if (HasEffect(Bozja.Buffs.FontOfPower))
                         {
                             if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                return Bozja.BannerOfHonoredSacrifice;
+                            { return Bozja.BannerOfHonoredSacrifice; }
 
                             if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                return Bozja.BannerOfNobleEnds;
+                            { return Bozja.BannerOfNobleEnds; }
                         }
                     }
 
                     if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                     {
                         if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                            return Bozja.BannerOfHonoredSacrifice;
+                        { return Bozja.BannerOfHonoredSacrifice; }
 
                         if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                            return Bozja.BannerOfNobleEnds;
+                        { return Bozja.BannerOfNobleEnds; }
                     }
                 }
             }
@@ -224,7 +224,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
             }
 
             if (canusebozjastuffs && IsEnabled(Bozja.LostRampage) && canuseaction)
-                return Bozja.LostRampage;
+            { return Bozja.LostRampage; }
 
             return actionID;
         }
@@ -280,7 +280,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     HasBattleTarget())
                 {
                     //Congrats your a tank now, good luck!
-                    return Bozja.LostIncense;
+                    { return Bozja.LostIncense; }
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) && IsEnabled(CustomComboPreset.ALL_BozjaHealerSS) &&
@@ -300,7 +300,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     if (IsEnabled(Bozja.LostCure4) &&
                     !HasEffect(Bozja.Buffs.LostBravery2) &&
                     HasEffect(Bozja.Buffs.PureElder))
-                        return Bozja.LostCure4;
+                    { return Bozja.LostCure4; }
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaCureSelfheal) && iscastersupport)
@@ -308,29 +308,29 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     if (IsEnabled(Bozja.LostCure4) &&
                     PlayerHealthPercentageHp() <= 50 &&
                     CanWeave(actionID))
-                        return Bozja.LostCure4;
+                    { return Bozja.LostCure4; }
 
                     if (IsEnabled(Bozja.LostCure3) &&
                     PlayerHealthPercentageHp() <= 50)
-                        return Bozja.LostCure3;
+                    { return Bozja.LostCure3; }
 
                     if (IsEnabled(Bozja.LostCure2) &&
                     PlayerHealthPercentageHp() <= 50 &&
                     CanWeave(actionID))
-                        return Bozja.LostCure2;
+                    { return Bozja.LostCure2; }
 
                     if (IsEnabled(Bozja.LostCure) &&
                     PlayerHealthPercentageHp() <= 50)
-                        return Bozja.LostCure;
+                    { return Bozja.LostCure;}
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
                 {
                     if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
-                        return Bozja.LostExcellence;
+                    { return Bozja.LostExcellence;}
 
                     if (IsEnabled(Bozja.FontOfMagic) && IsOffCooldown(Bozja.FontOfMagic))
-                        return Bozja.FontOfMagic;
+                    { return Bozja.FontOfMagic;}
 
                     // Checks to see if you have Font of Magic, and lines up Banners to Font
                     if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
@@ -338,13 +338,13 @@ namespace XIVSlothCombo.Combos.PvE.Content
                         if (HasEffect(Bozja.Buffs.FontOfMagic))
                         {
                             if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                                return Bozja.BannerOfHonoredSacrifice;
+                            { return Bozja.BannerOfHonoredSacrifice; }
 
                             if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                                return Bozja.BannerOfNobleEnds;
+                            { return Bozja.BannerOfNobleEnds; }
 
                             if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
-                                return Bozja.LostChainspell;
+                            { return Bozja.LostChainspell; }
 
                             //Other devs could we check for chainspell before using swiftcast?
                         }
@@ -353,13 +353,13 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                     {
                         if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
-                            return Bozja.BannerOfHonoredSacrifice;
+                        { return Bozja.BannerOfHonoredSacrifice; }
 
                         if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
-                            return Bozja.BannerOfNobleEnds;
+                        { return Bozja.BannerOfNobleEnds; }
 
                         if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
-                            return Bozja.LostChainspell;
+                        { return Bozja.LostChainspell; }
                     }
                 }
 
@@ -367,7 +367,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
                     if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
                         (LocalPlayer.CurrentMp >= 9000))
-                        return Bozja.LostFlareStar;
+                    { return Bozja.LostFlareStar; }
                 }
             }
 
@@ -421,16 +421,17 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
                     if (IsEnabled(Bozja.LostFlareStar) && !TargetHasEffect(Bozja.Debuffs.LostFlareStar) &&
                         (LocalPlayer.CurrentMp >= 9000))
-                        return Bozja.LostFlareStar;
+                    { return Bozja.LostFlareStar; }
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaMagicbanAOE) &&
                 IsEnabled(Bozja.LostBanish3) && HasBattleTarget())
-                    return Bozja.LostBanish3;
+                { return Bozja.LostBanish3; }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaMagicAOE) &&
                 IsEnabled(Bozja.LostBurst))
-                    return Bozja.LostBurst;
+                //if (isblackmage && CanWeave(actionID)) { return Transpose; }
+                { return Bozja.LostBurst; }
 
             }
 
