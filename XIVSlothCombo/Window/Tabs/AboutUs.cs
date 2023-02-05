@@ -16,7 +16,7 @@ namespace XIVSlothCombo.Window.Tabs
         public static Version version = null!;
 
         private static Dictionary<string, TextureWrap> Images = new();
-        internal static async void Draw(IDalamudPlugin P)
+        internal static void Draw(IDalamudPlugin P)
         {
             version ??= P.GetType().Assembly.GetName().Version!;
 
@@ -175,7 +175,7 @@ namespace XIVSlothCombo.Window.Tabs
             }
         }
 
-        private static async void LoadAllImages()
+        private static void LoadAllImages()
         {
             if (ThreadLoadImageHandler.TryGetTextureWrap(@"https://github.com/Nik-Potokar/XIVSlothCombo/raw/main/res/team_sloth_images/team-sloth.png", out var texture))
                 Images.TryAdd("teamsloth", texture);
