@@ -929,24 +929,24 @@ namespace XIVSlothCombo.Combos.PvE
 
                             else if (!LevelChecked(Drill))
                                 return Hypercharge;
+                        }
 
-                            //Heatblast, Gauss, Rico
-                            if (gauge.IsOverheated && LevelChecked(HeatBlast))
+                        //Heatblast, Gauss, Rico
+                        if (gauge.IsOverheated && LevelChecked(HeatBlast))
+                        {
+                            if (WasLastAction(HeatBlast) && CanWeave(actionID))
                             {
-                                if (WasLastAction(HeatBlast) && CanWeave(actionID))
-                                {
-                                    if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
-                                        return GaussRound;
+                                if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
+                                    return GaussRound;
 
-                                    if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
-                                        return Ricochet;
-                                }
-                                return HeatBlast;
+                                if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
+                                    return Ricochet;
                             }
+                            return HeatBlast;
                         }
 
                         // OGCD's
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_Reassembled) &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_Reassembled) && !HasEffect(Buffs.Wildfire) &&
                             (ActionReady(ChainSaw) || ActionReady(AirAnchor) || (!LevelChecked(AirAnchor) && ActionReady(Drill))) &&
                             !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble))
                             return Reassemble;
