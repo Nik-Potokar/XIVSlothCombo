@@ -91,7 +91,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaOffClassTankSct) &&
-                    IsEnabled(Bozja.LostIncense) && IsOffCooldown(Bozja.LostIncense) &&
+                    IsEnabled(Bozja.LostIncense) &&
                     HasBattleTarget())
                 {
                     //Congrats your a tank now, good luck!
@@ -120,7 +120,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaCure2Phys) &&
-                    IsEnabled(Bozja.LostCure2) && IsOffCooldown(Bozja.LostCure2) && HasEffect(Bozja.Buffs.PureFiendhunter) &&
+                    IsEnabled(Bozja.LostCure2) && HasEffect(Bozja.Buffs.PureFiendhunter) &&
                     isphysranged && !TargetHasEffect(Bozja.Buffs.MPRefresh) && !TargetHasEffect(Bozja.Buffs.MPRefresh2))
                 {
                     if (TargetHasEffect(Bozja.Buffs.ProfaneEssence) || TargetHasEffect(Bozja.Buffs.IrregularEssence) || TargetHasEffect(Bozja.Buffs.PureElder))
@@ -130,14 +130,14 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaRendArmor) &&
-                    IsEnabled(Bozja.LostRendArmor) && IsOffCooldown(Bozja.LostRendArmor) &&
+                    IsEnabled(Bozja.LostRendArmor) &&
                     HasBattleTarget() &&  canuseaction && !isphysranged && !TargetHasEffect(Bozja.Debuffs.LostRendArmor))
                 {
                     return Bozja.LostRendArmor;
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaPhysDerv) && isphysranged &&
-                        IsEnabled(Bozja.LostDervish) && IsOffCooldown(Bozja.LostDervish) && !HasEffect(Bozja.Buffs.LostDervish))
+                        IsEnabled(Bozja.LostDervish) && !HasEffect(Bozja.Buffs.LostDervish))
                 {
                     return Bozja.LostDervish;
                 }
@@ -145,20 +145,19 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 if (IsEnabled(CustomComboPreset.ALL_BozjaDPS))
                 {
 
-                    if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                    if (IsEnabled(Bozja.LostExcellence))
                     { return Bozja.LostExcellence; }
 
-                    if (IsEnabled(Bozja.FontOfPower) && IsOffCooldown(Bozja.FontOfPower))
+                    if (IsEnabled(Bozja.FontOfPower))
                     { return Bozja.FontOfPower; }
 
                     if (IsEnabled(CustomComboPreset.ALL_BozjaAssassinationDPS) &&
-                    IsEnabled(Bozja.LostAssassination) && IsOffCooldown(Bozja.LostAssassination) &&
-                    HasBattleTarget() && canuseaction)
+                    IsEnabled(Bozja.LostAssassination))
                     {
                         if (HasEffect(Bozja.Buffs.BeastEssence))
                         { return Bozja.LostAssassination; }
                         
-                        if (CanWeave(actionID))
+                        if (CanWeave(actionID) && HasBattleTarget() && canuseaction)
                         { return Bozja.LostAssassination; }
                     }
 
@@ -167,20 +166,24 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     {
                         if (HasEffect(Bozja.Buffs.FontOfPower))
                         {
-                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                            //if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice))
                             { return Bozja.BannerOfHonoredSacrifice; }
 
-                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                            //if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                            if (IsEnabled(Bozja.BannerOfNobleEnds))
                             { return Bozja.BannerOfNobleEnds; }
                         }
                     }
 
                     if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                     {
-                        if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                        //if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                        if (IsEnabled(Bozja.BannerOfHonoredSacrifice))
                         { return Bozja.BannerOfHonoredSacrifice; }
 
-                        if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                        //if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                        if (IsEnabled(Bozja.BannerOfNobleEnds))
                         { return Bozja.BannerOfNobleEnds; }
                     }
                 }
@@ -284,8 +287,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS) && IsEnabled(CustomComboPreset.ALL_BozjaHealerSS) &&
-                    IsEnabled(Bozja.LostSeraphStrike) && IsOffCooldown(Bozja.LostSeraphStrike) &&
-                    HasBattleTarget())
+                    IsEnabled(Bozja.LostSeraphStrike) && HasBattleTarget())
                 {
                     //Thin air added may be jank but yea, it may work? - Riley
                     //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
@@ -326,10 +328,10 @@ namespace XIVSlothCombo.Combos.PvE.Content
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaMagicDPS))
                 {
-                    if (IsEnabled(Bozja.LostExcellence) && IsOffCooldown(Bozja.LostExcellence))
+                    if (IsEnabled(Bozja.LostExcellence))
                     { return Bozja.LostExcellence;}
 
-                    if (IsEnabled(Bozja.FontOfMagic) && IsOffCooldown(Bozja.FontOfMagic))
+                    if (IsEnabled(Bozja.FontOfMagic))
                     { return Bozja.FontOfMagic;}
 
                     // Checks to see if you have Font of Magic, and lines up Banners to Font
@@ -337,13 +339,13 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     {
                         if (HasEffect(Bozja.Buffs.FontOfMagic))
                         {
-                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                            if (IsEnabled(Bozja.BannerOfHonoredSacrifice))
                             { return Bozja.BannerOfHonoredSacrifice; }
 
-                            if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                            if (IsEnabled(Bozja.BannerOfNobleEnds))
                             { return Bozja.BannerOfNobleEnds; }
 
-                            if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
+                            if (IsEnabled(Bozja.LostChainspell))
                             { return Bozja.LostChainspell; }
 
                             //Other devs could we check for chainspell before using swiftcast?
@@ -352,13 +354,13 @@ namespace XIVSlothCombo.Combos.PvE.Content
 
                     if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
                     {
-                        if (IsEnabled(Bozja.BannerOfHonoredSacrifice) && IsOffCooldown(Bozja.BannerOfHonoredSacrifice))
+                        if (IsEnabled(Bozja.BannerOfHonoredSacrifice))
                         { return Bozja.BannerOfHonoredSacrifice; }
 
-                        if (IsEnabled(Bozja.BannerOfNobleEnds) && IsOffCooldown(Bozja.BannerOfNobleEnds))
+                        if (IsEnabled(Bozja.BannerOfNobleEnds))
                         { return Bozja.BannerOfNobleEnds; }
 
-                        if (IsEnabled(Bozja.LostChainspell) && IsOffCooldown(Bozja.LostChainspell))
+                        if (IsEnabled(Bozja.LostChainspell))
                         { return Bozja.LostChainspell; }
                     }
                 }
