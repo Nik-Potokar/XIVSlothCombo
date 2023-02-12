@@ -338,7 +338,10 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                int spellsSinceDraw = ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Malefic), Draw) + ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Combust), Draw);
+                int spellsSinceDraw = ActionWatching.CombatActions.Any(x => x == Draw) ? ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Malefic), Draw) +
+                    ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Combust), Draw) +
+                    ActionWatching.HowManyTimesUsedAfterAnotherAction(OriginalHook(Gravity), Draw) : Config.AST_ST_DPS_Play_SpeedSetting;
+
                 if (spellsSinceDraw == 0 && DrawnCard != CardType.NONE)
                 {
                     spellsSinceDraw = 1;
