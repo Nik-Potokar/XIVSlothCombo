@@ -26,14 +26,8 @@ namespace XIVSlothCombo.Combos.PvE
             // Dancing
             StandardStep = 15997,
             TechnicalStep = 15998,
-            StandardFinish0 = 16003,
-            StandardFinish1 = 16191,
-            StandardFinish2 = 16192,
-            TechnicalFinish0 = 16004,
-            TechnicalFinish1 = 16193,
-            TechnicalFinish2 = 16194,
-            TechnicalFinish3 = 16195,
-            TechnicalFinish4 = 16196,
+            StandardFinish = 16192,
+            TechnicalFinish = 16196,
             // Fan Dances
             FanDance1 = 16007,
             FanDance2 = 16008,
@@ -42,12 +36,28 @@ namespace XIVSlothCombo.Combos.PvE
             // Other
             Peloton = 7557,
             SaberDance = 16005,
-            EnAvant = 16010,
             Devilment = 16011,
             ShieldSamba = 16012,
             Flourish = 16013,
             Improvisation = 16014,
             CuringWaltz = 16015;
+
+        /* Unused
+        EnAvant = 16010,
+        ClosedPosition = 16006,
+        Ending = 18073,
+        Emboite = 15999,
+        Entrechat = 16000,
+        Jete = 16001,
+        Pirouette = 16002,
+        StandardFinish0 = 16003,
+        StandardFinish1 = 16191,
+        TechnicalFinish0 = 16004,
+        TechnicalFinish1 = 16193,
+        TechnicalFinish2 = 16194,
+        TechnicalFinish3 = 16195,
+        ImprovisedFinish = 25789,
+        */
 
         public static class Buffs
         {
@@ -76,6 +86,23 @@ namespace XIVSlothCombo.Combos.PvE
                 Peloton = 1199,
                 ShieldSamba = 1826;
         }
+
+        /* Traits
+        public static class Traits
+        {
+            public const ushort
+                FourfoldFantasy = 252,
+                ActionDamage1 = 251,
+                ActionDamage2 = 253,
+                EnhancedEnAvant = 254,
+                EnhancedEnAvant2 = 256,
+                EnhancedTechnicalFinish = 453,
+                EnhancedEsprit = 454,
+                EnhancedFlourish = 455,
+                EnhancedShieldSamba = 456,
+                EnhancedDevilment = 457;
+        }
+        */
 
         public static class Config
         {
@@ -184,13 +211,13 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is StandardStep && gauge.IsDancing && HasEffect(Buffs.StandardStep))
                     return gauge.CompletedSteps < 2
                         ? gauge.NextStep
-                        : StandardFinish2;
+                        : StandardFinish;
 
                 // Technical Step
                 if ((actionID is TechnicalStep) && gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
                     return gauge.CompletedSteps < 4
                         ? gauge.NextStep
-                        : TechnicalFinish4;
+                        : TechnicalFinish;
 
                 return actionID;
             }
@@ -366,14 +393,14 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return gauge.CompletedSteps < 2
                                 ? gauge.NextStep
-                                : StandardFinish2;
+                                : StandardFinish;
                         }
 
                         if (HasEffect(Buffs.TechnicalStep))
                         {
                             return gauge.CompletedSteps < 4
                                 ? gauge.NextStep
-                                : TechnicalFinish4;
+                                : TechnicalFinish;
                         }
                     }
                 }
@@ -409,14 +436,14 @@ namespace XIVSlothCombo.Combos.PvE
                         HasEffect(Buffs.StandardStep))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
-                            : StandardFinish2;
+                            : StandardFinish;
 
                     // ST Technical (Dance) Steps & Fill
                     if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_TechFill)) &&
                         HasEffect(Buffs.TechnicalStep))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
-                            : TechnicalFinish4;
+                            : TechnicalFinish;
                     #endregion
 
                     #region Weaves
@@ -577,14 +604,14 @@ namespace XIVSlothCombo.Combos.PvE
                         HasEffect(Buffs.StandardStep))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
-                            : StandardFinish2;
+                            : StandardFinish;
 
                     // AoE Technical (Dance) Steps & Fill
                     if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)) &&
                         HasEffect(Buffs.TechnicalStep))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
-                            : TechnicalFinish4;
+                            : TechnicalFinish;
                     #endregion
 
                     #region Weaves
