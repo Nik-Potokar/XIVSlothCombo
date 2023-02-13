@@ -3,6 +3,7 @@ using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -42,22 +43,22 @@ namespace XIVSlothCombo.Combos.PvE
             Improvisation = 16014,
             CuringWaltz = 16015;
 
-        /* Unused
-        EnAvant = 16010,
-        ClosedPosition = 16006,
-        Ending = 18073,
-        Emboite = 15999,
-        Entrechat = 16000,
-        Jete = 16001,
-        Pirouette = 16002,
-        StandardFinish0 = 16003,
-        StandardFinish1 = 16191,
-        TechnicalFinish0 = 16004,
-        TechnicalFinish1 = 16193,
-        TechnicalFinish2 = 16194,
-        TechnicalFinish3 = 16195,
-        ImprovisedFinish = 25789,
-        */
+            /* Unused
+            EnAvant = 16010,
+            ClosedPosition = 16006,
+            Ending = 18073,
+            Emboite = 15999,
+            Entrechat = 16000,
+            Jete = 16001,
+            Pirouette = 16002,
+            StandardFinish0 = 16003,
+            StandardFinish1 = 16191,
+            TechnicalFinish0 = 16004,
+            TechnicalFinish1 = 16193,
+            TechnicalFinish2 = 16194,
+            TechnicalFinish3 = 16195,
+            ImprovisedFinish = 25789,
+            */
 
         public static class Buffs
         {
@@ -106,41 +107,33 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public const string
-                DNCEspritThreshold_ST = "DNCEspritThreshold_ST";                            // Single target Esprit threshold
-            public const string
-                DNCEspritThreshold_AoE = "DNCEspritThreshold_AoE";                          // AoE Esprit threshold
+            #region Legacy config
+            internal static UserInt
+                DNCEspritThreshold_ST = new("DNCEspritThreshold_ST"),                           // Single target Esprit threshold
+                DNCEspritThreshold_AoE = new("DNCEspritThreshold_AoE");                         // AoE Esprit threshold
+            #endregion
 
             #region Simple ST Sliders
-            public const string
-                DNCSimpleSSBurstPercent = "DNCSimpleSSBurstPercent";                        // Standard Step    target HP% threshold
-            public const string
-                DNCSimpleTSBurstPercent = "DNCSimpleTSBurstPercent";                        // Technical Step   target HP% threshold
-            public const string
-                DNCSimpleFeatherBurstPercent = "DNCSimpleFeatherBurstPercent";              // Feather burst    target HP% threshold
-            public const string
-                DNCSimpleSaberThreshold = "DNCSimpleSaberThreshold";                        // Saber Dance      Esprit threshold
-            public const string
-                DNCSimplePanicHealWaltzPercent = "DNCSimplePanicHealWaltzPercent";          // Curing Waltz     player HP% threshold
-            public const string
-                DNCSimplePanicHealWindPercent = "DNCSimplePanicHealWindPercent";            // Second Wind      player HP% threshold
+            internal static UserInt
+                DNCSimpleSSBurstPercent = new("DNCSimpleSSBurstPercent"),                       // Standard Step    target HP% threshold
+                DNCSimpleTSBurstPercent = new("DNCSimpleTSBurstPercent"),                       // Technical Step   target HP% threshold
+                DNCSimpleFeatherBurstPercent = new("DNCSimpleFeatherBurstPercent"),             // Feather burst    target HP% threshold
+                DNCSimpleSaberThreshold = new("DNCSimpleSaberThreshold"),                       // Saber Dance      Esprit threshold
+                DNCSimplePanicHealWaltzPercent = new("DNCSimplePanicHealWaltzPercent"),         // Curing Waltz     player HP% threshold
+                DNCSimplePanicHealWindPercent = new("DNCSimplePanicHealWindPercent");           // Second Wind      player HP% threshold
             #endregion
 
             #region Simple AoE Sliders
-            public const string
-                DNCSimpleSSAoEBurstPercent = "DNCSimpleSSAoEBurstPercent";                  // Standard Step    target HP% threshold
-            public const string
-                DNCSimpleTSAoEBurstPercent = "DNCSimpleTSAoEBurstPercent";                  // Technical Step   target HP% threshold
-            public const string
-                DNCSimpleAoESaberThreshold = "DNCSimpleAoESaberThreshold";                  // Saber Dance      Esprit threshold
-            public const string
-                DNCSimpleAoEPanicHealWaltzPercent = "DNCSimpleAoEPanicHealWaltzPercent";    // Curing Waltz     player HP% threshold 
-            public const string
-                DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";      // Second Wind      player HP% threshold
+            internal static UserInt
+                DNCSimpleSSAoEBurstPercent = new("DNCSimpleSSAoEBurstPercent"),                 // Standard Step    target HP% threshold
+                DNCSimpleTSAoEBurstPercent = new("DNCSimpleTSAoEBurstPercent"),                 // Technical Step   target HP% threshold
+                DNCSimpleAoESaberThreshold = new("DNCSimpleAoESaberThreshold"),                 // Saber Dance      Esprit threshold
+                DNCSimpleAoEPanicHealWaltzPercent = new("DNCSimpleAoEPanicHealWaltzPercent"),   // Curing Waltz     player HP% threshold
+                DNCSimpleAoEPanicHealWindPercent = new("DNCSimpleAoEPanicHealWindPercent");     // Second Wind      player HP% threshold
             #endregion
 
-            public const string
-                DNCVariantCurePercent = "DNCVariantCurePercent";                            // Variant Cure     player HP% threshold
+            internal static UserInt
+                DNCVariantCurePercent = new("DNCVariantCurePercent");                           // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceComboReplacer : CustomCombo
