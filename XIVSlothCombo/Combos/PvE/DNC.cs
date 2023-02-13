@@ -111,31 +111,31 @@ namespace XIVSlothCombo.Combos.PvE
         {
             #region Legacy config
             internal static UserInt
-                DNCEspritThreshold_ST = new("DNCEspritThreshold_ST"),                           // Single target Esprit threshold
-                DNCEspritThreshold_AoE = new("DNCEspritThreshold_AoE");                         // AoE Esprit threshold
+                DNC_LegacyST_EspritTh       = new("DNC_LegacyST_EspritTh"),       // Single target Esprit threshold
+                DNC_LegacyAoE_EspritTh      = new("DNC_LegacyAoE_EspritTh");      // AoE Esprit threshold
             #endregion
 
-            #region Simple ST Sliders
+            #region Advanced ST Sliders
             internal static UserInt
-                DNCSimpleSSBurstPercent = new("DNCSimpleSSBurstPercent"),                       // Standard Step    target HP% threshold
-                DNCSimpleTSBurstPercent = new("DNCSimpleTSBurstPercent"),                       // Technical Step   target HP% threshold
-                DNCSimpleFeatherBurstPercent = new("DNCSimpleFeatherBurstPercent"),             // Feather burst    target HP% threshold
-                DNCSimpleSaberThreshold = new("DNCSimpleSaberThreshold"),                       // Saber Dance      Esprit threshold
-                DNCSimplePanicHealWaltzPercent = new("DNCSimplePanicHealWaltzPercent"),         // Curing Waltz     player HP% threshold
-                DNCSimplePanicHealWindPercent = new("DNCSimplePanicHealWindPercent");           // Second Wind      player HP% threshold
+                DNC_AdvST_SSBurstPct        = new("DNC_AdvST_SSBurstPct"),        // Standard Step    target HP% threshold
+                DNC_AdvST_TSBurstPct        = new("DNC_AdvST_TSBurstPct"),        // Technical Step   target HP% threshold
+                DNC_AdvST_FeatherBurstPct   = new("DNC_AdvST_FeatherBurstPct"),   // Feather burst    target HP% threshold
+                DNC_AdvST_SaberTh           = new("DNC_AdvST_SaberTh"),           // Saber Dance      Esprit     threshold
+                DNC_AdvST_PanicWaltzPct     = new("DNC_AdvST_PanicWaltzPct"),     // Curing Waltz     player HP% threshold
+                DNC_AdvST_PanicWindPct      = new("DNC_AdvST_PanicWindPct");      // Second Wind      player HP% threshold
             #endregion
 
-            #region Simple AoE Sliders
+            #region Advanced AoE Sliders
             internal static UserInt
-                DNCSimpleSSAoEBurstPercent = new("DNCSimpleSSAoEBurstPercent"),                 // Standard Step    target HP% threshold
-                DNCSimpleTSAoEBurstPercent = new("DNCSimpleTSAoEBurstPercent"),                 // Technical Step   target HP% threshold
-                DNCSimpleAoESaberThreshold = new("DNCSimpleAoESaberThreshold"),                 // Saber Dance      Esprit threshold
-                DNCSimpleAoEPanicHealWaltzPercent = new("DNCSimpleAoEPanicHealWaltzPercent"),   // Curing Waltz     player HP% threshold
-                DNCSimpleAoEPanicHealWindPercent = new("DNCSimpleAoEPanicHealWindPercent");     // Second Wind      player HP% threshold
+                DNC_AdvAoE_SSBurstPct       = new("DNC_AdvAoE_SSBurstPct"),       // Standard Step    target HP% threshold
+                DNC_AdvAoE_TSBurstPct       = new("DNC_AdvAoE_TSBurstPct"),       // Technical Step   target HP% threshold
+                DNC_AdvAoE_SaberTh          = new("DNC_AdvAoE_SaberTh"),          // Saber Dance      Esprit     threshold
+                DNC_AdvAoE_PanicWaltzPct    = new("DNC_AdvAoE_PanicWaltzPct"),    // Curing Waltz     player HP% threshold
+                DNC_AdvAoE_PanicWindPct     = new("DNC_AdvAoE_PanicWindPct");     // Second Wind      player HP% threshold
             #endregion
 
             internal static UserInt
-                DNCVariantCurePercent = new("DNCVariantCurePercent");                           // Variant Cure     player HP% threshold
+                DNC_Variant_CurePct         = new("DNC_Variant_CurePct");         // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceComboReplacer : CustomCombo
@@ -250,7 +250,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyST_EspritTh))
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -298,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyAoE_EspritTh))
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -454,7 +454,7 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNC_Variant_CurePct))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
@@ -473,7 +473,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FanDance3;
 
                             // FD1 HP% Dump
-                            if (GetTargetHPPercent() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent) && Gauge.Feathers > 0)
+                            if (GetTargetHPPercent() <= PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_FeatherBurstPct) && Gauge.Feathers > 0)
                                 return FanDance1;
 
                             if (LevelChecked(TechnicalStep))
@@ -501,11 +501,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_PanicHeals))
                         {
                             if (ActionReady(CuringWaltz) &&
-                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWaltzPercent))
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_PanicWaltzPct))
                                 return CuringWaltz;
 
                             if (ActionReady(All.SecondWind) &&
-                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimplePanicHealWindPercent))
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_PanicWindPct))
                                 return All.SecondWind;
                         }
 
@@ -520,7 +520,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
-                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
+                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_SSBurstPct)) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
                             (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
                             IsOffCooldown(StandardStep))
@@ -529,7 +529,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Technical Step
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && ActionReady(TechnicalStep) &&
-                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
+                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_TSBurstPct)) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
@@ -537,7 +537,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
                     {
-                        if (Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
+                        if (Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_SaberTh) ||
                             (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
                             return SaberDance;
                     }
@@ -554,7 +554,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Standard Step (inside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
                     {
-                        if (GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent) &&
+                        if (GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNC_AdvST_SSBurstPct) &&
                             (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
                             return StandardStep;
                     }
@@ -621,7 +621,7 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNC_Variant_CurePct))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
@@ -688,11 +688,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_PanicHeals))
                         {
                             if (ActionReady(CuringWaltz) &&
-                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWaltzPercent))
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNC_AdvAoE_PanicWaltzPct))
                                 return CuringWaltz;
 
                             if (ActionReady(All.SecondWind) &&
-                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoEPanicHealWindPercent))
+                                PlayerHealthPercentageHp() < PluginConfiguration.GetCustomIntValue(Config.DNC_AdvAoE_PanicWindPct))
                                 return All.SecondWind;
                         }
 
@@ -707,7 +707,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
-                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent)) &&
+                        if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNC_AdvAoE_SSBurstPct)) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
                             (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
                             IsOffCooldown(StandardStep))
@@ -716,7 +716,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Technical Step
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && ActionReady(TechnicalStep) &&
-                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent)) &&
+                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNC_AdvAoE_TSBurstPct)) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
@@ -724,7 +724,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
                     {
-                        if (Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
+                        if (Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_AdvAoE_SaberTh) ||
                             (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
                             return SaberDance;
                     }
@@ -741,7 +741,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Standard Step (inside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
                     {
-                        if (GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent) &&
+                        if (GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNC_AdvAoE_SSBurstPct) &&
                             (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
                             return StandardStep;
                     }
