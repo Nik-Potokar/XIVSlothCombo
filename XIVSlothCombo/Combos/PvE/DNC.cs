@@ -105,6 +105,8 @@ namespace XIVSlothCombo.Combos.PvE
         }
         */
 
+        private static DNCGauge Gauge => CustomComboFunctions.GetJobGauge<DNCGauge>();
+
         public static class Config
         {
             #region Legacy config
@@ -142,7 +144,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (GetJobGauge<DNCGauge>().IsDancing)
+                if (Gauge.IsDancing)
                 {
                     uint[]? actionIDs = Service.Configuration.DancerDanceCompatActionIDs;
 
@@ -198,18 +200,16 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                DNCGauge? gauge = GetJobGauge<DNCGauge>();
-
                 // Standard Step
-                if (actionID is StandardStep && gauge.IsDancing && HasEffect(Buffs.StandardStep))
-                    return gauge.CompletedSteps < 2
-                        ? gauge.NextStep
+                if (actionID is StandardStep && Gauge.IsDancing && HasEffect(Buffs.StandardStep))
+                    return Gauge.CompletedSteps < 2
+                        ? Gauge.NextStep
                         : StandardFinish;
 
                 // Technical Step
-                if ((actionID is TechnicalStep) && gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
-                    return gauge.CompletedSteps < 4
-                        ? gauge.NextStep
+                if ((actionID is TechnicalStep) && Gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
+                    return Gauge.CompletedSteps < 4
+                        ? Gauge.NextStep
                         : TechnicalFinish;
 
                 return actionID;
@@ -244,21 +244,20 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Cascade)
                 {
                     #region Types
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
 
                     // ST Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
                         return SaberDance;
 
                     if (CanWeave(actionID))
                     {
                         // ST Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            LevelChecked(FanDance1) && gauge.Feathers is 4)
+                            LevelChecked(FanDance1) && Gauge.Feathers is 4)
                             return FanDance1;
 
                         // ST Fan Dance 3/4 on combo
@@ -293,21 +292,20 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Windmill)
                 {
                     #region Types
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
 
                     // AoE Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
                         return SaberDance;
 
                     if (CanWeave(actionID))
                     {
                         // AoE Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            LevelChecked(FanDance2) && gauge.Feathers is 4)
+                            LevelChecked(FanDance2) && Gauge.Feathers is 4)
                             return FanDance2;
 
                         // AoE Fan Dance 3/4 on combo
@@ -352,10 +350,8 @@ namespace XIVSlothCombo.Combos.PvE
                 // One-button mode for both dances (SS/TS). SS takes priority.
                 if (actionID is StandardStep)
                 {
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
-
                     // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !gauge.IsDancing)
+                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !Gauge.IsDancing)
                     {
                         if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
                             (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
@@ -364,7 +360,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Flourish
                     if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
-                        InCombat() && !gauge.IsDancing &&
+                        InCombat() && !Gauge.IsDancing &&
                         ActionReady(Flourish) &&
                         IsOnCooldown(StandardStep))
                         return Flourish;
@@ -376,23 +372,23 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Tech Step
                     if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
-                        !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
+                        !Gauge.IsDancing && !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
 
                     // Dance steps
-                    if (gauge.IsDancing)
+                    if (Gauge.IsDancing)
                     {
                         if (HasEffect(Buffs.StandardStep))
                         {
-                            return gauge.CompletedSteps < 2
-                                ? gauge.NextStep
+                            return Gauge.CompletedSteps < 2
+                                ? Gauge.NextStep
                                 : StandardFinish;
                         }
 
                         if (HasEffect(Buffs.TechnicalStep))
                         {
-                            return gauge.CompletedSteps < 4
-                                ? gauge.NextStep
+                            return Gauge.CompletedSteps < 4
+                                ? Gauge.NextStep
                                 : TechnicalFinish;
                         }
                     }
@@ -411,7 +407,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Cascade)
                 {
                     #region Types
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
@@ -427,15 +422,15 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Standard (Dance) Steps & Fill
                     if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)) &&
                         HasEffect(Buffs.StandardStep))
-                        return gauge.CompletedSteps < 2
-                            ? gauge.NextStep
+                        return Gauge.CompletedSteps < 2
+                            ? Gauge.NextStep
                             : StandardFinish;
 
                     // ST Technical (Dance) Steps & Fill
                     if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_TechFill)) &&
                         HasEffect(Buffs.TechnicalStep))
-                        return gauge.CompletedSteps < 4
-                            ? gauge.NextStep
+                        return Gauge.CompletedSteps < 4
+                            ? Gauge.NextStep
                             : TechnicalFinish;
                     #endregion
 
@@ -478,23 +473,23 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FanDance3;
 
                             // FD1 HP% Dump
-                            if (GetTargetHPPercent() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent) && gauge.Feathers > 0)
+                            if (GetTargetHPPercent() <= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent) && Gauge.Feathers > 0)
                                 return FanDance1;
 
                             if (LevelChecked(TechnicalStep))
                             {
                                 // Burst FD1
-                                if (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)
+                                if (HasEffect(Buffs.TechnicalFinish) && Gauge.Feathers > 0)
                                     return FanDance1;
 
                                 // FD1 Pooling
-                                if (gauge.Feathers > 3 &&
+                                if (Gauge.Feathers > 3 &&
                                     (GetCooldownRemainingTime(TechnicalStep) > 2.5f || IsOffCooldown(TechnicalStep)))
                                     return FanDance1;
                             }
 
                             // FD1 Non-pooling & under burst level
-                            if (!LevelChecked(TechnicalStep) && gauge.Feathers > 0)
+                            if (!LevelChecked(TechnicalStep) && Gauge.Feathers > 0)
                                 return FanDance1;
 
                         }
@@ -542,8 +537,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
                     {
-                        if (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
-                            (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
+                        if (Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
+                            (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
                             return SaberDance;
                     }
 
@@ -586,7 +581,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Windmill)
                 {
                     #region Types
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
@@ -595,15 +589,15 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Standard (Dance) Steps & Fill
                     if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)) &&
                         HasEffect(Buffs.StandardStep))
-                        return gauge.CompletedSteps < 2
-                            ? gauge.NextStep
+                        return Gauge.CompletedSteps < 2
+                            ? Gauge.NextStep
                             : StandardFinish;
 
                     // AoE Technical (Dance) Steps & Fill
                     if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)) &&
                         HasEffect(Buffs.TechnicalStep))
-                        return gauge.CompletedSteps < 4
-                            ? gauge.NextStep
+                        return Gauge.CompletedSteps < 4
+                            ? Gauge.NextStep
                             : TechnicalFinish;
                     #endregion
 
@@ -649,8 +643,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
 
-                            if ((gauge.Feathers > minFeathers ||
-                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)) &&
+                            if ((Gauge.Feathers > minFeathers ||
+                                (HasEffect(Buffs.TechnicalFinish) && Gauge.Feathers > 0)) &&
                                 LevelChecked(FanDance2))
                                 return FanDance2;
                         }
@@ -668,22 +662,22 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(TechnicalStep))
                                 {
                                     // Burst FD2
-                                    if (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)
+                                    if (HasEffect(Buffs.TechnicalFinish) && Gauge.Feathers > 0)
                                         return FanDance2;
 
                                     // FD2 Pooling
-                                    if (gauge.Feathers > 3 &&
+                                    if (Gauge.Feathers > 3 &&
                                         (GetCooldownRemainingTime(TechnicalStep) > 2.5f || IsOffCooldown(TechnicalStep)))
                                         return FanDance2;
                                 }
 
                                 // FD2 Non-pooling & under burst level
-                                if (!LevelChecked(TechnicalStep) && gauge.Feathers > 0)
+                                if (!LevelChecked(TechnicalStep) && Gauge.Feathers > 0)
                                     return FanDance2;
                             }
 
                             // FD1 Replacement for Lv.30-49
-                            if (!LevelChecked(FanDance2) && gauge.Feathers > 0)
+                            if (!LevelChecked(FanDance2) && Gauge.Feathers > 0)
                                 return FanDance1;
                         }
 
@@ -730,8 +724,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
                     {
-                        if (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
-                            (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
+                        if (Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleAoESaberThreshold) ||
+                            (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
                             return SaberDance;
                     }
 
