@@ -656,19 +656,14 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // Simple ST Variant Cure
-                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
-                        return Variant.VariantCure;
-
-                    // Simple ST Variant Rampart
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
-                        return Variant.VariantRampart;
-
                     if (CanWeave(actionID))
                     {
+                        // Simple ST Variant Rampart
+                        if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         // Simple ST Feathers & Fans
                         if (LevelChecked(FanDance1))
                         {
@@ -719,6 +714,11 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region GCD
+                    // Simple ST Variant Cure
+                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
+                        return Variant.VariantCure;
+
                     // Simple ST Standard Step (outside of burst)
                     if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -829,19 +829,14 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // Advanced ST Variant Cure
-                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
-                        return Variant.VariantCure;
-
-                    // Advanced ST Variant Rampart
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
-                        return Variant.VariantRampart;
-
                     if (CanWeave(actionID))
                     {
+                        // Advanced ST Variant Rampart
+                        if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         // Advanced ST Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_AdvST_Feathers) && LevelChecked(FanDance1))
                         {
@@ -894,6 +889,11 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region GCD
+                    // Advanced ST Variant Cure
+                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
+                        return Variant.VariantCure;
+
                     // Advanced ST Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -997,19 +997,14 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // Simple AoE Variant Cure
-                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
-                        return Variant.VariantCure;
-
-                    // Simple AoE Variant Rampart
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
-                        return Variant.VariantRampart;
-
                     if (CanWeave(actionID))
                     {
+                        // Simple AoE Variant Rampart
+                        if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         /*
                         // Simple AoE Feathers & Fans
                         if (LevelChecked(FanDance1))
@@ -1080,6 +1075,11 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region GCD
+                    // Simple AoE Variant Cure
+                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
+                        return Variant.VariantCure;
+
                     // Simple AoE Standard Step (outside of burst)
                     if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -1181,19 +1181,14 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    // Advanced AoE Variant Cure
-                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
-                        return Variant.VariantCure;
-
-                    // Advanced AoE Variant Rampart
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
-                        return Variant.VariantRampart;
-
                     if (CanWeave(actionID))
                     {
+                        // Advanced AoE Variant Rampart
+                        if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         /*
                         // Advanced AoE Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Feathers) && LevelChecked(FanDance1))
@@ -1266,6 +1261,11 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region GCD
+                    // Advanced AoE Variant Cure
+                    if (IsEnabled(CustomComboPreset.DNC_VariantCure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
+                        return Variant.VariantCure;
+
                     // Advanced AoE Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
