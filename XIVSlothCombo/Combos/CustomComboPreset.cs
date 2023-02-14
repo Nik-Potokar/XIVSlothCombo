@@ -838,66 +838,71 @@ namespace XIVSlothCombo.Combos
             "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 1, "", "")]
             DNC_AdvAoE_SS = 4023,
 
+                [ParentCombo(DNC_AdvAoE_SS)]
+                [CustomComboInfo("AoE Standard Dance Burst Option",
+                "Includes Standard Step (and all steps) in the burst at low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.", DNC.JobID, 1, "", "")]
+                DNC_AdvAoE_SS_Burst = 4024,
+
             [ParentCombo(DNC_AdvAoE)]
             [ConflictingCombos(DNC_AdvAoE_SS)]
             [CustomComboInfo("AoE Standard Fill Option",
             "Adds ONLY Standard dance steps and Standard Finish to the AoE rotation." +
             "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 2, "", "")]
-            DNC_AdvAoE_StandardFill = 4024,
+            DNC_AdvAoE_StandardFill = 4025,
 
             [ParentCombo(DNC_AdvAoE)]
             [ConflictingCombos(DNC_AdvAoE_TechFill)]
             [CustomComboInfo("AoE Technical Dance Option",
             "Includes Technical Step, all dance steps and Technical Finish in the AoE rotation.", DNC.JobID, 3, "", "")]
-            DNC_AdvAoE_TS = 4025,
+            DNC_AdvAoE_TS = 4026,
 
             [ParentCombo(DNC_AdvAoE)]
             [ConflictingCombos(DNC_AdvAoE_TS)]
             [CustomComboInfo("AoE Tech Fill Option",
             "Adds ONLY Technical dance steps and Technical Finish to the AoE rotation." +
             "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 4, "", "")]
-            DNC_AdvAoE_TechFill = 4026,
+            DNC_AdvAoE_TechFill = 4027,
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Tech Devilment Option",
             "Includes Devilment in the AoE rotation." +
             "\nWill activate only during Technical Finish if you're Lv70 or above." +
             "\nWill be used on cooldown below Lv70.", DNC.JobID, 5, "", "")]
-            DNC_AdvAoE_Devilment = 4027,
+            DNC_AdvAoE_Devilment = 4028,
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("Saber Dance Option",
             "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 6, "", "")]
-            DNC_AdvAoE_SaberDance = 4028,
+            DNC_AdvAoE_SaberDance = 4029,
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Flourish Option",
             "Includes Flourish in the AoE rotation.", DNC.JobID, 6, "", "")]
-            DNC_AdvAoE_Flourish = 4029,
+            DNC_AdvAoE_Flourish = 4030,
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Feathers Option",
             "Expends a feather in the next available weave window when capped." +
             "\nWeaves feathers where possible during Technical Finish." +
             "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 7, "", "")]
-            DNC_AdvAoE_Feathers = 4030,
+            DNC_AdvAoE_Feathers = 4031,
 
                 /*
                 [ParentCombo(DNC_AdvAoE_Feathers)]
                 [CustomComboInfo("AoE Feather Pooling Option",
                 "Expends a feather in the next available weave window when capped.", DNC.JobID, 8, "", "")]
-                DNC_AoE_Simple_FeatherPooling = 4031,
+                DNC_AoE_Simple_FeatherPooling = 4032,
                 */
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Panic Heals Option",
             "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 9, "", "")]
-            DNC_AdvAoE_PanicHeals = 4032,
+            DNC_AdvAoE_PanicHeals = 4033,
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Improvisation Option",
             "Includes Improvisation in the AoE rotation when available.", DNC.JobID, 10, "", "")]
-            DNC_AdvAoE_Improvisation = 4033,
+            DNC_AdvAoE_Improvisation = 4034,
         #endregion
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
@@ -906,7 +911,7 @@ namespace XIVSlothCombo.Combos
         "Change Standard Step and Technical Step into each dance step while dancing." +
         "\nWorks with Simple/Advanced Dancer Single Target and AoE." +
         "\nWorks with Legacy Features.", DNC.JobID, 0, "", "")]
-        DNC_DanceStepSolver = 4034,
+        DNC_DanceStepSolver = 4040,
 
         #region Legacy Features (L)
         [ConflictingCombos(DNC_ST_SimpleMode, DNC_AdvST, DNC_AoE_SimpleMode, DNC_AdvAoE)]

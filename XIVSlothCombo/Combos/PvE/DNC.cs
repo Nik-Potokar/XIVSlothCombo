@@ -1300,7 +1300,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // Advanced AoE Standard Step (inside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS_Burst) &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct &&
                         (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
