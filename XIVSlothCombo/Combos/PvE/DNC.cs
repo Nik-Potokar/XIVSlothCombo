@@ -1090,12 +1090,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // AoE Saber Dance
-                    if (LevelChecked(SaberDance) && (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
-                    {
-                        if (Gauge.Esprit >= 80 ||
-                            (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
-                            return SaberDance;
-                    }
+                    if (LevelChecked(SaberDance) &&
+                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
+                        ((HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50) ||
+                        Gauge.Esprit >= 80))
+                        return SaberDance;
 
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
@@ -1107,12 +1106,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // AoE Standard Step (inside of burst)
-                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
-                    {
-                        if (GetTargetHPPercent() > 5 &&
-                            (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
-                            return StandardStep;
-                    }
+                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                        GetTargetHPPercent() > 5 && (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
+                        return StandardStep;
 
                     if (LevelChecked(Bloodshower) && flow)
                         return Bloodshower;
@@ -1277,12 +1273,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SaberDance) && LevelChecked(SaberDance) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
-                    {
-                        if (Gauge.Esprit >= Config.DNC_AdvAoE_SaberTh ||
-                            (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
-                            return SaberDance;
-                    }
+                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
+                        ((HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50) ||
+                        Gauge.Esprit >= Config.DNC_AdvAoE_SaberTh))
+                        return SaberDance;
 
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
@@ -1294,12 +1288,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // AoE Standard Step (inside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
-                    {
-                        if (GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct &&
-                            (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
-                            return StandardStep;
-                    }
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) &&
+                        IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                        GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct &&
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
+                        return StandardStep;
 
                     if (LevelChecked(Bloodshower) && flow)
                         return Bloodshower;
