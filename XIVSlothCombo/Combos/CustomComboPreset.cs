@@ -733,42 +733,47 @@ namespace XIVSlothCombo.Combos
             "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1, "", "")]
             DNC_AdvST_SS = 4003,
 
+                [ParentCombo(DNC_AdvST_SS)]
+                [CustomComboInfo("Standard Dance Burst Option",
+                "Includes Standard Step (and all steps) in the burst at low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.", DNC.JobID, 1, "", "")]
+                DNC_AdvST_SS_Burst = 4004,
+
             [ParentCombo(DNC_AdvST)]
             [ConflictingCombos(DNC_AdvST_SS)]
             [CustomComboInfo("Standard Fill Option",
             "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
             "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 1, "", "")]
-            DNC_AdvST_StandardFill = 4004,
+            DNC_AdvST_StandardFill = 4005,
 
             [ParentCombo(DNC_AdvST)]
             [ConflictingCombos(DNC_AdvST_TechFill)]
             [CustomComboInfo("Technical Dance Option",
             "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 2, "", "")]
-            DNC_AdvST_TS = 4005,
+            DNC_AdvST_TS = 4006,
 
             [ParentCombo(DNC_AdvST)]
             [ConflictingCombos(DNC_AdvST_TS)]
             [CustomComboInfo("Technical Fill Option",
             "Adds ONLY Technical dance steps and Technical Finish to the rotation." +
             "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 2, "", "")]
-            DNC_AdvST_TechFill = 4006,
+            DNC_AdvST_TechFill = 4007,
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Technical Devilment Option",
             "Includes Devilment in the rotation." +
             "\nWill activate only during Technical Finish if you're Lv70 or above." +
             "\nWill be used on cooldown below Lv70.", DNC.JobID, 2, "", "")]
-            DNC_AdvST_Devilment = 4007,
+            DNC_AdvST_Devilment = 4008,
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Saber Dance Option",
             "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 3, "", "")]
-            DNC_AdvST_SaberDance = 4008,
+            DNC_AdvST_SaberDance = 4009,
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Flourish Option",
             "Includes Flourish in the rotation.", DNC.JobID, 3, "", "")]
-            DNC_AdvST_Flourish = 4009,
+            DNC_AdvST_Flourish = 4010,
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Feathers Option",
@@ -776,7 +781,7 @@ namespace XIVSlothCombo.Combos
             "\nWeaves feathers where possible during Technical Finish." +
             "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
             "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 4, "", "")]
-            DNC_AdvST_Feathers = 4010,
+            DNC_AdvST_Feathers = 4011,
 
                 /*
                 [ParentCombo(DNC_AdvST_Feathers)]
@@ -784,24 +789,24 @@ namespace XIVSlothCombo.Combos
                 "Expends a feather in the next available weave window when capped." +
                 "\nWeaves feathers where possible during Technical Finish." +
                 "\nWeaves feathers outside of burst when target is below set HP percentage.", DNC.JobID, 4, "", "")]
-                DNC_ST_Simple_FeatherPooling = 4011,
+                DNC_ST_Simple_FeatherPooling = 4012,
                 */
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Panic Heals Option",
             "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
-            DNC_AdvST_PanicHeals = 4012,
+            DNC_AdvST_PanicHeals = 4013,
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Improvisation Option",
             "Includes Improvisation in the rotation when available.", DNC.JobID, 5, "", "")]
-            DNC_AdvST_Improvisation = 4013,
+            DNC_AdvST_Improvisation = 4014,
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Peloton Opener Option",
             "Uses Peloton when you are out of combat, do not already have the Peloton buff and are performing Standard Step with greater than 5s remaining of your dance." +
             "\nWill not override Dance Step Combo Feature.", DNC.JobID, 5, "", "")]
-            DNC_AdvST_Peloton = 4014,
+            DNC_AdvST_Peloton = 4015,
         #endregion
 
         [ReplaceSkill(DNC.Windmill)]

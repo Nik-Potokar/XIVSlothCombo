@@ -750,11 +750,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // ST Standard Step (inside of burst)
-                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
-                    {
-                        if (GetTargetHPPercent() > 5 && (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
-                            return StandardStep;
-                    }
+                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                        Gauge.Esprit < 25 &&
+                        GetTargetHPPercent() > 5 &&
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
+                        return StandardStep;
 
                     if (LevelChecked(Fountainfall) && flow)
                         return Fountainfall;
@@ -923,12 +923,12 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // ST Standard Step (inside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish))
-                    {
-                        if (GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct &&
-                            (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
-                            return StandardStep;
-                    }
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS_Burst) &&
+                        IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                        Gauge.Esprit < 25 &&
+                        GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct &&
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 5))
+                        return StandardStep;
 
                     if (LevelChecked(Fountainfall) && flow)
                         return Fountainfall;
