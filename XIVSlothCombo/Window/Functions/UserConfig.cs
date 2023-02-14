@@ -1190,46 +1190,46 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyAoE_EspritTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_Variant_CurePct, "HP% to be at or under", 200);
+            if (preset == CustomComboPreset.DNC_VariantCure)
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_VariantCurePct, "HP% to be at or under", 200);
 
             #region Simple ST Sliders
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_SS)
+            if (preset == CustomComboPreset.DNC_AdvST_SS)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_SSBurstPct, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_TS)
+            if (preset == CustomComboPreset.DNC_AdvST_TS)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_TSBurstPct, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_Feathers)
+            if (preset == CustomComboPreset.DNC_AdvST_Feathers)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_FeatherBurstPct, "Target HP% to dump all pooled feathers below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_SaberDance)
+            if (preset == CustomComboPreset.DNC_AdvST_SaberDance)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_AdvST_SaberTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
+            if (preset == CustomComboPreset.DNC_AdvST_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWaltzPct, "Curing Waltz HP%", 200, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
+            if (preset == CustomComboPreset.DNC_AdvST_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWindPct, "Second Wind HP%", 200, SliderIncrements.Ones);
 
             #endregion
 
             #region Simple AoE Sliders
 
-            if (preset == CustomComboPreset.DNC_AoE_Simple_SS)
+            if (preset == CustomComboPreset.DNC_AdvAoE_SS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNC_AdvAoE_SSBurstPct, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AoE_Simple_TS)
+            if (preset == CustomComboPreset.DNC_AdvAoE_TS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNC_AdvAoE_TSBurstPct, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AoE_Simple_SaberDance)
+            if (preset == CustomComboPreset.DNC_AdvAoE_SaberDance)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_AdvAoE_SaberTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
+            if (preset == CustomComboPreset.DNC_AdvAoE_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWaltzPct, "Curing Waltz HP%", 200, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
+            if (preset == CustomComboPreset.DNC_AdvAoE_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWindPct, "Second Wind HP%", 200, SliderIncrements.Ones);
 
             #endregion
