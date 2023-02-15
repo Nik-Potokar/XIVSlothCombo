@@ -292,9 +292,18 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     //Thin air added may be jank but yea, it may work? - Riley
                     //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
 
-                    return thinAirReady
-                        ? ThinAir
-                        : Bozja.LostSeraphStrike;
+                    if (iswhitemage)
+                    {
+                        return thinAirReady
+                            ? ThinAir
+                            : Bozja.LostSeraphStrike;
+                    }
+
+                    else
+                    {
+                        return Bozja.LostSeraphStrike;
+                    }
+
                 }
 
                 if (IsEnabled(CustomComboPreset.ALL_BozjaCure4Caster) && iscastersupport)

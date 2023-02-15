@@ -220,7 +220,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(All.Sprint)]
         [ParentCombo(ALL_BozjaCures)]
-        [CustomComboInfo("Self Heal", "Use Lost Cure 1, 2, 3, or 4. To heal yourself if below 50% hp", ADV.JobID)]
+        [CustomComboInfo("Self Heal", "Use Lost Cure 1, 2, 3, or 4. To heal yourself if below half hp", ADV.JobID)]
         ALL_BozjaCureSelfheal = 101011,
 
         [ReplaceSkill(All.Sprint)]
