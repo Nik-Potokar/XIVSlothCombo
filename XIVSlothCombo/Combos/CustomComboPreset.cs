@@ -724,7 +724,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Interrupt Option",
-            "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 5, "", "")]
+            "Includes Head Graze in the rotation during the second weave window (if applicable to your current target).", DNC.JobID, 5, "", "")]
             DNC_AdvST_Interrupt = 4002,
 
             [ParentCombo(DNC_AdvST)]
@@ -735,7 +735,7 @@ namespace XIVSlothCombo.Combos
 
                 [ParentCombo(DNC_AdvST_SS)]
                 [CustomComboInfo("Standard Dance Burst Option",
-                "Includes Standard Step (and all steps) in the burst at low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.", DNC.JobID, 1, "", "")]
+                "Includes Standard Step (and all steps) in the burst with low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.", DNC.JobID, 1, "", "")]
                 DNC_AdvST_SS_Burst = 4004,
 
             [ParentCombo(DNC_AdvST)]
@@ -829,7 +829,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Interrupt Option",
-            "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0, "", "")]
+            "Includes Head Graze in the AoE rotation during the second weave window (if applicable to your current target).", DNC.JobID, 0, "", "")]
             DNC_AdvAoE_Interrupt = 4022,
 
             [ParentCombo(DNC_AdvAoE)]

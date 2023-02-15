@@ -1165,7 +1165,10 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region DANCER
 
-            if (preset == CustomComboPreset.DNC_DanceComboReplacer)
+            #region Legacy config
+
+            // Dance Combo Replacer
+            if (preset is CustomComboPreset.DNC_DanceComboReplacer)
             {
                 int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
                 bool inputChanged = false;
@@ -1184,57 +1187,84 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Spacing();
             }
 
-            if (preset == CustomComboPreset.DNC_ST_EspritOvercap)
+            // ST Multibutton Esprit overcap
+            if (preset is CustomComboPreset.DNC_ST_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyST_EspritTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
+            // AoE Multibutton Esprit overcap
+            if (preset is CustomComboPreset.DNC_AoE_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyAoE_EspritTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_VariantCure)
-                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_VariantCurePct, "HP% to be at or under", 200);
+            #endregion
 
-            #region Simple ST Sliders
+            #region Advanced ST config
 
-            if (preset == CustomComboPreset.DNC_AdvST_SS)
+            // Standard Step HP% throttle
+            if (preset is CustomComboPreset.DNC_AdvST_SS)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_SSBurstPct, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvST_TS)
+            // Technical Step HP% throttle
+            if (preset is CustomComboPreset.DNC_AdvST_TS)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_TSBurstPct, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvST_Feathers)
+            // Pooled Feathers HP% dump
+            if (preset is CustomComboPreset.DNC_AdvST_Feathers)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_FeatherBurstPct, "Target HP% to dump all pooled feathers below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvST_SaberDance)
+            // Saber Dance Esprit threshold
+            if (preset is CustomComboPreset.DNC_AdvST_SaberDance)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_AdvST_SaberTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_AdvST_PanicHeals)
+            // Curing Waltz HP%
+            if (preset is CustomComboPreset.DNC_AdvST_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWaltzPct, "Curing Waltz HP%", 200, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvST_PanicHeals)
+            // Second Wind HP%
+            if (preset is CustomComboPreset.DNC_AdvST_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWindPct, "Second Wind HP%", 200, SliderIncrements.Ones);
 
+            // Interrupt
+            if (preset is CustomComboPreset.DNC_AdvST_Interrupt)
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AdvST_InterruptAny, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.");
+
             #endregion
 
-            #region Simple AoE Sliders
+            #region Advanced AoE config
 
-            if (preset == CustomComboPreset.DNC_AdvAoE_SS)
+            // Standard Step HP% throttle
+            if (preset is CustomComboPreset.DNC_AdvAoE_SS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNC_AdvAoE_SSBurstPct, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvAoE_TS)
+            // Technical Step HP% throttle
+            if (preset is CustomComboPreset.DNC_AdvAoE_TS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNC_AdvAoE_TSBurstPct, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvAoE_SaberDance)
+            // Saber Dance Esprit threshold
+            if (preset is CustomComboPreset.DNC_AdvAoE_SaberDance)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_AdvAoE_SaberTh, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_AdvAoE_PanicHeals)
+            // Curing Waltz HP%
+            if (preset is CustomComboPreset.DNC_AdvAoE_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWaltzPct, "Curing Waltz HP%", 200, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.DNC_AdvAoE_PanicHeals)
+            // Second Wind HP%
+            if (preset is CustomComboPreset.DNC_AdvAoE_PanicHeals)
                 UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWindPct, "Second Wind HP%", 200, SliderIncrements.Ones);
+
+            // Interrupt
+            if (preset is CustomComboPreset.DNC_AdvAoE_Interrupt)
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AdvAoE_InterruptAny, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.");
 
             #endregion
 
-            #region PvP Sliders
+            #region Miscellaneous config
+
+            if (preset is CustomComboPreset.DNC_VariantCure)
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_VariantCurePct, "HP% to be at or under", 200);
+
+            #endregion
+
+            #region PvP config
 
             if (preset == CustomComboPreset.DNCPvP_BurstMode_CuringWaltz)
                 UserConfig.DrawSliderInt(0, 90, DNCPvP.Config.DNCPvP_WaltzThreshold, "Curing Waltz HP% - caps at 90 to prevent waste.", 150, SliderIncrements.Ones);

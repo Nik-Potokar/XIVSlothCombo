@@ -115,7 +115,7 @@ namespace XIVSlothCombo.Combos.PvE
                 DNC_LegacyAoE_EspritTh      = new("DNC_LegacyAoE_EspritTh");    // AoE Esprit threshold (L)
             #endregion
 
-            #region Advanced ST Sliders
+            #region Advanced ST config
             internal static UserInt
                 DNC_AdvST_SSBurstPct        = new("DNC_AdvST_SSBurstPct"),      // Standard Step    target HP% threshold
                 DNC_AdvST_TSBurstPct        = new("DNC_AdvST_TSBurstPct"),      // Technical Step   target HP% threshold
@@ -123,15 +123,21 @@ namespace XIVSlothCombo.Combos.PvE
                 DNC_AdvST_SaberTh           = new("DNC_AdvST_SaberTh"),         // Saber Dance      Esprit     threshold
                 DNC_AdvST_PanicWaltzPct     = new("DNC_AdvST_PanicWaltzPct"),   // Curing Waltz     player HP% threshold
                 DNC_AdvST_PanicWindPct      = new("DNC_AdvST_PanicWindPct");    // Second Wind      player HP% threshold
+
+            internal static UserBool
+                DNC_AdvST_InterruptAny      = new("DNC_AdvST_InterruptAny");   // Interrupt any time, outside of weave windows
             #endregion
 
-            #region Advanced AoE Sliders
+            #region Advanced AoE config
             internal static UserInt
                 DNC_AdvAoE_SSBurstPct       = new("DNC_AdvAoE_SSBurstPct"),     // Standard Step    target HP% threshold
                 DNC_AdvAoE_TSBurstPct       = new("DNC_AdvAoE_TSBurstPct"),     // Technical Step   target HP% threshold
                 DNC_AdvAoE_SaberTh          = new("DNC_AdvAoE_SaberTh"),        // Saber Dance      Esprit     threshold
                 DNC_AdvAoE_PanicWaltzPct    = new("DNC_AdvAoE_PanicWaltzPct"),  // Curing Waltz     player HP% threshold
                 DNC_AdvAoE_PanicWindPct     = new("DNC_AdvAoE_PanicWindPct");   // Second Wind      player HP% threshold
+
+            internal static UserBool
+                DNC_AdvAoE_InterruptAny      = new("DNC_AdvAoE_InterruptAny");  // Interrupt any time, outside of weave windows
             #endregion
 
             internal static UserInt
@@ -652,7 +658,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Flourish;
 
                     // Simple ST Interrupt
-                    if (CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
+                    if (CanInterruptEnemy() && CanDelayedWeave(actionID, 1.25, 0.6) &&
+                        ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
@@ -825,6 +832,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_Interrupt) &&
+                        (Config.DNC_AdvST_InterruptAny || CanDelayedWeave(actionID, 1.25, 0.6)) &&
                         CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
@@ -993,7 +1001,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Flourish;
 
                     // Simple AoE Interrupt
-                    if (CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
+                    if (CanInterruptEnemy() && CanDelayedWeave(actionID, 1.25, 0.6) &&
+                        ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
@@ -1177,6 +1186,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Interrupt) &&
+                        (Config.DNC_AdvAoE_InterruptAny || CanDelayedWeave(actionID, 1.25, 0.6)) &&
                         CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
