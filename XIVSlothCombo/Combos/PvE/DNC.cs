@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -111,39 +110,41 @@ namespace XIVSlothCombo.Combos.PvE
         {
             #region Legacy config
             internal static UserInt
-                DNC_LegacyST_EspritTh       = new("DNC_LegacyST_EspritTh"),     // Single target Esprit threshold (L)
-                DNC_LegacyAoE_EspritTh      = new("DNC_LegacyAoE_EspritTh");    // AoE Esprit threshold (L)
+                DNC_LegacyST_EspritThreshold    = new("DNC_LegacyST_EspritThreshold"),  // Single target Esprit threshold (L)
+                DNC_LegacyAoE_EspritThreshold   = new("DNC_LegacyAoE_EspritThreshold"); // AoE Esprit threshold (L)
             #endregion
 
             #region Advanced ST config
-            internal static UserInt
-                DNC_AdvST_SSBurstPct        = new("DNC_AdvST_SSBurstPct"),      // Standard Step    target HP% threshold
-                DNC_AdvST_TSBurstPct        = new("DNC_AdvST_TSBurstPct"),      // Technical Step   target HP% threshold
-                DNC_AdvST_FeatherBurstPct   = new("DNC_AdvST_FeatherBurstPct"), // Feather burst    target HP% threshold
-                DNC_AdvST_SaberTh           = new("DNC_AdvST_SaberTh"),         // Saber Dance      Esprit     threshold
-                DNC_AdvST_PanicWaltzPct     = new("DNC_AdvST_PanicWaltzPct"),   // Curing Waltz     player HP% threshold
-                DNC_AdvST_PanicWindPct      = new("DNC_AdvST_PanicWindPct");    // Second Wind      player HP% threshold
-
             internal static UserBool
-                DNC_AdvST_SS_Burst          = new("DNC_AdvST_SS_Burst"),        // Standard Step during TS burst phase
-                DNC_AdvST_InterruptAny      = new("DNC_AdvST_InterruptAny");    // Interrupt any time, outside of weave windows
+                DNC_AdvST_SS_Options_Burst      = new("DNC_AdvST_SS_Options_Burst");    // Standard Step during TS burst phase
+            internal static UserInt
+                DNC_AdvST_SS_Options            = new("DNC_AdvST_SS_Options"),          // Standard Step    usage choice
+                DNC_AdvST_SSBurstPct            = new("DNC_AdvST_SSBurstPct"),          // Standard Step    target HP% threshold
+                DNC_AdvST_TS_Options            = new("DNC_AdvST_TS_Options"),          // Technical Step   usage choice
+                DNC_AdvST_TSBurstPct            = new("DNC_AdvST_TSBurstPct"),          // Technical Step   target HP% threshold
+                DNC_AdvST_FeatherBurstPct       = new("DNC_AdvST_FeatherBurstPct"),     // Feather burst    target HP% threshold
+                DNC_AdvST_SaberThreshold        = new("DNC_AdvST_SaberThreshold"),      // Saber Dance      Esprit     threshold
+                DNC_AdvST_PanicWaltzPct         = new("DNC_AdvST_PanicWaltzPct"),       // Curing Waltz     player HP% threshold
+                DNC_AdvST_PanicWindPct          = new("DNC_AdvST_PanicWindPct"),        // Second Wind      player HP% threshold
+                DNC_AdvST_Interrupt             = new("DNC_AdvST_Interrupt");           // Interrupt        usage choice
             #endregion
 
             #region Advanced AoE config
-            internal static UserInt
-                DNC_AdvAoE_SSBurstPct       = new("DNC_AdvAoE_SSBurstPct"),     // Standard Step    target HP% threshold
-                DNC_AdvAoE_TSBurstPct       = new("DNC_AdvAoE_TSBurstPct"),     // Technical Step   target HP% threshold
-                DNC_AdvAoE_SaberTh          = new("DNC_AdvAoE_SaberTh"),        // Saber Dance      Esprit     threshold
-                DNC_AdvAoE_PanicWaltzPct    = new("DNC_AdvAoE_PanicWaltzPct"),  // Curing Waltz     player HP% threshold
-                DNC_AdvAoE_PanicWindPct     = new("DNC_AdvAoE_PanicWindPct");   // Second Wind      player HP% threshold
-
             internal static UserBool
-                DNC_AdvAoE_SS_Burst         = new("DNC_AdvAoE_SS_Burst"),       // Standard Step during TS burst phase
-                DNC_AdvAoE_InterruptAny     = new("DNC_AdvAoE_InterruptAny");   // Interrupt any time, outside of weave windows
+                DNC_AdvAoE_SS_Options_Burst     = new("DNC_AdvAoE_SS_Options_Burst");   // Standard Step during TS burst phase
+            internal static UserInt
+                DNC_AdvAoE_SS_Options           = new("DNC_AdvAoE_SS_Options"),         // Standard Step    usage choice
+                DNC_AdvAoE_SSBurstPct           = new("DNC_AdvAoE_SSBurstPct"),         // Standard Step    target HP% threshold
+                DNC_AdvAoE_TS_Options           = new("DNC_AdvAoE_TS_Options"),         // Technical Step   usage choice
+                DNC_AdvAoE_TSBurstPct           = new("DNC_AdvAoE_TSBurstPct"),         // Technical Step   target HP% threshold
+                DNC_AdvAoE_SaberThreshold       = new("DNC_AdvAoE_SaberThreshold"),     // Saber Dance      Esprit     threshold
+                DNC_AdvAoE_PanicWaltzPct        = new("DNC_AdvAoE_PanicWaltzPct"),      // Curing Waltz     player HP% threshold
+                DNC_AdvAoE_PanicWindPct         = new("DNC_AdvAoE_PanicWindPct"),       // Second Wind      player HP% threshold
+                DNC_AdvAoE_Interrupt            = new("DNC_AdvAoE_Interrupt");          // Interrupt        usage choice
             #endregion
 
             internal static UserInt
-                DNC_VariantCurePct          = new("DNC_VariantCurePct");        // Variant Cure     player HP% threshold
+                DNC_VariantCurePct              = new("DNC_VariantCurePct");            // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceStepSolver : CustomCombo
@@ -238,7 +239,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= Config.DNC_LegacyST_EspritTh)
+                        Gauge.Esprit >= Config.DNC_LegacyST_EspritThreshold)
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -278,7 +279,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= Config.DNC_LegacyAoE_EspritTh)
+                        Gauge.Esprit >= Config.DNC_LegacyAoE_EspritThreshold)
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -457,7 +458,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyST_EspritTh))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyST_EspritThreshold))
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -505,7 +506,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyAoE_EspritTh))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyAoE_EspritThreshold))
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -804,14 +805,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // Advanced ST Standard (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_AdvST_SS) || IsEnabled(CustomComboPreset.DNC_AdvST_StandardFill)) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) &&
                         HasEffect(Buffs.StandardStep))
                         return Gauge.CompletedSteps < 2
                             ? Gauge.NextStep
                             : StandardFinish;
 
                     // Advanced ST Technical (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_AdvST_TS) || IsEnabled(CustomComboPreset.DNC_AdvST_TechFill)) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_TS) &&
                         HasEffect(Buffs.TechnicalStep))
                         return Gauge.CompletedSteps < 4
                             ? Gauge.NextStep
@@ -834,7 +835,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_Interrupt) &&
-                        (Config.DNC_AdvST_InterruptAny || CanDelayedWeave(actionID, 1.25, 0.6)) &&
+                        ((Config.DNC_AdvST_Interrupt == 1 && CanDelayedWeave(actionID, 1.25, 0.6)) ||
+                         (Config.DNC_AdvST_Interrupt == 2 && CanDelayedWeave(actionID, 2.25, 0.7)) ||
+                         (Config.DNC_AdvST_Interrupt == 3)) &&
                         CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
@@ -905,7 +908,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Advanced ST Standard Step (outside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (Config.DNC_AdvST_SS_Options == 2 && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -915,7 +918,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Advanced ST Technical Step
-                    if (IsEnabled(CustomComboPreset.DNC_AdvST_TS) && ActionReady(TechnicalStep) &&
+                    if (Config.DNC_AdvST_TS_Options == 2 && ActionReady(TechnicalStep) &&
                         (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_TSBurstPct) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
@@ -924,7 +927,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
                     {
-                        if (Gauge.Esprit >= Config.DNC_AdvST_SaberTh ||
+                        if (Gauge.Esprit >= Config.DNC_AdvST_SaberThreshold ||
                             (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
                             return SaberDance;
                     }
@@ -940,7 +943,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // Advanced ST Standard Step (inside of burst)
-                    if (Config.DNC_AdvST_SS_Burst &&
+                    if (Config.DNC_AdvST_SS_Options_Burst &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         Gauge.Esprit < 25 &&
                         GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct &&
@@ -1158,14 +1161,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // Advanced AoE Standard (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) || IsEnabled(CustomComboPreset.DNC_AdvAoE_StandardFill)) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) &&
                         HasEffect(Buffs.StandardStep))
                         return Gauge.CompletedSteps < 2
                             ? Gauge.NextStep
                             : StandardFinish;
 
                     // Advanced AoE Technical (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_AdvAoE_TS) || IsEnabled(CustomComboPreset.DNC_AdvAoE_TechFill)) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_TS) &&
                         HasEffect(Buffs.TechnicalStep))
                         return Gauge.CompletedSteps < 4
                             ? Gauge.NextStep
@@ -1188,7 +1191,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Interrupt) &&
-                        (Config.DNC_AdvAoE_InterruptAny || CanDelayedWeave(actionID, 1.25, 0.6)) &&
+                        ((Config.DNC_AdvAoE_Interrupt == 1 && CanDelayedWeave(actionID, 1.25, 0.6)) ||
+                         (Config.DNC_AdvAoE_Interrupt == 2 && CanDelayedWeave(actionID, 2.25, 0.7)) ||
+                         (Config.DNC_AdvAoE_Interrupt == 3)) &&
                         CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
@@ -1279,7 +1284,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Advanced AoE Standard Step (outside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (Config.DNC_AdvAoE_SS_Options == 2 && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -1289,7 +1294,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Advanced AoE Technical Step
-                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_TS) && ActionReady(TechnicalStep) &&
+                    if (Config.DNC_AdvAoE_TS_Options == 2 && ActionReady(TechnicalStep) &&
                         (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_TSBurstPct) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
@@ -1298,7 +1303,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
                         ((HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50) ||
-                        Gauge.Esprit >= Config.DNC_AdvAoE_SaberTh))
+                        Gauge.Esprit >= Config.DNC_AdvAoE_SaberThreshold))
                         return SaberDance;
 
                     // Advanced AoE Starfall Dance / Tillana
@@ -1312,7 +1317,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // Advanced AoE Standard Step (inside of burst)
-                    if (Config.DNC_AdvAoE_SS_Burst &&
+                    if (Config.DNC_AdvAoE_SS_Options_Burst &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct &&
                         (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
