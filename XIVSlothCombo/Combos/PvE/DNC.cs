@@ -108,24 +108,25 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            #region Legacy config
+            #region Miscellaneous
             internal static UserBool
-                DNC_LegacyST_Multi_Esprit           = new("DNC_LegacyST_Multi_Esprit"),             // ST Esprit overcap protection (L)
-                DNC_LegacyST_Multi_FanOvercap       = new("DNC_LegacyST_Multi_FanOvercap"),         // ST Fan overcap protection (L)
-                DNC_LegacyST_Multi_FanDance34       = new("DNC_LegacyST_Multi_FanDance34"),         // ST Fan Dance III/IV (L)
-                DNC_LegacyAoE_Multi_Esprit          = new("DNC_LegacyAoE_Multi_Esprit"),            // AoE Esprit overcap protection (L)
-                DNC_LegacyAoE_Multi_FanOvercap      = new("DNC_LegacyAoE_Multi_FanOvercap"),        // AoE Fan overcap protection (L)
-                DNC_LegacyAoE_Multi_FanDance34      = new("DNC_LegacyAoE_Multi_FanDance34"),        // AoE Fan Dance III/IV (L)
-                DNC_Legacy_FanDanceCombos_13        = new("DNC_Legacy_FanDanceCombos_13"),          // Fan Dance 1 —> 3 Option
-                DNC_Legacy_FanDanceCombos_14        = new("DNC_Legacy_FanDanceCombos_14"),          // Fan Dance 1 —> 4 Option
-                DNC_Legacy_FanDanceCombos_23        = new("DNC_Legacy_FanDanceCombos_23"),          // Fan Dance 2 —> 3 Option
-                DNC_Legacy_FanDanceCombos_24        = new("DNC_Legacy_FanDanceCombos_24");          // Fan Dance 2 —> 4 Option
+                DNC_FanDanceCombos_13               = new("DNC_FanDanceCombos_13"),                 // Fan Dance 1 —> 3 Option
+                DNC_FanDanceCombos_14               = new("DNC_FanDanceCombos_14"),                 // Fan Dance 1 —> 4 Option
+                DNC_FanDanceCombos_23               = new("DNC_FanDanceCombos_23"),                 // Fan Dance 2 —> 3 Option
+                DNC_FanDanceCombos_24               = new("DNC_FanDanceCombos_24");                 // Fan Dance 2 —> 4 Option
             internal static UserInt
-                DNC_LegacyST_Multi_EspritThreshold  = new("DNC_LegacyST_Multi_EspritThreshold"),    // ST Esprit threshold (L)
-                DNC_LegacyAoE_Multi_EspritThreshold = new("DNC_LegacyAoE_Multi_EspritThreshold");   // AoE Esprit threshold (L)
+                DNC_VariantCurePct                  = new("DNC_VariantCurePct");                    // Variant Cure     player HP% threshold
             #endregion
 
-            #region Advanced ST config
+            #region Simple ST/AoE
+            internal static UserBool
+                DNC_ST_SimpleMode_SS                = new("DNC_ST_SimpleMode_SS"),                  // Simple ST Standard Step inclusion
+                DNC_ST_SimpleMode_TS                = new("DNC_ST_SimpleMode_TS"),                  // Simple ST Technical Step inclusion
+                DNC_AoE_SimpleMode_SS               = new("DNC_AoE_SimpleMode_SS"),                 // Simple AoE Standard Step inclusion
+                DNC_AoE_SimpleMode_TS               = new("DNC_AoE_SimpleMode_TS");                 // Simple AoE Technical Step inclusion
+            #endregion
+
+            #region Advanced ST
             internal static UserBool
                 DNC_AdvST_SS_Options_Burst          = new("DNC_AdvST_SS_Options_Burst");            // Standard Step during TS burst phase
             internal static UserInt
@@ -140,7 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
                 DNC_AdvST_Interrupt                 = new("DNC_AdvST_Interrupt");                   // Interrupt        usage choice
             #endregion
 
-            #region Advanced AoE config
+            #region Advanced AoE
             internal static UserBool
                 DNC_AdvAoE_SS_Options_Burst         = new("DNC_AdvAoE_SS_Options_Burst");           // Standard Step during TS burst phase
             internal static UserInt
@@ -154,8 +155,18 @@ namespace XIVSlothCombo.Combos.PvE
                 DNC_AdvAoE_Interrupt                = new("DNC_AdvAoE_Interrupt");                  // Interrupt        usage choice
             #endregion
 
+            #region Legacy
+            internal static UserBool
+                DNC_LegacyST_Multi_Esprit           = new("DNC_LegacyST_Multi_Esprit"),             // ST Esprit overcap protection (L)
+                DNC_LegacyST_Multi_FanOvercap       = new("DNC_LegacyST_Multi_FanOvercap"),         // ST Fan overcap protection (L)
+                DNC_LegacyST_Multi_FanDance34       = new("DNC_LegacyST_Multi_FanDance34"),         // ST Fan Dance III/IV (L)
+                DNC_LegacyAoE_Multi_Esprit          = new("DNC_LegacyAoE_Multi_Esprit"),            // AoE Esprit overcap protection (L)
+                DNC_LegacyAoE_Multi_FanOvercap      = new("DNC_LegacyAoE_Multi_FanOvercap"),        // AoE Fan overcap protection (L)
+                DNC_LegacyAoE_Multi_FanDance34      = new("DNC_LegacyAoE_Multi_FanDance34");        // AoE Fan Dance III/IV (L)
             internal static UserInt
-                DNC_VariantCurePct                  = new("DNC_VariantCurePct");                    // Variant Cure     player HP% threshold
+                DNC_LegacyST_Multi_EspritThreshold  = new("DNC_LegacyST_Multi_EspritThreshold"),    // ST Esprit threshold (L)
+                DNC_LegacyAoE_Multi_EspritThreshold = new("DNC_LegacyAoE_Multi_EspritThreshold");   // AoE Esprit threshold (L)
+            #endregion
         }
 
         // Dance Step Solver
@@ -201,43 +212,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(ReverseCascade);
                     if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == FanDance2))   // Fountainfall replacement
                         return OriginalHook(Fountainfall);
-                }
-                #endregion
-
-                #region Fan Dance Combos (L)
-                if (IsEnabled(CustomComboPreset.DNC_Legacy_FanDanceCombos))
-                {
-                    // FD 1 —> 3, FD 1 —> 4
-                    if (actionID is FanDance1)
-                    {
-                        if (Config.DNC_Legacy_FanDanceCombos_13 &&
-                            HasEffect(Buffs.ThreeFoldFanDance))
-                            return FanDance3;
-                        if (Config.DNC_Legacy_FanDanceCombos_14 &&
-                            HasEffect(Buffs.FourFoldFanDance))
-                            return FanDance4;
-                    }
-
-                    // FD 2 —> 3, FD 2 —> 4
-                    if (actionID is FanDance2)
-                    {
-                        if (Config.DNC_Legacy_FanDanceCombos_23 &&
-                            HasEffect(Buffs.ThreeFoldFanDance))
-                            return FanDance3;
-                        if (Config.DNC_Legacy_FanDanceCombos_24 &&
-                            HasEffect(Buffs.FourFoldFanDance))
-                            return FanDance4;
-                    }
-                }
-                #endregion
-
-                #region Fan Dance 3 & 4 on Flourish (L)
-                if (IsEnabled(CustomComboPreset.DNC_Legacy_FlourishingFanDances) && actionID is Flourish && CanWeave(actionID))
-                {
-                    if (HasEffect(Buffs.ThreeFoldFanDance))
-                        return FanDance3;
-                    if (HasEffect(Buffs.FourFoldFanDance))
-                        return FanDance4;
                 }
                 #endregion
 
@@ -321,11 +295,6 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 #endregion
 
-                #region Devilment --> Starfall Dance (L)
-                if (IsEnabled(CustomComboPreset.DNC_Starfall_Devilment) && actionID is Devilment && HasEffect(Buffs.FlourishingStarfall))
-                    return StarfallDance;
-                #endregion
-
                 #region Combined Dances (L)
                 // One-button mode for both dances (SS/TS). SS takes priority.
                 if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance) && IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances) && actionID is StandardStep)
@@ -379,6 +348,67 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        // Fan Dance/2 —> 3/4
+        internal class DNC_FanDanceCombos : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_FanDanceCombos;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is FanDance1)
+                {
+                    if (Config.DNC_FanDanceCombos_13 &&         // 1 —> 3
+                        HasEffect(Buffs.ThreeFoldFanDance))
+                        return FanDance3;
+                    if (Config.DNC_FanDanceCombos_14 &&         // 1 —> 4
+                        HasEffect(Buffs.FourFoldFanDance))
+                        return FanDance4;
+                }
+
+                if (actionID is FanDance2)
+                {
+                    if (Config.DNC_FanDanceCombos_23 &&         // 2 —> 3
+                        HasEffect(Buffs.ThreeFoldFanDance))
+                        return FanDance3;
+                    if (Config.DNC_FanDanceCombos_24 &&         // 2 —> 4
+                        HasEffect(Buffs.FourFoldFanDance))
+                        return FanDance4;
+                }
+
+                return actionID;
+            }
+        }
+
+        // Starfall Dance on Devilment
+        internal class DNC_Starfall_Devilment : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Starfall_Devilment;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is Devilment && HasEffect(Buffs.FlourishingStarfall)
+                    ? StarfallDance
+                    : actionID;
+        }
+
+        // Fan Dance 3 & 4 on Flourish
+        internal class DNC_FlourishingFanDances : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_FlourishingFanDances;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Flourish && CanWeave(actionID))
+                {
+                    if (HasEffect(Buffs.ThreeFoldFanDance))
+                        return FanDance3;
+                    if (HasEffect(Buffs.FourFoldFanDance))
+                        return FanDance4;
+                }
+
+                return actionID;
+            }
+        }
+
         // Simple Single Target
         internal class DNC_ST_SimpleMode : CustomCombo
         {
@@ -393,23 +423,15 @@ namespace XIVSlothCombo.Combos.PvE
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
 
-                    /*
-                    #region Pre-pull
-                    // Simple ST Peloton
-                    if (!InCombat() && !HasEffectAny(Buffs.Peloton) && GetBuffRemainingTime(Buffs.StandardStep) > 5)
-                        return Peloton;
-                    #endregion
-                    */
-
                     #region Dance Fills
                     // Simple ST Standard (Dance) Steps & Fill
-                    if (HasEffect(Buffs.StandardStep))
+                    if (HasEffect(Buffs.StandardStep) && Config.DNC_ST_SimpleMode_SS)
                         return Gauge.CompletedSteps < 2
                             ? Gauge.NextStep
                             : StandardFinish;
 
                     // Simple ST Technical (Dance) Steps & Fill
-                    if (HasEffect(Buffs.TechnicalStep))
+                    if (HasEffect(Buffs.TechnicalStep) && Config.DNC_ST_SimpleMode_TS)
                         return Gauge.CompletedSteps < 4
                             ? Gauge.NextStep
                             : TechnicalFinish;
@@ -481,12 +503,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(All.SecondWind) &&
                             PlayerHealthPercentageHp() < 30)
                             return All.SecondWind;
-
-                        /*
-                        // Simple ST Improvisation
-                        if (ActionReady(Improvisation))
-                            return Improvisation;
-                        */
                     }
                     #endregion
 
@@ -497,7 +513,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Simple ST Standard Step (outside of burst)
-                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (Config.DNC_ST_SimpleMode_SS && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > 5) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -507,7 +523,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Simple ST Technical Step
-                    if (ActionReady(TechnicalStep) &&
+                    if (Config.DNC_ST_SimpleMode_TS && ActionReady(TechnicalStep) &&
                         (!HasTarget() || GetTargetHPPercent() > 5) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
@@ -530,7 +546,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // Simple ST Standard Step (inside of burst)
-                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                    if (Config.DNC_ST_SimpleMode_SS &&
+                        IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         Gauge.Esprit < 25 &&
                         GetTargetHPPercent() > 5 &&
                         (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5))
@@ -749,13 +766,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // Simple AoE Standard (Dance) Steps & Fill
-                    if (HasEffect(Buffs.StandardStep))
+                    if (HasEffect(Buffs.StandardStep) && Config.DNC_AoE_SimpleMode_SS)
                         return Gauge.CompletedSteps < 2
                             ? Gauge.NextStep
                             : StandardFinish;
 
                     // Simple AoE Technical (Dance) Steps & Fill
-                    if (HasEffect(Buffs.TechnicalStep))
+                    if (HasEffect(Buffs.TechnicalStep) && Config.DNC_AoE_SimpleMode_TS)
                         return Gauge.CompletedSteps < 4
                             ? Gauge.NextStep
                             : TechnicalFinish;
@@ -847,12 +864,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(All.SecondWind) &&
                             PlayerHealthPercentageHp() < 30)
                             return All.SecondWind;
-
-                        /*
-                        // Simple AoE Improvisation
-                        if (ActionReady(Improvisation))
-                            return Improvisation;
-                        */
                     }
                     #endregion
 
@@ -863,7 +874,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Simple AoE Standard Step (outside of burst)
-                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (Config.DNC_AoE_SimpleMode_SS && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > 5) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -873,7 +884,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Simple AoE Technical Step
-                    if (ActionReady(TechnicalStep) &&
+                    if (Config.DNC_AoE_SimpleMode_TS && ActionReady(TechnicalStep) &&
                         (!HasTarget() || GetTargetHPPercent() > 5) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
@@ -896,7 +907,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // Simple AoE Standard Step (inside of burst)
-                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                    if (Config.DNC_AoE_SimpleMode_SS &&
+                        IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         GetTargetHPPercent() > 5 && (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
                         return StandardStep;
 

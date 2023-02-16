@@ -708,8 +708,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(DNC_AdvST, DNC_LegacyFeatures)]
         [CustomComboInfo("Simple Dancer (Single Target) Feature",
         "Single button, single target." +
-        "\nIncludes songs, flourishes and overprotections." +
-        "\nConflicts with all other non-simple features except 'Dance Step Solver Feature'.", DNC.JobID, 0)]
+        "\nIncludes dances, flourishes, burst and overcap protections.", DNC.JobID, 0)]
         DNC_ST_SimpleMode = 4000,
 
         #region Advanced Dancer (Single Target)
@@ -717,9 +716,8 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(DNC_ST_SimpleMode, DNC_LegacyFeatures)]
         [CustomComboInfo("Advanced Dancer (Single Target) Feature",
         "Single button, single target." +
-        "\nIncludes songs, flourishes and overprotections." +
-        "\nComplete with options for Advanced use." +
-        "\nConflicts with all other non-advanced features except 'Dance Step Solver Feature'.", DNC.JobID, 0)]
+        "\nIncludes dances, flourishes, burst and overcap protections." +
+        "\nComplete with options for advanced use.", DNC.JobID, 0)]
         DNC_AdvST = 4001,
 
             [ParentCombo(DNC_AdvST)]
@@ -793,8 +791,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(DNC_AdvAoE, DNC_LegacyFeatures)]
         [CustomComboInfo("Simple Dancer (AoE) Feature",
         "Single button, AoE." +
-        "\nIncludes songs, flourishes and overprotections." +
-        "\nConflicts with all other non-simple features except 'Dance Step Solver Feature'.", DNC.JobID, 0)]
+        "\nIncludes dances, flourishes, burst and overcap protections.", DNC.JobID, 0)]
         DNC_AoE_SimpleMode = 4020,
 
         #region Advanced Dancer (AoE)
@@ -802,9 +799,8 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(DNC_AoE_SimpleMode, DNC_LegacyFeatures)]
         [CustomComboInfo("Advanced Dancer (AoE) Feature",
         "Single button, AoE." +
-        "\nIncludes songs, flourishes and overprotections." +
-        "\nComplete with options for Advanced use." +
-        "\nConflicts with all other non-advanced features except 'Dance Step Solver Feature'.", DNC.JobID, 0)]
+        "\nIncludes dances, flourishes, burst and overcap protections." +
+        "\nComplete with options for advanced use.", DNC.JobID, 0)]
         DNC_AdvAoE = 4021,
 
             [ParentCombo(DNC_AdvAoE)]
@@ -868,10 +864,24 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
         [ConflictingCombos(DNC_Legacy_Dance)]
         [CustomComboInfo("Dance Step Solver Feature",
-        "Change Standard Step and Technical Step into each dance step while dancing." +
-        "\nWorks with Simple/Advanced Dancer Single Target and AoE." +
-        "\nWorks with Legacy Features.", DNC.JobID, 0)]
+        "Change Standard Step and Technical Step into each dance step while dancing, and their respective Finish.", DNC.JobID, 0)]
         DNC_DanceStepSolver = 4040,
+
+        [ReplaceSkill(DNC.Flourish)]
+        [CustomComboInfo("Flourishing Fan Dance Feature",
+        "Replace Flourish with Fan Dance III & IV during weave windows when Flourish is on cooldown.", DNC.JobID, 0)]
+        DNC_FlourishingFanDances = 4050,
+
+        [ReplaceSkill(DNC.FanDance1, DNC.FanDance2)]
+        [CustomComboInfo("Fan Dance Combo Feature",
+        "Options for Fan Dance combos." +
+        "\nFan Dance III takes priority over Fan Dance IV.", DNC.JobID, 0)]
+        DNC_FanDanceCombos = 4060,
+
+        [ReplaceSkill(DNC.Devilment)]
+        [CustomComboInfo("Devilment to Starfall Dance Feature",
+        "Change Devilment into Starfall Dance after use.", DNC.JobID, 0)]
+        DNC_Starfall_Devilment = 4070,
 
         #region Legacy Features [L]
         [ConflictingCombos(DNC_ST_SimpleMode, DNC_AdvST, DNC_AoE_SimpleMode, DNC_AdvAoE)]
@@ -926,30 +936,6 @@ namespace XIVSlothCombo.Combos
                 "\nThe defaults are Cascade, Flourish, Fan Dance and Fan Dance II. If set to 0, they will reset to these actions." +
                 "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0)]
                 DNC_Legacy_Dance_DanceActionReplacer = 4134,
-            #endregion
-
-            #region Flourishing Features [L]
-            [ReplaceSkill(DNC.Flourish)]
-            [ParentCombo(DNC_LegacyFeatures)]
-            [CustomComboInfo("[L] - Flourishing Fan Dance Feature",
-            "Replace Flourish with Fan Dance III & IV during weave-windows when Flourish is on cooldown.", DNC.JobID, 0)]
-            DNC_Legacy_FlourishingFanDances = 4140,
-
-            [ReplaceSkill(DNC.FanDance1, DNC.FanDance2)]
-            [ParentCombo(DNC_LegacyFeatures)]
-            [CustomComboInfo("[L] - Fan Dance Combo Feature",
-            "Options for Fan Dance combos." +
-            "\nFan Dance III takes priority over Fan Dance IV.", DNC.JobID, 0)]
-            DNC_Legacy_FanDanceCombos = 4150,
-
-            #endregion
-
-            #region Devilment --> Starfall [L]
-            [ReplaceSkill(DNC.Devilment)]
-            [ParentCombo(DNC_LegacyFeatures)]
-            [CustomComboInfo("[L] - Devilment to Starfall Dance Feature",
-            "Change Devilment into Starfall Dance after use.", DNC.JobID, 0)]
-            DNC_Starfall_Devilment = 4160,
             #endregion
 
         #endregion
