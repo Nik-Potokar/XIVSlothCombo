@@ -1176,16 +1176,16 @@ namespace XIVSlothCombo.Window.Functions
 
             #region Simple ST/AoE
 
-            if (preset is CustomComboPreset.DNC_ST_SimpleMode)
+            if (preset is CustomComboPreset.DNC_SimpleST)
             {
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_ST_SimpleMode_SS, "Include Standard Step", "Adds Standard Step to the rotation.");
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_ST_SimpleMode_TS, "Include Technical Step", "Adds Technical Step to the rotation.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleST_SS, "Include Standard Step", "Adds Standard Step to the rotation.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleST_TS, "Include Technical Step", "Adds Technical Step to the rotation.");
             }
 
-            if (preset is CustomComboPreset.DNC_AoE_SimpleMode)
+            if (preset is CustomComboPreset.DNC_SimpleAoE)
             {
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AoE_SimpleMode_SS, "Include Standard Step", "Adds Standard Step to the AoE rotation.");
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AoE_SimpleMode_TS, "Include Technical Step", "Adds Technical Step to the AoE rotation.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleAoE_SS, "Include Standard Step", "Adds Standard Step to the AoE rotation.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleAoE_TS, "Include Technical Step", "Adds Technical Step to the AoE rotation.");
             }
 
             #endregion

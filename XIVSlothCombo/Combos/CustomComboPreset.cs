@@ -709,11 +709,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Dancer (Single Target) Feature",
         "Single button, single target." +
         "\nIncludes dances, flourishes, burst and overcap protections.", DNC.JobID, 0)]
-        DNC_ST_SimpleMode = 4000,
+        DNC_SimpleST = 4000,
 
         #region Advanced Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_LegacyFeatures)]
+        [ConflictingCombos(DNC_SimpleST, DNC_LegacyFeatures)]
         [CustomComboInfo("Advanced Dancer (Single Target) Feature",
         "Single button, single target." +
         "\nIncludes dances, flourishes, burst and overcap protections." +
@@ -792,11 +792,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Dancer (AoE) Feature",
         "Single button, AoE." +
         "\nIncludes dances, flourishes, burst and overcap protections.", DNC.JobID, 0)]
-        DNC_AoE_SimpleMode = 4020,
+        DNC_SimpleAoE = 4020,
 
         #region Advanced Dancer (AoE)
         [ReplaceSkill(DNC.Windmill)]
-        [ConflictingCombos(DNC_AoE_SimpleMode, DNC_LegacyFeatures)]
+        [ConflictingCombos(DNC_SimpleAoE, DNC_LegacyFeatures)]
         [CustomComboInfo("Advanced Dancer (AoE) Feature",
         "Single button, AoE." +
         "\nIncludes dances, flourishes, burst and overcap protections." +
@@ -884,7 +884,7 @@ namespace XIVSlothCombo.Combos
         DNC_Starfall_Devilment = 4070,
 
         #region Legacy Features [L]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AdvST, DNC_AoE_SimpleMode, DNC_AdvAoE)]
+        [ConflictingCombos(DNC_SimpleST, DNC_AdvST, DNC_SimpleAoE, DNC_AdvAoE)]
         [CustomComboInfo("Legacy Features",
         "Deprecated features more closely resembling traditional XIVCombo implementation.\nThese features are marked with a '[L]'.", DNC.JobID, 0)]
         DNC_LegacyFeatures = 4100,
@@ -942,13 +942,13 @@ namespace XIVSlothCombo.Combos
 
         #region Variant
         [Variant]
-        [VariantParent(DNC_ST_SimpleMode, DNC_AdvST, DNC_AoE_SimpleMode, DNC_AdvAoE)]
+        [VariantParent(DNC_SimpleST, DNC_AdvST, DNC_SimpleAoE, DNC_AdvAoE)]
         [CustomComboInfo("Rampart Option",
         "Use Variant Rampart on cooldown.", DNC.JobID, 0)]
         DNC_Variant_Rampart = 4200,
 
         [Variant]
-        [VariantParent(DNC_ST_SimpleMode, DNC_AdvST, DNC_AoE_SimpleMode, DNC_AdvAoE)]
+        [VariantParent(DNC_SimpleST, DNC_AdvST, DNC_SimpleAoE, DNC_AdvAoE)]
         [CustomComboInfo("Cure Option",
         "Use Variant Cure when HP is below set threshold.", DNC.JobID, 0)]
         DNC_VariantCure = 4201,

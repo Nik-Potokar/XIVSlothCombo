@@ -120,10 +120,10 @@ namespace XIVSlothCombo.Combos.PvE
 
             #region Simple ST/AoE
             internal static UserBool
-                DNC_ST_SimpleMode_SS                = new("DNC_ST_SimpleMode_SS"),                  // Simple ST Standard Step inclusion
-                DNC_ST_SimpleMode_TS                = new("DNC_ST_SimpleMode_TS"),                  // Simple ST Technical Step inclusion
-                DNC_AoE_SimpleMode_SS               = new("DNC_AoE_SimpleMode_SS"),                 // Simple AoE Standard Step inclusion
-                DNC_AoE_SimpleMode_TS               = new("DNC_AoE_SimpleMode_TS");                 // Simple AoE Technical Step inclusion
+                DNC_SimpleST_SS                     = new("DNC_SimpleST_SS"),                       // Simple ST Standard Step inclusion
+                DNC_SimpleST_TS                     = new("DNC_SimpleST_TS"),                       // Simple ST Technical Step inclusion
+                DNC_SimpleAoE_SS                    = new("DNC_SimpleAoE_SS"),                      // Simple AoE Standard Step inclusion
+                DNC_SimpleAoE_TS                    = new("DNC_SimpleAoE_TS");                      // Simple AoE Technical Step inclusion
             #endregion
 
             #region Advanced ST
@@ -410,9 +410,9 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         // Simple Single Target
-        internal class DNC_ST_SimpleMode : CustomCombo
+        internal class DNC_SimpleST : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_ST_SimpleMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_SimpleST;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -425,13 +425,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // Simple ST Standard (Dance) Steps & Fill
-                    if (HasEffect(Buffs.StandardStep) && Config.DNC_ST_SimpleMode_SS)
+                    if (HasEffect(Buffs.StandardStep) && Config.DNC_SimpleST_SS)
                         return Gauge.CompletedSteps < 2
                             ? Gauge.NextStep
                             : StandardFinish;
 
                     // Simple ST Technical (Dance) Steps & Fill
-                    if (HasEffect(Buffs.TechnicalStep) && Config.DNC_ST_SimpleMode_TS)
+                    if (HasEffect(Buffs.TechnicalStep) && Config.DNC_SimpleST_TS)
                         return Gauge.CompletedSteps < 4
                             ? Gauge.NextStep
                             : TechnicalFinish;
@@ -513,7 +513,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Simple ST Standard Step (outside of burst)
-                    if (Config.DNC_ST_SimpleMode_SS && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (Config.DNC_SimpleST_SS && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > 5) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -523,7 +523,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Simple ST Technical Step
-                    if (Config.DNC_ST_SimpleMode_TS && ActionReady(TechnicalStep) &&
+                    if (Config.DNC_SimpleST_TS && ActionReady(TechnicalStep) &&
                         (!HasTarget() || GetTargetHPPercent() > 5) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
@@ -546,7 +546,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // Simple ST Standard Step (inside of burst)
-                    if (Config.DNC_ST_SimpleMode_SS &&
+                    if (Config.DNC_SimpleST_SS &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         Gauge.Esprit < 25 &&
                         GetTargetHPPercent() > 5 &&
@@ -751,9 +751,9 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         // Simple AoE
-        internal class DNC_AoE_SimpleMode : CustomCombo
+        internal class DNC_SimpleAoE : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_SimpleMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_SimpleAoE;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -766,13 +766,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // Simple AoE Standard (Dance) Steps & Fill
-                    if (HasEffect(Buffs.StandardStep) && Config.DNC_AoE_SimpleMode_SS)
+                    if (HasEffect(Buffs.StandardStep) && Config.DNC_SimpleAoE_SS)
                         return Gauge.CompletedSteps < 2
                             ? Gauge.NextStep
                             : StandardFinish;
 
                     // Simple AoE Technical (Dance) Steps & Fill
-                    if (HasEffect(Buffs.TechnicalStep) && Config.DNC_AoE_SimpleMode_TS)
+                    if (HasEffect(Buffs.TechnicalStep) && Config.DNC_SimpleAoE_TS)
                         return Gauge.CompletedSteps < 4
                             ? Gauge.NextStep
                             : TechnicalFinish;
@@ -874,7 +874,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Simple AoE Standard Step (outside of burst)
-                    if (Config.DNC_AoE_SimpleMode_SS && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (Config.DNC_SimpleAoE_SS && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > 5) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -884,7 +884,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Simple AoE Technical Step
-                    if (Config.DNC_AoE_SimpleMode_TS && ActionReady(TechnicalStep) &&
+                    if (Config.DNC_SimpleAoE_TS && ActionReady(TechnicalStep) &&
                         (!HasTarget() || GetTargetHPPercent() > 5) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
@@ -907,7 +907,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // Simple AoE Standard Step (inside of burst)
-                    if (Config.DNC_AoE_SimpleMode_SS &&
+                    if (Config.DNC_SimpleAoE_SS &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         GetTargetHPPercent() > 5 && (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
                         return StandardStep;
