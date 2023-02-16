@@ -1203,6 +1203,10 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.DNC_AdvST_SS)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_SSBurstPct, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
 
+            // Standard Dance Burst Option
+            if (preset is CustomComboPreset.DNC_AdvST_SS)
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AdvST_SS_Burst, "Standard Dance Burst Option", "Includes Standard Step (and all steps) in the burst with low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.");
+
             // Technical Step HP% throttle
             if (preset is CustomComboPreset.DNC_AdvST_TS)
                 UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_TSBurstPct, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
@@ -1234,6 +1238,10 @@ namespace XIVSlothCombo.Window.Functions
             // Standard Step HP% throttle
             if (preset is CustomComboPreset.DNC_AdvAoE_SS)
                 UserConfig.DrawSliderInt(0, 10, DNC.Config.DNC_AdvAoE_SSBurstPct, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
+
+            // Standard Dance Burst Option
+            if (preset is CustomComboPreset.DNC_AdvAoE_SS)
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AdvAoE_SS_Burst, "Standard Dance Burst Option", "Includes Standard Step (and all steps) in the burst with low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.");
 
             // Technical Step HP% throttle
             if (preset is CustomComboPreset.DNC_AdvAoE_TS)
