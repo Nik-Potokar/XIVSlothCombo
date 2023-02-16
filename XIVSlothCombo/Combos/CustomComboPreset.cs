@@ -881,14 +881,12 @@ namespace XIVSlothCombo.Combos
 
             [ReplaceSkill(DNC.Cascade)]
             [ParentCombo(DNC_LegacyFeatures)]
-            [ConflictingCombos()]
             [CustomComboInfo("[L] - Single Target Multibutton Feature",
             "Single target combo with Fan Dances and Esprit use.", DNC.JobID, 0)]
             DNC_LegacyST_MultiButton = 4110,
 
             [ReplaceSkill(DNC.Windmill)]
             [ParentCombo(DNC_LegacyFeatures)]
-            [ConflictingCombos()]
             [CustomComboInfo("[L] - AoE Multibutton Feature",
             "AoE combo with Fan Dances and Esprit use.", DNC.JobID, 0)]
             DNC_LegacyAoE_MultiButton = 4120,
@@ -897,7 +895,7 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(DNC_LegacyFeatures)]
             [ConflictingCombos(DNC_DanceStepSolver)]
             [CustomComboInfo("[L] - Dance Features",
-            "Features and options for Standard Step and Technical Step.", DNC.JobID, 0)]
+            "Features and options for Dances.", DNC.JobID, 0)]
             DNC_Legacy_Dance = 4130,
 
                 [ReplaceSkill(DNC.StandardStep)]
@@ -933,13 +931,12 @@ namespace XIVSlothCombo.Combos
             #region Flourishing Features [L]
             [ReplaceSkill(DNC.Flourish)]
             [ParentCombo(DNC_LegacyFeatures)]
-            [ConflictingCombos()]
             [CustomComboInfo("[L] - Flourishing Fan Dance Feature",
             "Replace Flourish with Fan Dance III & IV during weave-windows when Flourish is on cooldown.", DNC.JobID, 0)]
             DNC_Legacy_FlourishingFanDances = 4140,
 
+            [ReplaceSkill(DNC.FanDance1, DNC.FanDance2)]
             [ParentCombo(DNC_LegacyFeatures)]
-            [ConflictingCombos()]
             [CustomComboInfo("[L] - Fan Dance Combo Feature",
             "Options for Fan Dance combos." +
             "\nFan Dance III takes priority over Fan Dance IV.", DNC.JobID, 0)]
@@ -950,8 +947,7 @@ namespace XIVSlothCombo.Combos
             #region Devilment --> Starfall [L]
             [ReplaceSkill(DNC.Devilment)]
             [ParentCombo(DNC_LegacyFeatures)]
-            [ConflictingCombos()]
-            [CustomComboInfo("[L] - Devilment to Starfall Feature",
+            [CustomComboInfo("[L] - Devilment to Starfall Dance Feature",
             "Change Devilment into Starfall Dance after use.", DNC.JobID, 0)]
             DNC_Starfall_Devilment = 4160,
             #endregion

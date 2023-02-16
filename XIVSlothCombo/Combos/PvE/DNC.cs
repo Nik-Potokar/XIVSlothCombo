@@ -676,7 +676,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Advanced ST Standard Step (outside of burst)
-                    if (Config.DNC_AdvST_SS_Options == 2 && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 &&
+                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -686,9 +687,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Advanced ST Technical Step
-                    if (Config.DNC_AdvST_TS_Options == 2 && ActionReady(TechnicalStep) &&
-                        (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_TSBurstPct) &&
-                        !HasEffect(Buffs.StandardStep))
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_TS) && Config.DNC_AdvST_TS_Options == 2 &&
+                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
+                        (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_TSBurstPct))
                         return TechnicalStep;
 
                     // Advanced ST Saber Dance
@@ -711,7 +712,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // Advanced ST Standard Step (inside of burst)
-                    if (Config.DNC_AdvST_SS_Options_Burst &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 && Config.DNC_AdvST_SS_Options_Burst &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         Gauge.Esprit < 25 &&
                         GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct &&
@@ -1052,7 +1053,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Advanced AoE Standard Step (outside of burst)
-                    if (Config.DNC_AdvAoE_SS_Options == 2 && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 &&
+                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -1062,9 +1064,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Advanced AoE Technical Step
-                    if (Config.DNC_AdvAoE_TS_Options == 2 && ActionReady(TechnicalStep) &&
-                        (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_TSBurstPct) &&
-                        !HasEffect(Buffs.StandardStep))
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_TS) && Config.DNC_AdvAoE_TS_Options == 2 &&
+                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
+                        (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_TSBurstPct))
                         return TechnicalStep;
 
                     // Advanced AoE Saber Dance
@@ -1085,7 +1087,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // Advanced AoE Standard Step (inside of burst)
-                    if (Config.DNC_AdvAoE_SS_Options_Burst &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 && Config.DNC_AdvAoE_SS_Options_Burst &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct &&
                         (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))

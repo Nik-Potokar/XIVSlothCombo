@@ -1235,7 +1235,7 @@ namespace XIVSlothCombo.Window.Functions
             // SS Config
             if (preset is CustomComboPreset.DNC_AdvST_SS)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_SS_Options, "Resolve Only", "Adds ONLY Standard dance steps and Standard Finish to the rotation.\nStandard Step itself must be initiated manually when using this option.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_SS_Options, "Resolve", "Adds ONLY Standard dance steps and Standard Finish to the rotation.\nStandard Step itself must be initiated manually when using this option.", 1);
                 UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_SS_Options, "Initiate + Resolve", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2);
 
                 if (DNC.Config.DNC_AdvST_SS_Options == 2)
@@ -1252,7 +1252,7 @@ namespace XIVSlothCombo.Window.Functions
             // TS Config
             if (preset is CustomComboPreset.DNC_AdvST_TS)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Resolve Only", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1);
                 UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2);
 
                 if (DNC.Config.DNC_AdvST_TS_Options == 2)
@@ -1306,7 +1306,7 @@ namespace XIVSlothCombo.Window.Functions
             // SS Config
             if (preset is CustomComboPreset.DNC_AdvAoE_SS)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_SS_Options, "Resolve Only", "Adds ONLY Standard dance steps and Standard Finish to the rotation.\nStandard Step itself must be initiated manually when using this option.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_SS_Options, "Resolve", "Adds ONLY Standard dance steps and Standard Finish to the rotation.\nStandard Step itself must be initiated manually when using this option.", 1);
                 UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_SS_Options, "Initiate + Resolve", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2);
 
                 if (DNC.Config.DNC_AdvAoE_SS_Options == 2)
@@ -1323,7 +1323,7 @@ namespace XIVSlothCombo.Window.Functions
             // TS Config
             if (preset is CustomComboPreset.DNC_AdvAoE_TS)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Resolve Only", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1);
                 UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2);
 
                 if (DNC.Config.DNC_AdvAoE_TS_Options == 2)
