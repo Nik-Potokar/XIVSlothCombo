@@ -158,6 +158,7 @@ namespace XIVSlothCombo.Combos.PvE
                 DNC_VariantCurePct                  = new("DNC_VariantCurePct");                    // Variant Cure     player HP% threshold
         }
 
+        // Dance Step Solver
         internal class DNC_DanceStepSolver : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_DanceStepSolver;
@@ -180,7 +181,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        #region Legacy Features
+        // Legacy Features
         internal class DNC_LegacyFeatures : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_LegacyFeatures;
@@ -378,252 +379,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        /* Old code
-        internal class DNC_Legacy_Dance_DanceActionReplacer : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_Dance_DanceActionReplacer;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (Gauge.IsDancing)
-                {
-                    uint[]? actionIDs = Service.Configuration.DancerDanceCompatActionIDs;
-
-                    if (actionID == actionIDs[0] || (actionIDs[0] == 0 && actionID == Cascade))     // Cascade replacement
-                        return OriginalHook(Cascade);
-                    if (actionID == actionIDs[1] || (actionIDs[1] == 0 && actionID == Flourish))    // Fountain replacement
-                        return OriginalHook(Fountain);
-                    if (actionID == actionIDs[2] || (actionIDs[2] == 0 && actionID == FanDance1))   // Reverse Cascade replacement
-                        return OriginalHook(ReverseCascade);
-                    if (actionID == actionIDs[3] || (actionIDs[3] == 0 && actionID == FanDance2))   // Fountainfall replacement
-                        return OriginalHook(Fountainfall);
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_Legacy_FanDanceCombos : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_FanDanceCombos;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                // FD 1 --> 3, FD 1 --> 4
-                if (actionID is FanDance1)
-                {
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo) &&
-                        HasEffect(Buffs.ThreeFoldFanDance))
-                        return FanDance3;
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo) &&
-                        HasEffect(Buffs.FourFoldFanDance))
-                        return FanDance4;
-                }
-
-                // FD 2 --> 3, FD 2 --> 4
-                if (actionID is FanDance2)
-                {
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo) &&
-                        HasEffect(Buffs.ThreeFoldFanDance))
-                        return FanDance3;
-                    if (IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo) &&
-                        HasEffect(Buffs.FourFoldFanDance))
-                        return FanDance4;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_Legacy_FlourishingFanDances : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_FlourishingFanDances;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                // Fan Dance 3 & 4 on Flourish
-                if (actionID is Flourish && CanWeave(actionID))
-                {
-                    if (HasEffect(Buffs.ThreeFoldFanDance))
-                        return FanDance3;
-                    if (HasEffect(Buffs.FourFoldFanDance))
-                        return FanDance4;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_LegacyST_MultiButton : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_LegacyST_MultiButton;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Cascade)
-                {
-                    #region Types
-                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
-                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    #endregion
-
-                    // ST Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyST_Multi_EspritThreshold))
-                        return SaberDance;
-
-                    if (CanWeave(actionID))
-                    {
-                        // ST Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            LevelChecked(FanDance1) && Gauge.Feathers is 4)
-                            return FanDance1;
-
-                        // ST Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
-                        {
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
-                                return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance))
-                                return FanDance4;
-                        }
-                    }
-
-                    // ST base combos
-                    if (LevelChecked(Fountainfall) && flow)
-                        return Fountainfall;
-                    if (LevelChecked(ReverseCascade) && symmetry)
-                        return ReverseCascade;
-                    if (LevelChecked(Fountain) && lastComboMove is Cascade)
-                        return Fountain;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_LegacyAoE_MultiButton : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_LegacyAoE_MultiButton;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Windmill)
-                {
-                    #region Types
-                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
-                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    #endregion
-
-                    // AoE Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyAoE_Multi_EspritThreshold))
-                        return SaberDance;
-
-                    if (CanWeave(actionID))
-                    {
-                        // AoE Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            LevelChecked(FanDance2) && Gauge.Feathers is 4)
-                            return FanDance2;
-
-                        // AoE Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
-                        {
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
-                                return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance))
-                                return FanDance4;
-                        }
-                    }
-
-                    // AoE base combos
-                    if (LevelChecked(Bloodshower) && flow)
-                        return Bloodshower;
-                    if (LevelChecked(RisingWindmill) && symmetry)
-                        return RisingWindmill;
-                    if (LevelChecked(Bladeshower) && lastComboMove is Windmill)
-                        return Bladeshower;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_Starfall_Devilment : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Starfall_Devilment;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Devilment && HasEffect(Buffs.FlourishingStarfall))
-                    return StarfallDance;
-                else
-                    return actionID;
-            }
-        }
-
-        internal class DNC_Legacy_Dance_ComboDances : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_Dance_ComboDances;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                // One-button mode for both dances (SS/TS). SS takes priority.
-                if (actionID is StandardStep)
-                {
-                    // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !Gauge.IsDancing)
-                    {
-                        if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
-                            (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
-                            return Devilment;
-                    }
-
-                    // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances_Flourish) &&
-                        InCombat() && !Gauge.IsDancing &&
-                        ActionReady(Flourish) &&
-                        IsOnCooldown(StandardStep))
-                        return Flourish;
-
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
-                    if (HasEffect(Buffs.FlourishingFinish))
-                        return Tillana;
-
-                    // Tech Step
-                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
-                        !Gauge.IsDancing && !HasEffect(Buffs.StandardStep))
-                        return TechnicalStep;
-
-                    // Dance steps
-                    if (Gauge.IsDancing)
-                    {
-                        if (HasEffect(Buffs.StandardStep))
-                        {
-                            return Gauge.CompletedSteps < 2
-                                ? Gauge.NextStep
-                                : StandardFinish;
-                        }
-
-                        if (HasEffect(Buffs.TechnicalStep))
-                        {
-                            return Gauge.CompletedSteps < 4
-                                ? Gauge.NextStep
-                                : TechnicalFinish;
-                        }
-                    }
-                }
-
-                return actionID;
-            }
-        }
-        #endregion
-        */
-        #endregion
-
-        #region Siple/Advanced Single Target Modes
+        // Simple Single Target
         internal class DNC_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_ST_SimpleMode;
@@ -794,6 +550,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        // Advanced Single Target
         internal class DNC_AdvST : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AdvST;
@@ -974,9 +731,8 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-        #endregion
 
-        #region Simple/Advanced AoE Modes
+        // Simple AoE
         internal class DNC_AoE_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_SimpleMode;
@@ -1157,6 +913,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        // Advanced AoE
         internal class DNC_AdvAoE : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AdvAoE;
@@ -1347,6 +1104,5 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-        #endregion
     }
 }

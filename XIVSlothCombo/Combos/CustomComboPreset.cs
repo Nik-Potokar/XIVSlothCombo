@@ -818,7 +818,7 @@ namespace XIVSlothCombo.Combos
             DNC_AdvAoE_TS = 4023,
 
             [ParentCombo(DNC_AdvAoE)]
-            [CustomComboInfo("AoE Tech Devilment Option",
+            [CustomComboInfo("AoE Devilment Option",
             "Includes Devilment in the AoE rotation." +
             "\nWill activate only during Technical Finish if you're Lv70 or above." +
             "\nWill be used on cooldown below Lv70.", DNC.JobID, 0)]
