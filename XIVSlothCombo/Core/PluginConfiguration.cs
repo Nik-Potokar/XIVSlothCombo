@@ -232,7 +232,7 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets active Blue Mage (BLU) spells. </summary>
         public List<uint> ActiveBLUSpells { get; set; } = new List<uint>();
 
-        /// <summary> Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_DanceComboReplacer"/> combo. </summary>
+        /// <summary> Gets or sets an array of 4 ability IDs to interact with the <see cref="CustomComboPreset.DNC_Legacy_Dance_DanceActionReplacer"/> combo. </summary>
         public uint[] DancerDanceCompatActionIDs { get; set; } = new uint[]
         {
             DNC.Cascade,

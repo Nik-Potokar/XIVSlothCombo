@@ -1168,7 +1168,7 @@ namespace XIVSlothCombo.Window.Functions
             #region Legacy config
 
             // Dance Combo Replacer
-            if (preset is CustomComboPreset.DNC_DanceComboReplacer)
+            if (preset is CustomComboPreset.DNC_Legacy_Dance_DanceActionReplacer)
             {
                 int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
                 bool inputChanged = false;
@@ -1187,13 +1187,46 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Spacing();
             }
 
-            // ST Multibutton Esprit overcap
-            if (preset is CustomComboPreset.DNC_ST_EspritOvercap)
-                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyST_EspritThreshold, "Esprit", 150, SliderIncrements.Fives);
+            // ST Multibutton Feature
+            if (preset is CustomComboPreset.DNC_LegacyST_MultiButton)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyST_Multi_Esprit, "Esprit Overcap Option", "Adds Saber Dance when Esprit is at or above the set threshold.");
 
-            // AoE Multibutton Esprit overcap
-            if (preset is CustomComboPreset.DNC_AoE_EspritOvercap)
-                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyAoE_EspritThreshold, "Esprit", 150, SliderIncrements.Fives);
+                if (DNC.Config.DNC_LegacyST_Multi_Esprit == true)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyST_Multi_EspritThreshold, " Esprit", 150, SliderIncrements.Fives);
+                    ImGui.Unindent();
+                }
+
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyST_Multi_FanOvercap, "Fan Dance Overcap Protection Option", "Adds Fan Dance I when Fourfold Feathers are full.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyST_Multi_FanDance34, "Fan Dance Option", "Adds Fan Dance III/IV when available.");
+            }
+
+            // AoE Multibutton Feature
+            if (preset is CustomComboPreset.DNC_LegacyAoE_MultiButton)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyAoE_Multi_Esprit, "AoE Esprit Overcap Option", "Adds Saber Dance when Esprit is at or above the set threshold.");
+
+                if (DNC.Config.DNC_LegacyAoE_Multi_Esprit == true)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyAoE_Multi_EspritThreshold, " Esprit", 150, SliderIncrements.Fives);
+                    ImGui.Unindent();
+                }
+
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyAoE_Multi_FanOvercap, "AoE Fan Dance Overcap Protection Option", "Adds Fan Dance II when Fourfold Feathers are full.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyAoE_Multi_FanDance34, "AoE Fan Dance Option", "Adds Fan Dance III/IV when available.");
+            }
+
+            // Fan Dance Combo Feature
+            if (preset is CustomComboPreset.DNC_Legacy_FanDanceCombos)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_Legacy_FanDanceCombos_13, "Fan Dance —> III Option", "Changes Fan Dance to Fan Dance III when available.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_Legacy_FanDanceCombos_14, "Fan Dance —> IV Option", "Changes Fan Dance to Fan Dance IV when available.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_Legacy_FanDanceCombos_23, "Fan Dance II —> III Option", "Changes Fan Dance II to Fan Dance III when available.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_Legacy_FanDanceCombos_24, "Fan Dance II —> IV Option", "Changes Fan Dance II to Fan Dance IV when available.");
+            }
 
             #endregion
 

@@ -109,42 +109,53 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             #region Legacy config
+            internal static UserBool
+                DNC_LegacyST_Multi_Esprit           = new("DNC_LegacyST_Multi_Esprit"),             // ST Esprit overcap protection (L)
+                DNC_LegacyST_Multi_FanOvercap       = new("DNC_LegacyST_Multi_FanOvercap"),         // ST Fan overcap protection (L)
+                DNC_LegacyST_Multi_FanDance34       = new("DNC_LegacyST_Multi_FanDance34"),         // ST Fan Dance III/IV (L)
+                DNC_LegacyAoE_Multi_Esprit          = new("DNC_LegacyAoE_Multi_Esprit"),            // AoE Esprit overcap protection (L)
+                DNC_LegacyAoE_Multi_FanOvercap      = new("DNC_LegacyAoE_Multi_FanOvercap"),        // AoE Fan overcap protection (L)
+                DNC_LegacyAoE_Multi_FanDance34      = new("DNC_LegacyAoE_Multi_FanDance34"),        // AoE Fan Dance III/IV (L)
+                DNC_Legacy_FanDanceCombos_13        = new("DNC_Legacy_FanDanceCombos_13"),          // Fan Dance 1 —> 3 Option
+                DNC_Legacy_FanDanceCombos_14        = new("DNC_Legacy_FanDanceCombos_14"),          // Fan Dance 1 —> 4 Option
+                DNC_Legacy_FanDanceCombos_23        = new("DNC_Legacy_FanDanceCombos_23"),          // Fan Dance 2 —> 3 Option
+                DNC_Legacy_FanDanceCombos_24        = new("DNC_Legacy_FanDanceCombos_24");          // Fan Dance 2 —> 4 Option
             internal static UserInt
-                DNC_LegacyST_EspritThreshold    = new("DNC_LegacyST_EspritThreshold"),  // Single target Esprit threshold (L)
-                DNC_LegacyAoE_EspritThreshold   = new("DNC_LegacyAoE_EspritThreshold"); // AoE Esprit threshold (L)
+                DNC_LegacyST_Multi_EspritThreshold  = new("DNC_LegacyST_Multi_EspritThreshold"),    // ST Esprit threshold (L)
+                DNC_LegacyAoE_Multi_EspritThreshold = new("DNC_LegacyAoE_Multi_EspritThreshold");   // AoE Esprit threshold (L)
             #endregion
 
             #region Advanced ST config
             internal static UserBool
-                DNC_AdvST_SS_Options_Burst      = new("DNC_AdvST_SS_Options_Burst");    // Standard Step during TS burst phase
+                DNC_AdvST_SS_Options_Burst          = new("DNC_AdvST_SS_Options_Burst");            // Standard Step during TS burst phase
             internal static UserInt
-                DNC_AdvST_SS_Options            = new("DNC_AdvST_SS_Options"),          // Standard Step    usage choice
-                DNC_AdvST_SSBurstPct            = new("DNC_AdvST_SSBurstPct"),          // Standard Step    target HP% threshold
-                DNC_AdvST_TS_Options            = new("DNC_AdvST_TS_Options"),          // Technical Step   usage choice
-                DNC_AdvST_TSBurstPct            = new("DNC_AdvST_TSBurstPct"),          // Technical Step   target HP% threshold
-                DNC_AdvST_FeatherBurstPct       = new("DNC_AdvST_FeatherBurstPct"),     // Feather burst    target HP% threshold
-                DNC_AdvST_SaberThreshold        = new("DNC_AdvST_SaberThreshold"),      // Saber Dance      Esprit     threshold
-                DNC_AdvST_PanicWaltzPct         = new("DNC_AdvST_PanicWaltzPct"),       // Curing Waltz     player HP% threshold
-                DNC_AdvST_PanicWindPct          = new("DNC_AdvST_PanicWindPct"),        // Second Wind      player HP% threshold
-                DNC_AdvST_Interrupt             = new("DNC_AdvST_Interrupt");           // Interrupt        usage choice
+                DNC_AdvST_SS_Options                = new("DNC_AdvST_SS_Options"),                  // Standard Step    usage choice
+                DNC_AdvST_SSBurstPct                = new("DNC_AdvST_SSBurstPct"),                  // Standard Step    target HP% threshold
+                DNC_AdvST_TS_Options                = new("DNC_AdvST_TS_Options"),                  // Technical Step   usage choice
+                DNC_AdvST_TSBurstPct                = new("DNC_AdvST_TSBurstPct"),                  // Technical Step   target HP% threshold
+                DNC_AdvST_FeatherBurstPct           = new("DNC_AdvST_FeatherBurstPct"),             // Feather burst    target HP% threshold
+                DNC_AdvST_SaberThreshold            = new("DNC_AdvST_SaberThreshold"),              // Saber Dance      Esprit     threshold
+                DNC_AdvST_PanicWaltzPct             = new("DNC_AdvST_PanicWaltzPct"),               // Curing Waltz     player HP% threshold
+                DNC_AdvST_PanicWindPct              = new("DNC_AdvST_PanicWindPct"),                // Second Wind      player HP% threshold
+                DNC_AdvST_Interrupt                 = new("DNC_AdvST_Interrupt");                   // Interrupt        usage choice
             #endregion
 
             #region Advanced AoE config
             internal static UserBool
-                DNC_AdvAoE_SS_Options_Burst     = new("DNC_AdvAoE_SS_Options_Burst");   // Standard Step during TS burst phase
+                DNC_AdvAoE_SS_Options_Burst         = new("DNC_AdvAoE_SS_Options_Burst");           // Standard Step during TS burst phase
             internal static UserInt
-                DNC_AdvAoE_SS_Options           = new("DNC_AdvAoE_SS_Options"),         // Standard Step    usage choice
-                DNC_AdvAoE_SSBurstPct           = new("DNC_AdvAoE_SSBurstPct"),         // Standard Step    target HP% threshold
-                DNC_AdvAoE_TS_Options           = new("DNC_AdvAoE_TS_Options"),         // Technical Step   usage choice
-                DNC_AdvAoE_TSBurstPct           = new("DNC_AdvAoE_TSBurstPct"),         // Technical Step   target HP% threshold
-                DNC_AdvAoE_SaberThreshold       = new("DNC_AdvAoE_SaberThreshold"),     // Saber Dance      Esprit     threshold
-                DNC_AdvAoE_PanicWaltzPct        = new("DNC_AdvAoE_PanicWaltzPct"),      // Curing Waltz     player HP% threshold
-                DNC_AdvAoE_PanicWindPct         = new("DNC_AdvAoE_PanicWindPct"),       // Second Wind      player HP% threshold
-                DNC_AdvAoE_Interrupt            = new("DNC_AdvAoE_Interrupt");          // Interrupt        usage choice
+                DNC_AdvAoE_SS_Options               = new("DNC_AdvAoE_SS_Options"),                 // Standard Step    usage choice
+                DNC_AdvAoE_SSBurstPct               = new("DNC_AdvAoE_SSBurstPct"),                 // Standard Step    target HP% threshold
+                DNC_AdvAoE_TS_Options               = new("DNC_AdvAoE_TS_Options"),                 // Technical Step   usage choice
+                DNC_AdvAoE_TSBurstPct               = new("DNC_AdvAoE_TSBurstPct"),                 // Technical Step   target HP% threshold
+                DNC_AdvAoE_SaberThreshold           = new("DNC_AdvAoE_SaberThreshold"),             // Saber Dance      Esprit     threshold
+                DNC_AdvAoE_PanicWaltzPct            = new("DNC_AdvAoE_PanicWaltzPct"),              // Curing Waltz     player HP% threshold
+                DNC_AdvAoE_PanicWindPct             = new("DNC_AdvAoE_PanicWindPct"),               // Second Wind      player HP% threshold
+                DNC_AdvAoE_Interrupt                = new("DNC_AdvAoE_Interrupt");                  // Interrupt        usage choice
             #endregion
 
             internal static UserInt
-                DNC_VariantCurePct              = new("DNC_VariantCurePct");            // Variant Cure     player HP% threshold
+                DNC_VariantCurePct                  = new("DNC_VariantCurePct");                    // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceStepSolver : CustomCombo
@@ -177,7 +188,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 #region Dance Combo Replacer (L)
-                if (IsEnabled(CustomComboPreset.DNC_Dance_Menu) && IsEnabled(CustomComboPreset.DNC_DanceComboReplacer) && Gauge.IsDancing)
+                if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance) && IsEnabled(CustomComboPreset.DNC_Legacy_Dance_DanceActionReplacer) && Gauge.IsDancing)
                 {
                     uint[]? actionIDs = Service.Configuration.DancerDanceCompatActionIDs;
 
@@ -193,26 +204,26 @@ namespace XIVSlothCombo.Combos.PvE
                 #endregion
 
                 #region Fan Dance Combos (L)
-                if (IsEnabled(CustomComboPreset.DNC_FanDanceCombos))
+                if (IsEnabled(CustomComboPreset.DNC_Legacy_FanDanceCombos))
                 {
-                    // FD 1 --> 3, FD 1 --> 4
+                    // FD 1 —> 3, FD 1 —> 4
                     if (actionID is FanDance1)
                     {
-                        if (IsEnabled(CustomComboPreset.DNC_FanDance_1to3_Combo) &&
+                        if (Config.DNC_Legacy_FanDanceCombos_13 &&
                             HasEffect(Buffs.ThreeFoldFanDance))
                             return FanDance3;
-                        if (IsEnabled(CustomComboPreset.DNC_FanDance_1to4_Combo) &&
+                        if (Config.DNC_Legacy_FanDanceCombos_14 &&
                             HasEffect(Buffs.FourFoldFanDance))
                             return FanDance4;
                     }
 
-                    // FD 2 --> 3, FD 2 --> 4
+                    // FD 2 —> 3, FD 2 —> 4
                     if (actionID is FanDance2)
                     {
-                        if (IsEnabled(CustomComboPreset.DNC_FanDance_2to3_Combo) &&
+                        if (Config.DNC_Legacy_FanDanceCombos_23 &&
                             HasEffect(Buffs.ThreeFoldFanDance))
                             return FanDance3;
-                        if (IsEnabled(CustomComboPreset.DNC_FanDance_2to4_Combo) &&
+                        if (Config.DNC_Legacy_FanDanceCombos_24 &&
                             HasEffect(Buffs.FourFoldFanDance))
                             return FanDance4;
                     }
@@ -220,7 +231,7 @@ namespace XIVSlothCombo.Combos.PvE
                 #endregion
 
                 #region Fan Dance 3 & 4 on Flourish (L)
-                if (IsEnabled(CustomComboPreset.DNC_FlourishingFanDances) && actionID is Flourish && CanWeave(actionID))
+                if (IsEnabled(CustomComboPreset.DNC_Legacy_FlourishingFanDances) && actionID is Flourish && CanWeave(actionID))
                 {
                     if (HasEffect(Buffs.ThreeFoldFanDance))
                         return FanDance3;
@@ -230,7 +241,7 @@ namespace XIVSlothCombo.Combos.PvE
                 #endregion
 
                 #region ST Multibutton (L)
-                if (IsEnabled(CustomComboPreset.DNC_ST_MultiButton) && actionID is Cascade)
+                if (IsEnabled(CustomComboPreset.DNC_LegacyST_MultiButton) && actionID is Cascade)
                 {
                     #region Types
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
@@ -238,19 +249,19 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // ST Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= Config.DNC_LegacyST_EspritThreshold)
+                    if (Config.DNC_LegacyST_Multi_Esprit && LevelChecked(SaberDance) &&
+                        Gauge.Esprit >= Config.DNC_LegacyST_Multi_EspritThreshold)
                         return SaberDance;
 
                     if (CanWeave(actionID))
                     {
                         // ST Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
+                        if (Config.DNC_LegacyST_Multi_FanOvercap &&
                             LevelChecked(FanDance1) && Gauge.Feathers is 4)
                             return FanDance1;
 
                         // ST Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                        if (Config.DNC_LegacyST_Multi_FanDance34)
                         {
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
@@ -270,7 +281,7 @@ namespace XIVSlothCombo.Combos.PvE
                 #endregion
 
                 #region AoE Multibutton (L)
-                if (IsEnabled(CustomComboPreset.DNC_AoE_MultiButton) && actionID is Windmill)
+                if (IsEnabled(CustomComboPreset.DNC_LegacyAoE_MultiButton) && actionID is Windmill)
                 {
                     #region Types
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
@@ -278,19 +289,19 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // AoE Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= Config.DNC_LegacyAoE_EspritThreshold)
+                    if (Config.DNC_LegacyAoE_Multi_Esprit && LevelChecked(SaberDance) &&
+                        Gauge.Esprit >= Config.DNC_LegacyAoE_Multi_EspritThreshold)
                         return SaberDance;
 
                     if (CanWeave(actionID))
                     {
                         // AoE Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
+                        if (Config.DNC_LegacyAoE_Multi_FanOvercap &&
                             LevelChecked(FanDance2) && Gauge.Feathers is 4)
                             return FanDance2;
 
                         // AoE Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
+                        if (Config.DNC_LegacyAoE_Multi_FanDance34)
                         {
                             if (HasEffect(Buffs.ThreeFoldFanDance))
                                 return FanDance3;
@@ -316,10 +327,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 #region Combined Dances (L)
                 // One-button mode for both dances (SS/TS). SS takes priority.
-                if (IsEnabled(CustomComboPreset.DNC_Dance_Menu) && IsEnabled(CustomComboPreset.DNC_CombinedDances) && actionID is StandardStep)
+                if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance) && IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances) && actionID is StandardStep)
                 {
                     // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !Gauge.IsDancing)
+                    if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !Gauge.IsDancing)
                     {
                         if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
                             (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
@@ -327,7 +338,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
+                    if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances_Flourish) &&
                         InCombat() && !Gauge.IsDancing &&
                         ActionReady(Flourish) &&
                         IsOnCooldown(StandardStep))
@@ -368,9 +379,9 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         /* Old code
-        internal class DNC_DanceComboReplacer : CustomCombo
+        internal class DNC_Legacy_Dance_DanceActionReplacer : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_DanceComboReplacer;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_Dance_DanceActionReplacer;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -392,9 +403,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DNC_FanDanceCombos : CustomCombo
+        internal class DNC_Legacy_FanDanceCombos : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_FanDanceCombos;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_FanDanceCombos;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -424,9 +435,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DNC_FlourishingFanDances : CustomCombo
+        internal class DNC_Legacy_FlourishingFanDances : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_FlourishingFanDances;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_FlourishingFanDances;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -443,9 +454,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DNC_ST_MultiButton : CustomCombo
+        internal class DNC_LegacyST_MultiButton : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_ST_MultiButton;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_LegacyST_MultiButton;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -458,7 +469,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyST_EspritThreshold))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyST_Multi_EspritThreshold))
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -491,9 +502,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DNC_AoE_MultiButton : CustomCombo
+        internal class DNC_LegacyAoE_MultiButton : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_MultiButton;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_LegacyAoE_MultiButton;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -506,7 +517,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Esprit overcap protection
                     if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyAoE_EspritThreshold))
+                        Gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNC_LegacyAoE_Multi_EspritThreshold))
                         return SaberDance;
 
                     if (CanWeave(actionID))
@@ -552,9 +563,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DNC_CombinedDances : CustomCombo
+        internal class DNC_Legacy_Dance_ComboDances : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_CombinedDances;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Legacy_Dance_ComboDances;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -562,7 +573,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is StandardStep)
                 {
                     // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !Gauge.IsDancing)
+                    if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !Gauge.IsDancing)
                     {
                         if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
                             (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
@@ -570,7 +581,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
+                    if (IsEnabled(CustomComboPreset.DNC_Legacy_Dance_ComboDances_Flourish) &&
                         InCombat() && !Gauge.IsDancing &&
                         ActionReady(Flourish) &&
                         IsOnCooldown(StandardStep))

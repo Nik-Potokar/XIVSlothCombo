@@ -866,157 +866,94 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
-        [ConflictingCombos(DNC_Dance_Menu)]
+        [ConflictingCombos(DNC_Legacy_Dance)]
         [CustomComboInfo("Dance Step Solver Feature",
         "Change Standard Step and Technical Step into each dance step while dancing." +
         "\nWorks with Simple/Advanced Dancer Single Target and AoE." +
         "\nWorks with Legacy Features.", DNC.JobID, 0)]
         DNC_DanceStepSolver = 4040,
 
-        #region Legacy Features (L)
+        #region Legacy Features [L]
         [ConflictingCombos(DNC_ST_SimpleMode, DNC_AdvST, DNC_AoE_SimpleMode, DNC_AdvAoE)]
         [CustomComboInfo("Legacy Features",
-        "Deprecated features more closely resembling traditional XIVCombo implementation.", DNC.JobID, 0)]
+        "Deprecated features more closely resembling traditional XIVCombo implementation.\nThese features are marked with a '[L]'.", DNC.JobID, 0)]
         DNC_LegacyFeatures = 4100,
 
-            #region Single Target Multibutton (L)
             [ReplaceSkill(DNC.Cascade)]
             [ParentCombo(DNC_LegacyFeatures)]
             [ConflictingCombos()]
-            [CustomComboInfo("Single Target Multibutton Feature (Legacy)",
+            [CustomComboInfo("[L] - Single Target Multibutton Feature",
             "Single target combo with Fan Dances and Esprit use.", DNC.JobID, 0)]
-            DNC_ST_MultiButton = 4110,
+            DNC_LegacyST_MultiButton = 4110,
 
-                [ParentCombo(DNC_ST_MultiButton)]
-                [CustomComboInfo("ST Esprit Overcap Option",
-                "Adds Saber Dance above the set Esprit threshold.", DNC.JobID, 0)]
-                DNC_ST_EspritOvercap = 4111,
-
-                [ParentCombo(DNC_ST_MultiButton)]
-                [CustomComboInfo("Fan Dance Overcap Protection Option",
-                "Adds Fan Dance 1 when Fourfold Feathers are full.", DNC.JobID, 0)]
-                DNC_ST_FanDanceOvercap = 4112,
-
-                [ParentCombo(DNC_ST_MultiButton)]
-                [CustomComboInfo("Fan Dance Option",
-                "Adds Fan Dance 3/4 when available.", DNC.JobID, 0)]
-                DNC_ST_FanDance34 = 4113,
-            #endregion
-
-            #region AoE Multibutton (L)
             [ReplaceSkill(DNC.Windmill)]
             [ParentCombo(DNC_LegacyFeatures)]
             [ConflictingCombos()]
-            [CustomComboInfo("AoE Multibutton Feature (Legacy)",
+            [CustomComboInfo("[L] - AoE Multibutton Feature",
             "AoE combo with Fan Dances and Esprit use.", DNC.JobID, 0)]
-            DNC_AoE_MultiButton = 4120,
+            DNC_LegacyAoE_MultiButton = 4120,
 
-                [ParentCombo(DNC_AoE_MultiButton)]
-                [CustomComboInfo("AoE Esprit Overcap Option",
-                "Adds Saber Dance above the set Esprit threshold.", DNC.JobID, 0)]
-                DNC_AoE_EspritOvercap = 4121,
-
-                [ParentCombo(DNC_AoE_MultiButton)]
-                [CustomComboInfo("AoE Fan Dance Overcap Protection Option",
-                "Adds Fan Dance 2 when Fourfold Feathers are full.", DNC.JobID, 0)]
-                DNC_AoE_FanDanceOvercap = 4122,
-
-                [ParentCombo(DNC_AoE_MultiButton)]
-                [CustomComboInfo("AoE Fan Dance Option",
-                "Adds Fan Dance 3/4 when available.", DNC.JobID, 0)]
-                DNC_AoE_FanDance34 = 4123,
-            #endregion
-
-            #region Dance Features (L)
+            #region Dance Features [L]
             [ParentCombo(DNC_LegacyFeatures)]
             [ConflictingCombos(DNC_DanceStepSolver)]
-            [CustomComboInfo("Dance Features (Legacy)",
+            [CustomComboInfo("[L] - Dance Features",
             "Features and options for Standard Step and Technical Step.", DNC.JobID, 0)]
-            DNC_Dance_Menu = 4130,
+            DNC_Legacy_Dance = 4130,
 
                 [ReplaceSkill(DNC.StandardStep)]
-                [ParentCombo(DNC_Dance_Menu)]
-                [ConflictingCombos(DNC_DanceComboReplacer)]
+                [ParentCombo(DNC_Legacy_Dance)]
+                [ConflictingCombos(DNC_Legacy_Dance_DanceActionReplacer)]
                 [CustomComboInfo("Combined Dance Feature",
                 "Standard And Technical Dance on one button." +
                 "\nStandard > Technical." +
                 "\nThis combos out into Tillana and Starfall Dance.", DNC.JobID, 0)]
-                DNC_CombinedDances = 4131,
+                DNC_Legacy_Dance_ComboDances = 4131,
 
-                    [ParentCombo(DNC_CombinedDances)]
+                    [ParentCombo(DNC_Legacy_Dance_ComboDances)]
                     [CustomComboInfo("Devilment Plus Option",
                     "Adds Devilment right after Technical finish.", DNC.JobID, 0)]
-                    DNC_CombinedDances_Devilment = 4132,
+                    DNC_Legacy_Dance_ComboDances_Devilment = 4132,
 
-                    [ParentCombo(DNC_CombinedDances)]
+                    [ParentCombo(DNC_Legacy_Dance_ComboDances)]
                     [CustomComboInfo("Flourish Plus Option",
                     "Adds Flourish to the Combined Dance Feature.", DNC.JobID, 0)]
-                    DNC_CombinedDances_Flourish = 4133,
+                    DNC_Legacy_Dance_ComboDances_Flourish = 4133,
 
-                [ParentCombo(DNC_Dance_Menu)]
-                [ConflictingCombos(DNC_CombinedDances)]
+                [ParentCombo(DNC_Legacy_Dance)]
+                [ConflictingCombos(DNC_Legacy_Dance_ComboDances)]
                 [CustomComboInfo("Custom Dance Step Feature",
                 "Change custom actions into dance steps while dancing." +
                 "\nThis helps ensure you can still dance with combos on, without using auto dance." +
                 "\nYou can change the respective actions by inputting action IDs below for each dance step." +
                 "\nThe defaults are Cascade, Flourish, Fan Dance and Fan Dance II. If set to 0, they will reset to these actions." +
                 "\nYou can get Action IDs with Garland Tools by searching for the action and clicking the cog.", DNC.JobID, 0)]
-                DNC_DanceComboReplacer = 4134,
+                DNC_Legacy_Dance_DanceActionReplacer = 4134,
             #endregion
 
-            #region Flourishing Features (L)
+            #region Flourishing Features [L]
+            [ReplaceSkill(DNC.Flourish)]
             [ParentCombo(DNC_LegacyFeatures)]
             [ConflictingCombos()]
-            [CustomComboInfo("Flourishing Features (Legacy)",
-            "Features and options for Fourfold Feathers and Flourish.", DNC.JobID, 0)]
-            DNC_FlourishingFeatures_Menu = 4140,
+            [CustomComboInfo("[L] - Flourishing Fan Dance Feature",
+            "Replace Flourish with Fan Dance III & IV during weave-windows when Flourish is on cooldown.", DNC.JobID, 0)]
+            DNC_Legacy_FlourishingFanDances = 4140,
 
-                [ReplaceSkill(DNC.Flourish)]
-                [ParentCombo(DNC_FlourishingFeatures_Menu)]
-                [ConflictingCombos()]
-                [CustomComboInfo("Flourishing Fan Dance Feature",
-                "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID, 0)]
-                DNC_FlourishingFanDances = 4141,
+            [ParentCombo(DNC_LegacyFeatures)]
+            [ConflictingCombos()]
+            [CustomComboInfo("[L] - Fan Dance Combo Feature",
+            "Options for Fan Dance combos." +
+            "\nFan Dance III takes priority over Fan Dance IV.", DNC.JobID, 0)]
+            DNC_Legacy_FanDanceCombos = 4150,
 
-                [ParentCombo(DNC_FlourishingFeatures_Menu)]
-                [ConflictingCombos()]
-                [CustomComboInfo("Fan Dance Combo Feature (Legacy)",
-                "Options for Fan Dance combos." +
-                "\nFan Dance 3 takes priority over Fan Dance 4.", DNC.JobID, 0)]
-                DNC_FanDanceCombos = 4142,
-
-                    [ReplaceSkill(DNC.FanDance1)]
-                    [ParentCombo(DNC_FanDanceCombos)]
-                    [CustomComboInfo("Fan Dance 1 -> 3 Option",
-                    "Changes Fan Dance 1 to Fan Dance 3 when available.", DNC.JobID, 0)]
-                    DNC_FanDance_1to3_Combo = 4143,
-
-                    [ReplaceSkill(DNC.FanDance1)]
-                    [ParentCombo(DNC_FanDanceCombos)]
-                    [CustomComboInfo("Fan Dance 1 -> 4 Option",
-                    "Changes Fan Dance 1 to Fan Dance 4 when available.", DNC.JobID, 0)]
-                    DNC_FanDance_1to4_Combo = 4144,
-
-                    [ReplaceSkill(DNC.FanDance2)]
-                    [ParentCombo(DNC_FanDanceCombos)]
-                    [CustomComboInfo("Fan Dance 2 -> 3 Option",
-                    "Changes Fan Dance 2 to Fan Dance 3 when available.", DNC.JobID, 0)]
-                    DNC_FanDance_2to3_Combo = 4145,
-
-                    [ReplaceSkill(DNC.FanDance2)]
-                    [ParentCombo(DNC_FanDanceCombos)]
-                    [CustomComboInfo("Fan Dance 2 -> 4 Option",
-                    "Changes Fan Dance 2 to Fan Dance 4 when available.", DNC.JobID, 0)]
-                    DNC_FanDance_2to4_Combo = 4146,
             #endregion
 
-            #region Devilment --> Starfall (L)
+            #region Devilment --> Starfall [L]
             [ReplaceSkill(DNC.Devilment)]
             [ParentCombo(DNC_LegacyFeatures)]
             [ConflictingCombos()]
-            [CustomComboInfo("Devilment to Starfall Feature (Legacy)",
+            [CustomComboInfo("[L] - Devilment to Starfall Feature",
             "Change Devilment into Starfall Dance after use.", DNC.JobID, 0)]
-            DNC_Starfall_Devilment = 4150,
+            DNC_Starfall_Devilment = 4160,
             #endregion
 
         #endregion
