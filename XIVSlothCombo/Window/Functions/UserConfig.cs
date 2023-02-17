@@ -1178,14 +1178,20 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.DNC_SimpleST)
             {
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleST_SS, "Include Standard Step", "Adds Standard Step to the rotation.");
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleST_TS, "Include Technical Step", "Adds Technical Step to the rotation.");
+                ImGui.Indent();
+                ImGui.Spacing();
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleST_Dances, "Standard Step", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2, 0, 150, ImGuiColors.ParsedGold);
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleST_Dances, "Technical Step", "Adds Technical Step, all dance steps and Technical Finish to the rotation.", 2, 1, 150, Colors.Blue);
+                ImGui.Unindent();
             }
 
             if (preset is CustomComboPreset.DNC_SimpleAoE)
             {
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleAoE_SS, "Include Standard Step", "Adds Standard Step to the AoE rotation.");
-                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_SimpleAoE_TS, "Include Technical Step", "Adds Technical Step to the AoE rotation.");
+                ImGui.Indent();
+                ImGui.Spacing();
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleAoE_Dances, "Standard Step", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2, 0, 150, ImGuiColors.ParsedGold);
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleAoE_Dances, "Technical Step", "Adds Technical Step, all dance steps and Technical Finish to the rotation.", 2, 1, 150, Colors.Blue);
+                ImGui.Unindent();
             }
 
             #endregion
@@ -1245,17 +1251,17 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.DNC_AdvST_PanicHeals)
             {
                 ImGui.Indent(); ImGui.Indent();
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWaltzPct, " Curing Waltz HP%", 200, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWindPct, " Second Wind HP%", 200, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWaltzPct, " Curing Waltz HP%", 200, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWindPct, " Second Wind HP%", 200, SliderIncrements.Fives);
                 ImGui.Unindent(); ImGui.Unindent();
             }
 
             // Interrupt
             if (preset is CustomComboPreset.DNC_AdvST_Interrupt)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 1);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 2);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.", 3);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.", 2);
                 ImGui.Spacing();
             }
 
@@ -1308,17 +1314,17 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.DNC_AdvAoE_PanicHeals)
             {
                 ImGui.Indent(); ImGui.Indent();
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWaltzPct, " Curing Waltz HP%", 200, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWindPct, " Second Wind HP%", 200, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWaltzPct, " Curing Waltz HP%", 200, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWindPct, " Second Wind HP%", 200, SliderIncrements.Fives);
                 ImGui.Unindent(); ImGui.Unindent();
             }
 
             // Interrupt
             if (preset is CustomComboPreset.DNC_AdvAoE_Interrupt)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 1);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 2);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.", 3);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.", 2);
                 ImGui.Spacing();
             }
 
@@ -1381,7 +1387,7 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
 
             if (preset is CustomComboPreset.DNC_VariantCure)
-                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_VariantCurePct, " HP% to be at or under", 200);
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_VariantCurePct, " HP% to be at or under", 200, 5);
 
             #region PvP
 
