@@ -291,15 +291,25 @@ namespace XIVSlothCombo.Combos.PvE.Content
                 {
                     //Thin air added may be jank but yea, it may work? - Riley
                     //return IsEnabled(CustomComboPreset.WHM_ThinAirBozja) && thinAirReady
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix) && HasEffect(Bozja.Buffs.FontOfMagic))
+                    {
+                        canuseaction = true;
+                    }
 
-                    if (iswhitemage)
+                    if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix))
+                    { 
+                        canuseaction = true;
+                    }
+
+                        
+                    if (iswhitemage && canuseaction)
                     {
                         return thinAirReady
                             ? ThinAir
                             : Bozja.LostSeraphStrike;
                     }
 
-                    else
+                    if (!iswhitemage && canuseaction)
                     {
                         return Bozja.LostSeraphStrike;
                     }
@@ -344,7 +354,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                     { return Bozja.FontOfMagic;}
 
                     // Checks to see if you have Font of Magic, and lines up Banners to Font
-                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                    if (IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix))
                     {
                         if (HasEffect(Bozja.Buffs.FontOfMagic))
                         {
@@ -361,7 +371,7 @@ namespace XIVSlothCombo.Combos.PvE.Content
                         }
                     }
 
-                    if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerPhys))
+                    if (!IsEnabled(CustomComboPreset.ALL_BozjaHoldBannerMagix))
                     {
                         if (IsEnabled(Bozja.BannerOfHonoredSacrifice))
                         { return Bozja.BannerOfHonoredSacrifice; }
