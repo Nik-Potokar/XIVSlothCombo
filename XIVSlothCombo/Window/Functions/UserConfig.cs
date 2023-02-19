@@ -11,6 +11,9 @@ using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
+using Dalamud.Interface;
+using Dalamud.Interface.Style;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -1122,6 +1125,25 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
 
+            if (preset is CustomComboPreset.AST_Cards_QuickTargetCards)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "No Override", "", 0);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "Hard Target Override", "Overrides selection with hard target if you have one", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_QuickTarget_Override), "UI Mousover Override", "Overrides selection with UI mouseover target if you have one", 2);
+
+                ImGui.Spacing();
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipDamageDown), $"Skip targets with a {ActionWatching.GetStatusName(62)} debuff", "");
+                UserConfig.DrawAdditionalBoolChoice(nameof(AST.Config.AST_QuickTarget_SkipRezWeakness), $"Skip targets with a {ActionWatching.GetStatusName(43)} or {ActionWatching.GetStatusName(44)} debuff", "");
+            }
+
+            if (preset is CustomComboPreset.AST_DPS_AutoPlay)
+            {
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Fast (1 DPS GCD minimum delay)", "", 1);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Medium (2 DPS GCD minimum delay)", "", 2);
+                UserConfig.DrawRadioButton(nameof(AST.Config.AST_ST_DPS_Play_SpeedSetting), "Slow (3 DPS GCD minimum delay)", "", 3);
+
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
@@ -1808,42 +1830,50 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Ruin I / Broils", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_ST_DPS_AltMode), "On Bio", "Alternative DPS Mode. Leaves Ruin I / Broil alone for pure DPS, becomes Ruin I / Broil when features are on cooldown.", 1);
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_Adv, "Advanced Action Options", "Change how actions are handled", isConditionalChoice: true);
+
+                if (SCH.Config.SCH_ST_DPS_Adv)
+                {
+                    ImGui.Indent();ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin/Broils", "Apply options to Ruin and all Broils.", 3, 0);
+                    UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Bio/Bio II/Biolysis", "Apply options to Bio and Biolysis.", 3, 1);
+                    UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin II", "Apply options to Ruin II.", 3, 2);
+                    ImGui.Unindent();
+                }
             }
 
             if (preset is CustomComboPreset.SCH_DPS_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_DPS_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_DPS_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_DPS_Bio)
             {
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_BioOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_BioOption, "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv), "Advanced Options", "", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_Bio_Adv)))
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_Bio_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (PluginConfiguration.GetCustomBoolValue(SCH.Config.SCH_ST_DPS_Bio_Adv))
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 4, nameof(SCH.Config.SCH_ST_DPS_Bio_Threshold), "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
+                    UserConfig.DrawRoundedSliderFloat(0, 4, SCH.Config.SCH_ST_DPS_Bio_Threshold, "Seconds remaining before reapplying the DoT. Set to Zero to disable this check.", digits: 1);
                     ImGui.Unindent();
                 }
             }
 
             if (preset is CustomComboPreset.SCH_DPS_ChainStrat)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_DPS_ChainStratagemOption), "Stop using at Enemy HP%. Set to Zero to disable this check.");
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_DPS_ChainStratagemOption, "Stop using at Enemy HP%. Set to Zero to disable this check.");
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
             {
-                UserConfig.DrawAdditionalBoolChoice(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv), "Advanced Options", "", isConditionalChoice: true);
-                if (PluginConfiguration.GetCustomBoolValue(nameof(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)))
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv, "Advanced Options","", isConditionalChoice: true);
+                if (SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)
                 {
                     ImGui.Indent();
-                    UserConfig.DrawRoundedSliderFloat(0, 60, nameof(SCH.Config.SCH_ST_DPS_EnergyDrain), "Aetherflow remaining cooldown:", digits: 1);
+                    UserConfig.DrawRoundedSliderFloat(0, 60, SCH.Config.SCH_ST_DPS_EnergyDrain, "Aetherflow remaining cooldown:", digits: 1);
                     ImGui.Unindent();
                 }
             }
 
             if (preset is CustomComboPreset.SCH_AoE_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_AoE_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_AoE_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.SCH_ST_Heal)
             {
@@ -1860,44 +1890,67 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, nameof(SCH.Config.SCH_ST_Heal_LucidOption), "MP Threshold", 150, SliderIncrements.Hundreds);
-
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Heal_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
+            
             if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_AdloquiumOption), "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
-
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_AdloquiumOption, "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
+            
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
-                UserConfig.DrawSliderInt(0, 100, nameof(SCH.Config.SCH_ST_Heal_LustrateOption), "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
+
+            if (preset is CustomComboPreset.SCH_DeploymentTactics)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_DeploymentTactics_Adv, "Advanced Options", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_DeploymentTactics_Adv)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_DeploymentTactics_UIMouseOver,
+                        "Party UI Mouseover Checking",
+                        "Check party member's HP & Debuffs by using mouseover on the party list.\n" +
+                        "To be used in conjunction with Redirect/Reaction/etc");
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset is CustomComboPreset.SCH_FairyReminder)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Eos", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_FairyFeature), "Selene", "", 1);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
             }
 
             if (preset is CustomComboPreset.SCH_Aetherflow)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Display), "Show Aetherflow On Energy Drain Only", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Display), "Show Aetherflow On All Aetherflow Skills", "", 1);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only", "", 0);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On All Aetherflow Skills", "", 1);
             }
 
-            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Excog)
+            if (preset is CustomComboPreset.SCH_Aetherflow_Recite)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Excog), "Only when out of Aetherflow Stacks", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Excog), "Always when available", "", 1);
-            }
-
-            if (preset is CustomComboPreset.SCH_Aetherflow_Recite_Indom)
-            {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Only when out of Aetherflow Stacks", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Aetherflow_Recite_Indom), "Always when available", "", 1);
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Excog, "On Excogitation", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_Aetherflow_Recite_Excog)
+                {
+                    ImGui.Indent();ImGui.Spacing();
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Only when out of Aetherflow Stacks", "", 0);
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Always when available", "", 1);
+                    ImGui.Unindent();
+                }
+                
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Indom, "On Indominability", "", isConditionalChoice: true);
+                if (SCH.Config.SCH_Aetherflow_Recite_Indom)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_IndomMode, "Only when out of Aetherflow Stacks", "", 0);
+                    UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_IndomMode, "Always when available", "", 1);
+                    ImGui.Unindent();
+                }
             }
 
             if (preset is CustomComboPreset.SCH_Recitation)
             {
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Adloquium", "", 0);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Succor", "", 1);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Indomitability", "", 2);
-                UserConfig.DrawRadioButton(nameof(SCH.Config.SCH_Recitation_Mode), "Excogitation", "", 3);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Adloquium", "", 0);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Succor", "", 1);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Indomitability", "", 2);
+                UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Excogitation", "", 3);
             }
 
             #endregion
