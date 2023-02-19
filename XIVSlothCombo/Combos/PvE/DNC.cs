@@ -421,6 +421,12 @@ namespace XIVSlothCombo.Combos.PvE
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
 
+                    #region Pre-pull
+                    // Simple ST Standard Step (pre-pull)
+                    if (Config.DNC_SimpleST_Dances[0] && ActionReady(StandardStep) && IsOffCooldown(TechnicalStep) && !InCombat())
+                        return StandardStep;
+                    #endregion
+
                     #region Dance Fills
                     // Simple ST Standard (Dance) Steps & Fill
                     if (HasEffect(Buffs.StandardStep) &&
@@ -512,22 +518,22 @@ namespace XIVSlothCombo.Combos.PvE
                         PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
                         return Variant.VariantCure;
 
-                    // Simple ST Standard Step (outside of burst)
-                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
-                        Config.DNC_SimpleST_Dances[0])
-                    {
-                        if ((!HasTarget() || GetTargetHPPercent() > 5) &&
-                            ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
-                            return StandardStep;
-                    }
-
                     // Simple ST Technical Step
                     if (ActionReady(TechnicalStep) &&
                         Config.DNC_SimpleST_Dances[1] &&
                         (!HasTarget() || GetTargetHPPercent() > 5) &&
                         !HasEffect(Buffs.StandardStep))
                         return TechnicalStep;
+
+                    // Simple ST Standard Step (outside of burst)
+                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
+                        Config.DNC_SimpleST_Dances[0])
+                    {
+                        if ((!HasTarget() || GetTargetHPPercent() > 5) &&
+                            (GetCooldownRemainingTime(TechnicalStep) > 5) &&
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            return StandardStep;
+                    }
 
                     // Simple ST Saber Dance
                     if (LevelChecked(SaberDance) && (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
@@ -770,6 +776,12 @@ namespace XIVSlothCombo.Combos.PvE
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     #endregion
 
+                    #region Pre-pull
+                    // Simple AoE Standard Step (pre-pull)
+                    if (Config.DNC_SimpleAoE_Dances[0] && ActionReady(StandardStep) && IsOffCooldown(TechnicalStep) && !InCombat())
+                        return StandardStep;
+                    #endregion
+
                     #region Dance Fills
                     // Simple AoE Standard (Dance) Steps & Fill
                     if (HasEffect(Buffs.StandardStep) &&
@@ -881,21 +893,21 @@ namespace XIVSlothCombo.Combos.PvE
                         PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
                         return Variant.VariantCure;
 
-                    // Simple AoE Standard Step (outside of burst)
-                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
-                        Config.DNC_SimpleAoE_Dances[0])
-                    {
-                        if ((!HasTarget() || GetTargetHPPercent() > 5) &&
-                            ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
-                            return StandardStep;
-                    }
-
                     // Simple AoE Technical Step
                     if (ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
                         Config.DNC_SimpleAoE_Dances[1] &&
                         (!HasTarget() || GetTargetHPPercent() > 5))
                         return TechnicalStep;
+
+                    // Simple AoE Standard Step (outside of burst)
+                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
+                        Config.DNC_SimpleAoE_Dances[0])
+                    {
+                        if ((!HasTarget() || GetTargetHPPercent() > 5) &&
+                            (GetCooldownRemainingTime(TechnicalStep) > 5) &&
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            return StandardStep;
+                    }
 
                     // Simple AoE Saber Dance
                     if (LevelChecked(SaberDance) &&
@@ -946,6 +958,13 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Types
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
+                    #endregion
+
+                    #region Pre-pull
+                    // Advanced AoE Standard Step (pre-pull)
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 &&
+                        ActionReady(StandardStep) && IsOffCooldown(TechnicalStep) && !InCombat())
+                        return StandardStep;
                     #endregion
 
                     #region Dance Fills
@@ -1072,21 +1091,21 @@ namespace XIVSlothCombo.Combos.PvE
                         PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
                         return Variant.VariantCure;
 
-                    // Advanced AoE Standard Step (outside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 &&
-                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
-                    {
-                        if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct) &&
-                            ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
-                            return StandardStep;
-                    }
-
                     // Advanced AoE Technical Step
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_TS) && Config.DNC_AdvAoE_TS_Options == 2 &&
                         ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
                         (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_TSBurstPct))
                         return TechnicalStep;
+
+                    // Advanced AoE Standard Step (outside of burst)
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 &&
+                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    {
+                        if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct) &&
+                            (GetCooldownRemainingTime(TechnicalStep) > 5) &&
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            return StandardStep;
+                    }
 
                     // Advanced AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SaberDance) && LevelChecked(SaberDance) &&
