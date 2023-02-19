@@ -1240,8 +1240,8 @@ namespace XIVSlothCombo.Window.Functions
             // TS Config
             if (preset is CustomComboPreset.DNC_AdvST_TS)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1, 150, Colors.Blue);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2, 150, Colors.Blue);
 
                 if (DNC.Config.DNC_AdvST_TS_Options == 2)
                 {
@@ -1281,9 +1281,9 @@ namespace XIVSlothCombo.Window.Functions
             // Interrupt
             if (preset is CustomComboPreset.DNC_AdvST_Interrupt)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.", 2);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0, 150, ImGuiColors.ParsedGreen);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1, 150, ImGuiColors.DalamudYellow);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window.\nUSE WITH CAUTION.", 2, 150, ImGuiColors.DalamudRed);
                 ImGui.Spacing();
             }
 
@@ -1311,8 +1311,8 @@ namespace XIVSlothCombo.Window.Functions
             // TS Config
             if (preset is CustomComboPreset.DNC_AdvAoE_TS)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1, 150, Colors.Blue);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2, 150, Colors.Blue);
 
                 if (DNC.Config.DNC_AdvAoE_TS_Options == 2)
                 {
@@ -1344,9 +1344,9 @@ namespace XIVSlothCombo.Window.Functions
             // Interrupt
             if (preset is CustomComboPreset.DNC_AdvAoE_Interrupt)
             {
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1);
-                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window - use with caution.", 2);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0, 150, ImGuiColors.ParsedGreen);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1, 150, ImGuiColors.DalamudYellow);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window.\nUSE WITH CAUTION.", 2, 150, ImGuiColors.DalamudRed);
                 ImGui.Spacing();
             }
 
