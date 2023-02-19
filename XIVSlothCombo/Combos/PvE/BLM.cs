@@ -363,11 +363,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!ThunderList.ContainsKey(lastComboMove) && (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
                             {
                                 if (LevelChecked(Thunder3) &&
-                                    (!TargetHasEffect(Debuffs.Thunder3) || GetDebuffRemainingTime(Debuffs.Thunder3) <= 4))
+                                    GetDebuffRemainingTime(Debuffs.Thunder3) <= 4)
                                     return Thunder3;
 
                                 if (LevelChecked(Thunder) && !LevelChecked(Thunder3) &&
-                                    (!TargetHasEffect(Debuffs.Thunder) || GetDebuffRemainingTime(Debuffs.Thunder) <= 4))
+                                    GetDebuffRemainingTime(Debuffs.Thunder) <= 4)
                                     return Thunder;
                             }
 
@@ -971,11 +971,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
                             {
                                 if (LevelChecked(Thunder3) &&
-                                    (!TargetHasEffect(Debuffs.Thunder3) || GetDebuffRemainingTime(Debuffs.Thunder3) <= thunderRefreshTime))
+                                    (GetDebuffRemainingTime(Debuffs.Thunder3) <= thunderRefreshTime))
                                     return Thunder3;
 
                                 if (LevelChecked(Thunder) && !LevelChecked(Thunder3) &&
-                                    (!TargetHasEffect(Debuffs.Thunder) || GetDebuffRemainingTime(Debuffs.Thunder) <= thunderRefreshTime))
+                                    (GetDebuffRemainingTime(Debuffs.Thunder) <= thunderRefreshTime))
                                     return Thunder;
                             }
 
@@ -1066,8 +1066,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.InAstralFire)
                         {
                             // Xenoglossy overcap protection
-                            if ((gauge.PolyglotStacks is 2 && (gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
-                                (gauge.PolyglotStacks is 1 && (gauge.EnochianTimer <= 6000) && !TraitLevelChecked(Traits.EnhancedPolyGlot)))
+                            if (level > 70 && ((gauge.PolyglotStacks is 2 && (gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
+                                (gauge.PolyglotStacks is 1 && (gauge.EnochianTimer <= 6000) && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
                                 return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
@@ -1117,8 +1117,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Normal Ice phase
                     if (gauge.InUmbralIce)
                     {
-                        // Xenoglossy overcap protection
-                        if (gauge.EnochianTimer <= 20000 &&
+                        // Polyglot overcap protection
+                        if (level > 70 && gauge.EnochianTimer <= 20000 &&
                             ((gauge.PolyglotStacks is 2 && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
                             (gauge.PolyglotStacks is 1 && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
                             return LevelChecked(Xenoglossy)
@@ -1147,14 +1147,14 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Polyglot stacks on cooldown when we're not using Transpose rotation
-                        if (rotationSelection is 0 || level < 90)
+                        if (rotationSelection is 0 || level > 70 && level < 90)
                             return gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
 
                         // Use Polyglot stacks on cooldown when we're not using Transpose rotation
                         if (Config.BLM_Adv_Xeno_Burst &&
-                            (rotationSelection is 0 || level < 90))
+                            (rotationSelection is 0 || level > 70 && level < 90))
                             return gauge.PolyglotStacks is 2 && LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
@@ -1236,11 +1236,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                             {
                                 if (LevelChecked(Thunder4) &&
-                                    (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
+                                    GetDebuffRemainingTime(Debuffs.Thunder4) <= 4)
                                     return Thunder4;
 
                                 if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                    (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= 4))
+                                    GetDebuffRemainingTime(Debuffs.Thunder2) <= 4)
                                     return Thunder2;
                             }
 
@@ -1263,11 +1263,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                         {
                             if (LevelChecked(Thunder4) &&
-                                (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= 4))
+                                GetDebuffRemainingTime(Debuffs.Thunder4) <= 4)
                                 return Thunder4;
 
                             if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= 4))
+                                GetDebuffRemainingTime(Debuffs.Thunder2) <= 4)
                                 return Thunder2;
                         }
 
@@ -1329,6 +1329,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // Astral Fire
                     if (gauge.InAstralFire)
                     {
+                        // Polyglot overcap protection
+                        if (LevelChecked(Foul) &&
+                            (gauge.PolyglotStacks is 2 && (gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
+                            (gauge.PolyglotStacks is 1 && (gauge.EnochianTimer <= 6000) && !TraitLevelChecked(Traits.EnhancedPolyGlot)))
+                            return Foul;
+
                         // Manafont to Flare
                         if (LevelChecked(Flare))
                         {
@@ -1357,11 +1363,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 !ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                             {
                                 if (LevelChecked(Thunder4) &&
-                                    (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
+                                     (GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
                                     return Thunder4;
 
                                 if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                    (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
+                                    (GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
                                     return Thunder2;
                             }
 
@@ -1377,6 +1383,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // Umbral Ice
                     if (gauge.InUmbralIce)
                     {
+                        // Polyglot overcap protection
+                        if (LevelChecked(Foul) && gauge.EnochianTimer <= 20000 &&
+                            ((gauge.PolyglotStacks is 2 && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
+                            (gauge.PolyglotStacks is 1 && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
+                            return Foul;
+
                         if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze))
                             return Freeze;
 
@@ -1385,11 +1397,11 @@ namespace XIVSlothCombo.Combos.PvE
                            !ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                         {
                             if (LevelChecked(Thunder4) &&
-                                (!TargetHasEffect(Debuffs.Thunder4) || GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
+                                (GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
                                 return Thunder4;
 
                             if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                (!TargetHasEffect(Debuffs.Thunder2) || GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
+                                (GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
                                 return Thunder2;
                         }
 
