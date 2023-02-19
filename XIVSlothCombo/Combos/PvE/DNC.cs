@@ -699,7 +699,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
                             return StandardStep;
                     }
 
