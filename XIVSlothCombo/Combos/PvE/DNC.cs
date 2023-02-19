@@ -516,10 +516,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
                         Config.DNC_SimpleST_Dances[0])
                     {
-                        if (((!HasTarget() || GetTargetHPPercent() > 5) &&
+                        if ((!HasTarget() || GetTargetHPPercent() > 5) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
-                            IsOffCooldown(StandardStep))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
                             return StandardStep;
                     }
 
@@ -698,10 +697,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 &&
                         ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
-                        if (((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
+                        if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
-                            IsOffCooldown(StandardStep))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))
                             return StandardStep;
                     }
 
@@ -881,10 +879,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
                         Config.DNC_SimpleAoE_Dances[0])
                     {
-                        if (((!HasTarget() || GetTargetHPPercent() > 5) &&
+                        if ((!HasTarget() || GetTargetHPPercent() > 5) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
-                            IsOffCooldown(StandardStep))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
                             return StandardStep;
                     }
 
@@ -1073,10 +1070,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 &&
                         ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
-                        if (((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct) &&
+                        if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
-                            IsOffCooldown(StandardStep))
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
                             return StandardStep;
                     }
 
