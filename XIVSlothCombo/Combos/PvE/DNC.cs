@@ -587,6 +587,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_Peloton) &&
                         !InCombat() && !HasEffectAny(Buffs.Peloton) && GetBuffRemainingTime(Buffs.StandardStep) > 5)
                         return Peloton;
+
+                    // Advanced ST Standard Step (pre-pull)
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 &&
+                        ActionReady(StandardStep) &&
+                        IsOffCooldown(TechnicalStep) && !InCombat())
+                        return StandardStep;
                     #endregion
 
                     #region Dance Fills
@@ -693,21 +699,21 @@ namespace XIVSlothCombo.Combos.PvE
                         PlayerHealthPercentageHp() <= Config.DNC_VariantCurePct)
                         return Variant.VariantCure;
 
-                    // Advanced ST Standard Step (outside of burst)
-                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 &&
-                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
-                    {
-                        if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
-                            ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
-                            return StandardStep;
-                    }
-
                     // Advanced ST Technical Step
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_TS) && Config.DNC_AdvST_TS_Options == 2 &&
                         ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
                         (!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_TSBurstPct))
                         return TechnicalStep;
+
+                    // Advanced ST Standard Step (outside of burst)
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 &&
+                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
+                    {
+                        if ((!HasTarget() || GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct) &&
+                            (GetCooldownRemainingTime(TechnicalStep) > 5) &&
+                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5)))
+                            return StandardStep;
+                    }
 
                     // Advanced ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SaberDance) && LevelChecked(SaberDance) &&
