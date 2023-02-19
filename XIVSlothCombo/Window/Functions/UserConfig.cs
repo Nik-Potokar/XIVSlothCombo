@@ -11,8 +11,6 @@ using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
-using Dalamud.Interface;
-using Dalamud.Interface.Style;
 using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Window.Functions
@@ -442,6 +440,14 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.SameLine();
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
 
+            if (ImGui.GetColumnsCount() == totalChoices)
+            {
+                ImGui.NextColumn();
+            }
+            else
+            {
+                ImGui.Columns(totalChoices, null, false);
+            }
             //If new saved options or amount of choices changed, resize and save
             if (values.Length == 0 || values.Length != totalChoices)
             {
@@ -464,8 +470,10 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.EndTooltip();
             }
 
-            ImGui.PopStyleColor();
+            if (ImGui.GetColumnIndex() == totalChoices - 1)
+                ImGui.Columns(1);
 
+            ImGui.PopStyleColor();
             ImGui.Unindent();
         }
 
@@ -473,7 +481,7 @@ namespace XIVSlothCombo.Window.Functions
         {
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
 
-            ImGui.Columns(7, $"{config}", false);
+            ImGui.Columns(4, $"{config}", false);
 
             if (values.Length == 0) Array.Resize(ref values, 7);
 

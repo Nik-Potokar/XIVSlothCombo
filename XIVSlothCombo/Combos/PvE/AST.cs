@@ -558,7 +558,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection) &&
                         ActionReady(CelestialIntersection) && 
                         CanSpellWeave(actionID) &&
-                        !(healTarget as BattleChara).HasShield())
+                        !(healTarget as BattleChara)!.HasShield())
                         return CelestialIntersection;
                 }
                 return actionID;
