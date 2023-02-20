@@ -302,7 +302,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (battery == 100 && level >= Levels.RookOverdrive)
                             return RookAutoturret;
                     }
-                    
+
                     if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);

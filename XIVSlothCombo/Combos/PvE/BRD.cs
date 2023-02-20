@@ -92,6 +92,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HeavyShot or BurstShot)
                 {
+
                     if (IsEnabled(CustomComboPreset.BRD_Apex))
                     {
                         BRDGauge? gauge = GetJobGauge<BRDGauge>();

@@ -150,7 +150,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var executeThreshold = PluginConfiguration.GetCustomIntValue(Config.SAM_ST_ExecuteThreshold);
                     var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
-
                     
                     if (!InCombat())
                     {
@@ -196,6 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (InCombat())
                     {
+                        
                         if (inOpener && IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Opener) && OgiNamikiri.LevelChecked() && !hasDied && !nonOpener)
                         {
                             //oGCDs

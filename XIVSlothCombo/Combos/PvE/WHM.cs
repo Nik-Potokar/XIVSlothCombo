@@ -193,16 +193,19 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class WHM_ST_MainCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
+        protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
             internal static uint glare3Count = 0;
             internal static bool usedGlare3 = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+
                 if (actionID is Glare3 or Glare1 or Stone1 or Stone2 or Stone3 or Stone4)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool openerDelayComplete = glare3Count >= 3;
+                    int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_ST_Lucid);
+                    bool thinAirReady = !HasEffect(Buffs.ThinAir) && LevelChecked(ThinAir) && HasCharges(ThinAir);
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);

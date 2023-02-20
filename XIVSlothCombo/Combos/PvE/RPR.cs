@@ -105,10 +105,10 @@ namespace XIVSlothCombo.Combos.PvE
                 bool trueNorthReadyDyn = trueNorthReady;
                 bool opener = IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 30 && LevelChecked(Communio);
 
-				// Prevent the dynamic true north option from using the last charge
-				if( trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2 ) {
-					trueNorthReadyDyn = false;
-				}
+                // Prevent the dynamic true north option from using the last charge
+                if (trueNorthReady && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2) {
+                    trueNorthReadyDyn = false;
+                }
 
                 // Gibbet and Gallows on Shadow of Death
                 if (actionID is ShadowOfDeath && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows) && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_GibbetGallows_OnSoD) && soulReaver && LevelChecked(Gibbet))
@@ -159,16 +159,20 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (positionalChoice is 0 or 1 or 2)
                         {
-                            if (HasEffect(Buffs.EnhancedGibbet)) {
+                            if (HasEffect(Buffs.EnhancedGibbet))
+                            {
                                 // If we are not on the flank, but need to use gibbet, pop true north if not already up
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return OriginalHook(Gibbet);
                             }
-                            if (HasEffect(Buffs.EnhancedGallows)) {
+                            if (HasEffect(Buffs.EnhancedGallows))
+                            {
                                 // If we are not on the rear, but need to use gallows, pop true north if not already up
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return OriginalHook(Gallows);
@@ -180,16 +184,20 @@ namespace XIVSlothCombo.Combos.PvE
                         if (positionalChoice == 4)
                             return OriginalHook(Gibbet);
 
-                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget() )
+                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows) && HasBattleTarget())
                         {
-                            if (positionalChoice is 0 or 1) {
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear() ) {
+                            if (positionalChoice is 0 or 1)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsRear())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return Gallows;
                             }
-                            if (positionalChoice == 2) {
-                                if( IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank() ) {
+                            if (positionalChoice == 2)
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_TrueNorthDynamic) && trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID) && !OnTargetsFlank())
+                                {
                                     return All.TrueNorth;
                                 }
                                 return Gibbet;

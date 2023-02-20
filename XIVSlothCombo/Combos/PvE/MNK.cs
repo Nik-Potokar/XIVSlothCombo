@@ -298,6 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Bootshine)
                 {
+
                     if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
                     {
                         if (!HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes)

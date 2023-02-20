@@ -99,6 +99,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany);
                 var diveOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_ST_DiveOptions);
                 var openerOptions = PluginConfiguration.GetCustomIntValue(Config.DRG_OpenerOptions);
+                bool canuseaction = false;
 
                 Status? ChaosDoTDebuff;
                 if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);

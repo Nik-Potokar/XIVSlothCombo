@@ -76,6 +76,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
+                    
                 if (actionID is FastBlade)
                 {
 
