@@ -93,7 +93,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (Gauge.Chakra < 5 && LevelChecked(Meditation))
                             return Meditation;
 
-                        if (LevelChecked(FormShift) &&!HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                        if (LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
                             return FormShift;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) &&
@@ -374,7 +374,7 @@ namespace XIVSlothCombo.Combos.PvE
                                            (lastComboMove == Bootshine || lastComboMove == DragonKick) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                                             return PerfectBalance;
 
-                                        if (ActionReady(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) )
+                                        if (ActionReady(RiddleOfWind) && HasEffect(Buffs.PerfectBalance))
                                             return RiddleOfWind;
 
                                         if (Gauge.Chakra == 5)
@@ -586,7 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (!LevelChecked(TrueStrike)) 
+                        if (!LevelChecked(TrueStrike))
                             return Bootshine;
 
                         return !LevelChecked(TwinSnakes) || (GetBuffRemainingTime(Buffs.DisciplinedFist) >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
@@ -666,7 +666,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_Riddle_Brotherhood;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is RiddleOfFire && ActionReady(Brotherhood) && IsOnCooldown(RiddleOfFire) 
+                actionID is RiddleOfFire && ActionReady(Brotherhood) && IsOnCooldown(RiddleOfFire)
                     ? Brotherhood
                     : actionID;
         }
