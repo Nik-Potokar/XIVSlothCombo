@@ -6,6 +6,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -61,6 +62,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Demolish = 246;
         }
 
+        private static MNKGauge Gauge => CustomComboFunctions.GetJobGauge<MNKGauge>();
+
         public static class Config
         {
             public const string
@@ -81,14 +84,13 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
                 {
-                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    bool nadiNONE = gauge.Nadi == Nadi.NONE;
+                    bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+                    bool nadiNONE = Gauge.Nadi == Nadi.NONE;
 
                     if (!InCombat())
                     {
-                        if (gauge.Chakra < 5 && LevelChecked(Meditation))
+                        if (Gauge.Chakra < 5 && LevelChecked(Meditation))
                             return Meditation;
 
                         if (LevelChecked(FormShift) &&!HasEffect(Buffs.FormlessFist) && comboTime <= 0)
@@ -96,7 +98,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) &&
                             !InMeleeRange() &&
-                            gauge.Chakra == 5 &&
+                            Gauge.Chakra == 5 &&
                             (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                             return Thunderclap;
                     }
@@ -148,7 +150,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) &&
                             LevelChecked(Meditation) &&
-                            gauge.Chakra == 5 &&
+                            Gauge.Chakra == 5 &&
                             (HasEffect(Buffs.DisciplinedFist) ||
                             !LevelChecked(TwinSnakes)) && CanWeave(actionID))
                         {
@@ -308,10 +310,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Bootshine)
                 {
-                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    bool solarNadi = gauge.Nadi == Nadi.SOLAR;
+                    bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+                    bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
 
                     if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
@@ -376,7 +377,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (ActionReady(RiddleOfWind) && HasEffect(Buffs.PerfectBalance) )
                                             return RiddleOfWind;
 
-                                        if (gauge.Chakra == 5)
+                                        if (Gauge.Chakra == 5)
                                             return OriginalHook(Meditation);
                                     }
 
@@ -405,7 +406,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Out of combat preparation
                     if (!InCombat())
                     {
-                        if (!inOpener && gauge.Chakra < 5 &&
+                        if (!inOpener && Gauge.Chakra < 5 &&
                             LevelChecked(Meditation))
                             return Meditation;
 
@@ -416,7 +417,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) &&
                             !InMeleeRange() &&
-                            gauge.Chakra == 5 &&
+                            Gauge.Chakra == 5 &&
                             (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                             return Thunderclap;
                     }
@@ -505,7 +506,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) &&
                                 LevelChecked(Meditation) &&
-                                gauge.Chakra == 5 &&
+                                Gauge.Chakra == 5 &&
                                 (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                             {
                                 if (!LevelChecked(RiddleOfFire) ||
@@ -526,10 +527,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // Perfect Balance
                     if (HasEffect(Buffs.PerfectBalance))
                     {
-                        bool opoopoChakra = Array.Exists(gauge.BeastChakra, e => e == BeastChakra.OPOOPO);
-                        bool coeurlChakra = Array.Exists(gauge.BeastChakra, e => e == BeastChakra.COEURL);
-                        bool raptorChakra = Array.Exists(gauge.BeastChakra, e => e == BeastChakra.RAPTOR);
-                        bool canSolar = gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
+                        bool opoopoChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.OPOOPO);
+                        bool coeurlChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.COEURL);
+                        bool raptorChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.RAPTOR);
+                        bool canSolar = Gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
                         if (opoopoChakra)
                         {
                             if (coeurlChakra)
@@ -569,7 +570,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Out of range Meditation re-up
                     if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) &&
                         !InMeleeRange() &&
-                        gauge.Chakra < 5 &&
+                        Gauge.Chakra < 5 &&
                         LevelChecked(Meditation))
                         return Meditation;
 
@@ -615,10 +616,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is MasterfulBlitz)
                 {
-                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
                     Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    bool nadiNONE = gauge.Nadi == Nadi.NONE;
+                    bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+                    bool nadiNONE = Gauge.Nadi == Nadi.NONE;
 
                     if (!nadiNONE && !lunarNadi)
                     {
