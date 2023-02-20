@@ -233,7 +233,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 1f)
                     {
-                        if (lastComboActionID is TotalEclipse)
+                        if (lastComboActionID is TotalEclipse && Prominence.LevelChecked())
                             return OriginalHook(Prominence);
                     }
 
@@ -526,7 +526,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 1f)
                     {
-                        if (lastComboActionID is TotalEclipse)
+                        if (lastComboActionID is TotalEclipse && Prominence.LevelChecked())
                             return OriginalHook(Prominence);
                     }
 
