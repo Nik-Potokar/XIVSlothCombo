@@ -120,6 +120,31 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return false;
         }
 
+        public static bool TargetHasDamageDown(GameObject? target)
+        {
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(62)))
+            {
+                if (FindEffectOnMember((ushort)status, target) is not null) return true;
+            }
+
+            return false;
+        }
+
+        public static bool TargetHasRezWeakness(GameObject? target)
+        {
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(43)))
+            {
+                if (FindEffectOnMember((ushort)status, target) is not null) return true;
+            }
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(44)))
+            {
+                if (FindEffectOnMember((ushort)status, target) is not null) return true;
+            }
+
+            return false;
+        }
+
+
         public static bool HasCleansableDebuff(GameObject? OurTarget = null)
         {
             OurTarget ??= CurrentTarget;
@@ -132,6 +157,25 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 }
             }
             return false;
+        }
+
+        public static bool NoBlockingStatuses(uint actionId)
+        {
+            switch (ActionWatching.GetAttackType(actionId))
+            {
+                case ActionWatching.ActionAttackType.Weaponskill:
+                    if (HasPacification()) return false;
+                    return true;
+                case ActionWatching.ActionAttackType.Spell:
+                    if (HasSilence()) return false;
+                    return true;
+                case ActionWatching.ActionAttackType.Ability:
+                    if (HasAmnesia()) return false;
+                    return true;
+
+            }
+
+            return true;
         }
     }
 }
