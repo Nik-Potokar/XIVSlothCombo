@@ -2,7 +2,7 @@ using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class MCHPVP
+    internal static class MCHPvP
     {
         public const byte JobID = 31;
 

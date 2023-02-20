@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using System;
@@ -259,7 +260,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(AstralFlow);
                         }
                         
-                        if (gauge.HasAetherflowStacks)
+                        if (gauge.HasAetherflowStacks && CanSpellWeave(actionID))
                         {
                             if (!LevelChecked(SearingLight))
                             {
@@ -488,7 +489,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Fester/Painflare
                         if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_EDFester))
                         {
-                            if (gauge.HasAetherflowStacks)
+                            if (gauge.HasAetherflowStacks && CanSpellWeave(actionID))
                             {
                                 if (IsNotEnabled(CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling))
                                 {

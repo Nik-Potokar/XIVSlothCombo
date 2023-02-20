@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -1451,6 +1452,20 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                 }
 
+                return actionID;
+            }
+        }
+        internal class BLM_ScatheXeno : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ScatheXeno;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Scathe)
+                {
+                    if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
+                        return Xenoglossy;
+                }
                 return actionID;
             }
         }

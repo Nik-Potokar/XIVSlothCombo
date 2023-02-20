@@ -2,11 +2,11 @@
     "Author": "Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal, Genesis-Nova, Tartarga",
     "Name": "XIVSlothCombo",
     "InternalName": "XIVSlothCombo",
-    "DalamudApiLevel": 7,
+    "DalamudApiLevel": 8,
     "Punchline": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
     "Description": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
     "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
-    "IconUrl": "https://i.imgur.com/UeRukF8.png",
-    "ImageUrls": [ "https://i.imgur.com/UeRukF8.png" ],
-    "Changelog": "Features, Fixes & Enhancements for RPR and SGE. Please check the project's GitHub or Discord for a full changelog."
+    "IconUrl": "https://i.imgur.com/iEcxM81.png",
+    "ImageUrls": [ "https://i.imgur.com/iEcxM81.png" ],
+    "Changelog": "Features, Fixes & Enhancements Framework, DoH, PLD, RDM, SGE, WAR, WHM, ASTPvP and GNBPvP. Please check the project's GitHub or Discord for a full changelog."
 }
