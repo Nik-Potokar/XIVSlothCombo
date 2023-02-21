@@ -347,7 +347,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", AST.JobID)]
-            AST_ST_SimpleHeals_Esuna = 1037,
+            AST_ST_SimpleHeals_Esuna = 1039,
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
@@ -416,7 +416,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1036
+        // Last value = 1039
 
         #endregion
 
