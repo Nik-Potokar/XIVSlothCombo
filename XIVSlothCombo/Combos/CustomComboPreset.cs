@@ -209,11 +209,11 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID, 6)]
-            AST_DPS_AutoPlay = 1038,
+            AST_DPS_AutoPlay = 1037,
 
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID, 7)]
-            AST_DPS_AutoPlay_Redraw = 1039,
+            AST_DPS_AutoPlay_Redraw = 1038,
 
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 8, "", "")]
@@ -247,7 +247,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", AST.JobID)]
-            AST_ST_SimpleHeals_Esuna = 1037,
+            AST_ST_SimpleHeals_Esuna = 1039,
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
@@ -316,7 +316,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1036
+        // Last value = 1039
 
         #endregion
 
