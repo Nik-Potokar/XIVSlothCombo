@@ -37,7 +37,7 @@ namespace XIVSlothCombo.Window
             .GroupBy(tpl => tpl.Info.JobName)
             .ToDictionary(
                 tpl => tpl.Key,
-                tpl => tpl.ToList());
+                tpl => tpl.ToList())!;
         }
 
         internal static Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> GetPresetChildren()
@@ -57,7 +57,7 @@ namespace XIVSlothCombo.Window
                 kvp => kvp.Key,
                 kvp => kvp.Value
                     .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-                    .OrderBy(tpl => tpl.Info.Order).ToArray());
+                    .OrderBy(tpl => tpl.Info.Order).ToArray())!;
         }
 
         private bool visible = false;
