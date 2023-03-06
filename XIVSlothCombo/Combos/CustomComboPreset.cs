@@ -234,16 +234,20 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals = 1023,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID)]
+            [CustomComboInfo("Essential Dignity Option", "Essential Dignity will be added when the target is at or below the value set", AST.JobID)]
             AST_ST_SimpleHeals_EssentialDignity = 1024,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID)]
+            [CustomComboInfo("Celestial Intersection Option", "Adds Celestial Intersection.", AST.JobID)]
             AST_ST_SimpleHeals_CelestialIntersection = 1025,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID)]
+            [CustomComboInfo("Aspected Benefic Option", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID)]
             AST_ST_SimpleHeals_AspectedBenefic = 1027,
+
+            [ParentCombo(AST_ST_SimpleHeals)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", AST.JobID)]
+            AST_ST_SimpleHeals_Esuna = 1039,
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
@@ -254,15 +258,15 @@ namespace XIVSlothCombo.Combos
         AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-            [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID)]
+            [CustomComboInfo("Celestial Opposition Option", "Adds Celestial Opposition", AST.JobID)]
             AST_AoE_SimpleHeals_CelestialOpposition = 1021,
 
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-            [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID)]
+            [CustomComboInfo("Lazy Lady Option", "Adds Lady of Crowns, if the card is drawn", AST.JobID)]
             AST_AoE_SimpleHeals_LazyLady = 1022,
 
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-            [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID)]
+            [CustomComboInfo("Horoscope Option", "Adds Horoscope.", AST.JobID)]
             AST_AoE_SimpleHeals_Horoscope = 1026,
 
         [ReplaceSkill(AST.Benefic2)]
@@ -312,7 +316,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1036
+        // Last value = 1039
 
         #endregion
 
@@ -3551,9 +3555,13 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Afflatus Misery Heal Feature", "Changes Cure II into Afflatus Misery when Misery is ready to be used.", WHM.JobID, 51, "", "")]
             WHM_Cure2_Misery = 19012,
 
-            #region oGCD Heals/Shields Option
-
             [ParentCombo(WHM_Afflatus)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", WHM.JobID)]
+            WHM_Cure2_Esuna = 19027,
+
+        #region oGCD Heals/Shields Option
+
+        [ParentCombo(WHM_Afflatus)]
             [CustomComboInfo("oGCD Heals/Shields Option", "Adds oGCD Healing and Shields to Cure II.", WHM.JobID, 52, "", "")]
             WHM_Afflatus_oGCDHeals = 19018,
 
