@@ -39,7 +39,7 @@ namespace XIVSlothCombo.Data
         {
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
             TimeLastActionUsed = DateTime.Now;
-            if (!CustomComboNS.Functions.CustomComboFunctions.InCombat()) CombatActions.Clear();
+            if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is 13 or 2) return;
@@ -105,7 +105,7 @@ namespace XIVSlothCombo.Data
                 AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
                 !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)AST.AST_QuickTargetCards.SelectedRandomMember.Address))
             {
-                var targetOptions = AST.Config.AST_QuickTarget_Override;
+                int targetOptions = AST.Config.AST_QuickTarget_Override;
 
                 switch (targetOptions)
                 {

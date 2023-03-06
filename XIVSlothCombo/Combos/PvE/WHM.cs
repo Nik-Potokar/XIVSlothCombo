@@ -1,9 +1,10 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -70,15 +71,18 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public const string
-                WHM_ST_Lucid = "WHMLucidDreamingFeature",
-                WHM_ST_MainCombo_DoT = "WHM_ST_MainCombo_DoT",
-                WHM_AoE_Lucid = "WHM_AoE_Lucid",
-                WHM_oGCDHeals = "WHMogcdHealsShieldsFeature",
-                WHM_Medica_ThinAir = "WHM_Medica_ThinAir";
-
-            internal static bool WHM_ST_MainCombo_DoT_Adv => PluginConfiguration.GetCustomBoolValue(nameof(WHM_ST_MainCombo_DoT_Adv));
-            internal static float WHM_ST_MainCombo_DoT_Threshold => PluginConfiguration.GetCustomFloatValue(nameof(WHM_ST_MainCombo_DoT_Threshold));
+            internal static UserInt
+                WHM_ST_Lucid = new("WHMLucidDreamingFeature"),
+                WHM_ST_MainCombo_DoT = new("WHM_ST_MainCombo_DoT"),
+                WHM_AoE_Lucid = new("WHM_AoE_Lucid"),
+                WHM_oGCDHeals = new("WHMogcdHealsShieldsFeature"),
+                WHM_Medica_ThinAir = new("WHM_Medica_ThinAir");
+            internal static UserBool
+                WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
+                WHM_Afflatus_Adv = new("WHM_Afflatus_Adv"),
+                WHM_Afflatus_UIMouseOver = new("WHM_Afflatus_UIMouseOver");
+            internal static UserFloat
+                WHM_ST_MainCombo_DoT_Threshold = new("WHM_ST_MainCombo_DoT_Threshold");
         }
 
         internal class WHM_SolaceMisery : CustomCombo
@@ -133,17 +137,23 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Cure2)
                 {
                     bool benisonPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Benison);
-                    bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
-                    bool benisonJustUsed = GetCooldown(DivineBenison).RemainingCharges == 2 || GetCooldown(DivineBenison).ChargeCooldownRemaining <= 29;
+                    bool benisonReady = ActionReady(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
+                    bool benisonJustUsed = GetRemainingCharges(DivineBenison) == 2 || GetRemainingCharges(DivineBenison) <= 29;
                     bool tetraPrioFeatureEnabled = IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Prio) && IsEnabled(CustomComboPreset.WHM_Afflatus_oGCDHeals_Tetra);
-                    bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
-                    int tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
+                    int tetraHP = Config.WHM_oGCDHeals;
+
+                    //Grab our target (Soft->Hard->Self)
+                    GameObject? healTarget = GetHealTarget(Config.WHM_Afflatus_Adv && Config.WHM_Afflatus_UIMouseOver);
+
+                    if (IsEnabled(CustomComboPreset.WHM_Cure2_Esuna) && ActionReady(All.Esuna) &&
+                        HasCleansableDebuff(healTarget))
+                        return All.Esuna;
 
                     // Are these first two statements supposed to return 'actionID'?
                     // Seems like a weird condition set to return Cure II. -k
                     if (benisonPrioFeatureEnabled && benisonReady && benisonJustUsed)
                         return actionID;
-                    if (tetraPrioFeatureEnabled && tetraReady && GetTargetHPPercent() <= tetraHP)
+                    if (tetraPrioFeatureEnabled && ActionReady(Tetragrammaton) && GetTargetHPPercent(healTarget) <= tetraHP)
                         return actionID;
                     else if (IsEnabled(CustomComboPreset.WHM_Cure2_Misery) && BloodLilies == 3)
                         return AfflatusMisery;
@@ -193,7 +203,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool openerDelayComplete = glare3Count >= 3;
-                    int lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.WHM_ST_Lucid);
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
                     float glare3CD = GetCooldownRemainingTime(Glare3);
@@ -217,7 +226,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanSpellWeave(actionID) && openerDelayComplete)
                     {
-                        bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= lucidThreshold;
+                        bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_ST_Lucid;
                         bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
                         bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
                         bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
@@ -240,7 +249,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // DoTs
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero))
+                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero) && HasBattleTarget())
                     {
                         Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
                         if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
@@ -255,7 +264,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // DoT Uptime & HP% threshold
                         float refreshtimer = Config.WHM_ST_MainCombo_DoT_Adv ? Config.WHM_ST_MainCombo_DoT_Threshold : 3;
                         if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
-                            GetTargetHPPercent() > GetOptionValue(Config.WHM_ST_MainCombo_DoT))
+                            GetTargetHPPercent() > Config.WHM_ST_MainCombo_DoT)
                             return OriginalHook(Aero);
                     }
 
@@ -280,7 +289,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Medica2)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
-                    bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > GetOptionValue(Config.WHM_Medica_ThinAir);
+                    bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > Config.WHM_Medica_ThinAir;
 
                     if (!LevelChecked(Medica2))
                         return Medica1;
@@ -307,7 +316,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Cure2)
                 {
                     bool canWeave = CanSpellWeave(actionID);
-                    int tetraHP = PluginConfiguration.GetCustomIntValue(Config.WHM_oGCDHeals);
+                    int tetraHP = Config.WHM_oGCDHeals;
                     bool benisonReady = LevelChecked(DivineBenison) && HasCharges(DivineBenison) && !TargetHasEffectAny(Buffs.DivineBenison);
                     bool tetraReady = LevelChecked(Tetragrammaton) && IsOffCooldown(Tetragrammaton);
 
@@ -358,7 +367,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                             return PresenceOfMind;
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) &&
-                            LocalPlayer.CurrentMp <= PluginConfiguration.GetCustomIntValue(Config.WHM_AoE_Lucid))
+                            LocalPlayer.CurrentMp <= Config.WHM_AoE_Lucid)
                             return All.LucidDreaming;
                     }
 
