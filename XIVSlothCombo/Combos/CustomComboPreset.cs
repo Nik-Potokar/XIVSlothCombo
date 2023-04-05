@@ -2529,9 +2529,9 @@ namespace XIVSlothCombo.Combos
                 [CustomComboInfo("Gap close with Corps-a-corps Option", "Use Corp-a-corps when out of melee range and you have enough mana to start the melee combo.", RDM.JobID, 430)]
                 RDM_AoE_MeleeCombo_CorpsGapCloser = 13422,
 
-                [ParentCombo(RDM_AoE_MeleeCombo)]
-                [CustomComboInfo("Unbalance Mana Option", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 410)]
-                RDM_AoE_MeleeCombo_UnbalanceMana = 13423,
+                //[ParentCombo(RDM_AoE_MeleeCombo)]
+                //[CustomComboInfo("Unbalance Mana Option", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 410)]
+                //RDM_AoE_MeleeCombo_UnbalanceMana = 13423,
 
             [ParentCombo(RDM_AoE_DPS)]
             [CustomComboInfo("Melee Finisher Option", "Add Verflare/Verholy and other finishing moves.", RDM.JobID, 510)]
