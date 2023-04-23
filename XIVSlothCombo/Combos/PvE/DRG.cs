@@ -320,13 +320,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (comboTime > 0)
                         {
-                            if (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6 ||
+                            bool canChaosThrust = LevelChecked(ChaosThrust);
+                            if ((canChaosThrust && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6)) ||
                                 GetBuffRemainingTime(Buffs.PowerSurge) < 10)
                             {
                                 if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
                                     return Disembowel;
 
-                                if (lastComboMove is Disembowel && LevelChecked(ChaosThrust))
+                                if (lastComboMove is Disembowel && canChaosThrust)
                                     return OriginalHook(ChaosThrust);
                             }
 
