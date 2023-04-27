@@ -771,7 +771,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_AdvST)]
             [CustomComboInfo("Interrupt Option",
-            "Includes Head Graze in the rotation during the second weave window (if applicable to your current target).", DNC.JobID, 0)]
+            "Includes Head Graze in the rotation (if applicable to your current target).", DNC.JobID, 0)]
             DNC_AdvST_Interrupt = 4011,
 
             [ParentCombo(DNC_AdvST)]
@@ -845,7 +845,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(DNC_AdvAoE)]
             [CustomComboInfo("AoE Interrupt Option",
-            "Includes Head Graze in the AoE rotation during the second weave window (if applicable to your current target).", DNC.JobID, 0)]
+            "Includes Head Graze in the AoE rotation (if applicable to your current target).", DNC.JobID, 0)]
             DNC_AdvAoE_Interrupt = 4030,
 
             [ParentCombo(DNC_AdvAoE)]

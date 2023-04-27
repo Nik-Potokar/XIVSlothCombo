@@ -423,7 +423,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Pre-pull
                     // Simple ST Standard Step (pre-pull)
-                    if (Config.DNC_SimpleST_Dances[0] && ActionReady(StandardStep) && IsOffCooldown(TechnicalStep) && !InCombat())
+                    if (Config.DNC_SimpleST_Dances[0] && !InCombat() && ActionReady(StandardStep) && IsOffCooldown(TechnicalStep))
                         return StandardStep;
                     #endregion
 
@@ -519,15 +519,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Simple ST Technical Step
-                    if (ActionReady(TechnicalStep) &&
-                        Config.DNC_SimpleST_Dances[1] &&
-                        (!HasTarget() || GetTargetHPPercent() > 5) &&
-                        !HasEffect(Buffs.StandardStep))
+                    if (Config.DNC_SimpleST_Dances[1] &&
+                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
+                        (!HasTarget() || GetTargetHPPercent() > 5))
                         return TechnicalStep;
 
                     // Simple ST Standard Step (outside of burst)
-                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
-                        Config.DNC_SimpleST_Dances[0])
+                    if (Config.DNC_SimpleST_Dances[0] &&
+                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if ((!HasTarget() || GetTargetHPPercent() > 5) &&
                             (GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -536,11 +535,10 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Simple ST Saber Dance
-                    if (LevelChecked(SaberDance) && (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
-                    {
-                        if (Gauge.Esprit >= 85 || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
-                            return SaberDance;
-                    }
+                    if (LevelChecked(SaberDance) &&
+                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
+                        (Gauge.Esprit >= 85 || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)))
+                        return SaberDance;
 
                     // Simple ST Starfall Dance / Tillana
                     if (HasEffect(Buffs.FlourishingStarfall))
@@ -553,10 +551,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return Fountain;
 
                     // Simple ST Standard Step (inside of burst)
-                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
-                        Config.DNC_SimpleST_Dances[0] &&
-                        (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5) &&
-                        Gauge.Esprit < 25 &&
+                    if (Config.DNC_SimpleST_Dances[0] &&
+                        IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) > 5) && Gauge.Esprit <= 20 &&
                         GetTargetHPPercent() > 5)
                         return StandardStep;
 
@@ -596,8 +593,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced ST Standard Step (pre-pull)
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 &&
-                        ActionReady(StandardStep) &&
-                        IsOffCooldown(TechnicalStep) && !InCombat())
+                        !InCombat() && ActionReady(StandardStep) && IsOffCooldown(TechnicalStep))
                         return StandardStep;
                     #endregion
 
@@ -723,12 +719,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SaberDance) && LevelChecked(SaberDance) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
-                    {
-                        if (Gauge.Esprit >= Config.DNC_AdvST_SaberThreshold ||
-                            (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50))
-                            return SaberDance;
-                    }
+                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
+                        (Gauge.Esprit >= Config.DNC_AdvST_SaberThreshold ||
+                        (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)))
+                        return SaberDance;
 
                     // Advanced ST Starfall Dance / Tillana
                     if (HasEffect(Buffs.FlourishingStarfall))
@@ -743,9 +737,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Advanced ST Standard Step (inside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SS) && Config.DNC_AdvST_SS_Options == 2 && Config.DNC_AdvST_SS_Options_Burst &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
-                        Gauge.Esprit < 25 &&
-                        GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct &&
-                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 5))
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 5) && Gauge.Esprit <= 20 &&
+                        GetTargetHPPercent() > Config.DNC_AdvST_SSBurstPct)
                         return StandardStep;
 
                     // Advanced ST base GCDs
@@ -894,14 +887,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     // Simple AoE Technical Step
-                    if (ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
-                        Config.DNC_SimpleAoE_Dances[1] &&
+                    if (Config.DNC_SimpleST_Dances[1] &&
+                        ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) &&
                         (!HasTarget() || GetTargetHPPercent() > 5))
                         return TechnicalStep;
 
                     // Simple AoE Standard Step (outside of burst)
-                    if (ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish) &&
-                        Config.DNC_SimpleAoE_Dances[0])
+                    if (Config.DNC_SimpleAoE_Dances[0] &&
+                        ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
                         if ((!HasTarget() || GetTargetHPPercent() > 5) &&
                             (GetCooldownRemainingTime(TechnicalStep) > 5) &&
@@ -912,8 +905,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Simple AoE Saber Dance
                     if (LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
-                        ((HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50) ||
-                        Gauge.Esprit >= 80))
+                        (Gauge.Esprit >= 80 || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)))
                         return SaberDance;
 
                     // Simple AoE Starfall Dance / Tillana
@@ -927,9 +919,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bladeshower;
 
                     // Simple AoE Standard Step (inside of burst)
-                    if (IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
-                        Config.DNC_SimpleAoE_Dances[0] &&
-                        GetTargetHPPercent() > 5 && (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
+                    if (Config.DNC_SimpleAoE_Dances[0] &&
+                        IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 5) && Gauge.Esprit <= 20 &&
+                        GetTargetHPPercent() > 5)
                         return StandardStep;
 
                     // Simple AoE base GCDs
@@ -1110,8 +1103,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Advanced AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SaberDance) && LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
-                        ((HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50) ||
-                        Gauge.Esprit >= Config.DNC_AdvAoE_SaberThreshold))
+                        (Gauge.Esprit >= Config.DNC_AdvAoE_SaberThreshold ||
+                        (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)))
                         return SaberDance;
 
                     // Advanced AoE Starfall Dance / Tillana
@@ -1128,7 +1121,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SS) && Config.DNC_AdvAoE_SS_Options == 2 && Config.DNC_AdvAoE_SS_Options_Burst &&
                         IsOffCooldown(StandardStep) && HasEffect(Buffs.TechnicalFinish) &&
                         GetTargetHPPercent() > Config.DNC_AdvAoE_SSBurstPct &&
-                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 7))
+                        (GetBuffRemainingTime(Buffs.TechnicalFinish) >= 5) && Gauge.Esprit <= 20)
                         return StandardStep;
 
                     // Advanced AoE base GCDs
