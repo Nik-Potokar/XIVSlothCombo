@@ -615,8 +615,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Weaves
                     // Advanced ST Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_AdvST_Devilment) &&
-                        CanWeave(actionID) && ActionReady(Devilment) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvST_Devilment) && ActionReady(Devilment) &&
                         (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
@@ -719,7 +718,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_SaberDance) && LevelChecked(SaberDance) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
+                        (GetCooldownRemainingTime(TechnicalStep) > 4 || IsOffCooldown(TechnicalStep)) &&
                         (Gauge.Esprit >= Config.DNC_AdvST_SaberThreshold ||
                         (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)))
                         return SaberDance;
@@ -978,8 +977,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Weaves
                     // Advanced AoE Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Devilment) &&
-                        CanWeave(actionID) && ActionReady(Devilment) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Devilment) && ActionReady(Devilment) &&
                         (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
@@ -1102,7 +1100,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Advanced AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_SaberDance) && LevelChecked(SaberDance) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)) &&
+                        (GetCooldownRemainingTime(TechnicalStep) > 4 || IsOffCooldown(TechnicalStep)) &&
                         (Gauge.Esprit >= Config.DNC_AdvAoE_SaberThreshold ||
                         (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)))
                         return SaberDance;
