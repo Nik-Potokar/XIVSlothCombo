@@ -322,16 +322,16 @@ namespace XIVSlothCombo.Combos
 
         #region BLACK MAGE
 
-        [ReplaceSkill(BLM.Scathe)]
+        [ReplaceSkill(BLM.Fire)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_AdvancedMode)]
-        [CustomComboInfo("Simple Black Mage (Single Target) Feature", "Replaces Scathe with a full one-button rotation.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Simple Black Mage (Single Target) Feature", "Replaces Fire with a full one-button rotation.", BLM.JobID, -10, "", "")]
         BLM_SimpleMode = 2012,
 
         #region Advanced ST
 
-        [ReplaceSkill(BLM.Scathe)]
+        [ReplaceSkill(BLM.Fire)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_SimpleMode)]
-        [CustomComboInfo("Advanced Black Mage (Single Target) Feature", "Replaces Scathe with a full one-button rotation.", BLM.JobID, -9, "", "")]
+        [CustomComboInfo("Advanced Black Mage (Single Target) Feature", "Replaces Fire with a full one-button rotation.", BLM.JobID, -9, "", "")]
         BLM_AdvancedMode = 2021,
 
         [ParentCombo(BLM_AdvancedMode)]

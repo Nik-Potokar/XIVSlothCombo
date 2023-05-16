@@ -131,7 +131,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Scathe)
+                if (actionID is Fire)
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     float astralFireRefresh = Config.BLM_AstralFire_Refresh * 1000;
@@ -529,7 +529,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Scathe)
+                if (actionID is Fire)
                 {
                     uint currentMP = LocalPlayer.CurrentMp;
                     float astralFireRefresh = Config.BLM_AstralFire_Refresh * 1000;
