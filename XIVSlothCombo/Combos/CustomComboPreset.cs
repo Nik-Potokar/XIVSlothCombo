@@ -1286,6 +1286,10 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
+        [ReplaceSkill(GNB.HeartofStone)]
+        [CustomComboInfo("Simple Mitigation Feature", "Replace Heart of Stone/Corundum with other mitigation tools to mitigate with 1 button optimally", GNB.JobID, 0, "", "")]
+        GNB_SimpleMit = 7601,
+
         [CustomComboInfo("Skill Speed Support Feature", "Allows for features to support various skill speed rotations.", GNB.JobID, 0)]
         GNB_ST_SkSSupport = 7000,
 
@@ -1463,6 +1467,14 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region MACHINIST
+
+        [ReplaceSkill(MCH.Dismantle)]
+        [CustomComboInfo("Dismantle/Tactician Feature", "Replace Dismantle with Tactician when Dismantle on cooldown.", MCH.JobID, 0, "", "")]
+        MCH_DismantleTactician = 8041,
+
+        [ParentCombo(MCH_ST_SimpleMode)]
+        [CustomComboInfo("Delayed Tools Opener Feature", "Use The Balance's Delayed Tools Opener in Single Target Single Mode.", MCH.JobID, 0, "", "")]
+        MCH_DelayedTools_Opener = 8042,
 
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
