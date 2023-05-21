@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.Attributes;
+﻿using Dalamud.Utility;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -202,21 +203,28 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "", "")]
             AST_DPS_Divination = 1016,
 
-            [ConflictingCombos(AST_Cards_DrawOnPlay_AutoCardTarget)]
             [ParentCombo(AST_ST_DPS)]
             [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
             AST_DPS_AutoDraw = 1011,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 6, "", "")]
+            [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID, 6)]
+            AST_DPS_AutoPlay = 1037,
+
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID, 7)]
+            AST_DPS_AutoPlay_Redraw = 1038,
+
+            [ParentCombo(AST_ST_DPS)]
+            [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 8, "", "")]
             AST_DPS_Astrodyne = 1009,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 7, "", "")]
+            [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 9, "", "")]
             AST_DPS_AutoCrownDraw = 1012,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 8, "", "")]
+            [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
             AST_DPS_LazyLord = 1014,
             #endregion
 
@@ -226,16 +234,20 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals = 1023,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("Essential Dignity Feature", "Essential Dignity will be added when the target is at or below the value set", AST.JobID)]
+            [CustomComboInfo("Essential Dignity Option", "Essential Dignity will be added when the target is at or below the value set", AST.JobID)]
             AST_ST_SimpleHeals_EssentialDignity = 1024,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("Celestial Intersection Feature", "Adds Celestial Intersection.", AST.JobID)]
+            [CustomComboInfo("Celestial Intersection Option", "Adds Celestial Intersection.", AST.JobID)]
             AST_ST_SimpleHeals_CelestialIntersection = 1025,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("Aspected Benefic Feature", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID)]
+            [CustomComboInfo("Aspected Benefic Option", "Adds Aspected Benefic & refreshes it if needed.", AST.JobID)]
             AST_ST_SimpleHeals_AspectedBenefic = 1027,
+
+            [ParentCombo(AST_ST_SimpleHeals)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", AST.JobID)]
+            AST_ST_SimpleHeals_Esuna = 1039,
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
@@ -246,15 +258,15 @@ namespace XIVSlothCombo.Combos
         AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-            [CustomComboInfo("Celestial Opposition Feature", "Adds Celestial Opposition", AST.JobID)]
+            [CustomComboInfo("Celestial Opposition Option", "Adds Celestial Opposition", AST.JobID)]
             AST_AoE_SimpleHeals_CelestialOpposition = 1021,
 
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-            [CustomComboInfo("Lazy Lady Feature", "Adds Lady of Crowns, if the card is drawn", AST.JobID)]
+            [CustomComboInfo("Lazy Lady Option", "Adds Lady of Crowns, if the card is drawn", AST.JobID)]
             AST_AoE_SimpleHeals_LazyLady = 1022,
 
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-            [CustomComboInfo("Horoscope Feature", "Adds Horoscope.", AST.JobID)]
+            [CustomComboInfo("Horoscope Option", "Adds Horoscope.", AST.JobID)]
             AST_AoE_SimpleHeals_Horoscope = 1026,
 
         [ReplaceSkill(AST.Benefic2)]
@@ -285,41 +297,26 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
         AST_Cards_DrawOnPlay = 1000,
 
-            [ConflictingCombos(AST_DPS_AutoDraw)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
-            AST_Cards_DrawOnPlay_AutoCardTarget = 1029,
-
-                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
-                [CustomComboInfo("Keep Target Locked", "Keeps your target locked until you play the card", AST.JobID)]
-                AST_Cards_DrawOnPlay_TargetLock = 1030,
-
-                [ParentCombo(AST_Cards_DrawOnPlay_AutoCardTarget)]
-                [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
-                AST_Cards_DrawOnPlay_TargetExtra = 1031,
-
             [ParentCombo(AST_Cards_DrawOnPlay)]
             [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
             AST_Cards_Redraw = 1032,
 
-            [ConflictingCombos(AST_Cards_DrawOnPlay_ReFocusTarget)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Target Previous Feature", "Once you've played your card, switch back to your previously manually selected target. (May also be who you played the card on)", AST.JobID)]
-            AST_Cards_DrawOnPlay_ReTargetPrev = 1033,
-
-            [ConflictingCombos(AST_Cards_DrawOnPlay_ReTargetPrev)]
-            [ParentCombo(AST_Cards_DrawOnPlay)]
-            [CustomComboInfo("Target Focus Feature", "Once you've played your card, switch back to your focus target.", AST.JobID)]
-            AST_Cards_DrawOnPlay_ReFocusTarget = 1034,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
         //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
         [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
         AST_Cards_AstrodyneOnPlay = 1015,
+
+        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        AST_Cards_QuickTargetCards = 1029,
+
+        [ParentCombo(AST_Cards_QuickTargetCards)]
+        [CustomComboInfo("Add Tanks/Healers to Auto-Target", "Targets a tank or healer if no DPS remain for quick target selection", AST.JobID)]
+        AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1036
+        // Last value = 1039
 
         #endregion
 
@@ -3038,44 +3035,44 @@ namespace XIVSlothCombo.Combos
 
         #region DPS
         [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
-        [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils or Bios with options below", SCH.JobID, 100, "", "")]
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils with options below", SCH.JobID, 1)]
         SCH_DPS = 16100,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110, "", "")]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
             SCH_DPS_Lucid = 16110,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on cooldown with overlap protection", SCH.JobID, 120, "", "")]
+            [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on cooldown with overlap protection", SCH.JobID, 120)]
             SCH_DPS_ChainStrat = 16120,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130, "", "")]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
             SCH_DPS_Aetherflow = 16130,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131, "", "")]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
             SCH_DPS_EnergyDrain = 16160,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
-                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133, "", "")]
+                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
                 SCH_DPS_EnergyDrain_BurstSaver = 16161,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150, "", "")]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
             SCH_DPS_Ruin2Movement = 16140,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140, "", "")]
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
             SCH_DPS_Bio = 16150,
 
             [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170, "", "")]
+            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
             SCH_DPS_Dissipation_Opener = 16170,
 
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
-        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below.", SCH.JobID, 101)]
+        [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below.", SCH.JobID, 3)]
         SCH_AoE = 16101,
 
             [ParentCombo(SCH_AoE)]
@@ -3086,35 +3083,31 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
             SCH_AoE_Aetherflow = 16121,
 
-        [ReplaceSkill(SCH.Ruin2)]
-        [CustomComboInfo("Bio I/II on Ruin II Feature", "Replaces Ruin II with Bio I/II for DoT uptime", SCH.JobID, 180, "", "")]
-        SCH_Ruin2 = 16180,
-
         #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]
-        [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 210, "", "")]
+        [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 9)]
         SCH_Consolation = 16210,
 
         [ReplaceSkill(SCH.Lustrate)]
-        [CustomComboInfo("Lustrate to Excogitation Feature", "Change Lustrate into Excogitation when Excogitation is ready.", SCH.JobID, 220, "", "")]
+        [CustomComboInfo("Lustrate to Excogitation Feature", "Change Lustrate into Excogitation when Excogitation is ready.", SCH.JobID, 6)]
         SCH_Lustrate = 16220,
 
         [ReplaceSkill(SCH.Recitation)]
-        [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 230, "", "")]
+        [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 7)]
         SCH_Recitation = 16230,
         
         [ReplaceSkill(SCH.WhisperingDawn)]
-        [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 240, "", "")]
+        [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 8)]
         SCH_Fairy_Combo = 16240,
 
             [ParentCombo(SCH_Fairy_Combo)]
-            [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID, 240, "", "")]
+            [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID)]
             SCH_Fairy_Combo_Consolation = 16241,
 
         [ReplaceSkill(SCH.Succor)]
-        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 250)]
+        [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 5)]
         SCH_AoE_Heal = 16250,
 
             [ParentCombo(SCH_AoE_Heal)]
@@ -3125,16 +3118,16 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
             SCH_AoE_Heal_Aetherflow = 16252,
 
-        [ParentCombo(SCH_AoE_Heal_Aetherflow)]
-        [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
-        SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
+            [ParentCombo(SCH_AoE_Heal_Aetherflow)]
+            [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+            SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
 
             [ParentCombo(SCH_AoE_Heal)]
             [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
             SCH_AoE_Heal_Indomitability = 16254,
 
         [ReplaceSkill(SCH.Physick)]
-        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 260)]
+        [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 4)]
         SCH_ST_Heal = 16260,
 
             [ParentCombo(SCH_ST_Heal)]
@@ -3162,40 +3155,32 @@ namespace XIVSlothCombo.Combos
 
         #region Utilities
         [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
-        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected.", SCH.JobID, 300, "", "")]
+        [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected.", SCH.JobID, 9)]
         SCH_Aetherflow = 16300,
 
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indomitability.", SCH.JobID, 310, "", "")]
+            [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indomitability.", SCH.JobID)]
             SCH_Aetherflow_Recite = 16310,
 
-                [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Excogitation", "", SCH.JobID, 311, "", "")]
-                SCH_Aetherflow_Recite_Excog = 16311,
-
-                [ParentCombo(SCH_Aetherflow_Recite)]
-                [CustomComboInfo("On Indomitability", "", SCH.JobID, 312, "", "")]
-                SCH_Aetherflow_Recite_Indom = 16312,
-
             [ParentCombo(SCH_Aetherflow)]
-            [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID, 320, "", "")]
+            [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID)]
             SCH_Aetherflow_Dissipation = 16320,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown.", SCH.JobID, 400, "", "")]
+        [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown.", SCH.JobID, 10)]
         SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
-        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 500, "", "")]
+        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 11)]
         SCH_FairyReminder = 16500,
 
         [ReplaceSkill(SCH.DeploymentTactics)]
-        [CustomComboInfo("Deployment Tactics Feature", "Changes Deployment Tactics to Adloquium until a party member has the Galvanize buff.", SCH.JobID, 600, "", "")]
+        [CustomComboInfo("Deployment Tactics Feature", "Changes Deployment Tactics to Adloquium until a party member has the Galvanize buff.", SCH.JobID, 12)]
         SCH_DeploymentTactics = 16600,
 
             [ParentCombo(SCH_DeploymentTactics)]
-            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize buff on a party member.", SCH.JobID, 601, "", "")]
+            [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize buff on a party member.", SCH.JobID)]
             SCH_DeploymentTactics_Recitation = 16610,
 
         [Variant]
@@ -3551,9 +3536,13 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Afflatus Misery Heal Feature", "Changes Cure II into Afflatus Misery when Misery is ready to be used.", WHM.JobID, 51, "", "")]
             WHM_Cure2_Misery = 19012,
 
-            #region oGCD Heals/Shields Option
-
             [ParentCombo(WHM_Afflatus)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", WHM.JobID)]
+            WHM_Cure2_Esuna = 19027,
+
+        #region oGCD Heals/Shields Option
+
+        [ParentCombo(WHM_Afflatus)]
             [CustomComboInfo("oGCD Heals/Shields Option", "Adds oGCD Healing and Shields to Cure II.", WHM.JobID, 52, "", "")]
             WHM_Afflatus_oGCDHeals = 19018,
 
