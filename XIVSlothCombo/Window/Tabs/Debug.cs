@@ -1,16 +1,13 @@
 ﻿using System.Linq;
 using System.Numerics;
-using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using ImGuiNET;
 using XIVSlothCombo.Combos;
-using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
-using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 #if DEBUG
@@ -64,7 +61,6 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.BeginChild("BLUSPELLS", new Vector2(250, 100), false);
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
-                ImGui.TextUnformatted($"{CustomComboFunctions.GetJobGauge<PLDGauge>().OathGauge >= CustomComboFunctions.GetOptionValue(PLD.Config.PLD_SheltronOption)}");
 
             }
 
