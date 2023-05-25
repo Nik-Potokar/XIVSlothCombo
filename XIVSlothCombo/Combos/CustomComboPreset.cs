@@ -1,8 +1,6 @@
-﻿using Dalamud.Utility;
-using XIVSlothCombo.Attributes;
+﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
-using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos
 {
@@ -3172,7 +3170,7 @@ namespace XIVSlothCombo.Combos
         SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
-        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 11)]
+        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Summon Eos when the Fairy is not summoned.", SCH.JobID, 11)]
         SCH_FairyReminder = 16500,
 
         [ReplaceSkill(SCH.DeploymentTactics)]
