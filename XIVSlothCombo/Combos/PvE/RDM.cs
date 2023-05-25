@@ -44,6 +44,7 @@ namespace XIVSlothCombo.Combos.PvE
             EnchantedMoulinet = 7530,
             Corpsacorps = 7506,
             Displacement = 7515,
+            Reprise = 16529,
             MagickBarrier = 25857,
 
             //Buffs
@@ -336,7 +337,8 @@ namespace XIVSlothCombo.Combos.PvE
                           (Config.RDM_ST_oGCD_OnAction_Adv &&
                             ((Config.RDM_ST_oGCD_OnAction[0] && actionID is Jolt or Jolt2) ||
                              (Config.RDM_ST_oGCD_OnAction[1] && actionID is Fleche) ||
-                             (Config.RDM_ST_oGCD_OnAction[2] && actionID is Riposte or EnchantedRiposte)
+                             (Config.RDM_ST_oGCD_OnAction[2] && actionID is Riposte) ||
+                             (Config.RDM_ST_oGCD_OnAction[3] && actionID is Reprise)
                             )
                           )
                         );
