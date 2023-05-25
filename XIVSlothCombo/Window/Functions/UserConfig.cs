@@ -1916,12 +1916,6 @@ namespace XIVSlothCombo.Window.Functions
                 }
             }
 
-            if (preset is CustomComboPreset.SCH_FairyReminder)
-            {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
-            }
-
             if (preset is CustomComboPreset.SCH_Aetherflow)
             {
                 UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Display, "Show Aetherflow On Energy Drain Only", "", 0);
