@@ -5,6 +5,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
 {
     internal class RDM
     {
+        static bool HasEffect(ushort id) => CustomComboFunctions.HasEffect(id);
+        static float GetBuffRemainingTime(ushort effectid) => CustomComboFunctions.GetBuffRemainingTime(effectid);
+        static bool LevelChecked(uint id) => CustomComboFunctions.LevelChecked(id);
+        static float GetActionCastTime(uint actionID) => CustomComboFunctions.GetActionCastTime(actionID);
+        static ushort GetRemainingCharges(uint actionID) => CustomComboFunctions.GetRemainingCharges(actionID);
+        static float GetCooldownRemainingTime(uint actionID) => CustomComboFunctions.GetCooldownRemainingTime(actionID);
+        static bool ActionReady(uint id) => CustomComboFunctions.ActionReady(id);
+        static bool CanSpellWeave(uint id) => CustomComboFunctions.CanSpellWeave(id);
+        static bool HasCharges(uint id) => CustomComboFunctions.HasCharges(id);
+
         internal class ManaBalancer : PvE.RDM
         {
             internal bool useFire;
@@ -30,8 +40,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 //   - Resolution adds 4/4 mana
                 //2.Stay within difference limit [DONE]
                 //3.Strive to achieve correct mana for double melee combo burst [DONE]
-                static bool HasEffect(ushort id) => CustomComboFunctions.HasEffect(id);
-                static bool LevelChecked(uint id) => CustomComboFunctions.LevelChecked(id);
                 int blackmana = Gauge.BlackMana;
                 int whitemana = Gauge.WhiteMana;
                 //Reset outputs
@@ -54,10 +62,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     && !HasEffect(All.Buffs.Swiftcast)
                     && !HasEffect(Buffs.Acceleration))
                 {
-                    if (blackmana <= whitemana && HasEffect(Buffs.VerfireReady)) useFire = true;
-                    if (whitemana <= blackmana && HasEffect(Buffs.VerstoneReady)) useStone = true;
-                    if (!useFire && !useStone && HasEffect(Buffs.VerfireReady)) useFire = true;
-                    if (!useFire && !useStone && HasEffect(Buffs.VerstoneReady)) useStone = true;
+                    //Checking the time remaining instead of just the effect, to stop last second bad casts
+                    bool VerFireReady = GetBuffRemainingTime(Buffs.VerfireReady) >= GetActionCastTime(Verfire);
+                    bool VerStoneReady = GetBuffRemainingTime(Buffs.VerstoneReady) >= GetActionCastTime(Verstone);
+
+                    //Prioritize mana balance
+                    if (blackmana <= whitemana && VerFireReady) useFire = true;
+                    if (whitemana <= blackmana && VerStoneReady) useStone = true;
+                    //Else use the action if we can
+                    if (!useFire && !useStone && VerFireReady) useFire = true;
+                    if (!useFire && !useStone && VerStoneReady) useStone = true;
                 }
 
                 //AoE
@@ -77,9 +91,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
         { 
             internal static bool CanUse(in uint lastComboMove, out uint actionID)
             {
-                static bool HasEffect(ushort id) => CustomComboFunctions.HasEffect(id);
-                static float GetBuffRemainingTime(ushort effectid) => CustomComboFunctions.GetBuffRemainingTime(effectid);
-                static bool LevelChecked(uint id) => CustomComboFunctions.LevelChecked(id);
                 int blackmana = Gauge.BlackMana;
                 int whitemana = Gauge.WhiteMana;
 
@@ -136,12 +147,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             internal static bool CanUse(in uint actionID, in bool SingleTarget, out uint newActionID)
             {
-                static ushort GetRemainingCharges(uint actionID) => CustomComboFunctions.GetRemainingCharges(actionID);
-                static float GetCooldownRemainingTime(uint actionID) => CustomComboFunctions.GetCooldownRemainingTime(actionID);
-                static bool LevelChecked(uint id) => CustomComboFunctions.LevelChecked(id);
-                static bool ActionReady(uint id) => CustomComboFunctions.ActionReady(id);
-                static bool CanSpellWeave(uint id) => CustomComboFunctions.CanSpellWeave(id);
-                static bool HasCharges(uint id) => CustomComboFunctions.HasCharges(id);
                 var distance = CustomComboFunctions.GetTargetDistance();
                 
                 uint placeOGCD = 0;
