@@ -44,6 +44,7 @@ namespace XIVSlothCombo.Combos.PvE
             EnchantedMoulinet = 7530,
             Corpsacorps = 7506,
             Displacement = 7515,
+            Reprise = 16529,
             MagickBarrier = 25857,
 
             //Buffs
@@ -424,7 +425,8 @@ namespace XIVSlothCombo.Combos.PvE
                           (Config.RDM_ST_oGCD_OnAction_Adv &&
                             ((Config.RDM_ST_oGCD_OnAction[0] && actionID is Jolt or Jolt2) ||
                              (Config.RDM_ST_oGCD_OnAction[1] && actionID is Fleche) ||
-                             (Config.RDM_ST_oGCD_OnAction[2] && actionID is Riposte or EnchantedRiposte)
+                             (Config.RDM_ST_oGCD_OnAction[2] && actionID is Riposte) ||
+                             (Config.RDM_ST_oGCD_OnAction[3] && actionID is Reprise)
                             )
                           )
                         );
@@ -698,19 +700,21 @@ namespace XIVSlothCombo.Combos.PvE
                              (Config.RDM_AoE_MeleeFinisher_OnAction[1] && actionID is Moulinet or EnchantedMoulinet) ||
                              (Config.RDM_AoE_MeleeFinisher_OnAction[2] && actionID is Veraero2 or Verthunder2)));
 
+
                     if (ActionFound && MeleeFinisher.CanUse(lastComboMove, out uint finisherAction))
                         return finisherAction;
                 }
-                    //END_RDM_MELEEFINISHER
+                //END_RDM_MELEEFINISHER
 
                 //RDM_AOE_MELEECOMBO
                 if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo))
                 {
                     bool ActionFound =
-                        (!Config.RDM_ST_MeleeCombo_Adv && actionID is Scatter or Impact) ||
-                        (Config.RDM_ST_MeleeCombo_Adv &&
+                        (!Config.RDM_AoE_MeleeCombo_Adv && actionID is Scatter or Impact) ||
+                        (Config.RDM_AoE_MeleeCombo_Adv &&
                             ((Config.RDM_AoE_MeleeCombo_OnAction[0] && actionID is Scatter or Impact) ||
                                 (Config.RDM_AoE_MeleeCombo_OnAction[1] && actionID is Moulinet or EnchantedMoulinet)));
+
 
                     if (ActionFound)
                     {
@@ -780,9 +784,17 @@ namespace XIVSlothCombo.Combos.PvE
                             && !HasEffect(Buffs.Dualcast)
                             && !HasEffect(All.Buffs.Swiftcast)
                             && !HasEffect(Buffs.Acceleration)
-                            && ((Math.Min(Gauge.BlackMana, Gauge.WhiteMana) + (Gauge.ManaStacks * 20) >= 60) || (!LevelChecked(Verflare) && Math.Min(Gauge.BlackMana, Gauge.WhiteMana) >= 20))
-                            && ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && Gauge.ManaStacks == 0) || Gauge.ManaStacks >= 1))
-                            return OriginalHook(EnchantedMoulinet);
+                            && ((Math.Min(Gauge.BlackMana, Gauge.WhiteMana) + (Gauge.ManaStacks * 20) >= 60) || 
+                                (!LevelChecked(Verflare) && Math.Min(Gauge.BlackMana, Gauge.WhiteMana) >= 20)))
+                        {
+                            if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_CorpsGapCloser)
+                                && ActionReady(Corpsacorps)
+                                && GetTargetDistance() > Config.RDM_AoE_MoulinetRange)
+                                return Corpsacorps;
+
+                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && Gauge.ManaStacks == 0) || Gauge.ManaStacks >= 1)
+                            return OriginalHook(Moulinet);
+                        }
                     }
                 }
                 //END_RDM_AOE_MELEECOMBO

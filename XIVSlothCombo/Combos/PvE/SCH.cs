@@ -43,7 +43,6 @@ namespace XIVSlothCombo.Combos.PvE
             // Faerie
             SummonSeraph = 16545,
             SummonEos = 17215,
-            SummonSelene = 17216,
             WhisperingDawn = 16537,
             FeyIllumination = 16538,
             Dissipation = 3587,
@@ -138,8 +137,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SCH_Aetherflow_Display = new("SCH_Aetherflow_Display"),
                 SCH_Aetherflow_Recite_ExcogMode = new("SCH_Aetherflow_Recite_ExcogMode"),
                 SCH_Aetherflow_Recite_IndomMode = new("SCH_Aetherflow_Recite_IndomMode"),
-                SCH_Recitation_Mode = new("SCH_Recitation_Mode"),
-                SCH_FairyFeature = new("SCH_FairyFeature");
+                SCH_Recitation_Mode = new("SCH_Recitation_Mode");
             #endregion
 
         }
@@ -258,14 +256,12 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast) ? Resurrection : actionID;
         }
 
-        // Replaces Fairy abilities with Fairy summoning with Eos (default) or Selene
+        // Replaces Fairy abilities with Fairy summoning with Eos
         internal class SCH_FairyReminder : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_FairyReminder;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => FairyList.Contains(actionID) && !HasPetPresent() && Gauge.SeraphTimer == 0
-                    ? (Config.SCH_FairyFeature == 1) ? SummonSelene : SummonEos
-                    : actionID;
+                => FairyList.Contains(actionID) && !HasPetPresent() && Gauge.SeraphTimer == 0 ? SummonEos : actionID;
         }
 
         /*
