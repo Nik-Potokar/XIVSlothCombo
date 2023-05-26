@@ -1557,9 +1557,10 @@ namespace XIVSlothCombo.Window.Functions
                 if (RDM.Config.RDM_ST_oGCD_OnAction_Adv)
                 {
                     ImGui.Indent();ImGui.Spacing();
-                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Jolts", "", 3, 0, descriptionColor: ImGuiColors.DalamudYellow);
-                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Fleche", "", 3, 1, descriptionColor: ImGuiColors.DalamudYellow);
-                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Riposte", "", 3, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Jolts", "", 4, 0, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Fleche", "", 4, 1, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Riposte", "", 4, 2, descriptionColor: ImGuiColors.DalamudYellow);
+                    UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Reprise", "", 4, 3, descriptionColor: ImGuiColors.DalamudYellow);
                     ImGui.Unindent();
                 }
 
@@ -1914,12 +1915,6 @@ namespace XIVSlothCombo.Window.Functions
                         "To be used in conjunction with Redirect/Reaction/etc");
                     ImGui.Unindent();
                 }
-            }
-
-            if (preset is CustomComboPreset.SCH_FairyReminder)
-            {
-                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Eos", "", 0);
-                UserConfig.DrawRadioButton(SCH.Config.SCH_FairyFeature, "Selene", "", 1);
             }
 
             if (preset is CustomComboPreset.SCH_Aetherflow)
