@@ -101,7 +101,7 @@ namespace XIVSlothCombo.Combos.PvE
                 int openerChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_OpenerChoice);
                 int sodThreshold = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDThreshold);
                 int sodRefreshRange = PluginConfiguration.GetCustomIntValue(Config.RPR_SoDRefreshRange);
-                bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                bool trueNorthReady = TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
                 bool trueNorthReadyDyn = trueNorthReady;
                 bool opener = IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_Opener) && CombatEngageDuration().TotalSeconds < 30 && LevelChecked(Communio);
 
@@ -436,7 +436,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is BloodStalk)
                 {
-                    bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                    bool trueNorthReady = TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
                         return All.TrueNorth;
@@ -554,7 +554,7 @@ namespace XIVSlothCombo.Combos.PvE
                 int positionalChoice = PluginConfiguration.GetCustomIntValue(Config.RPR_PositionalChoice);
                 if (actionID is Enshroud)
                 {
-                    bool trueNorthReady = GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
+                    bool trueNorthReady = TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth);
 
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorth) && GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
                         return All.TrueNorth;
