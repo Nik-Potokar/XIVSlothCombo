@@ -1,5 +1,9 @@
-﻿using Dalamud.Game.ClientState.Statuses;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -32,7 +36,8 @@ namespace XIVSlothCombo.Combos.PvE
             BladeOfValor = 25750,
             FightOrFlight = 20,
             Atonement = 16460,
-            Intervene = 16461;
+            Intervene = 16461,
+            Sheltron = 3542;
 
         public static class Buffs
         {
@@ -40,7 +45,10 @@ namespace XIVSlothCombo.Combos.PvE
                 Requiescat = 1368,
                 SwordOath = 1902,
                 FightOrFlight = 76,
-                BladeOfFaithReady = 3019;
+                ConfiteorReady = 3019,
+                DivineMight = 2673,
+                HolySheltron = 2674,
+                Sheltron = 1856;
         }
 
         public static class Debuffs
@@ -50,123 +58,132 @@ namespace XIVSlothCombo.Combos.PvE
                 GoringBlade = 725;
         }
 
-        public static class Levels
-        {
-            public const byte
-                FastBlade = 1,
-                FightOrFlight = 2,
-                RiotBlade = 4,
-                TotalEclipse = 6,
-                ShieldBash = 10,
-                IronWill = 10,
-                ShieldLob = 15,
-                RageOfHalone = 26,
-                SpiritsWithin = 30,
-                Sheltron = 35,
-                Sentinel = 38,
-                Prominence = 40,
-                Cover = 45,
-                CircleOfScorn = 50,
-                HallowedGround = 50,
-                GoringBlade = 54,
-                DivineVeil = 56,
-                Clemency = 58,
-                RoyalAuthority = 60,
-                Intervention = 62,
-                HolySpirit = 64,
-                Requiescat = 68,
-                PassageOfArms = 70,
-                HolyCircle = 72,
-                Intervene = 74,
-                Atonement = 76,
-                Confiteor = 80,
-                HolySheltron = 82,
-                Expiacion = 86,
-                BladeOfFaith = 90,
-                BladeOfTruth = 90,
-                BladeOfValor = 90;
-        }
 
         public static class Config
         {
             public const string
                 PLD_Intervene_HoldCharges = "PLDKeepInterveneCharges",
-                PLD_VariantCure = "PLD_VariantCure";
+                PLD_Intervene_MeleeOnly = "PLD_Intervene_MeleeOnly",
+                PLD_VariantCure = "PLD_VariantCure",
+                PLD_RequiescatOption = "PLD_RequiescatOption",
+                PLD_SpiritsWithinOption = "PLD_SpiritsWithinOption",
+                PLD_SheltronOption = "PLD_SheltronOption";
         }
 
-        internal class PLD_GoringBladeCombo : CustomCombo
+        internal class PLD_ST_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_GoringBladeCombo;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_ST_SimpleMode;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID is GoringBlade)
+                if (actionID is FastBlade)
                 {
-                    if (comboTime > 0)
+
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (HasBattleTarget())
                     {
-                        if (lastComboMove is FastBlade && LevelChecked(RiotBlade))
-                            return RiotBlade;
+                        if (!InMeleeRange() && HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && !IsMoving)
+                            return OriginalHook(HolySpirit);
 
-                        if (lastComboMove is RiotBlade && LevelChecked(GoringBlade))
-                            return GoringBlade;
+                        if (!InMeleeRange() && ShieldLob.LevelChecked())
+                            return OriginalHook(ShieldLob);
+
+                        if (CanWeave(actionID))
+                        {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
+                        }
+
+                        if (HasEffect(Buffs.FightOrFlight))
+                        {
+                            if (CanWeave(actionID))
+                            {
+                                if (Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                                    return OriginalHook(Requiescat);
+
+                                if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                    return OriginalHook(CircleOfScorn);
+
+                                if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                    return OriginalHook(SpiritsWithin);
+
+                            }
+
+                            if (GoringBlade.LevelChecked() && IsOffCooldown(GoringBlade))
+                                return OriginalHook(GoringBlade);
+
+                            if (HasEffect(Buffs.Requiescat))
+                            {
+                                if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) && GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)
+                                    return OriginalHook(Confiteor);
+
+                                if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    return OriginalHook(HolySpirit);
+                            }
+
+
+                            if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                return OriginalHook(HolySpirit);
+
+                        }
+
+
+                        if (comboTime > 1f)
+                        {
+                            if (lastComboActionID == OriginalHook(FastBlade) && RiotBlade.LevelChecked())
+                            {
+                                return OriginalHook(RiotBlade);
+                            }
+
+                            if (lastComboActionID == OriginalHook(RiotBlade) && OriginalHook(RoyalAuthority).LevelChecked())
+                            {
+                                return OriginalHook(RoyalAuthority);
+                            }
+
+                        }
+
+                        if (FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID))
+                            return OriginalHook(FightOrFlight);
+
+                        if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn) && CanWeave(actionID) && !WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15)
+                            return OriginalHook(CircleOfScorn);
+
+                        if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)) && CanWeave(actionID) && !WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15)
+                            return OriginalHook(SpiritsWithin);
+
+                        if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                            return OriginalHook(HolySpirit);
+
+                        if (HasEffectAny(Buffs.SwordOath) && Atonement.LevelChecked())
+                            return OriginalHook(Atonement);
+
                     }
-
-                    return FastBlade;
                 }
 
                 return actionID;
             }
         }
 
-        internal class PLD_ST_RoyalAuth : CustomCombo
+        internal class PLD_AoE_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_ST_RoyalAuth;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_AoE_SimpleMode;
 
-            internal static bool inOpener = false;
-            internal static bool openerFinished = false;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID is RageOfHalone or RoyalAuthority)
+                if (actionID is TotalEclipse)
                 {
                     if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
                         return Variant.VariantCure;
 
-                    if (!InCombat())
-                    {
-                        inOpener = false;
-                        openerFinished = false;
-                    }
-                    else if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener) && LevelChecked(Requiescat) && !openerFinished && !inOpener)
-                    {
-                        inOpener = true;
-                    }
-
-                    // Uptime Feature
-                    if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_RangedUptime) &&
-                        !(HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth) && HasBattleTarget())
-                    {
-                        if (LevelChecked(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !IsMoving && !HasEffect(Buffs.Requiescat) ||
-                            LevelChecked(Confiteor) && HasEffect(Buffs.Requiescat) && GetBuffStacks(Buffs.Requiescat) is not 1 && (GetBuffRemainingTime(Buffs.Requiescat) >= 3) && LocalPlayer.CurrentMp >= 2000)
-                        {
-                            return HolySpirit;
-                        }
-                        else if (LevelChecked(ShieldLob) && (!HasEffect(Buffs.Requiescat) || LocalPlayer.CurrentMp < 1000))
-                        {
-                            return ShieldLob;
-                        }
-                    }
-
-                    // Buffs
-                    if (GetCooldown(actionID).CooldownRemaining < 0.9 && GetCooldown(actionID).CooldownRemaining > 0.2)
-                    {
-                        if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoF) && LevelChecked(FightOrFlight) && lastComboMove is FastBlade && IsOffCooldown(FightOrFlight))
-                            return FightOrFlight;
-                        if (!inOpener && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Requiescat) && LevelChecked(Requiescat) && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) < 17 && IsOffCooldown(Requiescat))
-                            return Requiescat;
-                    }
-
-                    // oGCD features
                     if (CanWeave(actionID))
                     {
                         Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
@@ -178,279 +195,438 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
                             return Variant.VariantUltimatum;
 
-                        if (inOpener)
+                    }
+
+
+                    if (HasEffect(Buffs.FightOrFlight))
+                    {
+                        if (CanWeave(actionID))
                         {
-                            if (lastComboMove is Confiteor || (!HasEffect(Buffs.Requiescat) && IsOnCooldown(Requiescat) && GetCooldownRemainingTime(Requiescat) <= 59))
+                            if (Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                                return OriginalHook(Requiescat);
+
+                            if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                return OriginalHook(CircleOfScorn);
+
+                            if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                return OriginalHook(SpiritsWithin);
+
+                        }
+
+
+                        if (HasEffect(Buffs.Requiescat))
+                        {
+                            if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) && GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)
+                                return OriginalHook(Confiteor);
+
+                            if (GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && HolyCircle.LevelChecked())
+                                return OriginalHook(HolyCircle);
+
+                            if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && HolySpirit.LevelChecked())
+                                return OriginalHook(HolySpirit);
+                        }
+
+                        if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && HolyCircle.LevelChecked())
+                            return OriginalHook(HolyCircle);
+                    }
+
+                    if (comboTime > 1f)
+                    {
+                        if (lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                            return OriginalHook(Prominence);
+                    }
+
+
+                    if (FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID))
+                        return OriginalHook(FightOrFlight);
+
+                    if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn) && CanWeave(actionID) && !WasLastAction(FightOrFlight) && IsOnCooldown(FightOrFlight))
+                        return OriginalHook(CircleOfScorn);
+
+                    if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)) && CanWeave(actionID) && !WasLastAction(FightOrFlight) && IsOnCooldown(FightOrFlight))
+                        return OriginalHook(SpiritsWithin);
+
+                    if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
+                        return OriginalHook(HolyCircle);
+
+
+                    return actionID;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class PLD_ST_AdvancedMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_ST_AdvancedMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is FastBlade)
+                {
+
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (HasBattleTarget())
+                    {
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                            !InMeleeRange() &&
+                            HolySpirit.LevelChecked() &&
+                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                            !IsMoving)
+                            return OriginalHook(HolySpirit);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) &&
+                            !InMeleeRange() &&
+                            ShieldLob.LevelChecked())
+                            return OriginalHook(ShieldLob);
+
+                        if (CanWeave(actionID))
+                        {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) &&
+                                IsEnabled(Variant.VariantUltimatum) &&
+                                IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) &&
+                                Sheltron.LevelChecked() &&
+                                !HasEffect(Buffs.Sheltron) &&
+                                !HasEffect(Buffs.HolySheltron) &&
+                                GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption)
+                                )
+                                return OriginalHook(Sheltron);
+
+                        }
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && HasEffect(Buffs.FightOrFlight))
+                        {
+                            if (CanWeave(actionID))
                             {
-                                inOpener = false;
-                                openerFinished = true;
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) &&
+                                    Requiescat.LevelChecked() &&
+                                    IsOffCooldown(Requiescat))
+                                    return OriginalHook(Requiescat);
+
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) &&
+                                    CircleOfScorn.LevelChecked() &&
+                                    IsOffCooldown(CircleOfScorn))
+                                    return OriginalHook(CircleOfScorn);
+
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) &&
+                                    OriginalHook(SpiritsWithin).LevelChecked() &&
+                                    IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                    return OriginalHook(SpiritsWithin);
+
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
+                                    OriginalHook(Intervene).LevelChecked() &&
+                                    GetRemainingCharges(Intervene) > GetOptionValue(Config.PLD_Intervene_HoldCharges) &&
+                                    ((GetOptionBool(Config.PLD_Intervene_MeleeOnly) && InMeleeRange()) || (!GetOptionBool(Config.PLD_Intervene_MeleeOnly))))
+                                    return OriginalHook(Intervene);
+
                             }
 
-                            if (HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) <= 19)
-                            {
-                                if (lastComboMove is not FastBlade && TargetHasEffect(Debuffs.GoringBlade))
-                                {
-                                    if (IsOffCooldown(CircleOfScorn))
-                                        return CircleOfScorn;
-                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) == 2)
-                                        return Intervene;
-                                    if (IsOffCooldown(OriginalHook(SpiritsWithin)))
-                                        return OriginalHook(SpiritsWithin);
-                                    if (IsOffCooldown(Requiescat))
-                                        return Requiescat;
-                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) > 0)
-                                        return Intervene;
-                                }
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                GoringBlade.LevelChecked() &&
+                                IsOffCooldown(GoringBlade))
+                                return OriginalHook(GoringBlade);
 
-                                if (GetBuffRemainingTime(Buffs.FightOrFlight) <= 8)
-                                {
-                                    if (IsOffCooldown(Requiescat))
-                                        return Requiescat;
-                                    if (IsOffCooldown(CircleOfScorn))
-                                        return CircleOfScorn;
-                                    if (IsOffCooldown(OriginalHook(SpiritsWithin)))
-                                        return OriginalHook(SpiritsWithin);
-                                    if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_FoFOpener_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) > 0)
-                                        return Intervene;
-                                }
+
+                            if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
+                            {
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    return OriginalHook(HolySpirit);
                             }
+                            else
+                            {
+                                if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
+                                    Confiteor.LevelChecked() &&
+                                    HasEffect(Buffs.ConfiteorReady))
+                                    ||
+                                    (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) &&
+                                    BladeOfFaith.LevelChecked() &&
+                                    HasEffect(Buffs.Requiescat) &&
+                                    OriginalHook(Confiteor) != Confiteor &&
+                                    GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
+                                    return OriginalHook(Confiteor);
+                            }
+
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                                HasEffect(Buffs.DivineMight) &&
+                                GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                return OriginalHook(HolySpirit);
+
+                        }
+
+                        if (comboTime > 1f)
+                        {
+                            if (lastComboActionID == OriginalHook(FastBlade) &&
+                                RiotBlade.LevelChecked())
+                            {
+                                return OriginalHook(RiotBlade);
+                            }
+
+                            if (lastComboActionID == OriginalHook(RiotBlade) &&
+                                OriginalHook(RoyalAuthority).LevelChecked())
+                            {
+                                return OriginalHook(RoyalAuthority);
+                            }
+
+                        }
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
+                            FightOrFlight.LevelChecked() &&
+                            IsOffCooldown(FightOrFlight) &&
+                            CanWeave(actionID) &&
+                            !ActionWatching.WasLast2ActionsAbilities())
+                            return OriginalHook(FightOrFlight);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) &&
+                            Requiescat.LevelChecked() && IsOffCooldown(Requiescat) &&
+                            CanWeave(actionID) &&
+                            (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF)) &&
+                            !ActionWatching.WasLast2ActionsAbilities())
+                            return OriginalHook(Requiescat);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) &&
+                            CircleOfScorn.LevelChecked() &&
+                            IsOffCooldown(CircleOfScorn) &&
+                            CanWeave(actionID) &&
+                            (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF)) &&
+                            !ActionWatching.WasLast2ActionsAbilities())
+                            return OriginalHook(CircleOfScorn);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) &&
+                            OriginalHook(SpiritsWithin).LevelChecked() &&
+                            IsOffCooldown(OriginalHook(SpiritsWithin)) &&
+                            CanWeave(actionID) &&
+                            (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF)) &&
+                            !ActionWatching.WasLast2ActionsAbilities())
+                            return OriginalHook(SpiritsWithin);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                            (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) &&
+                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                            return OriginalHook(HolySpirit);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                            GoringBlade.LevelChecked() &&
+                            IsOffCooldown(GoringBlade) &&
+                            IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
+                            return OriginalHook(GoringBlade);
+
+                        if (((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
+                            Confiteor.LevelChecked() &&
+                            HasEffect(Buffs.ConfiteorReady))
+                            ||
+                            (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) &&
+                            BladeOfFaith.LevelChecked() &&
+                            HasEffect(Buffs.Requiescat) &&
+                            OriginalHook(Confiteor) != Confiteor &&
+                            GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)))
+                            return OriginalHook(Confiteor);
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
+                            HasEffectAny(Buffs.SwordOath) &&
+                            Atonement.LevelChecked())
+                            return OriginalHook(Atonement);
+
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class PLD_AoE_AdvancedMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_AoE_AdvancedMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is TotalEclipse)
+                {
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (CanWeave(actionID))
+                    {
+                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                        if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
+                            IsEnabled(Variant.VariantSpiritDart) &&
+                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                            return Variant.VariantSpiritDart;
+
+                        if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            return Variant.VariantUltimatum;
+
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) &&
+                            Sheltron.LevelChecked() &&
+                            !HasEffect(Buffs.Sheltron) &&
+                            !HasEffect(Buffs.HolySheltron) &&
+                            GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption)
+                            )
+                            return OriginalHook(Sheltron);
+
+                    }
+
+
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && HasEffect(Buffs.FightOrFlight))
+                    {
+                        if (CanWeave(actionID))
+                        {
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                                return OriginalHook(Requiescat);
+
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) && CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                return OriginalHook(CircleOfScorn);
+
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_SpiritsWithin) && OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                return OriginalHook(SpiritsWithin);
+
+                        }
+
+                        if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
+                        {
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
+                                GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
+                                return OriginalHook(HolyCircle);
                         }
                         else
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && LevelChecked(SpiritsWithin) && InCombat() && IsOffCooldown(OriginalHook(SpiritsWithin)))
-                            {
-                                if (IsNotEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) ||
-                                    (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
-                                    return OriginalHook(SpiritsWithin);
-                            }
-
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn) && LevelChecked(CircleOfScorn) && InCombat() && IsOffCooldown(CircleOfScorn))
-                            {
-                                if (IsNotEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) ||
-                                    (IsEnabled(CustomComboPreset.PLD_RoyalAuth_ExpiacionScorn_FoFOption) && HasEffect(Buffs.FightOrFlight) || IsOnCooldown(FightOrFlight)))
-                                    return CircleOfScorn;
-                            }
-
-                            var interveneChargesRemaining = GetOptionValue(Config.PLD_Intervene_HoldCharges);
-                            if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene) && LevelChecked(Intervene) && GetRemainingCharges(Intervene) > interveneChargesRemaining)
-                            {
-                                if (IsNotEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene_Melee) ||
-                                    (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Intervene_Melee) && HasEffect(Buffs.FightOrFlight) && GetTargetDistance() <= 1))
-                                {
-                                    if (!IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Requiescat) || GetCooldownRemainingTime(Requiescat) >= 3)
-                                        return Intervene;
-                                }
-                            }
+                            if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) &&
+                                Confiteor.LevelChecked() &&
+                                HasEffect(Buffs.ConfiteorReady))
+                                ||
+                                (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) &&
+                                BladeOfFaith.LevelChecked() &&
+                                HasEffect(Buffs.Requiescat) &&
+                                OriginalHook(Confiteor) != Confiteor &&
+                                GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
+                                return OriginalHook(Confiteor);
                         }
+
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && 
+                            (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && 
+                            GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp &&
+                            HolyCircle.LevelChecked())
+                            return OriginalHook(HolyCircle);
                     }
 
-                    // GCDs
-                    if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_HolySpirit))
+                    if (comboTime > 1f)
                     {
-                        if (inOpener)
-                        {
-                            if (lastComboMove is GoringBlade && HasEffect(Buffs.FightOrFlight) && GetBuffRemainingTime(Buffs.FightOrFlight) <= 3)
-                                return HolySpirit;
-                        }
-
-                        if (HasEffect(Buffs.Requiescat) && LevelChecked(HolySpirit) && (!HasEffect(Buffs.FightOrFlight) || !InMeleeRange()) && LocalPlayer.CurrentMp >= 1000)
-                        {
-                            if (IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && LevelChecked(Confiteor) &&
-                                ((GetBuffRemainingTime(Buffs.Requiescat) <= 3 && GetBuffRemainingTime(Buffs.Requiescat) >= 0) || GetBuffStacks(Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000)) //Confiteor Conditions
-                                return Confiteor;
-
-                            return HolySpirit;
-                        }
-
-                        if (HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth)
-                            return OriginalHook(Confiteor);
+                        if (lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                            return OriginalHook(Prominence);
                     }
 
-                    if (LevelChecked(Atonement) && HasEffect(Buffs.SwordOath) && IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Atonement))
-                    {
-                        if (IsNotEnabled(CustomComboPreset.PLD_AtonementDrop))
-                            return Atonement;
 
-                        if (IsEnabled(CustomComboPreset.PLD_AtonementDrop))
-                        {
-                            if (HasEffect(Buffs.FightOrFlight))
-                            {
-                                if (lastComboMove == Atonement || lastComboMove == RoyalAuthority)
-                                {
-                                    return Atonement;
-                                }
-                            }
-                            else if (GetBuffStacks(Buffs.SwordOath) > 1)
-                            {
-                                return Atonement;
-                            }
-                        }
-                    }
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID))
+                        return OriginalHook(FightOrFlight);
 
-                    // 1-2-3 Combo
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove is FastBlade && LevelChecked(RiotBlade))
-                            return RiotBlade;
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) &&
+                        Requiescat.LevelChecked() && IsOffCooldown(Requiescat) &&
+                        CanWeave(actionID) &&
+                        (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF)) &&
+                        !ActionWatching.WasLast2ActionsAbilities())
+                        return OriginalHook(Requiescat);
 
-                        if (lastComboMove is RiotBlade && LevelChecked(RageOfHalone))
-                        {
-                            if (IsEnabled(CustomComboPreset.PLD_ST_RoyalAuth_Goring) && LevelChecked(GoringBlade) &&
-                                ((GetDebuffRemainingTime(Debuffs.BladeOfValor) > 0 && GetDebuffRemainingTime(Debuffs.BladeOfValor) < 5) ||
-                                (FindTargetEffect(Debuffs.BladeOfValor) is null && GetDebuffRemainingTime(Debuffs.GoringBlade) < 5)))
-                                return GoringBlade;
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) &&
+                        CircleOfScorn.LevelChecked() &&
+                        IsOffCooldown(CircleOfScorn) &&
+                        CanWeave(actionID) &&
+                        (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF)) &&
+                        !ActionWatching.WasLast2ActionsAbilities())
+                        return OriginalHook(CircleOfScorn);
 
-                            return OriginalHook(RageOfHalone);
-                        }
-                    }
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_SpiritsWithin) &&
+                        OriginalHook(SpiritsWithin).LevelChecked() &&
+                        IsOffCooldown(OriginalHook(SpiritsWithin)) &&
+                        CanWeave(actionID) &&
+                        (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF)) &&
+                        !ActionWatching.WasLast2ActionsAbilities())
+                        return OriginalHook(SpiritsWithin);
 
-                    return FastBlade;
-                }
-
-                return actionID;
-            }
-
-        }
-
-        internal class PLD_AoE_Prominence : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_AoE_Prominence;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Prominence)
-                {
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (CanWeave(actionID))
-                    {
-                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
-                        if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
-                            IsEnabled(Variant.VariantSpiritDart) &&
-                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
-                            return Variant.VariantSpiritDart;
-
-                        if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
-                            return Variant.VariantUltimatum;
-
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Requiescat) && LevelChecked(Requiescat) && IsOffCooldown(Requiescat))
-                            return Requiescat;
-
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_ExpiacionScorn) && InCombat())
-                        {
-                            if (LevelChecked(SpiritsWithin) && IsOffCooldown(SpiritsWithin))
-                                return OriginalHook(SpiritsWithin);
-
-                            if (LevelChecked(CircleOfScorn) && IsOffCooldown(CircleOfScorn))
-                                return CircleOfScorn;
-                        }
-                    }
-
-                    if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle) && HasEffect(Buffs.Requiescat) && LevelChecked(HolyCircle) && LocalPlayer.CurrentMp >= 1000)
-                    {
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Confiteor) && LevelChecked(Confiteor) &&
-                            ((GetBuffRemainingTime(Buffs.Requiescat) <= 3 && GetBuffRemainingTime(Buffs.Requiescat) >= 0) || GetBuffStacks(Buffs.Requiescat) is 1 || LocalPlayer.CurrentMp <= 2000))
-                            return Confiteor;
-
-                        return HolyCircle;
-
-                    }
-
-                    if (IsEnabled(CustomComboPreset.PLD_AoE_Prominence_HolyCircle_Confiteor) &&
-                        (HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth))
+                    if (((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) &&
+                        Confiteor.LevelChecked() &&
+                        HasEffect(Buffs.ConfiteorReady))
+                        ||
+                        (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) &&
+                        BladeOfFaith.LevelChecked() &&
+                        HasEffect(Buffs.Requiescat) &&
+                        OriginalHook(Confiteor) != Confiteor &&
+                        GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)) &&
+                        IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF))
                         return OriginalHook(Confiteor);
 
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove is TotalEclipse && LevelChecked(Prominence))
-                            return Prominence;
-                    }
+                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
+                        return OriginalHook(HolyCircle);
 
-                    return TotalEclipse;
+
+                    return actionID;
                 }
 
                 return actionID;
             }
         }
 
-        internal class PLD_ScornfulSpirits : CustomCombo
+        internal class PLD_Requiescat_Confiteor : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_ScornfulSpirits;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_Requiescat_Options;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID is SpiritsWithin or CircleOfScorn)
+                if (actionID is Requiescat)
                 {
-                    if (level is >= Levels.SpiritsWithin and <= Levels.Expiacion)
-                        return CalcBestAction(actionID, SpiritsWithin, CircleOfScorn);
+                    var choice = GetOptionValue(Config.PLD_RequiescatOption);
 
-                    if (level >= Levels.Expiacion)
-                        return CalcBestAction(actionID, Expiacion, CircleOfScorn);
-
-                    if (level >= Levels.CircleOfScorn)
-                        return CalcBestAction(actionID, SpiritsWithin, CircleOfScorn);
-
-                    return SpiritsWithin;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class PLD_HolySpirit_Standalone : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_HolySpirit_Standalone;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is HolySpirit)
-                {
-                    if (HasEffect(Buffs.Requiescat) && LevelChecked(HolySpirit))
-                    {
-                        var requiescatTime = GetBuffRemainingTime(Buffs.Requiescat);
-                        var requiescatStacks = GetBuffStacks(Buffs.Requiescat);
-
-                        if (LevelChecked(Confiteor) &&
-                                ((IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && requiescatTime is <= 3 and > 0) ||
-                                requiescatStacks is 1 || LocalPlayer.CurrentMp <= 2000))
-                            return Confiteor;
-
-                        return HolySpirit;
-                    }
-
-                    if (HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth)
+                    if ((choice == 1 || choice == 3) && HasEffect(Buffs.ConfiteorReady) && Confiteor.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
                         return OriginalHook(Confiteor);
+
+                    if ((choice == 2 || choice == 3) && HasEffect(Buffs.Requiescat) && OriginalHook(Confiteor) != Confiteor && BladeOfFaith.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
+                        return OriginalHook(Confiteor);
+
+                    if (choice == 4 && HasEffect(Buffs.Requiescat) && HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                        return OriginalHook(HolySpirit);
+
+                    if (choice == 5 && HasEffect(Buffs.Requiescat) && HolyCircle.LevelChecked() && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                        return OriginalHook(HolyCircle);
+
                 }
 
                 return actionID;
             }
         }
 
-        internal class PLD_HolyCircle_Standalone : CustomCombo
+        internal class PLD_CircleOfScorn : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_HolyCircle_Standalone;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_SpiritsWithin;
 
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID is HolyCircle)
+                if (actionID == OriginalHook(SpiritsWithin))
                 {
-                    if (HasEffect(Buffs.Requiescat) && LevelChecked(HolyCircle))
-                    {
-                        var requiescatTime = GetBuffRemainingTime(Buffs.Requiescat);
-                        var requiescatStacks = GetBuffStacks(Buffs.Requiescat);
+                    var choice = GetOptionValue(Config.PLD_SpiritsWithinOption);
 
-                        if (LevelChecked(Confiteor) && ((IsEnabled(CustomComboPreset.PLD_RoyalAuth_Requiescat_Confiteor) && requiescatTime is <= 3 and > 0) ||
-                                requiescatStacks is 1 || LocalPlayer.CurrentMp <= 2000))
-                            return Confiteor;
+                    if (choice == 1 && IsOffCooldown(CircleOfScorn) && CircleOfScorn.LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                        return OriginalHook(CircleOfScorn);
 
-                        return HolyCircle;
-                    }
+                    if (choice == 2 && IsOffCooldown(CircleOfScorn) && CircleOfScorn.LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                        return OriginalHook(SpiritsWithin);
 
-                    if (HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth)
-                        return OriginalHook(Confiteor);
+                    if (IsOffCooldown(CircleOfScorn) && CircleOfScorn.LevelChecked())
+                        return OriginalHook(CircleOfScorn);
+
                 }
-
                 return actionID;
             }
         }

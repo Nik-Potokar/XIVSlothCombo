@@ -2,7 +2,7 @@
 
 namespace XIVSlothCombo.Combos.PvP
 {
-    internal static class NINPVP
+    internal static class NINPvP
     {
         public const byte ClassID = 29;
         public const byte JobID = 30;

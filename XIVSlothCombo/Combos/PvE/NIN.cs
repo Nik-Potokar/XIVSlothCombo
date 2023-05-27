@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
@@ -433,7 +434,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove == SpinningEdge && GustSlash.LevelChecked())
                             return OriginalHook(GustSlash);
 
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) &&
+                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) && TargetNeedsPositionals() &&
                             IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth_ArmorCrush) &&
                             lastComboMove == GustSlash && GetRemainingCharges(All.TrueNorth) > 0 &&
                             All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) &&
@@ -740,7 +741,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove == GustSlash && gauge.HutonTimer <= 30000 && ArmorCrush.LevelChecked())
                             return OriginalHook(ArmorCrush);
 
-                        if (lastComboMove == GustSlash && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) && canWeave)
+                        if (lastComboMove == GustSlash && TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) && canWeave)
                             return OriginalHook(All.TrueNorth);
 
                         if (lastComboMove == GustSlash && AeolianEdge.LevelChecked())

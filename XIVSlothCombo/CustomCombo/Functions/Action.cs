@@ -19,7 +19,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player is high enough level to use the passed Action ID. </summary>
         /// <param name="actionid"> ID of the action. </param>
         /// <returns></returns>
-        public static bool LevelChecked(uint actionid) => LocalPlayer.Level >= GetLevel(actionid);
+        public static bool LevelChecked(uint actionid) => LocalPlayer.Level >= GetLevel(actionid) && NoBlockingStatuses(actionid);
 
         /// <summary> Checks if the player is high enough level to use the passed Trait ID. </summary>
         /// <param name="traitid"> ID of the action. </param>
@@ -35,6 +35,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
         public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
+
+        /// <summary> Get the Cast time of an action. </summary>
+        /// <param name="id"> Action ID to check. </param>
+        /// <returns> Returns the cast time of an action. </returns>
+        internal static unsafe float GetActionCastTime(uint id) => ActionWatching.GetActionCastTime(id);
 
         /// <summary> Checks if the player is in range to use an action. Best used with actions with irregular ranges.</summary>
         /// <param name="id"> ID of the action. </param>
