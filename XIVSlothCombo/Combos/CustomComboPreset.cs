@@ -1,8 +1,6 @@
-﻿using Dalamud.Utility;
-using XIVSlothCombo.Attributes;
+﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
-using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos
 {
@@ -247,7 +245,7 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", AST.JobID)]
-            AST_ST_SimpleHeals_Esuna = 1037,
+            AST_ST_SimpleHeals_Esuna = 1039,
 
             [ParentCombo(AST_ST_SimpleHeals)]
             [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
@@ -316,7 +314,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1036
+        // Last value = 1039
 
         #endregion
 
@@ -2529,9 +2527,9 @@ namespace XIVSlothCombo.Combos
                 [CustomComboInfo("Gap close with Corps-a-corps Option", "Use Corp-a-corps when out of melee range and you have enough mana to start the melee combo.", RDM.JobID, 430)]
                 RDM_AoE_MeleeCombo_CorpsGapCloser = 13422,
 
-                [ParentCombo(RDM_AoE_MeleeCombo)]
-                [CustomComboInfo("Unbalance Mana Option", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 410)]
-                RDM_AoE_MeleeCombo_UnbalanceMana = 13423,
+                //[ParentCombo(RDM_AoE_MeleeCombo)]
+                //[CustomComboInfo("Unbalance Mana Option", "Use Acceleration to unbalance mana prior to starting melee combo", RDM.JobID, 410)]
+                //RDM_AoE_MeleeCombo_UnbalanceMana = 13423,
 
             [ParentCombo(RDM_AoE_DPS)]
             [CustomComboInfo("Melee Finisher Option", "Add Verflare/Verholy and other finishing moves.", RDM.JobID, 510)]
@@ -3172,7 +3170,7 @@ namespace XIVSlothCombo.Combos
         SCH_Raise = 16400,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
-        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Fairy Summons if you do not have a fairy summoned.", SCH.JobID, 11)]
+        [CustomComboInfo("Fairy Feature", "Change all fairy actions into Summon Eos when the Fairy is not summoned.", SCH.JobID, 11)]
         SCH_FairyReminder = 16500,
 
         [ReplaceSkill(SCH.DeploymentTactics)]

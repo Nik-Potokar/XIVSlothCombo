@@ -36,6 +36,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
 
+        /// <summary> Get the Cast time of an action. </summary>
+        /// <param name="id"> Action ID to check. </param>
+        /// <returns> Returns the cast time of an action. </returns>
+        internal static unsafe float GetActionCastTime(uint id) => ActionWatching.GetActionCastTime(id);
+
         /// <summary> Checks if the player is in range to use an action. Best used with actions with irregular ranges.</summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
