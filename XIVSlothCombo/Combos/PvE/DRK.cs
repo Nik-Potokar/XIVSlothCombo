@@ -1,4 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -52,7 +54,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 DRK_KeepPlungeCharges = "DrkKeepPlungeCharges",
-                DRK_MPManagement = "DrkMPManagement";
+                DRK_MPManagement = "DrkMPManagement",
+                DRK_VariantCure = "DRKVariantCure";
         }
 
 
@@ -68,6 +71,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var plungeChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_KeepPlungeCharges);
                     var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_MPManagement);
 
+                    if (IsEnabled(CustomComboPreset.DRK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
+                        return Variant.VariantCure;
+
                     if (IsEnabled(CustomComboPreset.DRK_RangedUptime) && LevelChecked(Unmend) && !InMeleeRange() && HasBattleTarget())
                         return Unmend;
 
@@ -76,17 +82,29 @@ namespace XIVSlothCombo.Combos.PvE
                         // oGCDs
                         if (CanWeave(actionID))
                         {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.DRK_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
+                            if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                return Variant.VariantUltimatum;
+
                             //Mana Features
                             if (IsEnabled(CustomComboPreset.DRK_ManaOvercap))
                             {
-                                if (IsEnabled(CustomComboPreset.DRK_EoSPooling) && GetCooldownRemainingTime(Delirium) >= 50 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && LevelChecked(EdgeOfDarkness) && CanDelayedWeave(actionID))
-                                    return OriginalHook(EdgeOfDarkness);
-                                if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000))
+                                if ((CombatEngageDuration().TotalSeconds < 7 && gauge.DarksideTimeRemaining == 0) || CombatEngageDuration().TotalSeconds >= 6)
                                 {
-                                    if (LevelChecked(EdgeOfDarkness))
+                                    if (IsEnabled(CustomComboPreset.DRK_EoSPooling) && GetCooldownRemainingTime(Delirium) >= 40 && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000)) && LevelChecked(EdgeOfDarkness) && CanDelayedWeave(actionID))
                                         return OriginalHook(EdgeOfDarkness);
-                                    if (LevelChecked(FloodOfDarkness) && !LevelChecked(EdgeOfDarkness))
-                                        return FloodOfDarkness;
+                                    if (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10000 && LocalPlayer.CurrentMp >= 3000))
+                                    {
+                                        if (LevelChecked(EdgeOfDarkness))
+                                            return OriginalHook(EdgeOfDarkness);
+                                        if (LevelChecked(FloodOfDarkness) && !LevelChecked(EdgeOfDarkness))
+                                            return FloodOfDarkness;
+                                    }
                                 }
                             }
 
@@ -139,12 +157,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Delirium) && IsEnabled(CustomComboPreset.DRK_Bloodspiller) && IsEnabled(CustomComboPreset.DRK_MainComboCDs_Group))
                         {
                             //Regular Delirium
-                            if (GetBuffStacks(Buffs.Delirium) > 0 && (!LevelChecked(LivingShadow) || IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller)))
+                            if (GetBuffStacks(Buffs.Delirium) > 0 && IsNotEnabled(CustomComboPreset.DRK_DelayedBloodspiller))
                                 return Bloodspiller;
 
                             //Delayed Delirium
-                            if (IsEnabled(CustomComboPreset.DRK_DelayedBloodspiller) && GetBuffStacks(Buffs.Delirium) > 0 &&
-                                ((GetBuffStacks(Buffs.BloodWeapon) <= 2 && CombatEngageDuration().TotalSeconds < 30) || CombatEngageDuration().TotalSeconds >= 30))
+                            if (IsEnabled(CustomComboPreset.DRK_DelayedBloodspiller) && GetBuffStacks(Buffs.Delirium) > 0 && IsOnCooldown(BloodWeapon) && GetBuffStacks(Buffs.BloodWeapon) < 2)
                                 return Bloodspiller;
 
                             //Blood management before Delirium
@@ -184,8 +201,21 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<DRKGauge>();
 
+                    if (IsEnabled(CustomComboPreset.DRK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
+                        return Variant.VariantCure;
+
+
                     if (CanWeave(actionID))
                     {
+                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                        if (IsEnabled(CustomComboPreset.DRK_Variant_SpiritDart) &&
+                            IsEnabled(Variant.VariantSpiritDart) &&
+                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                            return Variant.VariantSpiritDart;
+
+                        if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            return Variant.VariantUltimatum;
+
                         if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap) && LevelChecked(FloodOfDarkness) && (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000)))
                             return OriginalHook(FloodOfDarkness);
                         if (gauge.DarksideTimeRemaining > 1)

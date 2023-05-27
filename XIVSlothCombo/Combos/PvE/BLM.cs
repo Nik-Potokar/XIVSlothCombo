@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -28,6 +29,7 @@ namespace XIVSlothCombo.Combos.PvE
             Scathe = 156,
             Freeze = 159,
             Flare = 162,
+            AetherialManipulation = 155,
             LeyLines = 3573,
             Blizzard4 = 3576,
             Fire4 = 3577,
@@ -49,6 +51,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const ushort
                 Thundercloud = 164,
                 LeyLines = 737,
+                CircleOfPower = 738,
                 Firestarter = 165,
                 Sharpcast = 867,
                 Triplecast = 1211;
@@ -99,6 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const string BLM_PolyglotsStored = "BlmPolyglotsStored   ";
             internal const string BLM_AstralFireRefresh = "BlmAstralFireRefresh   ";
             internal const string BLM_MovementTime = "BlmMovementTime";
+            internal const string BLM_VariantCure = "BlmVariantCure";
         }
 
 
@@ -137,6 +141,19 @@ namespace XIVSlothCombo.Combos.PvE
                 actionID is LeyLines && HasEffect(Buffs.LeyLines) && LevelChecked(BetweenTheLines) ? BetweenTheLines : actionID;
         }
 
+        internal class BLM_AetherialManipulation : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AetherialManipulation;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is AetherialManipulation &&
+                ActionReady(BetweenTheLines) &&
+                HasEffect(Buffs.LeyLines) && 
+                !HasEffect(Buffs.CircleOfPower) &&
+                !IsMoving
+                ? BetweenTheLines : actionID;
+        }
+
         internal class BLM_Mana : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Mana;
@@ -155,6 +172,15 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var currentMP = LocalPlayer.CurrentMp;
                     var polyToStore = PluginConfiguration.GetCustomIntValue(Config.BLM_PolyglotsStored);
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
 
                     // Polyglot usage
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Simple_Foul) && LevelChecked(Manafont) && LevelChecked(Foul))
@@ -279,6 +305,16 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return !thunder3 || (thunder3 && thunder3Duration.RemainingTime < duration);
                     };
+
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
 
                     // Opener for BLM
                     // Credit to damolitionn for providing code to be used as a base for this opener
@@ -1096,6 +1132,22 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        internal class BLM_Variant_Raise : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Variant_Raise;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is All.Swiftcast)
+                {
+                    if (HasEffect(All.Buffs.Swiftcast) && IsEnabled(Variant.VariantRaise))
+                        return Variant.VariantRaise;
+                }
+
+                return actionID;
+            }
+        }
+
         internal class BLM_Paradox : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_Paradox;
@@ -1400,6 +1452,20 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                 }
 
+                return actionID;
+            }
+        }
+        internal class BLM_ScatheXeno : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ScatheXeno;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Scathe)
+                {
+                    if (LevelChecked(Xenoglossy) && Gauge.PolyglotStacks > 0)
+                        return Xenoglossy;
+                }
                 return actionID;
             }
         }

@@ -9,6 +9,7 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Extensions;
+using System.Numerics;
 
 namespace XIVSlothCombo.Core
 {
@@ -17,6 +18,9 @@ namespace XIVSlothCombo.Core
     public class PluginConfiguration : IPluginConfiguration
     {
         private static readonly HashSet<CustomComboPreset> SecretCombos;
+        private static readonly HashSet<CustomComboPreset> VariantCombos;
+        private static readonly HashSet<CustomComboPreset> BozjaCombos;
+        private static readonly HashSet<CustomComboPreset> EurekaCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset[]> ConflictingCombos;
         private static readonly Dictionary<CustomComboPreset, CustomComboPreset?> ParentCombos;  // child: parent
 
@@ -25,6 +29,18 @@ namespace XIVSlothCombo.Core
             // Secret combos
             SecretCombos = Enum.GetValues<CustomComboPreset>()
                 .Where(preset => preset.GetAttribute<SecretCustomComboAttribute>() != default)
+                .ToHashSet();
+
+            VariantCombos = Enum.GetValues<CustomComboPreset>()
+                .Where(preset => preset.GetAttribute<VariantAttribute>() != default)
+                .ToHashSet();
+
+            BozjaCombos = Enum.GetValues<CustomComboPreset>()
+                .Where(preset => preset.GetAttribute<BozjaAttribute>() != default)
+                .ToHashSet();
+
+            EurekaCombos = Enum.GetValues<CustomComboPreset>()
+                .Where(preset => preset.GetAttribute<EurekaAttribute>() != default)
                 .ToHashSet();
 
             // Conflicting combos
@@ -73,6 +89,8 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets or sets the offset of the melee range check. Default is 0. </summary>
         public double MeleeOffset { get; set; } = 0;
 
+        public Vector4 TargetHighlightColor { get; set; } = new() { W = 1, X = 0.5f, Y = 0.5f, Z = 0.5f };
+
         #endregion
 
         #region Combo Preset Checks
@@ -86,6 +104,21 @@ namespace XIVSlothCombo.Core
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The boolean representation. </returns>
         public static bool IsSecret(CustomComboPreset preset) => SecretCombos.Contains(preset);
+
+        /// <summary> Gets a value indicating whether a preset is secret. </summary>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The boolean representation. </returns>
+        public static bool IsVariant(CustomComboPreset preset) => VariantCombos.Contains(preset);
+
+        /// <summary> Gets a value indicating whether a preset is secret. </summary>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The boolean representation. </returns>
+        public static bool IsBozja(CustomComboPreset preset) => BozjaCombos.Contains(preset);
+
+        /// <summary> Gets a value indicating whether a preset is secret. </summary>
+        /// <param name="preset"> Preset to check. </param>
+        /// <returns> The boolean representation. </returns>
+        public static bool IsEureka(CustomComboPreset preset) => EurekaCombos.Contains(preset);
 
         /// <summary> Gets the parent combo preset if it exists, or null. </summary>
         /// <param name="preset"> Preset to check. </param>

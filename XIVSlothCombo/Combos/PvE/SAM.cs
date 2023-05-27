@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Extensions;
@@ -81,7 +82,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
                 SAM_AoESecondWindThreshold = "SAM_AoESecondWindThreshold",
                 SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold",
-                SAM_ST_ExecuteThreshold = "SAM_ST_ExecuteThreshold";
+                SAM_ST_ExecuteThreshold = "SAM_ST_ExecuteThreshold",
+                SAM_VariantCure = "SAM_VariantCure";
         }
 
         internal class SAM_ST_YukikazeCombo : CustomCombo
@@ -204,11 +206,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (twoSeal && gauge.MeditationStacks == 0 && GetCooldownRemainingTime(Ikishoten) < 110 && IsOnCooldown(Ikishoten))
                                 {
-                                    if (gauge.Kenki >= 10 && IsOffCooldown(Gyoten))
-                                        return Gyoten;
-
                                     if (gauge.Kenki >= 25)
                                         return Shinten;
+
+                                    if (gauge.Kenki >= 10 && IsOffCooldown(Gyoten))
+                                        return Gyoten;
                                 }
 
                                 if (twoSeal && IsOffCooldown(Ikishoten))
@@ -286,6 +288,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
+                            if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
+                                return Variant.VariantCure;
+
+                            if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) &&
+                                IsEnabled(Variant.VariantRampart) &&
+                                IsOffCooldown(Variant.VariantRampart) &&
+                                CanWeave(actionID))
+                                return Variant.VariantRampart;
+
                             //Death desync check
                             if (HasEffect(All.Buffs.Weakness))
                                 hasDied = true;
@@ -639,6 +650,15 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<SAMGauge>();
                     var SamAOEKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_AoE_KenkiOvercapAmount);
+
+                    if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(actionID))
+                        return Variant.VariantRampart;
 
                     //oGCD Features
                     if (CanSpellWeave(actionID))

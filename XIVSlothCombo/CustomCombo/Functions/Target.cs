@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using XIVSlothCombo.Data;
@@ -93,7 +94,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         public static float PlayerHealthPercentageHp() => (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 
-        public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy;
+        public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy or (BattleNpcSubKind)1;
 
         public static bool HasFriendlyTarget(GameObject? OurTarget = null)
         {
@@ -101,16 +102,44 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             {
                 //Fallback to CurrentTarget
                 OurTarget = CurrentTarget;
-                if (OurTarget is null) 
+                if (OurTarget is null)
                     return false;
             }
 
-            //Humans
-            if (OurTarget.ObjectKind is ObjectKind.Player) 
+            //Humans and Trusts
+            if (OurTarget.ObjectKind is ObjectKind.Player)
                 return true;
             //AI
-            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy;
+            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
             return false;
+        }
+
+        /// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
+        /// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
+        /// <returns> GameObject of a player target. </returns>
+        public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
+        {
+            GameObject? healTarget = null;
+            TargetManager tm = Service.TargetManager;
+            
+            if (HasFriendlyTarget(tm.SoftTarget)) healTarget = tm.SoftTarget;
+            if (healTarget is null && HasFriendlyTarget(CurrentTarget) && !restrictToMouseover) healTarget = CurrentTarget;
+            //if (checkMO && HasFriendlyTarget(tm.MouseOverTarget)) healTarget = tm.MouseOverTarget;
+            if (checkMOPartyUI)
+            {
+                StructsObject.GameObject* t = PartyTargetingService.UITarget;
+                if (t != null)
+                {
+                    long o = PartyTargetingService.GetObjectID(t);
+                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == o).First();
+                    if (HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
+                }
+
+                if (restrictToMouseover)
+                    return healTarget;
+            }
+            healTarget ??= LocalPlayer;
+            return healTarget;
         }
 
         /// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
@@ -165,7 +194,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (IsInRange(target)) SetTarget(target);
         }
 
-        protected unsafe static StructsObject.GameObject* GetTarget(TargetType target)
+        public unsafe static StructsObject.GameObject* GetTarget(TargetType target)
         {
             GameObject? o = null;
 
@@ -347,6 +376,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 return (float)Math.Atan2(b.X - a.X, b.Z - a.Z);
             }
         }
-    
+
+        internal unsafe static bool OutOfRange(uint actionID, GameObject target) => ActionWatching.OutOfRange(actionID, (StructsObject.GameObject*)Service.ClientState.LocalPlayer.Address, (StructsObject.GameObject*)target.Address);
+
     }
 }

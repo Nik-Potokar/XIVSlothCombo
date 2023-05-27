@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
@@ -90,7 +91,8 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_STSecondWindThreshold = "MNK_STSecondWindThreshold",
                 MNK_STBloodbathThreshold = "MNK_STBloodbathThreshold",
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
-                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold";
+                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold",
+                MNK_VariantCure = "MNK_VariantCure";
         }
 
         internal class MNK_AoE_SimpleMode : CustomCombo
@@ -127,9 +129,17 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
                     // Buffs
                     if (inCombat && canWeave)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs))
                         {
                             if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
@@ -247,9 +257,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.LeadenFist) &&
                         (HasEffect(Buffs.FormlessFist) ||
                         HasEffect(Buffs.PerfectBalance) ||
-                        HasEffect(Buffs.OpoOpoForm) ||
-                        HasEffect(Buffs.RaptorForm) ||
-                        HasEffect(Buffs.CoerlForm)))
+                        HasEffect(Buffs.OpoOpoForm)))
                         return Bootshine;
 
                     if (level < Levels.DragonKick)
@@ -349,6 +357,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
+
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
 
                     // Opener for MNK
                     if (IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
@@ -466,10 +477,17 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && !inOpener)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            canWeave)
+                            return Variant.VariantRampart;
+
                         if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))
                         {
                             if (canWeave)
                             {
+
                                 if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_PerfectBalance) && !HasEffect(Buffs.FormlessFist) &&
                                     level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.DisciplinedFist) &&
                                     OriginalHook(MasterfulBlitz) == MasterfulBlitz)
@@ -498,6 +516,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
                                 {
                                     return RiddleOfFire;
+                                }
+
+                                if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
+                                {
+                                    if (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                    {
+                                        if (!OnTargetsRear())
+                                            return All.TrueNorth;
+                                    }
+                                    else if (!OnTargetsFlank())
+                                        return All.TrueNorth;
                                 }
                             }
 
@@ -591,27 +620,34 @@ namespace XIVSlothCombo.Combos.PvE
                         return Meditation;
                     }
 
-                    if ((level >= Levels.DragonKick && HasEffect(Buffs.OpoOpoForm)) || HasEffect(Buffs.FormlessFist))
+                    if (!HasEffect(Buffs.PerfectBalance))
                     {
-                        return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
+                        if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
+                        {
+                            return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
+                                ? MNK.Bootshine
+                                : MNK.DragonKick;
+                        }
                     }
 
-                    if (level >= Levels.TrueStrike && HasEffect(Buffs.RaptorForm))
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (level >= Levels.TwinSnakes && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply)))
+                        if (!LevelChecked(TrueStrike)) 
                         {
-                            return TwinSnakes;
+                            return Bootshine;
                         }
-                        return TrueStrike;
-                    }
 
-                    if (level >= Levels.SnapPunch && HasEffect(Buffs.CoerlForm))
+                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
+                            ? TrueStrike
+                            : TwinSnakes;
+                    }
+                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
                     {
-                        if (level >= Levels.Demolish && HasEffect(Buffs.DisciplinedFist) && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply)))
-                        {
-                            return Demolish;
-                        }
-                        return SnapPunch;
+                        return !LevelChecked(SnapPunch)
+                            ? Bootshine
+                            : !LevelChecked(Demolish) || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
+                                ? SnapPunch
+                                : Demolish;
                     }
                 }
                 return actionID;

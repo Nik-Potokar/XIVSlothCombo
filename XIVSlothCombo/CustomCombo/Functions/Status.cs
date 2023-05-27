@@ -88,7 +88,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static bool HasSilence()
         {
-            foreach (uint status in ActionWatching.GetStatusesByName("Silence"))
+            foreach (uint status in ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(7)))
             {
                 if (HasEffectAny((ushort)status)) return true;
             }
@@ -100,7 +100,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static bool HasPacification()
         {
-            foreach (uint status in ActionWatching.GetStatusesByName("Pacification"))
+            foreach (uint status in ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(6)))
             {
                 if (HasEffectAny((ushort)status)) return true;
             }
@@ -112,12 +112,70 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns></returns>
         public static bool HasAmnesia()
         {
-            foreach (uint status in ActionWatching.GetStatusesByName("Amnesia"))
+            foreach (uint status in ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(5)))
             {
                 if (HasEffectAny((ushort)status)) return true;
             }
 
             return false;
+        }
+
+        public static bool TargetHasDamageDown(GameObject? target)
+        {
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(62)))
+            {
+                if (FindEffectOnMember((ushort)status, target) is not null) return true;
+            }
+
+            return false;
+        }
+
+        public static bool TargetHasRezWeakness(GameObject? target)
+        {
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(43)))
+            {
+                if (FindEffectOnMember((ushort)status, target) is not null) return true;
+            }
+            foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(44)))
+            {
+                if (FindEffectOnMember((ushort)status, target) is not null) return true;
+            }
+
+            return false;
+        }
+
+
+        public static bool HasCleansableDebuff(GameObject? OurTarget = null)
+        {
+            OurTarget ??= CurrentTarget;
+            if (HasFriendlyTarget(OurTarget) && (OurTarget is BattleChara chara))
+            {
+                foreach (Status status in chara.StatusList)
+                {
+                    if (ActionWatching.StatusSheet.TryGetValue(status.StatusId, out var statusItem) && statusItem.CanDispel)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool NoBlockingStatuses(uint actionId)
+        {
+            switch (ActionWatching.GetAttackType(actionId))
+            {
+                case ActionWatching.ActionAttackType.Weaponskill:
+                    if (HasPacification()) return false;
+                    return true;
+                case ActionWatching.ActionAttackType.Spell:
+                    if (HasSilence()) return false;
+                    return true;
+                case ActionWatching.ActionAttackType.Ability:
+                    if (HasAmnesia()) return false;
+                    return true;
+
+            }
+
+            return true;
         }
     }
 }
