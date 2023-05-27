@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -86,8 +87,12 @@ namespace XIVSlothCombo.Combos.PvE
             };
 
         // Class Gauge
-        private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
-        private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
+
+        //private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
+        public static TmpSCHGauge Gauge = new TmpSCHGauge();
+
+        //private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
+        private static bool HasAetherflow(this TmpSCHGauge gauge) => (gauge.Aetherflow > 0);
 
         internal enum OpenerState
         {
