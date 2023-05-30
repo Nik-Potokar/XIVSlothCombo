@@ -645,7 +645,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (CanDelayedWeave(actionID, 1.25, 0.5))
                             {
-                                if (ActionReady(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist) && InMeleeRange())   
+                                if (ActionReady(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist) && InMeleeRange() &&
+                                    IsEnabled(CustomComboPreset.MNK_ST_ADV_CDs_RiddleOfFire))   
                                     return RiddleOfFire;
 
                                 if (IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) &&
@@ -1092,7 +1093,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_ADV_CDs))
                         {
-                            if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire) && InMeleeRange())
+                            if (LevelChecked(RiddleOfFire) && ActionReady(RiddleOfFire) && InMeleeRange() &&
+                                IsEnabled(CustomComboPreset.MNK_AoE_CDs_RiddleOfFire))
                                 return RiddleOfFire;
 
                             if (IsEnabled(CustomComboPreset.MNK_AoE_CDs_PerfectBalance) && LevelChecked(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)

@@ -1704,12 +1704,16 @@ namespace XIVSlothCombo.Combos
         MNK_Riddle_Brotherhood = 9012,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the main combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 12, "", "")]
+        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the main combo.", MNK.JobID, 12, "", "")]
         MNK_ST_ADV_CDs = 9013,
 
         [ParentCombo(MNK_ST_ADV_CDs)]
         [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the main combo.", MNK.JobID, 13, "", "")]
         MNK_ST_ADV_CDs_RiddleOfWind = 9014,
+
+        [ParentCombo(MNK_ST_ADV_CDs)]
+        [CustomComboInfo("Riddle of Fire on Main Combo", "Adds Riddle of Fire to the main combo.", MNK.JobID, 13, "", "")]
+        MNK_ST_ADV_CDs_RiddleOfFire = 9036,
 
         [ParentCombo(MNK_ST_ADV_CDs)]
         [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the main combo.", MNK.JobID, 14, "", "")]
@@ -1728,12 +1732,16 @@ namespace XIVSlothCombo.Combos
         MNK_ST_LunarSolarOpener = 9018,
 
         [ParentCombo(MNK_AOE_AdvancedMode)]
-        [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID, 42, "", "")]
+        [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE combo.", MNK.JobID, 42, "", "")]
         MNK_AoE_ADV_CDs = 9019,
 
         [ParentCombo(MNK_AoE_ADV_CDs)]
         [CustomComboInfo("Riddle of Wind on AoE Combo", "Adds Riddle of Wind to the AoE combo.", MNK.JobID, 43, "", "")]
         MNK_AoE_CDs_RiddleOfWind = 9020,
+
+        [ParentCombo(MNK_AoE_ADV_CDs)]
+        [CustomComboInfo("Riddle of Fire on AoE Combo", "Adds Riddle of Fire to the AoE combo.", MNK.JobID, 13, "", "")]
+        MNK_AoE_CDs_RiddleOfFire = 9037,
 
         [ParentCombo(MNK_AoE_ADV_CDs)]
         [CustomComboInfo("Perfect Balance on AoE Combo", "Adds Perfect Balance to the AoE combo.", MNK.JobID, 44, "", "")]
