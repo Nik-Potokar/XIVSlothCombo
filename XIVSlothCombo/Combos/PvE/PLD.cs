@@ -2,6 +2,7 @@
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 
@@ -57,6 +58,8 @@ namespace XIVSlothCombo.Combos.PvE
                 BladeOfValor = 2721,
                 GoringBlade = 725;
         }
+
+        private static PLDGauge Gauge => CustomComboFunctions.GetJobGauge<PLDGauge>();
 
         public static class Config
         {
@@ -291,7 +294,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) &&
                                 Sheltron.LevelChecked() && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                                GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
+                                Gauge.OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
                                 return OriginalHook(Sheltron);
                         }
 
@@ -430,7 +433,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) &&
                             Sheltron.LevelChecked() && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                            GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
+                            Gauge.OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
                             return OriginalHook(Sheltron);
                     }
 
