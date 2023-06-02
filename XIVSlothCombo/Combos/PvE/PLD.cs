@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -363,6 +364,13 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(HolySpirit);
                         }
 
+                        // FoF (Starts burst)
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
+                            FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID) &&
+                            !ActionWatching.WasLast2ActionsAbilities() &&
+                            ActionWatching.CombatActions.Where(x => x == PLD.RoyalAuthority).Count() >= 1)
+                            return OriginalHook(FightOrFlight);
+
                         // Base combo
                         if (comboTime > 1f)
                         {
@@ -375,11 +383,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (CanWeave(actionID) && !ActionWatching.WasLast2ActionsAbilities())
                         {
-                            // FoF (Starts burst)
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
-                                FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight))
-                                return OriginalHook(FightOrFlight);
-
                             // Usage outside of burst (desync for Req, 30s windows for CoS/SW)
                             if (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
                             {
@@ -419,7 +422,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Confiteor);
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            HasEffectAny(Buffs.SwordOath) && Atonement.LevelChecked())
+                            HasEffectAny(Buffs.SwordOath) && Atonement.LevelChecked() &&
+                            GetCooldownRemainingTime(FightOrFlight) >= 7)
                             return OriginalHook(Atonement);
                     }
                 }
