@@ -58,7 +58,6 @@ namespace XIVSlothCombo.Combos.PvE
                 GoringBlade = 725;
         }
 
-
         public static class Config
         {
             public const string
@@ -93,6 +92,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CanWeave(actionID))
                         {
                             Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+
                             if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
                                 IsEnabled(Variant.VariantSpiritDart) &&
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
@@ -100,7 +100,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
                                 return Variant.VariantUltimatum;
-
                         }
 
                         if (HasEffect(Buffs.FightOrFlight))
@@ -115,7 +114,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
                                     return OriginalHook(SpiritsWithin);
-
                             }
 
                             if (GoringBlade.LevelChecked() && IsOffCooldown(GoringBlade))
@@ -130,25 +128,17 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(HolySpirit);
                             }
 
-
                             if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                 return OriginalHook(HolySpirit);
-
                         }
-
 
                         if (comboTime > 1f)
                         {
                             if (lastComboActionID == OriginalHook(FastBlade) && RiotBlade.LevelChecked())
-                            {
                                 return OriginalHook(RiotBlade);
-                            }
 
                             if (lastComboActionID == OriginalHook(RiotBlade) && OriginalHook(RoyalAuthority).LevelChecked())
-                            {
                                 return OriginalHook(RoyalAuthority);
-                            }
-
                         }
 
                         if (FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID))
@@ -165,7 +155,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (HasEffectAny(Buffs.SwordOath) && Atonement.LevelChecked())
                             return OriginalHook(Atonement);
-
                     }
                 }
 
@@ -187,6 +176,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (CanWeave(actionID))
                     {
                         Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+
                         if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
                             IsEnabled(Variant.VariantSpiritDart) &&
                             (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
@@ -194,9 +184,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
                             return Variant.VariantUltimatum;
-
                     }
-
 
                     if (HasEffect(Buffs.FightOrFlight))
                     {
@@ -210,9 +198,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
-
                         }
-
 
                         if (HasEffect(Buffs.Requiescat))
                         {
@@ -236,7 +222,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Prominence);
                     }
 
-
                     if (FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID))
                         return OriginalHook(FightOrFlight);
 
@@ -248,7 +233,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return OriginalHook(HolyCircle);
-
 
                     return actionID;
                 }
@@ -265,7 +249,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is FastBlade)
                 {
-
                     if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
                         PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
@@ -288,6 +271,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CanWeave(actionID))
                         {
                             Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+
                             if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
                                 IsEnabled(Variant.VariantSpiritDart) &&
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
@@ -302,10 +286,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 Sheltron.LevelChecked() &&
                                 !HasEffect(Buffs.Sheltron) &&
                                 !HasEffect(Buffs.HolySheltron) &&
-                                GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption)
-                                )
+                                GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
                                 return OriginalHook(Sheltron);
-
                         }
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && HasEffect(Buffs.FightOrFlight))
@@ -332,14 +314,12 @@ namespace XIVSlothCombo.Combos.PvE
                                     GetRemainingCharges(Intervene) > GetOptionValue(Config.PLD_Intervene_HoldCharges) &&
                                     ((GetOptionBool(Config.PLD_Intervene_MeleeOnly) && InMeleeRange()) || (!GetOptionBool(Config.PLD_Intervene_MeleeOnly))))
                                     return OriginalHook(Intervene);
-
                             }
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                                 GoringBlade.LevelChecked() &&
                                 IsOffCooldown(GoringBlade))
                                 return OriginalHook(GoringBlade);
-
 
                             if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
                             {
@@ -365,23 +345,15 @@ namespace XIVSlothCombo.Combos.PvE
                                 HasEffect(Buffs.DivineMight) &&
                                 GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                 return OriginalHook(HolySpirit);
-
                         }
 
                         if (comboTime > 1f)
                         {
-                            if (lastComboActionID == OriginalHook(FastBlade) &&
-                                RiotBlade.LevelChecked())
-                            {
+                            if (lastComboActionID == OriginalHook(FastBlade) && RiotBlade.LevelChecked())
                                 return OriginalHook(RiotBlade);
-                            }
 
-                            if (lastComboActionID == OriginalHook(RiotBlade) &&
-                                OriginalHook(RoyalAuthority).LevelChecked())
-                            {
+                            if (lastComboActionID == OriginalHook(RiotBlade) && OriginalHook(RoyalAuthority).LevelChecked())
                                 return OriginalHook(RoyalAuthority);
-                            }
-
                         }
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
@@ -440,7 +412,6 @@ namespace XIVSlothCombo.Combos.PvE
                             HasEffectAny(Buffs.SwordOath) &&
                             Atonement.LevelChecked())
                             return OriginalHook(Atonement);
-
                     }
                 }
 
@@ -462,6 +433,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (CanWeave(actionID))
                     {
                         Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+
                         if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
                             IsEnabled(Variant.VariantSpiritDart) &&
                             (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
@@ -474,12 +446,9 @@ namespace XIVSlothCombo.Combos.PvE
                             Sheltron.LevelChecked() &&
                             !HasEffect(Buffs.Sheltron) &&
                             !HasEffect(Buffs.HolySheltron) &&
-                            GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption)
-                            )
+                            GetJobGauge<PLDGauge>().OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
                             return OriginalHook(Sheltron);
-
                     }
-
 
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && HasEffect(Buffs.FightOrFlight))
                     {
@@ -493,7 +462,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_SpiritsWithin) && OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
-
                         }
 
                         if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
@@ -523,12 +491,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(HolyCircle);
                     }
 
-                    if (comboTime > 1f)
-                    {
-                        if (lastComboActionID is TotalEclipse && Prominence.LevelChecked())
-                            return OriginalHook(Prominence);
-                    }
-
+                    if (comboTime > 1f && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                        return OriginalHook(Prominence);
 
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID))
                         return OriginalHook(FightOrFlight);
@@ -571,7 +535,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return OriginalHook(HolyCircle);
 
-
                     return actionID;
                 }
 
@@ -600,7 +563,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (choice == 5 && HasEffect(Buffs.Requiescat) && HolyCircle.LevelChecked() && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
                         return OriginalHook(HolyCircle);
-
                 }
 
                 return actionID;
@@ -625,8 +587,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsOffCooldown(CircleOfScorn) && CircleOfScorn.LevelChecked())
                         return OriginalHook(CircleOfScorn);
-
                 }
+
                 return actionID;
             }
         }
