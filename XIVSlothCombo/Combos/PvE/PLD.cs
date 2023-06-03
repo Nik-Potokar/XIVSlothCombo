@@ -64,13 +64,15 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public const string
-                PLD_Intervene_HoldCharges = "PLDKeepInterveneCharges",
-                PLD_Intervene_MeleeOnly = "PLD_Intervene_MeleeOnly",
-                PLD_VariantCure = "PLD_VariantCure",
-                PLD_RequiescatOption = "PLD_RequiescatOption",
-                PLD_SpiritsWithinOption = "PLD_SpiritsWithinOption",
-                PLD_SheltronOption = "PLD_SheltronOption";
+            public static UserInt
+                PLD_Intervene_HoldCharges = new("PLDKeepInterveneCharges"),
+                PLD_VariantCure = new("PLD_VariantCure"),
+                PLD_RequiescatOption = new("PLD_RequiescatOption"),
+                PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
+                PLD_SheltronOption = new("PLD_SheltronOption");
+            public static UserBool
+                PLD_Intervene_MeleeOnly = new("PLD_Intervene_MeleeOnly");
+
         }
 
         internal class PLD_ST_SimpleMode : CustomCombo
@@ -83,7 +85,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
 
                     if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -188,7 +190,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is TotalEclipse)
                 {
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (CanWeave(actionID))
@@ -271,7 +273,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FastBlade)
                 {
                     if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -305,7 +307,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // (Holy) Sheltron overcap protection
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) &&
                                 Sheltron.LevelChecked() && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                                Gauge.OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
+                                Gauge.OathGauge >= Config.PLD_SheltronOption)
                                 return OriginalHook(Sheltron);
                         }
 
@@ -328,8 +330,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
                                     OriginalHook(Intervene).LevelChecked() &&
-                                    GetRemainingCharges(Intervene) > GetOptionValue(Config.PLD_Intervene_HoldCharges) &&
-                                    ((GetOptionBool(Config.PLD_Intervene_MeleeOnly) && InMeleeRange()) || (!GetOptionBool(Config.PLD_Intervene_MeleeOnly))))
+                                    GetRemainingCharges(Intervene) > Config.PLD_Intervene_HoldCharges &&
+                                    ((Config.PLD_Intervene_MeleeOnly && InMeleeRange()) || (!Config.PLD_Intervene_MeleeOnly)))
                                     return OriginalHook(Intervene);
                             }
 
@@ -440,7 +442,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is TotalEclipse)
                 {
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_VariantCure))
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (CanWeave(actionID))
@@ -457,7 +459,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // (Holy) Sheltron overcap protection
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) &&
                             Sheltron.LevelChecked() && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                            Gauge.OathGauge >= GetOptionValue(Config.PLD_SheltronOption))
+                            Gauge.OathGauge >= Config.PLD_SheltronOption)
                             return OriginalHook(Sheltron);
                     }
 
@@ -565,7 +567,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Requiescat)
                 {
-                    var choice = GetOptionValue(Config.PLD_RequiescatOption);
+                    int choice = Config.PLD_RequiescatOption;
 
                     if ((choice == 1 || choice == 3) && HasEffect(Buffs.ConfiteorReady) && Confiteor.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
                         return OriginalHook(Confiteor);
@@ -595,7 +597,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == OriginalHook(SpiritsWithin))
                 {
-                    var choice = GetOptionValue(Config.PLD_SpiritsWithinOption);
+                    int choice = Config.PLD_SpiritsWithinOption;
 
                     if (IsOffCooldown(CircleOfScorn) && CircleOfScorn.LevelChecked())
                     {
