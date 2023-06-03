@@ -330,6 +330,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
                                     OriginalHook(Intervene).LevelChecked() &&
+                                    !WasLastAction(Intervene) &&
                                     GetRemainingCharges(Intervene) > Config.PLD_Intervene_HoldCharges &&
                                     ((Config.PLD_Intervene_MeleeOnly && InMeleeRange()) || (!Config.PLD_Intervene_MeleeOnly)))
                                     return OriginalHook(Intervene);
@@ -370,7 +371,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
                             FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID) &&
                             !ActionWatching.WasLast2ActionsAbilities() &&
-                            ActionWatching.CombatActions.Where(x => x == PLD.RoyalAuthority).Count() >= 1)
+                            ActionWatching.CombatActions.Where(x => x == RoyalAuthority).Any())
                             return OriginalHook(FightOrFlight);
 
                         // Base combo
