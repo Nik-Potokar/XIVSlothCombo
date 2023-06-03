@@ -1470,8 +1470,8 @@ namespace XIVSlothCombo.Combos
         MCH_DismantleTactician = 8041,
 
         [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Delayed Tools Opener Feature", "Use The Balance's Delayed Tools Opener in Single Target Single Mode.", MCH.JobID, 0, "", "")]
-        MCH_DelayedTools_Opener = 8042,
+        [CustomComboInfo("123 Tools Opener Feature", "Use The Balance's 123 Tools Opener in Single Target Single Mode.", MCH.JobID, 0, "", "")]
+        MCH_123Tools_Opener = 8042,
 
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
