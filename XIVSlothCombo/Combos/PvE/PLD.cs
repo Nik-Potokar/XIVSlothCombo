@@ -332,9 +332,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(SpiritsWithin);
 
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
-                                    OriginalHook(Intervene).LevelChecked() &&
-                                    !WasLastAction(Intervene) &&
+                                    OriginalHook(Intervene).LevelChecked() && !WasLastAction(Intervene) &&
                                     GetRemainingCharges(Intervene) > Config.PLD_Intervene_HoldCharges &&
+                                    GetCooldownRemainingTime(CircleOfScorn) > 3 && GetCooldownRemainingTime(OriginalHook(CircleOfScorn)) > 3 &&
                                     ((Config.PLD_Intervene_MeleeOnly && InMeleeRange()) || (!Config.PLD_Intervene_MeleeOnly)))
                                     return OriginalHook(Intervene);
                             }
