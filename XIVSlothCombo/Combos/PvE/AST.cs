@@ -415,7 +415,7 @@ namespace XIVSlothCombo.Combos.PvE
                         //Combust
                         if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) &&
                             !GravityList.Contains(actionID) &&
-                            ActionReady(Combust))
+                            LevelChecked(Combust))
                         {
                             //Grab current DoT via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                             uint dot = OriginalHook(Combust);
