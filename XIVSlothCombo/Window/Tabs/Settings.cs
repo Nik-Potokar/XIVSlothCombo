@@ -144,6 +144,7 @@ namespace XIVSlothCombo.Window.Tabs
             {
                 ImGui.BeginTooltip();
                 ImGui.TextUnformatted($"Used for {CustomComboInfoAttribute.JobIDToName(33)} card targeting features.\r\nSet Alpha to 0 to hide the box.");
+                ImGui.EndTooltip();
             }
             #region UI Settings
 
