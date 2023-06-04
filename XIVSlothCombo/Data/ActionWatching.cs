@@ -39,7 +39,7 @@ namespace XIVSlothCombo.Data
         {
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
             TimeLastActionUsed = DateTime.Now;
-            if (!CustomComboNS.Functions.CustomComboFunctions.InCombat()) CombatActions.Clear();
+            if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is 13 or 2) return;
@@ -105,7 +105,7 @@ namespace XIVSlothCombo.Data
                 AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
                 !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)AST.AST_QuickTargetCards.SelectedRandomMember.Address))
             {
-                var targetOptions = AST.Config.AST_QuickTarget_Override;
+                int targetOptions = AST.Config.AST_QuickTarget_Override;
 
                 switch (targetOptions)
                 {
@@ -222,6 +222,7 @@ namespace XIVSlothCombo.Data
         }
 
         public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;
+        public static float GetActionCastTime(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.Cast100ms / (float)10 : 0;
         public static int GetActionRange(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.Range : -2; // 0 & -1 are valid numbers. -2 is our failure code for InActionRange
         public static int GetActionEffectRange(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.EffectRange : -1;
         public static int GetTraitLevel(uint id) => TraitSheet.TryGetValue(id, out var trait) ? trait.Level : 255;

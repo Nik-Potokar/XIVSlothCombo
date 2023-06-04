@@ -28,6 +28,10 @@
         public static class Buffs
         {
             public const ushort
+                MPRefresh = 909,
+                MPRefresh2 = 1198,
+                ProfaneEssence = 2320,
+                IrregularEssence = 2321,
                 BeastEssence = 2324,
                 BannerOfNobleEnds = 2326,
                 BannerOfHonoredSacrifice = 2327,
