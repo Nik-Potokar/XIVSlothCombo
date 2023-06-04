@@ -1,6 +1,7 @@
 using System;
 using Dalamud.Game;
 using Dalamud.Logging;
+using FFXIVClientStructs.FFXIV.Client.Game;
 
 namespace XIVSlothCombo.Core
 {
@@ -20,11 +21,11 @@ namespace XIVSlothCombo.Core
         public IntPtr IsActionIdReplaceable { get; private set; }
 
         /// <inheritdoc/>
-        protected override void Setup64Bit(SigScanner scanner)
+        protected unsafe override void Setup64Bit(SigScanner scanner)
         {
-            ComboTimer = scanner.GetStaticAddressFromSig("F3 0F 11 05 ?? ?? ?? ?? F3 0F 10 45 ?? E8");
+            ComboTimer = new IntPtr(&ActionManager.Instance()->Combo.Timer);
 
-            GetAdjustedActionId = scanner.ScanText("E8 ?? ?? ?? ?? 8B F8 3B DF");  // Client::Game::ActionManager.GetAdjustedActionId
+            GetAdjustedActionId = scanner.ScanText("E8 ?? ?? ?? ?? 89 03 8B 03");  // Client::Game::ActionManager.GetAdjustedActionId
 
             IsActionIdReplaceable = scanner.ScanText("E8 ?? ?? ?? ?? 84 C0 74 4C 8B D3");
 
