@@ -278,18 +278,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasBattleTarget())
                     {
-                        // HS when out of range
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                            !InMeleeRange() &&
-                            HolySpirit.LevelChecked() &&
-                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
-                            !IsMoving)
-                            return HolySpirit;
+                        if (!InMeleeRange() && OriginalHook(Confiteor) is Confiteor &&
+                            !HasEffect(Buffs.ConfiteorReady) && !HasEffect(Buffs.DivineMight) && !HasEffect(Buffs.Requiescat))
+                        {
+                            // HS when out of range
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && !IsMoving &&
+                                HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                return HolySpirit;
 
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) &&
-                            !InMeleeRange() &&
-                            ShieldLob.LevelChecked())
-                            return ShieldLob;
+                            // Shield lob uptime only if unable to stop and HS
+                            // (arguably better to delay by less than a whole GCD and just stop moving to cast)
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) &&
+                                ShieldLob.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp)
+                                return ShieldLob;
+                        }
 
                         if (CanWeave(actionID))
                         {
