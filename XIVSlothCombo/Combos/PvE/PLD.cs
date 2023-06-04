@@ -142,15 +142,16 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Base combo
-                        if (comboTime > 1f)
+                        if (comboTime > 0)
                         {
-                            if (lastComboActionID == FastBlade && RiotBlade.LevelChecked())
+                            if (lastComboActionID is FastBlade && RiotBlade.LevelChecked())
                                 return RiotBlade;
 
-                            if (lastComboActionID == RiotBlade && OriginalHook(RoyalAuthority).LevelChecked())
-                                return OriginalHook(RoyalAuthority);
+                            if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
+                                return (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    ? HolySpirit
+                                    : OriginalHook(RageOfHalone);
                         }
-
 
                         if (CanWeave(actionID))
                         {
