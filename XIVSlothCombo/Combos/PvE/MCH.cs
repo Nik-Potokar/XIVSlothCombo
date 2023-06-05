@@ -455,26 +455,44 @@ namespace XIVSlothCombo.Combos.PvE
                     bool inCombat = HasCondition(ConditionFlag.InCombat);
                     var gauge = GetJobGauge<MCHGauge>();
 
-                    if (//(readyOpener || openerStarted) && 
-                        inOpener == false && !inCombat && gauge.Heat < 5) { openerStarted = true; return HeatedSplitShot; }
-                    if (openerStarted == true && (WasLastWeaponskill(HeatedSplitShot) || lastComboMove is HeatedSplitShot || WasLastAction(HeatedSplitShot)) &&
-                        gauge.Heat == 5 && inCombat && GetRemainingCharges(GaussRound) == 3) { openerStarted = false; inOpener = true; return GaussRound; }
-
-                    //Reset check for opener
-                    if (//gauge.Heat == 0 && gauge.Battery == 0
-                         IsOffCooldown(ChainSaw) && IsOffCooldown(Drill) && IsOffCooldown(AirAnchor)
-                         //&& GetRemainingCharges(GaussRound) == 3 && GetRemainingCharges(Ricochet) == 3 && GetRemainingCharges(Reassemble) == 2
-                         //&& IsOffCooldown(Wildfire) && IsOffCooldown(BarrelStabilizer)
-                         && GetTargetHPPercent() == 100 && !inCombat)
-                    //&& !inOpener && !openerStarted)
+                    if (!inCombat && inOpener == false && readyOpener == true && gauge.Heat < 5)
                     {
                         openerStarted = true;
-                        inOpener = false;
-                        step = 0;
-                        //robotstep = 0;
+                        readyOpener = false;
                         return HeatedSplitShot;
                     }
 
+                    if (openerStarted == true && (WasLastWeaponskill(HeatedSplitShot) || lastComboMove is HeatedSplitShot || WasLastAction(HeatedSplitShot))
+                      && gauge.Heat == 5 && inCombat && GetRemainingCharges(GaussRound) == 3)
+                    {
+                        openerStarted = false;
+                        inOpener = true;
+                        readyOpener = false;
+                        return GaussRound;
+                    }
+
+                    //Check if opener needs to be reset on party wipe
+                    if (!inCombat)
+                    {
+                        if (gauge.Heat == 0 && gauge.Battery == 0 &&
+                            IsOffCooldown(ChainSaw) && IsOffCooldown(Drill) && IsOffCooldown(AirAnchor) &&
+                            GetRemainingCharges(GaussRound) == 3 && GetRemainingCharges(Ricochet) == 3 && GetRemainingCharges(Reassemble) == 2 &&
+                            IsOffCooldown(Wildfire) && IsOffCooldown(BarrelStabilizer))
+                        {
+                            openerStarted = true;
+                            inOpener = false;
+                            readyOpener = true;
+                            step = 0;
+                            //robotstep = 0;
+                            //return HeatedSplitShot;
+                        }
+                        else if (inCombat && readyOpener == false && inOpener == false)
+                        {
+                            step = 25;
+                            inOpener = false;
+                            readyOpener = false;
+                        }
+                    }
                     if (inOpener == true)
                     {
 
@@ -658,7 +676,8 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 {
-                    if (actionID is SplitShot or HeatedSplitShot && (step == 25 || !IsEnabled(CustomComboPreset.MCH_123Tools_Opener)))
+                    if (actionID is SplitShot or HeatedSplitShot && (IsEnabled(CustomComboPreset.MCH_123Tools_Opener) && step == 25 && inOpener == false ||
+                        !IsEnabled(CustomComboPreset.MCH_123Tools_Opener)))
                     {
                         var inCombat = InCombat();
                         var gauge = GetJobGauge<MCHGauge>();
@@ -747,7 +766,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (/*wildfireCDTime >= 2 && */(!WasLastAbility(Wildfire) || level < Levels.Wildfire)))
                         {
                             //steps to control robot timings
-                            if (!IsEnabled(CustomComboPreset.MCH_123Tools_Opener) && level >= 90)
+                            if (IsEnabled(CustomComboPreset.MCH_123Tools_Opener) && level >= 90)
                             {
                                 // First condition
                                 if (gauge.Battery == 50 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
@@ -774,11 +793,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     return AutomatonQueen;
                                 }
                             }
-                            if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Seconds < 55 && !IsEnabled(CustomComboPreset.MCH_123Tools_Opener))
-                            {
-                                return OriginalHook(RookAutoturret);
-                            }
-                            else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && IsEnabled(CustomComboPreset.MCH_123Tools_Opener))
+                            //if (level >= Levels.RookOverdrive && gauge.Battery == 100 && CombatEngageDuration().Seconds < 55 && !IsEnabled(CustomComboPreset.MCH_123Tools_Opener))
+                            //{
+                            //    return OriginalHook(RookAutoturret);
+                            //} fix this later?
+                            else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && !IsEnabled(CustomComboPreset.MCH_123Tools_Opener))
                             {
                                 return OriginalHook(RookAutoturret);
                             }
@@ -1012,12 +1031,17 @@ namespace XIVSlothCombo.Combos.PvE
                             return true;
                         }
 
-                        if (gauge.Heat >= 90 && wildfireCDTime <= 40)
+                        if (gauge.Heat < 50 && GetCooldownRemainingTime(AirAnchor) < 25 && GetCooldownRemainingTime(ChainSaw) < 30)
+                        {
+                            return false;
+                        }
+
+                        if (gauge.Heat >= 50 && wildfireCDTime <= 26)
                         {
                             return true;
                         }
 
-                        if (gauge.Heat >= 50 && wildfireCDTime >= 40)
+                        if (gauge.Heat >= 50 && wildfireCDTime >= 60)
                         {
                             return true;
                         }
