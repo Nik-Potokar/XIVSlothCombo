@@ -148,9 +148,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 return RiotBlade;
 
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
+                            {
+                                if (HasEffect(Buffs.SwordOath))
+                                    return Atonement;
+
                                 return (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     ? HolySpirit
                                     : OriginalHook(RageOfHalone);
+                            }
                         }
 
                         if (CanWeave(actionID))
@@ -343,10 +348,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 GoringBlade.LevelChecked() &&
                                 IsOffCooldown(GoringBlade))
                                 return GoringBlade;
-
-                            // HS when Confiteor not unlocked
+                            
                             if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
                             {
+                                // HS when Confiteor not unlocked
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
                                     GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
@@ -368,14 +373,29 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
                                 HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                 return HolySpirit;
+
+                            if (HasEffect(Buffs.SwordOath))
+                                return Atonement;
                         }
 
                         // FoF (Starts burst)
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
                             FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID) &&
-                            !ActionWatching.WasLast2ActionsAbilities() &&
                             ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any())
                             return FightOrFlight;
+
+                        // CoS/SW outside of burst
+                        if (CanWeave(actionID, 0.6) && (!WasLastAction(FightOrFlight) &&
+                            GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF)))
+                        {
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) &&
+                                CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                return CircleOfScorn;
+
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) &&
+                                OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                return OriginalHook(SpiritsWithin);
+                        }
 
                         // Base combo
                         if (comboTime > 0)
@@ -384,36 +404,18 @@ namespace XIVSlothCombo.Combos.PvE
                                 return RiotBlade;
 
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
-                                return (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                            {
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) && HasEffect(Buffs.SwordOath))
+                                    return Atonement;
+
+                                return (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                                    HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     ? HolySpirit
                                     : OriginalHook(RageOfHalone);
-                        }
-
-                        if (CanWeave(actionID) && !ActionWatching.WasLast2ActionsAbilities())
-                        {
-                            // Usage outside of burst (desync for Req, 30s windows for CoS/SW)
-                            if (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
-                            {
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) &&
-                                    Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
-                                    return Requiescat;
-
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) &&
-                                    CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
-                                    return CircleOfScorn;
-
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) &&
-                                    OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
-                                    return OriginalHook(SpiritsWithin);
                             }
                         }
 
-                        // HS under DM (outside of burst)
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                            (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) &&
-                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                            return HolySpirit;
-
+                        // Goring on cooldown (burst features disabled)
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             GoringBlade.LevelChecked() && IsOffCooldown(GoringBlade) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
@@ -428,11 +430,6 @@ namespace XIVSlothCombo.Combos.PvE
                             OriginalHook(Confiteor) != Confiteor &&
                             GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)))
                             return OriginalHook(Confiteor);
-
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            HasEffectAny(Buffs.SwordOath) && Atonement.LevelChecked() &&
-                            GetCooldownRemainingTime(FightOrFlight) >= 7)
-                            return Atonement;
                     }
                 }
 
