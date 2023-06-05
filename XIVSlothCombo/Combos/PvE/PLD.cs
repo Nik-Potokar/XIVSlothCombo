@@ -113,17 +113,17 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (CanWeave(actionID))
                             {
-                                if (Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                                if (ActionReady(Requiescat))
                                     return Requiescat;
 
-                                if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                if (ActionReady(CircleOfScorn))
                                     return CircleOfScorn;
 
-                                if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                if (ActionReady(OriginalHook(SpiritsWithin)))
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (GoringBlade.LevelChecked() && IsOffCooldown(GoringBlade))
+                            if (ActionReady(GoringBlade))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -139,6 +139,23 @@ namespace XIVSlothCombo.Combos.PvE
                             // HS under DM
                             if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                 return HolySpirit;
+                        }
+
+                        if (CanWeave(actionID))
+                        {
+                            // FoF (Starts burst)
+                            if (ActionReady(FightOrFlight))
+                                return FightOrFlight;
+
+                            // Usage outside of burst
+                            if (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15)
+                            {
+                                if (ActionReady(CircleOfScorn))
+                                    return CircleOfScorn;
+
+                                if (ActionReady(OriginalHook(SpiritsWithin)))
+                                    return OriginalHook(SpiritsWithin);
+                            }
                         }
 
                         // Base combo
@@ -157,30 +174,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     : OriginalHook(RageOfHalone);
                             }
                         }
-
-                        if (CanWeave(actionID))
-                        {
-                            // FoF (Starts burst)
-                            if (FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight))
-                                return FightOrFlight;
-
-                            // Usage outside of burst
-                            if (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15)
-                            {
-                                if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
-                                    return CircleOfScorn;
-
-                                if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
-                                    return OriginalHook(SpiritsWithin);
-                            }
-                        }
-
-                        // HS under DM
-                        if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                            return HolySpirit;
-
-                        if (HasEffectAny(Buffs.SwordOath) && Atonement.LevelChecked())
-                            return Atonement;
                     }
                 }
 
@@ -216,13 +209,13 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (CanWeave(actionID))
                         {
-                            if (Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                            if (ActionReady(Requiescat))
                                 return Requiescat;
 
-                            if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                            if (ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
-                            if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                            if (ActionReady(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
                         }
 
@@ -242,20 +235,20 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolyCircle;
                     }
 
-                    if (comboTime > 1f && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
                         return Prominence;
 
                     if (CanWeave(actionID))
                     {
-                        if (FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight))
+                        if (ActionReady(FightOrFlight))
                             return FightOrFlight;
 
                         if (!WasLastAction(FightOrFlight) && IsOnCooldown(FightOrFlight))
                         {
-                            if (CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                            if (ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
-                            if (OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                            if (ActionReady(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
                         }
                     }
@@ -324,16 +317,13 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (CanWeave(actionID))
                             {
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) &&
-                                    Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && ActionReady(Requiescat))
                                     return Requiescat;
 
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) &&
-                                    CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) && ActionReady(CircleOfScorn))
                                     return CircleOfScorn;
 
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) &&
-                                    OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) && ActionReady(OriginalHook(SpiritsWithin)))
                                     return OriginalHook(SpiritsWithin);
 
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
@@ -345,8 +335,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                GoringBlade.LevelChecked() &&
-                                IsOffCooldown(GoringBlade))
+                                ActionReady(GoringBlade))
                                 return GoringBlade;
                             
                             if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
@@ -380,20 +369,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // FoF (Starts burst)
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) &&
-                            FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight) && CanWeave(actionID) &&
-                            ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any())
+                            ActionReady(FightOrFlight) && CanWeave(actionID) &&
+                            ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any()) // Check RA has been used for opener exception
                             return FightOrFlight;
 
                         // CoS/SW outside of burst
                         if (CanWeave(actionID, 0.6) && (!WasLastAction(FightOrFlight) &&
                             GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF)))
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) &&
-                                CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) && ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_SpiritsWithin) &&
-                                OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                ActionReady(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
                         }
 
@@ -416,8 +404,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Goring on cooldown (burst features disabled)
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                            GoringBlade.LevelChecked() && IsOffCooldown(GoringBlade) &&
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) && ActionReady(GoringBlade) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
                             return GoringBlade;
 
@@ -471,16 +458,15 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (CanWeave(actionID))
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) &&
-                                Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && ActionReady(Requiescat))
                                 return Requiescat;
 
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) &&
-                                CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                                ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_SpiritsWithin) &&
-                                OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                ActionReady(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
                         }
 
@@ -512,29 +498,27 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolyCircle;
                     }
 
-                    if (comboTime > 1f && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
                         return Prominence;
 
                     if (CanWeave(actionID))
                     {
                         // FoF (Starts burst)
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && FightOrFlight.LevelChecked() && IsOffCooldown(FightOrFlight))
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && ActionReady(FightOrFlight))
                             return FightOrFlight;
 
                         // Usage outside of burst (desync for Req, 30s windows for CoS/SW)
                         if ((!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF)) &&
                             !ActionWatching.WasLast2ActionsAbilities())
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) &&
-                                Requiescat.LevelChecked() && IsOffCooldown(Requiescat))
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && ActionReady(Requiescat))
                                 return Requiescat;
 
-                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) &&
-                                CircleOfScorn.LevelChecked() && IsOffCooldown(CircleOfScorn))
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) && ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_SpiritsWithin) &&
-                                OriginalHook(SpiritsWithin).LevelChecked() && IsOffCooldown(OriginalHook(SpiritsWithin)))
+                                ActionReady(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
                         }
                     }
@@ -572,18 +556,18 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     int choice = Config.PLD_RequiescatOption;
 
-                    if ((choice == 1 || choice == 3) && HasEffect(Buffs.ConfiteorReady) && Confiteor.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
+                    if ((choice is 1 || choice is 3) && HasEffect(Buffs.ConfiteorReady) && Confiteor.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
                         return OriginalHook(Confiteor);
 
                     if (HasEffect(Buffs.Requiescat))
                     {
-                        if ((choice == 2 || choice == 3) && OriginalHook(Confiteor) != Confiteor && BladeOfFaith.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
+                        if ((choice is 2 || choice is 3) && OriginalHook(Confiteor) != Confiteor && BladeOfFaith.LevelChecked() && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
                             return OriginalHook(Confiteor);
 
-                        if (choice == 4 && HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                        if (choice is 4 && HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                             return HolySpirit;
 
-                        if (choice == 5 && HolyCircle.LevelChecked() && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
+                        if (choice is 5 && HolyCircle.LevelChecked() && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
                             return HolyCircle;
                     }
                 }
@@ -602,14 +586,14 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     int choice = Config.PLD_SpiritsWithinOption;
 
-                    if (IsOffCooldown(CircleOfScorn) && CircleOfScorn.LevelChecked())
+                    if (ActionReady(CircleOfScorn))
                     {
                         if (IsOffCooldown(OriginalHook(SpiritsWithin)))
                         {
-                            if (choice == 1)
+                            if (choice is 1)
                                 return CircleOfScorn;
 
-                            if (choice == 2)
+                            if (choice is 2)
                                 return OriginalHook(SpiritsWithin);
                         }
                         
