@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -122,26 +121,13 @@ namespace XIVSlothCombo.Combos.PvE
                 { Combust3, Debuffs.Combust3 }
             };
 
-        private static ASTGauge Gauge => CustomComboFunctions.GetJobGauge<ASTGauge>();
+        public static ASTGauge Gauge => CustomComboFunctions.GetJobGauge<ASTGauge>();
 
-        private static CardType drawnCard;
-        private static CardType DrawnCard
-        {
-            get
-            {
-                if (drawnCard != Gauge.DrawnCard)
-                {
-                    drawnCard = Gauge.DrawnCard;
-                    Dalamud.Logging.PluginLog.Debug("Changing Target");
-                    AST_QuickTargetCards.SelectedRandomMember = null;
-                }
-                return drawnCard;
-            }
-        }
+        public static CardType DrawnCard { get; set; }
 
         public static class Config
         {
-            internal static UserInt
+            public static UserInt
                 AST_LucidDreaming = new("ASTLucidDreamingFeature"),
                 AST_EssentialDignity = new("ASTCustomEssentialDignity"),
                 AST_DPS_AltMode = new("AST_DPS_AltMode"),
@@ -150,13 +136,13 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_DPS_CombustOption = new("AST_DPS_CombustOption"),
                 AST_QuickTarget_Override = new("AST_QuickTarget_Override"),
                 AST_ST_DPS_Play_SpeedSetting = new("AST_ST_DPS_Play_SpeedSetting");
-            internal static UserBool
+            public static UserBool
                 AST_QuickTarget_SkipDamageDown = new("AST_QuickTarget_SkipDamageDown"),
                 AST_QuickTarget_SkipRezWeakness = new("AST_QuickTarget_SkipRezWeakness"),
                 AST_ST_SimpleHeals_Adv = new("AST_ST_SimpleHeals_Adv"),
                 AST_ST_SimpleHeals_UIMouseOver = new("AST_ST_SimpleHeals_UIMouseOver"),
                 AST_ST_DPS_CombustUptime_Adv = new("AST_ST_DPS_CombustUptime_Adv");
-            internal static UserFloat 
+            public static UserFloat
                 AST_ST_DPS_CombustUptime_Threshold = new("AST_ST_DPS_CombustUptime_Threshold");
         }
 
@@ -196,122 +182,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class AST_QuickTargetCards : CustomCombo
-        {
-           
-            internal static List<GameObject> PartyTargets = new();
-
-            internal static GameObject? SelectedRandomMember;
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_QuickTargetCards;
-
-            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
-            {
-                if (GetPartySlot(2) is not null && DrawnCard is not CardType.NONE)
-                {
-                    if (SelectedRandomMember is null || SelectedRandomMember.IsDead)
-                    {
-                        SetTarget();
-                        return actionID;
-                    }
-                }
-                else
-                {
-                    SelectedRandomMember = null;
-                }
-
-                return actionID;
-            }
-
-            private static bool SetTarget()
-            {
-                if (Gauge.DrawnCard.Equals(CardType.NONE)) return false;
-                CardType cardDrawn = Gauge.DrawnCard;
-                PartyTargets.Clear();
-                for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
-                {
-                    if (GetPartySlot(i) is not BattleChara member) continue;
-                    if (member is null) continue; //Skip nulls/disconnected people
-                    if (member.IsDead) continue;
-                    if (OutOfRange(Bole, member)) continue;
-
-                    if (FindEffectOnMember(Buffs.BalanceDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.ArrowDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.BoleDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.EwerDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
-                    if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
-
-                    if (Config.AST_QuickTarget_SkipDamageDown && TargetHasDamageDown(member)) continue;
-                    if (Config.AST_QuickTarget_SkipRezWeakness && TargetHasRezWeakness(member)) continue;
-
-                    PartyTargets.Add(member);
-                }
-
-                //The inevitable "0 targets found" because of debuffs
-                if (PartyTargets.Count == 0)
-                {
-                    for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
-                    {
-                        if (GetPartySlot(i) is not BattleChara member) continue;
-                        if (member is null) continue; //Skip nulls/disconnected people
-                        if (member.IsDead) continue;
-                        if (OutOfRange(Bole, member)) continue;
-
-                        if (FindEffectOnMember(Buffs.BalanceDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.ArrowDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.BoleDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.EwerDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.SpireDamage, member) is not null) continue;
-                        if (FindEffectOnMember(Buffs.SpearDamage, member) is not null) continue;
-
-                        PartyTargets.Add(member);
-                    }
-                }
-
-                if (SelectedRandomMember is not null)
-                {
-                    if (PartyTargets.Any(x => x.ObjectId == SelectedRandomMember.ObjectId))
-                    {
-                        //TargetObject(SelectedRandomMember);
-                        return true;
-                    }
-                }
-
-
-                if (PartyTargets.Count > 0)
-                {
-                    PartyTargets.Shuffle();
-                    //Give card to DPS first
-                    for (int i = 0; i <= PartyTargets.Count - 1; i++)
-                    {
-                        byte job = PartyTargets[i] is BattleChara ? (byte)(PartyTargets[i] as BattleChara).ClassJob.Id : (byte)0;
-                        if (((cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR) && JobIDs.Melee.Contains(job)) ||
-                            ((cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE) && JobIDs.Ranged.Contains(job)))
-                        {
-                            //TargetObject(PartyTargets[i]);
-                            SelectedRandomMember = PartyTargets[i];
-                            return true;
-                        }
-                    }
-                    //Give cards to healers/tanks if backup is turned on
-                    if (IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards_TargetExtra))
-                    {
-                        for (int i = 0; i <= PartyTargets.Count - 1; i++)
-                        {
-                            byte job = PartyTargets[i] is BattleChara ? (byte)(PartyTargets[i] as BattleChara).ClassJob.Id : (byte)0;
-                            if ((cardDrawn is CardType.BALANCE or CardType.ARROW or CardType.SPEAR && JobIDs.Tank.Contains(job)) ||
-                                (cardDrawn is CardType.BOLE or CardType.EWER or CardType.SPIRE && JobIDs.Healer.Contains(job)))
-                            {
-                                //TargetObject(PartyTargets[i]);
-                                SelectedRandomMember = PartyTargets[i];
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-            }
-        }
         internal class AST_Benefic : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Benefic;
@@ -433,13 +303,13 @@ namespace XIVSlothCombo.Combos.PvE
                         //Combust
                         if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) &&
                             !GravityList.Contains(actionID) &&
-                            ActionReady(Combust))
+                            LevelChecked(Combust))
                         {
                             //Grab current DoT via OriginalHook, grab it's fellow debuff ID from Dictionary, then check for the debuff
                             uint dot = OriginalHook(Combust);
                             Status? dotDebuff = FindTargetEffect(CombustList[dot]);
                             float refreshtimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
-                            
+
                             if (IsEnabled(CustomComboPreset.AST_Variant_SpiritDart) &&
                                 IsEnabled(Variant.VariantSpiritDart) &&
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
@@ -556,7 +426,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Exaltation;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection) &&
-                        ActionReady(CelestialIntersection) && 
+                        ActionReady(CelestialIntersection) &&
                         CanSpellWeave(actionID) &&
                         !(healTarget as BattleChara)!.HasShield())
                         return CelestialIntersection;

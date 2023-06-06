@@ -1,5 +1,6 @@
 ﻿using System;
 using XIVSlothCombo.Core;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
 {
@@ -43,8 +44,22 @@ namespace XIVSlothCombo.CustomComboNS.Functions
     {
         public UserBoolArray(string v) : base(v) { }
         public int Count => PluginConfiguration.GetCustomBoolArrayValue(this.pName).Length;
-        public bool this[int index] => PluginConfiguration.GetCustomBoolArrayValue(this.pName)[index];
         public static implicit operator bool[](UserBoolArray o) => PluginConfiguration.GetCustomBoolArrayValue(o.pName);
+        public bool this[int index]
+        {
+            get
+            {
+                if (index >= this.Count)
+                {
+                    var array = PluginConfiguration.GetCustomBoolArrayValue(this.pName);
+                    Array.Resize(ref array, index + 1);
+                    array[index] = false;
+                    PluginConfiguration.SetCustomBoolArrayValue(this.pName, array);
+                    Service.Configuration.Save();
+                }
+                return PluginConfiguration.GetCustomBoolArrayValue(this.pName)[index];
+            }
+        }
     }
 
 }
