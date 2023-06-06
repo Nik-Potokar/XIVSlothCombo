@@ -131,11 +131,11 @@ namespace XIVSlothCombo.Window
 
         private unsafe void DrawTargetHelper()
         {
-            if (AST.AST_QuickTargetCards.SelectedRandomMember is not null)
+            if (Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null)
             {
                 for (int i = 1; i <= 8; i++)
                 {
-                    if (CustomComboFunctions.GetPartySlot(i) == AST.AST_QuickTargetCards.SelectedRandomMember)
+                    if (CustomComboFunctions.GetPartySlot(i) == Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember)
                     {
                         IntPtr partyPTR = Service.GameGui.GetAddonByName("_PartyList", 1);
                         if (partyPTR == IntPtr.Zero)

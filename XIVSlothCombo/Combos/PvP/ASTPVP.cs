@@ -38,7 +38,7 @@ namespace XIVSlothCombo.Combos.PvP
                 if (actionID is Malefic)
                 {
                     // Out of combat Draw
-                    if (IsOffCooldown(Draw) && !InCombat())
+                    if (IsOffCooldown(Draw) && !InCombat() && IsEnabled(CustomComboPreset.ASTPvP_Card))
                         return Draw;
 
                     // Malefic to initiate combat
@@ -51,7 +51,7 @@ namespace XIVSlothCombo.Combos.PvP
                         return Malefic;
 
                     // Play "The Balance" before a Gravity/Double + Macro burst
-                    if (HasCharges(DoubleCast) && IsOffCooldown(Gravity) && IsOffCooldown(Macrocosmos) && HasEffect(Buffs.BalanceDrawn))
+                    if (HasCharges(DoubleCast) && IsOffCooldown(Gravity) && IsOffCooldown(Macrocosmos) && HasEffect(Buffs.BalanceDrawn) && IsEnabled(CustomComboPreset.ASTPvP_Card))
                         return OriginalHook(Draw);
 
                     if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
@@ -59,14 +59,14 @@ namespace XIVSlothCombo.Combos.PvP
                         if (lastComboMove == DoubleGravity && IsOffCooldown(Macrocosmos))
                             return Macrocosmos;
 
-                        if (lastComboMove == Gravity && HasCharges(DoubleCast))
+                        if (lastComboMove == Gravity && HasCharges(DoubleCast) && IsEnabled(CustomComboPreset.ASTPvP_DoubleCast))
                             return DoubleGravity;
 
                         if (IsOffCooldown(Gravity))
                             return Gravity;
 
                         if (lastComboMove == Malefic && (GetRemainingCharges(DoubleCast) > 1 ||
-                            GetCooldownRemainingTime(Gravity) > 7.5f) && CanWeave(actionID))
+                            GetCooldownRemainingTime(Gravity) > 7.5f) && CanWeave(actionID) && IsEnabled(CustomComboPreset.ASTPvP_DoubleCast))
                             return DoubleMalefic;
                     }
 
@@ -74,16 +74,16 @@ namespace XIVSlothCombo.Combos.PvP
                     if (((GetBuffRemainingTime(Buffs.BalanceDrawn) < 3) ||
                         (GetBuffRemainingTime(Buffs.BoleDrawn) < 3) ||
                         (GetBuffRemainingTime(Buffs.ArrowDrawn) < 3)) &&
-                        CanWeave(actionID))
+                        CanWeave(actionID) && IsEnabled(CustomComboPreset.ASTPvP_Card))
                         return OriginalHook(Draw);
 
                     // Generic Draw
-                    if (IsOffCooldown(Draw) && CanWeave(actionID))
+                    if (IsOffCooldown(Draw) && CanWeave(actionID) && IsEnabled(CustomComboPreset.ASTPvP_Card))
                         return Draw;
 
                     // Generic Play outside of necessary holding
                     if (CanWeave(actionID) && GetCooldownRemainingTime(Macrocosmos) > 7.5f && (IsOffCooldown(Draw) ||
-                        HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn)))
+                        HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn)) && IsEnabled(CustomComboPreset.ASTPvP_Card))
                         return OriginalHook(Draw);
                 }
 
