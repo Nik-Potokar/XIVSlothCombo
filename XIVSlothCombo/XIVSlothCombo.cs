@@ -43,6 +43,7 @@ namespace XIVSlothCombo
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
             ActionWatching.Enable();
+            Combos.JobHelpers.AST.Init();
 
             configWindow = new();
 
@@ -138,6 +139,7 @@ namespace XIVSlothCombo
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
             ActionWatching.Dispose();
+            Combos.JobHelpers.AST.Dispose();
 
             Service.ClientState.Login -= PrintLoginMessage;
         }

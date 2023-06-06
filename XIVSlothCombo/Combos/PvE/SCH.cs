@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -88,11 +87,9 @@ namespace XIVSlothCombo.Combos.PvE
 
         // Class Gauge
 
-        //private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
-        public static TmpSCHGauge Gauge = new TmpSCHGauge();
+        private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
 
-        //private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
-        private static bool HasAetherflow(this TmpSCHGauge gauge) => (gauge.Aetherflow > 0);
+        private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
 
         internal enum OpenerState
         {
@@ -234,7 +231,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!HasAetherFlows)
                     {
                         bool ShowAetherflowOnAll = (Config.SCH_Aetherflow_Display == 1);
-                        if ((actionID is EnergyDrain && !ShowAetherflowOnAll) || ShowAetherflowOnAll)
+                        if (((actionID is EnergyDrain && !ShowAetherflowOnAll) || ShowAetherflowOnAll) &&
+                            IsOffCooldown(actionID))
                         {
                             if (IsEnabled(CustomComboPreset.SCH_Aetherflow_Dissipation) &&
                                 ActionReady(Dissipation) &&
