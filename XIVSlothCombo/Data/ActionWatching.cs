@@ -244,11 +244,11 @@ namespace XIVSlothCombo.Data
         {
             if (!ActionSheet.TryGetValue(id, out var action)) return ActionAttackType.Unknown;
 
-            return action.ActionCategory.Value.Name.RawString switch
+            return action.ActionCategory.Row switch
             {
-                "Spell" => ActionAttackType.Spell,
-                "Weaponskill" => ActionAttackType.Weaponskill,
-                "Ability" => ActionAttackType.Ability,
+                2 => ActionAttackType.Spell,
+                3 => ActionAttackType.Weaponskill,
+                4 => ActionAttackType.Ability,
                 _ => ActionAttackType.Unknown
             };
         }
