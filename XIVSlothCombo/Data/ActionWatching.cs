@@ -102,27 +102,27 @@ namespace XIVSlothCombo.Data
         private unsafe static void CheckForChangedTarget(uint actionId, ref long targetObjectId)
         {
             if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear &&
-                AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
-                !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)AST.AST_QuickTargetCards.SelectedRandomMember.Address))
+                Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
+                !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.Address))
             {
                 int targetOptions = AST.Config.AST_QuickTarget_Override;
 
                 switch (targetOptions)
                 {
                     case 0:
-                        targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
                         break;
                     case 1:
                         if (Service.ClientState.LocalPlayer.TargetObject is not null)
                             targetObjectId = Service.ClientState.LocalPlayer.TargetObject.ObjectId;
                         else
-                            targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
                         break;
                     case 2:
                         if (CustomComboFunctions.GetHealTarget(true, true) is not null)
                             targetObjectId = CustomComboFunctions.GetHealTarget(true, true).ObjectId;
                         else
-                            targetObjectId = AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
                         break;
                 }
 
@@ -244,11 +244,11 @@ namespace XIVSlothCombo.Data
         {
             if (!ActionSheet.TryGetValue(id, out var action)) return ActionAttackType.Unknown;
 
-            return action.ActionCategory.Value.Name.RawString switch
+            return action.ActionCategory.Row switch
             {
-                "Spell" => ActionAttackType.Spell,
-                "Weaponskill" => ActionAttackType.Weaponskill,
-                "Ability" => ActionAttackType.Ability,
+                2 => ActionAttackType.Spell,
+                3 => ActionAttackType.Weaponskill,
+                4 => ActionAttackType.Ability,
                 _ => ActionAttackType.Unknown
             };
         }
