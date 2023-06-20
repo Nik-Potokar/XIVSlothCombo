@@ -3,6 +3,7 @@ using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.CustomComboNS.Functions;
+using System;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -445,8 +446,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Weaves
                     // Simple ST Devilment
-                    if (CanWeave(actionID) && ActionReady(Devilment) &&
-                        (WasLastAction(TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                    if (ActionReady(Devilment) && (WasLastWeaponskill(TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // Simple ST Flourish
@@ -473,7 +473,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(FanDance1))
                         {
                             // FD3
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                            if (HasEffect(Buffs.ThreeFoldFanDance) &&
+                                (GetCooldownRemainingTime(TechnicalStep) > 26f ||
+                                HasEffect(Buffs.TechnicalFinish) ||
+                                Gauge.Feathers is 4 ||
+                                GetBuffRemainingTime(Buffs.ThreeFoldFanDance) < 3f))
                                 return FanDance3;
 
                             // FD1 HP% Dump
@@ -495,7 +499,6 @@ namespace XIVSlothCombo.Combos.PvE
                             // FD1 Non-pooling & under burst level
                             if (!LevelChecked(TechnicalStep) && Gauge.Feathers > 0)
                                 return FanDance1;
-
                         }
 
                         if (HasEffect(Buffs.FourFoldFanDance))
@@ -616,7 +619,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Weaves
                     // Advanced ST Devilment
                     if (IsEnabled(CustomComboPreset.DNC_AdvST_Devilment) && ActionReady(Devilment) &&
-                        (WasLastAction(TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                        (WasLastWeaponskill(TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // Advanced ST Flourish
@@ -631,8 +634,8 @@ namespace XIVSlothCombo.Combos.PvE
                         ((Config.DNC_AdvST_Interrupt == 0 && CanDelayedWeave(actionID, 1.25, 0.6)) ||
                          (Config.DNC_AdvST_Interrupt == 1 && CanDelayedWeave(actionID, 2.25, 0.7)) ||
                          (Config.DNC_AdvST_Interrupt == 2)) &&
-                        CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
-                        !HasEffect(Buffs.TechnicalFinish))
+                         CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
+                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
                     if (CanWeave(actionID))
@@ -647,7 +650,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DNC_AdvST_Feathers) && LevelChecked(FanDance1))
                         {
                             // FD3
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                            if (HasEffect(Buffs.ThreeFoldFanDance) &&
+                                (GetCooldownRemainingTime(TechnicalStep) > 26f ||
+                                HasEffect(Buffs.TechnicalFinish) ||
+                                Gauge.Feathers is 4 ||
+                                GetBuffRemainingTime(Buffs.ThreeFoldFanDance) < 3f))
                                 return FanDance3;
 
                             // FD1 HP% Dump
@@ -669,7 +676,6 @@ namespace XIVSlothCombo.Combos.PvE
                             // FD1 Non-pooling & under burst level
                             if (!LevelChecked(TechnicalStep) && Gauge.Feathers > 0)
                                 return FanDance1;
-
                         }
 
                         if (HasEffect(Buffs.FourFoldFanDance))
@@ -792,8 +798,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Weaves
                     // Simple AoE Devilment
-                    if (CanWeave(actionID) && ActionReady(Devilment) &&
-                        (WasLastAction(TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                    if (ActionReady(Devilment) && (WasLastWeaponskill(TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // Simple AoE Flourish
@@ -838,7 +843,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(FanDance1))
                         {
                             // FD3
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                            if (HasEffect(Buffs.ThreeFoldFanDance) &&
+                                (GetCooldownRemainingTime(TechnicalStep) > 26f ||
+                                HasEffect(Buffs.TechnicalFinish) ||
+                                Gauge.Feathers is 4 ||
+                                GetBuffRemainingTime(Buffs.ThreeFoldFanDance) < 3f))
                                 return FanDance3;
 
                             if (LevelChecked(FanDance2))
@@ -978,7 +987,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Weaves
                     // Advanced AoE Devilment
                     if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Devilment) && ActionReady(Devilment) &&
-                        (WasLastAction(TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                        (WasLastWeaponskill(TechnicalFinish) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // Advanced AoE Flourish
@@ -1027,7 +1036,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DNC_AdvAoE_Feathers) && LevelChecked(FanDance1))
                         {
                             // FD3
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                            if (HasEffect(Buffs.ThreeFoldFanDance) &&
+                                (GetCooldownRemainingTime(TechnicalStep) > 26f ||
+                                HasEffect(Buffs.TechnicalFinish) ||
+                                Gauge.Feathers is 4 ||
+                                GetBuffRemainingTime(Buffs.ThreeFoldFanDance) < 3f))
                                 return FanDance3;
 
                             if (LevelChecked(FanDance2))
