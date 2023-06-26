@@ -2207,7 +2207,7 @@ namespace XIVSlothCombo.Combos
         ReaperPositionalConfig = 12000,
 
         #region Single Target (Slice) Combo Section
-        [ReplaceSkill(RPR.Slice)]
+        [ReplaceSkill(RPR.Slice, RPR.Harpe)]
         [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo = 12001,
 

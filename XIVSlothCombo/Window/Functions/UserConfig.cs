@@ -1508,6 +1508,12 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region REAPER
 
+            if (preset is CustomComboPreset.RPR_ST_SliceCombo)
+            {
+                UserConfig.DrawRadioButton(RPR.Config.RPR_Slice_AltMode, "Combo on Slice", "Default mode. Replaces Slice.", 0);
+                UserConfig.DrawRadioButton(RPR.Config.RPR_Slice_AltMode, "Combo on Harpe", "Have the feature replace Harpe instead of Slice.", 1);
+            }
+
             if (preset == CustomComboPreset.RPRPvP_Burst_ImmortalPooling && enabled)
                 UserConfig.DrawSliderInt(0, 8, RPRPvP.Config.RPRPvP_ImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
 
