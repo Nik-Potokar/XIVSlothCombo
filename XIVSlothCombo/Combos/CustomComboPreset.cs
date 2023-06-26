@@ -3794,6 +3794,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Melee Plunge Option", "Uses Plunge whilst in melee range, and not just as a gap-closer.", DRK.JobID)]
         DRKPvP_PlungeMelee = 115002,
 
+        [SecretCustomCombo]
+        [ParentCombo(DRKPvP_Burst)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth to Burst mode.", DRK.JobID)]
+        DRKPvP_SaltedEarth = 115003,
+
         // Last value = 115002
 
         #endregion
