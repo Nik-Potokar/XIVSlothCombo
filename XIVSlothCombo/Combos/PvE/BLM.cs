@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System.Collections.Generic;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -12,7 +12,7 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte ClassID = 7;
         public const byte JobID = 25;
 
-        internal const uint
+        public const uint
             Fire = 141,
             Blizzard = 142,
             Thunder = 144,
@@ -44,9 +44,9 @@ namespace XIVSlothCombo.Combos.PvE
             Amplifier = 25796,
             Paradox = 25797;
 
-        internal static class Buffs
+        public static class Buffs
         {
-            internal const ushort
+            public const ushort
                 Thundercloud = 164,
                 Firestarter = 165,
                 LeyLines = 737,
@@ -56,18 +56,18 @@ namespace XIVSlothCombo.Combos.PvE
                 EnhancedFlare = 2960;
         }
 
-        internal static class Debuffs
+        public static class Debuffs
         {
-            internal const ushort
+            public const ushort
                 Thunder = 161,
                 Thunder2 = 162,
                 Thunder3 = 163,
                 Thunder4 = 1210;
         }
 
-        internal static class Traits
+        public static class Traits
         {
-            internal const uint
+            public const uint
                 EnhancedFreeze = 295,
                 EnhancedPolyGlot = 297,
                 AspectMasteryIII = 459,
@@ -75,21 +75,21 @@ namespace XIVSlothCombo.Combos.PvE
                 EnhancedManafont = 463;
         }
 
-        internal static class MP
+        public static class MP
         {
-            internal const int MaxMP = 10000;
+            public const int MaxMP = 10000;
 
-            internal const int AllMPSpells = 800; //"ALL MP" spell. Only caring about the absolute minimum.
-            internal static int ThunderST => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder));
-            internal static int ThunderAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder2));
-            internal static int FireI => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire));
-            internal static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire2));
-            internal static int FireIII => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire3));
-            internal static int BlizzardAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Blizzard2));
+            public const int AllMPSpells = 800; //"ALL MP" spell. Only caring about the absolute minimum.
+            public static int ThunderST => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder));
+            public static int ThunderAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder2));
+            public static int FireI => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire));
+            public static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire2));
+            public static int FireIII => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire3));
+            public static int BlizzardAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Blizzard2));
         }
 
         // Debuff Pairs of Actions and Debuff
-        internal static readonly Dictionary<uint, ushort>
+        public static readonly Dictionary<uint, ushort>
             ThunderList = new()
             {
                 { Thunder,  Debuffs.Thunder  },
@@ -98,18 +98,18 @@ namespace XIVSlothCombo.Combos.PvE
                 { Thunder4, Debuffs.Thunder4 }
             };
 
-        internal static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
+        public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
 
-        internal static class Config
+        public static class Config
         {
-            internal static UserBool
+            public static UserBool
                 BLM_Adv_Xeno_Burst = new("BLM_Adv_Xeno_Burst");
 
-            internal static UserBoolArray
+            public static UserBoolArray
                 BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
                 BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
 
-            internal static UserInt
+            public static UserInt
                 BLM_VariantCure = new("BLM_VariantCure"),
                 BLM_Adv_Cooldowns = new("BLM_Adv_Cooldowns"),
                 BLM_Adv_Thunder = new("BLM_Adv_Thunder"),
@@ -117,7 +117,7 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_Advanced_OpenerSelection = new("BLM_Advanced_OpenerSelection"),
                 BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime");
 
-            internal static UserFloat
+            public static UserFloat
                 BLM_AstralFire_Refresh = new("BLM_AstralFire_Refresh");
         }
 
@@ -1066,7 +1066,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.InAstralFire)
                         {
                             // Xenoglossy overcap protection
-                            if (level > 70 && ((gauge.PolyglotStacks is 2 && (gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
+                            if (level >= 70 && ((gauge.PolyglotStacks is 2 && (gauge.EnochianTimer <= 3000) && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
                                 (gauge.PolyglotStacks is 1 && (gauge.EnochianTimer <= 6000) && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
                                 return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
@@ -1118,7 +1118,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.InUmbralIce)
                     {
                         // Polyglot overcap protection
-                        if (level > 70 && gauge.EnochianTimer <= 20000 &&
+                        if (level >= 70 && gauge.EnochianTimer <= 20000 &&
                             ((gauge.PolyglotStacks is 2 && TraitLevelChecked(Traits.EnhancedPolyGlot)) ||
                             (gauge.PolyglotStacks is 1 && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
                             return LevelChecked(Xenoglossy)
@@ -1147,15 +1147,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Polyglot stacks on cooldown when we're not using Transpose rotation
-                        if (rotationSelection is 0  || (level > 70 && level < 90))
-                            return gauge.HasPolyglotStacks() && LevelChecked(Xenoglossy)
+                        if (rotationSelection is 0 && level >= 70 && gauge.HasPolyglotStacks())
+                            return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
 
-                        // Use Polyglot stacks on cooldown when we're not using Transpose rotation
+                        // Use Polyglot stacks in burst when we're not using Transpose rotation
                         if (Config.BLM_Adv_Xeno_Burst &&
-                            (rotationSelection is 0 || (level > 70 && level < 90)))
-                            return gauge.PolyglotStacks is 2 && LevelChecked(Xenoglossy)
+                            (rotationSelection is 0 && level >= 70) && gauge.PolyglotStacks is 2)
+                            return LevelChecked(Xenoglossy)
                                     ? Xenoglossy
                                     : Foul;
 
