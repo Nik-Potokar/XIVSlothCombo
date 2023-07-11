@@ -1306,8 +1306,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Standard Opener", "Uses the Standard Tincture Opener.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "2.5 Opener", "Uses the 2.5 Opener.", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "2.46 Opener", "Uses the 2.46 Opener.", 1);
             }
 
             if (preset == CustomComboPreset.DRG_ST_ComboHeals)
