@@ -1,5 +1,5 @@
 {
-    "Author": "Aki, k-kz, ele-starshade, damolitionn, Taurenkey, Augporto, grimgal, Genesis-Nova, Tartarga",
+    "Author": "Team Sloth",
     "Name": "XIVSlothCombo",
     "InternalName": "XIVSlothCombo",
     "DalamudApiLevel": 8,
@@ -8,5 +8,5 @@
     "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",
     "IconUrl": "https://i.imgur.com/iEcxM81.png",
     "ImageUrls": [ "https://i.imgur.com/iEcxM81.png" ],
-    "Changelog": "Features, Fixes & Enhancements Framework, DoH, PLD, RDM, SGE, WAR, WHM, ASTPvP and GNBPvP. Please check the project's GitHub or Discord for a full changelog."
+    "Changelog": "Features, Fixes & Enhancements for Framework, AST, ASTPvP, RDM, SGE and SCH. Please check the project's GitHub or Discord for a full changelog."
 }
