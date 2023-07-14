@@ -51,7 +51,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Rampart = 1191,
                 Peloton = 1199,
                 LucidDreaming = 1204,
-                TrueNorth = 1250;
+                TrueNorth = 1250,
+                Sprint = 50;
         }
 
         public static class Debuffs
