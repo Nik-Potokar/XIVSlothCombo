@@ -86,6 +86,50 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_AoEBloodbathThreshold = new("DRG_AoEBloodbathThreshold");
         }
 
+        internal class DRG_ST_BasicCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_BasicCombo;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                Status? ChaosDoTDebuff;
+
+                if (LevelChecked(ChaoticSpring))
+                    ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
+                else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
+
+                if (actionID is TrueThrust)
+                {
+                    if (HasEffect(Buffs.SharperFangAndClaw))
+                        return FangAndClaw;
+
+                    if (HasEffect(Buffs.EnhancedWheelingThrust))
+                        return WheelingThrust;
+
+                    if (comboTime > 0)
+                    {
+                        if ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6)) ||
+                            GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                        {
+                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
+                                return Disembowel;
+
+                            if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
+                                return OriginalHook(ChaosThrust);
+                        }
+
+                        if (lastComboMove is TrueThrust or RaidenThrust)
+                            return VorpalThrust;
+
+                        if (lastComboMove is VorpalThrust)
+                            return OriginalHook(FullThrust);
+                    }
+                    return OriginalHook(TrueThrust);
+                }
+
+                return actionID;
+            }
+        }
+
         internal class DRG_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
@@ -98,8 +142,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany) && IsOffCooldown(DragonSight);
-                int diveOptions = Config.DRG_ST_DiveOptions;
-                int openerSelection = Config.DRG_OpenerOptions;
                 Status? ChaosDoTDebuff;
                 float ST_secondWindTreshold = PluginConfiguration.GetCustomFloatValue(Config.DRG_STSecondWindThreshold);
                 float ST_bloodBathTreshold = PluginConfiguration.GetCustomFloatValue(Config.DRG_STBloodbathThreshold);
@@ -364,7 +406,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                         return Stardiver;
 
-                                    if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive)) || //Dives for lower lvl sync 
+                                    if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for lower lvl sync 
                                        (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)))//Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                     {
                                         if (ActionReady(DragonfireDive))
@@ -440,7 +482,8 @@ namespace XIVSlothCombo.Combos.PvE
                 float ST_secondWindTreshold = PluginConfiguration.GetCustomFloatValue(Config.DRG_STSecondWindThreshold);
                 float ST_bloodBathTreshold = PluginConfiguration.GetCustomFloatValue(Config.DRG_STBloodbathThreshold);
 
-                if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
+                if (LevelChecked(ChaoticSpring))
+                    ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
                 else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
 
                 if (actionID is TrueThrust)
@@ -913,7 +956,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Stardiver;
 
                                         if (diveOptions is 0 || //Dives on cooldown
-                                           (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive)) || //Dives for synched
+                                           (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
                                            (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                            (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                         {
@@ -1045,7 +1088,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                     return Stardiver;
 
-                                if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive)) || //Dives for lower lvl sync 
+                                if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for lower lvl sync 
                                    (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)))//Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                 {
                                     if (ActionReady(DragonfireDive))
@@ -1168,7 +1211,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return Stardiver;
 
                                     if (diveOptions is 0 || //Dives on cooldown
-                                       (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive)) || //Dives for lower lvl sync 
+                                       (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for lower lvl sync 
                                        (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                        (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                     {
@@ -1205,6 +1248,14 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 return actionID;
             }
+        }
+
+        internal class DRG_JumpFeature : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_Jump;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is DRG.Jump or DRG.HighJump && HasEffect(DRG.Buffs.DiveReady) ? DRG.MirageDive : actionID;
         }
 
         internal class DRG_StardiverFeature : CustomCombo
