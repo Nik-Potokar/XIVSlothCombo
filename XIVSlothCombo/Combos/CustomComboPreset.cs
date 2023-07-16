@@ -1131,7 +1131,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode, DRG_ST_SimpleMode)]
-        [CustomComboInfo("Basic Rotation - Single Target", "Replaces Full Thrust with Dragoons basic single target combo on one button", DRG.JobID, -5, "", "")]
+        [CustomComboInfo("Basic Rotation - Single Target", "Replaces True Thrust with Dragoons basic single target combo on one button", DRG.JobID, -5, "", "")]
         DRG_ST_BasicCombo = 6000,
 
         [ReplaceSkill(DRG.TrueThrust)]
