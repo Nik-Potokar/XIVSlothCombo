@@ -87,7 +87,10 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is (HeartofCorundum or HeartofStone))
                 {
-                    if ((IsOnCooldown(HeartofCorundum) || level < Levels.HeartofStone) && (GetCooldownRemainingTime(Rampart) < 1 || ActionReady(Rampart)))
+                    if (ActionReady(HeartofStone))
+                        return OriginalHook(HeartofStone);
+
+                    else if ((IsOnCooldown(HeartofCorundum) || level < Levels.HeartofStone) && (GetCooldownRemainingTime(Rampart) < 1 || ActionReady(Rampart)))
                         return Rampart;
 
                     else if (IsOnCooldown(Rampart) && (ActionReady(Camouflage) || (GetCooldownRemainingTime(Camouflage) < 1)))

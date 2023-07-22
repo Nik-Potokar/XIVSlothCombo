@@ -1467,9 +1467,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dismantle/Tactician Feature", "Replace Dismantle with Tactician when Dismantle on cooldown.", MCH.JobID, 0, "", "")]
         MCH_DismantleTactician = 8041,
 
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("123 Tools Opener Feature", "Use The Balance's 123 Tools Opener in Single Target Single Mode.", MCH.JobID, 0, "", "")]
-        MCH_123Tools_Opener = 8042,
+        [ReplaceSkill (MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode)]
+        [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, 0, "", "")]
+        MCH_123Tools = 8042,
+
+        [ParentCombo(MCH_123Tools)]
+        [CustomComboInfo("123Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature.", MCH.JobID, 0, "", "")]
+        MCH_123ToolsOpener = 8043,
 
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
@@ -1553,7 +1558,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_AutoBarrel = 8019,
 
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet)]
+        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet, MCH_123Tools)]
         [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
         MCH_ST_SimpleMode = 8020,
 
