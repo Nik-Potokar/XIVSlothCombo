@@ -1,5 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
+using System.Linq;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -40,7 +42,12 @@ namespace XIVSlothCombo.Combos.PvE
             PeripheralSynthesis = 23286,
             BasicInstinct = 23276,
             HydroPull = 23282,
-            MustardBomb = 23279;
+            MustardBomb = 23279,
+            WingedRepropbation = 34576,
+            SeaShanty = 34580,
+            BeingMortal = 34582,
+            BreathOfMagic = 34567,
+            MortalFlame = 34579;
 
         public static class Buffs
         {
@@ -53,7 +60,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Whistle = 2118,
                 TankMimicry = 2124,
                 DPSMimicry = 2125,
-                BasicInstinct = 2498;
+                BasicInstinct = 2498,
+                WingedReprobation = 3640;
         }
 
         public static class Debuffs
@@ -67,7 +75,9 @@ namespace XIVSlothCombo.Combos.PvE
                 Offguard = 1717,
                 Malodorous = 1715,
                 Conked = 2115,
-                Lightheaded = 2501;
+                Lightheaded = 2501,
+                MortalFlame = 3643,
+                BreathOfMagic = 3712;
         }
 
         internal class BLU_BuffedSoT : CustomCombo
@@ -357,6 +367,109 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 return (actionID is SonicBoom && GetTargetDistance() <= 3 && IsSpellActive(SharpenedKnife)) ? SharpenedKnife : actionID;
+            }
+        }
+
+        internal class BLU_NewMoonFluteOpener : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_NewMoonFluteOpener;
+            private static bool surpanakhaReady = false;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is MoonFlute)
+                {
+                    if (!HasEffect(Buffs.MoonFlute))
+                    {
+                        if (IsSpellActive(Whistle) && !HasEffect(Buffs.Whistle) && !WasLastAction(Whistle))
+                            return Whistle;
+
+                        if (IsSpellActive(Tingle) && !HasEffect(Buffs.Tingle))
+                            return Tingle;
+
+                        if (IsSpellActive(RoseOfDestruction) && GetCooldown(RoseOfDestruction).CooldownRemaining < 1f)
+                            return RoseOfDestruction;
+
+                        if (IsSpellActive(JKick) && IsOffCooldown(JKick))
+                            return JKick;
+
+                        if (IsSpellActive(MoonFlute))
+                            return MoonFlute;
+                    }
+
+
+                    if (IsSpellActive(TripleTrident) && IsOffCooldown(TripleTrident))
+                        return TripleTrident;
+
+                    if (IsSpellActive(Nightbloom) && IsOffCooldown(Nightbloom))
+                        return Nightbloom;
+
+                    if (IsEnabled(CustomComboPreset.BLU_NewMoonFluteOpener_DoTOpener))
+                    {
+                        if (!ActionWatching.CombatActions.Any(x => x == MortalFlame || x == BreathOfMagic))
+                        {
+                            if (IsSpellActive(Bristle) && !HasEffect(Buffs.Bristle))
+                                return Bristle;
+
+                            if (IsSpellActive(FeatherRain) && IsOffCooldown(FeatherRain))
+                                return FeatherRain;
+
+                            if (IsSpellActive(SeaShanty) && IsOffCooldown(SeaShanty))
+                                return SeaShanty;
+
+                            if ((!IsSpellActive(Bristle) || HasEffect(Buffs.Bristle)) && IsSpellActive(BreathOfMagic) && !TargetHasEffectAny(Debuffs.BreathOfMagic))
+                                return BreathOfMagic;
+                            else if ((!IsSpellActive(Bristle) || HasEffect(Buffs.Bristle)) && IsSpellActive(MortalFlame) && !TargetHasEffectAny(Debuffs.MortalFlame))
+                                return MortalFlame;
+                        }
+                    }
+                    else
+                    {
+                        if (IsSpellActive(WingedRepropbation) && (!HasEffect(Buffs.WingedReprobation) || FindEffect(Buffs.WingedReprobation).StackCount < 2) && IsOffCooldown(WingedRepropbation) && !WasLastAbility(WingedRepropbation) && !WasLastAbility(FeatherRain))
+                            return OriginalHook(WingedRepropbation);
+
+                        if (IsSpellActive(FeatherRain) && IsOffCooldown(FeatherRain))
+                            return FeatherRain;
+
+                        if (IsSpellActive(SeaShanty) && IsOffCooldown(SeaShanty))
+                            return SeaShanty;
+
+                    }
+
+                    if (IsSpellActive(ShockStrike) && IsOffCooldown(ShockStrike))
+                        return ShockStrike;
+
+                    if (IsSpellActive(BeingMortal) && IsOffCooldown(BeingMortal) && IsNotEnabled(CustomComboPreset.BLU_NewMoonFluteOpener_DoTOpener))
+                        return BeingMortal;
+
+                    if (IsSpellActive(Bristle) && !HasEffect(Buffs.Bristle) && IsOffCooldown(MatraMagic) && IsSpellActive(MatraMagic))
+                        return Bristle;
+
+                    if (IsOffCooldown(All.Swiftcast))
+                        return All.Swiftcast;
+
+                    if (IsSpellActive(Surpanakha))
+                    {
+                        if (GetRemainingCharges(Surpanakha) > 0) return Surpanakha;
+                    }
+
+                    if (IsSpellActive(MatraMagic) && HasEffect(All.Buffs.Swiftcast))
+                        return MatraMagic;
+
+                    if (IsSpellActive(BeingMortal) && IsOffCooldown(BeingMortal))
+                        return BeingMortal;
+
+                    if (IsSpellActive(PhantomFlurry) && IsOffCooldown(PhantomFlurry))
+                        return PhantomFlurry;
+
+                    if (HasEffect(Buffs.PhantomFlurry) && FindEffect(Buffs.PhantomFlurry).RemainingTime < 2)
+                        return OriginalHook(PhantomFlurry);
+
+                    if (HasEffect(Buffs.MoonFlute))
+                        return BLM.Fire;
+                }
+
+                return actionID;
             }
         }
     }
