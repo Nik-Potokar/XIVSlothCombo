@@ -1508,7 +1508,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Advanced_SecondWind = 8037,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", MCH.JobID, -99, "", "")]
+        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo.", MCH.JobID, -99, "", "")]
         MCH_ST_Advanced_Opener = 8041,
 
         [ParentCombo(MCH_ST_AdvancedMode)]

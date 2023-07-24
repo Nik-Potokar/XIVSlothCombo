@@ -1371,11 +1371,6 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.MCH_AoE_Advanced_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.MCH_ST_Advanced_Opener)
-            {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_Simple_OpenerSelection, "General Purpose Opener", "Uses General Purpose Opener from 6.2. ", 0);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_Simple_OpenerSelection, "Delayed Tools Opener", "Uses Delayed Tools Opener starting from Heated Split Shot. ", 1);
-            }
             #endregion
             // ====================================================================================
             #region MONK
