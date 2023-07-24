@@ -658,38 +658,47 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (level >= 90)
                             {
-                                if (CombatEngageDuration().Minutes == 1 && gauge.Battery >= 50)
+                                // First condition
+                                if (gauge.Battery is 50 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
                                     return OriginalHook(RookAutoturret);
 
-                                if (CombatEngageDuration().Minutes % 2 == 0 && gauge.Battery == 100)
+                                // Second condition
+                                if (gauge.Battery is 100 && gauge.LastSummonBatteryPower == 50 &&
+                                    (GetCooldownRemainingTime(AirAnchor) <= 3 || ActionReady(AirAnchor)))
                                     return OriginalHook(RookAutoturret);
 
-                                if (CombatEngageDuration().Minutes % 2 == 1 && gauge.Battery >= 80)
+                                // Third condition
+                                while (gauge.LastSummonBatteryPower is 100 && gauge.Battery >= 80)
+                                    return OriginalHook(RookAutoturret);
+
+                                // Fourth condition
+                                while (gauge.LastSummonBatteryPower != 50 && gauge.Battery is 100 && (GetCooldownRemainingTime(AirAnchor) <= 3 || ActionReady(AirAnchor)))
                                     return OriginalHook(RookAutoturret);
                             }
-
-                            if (level >= 80 && level < 90 && gauge.Battery == 100)
-                                return OriginalHook(RookAutoturret);
-
-                            if (level < 80 && gauge.Battery == 80)
+                            else if (LevelChecked(RookOverdrive) && gauge.Battery >= 50)
                                 return OriginalHook(RookAutoturret);
                         }
 
                         // BarrelStabelizer use
-                        if (CanWeave(actionID) && gauge.Heat <= 45 && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
-                            ((IsNotEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only) && ActionReady(BarrelStabilizer)) ||
-                            (IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only) && ActionReady(BarrelStabilizer) && ActionReady(Wildfire))))
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer) &&
+                            gauge.Heat <= 55 && ActionReady(BarrelStabilizer) & !WasLastWeaponskill(ChainSaw) &&
+                            ((wildfireCDTime <= 9 && IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only)) ||
+                            (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Advanced_Stabilizer_Wildfire_Only) && gauge.IsOverheated)))
                             return BarrelStabilizer;
 
                         // Wildfire
-                        if (gauge.Heat >= 50 && ActionReady(Wildfire) &&
-                            IsEnabled(CustomComboPreset.MCH_ST_Advanced_WildFire))
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Advanced_WildFire) &&
+                            (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && LevelChecked(Wildfire) &&
+                            (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast)))) //these try to ensure the correct loops
                         {
-                            if (HasEffect(Buffs.Reassembled) && IsOffCooldown(ChainSaw) &&
-                                CanDelayedWeave(actionID))
-                                return Wildfire;
+                            if (CanDelayedWeave(actionID))
+                            {
+                                if (!gauge.IsOverheated && IsOnCooldown(AirAnchor) && HasEffect(Buffs.Reassembled)) //WF EVEN BURST
+                                    return Wildfire;
 
-                            return Wildfire;
+                                else if (gauge.IsOverheated && level < 90)
+                                    return Wildfire;
+                            }
                         }
 
                         // Hypercharge
