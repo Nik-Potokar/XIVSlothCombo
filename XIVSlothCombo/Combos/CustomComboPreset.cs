@@ -1129,7 +1129,6 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
 
-
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode)]
         [CustomComboInfo("Simple ST Dragoon", "Replaces True Thrust with a full one-button rotation.", DRG.JobID, -4, "", "")]
@@ -1143,64 +1142,80 @@ namespace XIVSlothCombo.Combos
         DRG_ST_AdvancedMode = 6100,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany, Lance Charge and Dragon Sight are off cooldown and when Sprint is used outside of combat or if Elusive Jump is used at the beginning of battle.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
+        [CustomComboInfo("Level 88+ Opener", "Adds opener to the rotation.\nActivates when Battle Litany, Lance Charge and Dragon Sight are off cooldown and when Sprint is used outside of combat or if Elusive Jump is used at the beginning of battle.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, -3, "", "")]
         DRG_ST_Opener = 6101,
 
-        [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("CDs on Main Combo", "Collection of CD features on Main Combo.", DRG.JobID, 0, "", "")]
-        DRG_ST_CDs = 6199,
+        #region Buffs ST
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Buffs on Main Combo", "Collection of Buff features on Main Combo.", DRG.JobID, 0, "", "")]
-        DRG_ST_Buffs = 6198,
-
-        [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Wyrmwind Thrust Option", "Includes Wyrmwind Thrust to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_Wyrmwind = 6102,
-
-        [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Geirskogul and Nastrond Option", "Includes Geirskogul and Nastrond to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_GeirskogulNastrond = 6103,
-
-        [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Dives Option", "Adds Spineshatter Dive, Dragonfire Dive, and Stardiver to the rotation.\n Select options below for when to use dives.", DRG.JobID, 0, "", "")]
-        DRG_ST_Dives = 6104,
-
-        [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("High Jump Option", "Includes High Jump/Jump to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_HighJump = 6105,
-
-        [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Mirage Option", "Includes Mirage Dive to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_Mirage = 6106,
-
-        [ParentCombo(DRG_ST_Buffs)]
-        [CustomComboInfo("Lance Charge Option", "Includes Lance Charge to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_Lance = 6107,
-
-        [ParentCombo(DRG_ST_Buffs)]
-        [CustomComboInfo("Dragon Sight Option", "Includes Dragon Sight to the rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
-        DRG_ST_DragonSight = 6108,
+        [CustomComboInfo("Buffs on Main Combo", "Collection of Buff features on Main Combo.", DRG.JobID, -2, "", "")]
+        DRG_ST_Buffs = 6102,
 
         [ParentCombo(DRG_ST_Buffs)]
         [CustomComboInfo("Battle Litany Option", "Includes Battle Litany to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_Litany = 6109,
+        DRG_ST_Litany = 6103,
 
-        [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Life Surge Option", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, 0, "", "")]
-        DRG_ST_LifeSurge = 6110,
+        [ParentCombo(DRG_ST_Buffs)]
+        [CustomComboInfo("Lance Charge Option", "Includes Lance Charge to the rotation.", DRG.JobID, 0, "", "")]
+        DRG_ST_Lance = 6104,
+
+        [ParentCombo(DRG_ST_Buffs)]
+        [CustomComboInfo("Dragon Sight Option", "Includes Dragon Sight to the rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
+        DRG_ST_DragonSight = 6105,
+
+        #endregion
+
+        #region Cooldowns ST
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 0, "", "")]
-        DRG_ST_RangedUptime = 6111,
+        [CustomComboInfo("CDs on Main Combo", "Collection of CD features on Main Combo.", DRG.JobID, -1, "", "")]
+        DRG_ST_CDs = 6106,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("Life Surge Option", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID, -8, "", "")]
+        DRG_ST_LifeSurge = 6107,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("Dives Option", "Adds Spineshatter Dive and Dragonfire Dive to the rotation.\n Select options below for when to use dives.", DRG.JobID, -7, "", "")]
+        DRG_ST_Dives = 6108,
 
         [ParentCombo(DRG_ST_Dives)]
         [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 0, "", "")]
-        DRG_ST_Dives_Melee = 6112,
+        DRG_ST_Dives_Melee = 6109,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("StarDiver Option", "Uses Stardiver when under 1 buff", DRG.JobID, -7, "", "")]
+        DRG_ST_Stardiver = 6110,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("High Jump Option", "Includes High Jump/Jump to the rotation.", DRG.JobID, -6, "", "")]
+        DRG_ST_HighJump = 6111,
+
+        [ParentCombo(DRG_ST_HighJump)]
+        [CustomComboInfo("Mirage Option", "Includes Mirage Dive to the rotation.", DRG.JobID, 0, "", "")]
+        DRG_ST_Mirage = 6112,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("Geirskogul and Nastrond Option", "Includes Geirskogul and Nastrond to the rotation.", DRG.JobID, -5, "", "")]
+        DRG_ST_GeirskogulNastrond = 6113,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("Wyrmwind Thrust Option", "Includes Wyrmwind Thrust to the rotation.", DRG.JobID, -4, "", "")]
+        DRG_ST_Wyrmwind = 6114,
+
+        #endregion
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
-        DRG_ST_ComboHeals = 6113,
+        [CustomComboInfo("optimized rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 0, "", "")]
+        DRG_ST_Optimized_Rotation = 6115,
+
+        [ParentCombo(DRG_ST_AdvancedMode)]
+        [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 98, "", "")]
+        DRG_ST_RangedUptime = 6116,
+
+        [ParentCombo(DRG_ST_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 99, "", "")]
+        DRG_ST_ComboHeals = 6117,
 
         #endregion
 
@@ -1216,105 +1231,108 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Advanced Dragoon AoE", "Replaces Doom Spike with a full one-button rotation.", DRG.JobID, -1, "", "")]
         DRG_AOE_AdvancedMode = 6201,
 
-
-
-        #region Buffs AoE Feature
+        #region Buffs AoE
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Buffs AoE Feature", "Includes Lance Charge and Battle Litany to the AoE rotation.", DRG.JobID, 35, "", "")]
-        DRG_AoE_Buffs = 6207,
-
-        [ParentCombo(DRG_AoE_Buffs)]
-        [CustomComboInfo("Dragon Sight AoE Feature", "Includes Dragon Sight to the AoE rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 36, "", "")]
-        DRG_AoE_DragonSight = 6208,
+        [CustomComboInfo("Buffs AoE Feature", "Includes Lance Charge and Battle Litany to the AoE rotation.", DRG.JobID, -2, "", "")]
+        DRG_AoE_Buffs = 6202,
 
         [ParentCombo(DRG_AoE_Buffs)]
         [CustomComboInfo("Battle Litany AoE Feature", "Includes Battle Litany to the AoE rotation.", DRG.JobID, 36, "", "")]
-        DRG_AoE_Litany = 6209,
+        DRG_AoE_Litany = 6203,
 
         [ParentCombo(DRG_AoE_Buffs)]
         [CustomComboInfo("Lance Charge AoE Feature", "Includes Lance Charge to the AoE rotation.", DRG.JobID, 36, "", "")]
-        DRG_AoE_Lance = 6210,
+        DRG_AoE_Lance = 6204,
+
+        [ParentCombo(DRG_AoE_Buffs)]
+        [CustomComboInfo("Dragon Sight AoE Feature", "Includes Dragon Sight to the AoE rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 0, "", "")]
+        DRG_AoE_DragonSight = 6205,
+
         #endregion
 
-        #region CDs Aoe Feature
+        #region CDs AoE
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Cooldowns AoE Feature", "Includes various cooldowns to the AoE rotation.", DRG.JobID, 35, "", "")]
-        DRG_AoE_CDs = 6211,
+        [CustomComboInfo("Cooldowns AoE Feature", "Includes various cooldowns to the AoE rotation.", DRG.JobID, -1, "", "")]
+        DRG_AoE_CDs = 6206,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Life Surge AoE Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the AoE rotation.", DRG.JobID, 37, "", "")]
-        DRG_AoE_LifeSurge = 6212,
+        [CustomComboInfo("Life Surge AoE Feature", "Includes Life Surge, while under proper buffs, onto proper GCDs, to the AoE rotation.", DRG.JobID, 0, "", "")]
+        DRG_AoE_LifeSurge = 6207,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Wyrmwind AoE Feature", "Includes Wyrmwind Thrust to the AoE rotation.", DRG.JobID, 37, "", "")]
-        DRG_AoE_Wyrmwind = 6213,
-
-        [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Ranged Uptime Option", "Replaces Main AoE Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 40, "", "")]
-        DRG_AoE_RangedUptime = 6214,
-
-        [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive, Dragonfire Dive and Stardiver to the AoE rotation.", DRG.JobID, 29, "", "")]
-        DRG_AoE_Dives = 6204,
+        [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive and Dragonfire Dive to the AoE rotation.\n Select options below for when to use dives.", DRG.JobID, 0, "", "")]
+        DRG_AoE_Dives = 6208,
 
         [ParentCombo(DRG_AoE_Dives)]
-        [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 29, "", "")]
-        DRG_AoE_Dives_Melee = 6215,
+        [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 0, "", "")]
+        DRG_AoE_Dives_Melee = 6209,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("High Jump AoE Feature", "Includes High Jump to the AoE rotation.", DRG.JobID, 33, "", "")]
-        DRG_AoE_HighJump = 6205,
+        [CustomComboInfo("StarDiver Option", "Uses Stardiver when under 1 buff", DRG.JobID, -7, "", "")]
+        DRG_AoE_Stardiver = 6210,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Mirage AoE Feature", "Includes Mirage to the AoE rotation.", DRG.JobID, 34, "", "")]
-        DRG_AoE_Mirage = 6206,
+        [CustomComboInfo("High Jump AoE Feature", "Includes High Jump to the AoE rotation.", DRG.JobID, 0, "", "")]
+        DRG_AoE_HighJump = 6211,
+
+        [ParentCombo(DRG_AoE_HighJump)]
+        [CustomComboInfo("Mirage AoE Feature", "Includes Mirage to the AoE rotation.", DRG.JobID, 0, "", "")]
+        DRG_AoE_Mirage = 6212,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Wyrmwind Thrust AoE Feature", "Includes Wyrmwind Thrust to the AoE rotation.", DRG.JobID, 27, "", "")]
-        DRG_AoE_WyrmwindFeature = 6202,
+        [CustomComboInfo("Geirskogul and Nastrond AoE Feature", "Includes Geirskogul and Nastrond to the AoE rotation.", DRG.JobID, 0, "", "")]
+        DRG_AoE_GeirskogulNastrond = 6213,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Geirskogul and Nastrond AoE Feature", "Includes Geirskogul and Nastrond to the AoE rotation.", DRG.JobID, 28, "", "")]
-        DRG_AoE_GeirskogulNastrond = 6203,
+        [CustomComboInfo("Wyrmwind AoE Feature", "Includes Wyrmwind Thrust to the AoE rotation.", DRG.JobID, 0, "", "")]
+        DRG_AoE_Wyrmwind = 6214,
 
         #endregion
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
-        DRG_AoE_ComboHeals = 6216,
+        [CustomComboInfo("optimized rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 0, "", "")]
+        DRG_AoE_Optimized_Rotation = 6215,
+
+        [ParentCombo(DRG_AOE_AdvancedMode)]
+        [CustomComboInfo("Ranged Uptime Option", "Replaces Main AoE Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 98, "", "")]
+        DRG_AoE_RangedUptime = 6216,
+
+        [ParentCombo(DRG_AOE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 99, "", "")]
+        DRG_AoE_ComboHeals = 6217,
 
         #endregion
 
         [ReplaceSkill(DRG.Jump, DRG.HighJump)]
         [CustomComboInfo("Jump to Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 0)]
-        DRG_Jump = 6003,
+        DRG_Jump = 6300,
 
         [ReplaceSkill(DRG.Stardiver)]
-        [CustomComboInfo("Stardiver Feature", "Turns Stardiver into Nastrond during Life of the Dragon, and Geirskogul outside of Life of the Dragon.", DRG.JobID, 26, "", "")]
-        DRG_StardiverFeature = 6300,
+        [CustomComboInfo("Stardiver Feature", "Turns Stardiver into Nastrond during Life of the Dragon, and Geirskogul outside of Life of the Dragon.", DRG.JobID, 0, "", "")]
+        DRG_StardiverFeature = 6301,
 
         [ReplaceSkill(DRG.LanceCharge)]
-        [CustomComboInfo("Lance Charge to Battle Litany Feature", "Turns Lance Charge into Battle Litany when the former is on cooldown.", DRG.JobID, 26, "", "")]
-        DRG_BurstCDFeature = 6400,
+        [CustomComboInfo("Lance Charge to Battle Litany Feature", "Turns Lance Charge into Battle Litany when the former is on cooldown.", DRG.JobID, 0, "", "")]
+        DRG_BurstCDFeature = 6302,
 
         [ParentCombo(DRG_BurstCDFeature)]
-        [CustomComboInfo("Dragon Sight Option", "Adds Dragon Sight to Lance Charge, will take precedence over Battle Litany.", DRG.JobID, 26, "", "")]
-        DRG_BurstCDFeature_DragonSight = 6401,
+        [CustomComboInfo("Dragon Sight Option", "Adds Dragon Sight to Lance Charge, will take precedence over Battle Litany.", DRG.JobID, 0, "", "")]
+        DRG_BurstCDFeature_DragonSight = 6303,
 
         [Variant]
         [VariantParent(DRG_ST_AdvancedMode, DRG_AOE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DRG.JobID)]
-        DRG_Variant_Cure = 6500,
+        DRG_Variant_Cure = 6304,
 
         [Variant]
         [VariantParent(DRG_ST_AdvancedMode, DRG_AOE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DRG.JobID)]
-        DRG_Variant_Rampart = 6600,
+        DRG_Variant_Rampart = 6305,
 
 
-        // Last value = 6600
+        // Last value = 6117 - 6215 - 6305
 
         #endregion
 
