@@ -1467,14 +1467,23 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dismantle/Tactician Feature", "Replace Dismantle with Tactician when Dismantle on cooldown.", MCH.JobID, 0, "", "")]
         MCH_DismantleTactician = 8041,
 
-        [ReplaceSkill (MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_SimpleMode)]
+        [ReplaceSkill (MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_AureliaRotation)]
         [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, 0, "", "")]
         MCH_123Tools = 8042,
 
         [ParentCombo(MCH_123Tools)]
-        [CustomComboInfo("123Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("123Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
         MCH_123ToolsOpener = 8043,
+
+        [ReplaceSkill(MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_123Tools)]
+        [CustomComboInfo("Aurelias Rotation Feature", "Uses Aurelias Rotation specific for P12S P1.", MCH.JobID, 0, "", "")]
+        MCH_AureliaRotation = 8044,
+
+        [ParentCombo(MCH_AureliaRotation)]
+        [CustomComboInfo("Aurelia Opener Feature", "Adds opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
+        MCH_AureliaOpener = 8045,
 
         [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode)]
