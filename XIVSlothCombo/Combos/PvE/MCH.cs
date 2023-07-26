@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -305,6 +306,51 @@ namespace XIVSlothCombo.Combos.PvE
                             return RookAutoturret;
                     }
 
+<<<<<<< HEAD
+=======
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Assembling) && LevelChecked(Reassemble))
+                    {
+                        if (HasEffect(Buffs.Reassembled))
+                        {
+                            if (BioBlaster.LevelChecked())
+                            {
+                                if (LevelChecked(ChainSaw) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && IsOffCooldown(ChainSaw))
+                                    return ChainSaw;
+
+                                if (LevelChecked(BioBlaster) && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Assembling_Bioblaster) && IsOffCooldown(BioBlaster))
+                                    return BioBlaster;
+                            }
+                            else
+                            {
+                                if (LevelChecked(AutoCrossbow) && gauge.IsOverheated)
+                                    return AutoCrossbow;
+
+                                return OriginalHook(SpreadShot);
+                            }
+                        }
+
+                        var reassmCharges = GetRemainingCharges(Reassemble);
+                        var bioMaxChargeCheck = IsEnabled(CustomComboPreset.MCH_AoE_Simple_Assembling_Bioblaster_MaxCharges) ? GetMaxCharges(Reassemble) : 1;
+                        var chainMaxChargeCheck = IsEnabled(CustomComboPreset.MCH_AoE_Simple_Assembling_ChainSaw_MaxCharges) ? GetMaxCharges(Reassemble) : 1;
+
+                        if (reassmCharges > 0)
+                        {
+                            if (BioBlaster.LevelChecked())
+                            {
+                                if (LevelChecked(BioBlaster) && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Assembling_Bioblaster) && IsOffCooldown(BioBlaster) && reassmCharges >= bioMaxChargeCheck)
+                                    return Reassemble;
+
+                                if (LevelChecked(ChainSaw) && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Assembling_ChainSaw) && IsOffCooldown(ChainSaw) && reassmCharges >= chainMaxChargeCheck)
+                                    return Reassemble;
+                            }
+                            else
+                            {
+                                return Reassemble;
+                            }
+                        }
+                    }
+
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
                     if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
                     {
                         var gaussCharges = GetRemainingCharges(GaussRound);
@@ -318,7 +364,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
-                    if (IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
+                    if (IsOffCooldown(ChainSaw) && ChainSaw.LevelChecked() && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_ChainSaw))
+                        return ChainSaw;
+
+                    if (IsOffCooldown(BioBlaster) && BioBlaster.LevelChecked() && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
                         return BioBlaster;
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
@@ -443,19 +492,36 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 {
+<<<<<<< HEAD
                     if (actionID is HeatedSplitShot)
+=======
+                    var inCombat = InCombat();
+                    var gauge = GetJobGauge<MCHGauge>();
+
+                    var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
+
+                    if (!inCombat)
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
                     {
                         var inCombat = InCombat();
                         var gauge = GetJobGauge<MCHGauge>();
 
                         var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
+<<<<<<< HEAD
                         if (!inCombat)
                         {
                             openerFinished = false;
+=======
+                    if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
+                            IsOffCooldown(BarrelStabilizer) && level >= Levels.BarrelStabilizer && !WasLastWeaponskill(ChainSaw) &&
+                            (wildfireCDTime <= 9 || (wildfireCDTime >= 110 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer_Wildfire_Only) && gauge.IsOverheated)))
+                        return BarrelStabilizer;
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
 
                         }
 
+<<<<<<< HEAD
                         //Barrel Stabilizer
                         {
                             if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Stabilizer) && gauge.Heat <= 55 &&
@@ -465,6 +531,23 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return BarrelStabilizer;
                             }
+=======
+                    if (openerFinished && (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) &&
+                        (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast)))) //these try to ensure the correct loops
+                    {
+                        if (CanDelayedWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(ChainSaw))
+                        {
+                            return Wildfire;
+                        }
+                        else if (CanDelayedWeave(actionID, 1.1) && !gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
+                        {
+                            return Wildfire;
+                        }
+                        else if (CanWeave(actionID, 0.6) && gauge.IsOverheated)
+                        {
+                            return Wildfire;
+                        }
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
 
                         }
 
@@ -472,8 +555,12 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return All.HeadGraze;
                         }
+<<<<<<< HEAD
 
                         //Wildfire stuff
+=======
+                        else if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && (CombatEngageDuration().Seconds >= 59 || CombatEngageDuration().Seconds <= 05 || (CombatEngageDuration().Minutes == 0 && !WasLastWeaponskill(OriginalHook(CleanShot)))))
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
                         {
                             if (openerFinished && (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && wildfireCDTime <= 2 && level >= Levels.Wildfire && IsEnabled(CustomComboPreset.MCH_ST_Simple_WildCharge) &&
                                 (WasLastWeaponskill(ChainSaw) || (!WasLastWeaponskill(Drill) && !WasLastWeaponskill(AirAnchor) && !WasLastWeaponskill(HeatBlast)))) //these try to ensure the correct loops
@@ -494,12 +581,38 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
+<<<<<<< HEAD
                         //Queen
                         if (CanWeave(actionID) && !gauge.IsRobotActive &&
                             (/*wildfireCDTime >= 2 && */(!WasLastAbility(Wildfire) || level < Levels.Wildfire)))
                         {
                             //steps to control robot timings
                             if (level >= 90 && IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget))
+=======
+
+                    if (gauge.IsOverheated && level >= Levels.HeatBlast)
+                    {
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID, 0.6) && (wildfireCDTime > 2 || level < Levels.Wildfire)) //gauss and ricochet weave
+                        {
+                            var gaussCharges = GetRemainingCharges(GaussRound);
+                            var gaussMaxCharges = GetMaxCharges(GaussRound);
+
+                            var overheatTime = gauge.OverheatTimeRemaining;
+                            var reasmCharges = GetRemainingCharges(Reassemble);
+
+                            //Makes sure Reassemble isnt double weaved after a Gauss/Richochet during Hypercharge
+                            if (overheatTime < 1.7 && !HasEffect(Buffs.Reassembled) && IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling) && (WasLastAbility(GaussRound) || WasLastAbility(Ricochet)) &&
+                                (
+                                    (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_ChainSaw) && reasmCharges >= 1 && GetCooldownRemainingTime(ChainSaw) <= 2)
+                                    ||
+                                    (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_AirAnchor) && reasmCharges >= 1 && GetCooldownRemainingTime(AirAnchor) <= 2)
+                                    ||
+                                    (IsEnabled(CustomComboPreset.MCH_ST_Simple_Assembling_Drill) && reasmCharges >= 1 && GetCooldownRemainingTime(Drill) <= 2)
+                                ))
+                                return Reassemble;
+                            else if ((!IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet))) ||
+                                       (IsEnabled(CustomComboPreset.MCH_ST_Simple_High_Latency_Mode) && gaussCharges >= gaussMaxCharges - 1))
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
                             {
                                 // First condition
                                 if (gauge.Battery == 50 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
@@ -532,7 +645,11 @@ namespace XIVSlothCombo.Combos.PvE
                             //} fix this later?
                             if (level >= Levels.RookOverdrive && gauge.Battery >= 50 && !IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget))
                             {
+<<<<<<< HEAD
                                return OriginalHook(RookAutoturret);
+=======
+                                return Ricochet;
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
                             }
                             //else if (gauge.Battery >= 50 && level >= Levels.RookOverdrive && (CombatEngageDuration().Seconds >= 58 || CombatEngageDuration().Seconds <= 05))
                             //{
@@ -612,8 +729,12 @@ namespace XIVSlothCombo.Combos.PvE
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.MCH_ST_SecondWind) && CanWeave(actionID, 0.6))
                         {
+<<<<<<< HEAD
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_ST_SecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                                 return All.SecondWind;
+=======
+                            if (UseHypercharge(gauge, wildfireCDTime)) return Hypercharge;
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
                         }
 
                         // TOOLS!! ChainSaw Drill Air Anchor
@@ -661,6 +782,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Ricochet;
                         }
 
+<<<<<<< HEAD
+=======
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Simple_GaussRicochet) && CanWeave(actionID))
+                    {
+                        if (HasCharges(GaussRound) && (level < Levels.Ricochet || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                            return GaussRound;
+                        else if (HasCharges(Ricochet) && level >= Levels.Ricochet)
+                            return Ricochet;
+                    }
+
+>>>>>>> b2ec8f6de7140ef082c4f4909c6c8f9793211b03
 
                         if (lastComboMove == SplitShot && level >= Levels.SlugShot)
                             return OriginalHook(SlugShot);

@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -83,6 +84,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RPR_OpenerChoice = "RPR_OpenerChoice",
                 RPR_SoulsowOptions = "RPRSoulsowOptions",
                 RPR_VariantCure = "RPRVariantCure";
+            public static UserInt
+                RPR_Slice_AltMode = new("RPR_Slice_AltMode");
         }
 
         internal class RPR_ST_SliceCombo : CustomCombo
@@ -139,7 +142,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                 }
 
-                if (actionID is Slice)
+                if (actionID is Slice && Config.RPR_Slice_AltMode == 0 || actionID is Harpe && Config.RPR_Slice_AltMode == 1)
                 {
                     bool interruptReady = LevelChecked(All.LegSweep) && CanInterruptEnemy() && IsOffCooldown(All.LegSweep);
 
