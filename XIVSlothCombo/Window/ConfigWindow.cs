@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Dalamud.Interface;
+using Dalamud.Plugin;
 using Dalamud.Utility;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
@@ -24,6 +25,7 @@ namespace XIVSlothCombo.Window
         internal static readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets = GetGroupedPresets();
         internal static readonly Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> presetChildren = GetPresetChildren();
 
+        private readonly IDalamudPlugin Plugin;
         internal static Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> GetGroupedPresets()
         {
             return Enum
@@ -64,16 +66,25 @@ namespace XIVSlothCombo.Window
         public bool Visible
         {
             get => visible;
-            set => visible = value;
+            set
+            {
+                if (!value)
+                {
+                    PvEFeatures.HasToOpenJob = true;
+                }
+                visible = value;
+            }
         }
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow() : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
+        public ConfigWindow(XIVSlothCombo plugin = null!) : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
         {
             RespectCloseHotkey = true;
 
             SizeCondition = ImGuiCond.FirstUseEver;
             Size = new Vector2(740, 490);
+
+            Plugin = plugin;
         }
 
         public override void Draw()
@@ -113,7 +124,7 @@ namespace XIVSlothCombo.Window
 
                     if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
                     {
-                        AboutUs.Draw();
+                        AboutUs.Draw(Plugin);
                         ImGui.EndTabItem();
                     }
 

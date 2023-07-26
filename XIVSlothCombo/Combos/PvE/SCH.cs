@@ -98,33 +98,33 @@ namespace XIVSlothCombo.Combos.PvE
             PostOpener,
         }
 
-        internal static class Config
+        public static class Config
         {
             #region DPS
-            internal static UserInt
+            public static UserInt
                 SCH_ST_DPS_AltMode = new("SCH_ST_DPS_AltMode"),
                 SCH_ST_DPS_LucidOption = new("SCH_ST_DPS_LucidOption"),
                 SCH_ST_DPS_BioOption = new("SCH_ST_DPS_BioOption"),
                 SCH_ST_DPS_ChainStratagemOption = new("SCH_ST_DPS_ChainStratagemOption");
-            internal static UserBool
+            public static UserBool
                 SCH_ST_DPS_Adv = new("SCH_ST_DPS_Adv"),
                 SCH_ST_DPS_Bio_Adv = new("SCH_ST_DPS_Bio_Adv"),
                 SCH_ST_DPS_EnergyDrain_Adv = new("SCH_ST_DPS_EnergyDrain_Adv");
-            internal static UserFloat
+            public static UserFloat
                 SCH_ST_DPS_Bio_Threshold = new("SCH_ST_DPS_Bio_Threshold"),
                 SCH_ST_DPS_EnergyDrain = new("SCH_ST_DPS_EnergyDrain");
-            internal static UserBoolArray
+            public static UserBoolArray
                 SCH_ST_DPS_Adv_Actions = new("SCH_ST_DPS_Adv_Actions");
             #endregion
 
             #region Healing
-            internal static UserInt
+            public static UserInt
                 SCH_AoE_LucidOption = new("SCH_AoE_LucidOption"),
                 SCH_AoE_Heal_LucidOption = new("SCH_AoE_Heal_LucidOption"),
                 SCH_ST_Heal_LucidOption = new("SCH_ST_Heal_LucidOption"),
                 SCH_ST_Heal_AdloquiumOption = new("SCH_ST_Heal_AdloquiumOption"),
                 SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption");
-            internal static UserBool
+            public static UserBool
                 SCH_ST_Heal_Adv = new("SCH_ST_Heal_Adv"),
                 SCH_ST_Heal_UIMouseOver = new("SCH_ST_Heal_UIMouseOver"),
                 SCH_DeploymentTactics_Adv = new ("SCH_DeploymentTactics_Adv"),

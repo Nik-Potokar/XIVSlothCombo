@@ -10,6 +10,7 @@ namespace XIVSlothCombo.Window.Tabs
     {
         internal static new void Draw()
         {
+            PvEFeatures.HasToOpenJob = true;
             ImGui.BeginChild("main", new Vector2(0, 0), true);
             ImGui.Text("This tab allows you to customise your options when enabling features.");
 
@@ -106,7 +107,7 @@ namespace XIVSlothCombo.Window.Tabs
             if (ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Offset of melee check distance for features that use it. For those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
+                ImGui.TextUnformatted("Offset of melee check distance for features that use it.\r\nFor those who don't want to immediately use their ranged attack if the boss walks slightly out of range.");
                 ImGui.EndTooltip();
             }
 
@@ -143,7 +144,26 @@ namespace XIVSlothCombo.Window.Tabs
             {
                 ImGui.BeginTooltip();
                 ImGui.TextUnformatted($"Used for {CustomComboInfoAttribute.JobIDToName(33)} card targeting features.\r\nSet Alpha to 0 to hide the box.");
+                ImGui.EndTooltip();
             }
+            #region UI Settings
+
+            bool openAtJob = Service.Configuration.AutomaticallyOpenToCurrentJob;
+            if (ImGui.Checkbox("Automatically open [PvE Features] to your current job", ref openAtJob))
+            {
+                Service.Configuration.AutomaticallyOpenToCurrentJob = openAtJob;
+                Service.Configuration.Save();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted("Whenever you open the PvE features tab, the plugin will automatically open\r\nat the job you're currently playing as.");
+                ImGui.EndTooltip();
+            }
+
+            #endregion
+
             ImGui.EndChild();
         }
     }

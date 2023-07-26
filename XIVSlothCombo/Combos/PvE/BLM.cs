@@ -97,12 +97,12 @@ namespace XIVSlothCombo.Combos.PvE
         private static BLMGauge Gauge => CustomComboFunctions.GetJobGauge<BLMGauge>();
         private static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
 
-        internal static class Config
+        public static class Config
         {
-            internal const string BLM_PolyglotsStored = "BlmPolyglotsStored   ";
-            internal const string BLM_AstralFireRefresh = "BlmAstralFireRefresh   ";
-            internal const string BLM_MovementTime = "BlmMovementTime";
-            internal const string BLM_VariantCure = "BlmVariantCure";
+            public const string BLM_PolyglotsStored = "BlmPolyglotsStored";
+            public const string BLM_AstralFireRefresh = "BlmAstralFireRefresh";
+            public const string BLM_MovementTime = "BlmMovementTime";
+            public const string BLM_VariantCure = "BlmVariantCure";
         }
 
 

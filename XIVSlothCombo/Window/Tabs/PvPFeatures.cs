@@ -12,6 +12,7 @@ namespace XIVSlothCombo.Window.Tabs
     {
         internal static new void Draw()
         {
+            PvEFeatures.HasToOpenJob = true;
             ImGui.Text("This tab allows you to select which PvP combos and features you wish to enable.");
 
             ImGui.PushFont(UiBuilder.IconFont);
@@ -43,8 +44,13 @@ namespace XIVSlothCombo.Window.Tabs
                     foreach (var otherJob in groupedPresets.Keys.Where(x => x != jobName))
                     {
                         ImGui.GetStateStorage().SetInt(ImGui.GetID(otherJob), 0);
+                        
                     }
-
+                    if (jobName != groupedPresets.First().Key)
+                    {
+                        ImGui.GetStateStorage().SetInt(ImGui.GetID("All Jobs"), 0);
+                    }
+                    
                     DrawHeadingContents(jobName, i);
                 }
 
