@@ -1469,7 +1469,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill (MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_AureliaRotation)]
-        [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, -2, "", "")]
         MCH_123Tools = 8042,
 
         [ParentCombo(MCH_123Tools)]
@@ -1478,16 +1478,15 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_123Tools)]
-        [CustomComboInfo("Aurelias Rotation Feature", "Uses Aurelias Rotation specific for P12S P1.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Aurelias Rotation Feature", "Uses Aurelias Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
         MCH_AureliaRotation = 8044,
 
         [ParentCombo(MCH_AureliaRotation)]
         [CustomComboInfo("Aurelia Opener Feature", "Adds opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
         MCH_AureliaOpener = 8045,
 
-        [ReplaceSkill(MCH.CleanShot, MCH.HeatedCleanShot, MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_SimpleMode)]
-        [CustomComboInfo("(Heated) Shot Combo Feature", "Replace either form of Clean Shot with its combo chain.", MCH.JobID, 0, "", "")]
+        [ReplaceSkill(MCH.SplitShot)]
+        [CustomComboInfo("1-2-3 Combo Feature", "Replace Split Shot with its combo chain.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo = 8000,
 
         [ReplaceSkill(MCH.RookAutoturret, MCH.AutomatonQueen)]
