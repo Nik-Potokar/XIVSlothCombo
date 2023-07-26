@@ -1,14 +1,35 @@
-﻿namespace XIVSlothCombo.Combos.PvE.Content
+﻿using XIVSlothCombo.Services;
+
+namespace XIVSlothCombo.Combos.PvE.Content
 {
     internal static class Variant
     {
         public const uint
-            VariantCure = 29729,
             VariantUltimatum = 29730,
             VariantRaise = 29731,
-            VariantSpiritDart = 29732,
-            VariantRampart = 29733,
-            VariantRaise2 = 297334;
+            VariantRaise2 = 29734;
+        //1069 = The Sil'dihn Subterrane
+        //1137 = Mount Rokkon
+        public static uint VariantCure => Service.ClientState.TerritoryType switch
+        {
+            1069 => 29729,
+            1137 => 33862,
+            _ => 0
+        };
+
+        public static uint VariantSpiritDart => Service.ClientState.TerritoryType switch
+        {
+            1069 => 29732,
+            1137 => 33863,
+            _ => 0
+        };
+
+        public static uint VariantRampart => Service.ClientState.TerritoryType switch
+        {
+            1069 => 29733,
+            1137 => 33864,
+            _ => 0
+        };
 
         public static class Buffs
         {
