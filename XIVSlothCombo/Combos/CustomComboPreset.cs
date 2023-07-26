@@ -521,6 +521,16 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("J Kick Option", "Adds J Kick to the Primal Feature.", BLU.JobID)]
         BLU_PrimalCombo_JKick = 70013,
 
+        [BlueInactive(BLU.SeaShanty)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Sea Shanty Option", "Adds Sea Shanty to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_SeaShanty = 70024,
+
+        [BlueInactive(BLU.WingedRepropbation)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Winged Reprobration Option", "Adds Winged Reprobation to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_WingedReprobation = 70025,
+
         [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
         [CustomComboInfo("Perpetual Ray into Sharpened Knife Feature", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID)]
         BLU_PerpetualRayStunCombo = 70014,
@@ -554,6 +564,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
         BLU_PrimalCombo_Nightbloom = 70020,
 
+        [ReplaceSkill(BLU.MoonFlute)]
         [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedRepropbation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle)]
         [ConflictingCombos(BLU_Opener)]
         [CustomComboInfo("New BLU Moon Flute Opener (Level 80 Edition)", "Turns Moon Flute into a full opener (level 80 update)", BLU.JobID)]
@@ -564,7 +575,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("DoT Opener", "Changes the opener to apply either Mortal Flame or Breath of Magic instead of using Winged Reprobation", BLU.JobID)]
         BLU_NewMoonFluteOpener_DoTOpener = 70022,
 
-        // Last value = 70020
+        [ReplaceSkill(BLU.DeepClean)]
+        [BlueInactive(BLU.PeatPelt, BLU.DeepClean)]
+        [CustomComboInfo("Peat Clean", "Changes Deep Clean to Peat Pelt if current target is not inflicted with Begrimed.", BLU.JobID)]
+        BLU_PeatClean = 70023,
+
+        // Last value = 70023
 
         #endregion
 

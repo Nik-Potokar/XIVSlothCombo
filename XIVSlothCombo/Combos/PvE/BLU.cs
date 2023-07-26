@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
+using System;
 using System.Linq;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
@@ -47,7 +48,9 @@ namespace XIVSlothCombo.Combos.PvE
             SeaShanty = 34580,
             BeingMortal = 34582,
             BreathOfMagic = 34567,
-            MortalFlame = 34579;
+            MortalFlame = 34579,
+            PeatPelt = 34569,
+            DeepClean = 34570;
 
         public static class Buffs
         {
@@ -77,7 +80,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Conked = 2115,
                 Lightheaded = 2501,
                 MortalFlame = 3643,
-                BreathOfMagic = 3712;
+                BreathOfMagic = 3712,
+                Begrimed = 3636;
         }
 
         internal class BLU_BuffedSoT : CustomCombo
@@ -276,6 +280,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.PhantomFlurry))
                     {
+                        if (FindEffect(Buffs.WingedReprobation)?.StackCount > 1 && IsOffCooldown(WingedRepropbation))
+                            return OriginalHook(WingedRepropbation);
+
                         if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain) &&
                             (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
                             return FeatherRain;
@@ -304,6 +311,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (surpanakhaReady && GetRemainingCharges(Surpanakha) > 0) return Surpanakha;
                             if (GetRemainingCharges(Surpanakha) == 0) surpanakhaReady = false;
                         }
+
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_WingedReprobation) && IsSpellActive(WingedRepropbation) && IsOffCooldown(WingedRepropbation))
+                            return OriginalHook(WingedRepropbation);
+
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_SeaShanty) && IsSpellActive(SeaShanty) && IsOffCooldown(SeaShanty))
+                            return SeaShanty;
 
                         if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_PhantomFlurry) && IsOffCooldown(PhantomFlurry) && IsSpellActive(PhantomFlurry))
                             return PhantomFlurry;
@@ -370,6 +383,21 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        internal class BLU_PeatClean : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_PeatClean;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is DeepClean)
+                {
+                    if (IsSpellActive(PeatPelt) && !TargetHasEffect(Debuffs.Begrimed))
+                        return PeatPelt;
+                }
+
+                return actionID;
+            }
+        }
         internal class BLU_NewMoonFluteOpener : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_NewMoonFluteOpener;
@@ -406,7 +434,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.BLU_NewMoonFluteOpener_DoTOpener))
                     {
-                        if (!ActionWatching.CombatActions.Any(x => x == MortalFlame || x == BreathOfMagic))
+                        if ((!TargetHasEffectAny(Debuffs.BreathOfMagic) && IsSpellActive(BreathOfMagic)) || (!TargetHasEffectAny(Debuffs.MortalFlame) && IsSpellActive(MortalFlame)))
                         {
                             if (IsSpellActive(Bristle) && !HasEffect(Buffs.Bristle))
                                 return Bristle;
@@ -417,9 +445,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsSpellActive(SeaShanty) && IsOffCooldown(SeaShanty))
                                 return SeaShanty;
 
-                            if ((!IsSpellActive(Bristle) || HasEffect(Buffs.Bristle)) && IsSpellActive(BreathOfMagic) && !TargetHasEffectAny(Debuffs.BreathOfMagic))
+                            if (IsSpellActive(BreathOfMagic) && !TargetHasEffectAny(Debuffs.BreathOfMagic))
                                 return BreathOfMagic;
-                            else if ((!IsSpellActive(Bristle) || HasEffect(Buffs.Bristle)) && IsSpellActive(MortalFlame) && !TargetHasEffectAny(Debuffs.MortalFlame))
+                            else if (IsSpellActive(MortalFlame) && !TargetHasEffectAny(Debuffs.MortalFlame))
                                 return MortalFlame;
                         }
                     }
