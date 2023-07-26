@@ -54,7 +54,7 @@ namespace XIVSlothCombo.Combos.PvP
                         if (ActionReady(BlackestNight))
                             return OriginalHook(BlackestNight);
 
-                        if (ActionReady(SaltedEarth))
+                        if (ActionReady(SaltedEarth) && IsEnabled(CustomComboPreset.DRKPvP_SaltedEarth))
                             return OriginalHook(SaltedEarth);
 
                         if (HasEffect(Buffs.SaltedEarthDMG) && ActionReady(SaltAndDarkness))

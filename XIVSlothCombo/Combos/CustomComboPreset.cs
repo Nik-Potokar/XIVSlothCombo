@@ -1,6 +1,7 @@
 ﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos
 {
@@ -462,6 +463,7 @@ namespace XIVSlothCombo.Combos
 
         [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.RoseOfDestruction, BLU.FeatherRain, BLU.Bristle, BLU.GlassDance, BLU.Surpanakha, BLU.MatraMagic, BLU.ShockStrike, BLU.PhantomFlurry)]
         [ReplaceSkill(BLU.MoonFlute)]
+        [ConflictingCombos(BLU_NewMoonFluteOpener)]
         [CustomComboInfo("Moon Flute Opener", "Puts the Full Moon Flute Opener on Moon Flute or Whistle.", BLU.JobID)]
         BLU_Opener = 70001,
 
@@ -520,6 +522,16 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("J Kick Option", "Adds J Kick to the Primal Feature.", BLU.JobID)]
         BLU_PrimalCombo_JKick = 70013,
 
+        [BlueInactive(BLU.SeaShanty)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Sea Shanty Option", "Adds Sea Shanty to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_SeaShanty = 70024,
+
+        [BlueInactive(BLU.WingedRepropbation)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Winged Reprobration Option", "Adds Winged Reprobation to the Primal Feature.", BLU.JobID)]
+        BLU_PrimalCombo_WingedReprobation = 70025,
+
         [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
         [CustomComboInfo("Perpetual Ray into Sharpened Knife Feature", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID)]
         BLU_PerpetualRayStunCombo = 70014,
@@ -553,7 +565,23 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
         BLU_PrimalCombo_Nightbloom = 70020,
 
-        // Last value = 70020
+        [ReplaceSkill(BLU.MoonFlute)]
+        [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedRepropbation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle)]
+        [ConflictingCombos(BLU_Opener)]
+        [CustomComboInfo("New BLU Moon Flute Opener (Level 80 Edition)", "Turns Moon Flute into a full opener (level 80 update)", BLU.JobID)]
+        BLU_NewMoonFluteOpener = 70021,
+
+        [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
+        [ParentCombo(BLU_NewMoonFluteOpener)]
+        [CustomComboInfo("DoT Opener", "Changes the opener to apply either Mortal Flame or Breath of Magic instead of using Winged Reprobation", BLU.JobID)]
+        BLU_NewMoonFluteOpener_DoTOpener = 70022,
+
+        [ReplaceSkill(BLU.DeepClean)]
+        [BlueInactive(BLU.PeatPelt, BLU.DeepClean)]
+        [CustomComboInfo("Peat Clean", "Changes Deep Clean to Peat Pelt if current target is not inflicted with Begrimed.", BLU.JobID)]
+        BLU_PeatClean = 70023,
+
+        // Last value = 70023
 
         #endregion
 
@@ -1005,9 +1033,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "")]
         DRK_StalwartSoulCombo = 5001,
 
-        [ReplaceSkill(DRK.Souleater)]
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Bloodspiller Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID, 0, "", "")]
         DRK_Bloodspiller = 5002,
 
         [ReplaceSkill(DRK.StalwartSoul)]
@@ -2211,7 +2238,7 @@ namespace XIVSlothCombo.Combos
         ReaperPositionalConfig = 12000,
 
         #region Single Target (Slice) Combo Section
-        [ReplaceSkill(RPR.Slice)]
+        [ReplaceSkill(RPR.Slice, RPR.Harpe)]
         [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo = 12001,
 
@@ -3120,7 +3147,7 @@ namespace XIVSlothCombo.Combos
             SCH_AoE_Heal_Aetherflow = 16252,
 
             [ParentCombo(SCH_AoE_Heal_Aetherflow)]
-            [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+            [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow if Indomitability is ready to use.", SCH.JobID)]
             SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
 
             [ParentCombo(SCH_AoE_Heal)]
@@ -3797,6 +3824,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Melee Plunge Option", "Uses Plunge whilst in melee range, and not just as a gap-closer.", DRK.JobID)]
         DRKPvP_PlungeMelee = 115002,
 
+        [SecretCustomCombo]
+        [ParentCombo(DRKPvP_Burst)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth to Burst mode.", DRK.JobID)]
+        DRKPvP_SaltedEarth = 115003,
+
         // Last value = 115002
 
         #endregion
@@ -4006,7 +4038,7 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [ParentCombo(RPRPvP_Burst)]
-        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under the set HP perecentage.", RPR.JobID)]
+        [CustomComboInfo("Arcane Crest Option", "Adds Arcane Crest to the main combo when under the set HP perecentage.", RPR.JobID)]
         RPRPvP_Burst_ArcaneCircle = 122008,
 
         // Last value = 122008
