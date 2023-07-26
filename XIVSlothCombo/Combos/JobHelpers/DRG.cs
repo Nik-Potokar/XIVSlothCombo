@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -31,8 +26,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             PvE.DRG.SpineshatterDive
         };
 
-        internal static uint SlowLock => PvE.DRG.SpineshatterDive;
-
+        internal static uint SlowLock => PvE.DRG.Stardiver;
 
         internal static bool CanDRGWeave(uint oGCD)
         {
