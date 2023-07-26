@@ -60,7 +60,7 @@ namespace XIVSlothCombo.Window
         {
             Vector2 region = ImGui.GetContentRegionAvail();
             Vector2 currentPosition = ImGui.GetCursorPos();
-            Vector2 width = new Vector2(region.X * percentSize);
+            Vector2 width = new(region.X * percentSize);
             ImGui.SetCursorPos(currentPosition with { X = (region.X / 2.0f) - (width.X / 2.0f) });
 
             Size = width;
@@ -69,7 +69,7 @@ namespace XIVSlothCombo.Window
 
         private void DrawContents()
         {
-            Vector2 topLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
+            Vector2 topLeftCurveCenter = new(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
 
             ImGui.SetCursorScreenPos(topLeftCurveCenter);
             ImGui.PushTextWrapPos(Size.X);
@@ -85,10 +85,10 @@ namespace XIVSlothCombo.Window
 
         private void DrawCorners()
         {
-            Vector2 topLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
-            Vector2 topRightCurveCenter = new Vector2(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + CurveRadius);
-            Vector2 bottomLeftCurveCenter = new Vector2(StartPosition.X + CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
-            Vector2 bottomRightCurveCenter = new Vector2(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
+            Vector2 topLeftCurveCenter = new(StartPosition.X + CurveRadius, StartPosition.Y + CurveRadius);
+            Vector2 topRightCurveCenter = new(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + CurveRadius);
+            Vector2 bottomLeftCurveCenter = new(StartPosition.X + CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
+            Vector2 bottomRightCurveCenter = new(StartPosition.X + Size.X - CurveRadius, StartPosition.Y + Size.Y - CurveRadius);
 
             DrawList.PathArcTo(topLeftCurveCenter, CurveRadius, DegreesToRadians(180), DegreesToRadians(270), SegmentResolution);
             DrawList.PathStroke(ColorU32, ImDrawFlags.None, BorderThickness);
