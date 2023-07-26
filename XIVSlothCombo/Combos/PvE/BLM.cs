@@ -135,7 +135,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 uint currentMP = LocalPlayer.CurrentMp;
-                float astralFireRefresh = Config.BLM_AstralFire_Refresh * 1000;
+                float astralFireRefresh = 8000;
                 bool openerReady = ActionReady(Manafont) && ActionReady(Amplifier) && ActionReady(LeyLines);
                 Status? dotDebuff = FindTargetEffect(ThunderList[OriginalHook(Thunder)]); // Match DoT with its debuff ID, and check for the debuff
                 BLMGauge? gauge = GetJobGauge<BLMGauge>();
@@ -363,7 +363,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Thunder I/III uptime
-                            if (!ThunderList.ContainsKey(lastComboMove) && (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
+                            if (!ThunderList.ContainsKey(lastComboMove) &&
+                                (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
                             {
                                 if (LevelChecked(Thunder3) &&
                                     GetDebuffRemainingTime(Debuffs.Thunder3) <= 4)
@@ -373,7 +374,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     GetDebuffRemainingTime(Debuffs.Thunder) <= 4)
                                     return Thunder;
                             }
-
 
                             // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
                             if (GetRemainingCharges(Triplecast) is 2 &&
@@ -454,18 +454,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Xenoglossy
                                     : Foul;
 
-                            // Fire III proc or Swiftcast Fire III during Transpose lines(< 3 Astral Fire stacks)
+                            // Fire III proc (< 3 Astral Fire stacks)
                             if (gauge.AstralFireStacks < 3 || (gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
                                 return Fire3;
 
                             // Use Paradox instead of hardcasting Fire if we can
                             if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
-                                return LevelChecked(Paradox) && gauge.IsParadoxActive
-                                    ? Paradox
-                                    : Fire;
+                                return OriginalHook(Fire);
 
-                            if (Config.BLM_Adv_Cooldowns_Choice[0] &&
-                                ActionReady(Manafont) && WasLastAction(Despair))
+                            if (ActionReady(Manafont) && WasLastAction(Despair))
                                 return Manafont;
 
                             // Cast Fire IV after Manafont
@@ -475,9 +472,13 @@ namespace XIVSlothCombo.Combos.PvE
                             // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.FireI || gauge.ElementTimeRemaining <= 5000)
                             {
-                                return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
-                                    ? Despair
-                                    : Blizzard3;
+                                if (currentMP >= MP.FireI)
+                                    return OriginalHook(Fire);
+
+                                if (currentMP < MP.FireI && currentMP >= MP.AllMPSpells && LevelChecked(Despair))
+                                    return Despair;
+
+                                return Blizzard3;
                             }
 
                             return Fire4;
@@ -495,8 +496,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     : Foul;
 
                             // Sharpcast
-                            if (Config.BLM_Adv_Cooldowns_Choice[1] &&
-                                ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                            if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
                                 !WasLastAction(Thunder3) && CanSpellWeave(actionID))
                                 return Sharpcast;
 
@@ -1047,7 +1047,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (gauge.InAstralFire)
                             {
-                                if (HasEffect(Buffs.Firestarter) && currentMP <= MP.FireI)
+                                if (HasEffect(Buffs.Firestarter) && currentMP <= 5000)
                                     return Fire3;
 
                                 return (currentMP < MP.FireI)
@@ -1082,9 +1082,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Use Paradox instead of hardcasting Fire if we can
                             if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
-                                return LevelChecked(Paradox) && gauge.IsParadoxActive
-                                    ? Paradox
-                                    : Fire;
+                                return OriginalHook(Fire);
 
                             if (Config.BLM_Adv_Cooldowns_Choice[0] &&
                                 ActionReady(Manafont) && WasLastAction(Despair))
@@ -1109,9 +1107,13 @@ namespace XIVSlothCombo.Combos.PvE
                             // Blizzard III/Despair when below Fire IV + Despair MP
                             if (currentMP < MP.FireI || gauge.ElementTimeRemaining <= 5000)
                             {
-                                return (LevelChecked(Despair) && currentMP >= MP.AllMPSpells)
-                                    ? Despair
-                                    : Blizzard3;
+                                if (currentMP >= MP.FireI)
+                                    return OriginalHook(Fire);
+
+                                if (currentMP < MP.FireI && currentMP >= MP.AllMPSpells && LevelChecked(Despair))
+                                    return Despair;
+
+                                return Blizzard3;
                             }
 
                             return Fire4;
