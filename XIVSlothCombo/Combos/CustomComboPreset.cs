@@ -3168,7 +3168,7 @@ namespace XIVSlothCombo.Combos
             SCH_AoE_Heal_Aetherflow = 16252,
 
             [ParentCombo(SCH_AoE_Heal_Aetherflow)]
-            [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+            [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow if Indomitability is ready to use.", SCH.JobID)]
             SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
 
             [ParentCombo(SCH_AoE_Heal)]
@@ -4059,7 +4059,7 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [ParentCombo(RPRPvP_Burst)]
-        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the main combo when under the set HP perecentage.", RPR.JobID)]
+        [CustomComboInfo("Arcane Crest Option", "Adds Arcane Crest to the main combo when under the set HP perecentage.", RPR.JobID)]
         RPRPvP_Burst_ArcaneCircle = 122008,
 
         // Last value = 122008
