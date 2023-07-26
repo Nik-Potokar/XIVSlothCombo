@@ -162,9 +162,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_ST_AdvancedMode;
 
-            protected internal MudraCasting mudraState = new MudraCasting();
+            protected internal MudraCasting mudraState = new();
 
-            protected internal NINOpenerLogic openerLogic = new NINOpenerLogic();
+            protected internal NINOpenerLogic openerLogic = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -455,7 +455,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_AoE_AdvancedMode;
 
-            protected internal MudraCasting mudraState = new MudraCasting();
+            protected internal MudraCasting mudraState = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -629,9 +629,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_ST_SimpleMode;
 
-            protected internal MudraCasting mudraState = new MudraCasting();
+            protected internal MudraCasting mudraState = new();
 
-            protected internal NINOpenerLogic openerLogic = new NINOpenerLogic();
+            protected internal NINOpenerLogic openerLogic = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -758,7 +758,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_AoE_SimpleMode;
 
-            protected internal MudraCasting mudraState = new MudraCasting();
+            protected internal MudraCasting mudraState = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {

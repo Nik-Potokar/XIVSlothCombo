@@ -94,33 +94,33 @@ namespace XIVSlothCombo.Combos.PvE
         private static bool HasAddersgall(this SGEGauge gauge) => gauge.Addersgall > 0;
         private static bool HasAddersting(this SGEGauge gauge) => gauge.Addersting > 0;
 
-        internal static class Config
+        public static class Config
         {
             #region DPS
-            internal static UserBool
+            public static UserBool
                 SGE_ST_DPS_Adv = new("SGE_ST_DPS_Adv"),
                 SGE_ST_DPS_Adv_D2 = new("SGE_ST_Dosis_AltMode"),
                 SGE_ST_DPS_Adv_GroupInstants = new("SGE_ST_DPS_Adv_GroupInstants"),
                 SGE_ST_DPS_EDosis_Adv = new("SGE_ST_Dosis_EDosis_Adv");
-            internal static UserBoolArray
+            public static UserBoolArray
                 SGE_ST_DPS_Adv_GroupInstants_Addl = new("SGE_ST_DPS_Adv_GroupInstants_Addl"),
                 SGE_ST_DPS_Movement = new("SGE_ST_DPS_Movement");
-            internal static UserInt
+            public static UserInt
                 SGE_ST_DPS_EDosisHPPer = new("SGE_ST_Dosis_EDosisHPPer"),
                 SGE_ST_DPS_Lucid = new("SGE_ST_DPS_Lucid"),
                 SGE_ST_DPS_Rhizo = new("SGE_ST_DPS_Rhizo"),
                 SGE_AoE_DPS_Lucid = new("SGE_AoE_Phlegma_Lucid"),
                 SGE_AoE_DPS_Rhizo = new("SGE_AoE_DPS_Rhizo");
-            internal static UserFloat
+            public static UserFloat
                 SGE_ST_DPS_EDosisThreshold = new("SGE_ST_Dosis_EDosisThreshold");
             #endregion
 
             #region Healing
-            internal static UserBool
+            public static UserBool
                 SGE_ST_Heal_Adv = new("SGE_ST_Heal_Adv"),
                 SGE_ST_Heal_UIMouseOver = new("SGE_ST_Heal_UIMouseOver"),
                 SGE_AoE_Heal_KeracholeTrait = new("SGE_AoE_Heal_KeracholeTrait");
-            internal static UserInt
+            public static UserInt
                 SGE_ST_Heal_Zoe = new("SGE_ST_Heal_Zoe"),
                 SGE_ST_Heal_Haima = new("SGE_ST_Heal_Haima"),
                 SGE_ST_Heal_Krasis = new("SGE_ST_Heal_Krasis"),
@@ -131,7 +131,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole");                
             #endregion
 
-            internal static UserInt
+            public static UserInt
                 SGE_Eukrasia_Mode = new("SGE_Eukrasia_Mode");
         }
 
