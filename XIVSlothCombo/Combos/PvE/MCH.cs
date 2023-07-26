@@ -443,7 +443,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 {
-                    if (actionID is SplitShot or HeatedSplitShot)
+                    if (actionID is HeatedSplitShot)
                     {
                         var inCombat = InCombat();
                         var gauge = GetJobGauge<MCHGauge>();
@@ -722,7 +722,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (level >= 90 && actionID is SplitShot or HeatedSplitShot)
+                if (level >= 90 && actionID is HeatedSplitShot)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_123ToolsOpener))
                     {
