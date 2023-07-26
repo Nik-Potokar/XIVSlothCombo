@@ -1,6 +1,7 @@
 ﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos
 {
@@ -1032,9 +1033,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID, 0, "", "")]
         DRK_StalwartSoulCombo = 5001,
 
-        [ReplaceSkill(DRK.Souleater)]
         [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Bloodspiller Feature", "Replace Souleater and Stalwart Soul with Bloodspiller and Quietus when Delirium is active.", DRK.JobID, 0, "", "")]
+        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID, 0, "", "")]
         DRK_Bloodspiller = 5002,
 
         [ReplaceSkill(DRK.StalwartSoul)]
@@ -1561,7 +1561,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Wildfire = 8015,
 
         [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the Spreadshot feature", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("BioBlaster Option", "Adds Bioblaster to the feature", MCH.JobID, 0, "", "")]
         MCH_AoE_Simple_Bioblaster = 8016,
 
         [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast and Single Button Auto Crossbow Features when below 50 Heat Gauge and it is off cooldown", MCH.JobID, 0, "", "")]
@@ -1617,15 +1617,15 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Simple_Assembling_ChainSaw = 8031,
 
         [ParentCombo(MCH_ST_Simple_Assembling_Drill)]
-        [CustomComboInfo("Only use Drill Option", "Only use Drill when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Drill Option Pooling Option", "Only use Drill when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_Drill_MaxCharges = 8032,
 
         [ParentCombo(MCH_ST_Simple_Assembling_AirAnchor)]
-        [CustomComboInfo("Only use Air Anchor Option", "Only use Air Anchor when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Air Anchor Pooling Option", "Only use Air Anchor when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_AirAnchor_MaxCharges = 8033,
 
         [ParentCombo(MCH_ST_Simple_Assembling_ChainSaw)]
-        [CustomComboInfo("Only use Chain Saw Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Chain Saw Pooling Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling_ChainSaw_MaxCharges = 8034,
 
         [ParentCombo(MCH_ST_Simple_Stabilizer)]
@@ -1654,7 +1654,31 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MCH.JobID)]
         MCH_Variant_Cure = 8040,
 
-        // Last value = 8040
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Chain Saw Option", "Adds Chain Saw to the feature.", MCH.JobID)]
+        MCH_AoE_ChainSaw = 8041,
+
+        [ParentCombo(MCH_AoE_SimpleMode)]
+        [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Bioblaster it will be used with Auto Crossbow and Spread Shot.", MCH.JobID)]
+        MCH_AoE_Simple_Assembling = 8042,
+
+        [ParentCombo(MCH_AoE_Simple_Assembling)]
+        [CustomComboInfo("Chain Saw Option", $"Use Reassemble with Chain Saw when available.", MCH.JobID)]
+        MCH_AoE_Simple_Assembling_ChainSaw = 8043,
+
+        [ParentCombo(MCH_AoE_Simple_Assembling_ChainSaw)]
+        [CustomComboInfo("Chain Saw Pooling Option", "Only use Chain Saw when you have max charges of Reassemble.", MCH.JobID)]
+        MCH_AoE_Simple_Assembling_ChainSaw_MaxCharges = 8044,
+
+        [ParentCombo(MCH_AoE_Simple_Assembling)]
+        [CustomComboInfo("Bioblaster Option", $"Use Reassemble with Bioblaster when available.", MCH.JobID)]
+        MCH_AoE_Simple_Assembling_Bioblaster = 8045,
+
+        [ParentCombo(MCH_AoE_Simple_Assembling_Bioblaster)]
+        [CustomComboInfo("Bioblaster Pooling Option", "Only use Bioblaster when you have max charges of Reassemble.", MCH.JobID)]
+        MCH_AoE_Simple_Assembling_Bioblaster_MaxCharges = 8046,
+
+        // Last value = 8046
 
         #endregion
 
@@ -2235,7 +2259,7 @@ namespace XIVSlothCombo.Combos
         ReaperPositionalConfig = 12000,
 
         #region Single Target (Slice) Combo Section
-        [ReplaceSkill(RPR.Slice)]
+        [ReplaceSkill(RPR.Slice, RPR.Harpe)]
         [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo = 12001,
 
@@ -3820,6 +3844,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DRKPvP_Plunge)]
         [CustomComboInfo("Melee Plunge Option", "Uses Plunge whilst in melee range, and not just as a gap-closer.", DRK.JobID)]
         DRKPvP_PlungeMelee = 115002,
+
+        [SecretCustomCombo]
+        [ParentCombo(DRKPvP_Burst)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth to Burst mode.", DRK.JobID)]
+        DRKPvP_SaltedEarth = 115003,
 
         // Last value = 115002
 

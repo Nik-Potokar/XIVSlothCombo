@@ -697,10 +697,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Suiton) && IsOffCooldown(TrickAttack))
                             return OriginalHook(TrickAttack);
 
-                        if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || useBhakaBeforeTrickWindow && gauge.Ninki == 100 && Bhavacakra.LevelChecked())
+                        if (Bhavacakra.LevelChecked() && ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || useBhakaBeforeTrickWindow && gauge.Ninki == 100))
                             return OriginalHook(Bhavacakra);
 
-                        if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || useBhakaBeforeTrickWindow && gauge.Ninki == 100 && !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked())
+                        if ((TargetHasEffect(Debuffs.TrickAttack) && gauge.Ninki >= 50) || (useBhakaBeforeTrickWindow && gauge.Ninki == 100) && !Bhavacakra.LevelChecked() && Hellfrog.LevelChecked())
                             return OriginalHook(Hellfrog);
 
                         if (!inTrickBurstSaveWindow)
