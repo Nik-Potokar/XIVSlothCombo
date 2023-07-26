@@ -77,6 +77,7 @@ namespace XIVSlothCombo.Combos.PvP
 
 
                 if (HasEffect(3180)) return false; //DRG LB buff
+                if (HasEffectAny(1420)) return false; //Rival Wings Mounted
                 if (HasEffect(DRKPvP.Buffs.UndeadRedemption)) return false;
                 if (LocalPlayer.CurrentMp < 2500) return false;
                 if (remainingPercentage * 100 > threshold) return false;
@@ -114,6 +115,7 @@ namespace XIVSlothCombo.Combos.PvP
                 var remainingPercentage = (float)LocalPlayer.CurrentHp / (float)jobMaxHp;
 
                 if (HasEffect(3180)) return false; //DRG LB buff
+                if (HasEffectAny(1420)) return false; //Rival Wings Mounted
                 if (HasEffect(DRKPvP.Buffs.UndeadRedemption)) return false;
                 if (HasEffectAny(Debuffs.Unguarded) || HasEffect(WARPvP.Buffs.InnerRelease)) return false;
                 if (GetCooldown(Guard).IsCooldown) return false;
@@ -149,6 +151,7 @@ namespace XIVSlothCombo.Combos.PvP
                 var selectedStatuses = PluginConfiguration.GetCustomBoolArrayValue(Config.QuickPurifyStatuses);
 
                 if (HasEffect(3180)) return false; //DRG LB buff
+                if (HasEffectAny(1420)) return false; //Rival Wings Mounted
 
                 if (selectedStatuses.Length == 0) return false;
                 if (GetCooldown(Purify).IsCooldown) return false;
