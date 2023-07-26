@@ -334,7 +334,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Thunder I/III Option", "Adds Thunder I/Thunder III when the debuff isn't present or is expiring.", BLM.JobID, 0, "", "")]
-        BLM_Adv_Thunder = 2029,
+        BLM_ST_Adv_Thunder = 2029,
 
         [ParentCombo(BLM_AdvancedMode)]
         [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]

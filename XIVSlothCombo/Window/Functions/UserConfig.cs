@@ -1261,15 +1261,17 @@ namespace XIVSlothCombo.Window.Functions
                 });
             }
 
-            if (preset is CustomComboPreset.BLM_Adv_Thunder)
-            {
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder)
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_Adv_Thunder, "Seconds remaining before refreshing Thunder");
-            }
-
+            
             if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
-            {
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
-            }
+            
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_ST_Adv_ThunderHP, "Target HP% to stop using Thunder");
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime_AstralFire)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderHP, "Target HP% to stop using Thunder");
 
             #endregion
             // ====================================================================================
