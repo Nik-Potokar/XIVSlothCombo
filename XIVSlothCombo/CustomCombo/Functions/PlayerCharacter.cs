@@ -21,11 +21,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Find if the player has a pet present. </summary>
         /// <returns> A value indicating whether the player has a pet (fairy/carbuncle) present. </returns>
-        public static bool HasPetPresent() => Service.BuddyList.PetBuddyPresent;
+        public static bool HasPetPresent() => Service.BuddyList.PetBuddy != null;
 
         /// <summary> Find if the player has a companion (chocobo) present. </summary>
         /// <returns> A value indicating whether the player has a companion (chocobo). </returns>
-        public static bool HasCompanionPresent() => Service.BuddyList.CompanionBuddyPresent;
+        public static bool HasCompanionPresent() => Service.BuddyList.CompanionBuddy != null;
 
         /// <summary> Checks if the player is in a PVP enabled zone. </summary>
         /// <returns> A value indicating whether the player is in a PVP enabled zone. </returns>
