@@ -393,11 +393,11 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_Adv_Foul = 2044,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 3, "", "")]
+        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 4, "", "")]
         BLM_AoE_Adv_UmbralSoul = 2049,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Manafont Option", "Adds Manafont to the AoE combo for an extra Flare use.", BLM.JobID, 4, "", "")]
+        [CustomComboInfo("Manafont Option", "Adds Manafont to the AoE combo for an extra Flare use.", BLM.JobID, 3, "", "")]
         BLM_AoE_Adv_Manafont = 2052,
 
         #endregion

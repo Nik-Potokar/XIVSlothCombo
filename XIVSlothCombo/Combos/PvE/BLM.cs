@@ -1367,11 +1367,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 !ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                             {
                                 if (LevelChecked(Thunder4) &&
-                                     (GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
+                                     (GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
                                     return Thunder4;
 
                                 if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                    (GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
+                                    (GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
                                     return Thunder2;
                             }
 
@@ -1401,11 +1401,11 @@ namespace XIVSlothCombo.Combos.PvE
                            !ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
                         {
                             if (LevelChecked(Thunder4) &&
-                                (GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime))
+                                (GetDebuffRemainingTime(Debuffs.Thunder4) <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
                                 return Thunder4;
 
                             if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
-                                (GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime))
+                                (GetDebuffRemainingTime(Debuffs.Thunder2) <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
                                 return Thunder2;
                         }
 
