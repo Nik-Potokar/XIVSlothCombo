@@ -338,9 +338,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
                                 return LifeSurge;
 
-                            //StarDives Feature
-                            if (gauge.IsLOTDActive && ActionReady(Stardiver) && CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                return Stardiver;
+                            //Wyrmwind Thrust Feature
+                            if (gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
+                                return WyrmwindThrust;
 
                             //Dives Feature
                             if (!IsMoving && LevelChecked(LanceCharge))
@@ -368,9 +368,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady) && CanDRGWeave(MirageDive))
                                 return MirageDive;
 
-                            //Wyrmwind Thrust Feature
-                            if (gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
-                                return WyrmwindThrust;
+                            //StarDives Feature
+                            if (gauge.IsLOTDActive && ActionReady(Stardiver) && CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                                return Stardiver;
                         }
                     }
 
@@ -870,10 +870,10 @@ namespace XIVSlothCombo.Combos.PvE
                                     (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
                                     return LifeSurge;
 
-                                //StarDives Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && CanDRGWeave(Stardiver) &&
-                                    gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                    return Stardiver;
+                                //Wyrmwind Thrust Feature
+                                if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
+                                    gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
+                                    return WyrmwindThrust;
 
                                 //Dives Feature
                                 if (IsEnabled(CustomComboPreset.DRG_ST_Dives) &&
@@ -904,14 +904,14 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Geirskogul);
 
                                 //Mirage Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && ((HasEffect(Buffs.DiveReady) && CanDRGWeave(MirageDive)) ||
+                                if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && CanDRGWeave(MirageDive) && ((HasEffect(Buffs.DiveReady)) ||
                                    (IsEnabled(CustomComboPreset.DRG_ST_Optimized_Rotation) && IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady))))
                                     return MirageDive;
 
-                                //Wyrmwind Thrust Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
-                                    gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
-                                    return WyrmwindThrust;
+                                //StarDives Feature
+                                if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && CanDRGWeave(Stardiver) &&
+                                    gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                                    return Stardiver;
                             }
                         }
 
@@ -1006,9 +1006,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 lastComboMove is SonicThrust && LevelChecked(CoerthanTorment) && CanDRGWeave(LifeSurge))
                             return LifeSurge;
 
-                        //StarDives Feature
-                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                            return Stardiver;
+
+                        //Wyrmwind Thrust Feature
+                        if (gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
+                            return WyrmwindThrust;
 
                         //Dives Feature
                         if (!IsMoving && LevelChecked(LanceCharge))
@@ -1036,9 +1037,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady) && CanDRGWeave(MirageDive))
                             return MirageDive;
 
-                        //Wyrmwind Thrust Feature
-                        if (gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
-                            return WyrmwindThrust;
+                        //StarDives Feature
+                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                            return Stardiver;
                     }
 
                     if (comboTime > 0)
@@ -1115,10 +1116,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 lastComboMove is SonicThrust && LevelChecked(CoerthanTorment) && CanDRGWeave(LifeSurge))
                                 return LifeSurge;
 
-                            //StarDives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && CanDRGWeave(Stardiver) &&
-                               gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                return Stardiver;
+                            //Wyrmwind Thrust Feature
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Wyrmwind) &&
+                                gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
+                                return WyrmwindThrust;
 
                             //Dives Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Dives) &&
@@ -1153,10 +1154,10 @@ namespace XIVSlothCombo.Combos.PvE
                                (IsEnabled(CustomComboPreset.DRG_AoE_Optimized_Rotation) && IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady))))
                                 return MirageDive;
 
-                            //Wyrmwind Thrust Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Wyrmwind) &&
-                                gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
-                                return WyrmwindThrust;
+                            //StarDives Feature
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && CanDRGWeave(Stardiver) &&
+                               gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                                return Stardiver;
                         }
                     }
 
