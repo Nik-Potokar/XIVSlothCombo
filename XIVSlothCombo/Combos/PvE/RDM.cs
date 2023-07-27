@@ -4,6 +4,7 @@ using System;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Services;
 using static XIVSlothCombo.Combos.JobHelpers.RDM;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -130,6 +131,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                if (Service.ClientState.IsPvP)
+                    return actionID;
+
                 //MAIN_COMBO_VARIABLES
                 int blackmana = Gauge.BlackMana;
                 int whitemana = Gauge.WhiteMana;
