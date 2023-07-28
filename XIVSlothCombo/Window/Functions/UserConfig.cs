@@ -1359,17 +1359,14 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            if (preset == CustomComboPreset.MCH_ST_Simple_SecondWind)
+            if (preset == CustomComboPreset.MCH_ST_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.MCH_ST_Advanced_SecondWind)
-                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.MCH_AoE_Simple_SecondWind)
+            if (preset == CustomComboPreset.MCH_AoE_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.MCH_AoE_Advanced_SecondWind)
-                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+            if (preset == CustomComboPreset.MCH_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
