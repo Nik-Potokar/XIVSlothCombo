@@ -330,7 +330,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) &&
                                     OriginalHook(Intervene).LevelChecked() &&
                                     GetRemainingCharges(Intervene) > GetOptionValue(Config.PLD_Intervene_HoldCharges) &&
-                                    ((GetOptionBool(Config.PLD_Intervene_MeleeOnly) && InMeleeRange()) || (!GetOptionBool(Config.PLD_Intervene_MeleeOnly))))
+                                    ((GetOptionBool(Config.PLD_Intervene_MeleeOnly) && InMeleeRange() && !IsMoving) || (!GetOptionBool(Config.PLD_Intervene_MeleeOnly))))
                                     return OriginalHook(Intervene);
 
                             }

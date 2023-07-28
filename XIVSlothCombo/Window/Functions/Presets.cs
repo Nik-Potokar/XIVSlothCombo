@@ -135,9 +135,9 @@ namespace XIVSlothCombo.Window.Functions
                     var par2 = par;
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
-                        var subpar = PluginConfiguration.GetParent(par2)!;
-                        builder.Insert(0,$"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
-                        par2 = subpar.Value;
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0,$"{subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar!.Value;
 
                     }
                     
@@ -159,9 +159,9 @@ namespace XIVSlothCombo.Window.Functions
                     var par2 = par;
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
-                        var subpar = PluginConfiguration.GetParent(par2)!;
-                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
-                        par2 = subpar.Value;
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0, $"{subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar!.Value;
 
                     }
 
@@ -183,9 +183,9 @@ namespace XIVSlothCombo.Window.Functions
                     var par2 = par;
                     while (PluginConfiguration.GetParent(par2) != null)
                     {
-                        var subpar = PluginConfiguration.GetParent(par2)!;
-                        builder.Insert(0, $"{subpar.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
-                        par2 = subpar.Value;
+                        var subpar = PluginConfiguration.GetParent(par2);
+                        builder.Insert(0, $"{subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName} -> ");
+                        par2 = subpar!.Value;
 
                     }
 

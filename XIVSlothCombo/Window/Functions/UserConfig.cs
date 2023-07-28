@@ -1663,11 +1663,17 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region REAPER
 
+            if (preset is CustomComboPreset.RPR_ST_SliceCombo)
+            {
+                UserConfig.DrawRadioButton(RPR.Config.RPR_Slice_AltMode, "Combo on Slice", "Default mode. Replaces Slice.", 0);
+                UserConfig.DrawRadioButton(RPR.Config.RPR_Slice_AltMode, "Combo on Harpe", "Have the feature replace Harpe instead of Slice.", 1);
+            }
+
             if (preset == CustomComboPreset.RPRPvP_Burst_ImmortalPooling && enabled)
-                UserConfig.DrawSliderInt(0, 8, RPRPvP.Config.RPRPvP_ImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.###RPR", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 8, RPRPvP.Config.RPRPvP_ImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
-                UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.###RPR", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
             {
@@ -2146,10 +2152,10 @@ namespace XIVSlothCombo.Window.Functions
             #region PvP
 
             if (preset == CustomComboPreset.SMNPvP_BurstMode)
-                UserConfig.DrawSliderInt(50, 100, SMNPvP.Config.SMNPvP_FesterThreshold, "Target HP% to cast Fester below.\nSet to 100 use Fester as soon as it's available.###SMNPvP", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(50, 100, SMNPvP.Config.SMNPvP_FesterThreshold, "Target HP% to cast Fester below.\nSet to 100 use Fester as soon as it's available.", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.SMNPvP_BurstMode_RadiantAegis)
-                UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Caps at 90 to prevent waste.###SMNPvP", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
             #endregion
 
