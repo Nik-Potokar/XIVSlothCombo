@@ -4,7 +4,6 @@ using Dalamud.Game.ClientState.Statuses;
 using System;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 
@@ -92,14 +91,15 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserFloat
                 MNK_Demolish_Apply = new("MnkDemolishApply"),
                 MNK_DisciplinedFist_Apply = new("MnkDisciplinedFistApply"),
-                MNK_DemolishTreshhold = new("MNK_ST_DemolishThreshold"),
+                MNK_DemolishTreshhold = new("MNK_ST_DemolishThreshold");
+
+
+            public static UserInt
                 MNK_STSecondWindThreshold = new("MNK_STSecondWindThreshold"),
                 MNK_STBloodbathThreshold = new("MNK_STBloodbathThreshold"),
                 MNK_AoESecondWindThreshold = new("MNK_AoESecondWindThreshold"),
-                MNK_AoEBloodbathThreshold = new("MNK_AoEBloodbathThreshold");
-
-            public static UserInt
-                MNK_VariantCure = new("MNK_VariantCure");
+                MNK_AoEBloodbathThreshold = new("MNK_AoEBloodbathThreshold"),
+            MNK_VariantCure = new("MNK_VariantCure");
         }
 
         internal class MNK_ST_BasicCombo : CustomCombo
@@ -113,6 +113,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Bootshine)
                 {
+
                     if (!HasEffect(Buffs.PerfectBalance))
                     {
                         if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
@@ -209,16 +210,16 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                MNKGauge? gauge = GetJobGauge<MNKGauge>();
+                Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
+                bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
+                bool solarNadi = gauge.Nadi == Nadi.SOLAR;
+                float demolishTreshold = Config.MNK_DemolishTreshhold;
+
                 if (actionID is DragonKick)
                 {
-                    MNKGauge? gauge = GetJobGauge<MNKGauge>();
-                    Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    bool solarNadi = gauge.Nadi == Nadi.SOLAR;
-                    float demolishTreshold = PluginConfiguration.GetCustomFloatValue(Config.MNK_DemolishTreshhold);
-
-
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
                     // Opener for MNK
@@ -499,8 +500,8 @@ namespace XIVSlothCombo.Combos.PvE
                 bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 bool solarNadi = gauge.Nadi == Nadi.SOLAR;
                 float demolishTreshold = Config.MNK_DemolishTreshhold;
-                float secondWindTreshold = Config.MNK_STSecondWindThreshold;
-                float bloodBathTreshold = Config.MNK_STBloodbathThreshold;
+                int secondWindTreshold = Config.MNK_STSecondWindThreshold;
+                int bloodBathTreshold = Config.MNK_STBloodbathThreshold;
                 float demolishApply = Config.MNK_Demolish_Apply;
                 float disciplinedFistApply = Config.MNK_DisciplinedFist_Apply;
 
@@ -969,12 +970,12 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (LevelChecked(Brotherhood) && ActionReady(Brotherhood))
+                        if (ActionReady(Brotherhood))
                         {
                             return Brotherhood;
                         }
 
-                        if (LevelChecked(RiddleOfWind) && ActionReady(RiddleOfWind))
+                        if (ActionReady(RiddleOfWind))
                         {
                             return RiddleOfWind;
                         }
@@ -1064,8 +1065,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
                 bool lunarNadi = gauge.Nadi == Nadi.LUNAR;
                 bool nadiNONE = gauge.Nadi == Nadi.NONE;
-                float secondWindTreshold = Config.MNK_STSecondWindThreshold;
-                float bloodBathTreshold = Config.MNK_STBloodbathThreshold;
+                int secondWindTreshold = Config.MNK_STSecondWindThreshold;
+                int bloodBathTreshold = Config.MNK_STBloodbathThreshold;
 
                 if (actionID is ArmOfTheDestroyer)
                 {

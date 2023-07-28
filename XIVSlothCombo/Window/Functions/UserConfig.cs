@@ -10,8 +10,8 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
-using XIVSlothCombo.Services;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -57,7 +57,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
                     Vector2 height = ImGui.GetItemRectSize();
-                    float lines = (height.Y / ImGui.GetFontSize());
+                    float lines = height.Y / ImGui.GetFontSize();
                     Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
@@ -158,7 +158,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
                     Vector2 height = ImGui.GetItemRectSize();
-                    float lines = (height.Y / ImGui.GetFontSize());
+                    float lines = height.Y / ImGui.GetFontSize();
                     Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
@@ -253,7 +253,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
                     Vector2 height = ImGui.GetItemRectSize();
-                    float lines = (height.Y / ImGui.GetFontSize());
+                    float lines = height.Y / ImGui.GetFontSize();
                     Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
@@ -1372,10 +1372,10 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MONK
 
-            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
+            if (preset == CustomComboPreset.MNK_ST_BasicCombo || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
-            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
+            if (preset == CustomComboPreset.MNK_ST_BasicCombo || (preset == CustomComboPreset.MNK_ST_AdvancedMode))
                 UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
@@ -1390,7 +1390,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
-            if (preset == (CustomComboPreset.MNK_ST_BasicCombo) || (preset == CustomComboPreset.MNK_ST_AdvancedMode) || (preset == CustomComboPreset.MNK_ST_SimpleMode))
+            if (preset == CustomComboPreset.MNK_ST_BasicCombo || (preset == CustomComboPreset.MNK_ST_AdvancedMode) || (preset == CustomComboPreset.MNK_ST_SimpleMode))
             {
                 UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_DemolishTreshhold, "Stop using Demolish on targets below this HP % (0% = normal use).", 150, SliderIncrements.Ones);
             }
@@ -1566,7 +1566,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_OnAction_Adv, "Advanced Action Options.", "Changes which action this option will replace.", isConditionalChoice: true);
                 if (RDM.Config.RDM_ST_oGCD_OnAction_Adv)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Jolts", "", 4, 0, descriptionColor: ImGuiColors.DalamudYellow);
                     UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Fleche", "", 4, 1, descriptionColor: ImGuiColors.DalamudYellow);
                     UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Riposte", "", 4, 2, descriptionColor: ImGuiColors.DalamudYellow);
@@ -1586,7 +1586,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps, "Corp-a-Corps", "", isConditionalChoice: true);
                 if (RDM.Config.RDM_ST_oGCD_CorpACorps)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Melee, "Use only in melee range.", "");
                     UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Pooling, "Pool one charge for manual use.", "");
                     ImGui.Unindent();
@@ -1774,7 +1774,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
-                    "Check for Enhanced Kerachole Trait (Heal over Time)", 
+                    "Check for Enhanced Kerachole Trait (Heal over Time)",
                     "Enabling this will prevent Kerachole from being used when the Heal over Time trait is unavailable.");
 
             if (preset is CustomComboPreset.SGE_Eukrasia)
@@ -1849,7 +1849,7 @@ namespace XIVSlothCombo.Window.Functions
 
                 if (SCH.Config.SCH_ST_DPS_Adv)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin/Broils", "Apply options to Ruin and all Broils.", 3, 0);
                     UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Bio/Bio II/Biolysis", "Apply options to Bio and Biolysis.", 3, 1);
                     UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin II", "Apply options to Ruin II.", 3, 2);
@@ -1878,7 +1878,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
             {
-                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv, "Advanced Options","", isConditionalChoice: true);
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv, "Advanced Options", "", isConditionalChoice: true);
                 if (SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)
                 {
                     ImGui.Indent();
@@ -1906,10 +1906,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Heal_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
-            
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_AdloquiumOption, "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
-            
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
 
@@ -1938,12 +1938,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Excog, "On Excogitation", "", isConditionalChoice: true);
                 if (SCH.Config.SCH_Aetherflow_Recite_Excog)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Only when out of Aetherflow Stacks", "", 0);
                     UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Always when available", "", 1);
                     ImGui.Unindent();
                 }
-                
+
                 UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Indom, "On Indominability", "", isConditionalChoice: true);
                 if (SCH.Config.SCH_Aetherflow_Recite_Indom)
                 {

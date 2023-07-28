@@ -1,7 +1,6 @@
 ﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos
 {
@@ -3197,9 +3196,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
         SCH_AoE_Heal_Aetherflow = 16252,
 
-            [ParentCombo(SCH_AoE_Heal_Aetherflow)]
-            [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow if Indomitability is ready to use.", SCH.JobID)]
-            SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
+        [ParentCombo(SCH_AoE_Heal_Aetherflow)]
+        [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow if Indomitability is ready to use.", SCH.JobID)]
+        SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
 
         [ParentCombo(SCH_AoE_Heal)]
         [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
