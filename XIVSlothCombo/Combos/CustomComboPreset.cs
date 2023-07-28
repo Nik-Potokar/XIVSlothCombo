@@ -1488,29 +1488,35 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region MACHINIST
-
         [ReplaceSkill(MCH.Dismantle)]
         [CustomComboInfo("Dismantle/Tactician Feature", "Replace Dismantle with Tactician when Dismantle on cooldown.", MCH.JobID, 0, "", "")]
-        MCH_DismantleTactician = 8041,
+        MCH_DismantleTactician = 8053,
 
-        [ReplaceSkill (MCH.HeatedSplitShot)]
+        [ReplaceSkill(MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_AureliaRotation)]
         [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, -2, "", "")]
-        MCH_123Tools = 8042,
+        MCH_123Tools = 8047,
 
         [ParentCombo(MCH_123Tools)]
         [CustomComboInfo("123Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
-        MCH_123ToolsOpener = 8043,
+        MCH_123ToolsOpener = 8048,
 
         [ReplaceSkill(MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_123Tools)]
         [CustomComboInfo("Aurelias Rotation Feature", "Uses Aurelias Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
-        MCH_AureliaRotation = 8044,
+        MCH_AureliaRotation = 8049,
 
         [ParentCombo(MCH_AureliaRotation)]
         [CustomComboInfo("Aurelia Opener Feature", "Adds opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
-        MCH_AureliaOpener = 8045,
+        MCH_AureliaOpener = 8050,
+
+        [ParentCombo(MCH_AureliaRotation)]
+        [CustomComboInfo("Aurelia Queen Feature", "Adds optimal Queen usage (100-90-100 etc.) to the Rotation Feature. If disabled, uses Queen at 50 Battery.", MCH.JobID, 0, "", "")]
+        MCH_AureliaQueen = 8051,
+
+        [ParentCombo(MCH_AureliaRotation)]
+        [CustomComboInfo("Aurelia Reassemble Feature", "Adds Reassemble x2 during reopeners. In 10min or more fights, you lose 1 usage. If disabled, uses Reassemble on Chainsaw.", MCH.JobID, 0, "", "")]
+        MCH_AureliaReassembleUnderBuffs = 8052,
 
         [ReplaceSkill(MCH.SplitShot)]
         [CustomComboInfo("1-2-3 Combo Feature", "Replace Split Shot with its combo chain.", MCH.JobID, 0, "", "")]
@@ -3759,8 +3765,6 @@ namespace XIVSlothCombo.Combos
             FSH_Chum_BaitedBreath = 51011,
 
         // Last value = 51011
-
-        #endregion
 
         #endregion
 
