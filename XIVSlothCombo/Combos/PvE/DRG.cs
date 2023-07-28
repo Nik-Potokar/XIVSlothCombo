@@ -75,17 +75,15 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public static UserFloat
+            public static UserInt
+                DRG_ST_DiveOptions = new("DRG_ST_DiveOptions"),
+                DRG_AOE_DiveOptions = new("DRG_AOE_DiveOptions"),
+                DRG_OpenerOptions = new("DRG_OpenerOptions"),
                 DRG_VariantCure = new("DRG_VariantCure"),
                 DRG_STSecondWindThreshold = new("DRG_STSecondWindThreshold"),
                 DRG_STBloodbathThreshold = new("DRG_STBloodbathThreshold"),
                 DRG_AoESecondWindThreshold = new("DRG_AoESecondWindThreshold"),
                 DRG_AoEBloodbathThreshold = new("DRG_AoEBloodbathThreshold");
-
-            public static UserInt
-                DRG_ST_DiveOptions = new("DRG_ST_DiveOptions"),
-                DRG_AOE_DiveOptions = new("DRG_AOE_DiveOptions"),
-                DRG_OpenerOptions = new("DRG_OpenerOptions");
         }
 
         internal class DRG_ST_SimpleMode : CustomCombo
@@ -422,12 +420,20 @@ namespace XIVSlothCombo.Combos.PvE
                 int diveOptions = Config.DRG_ST_DiveOptions;
                 int openerSelection = Config.DRG_OpenerOptions;
                 Status? ChaosDoTDebuff;
-                float ST_secondWindTreshold = Config.DRG_STSecondWindThreshold;
-                float ST_bloodBathTreshold = Config.DRG_STBloodbathThreshold;
+                int ST_secondWindTreshold = Config.DRG_STSecondWindThreshold;
+                int ST_bloodBathTreshold = Config.DRG_STBloodbathThreshold;
+                bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
+                bool trueNorthReadyDyn = trueNorthReady;
 
                 if (LevelChecked(ChaoticSpring))
                     ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
                 else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
+
+                // Prevent the dynamic true north option from using the last charge
+                if (trueNorthReady && IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                    IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2)
+                    trueNorthReadyDyn = false;
+
 
                 if (actionID is TrueThrust)
                 {
@@ -904,7 +910,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Geirskogul);
 
                                 //Mirage Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && CanDRGWeave(MirageDive) && ((HasEffect(Buffs.DiveReady)) ||
+                                if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && CanDRGWeave(MirageDive) && (HasEffect(Buffs.DiveReady) ||
                                    (IsEnabled(CustomComboPreset.DRG_ST_Optimized_Rotation) && IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady))))
                                     return MirageDive;
 
@@ -914,7 +920,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Stardiver;
                             }
                         }
-
                     }
 
                     // healing
@@ -931,10 +936,26 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //1-2-3 Combo
                     if (HasEffect(Buffs.SharperFangAndClaw))
-                        return FangAndClaw;
+                    {
+                        // If we are not on the flank, but need to use Fangs, pop true north if not already up
+                        if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                            trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) &&
+                            CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
+                            return All.TrueNorth;
+
+                        return OriginalHook(FangAndClaw);
+                    }
 
                     if (HasEffect(Buffs.EnhancedWheelingThrust))
-                        return WheelingThrust;
+                    {
+                        // If we are not on the rear, but need to use Wheeling, pop true north if not already up
+                        if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                            trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) &&
+                            CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                            return All.TrueNorth;
+
+                        return OriginalHook(WheelingThrust);
+                    }
 
                     if (comboTime > 0)
                     {
@@ -1066,8 +1087,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 int diveOptions = Config.DRG_AOE_DiveOptions;
-                float AoE_secondWindTreshold = Config.DRG_AoESecondWindThreshold;
-                float AoE_bloodBathTreshold = Config.DRG_AoEBloodbathThreshold;
+                int AoE_secondWindTreshold = Config.DRG_AoESecondWindThreshold;
+                int AoE_bloodBathTreshold = Config.DRG_AoEBloodbathThreshold;
 
                 if (actionID is DoomSpike)
                 {
@@ -1242,4 +1263,3 @@ namespace XIVSlothCombo.Combos.PvE
         }
     }
 }
-

@@ -1244,6 +1244,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 99, "", "")]
         DRG_ST_ComboHeals = 6117,
 
+        [ParentCombo(DRG_ST_AdvancedMode)]
+        [CustomComboInfo("Dynamic True North Feature", "Adds True North before Fang And Claw/Wheeling Thrust when you are not in the correct position for the enhanced potency bonus.", DRG.JobID, 0, "", "")]
+        DRG_TrueNorthDynamic = 6118,
+
+        [ParentCombo(DRG_TrueNorthDynamic)]
+        [CustomComboInfo("Hold True North option", "Will hold the last charge of True North, even when out of position for Fang And Claw/Wheeling Thrust potency bonuses.", DRG.JobID, 0, "", "")]
+        DRG_TrueNorthDynamic_HoldCharge = 6119,
+
+
         #endregion
 
         [ReplaceSkill(DRG.DoomSpike)]
