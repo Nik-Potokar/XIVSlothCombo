@@ -378,27 +378,28 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                                 ActionReady(GoringBlade) && InMeleeRange())
                                 return GoringBlade;
-                            
-                            if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
+
+                            if (HasEffect(Buffs.Requiescat))
                             {
-                                // HS when Confiteor not unlocked
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                                    return HolySpirit;
-                            }
-                            else
-                            {
-                                // Confiteor & Blades
-                                if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
-                                    Confiteor.LevelChecked() &&
-                                    HasEffect(Buffs.ConfiteorReady))
-                                    ||
-                                    (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) &&
-                                    BladeOfFaith.LevelChecked() &&
-                                    HasEffect(Buffs.Requiescat) &&
-                                    OriginalHook(Confiteor) != Confiteor &&
-                                    GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp))
-                                    return OriginalHook(Confiteor);
+                                if (!Confiteor.LevelChecked())
+                                {
+                                    // HS when Confiteor not unlocked
+                                    if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                                        GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                        return HolySpirit;
+                                }
+                                else
+                                {
+                                    // Confiteor & Blades
+                                    if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
+                                        HasEffect(Buffs.ConfiteorReady))
+                                        ||
+                                        (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) &&
+                                        BladeOfFaith.LevelChecked() &&
+                                        OriginalHook(Confiteor) != Confiteor &&
+                                        GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp))
+                                        return OriginalHook(Confiteor);
+                                }
                             }
 
                             // HS under DM
@@ -449,6 +450,12 @@ namespace XIVSlothCombo.Combos.PvE
                             OriginalHook(Confiteor) != Confiteor &&
                             GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)))
                             return OriginalHook(Confiteor);
+
+                        //Req HS
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                            HasEffect(Buffs.Requiescat) &&
+                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                            return HolySpirit;
 
                         // Base combo
                         if (comboTime > 0)
@@ -529,27 +536,30 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SpiritsWithin);
                         }
 
-                        // HS when Confiteor not unlocked
-                        if (HasEffect(Buffs.Requiescat) && !Confiteor.LevelChecked())
+                        // HC when Confiteor not unlocked
+                        if (HasEffect(Buffs.Requiescat))
                         {
-                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
-                                GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
-                                return HolyCircle;
-                        }
-                        else
-                        {
-                            // Confiteor & Blades
-                            if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) &&
-                                Confiteor.LevelChecked() && HasEffect(Buffs.ConfiteorReady))
-                                ||
-                                (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) &&
-                                BladeOfFaith.LevelChecked() && HasEffect(Buffs.Requiescat) &&
-                                OriginalHook(Confiteor) != Confiteor &&
-                                GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
-                                return OriginalHook(Confiteor);
+                            if (!Confiteor.LevelChecked())
+                            {
+                                if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
+                                    GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
+                                    return HolyCircle;
+                            }
+                            else
+                            {
+                                // Confiteor & Blades
+                                if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) &&
+                                    HasEffect(Buffs.ConfiteorReady))
+                                    ||
+                                    (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) &&
+                                    BladeOfFaith.LevelChecked() &&
+                                    OriginalHook(Confiteor) != Confiteor &&
+                                    GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp))
+                                    return OriginalHook(Confiteor);
+                            }
                         }
 
-                        // HS under DM/Req
+                        // HC under DM/Req
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && 
                             (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) && 
                             GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp &&
