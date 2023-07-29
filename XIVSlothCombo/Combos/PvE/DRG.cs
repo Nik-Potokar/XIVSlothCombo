@@ -391,10 +391,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(ChaosThrust);
                         }
 
-                        if (lastComboMove is TrueThrust or RaidenThrust)
+                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                             return VorpalThrust;
 
-                        if (lastComboMove is VorpalThrust)
+                        if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
                             return OriginalHook(FullThrust);
                     }
 
@@ -969,10 +969,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(ChaosThrust);
                         }
 
-                        if (lastComboMove is TrueThrust or RaidenThrust)
+                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                             return VorpalThrust;
 
-                        if (lastComboMove is VorpalThrust)
+                        if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
                             return OriginalHook(FullThrust);
                     }
 
