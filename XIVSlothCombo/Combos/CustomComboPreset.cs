@@ -1493,7 +1493,7 @@ namespace XIVSlothCombo.Combos
         MCH_DismantleTactician = 8053,
 
         [ReplaceSkill(MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_SimpleMode, MCH_AureliaRotation)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_EarlyToolsRotation)]
         [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, -2, "", "")]
         MCH_123Tools = 8047,
 
@@ -1503,20 +1503,20 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_123Tools)]
-        [CustomComboInfo("Aurelias Rotation Feature", "Uses Aurelias Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
-        MCH_AureliaRotation = 8049,
+        [CustomComboInfo("EarlyToolss Rotation Feature", "Uses EarlyToolss Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
+        MCH_EarlyToolsRotation = 8049,
 
-        [ParentCombo(MCH_AureliaRotation)]
-        [CustomComboInfo("Aurelia Opener Feature", "Adds opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
-        MCH_AureliaOpener = 8050,
+        [ParentCombo(MCH_EarlyToolsRotation)]
+        [CustomComboInfo("EarlyTools Opener Feature", "Adds opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
+        MCH_EarlyToolsOpener = 8050,
 
-        [ParentCombo(MCH_AureliaRotation)]
-        [CustomComboInfo("Aurelia Queen Feature", "Adds optimal Queen usage (100-90-100 etc.) to the Rotation Feature. If disabled, uses Queen at 50 Battery.", MCH.JobID, 0, "", "")]
-        MCH_AureliaQueen = 8051,
+        [ParentCombo(MCH_EarlyToolsRotation)]
+        [CustomComboInfo("EarlyTools Queen Feature", "Adds optimal Queen usage (100-90-100 etc.) to the Rotation Feature. If disabled, uses Queen at 50 Battery.", MCH.JobID, 0, "", "")]
+        MCH_EarlyToolsQueen = 8051,
 
-        [ParentCombo(MCH_AureliaRotation)]
-        [CustomComboInfo("Aurelia Reassemble Feature", "Adds Reassemble x2 during reopeners. In 10min or more fights, you lose 1 usage. If disabled, uses Reassemble on Chainsaw.", MCH.JobID, 0, "", "")]
-        MCH_AureliaReassembleUnderBuffs = 8052,
+        [ParentCombo(MCH_EarlyToolsRotation)]
+        [CustomComboInfo("EarlyTools Reassemble Feature", "Adds Reassemble x2 during reopeners. In 10min or more fights, you lose 1 usage. If disabled, uses Reassemble on Chainsaw.", MCH.JobID, 0, "", "")]
+        MCH_EarlyToolsReassembleUnderBuffs = 8052,
 
         [ReplaceSkill(MCH.SplitShot)]
         [CustomComboInfo("1-2-3 Combo Feature", "Replace Split Shot with its combo chain.", MCH.JobID, 0, "", "")]
@@ -1535,12 +1535,10 @@ namespace XIVSlothCombo.Combos
         MCH_HotShotDrillChainSaw = 8004,
 
         [ParentCombo(MCH_ST_MainCombo)]
-        [ConflictingCombos(MCH_ST_MainComboAlternate)]
         [CustomComboInfo("Drill/Air/Chain Saw on Main Combo Option", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf Air Anchor is on cooldown and you use Reassemble, Chain Saw will be added to main combo instead.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_Cooldowns = 8005,
 
         [ReplaceSkill(MCH.HeatBlast)]
-        [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("Single Button Heat Blast Feature", "Switches Heat Blast to Hypercharge.", MCH.JobID, 0, "", "")]
         MCH_HeatblastGaussRicochet = 8006,
 
@@ -1549,7 +1547,6 @@ namespace XIVSlothCombo.Combos
         MCH_AutoCrossbowGaussRicochet = 8018,
 
         [ParentCombo(MCH_ST_MainCombo)]
-        [ConflictingCombos(MCH_ST_MainCombo_Cooldowns)]
         [CustomComboInfo("Alternate Drill/Air Feature on Main Combo Option", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff\nOr Reasemble is on CD (will do nothing if Reassemble is OFF CD)", MCH.JobID, 0, "", "")]
         MCH_ST_MainComboAlternate = 8007,
 
@@ -1573,12 +1570,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Always Gauss Round/Ricochet Option", "Adds Gauss Round/Ricochet to the AoE combo outside of Hypercharge windows.", MCH.JobID, 0, "", "")]
         MCH_AoE_Gauss = 8012,
 
-        [ConflictingCombos(MCH_ST_MainCombo_RicochetGauss)]
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Ricochet & Gauss Round Option", "Adds Ricochet and Gauss Round to main combo.\nWill use all charges.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_RicochetGaussCharges = 8017,
 
-        [ConflictingCombos(MCH_ST_MainCombo_RicochetGaussCharges)]
         [ParentCombo(MCH_ST_MainCombo)]
         [CustomComboInfo("Ricochet & Gauss Round Overcap Protection Option", "Adds Ricochet and Gauss Round to main combo.\nWill leave 1 charge of each.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_RicochetGauss = 8013,
@@ -1599,7 +1594,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_AutoBarrel = 8019,
 
         [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
-        [ConflictingCombos(MCH_ST_MainCombo, MCH_HeatblastGaussRicochet, MCH_123Tools)]
+        [ConflictingCombos(MCH_EarlyToolsRotation, MCH_123Tools)]
         [CustomComboInfo("Simple Machinist Feature", "Single button, single target machinist, including buffs and overcap protections.\nConflicts with other single target toggles!\nMade to work optimally with a 2.5 GCD.\nThe use of latency mitigation tools is recommended due to XIV's network handling.", MCH.JobID, 0, "", "")]
         MCH_ST_SimpleMode = 8020,
 

@@ -3,6 +3,16 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using Lumina.Excel.GeneratedSheets;
+using Dalamud.Game.Gui.PartyFinder.Types;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using Newtonsoft.Json.Linq;
+using Microsoft.VisualBasic;
+using Dalamud.Interface.Colors;
+using Dalamud.Interface.Components;
+using Dalamud.Interface.Windowing;
+using Dalamud.Logging.Internal;
+using Dalamud.Logging;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -495,7 +505,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Queen
-                        if (CanWeave(actionID) && !gauge.IsRobotActive &&
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Simple_Gadget) && CanWeave(actionID) && !gauge.IsRobotActive &&
                             (/*wildfireCDTime >= 2 && */(!WasLastAbility(Wildfire) || level < Levels.Wildfire)))
                         {
                             //steps to control robot timings
@@ -1169,13 +1179,13 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class MCH_AureliaRotation : CustomCombo
+        internal class MCH_EarlyToolsRotation : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AureliaRotation;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_EarlyToolsRotation;
             internal static bool openerFinished = false;
 
             internal static bool inOpener = false;
-            internal static bool readyOpener = true;
+            internal static bool readyOpener = false;
             internal static bool openerStarted = false;
             internal static byte step = 0;
             internal static byte robotstep = 0;
@@ -1184,61 +1194,38 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (level >= 90 && actionID is HeatedSplitShot)
                 {
-                    if (IsEnabled(CustomComboPreset.MCH_AureliaOpener))
+                    if (IsEnabled(CustomComboPreset.MCH_EarlyToolsOpener) && level >= 90)
                     {
                         bool inCombat = HasCondition(ConditionFlag.InCombat);
                         var gauge = GetJobGauge<MCHGauge>();
 
-                        if (!inCombat && inOpener == false && readyOpener == true && GetRemainingCharges(Reassemble) == 2)
+                        // Check to start opener
+                        if (openerStarted && WasLastAbility(Reassemble) && HasEffect(Buffs.Reassembled)) { inOpener = true; openerStarted = false; readyOpener = false; return AirAnchor; }
+                        //if ((readyOpener || openerStarted) && !inOpener && GetRemainingCharges(Reassemble) == 2) { openerStarted = true; return AirAnchor; } else { openerStarted = false; }
+
+                        // Reset check for opener
+                        if (gauge.Battery == 0 && gauge.Heat == 0
+                            && IsOffCooldown(Wildfire) && IsOffCooldown(BarrelStabilizer) && IsOffCooldown(AirAnchor)
+                            && GetRemainingCharges(Reassemble) == 2 && GetRemainingCharges(GaussRound) == 3 && GetRemainingCharges(Ricochet) == 3
+                            && IsOffCooldown(ChainSaw) && IsOffCooldown(Drill)
+                            && GetTargetHPPercent() == 100 && !inCombat)
                         {
+                            readyOpener = true;
+                            inOpener = false;
                             openerStarted = true;
-                            readyOpener = false;
-                            Dalamud.Logging.PluginLog.Log("Opener Start");
+                            step = 0;
                             return Reassemble;
                         }
+                        else
+                        { readyOpener = false; }
 
-                        if (openerStarted == true && GetRemainingCharges(Reassemble) == 1 &&
-                            gauge.Battery == 0 && !inCombat && ActionReady(AirAnchor))
-                        {
-                            openerStarted = false;
-                            inOpener = true;
-                            readyOpener = false;
-                            Dalamud.Logging.PluginLog.Log("InOpener Start");
-                            return AirAnchor;
-                        }
-
-                        //Check if opener needs to be reset on party wipe
-                        if (!inCombat)
-                        {
-                            if (gauge.Heat == 0 && gauge.Battery == 0 &&
-                                IsOffCooldown(ChainSaw) && IsOffCooldown(Drill) && IsOffCooldown(AirAnchor) &&
-                                GetRemainingCharges(GaussRound) == 3 && GetRemainingCharges(Ricochet) == 3 && GetRemainingCharges(Reassemble) == 2 &&
-                                IsOffCooldown(Wildfire) && IsOffCooldown(BarrelStabilizer))
-                            {
-                                openerStarted = false;
-                                inOpener = false;
-                                readyOpener = true;
-                                step = 0;
-                                Dalamud.Logging.PluginLog.Log("RESET");
-                                //robotstep = 0;
-                                return Reassemble;
-                            }
-
-                            else if (inCombat && readyOpener == false && inOpener == false)
-                            {
-                                step = 25;
-                                inOpener = false;
-                                readyOpener = false;
-                                Dalamud.Logging.PluginLog.Log("Step 25");
-                            }
-                        }
                         if (inOpener == true)
                         {
 
                             if (step == 0)
                             {
                                 if (WasLastAction(AirAnchor)) step++;
-                                else return AirAnchor; Dalamud.Logging.PluginLog.Log("INOpener Time");
+                                else return AirAnchor; Dalamud.Logging.PluginLog.Log("Time for the Opener!");
                             }
 
                             if (step == 1)
@@ -1392,7 +1379,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         var inCombat = InCombat();
                         var gauge = GetJobGauge<MCHGauge>();
-
+                        Dalamud.Logging.PluginLog.Log("Step 25 and better be donezo");
                         var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
                         if (!inCombat && inOpener == false)
@@ -1428,7 +1415,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Queen aka Robot
-                        if (IsEnabled(CustomComboPreset.MCH_AureliaQueen) && CanWeave(actionID) && !gauge.IsRobotActive && (/*wildfireCDTime >= 2 && */!WasLastAbility(Wildfire)))
+                        if (IsEnabled(CustomComboPreset.MCH_EarlyToolsQueen) && CanWeave(actionID) && !gauge.IsRobotActive && (/*wildfireCDTime >= 2 && */!WasLastAbility(Wildfire)))
                         {
                             // First condition
                             if (gauge.Battery == 70 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
@@ -1439,12 +1426,12 @@ namespace XIVSlothCombo.Combos.PvE
                             // Second condition
                             if (!WasLastAction(OriginalHook(CleanShot)))
                             {
-                                if (gauge.Battery == 100 && gauge.LastSummonBatteryPower == 70)
+                                if (gauge.Battery >= 90 && gauge.LastSummonBatteryPower == 70)
                                     return AutomatonQueen;
                             }
 
                             // Third condition
-                            while (gauge.LastSummonBatteryPower == 100 && gauge.Battery >= 90) //was previously 80 with 30 overcap for 10mins
+                            if (gauge.LastSummonBatteryPower >= 90 && gauge.Battery >= 90) 
                             {
                                 return AutomatonQueen;
                             }
@@ -1455,11 +1442,16 @@ namespace XIVSlothCombo.Combos.PvE
                                 return AutomatonQueen;
                             }
 
+                            // Fifth condition
+                            while (gauge.LastSummonBatteryPower == 100 && gauge.Battery >= 90) //was previously 80 with 30 overcap for 10mins
+                            {
+                                return AutomatonQueen;
+                            }
                         }
-
-                        if (!IsEnabled(CustomComboPreset.MCH_AureliaQueen) && CanWeave(actionID) && !gauge.IsRobotActive && !WasLastAbility(Wildfire))
+                        
+                        if (!IsEnabled(CustomComboPreset.MCH_EarlyToolsQueen) && gauge.Battery >= 50 && CanWeave(actionID) && !gauge.IsRobotActive && !WasLastAbility(Wildfire))
                         {
-                            if (gauge.Battery == 50) return AutomatonQueen;
+                            return AutomatonQueen;
                         }
 
                         //Overheated Reassemble & Heatblast & GaussRico featuring a small ChainSaw addendum
@@ -1528,37 +1520,39 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // TOOLS!! ChainSaw Drill Air Anchor
                         if ((IsOffCooldown(AirAnchor) || 
-                             GetCooldownRemainingTime(AirAnchor) < 1.2 && IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs) ||
-                             GetCooldownRemainingTime(AirAnchor) < 1 && !IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs)) && 
+                             GetCooldownRemainingTime(AirAnchor) < 1) && 
                              level >= Levels.AirAnchor && inOpener == false)
                         {
-                            if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs) && 
-                                !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 2 &&
-                               (wildfireCDTime <= 12 || IsOffCooldown(Wildfire)))
-                            {
-                                return Reassemble;
-                            }
                             return AirAnchor;
                         }
 
-                        if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1.2 && IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs) ||
-                             GetCooldownRemainingTime(Drill) < 1 && !IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs)) && 
+                        if ((IsOffCooldown(Drill) || 
+                            GetCooldownRemainingTime(Drill) < 1.2 && IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs) ||
+                            GetCooldownRemainingTime(Drill) < 1 && !IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs)) && 
                              level >= Levels.Drill && inOpener == false)
                         {
-                            if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs) && 
-                                !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 &&
-                               (wildfireCDTime <= 10 || IsOffCooldown(Wildfire)))
+                            if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs) && 
+                                !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= 2 &&
+                               (wildfireCDTime <= 14 || IsOffCooldown(Wildfire)))
                             {
                                 return Reassemble;
                             }
                             return Drill;
                         }
 
-                        if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1.2 && !IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs) ||
-                            GetCooldownRemainingTime(ChainSaw) < 1 && IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs)) && 
-                            level >= Levels.ChainSaw && openerFinished && inOpener == false)
+                        if ((IsOffCooldown(ChainSaw) || 
+                            GetCooldownRemainingTime(ChainSaw) < 1.2 && IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs) ||
+                            GetCooldownRemainingTime(ChainSaw) < 1 && !IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs)) && 
+                            level >= Levels.ChainSaw && inOpener == false)
                         {
-                            if (CanWeave(actionID) && !IsEnabled(CustomComboPreset.MCH_AureliaReassembleUnderBuffs) &&
+                            if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs) &&
+                                !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= 2 &&
+                               (wildfireCDTime <= 12 || IsOffCooldown(Wildfire)))
+                            {
+                                return Reassemble;
+                            }
+
+                            if (CanWeave(actionID) && !IsEnabled(CustomComboPreset.MCH_EarlyToolsReassembleUnderBuffs) &&
                                 !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0)
                             {
                                 return Reassemble;
