@@ -150,13 +150,42 @@ namespace XIVSlothCombo.Combos.PvE
                             return HeatBlast;
                     }
 
+                    if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_Hypercharge) && gauge.Heat >= 95 && level >= Levels.Hypercharge && !gauge.IsOverheated)
+                    {
+                        //Protection & ensures Hyper charged is double weaved with WF during reopener
+                        //if (HasEffect(Buffs.Wildfire) || level < Levels.Wildfire) return Hypercharge;
+
+                        if (level >= Levels.Drill && GetCooldownRemainingTime(Drill) >= 8)
+                        {
+                            if (level >= Levels.AirAnchor && GetCooldownRemainingTime(AirAnchor) >= 8)
+                            {
+                                if (level >= Levels.ChainSaw && GetCooldownRemainingTime(ChainSaw) >= 8)
+                                {
+                                    if (CanWeave(actionID)) return Hypercharge;
+                                }
+                                else if (level < Levels.ChainSaw)
+                                {
+                                    if (CanWeave(actionID)) return Hypercharge;
+                                }
+                            }
+                            else if (level < Levels.AirAnchor)
+                            {
+                                if (CanWeave(actionID)) return Hypercharge;
+                            }
+                        }
+                        else if (level < Levels.Drill)
+                        {
+                            if (CanWeave(actionID)) return Hypercharge;
+                        }
+                    }
+
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainCombo_Cooldowns))
                     {
-                        if (HasEffect(Buffs.Reassembled) && !airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
+                        if (!airAnchorCD.IsCooldown && level >= Levels.AirAnchor)
                             return AirAnchor;
-                        if (airAnchorCD.IsCooldown && !drillCD.IsCooldown && level >= Levels.Drill)
+                        if (!drillCD.IsCooldown && level >= Levels.Drill)
                             return Drill;
-                        if (HasEffect(Buffs.Reassembled) && !chainsawCD.IsCooldown && level >= Levels.ChainSaw)
+                        if (!chainsawCD.IsCooldown && level >= Levels.ChainSaw)
                             return ChainSaw;
                     }
 
@@ -180,13 +209,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_MainComboAlternate))
                     {
-                        if (level >= Levels.AirAnchor && !airAnchorCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
+                        if (level >= Levels.AirAnchor && !airAnchorCD.IsCooldown)
                             return AirAnchor;
-                        if (level >= Levels.ChainSaw && !chainsawCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)))
+                        if (level >= Levels.ChainSaw && !chainsawCD.IsCooldown)
                             return ChainSaw;
-                        if (level >= Levels.Drill && !drillCD.IsCooldown && (HasEffect(Buffs.Reassembled) || !HasCharges(Reassemble)))
+                        if (level >= Levels.Drill && !drillCD.IsCooldown)
                             return Drill;
-                        if (level < Levels.AirAnchor && !hotshotCD.IsCooldown && (GetCooldownChargeRemainingTime(Reassemble) >= 55 || !HasCharges(Reassemble)))
+                        if (level < Levels.AirAnchor && !hotshotCD.IsCooldown)
                             return HotShot;
                     }
 
@@ -194,7 +223,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (battery == 100 && level is >= 40 and <= 79)
                             return RookAutoturret;
-                        if (battery == 100 && level >= 80)
+                        if (battery >= 90 && level >= 80)
                             return AutomatonQueen;
                     }
 

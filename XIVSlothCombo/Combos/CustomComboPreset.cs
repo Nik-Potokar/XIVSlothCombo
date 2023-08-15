@@ -1490,7 +1490,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.Dismantle)]
         [CustomComboInfo("Dismantle/Tactician Feature", "Replace Dismantle with Tactician when Dismantle on cooldown.", MCH.JobID, 0, "", "")]
-        MCH_DismantleTactician = 8053,
+        MCH_DismantleTactician = 8060,
 
         [ReplaceSkill(MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_EarlyToolsRotation)]
@@ -1498,12 +1498,12 @@ namespace XIVSlothCombo.Combos
         MCH_123Tools = 8047,
 
         [ParentCombo(MCH_123Tools)]
-        [CustomComboInfo("123Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("123 Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
         MCH_123ToolsOpener = 8048,
 
         [ReplaceSkill(MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_SimpleMode, MCH_123Tools)]
-        [CustomComboInfo("EarlyToolss Rotation Feature", "Uses EarlyToolss Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
+        [CustomComboInfo("EarlyTools Rotation Feature", "Uses EarlyToolss Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
         MCH_EarlyToolsRotation = 8049,
 
         [ParentCombo(MCH_EarlyToolsRotation)]
@@ -1517,6 +1517,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_EarlyToolsRotation)]
         [CustomComboInfo("EarlyTools Reassemble Feature", "Adds Reassemble x2 during reopeners. In 10min or more fights, you lose 1 usage. If disabled, uses Reassemble on Chainsaw.", MCH.JobID, 0, "", "")]
         MCH_EarlyToolsReassembleUnderBuffs = 8052,
+
+        [ParentCombo(MCH_ST_MainCombo)]
+        [CustomComboInfo("Hypercharge on Main Combo Option", "Add Hypercharge without drifting tools on main combo.", MCH.JobID, 0, "", "")]
+        MCH_ST_MainCombo_Hypercharge = 8053,
 
         [ReplaceSkill(MCH.SplitShot)]
         [CustomComboInfo("1-2-3 Combo Feature", "Replace Split Shot with its combo chain.", MCH.JobID, 0, "", "")]
@@ -1535,7 +1539,7 @@ namespace XIVSlothCombo.Combos
         MCH_HotShotDrillChainSaw = 8004,
 
         [ParentCombo(MCH_ST_MainCombo)]
-        [CustomComboInfo("Drill/Air/Chain Saw on Main Combo Option", "Air Anchor followed by Drill is added onto main combo if you use Reassemble.\nIf Air Anchor is on cooldown and you use Reassemble, Chain Saw will be added to main combo instead.", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Drill/Air/Chain Saw on Main Combo Option", "", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_Cooldowns = 8005,
 
         [ReplaceSkill(MCH.HeatBlast)]
@@ -1547,7 +1551,7 @@ namespace XIVSlothCombo.Combos
         MCH_AutoCrossbowGaussRicochet = 8018,
 
         [ParentCombo(MCH_ST_MainCombo)]
-        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo Option", "Drill/Air/Hotshot Feature is added onto main combo (Note: It will add them onto main combo ONLY if you are under Reassemble Buff\nOr Reasemble is on CD (will do nothing if Reassemble is OFF CD)", MCH.JobID, 0, "", "")]
+        [CustomComboInfo("Alternate Drill/Air Feature on Main Combo Option", "", MCH.JobID, 0, "", "")]
         MCH_ST_MainComboAlternate = 8007,
 
         [ParentCombo(MCH_ST_MainCombo)]
