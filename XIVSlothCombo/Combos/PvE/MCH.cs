@@ -1408,7 +1408,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         var inCombat = InCombat();
                         var gauge = GetJobGauge<MCHGauge>();
-                        Dalamud.Logging.PluginLog.Log("Step 25 and better be donezo");
                         var wildfireCDTime = GetCooldownRemainingTime(Wildfire);
 
                         if (!inCombat && inOpener == false)

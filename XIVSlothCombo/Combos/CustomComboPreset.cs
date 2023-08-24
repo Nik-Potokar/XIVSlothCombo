@@ -1025,6 +1025,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID, 0, "", "")]
         DRK_MainComboCDs_Group = 5099,
 
+        [ReplaceSkill(DRK.TheBlackestNight)]
+        [CustomComboInfo("Simple Mitigation", "Replace TBN with single-target mits.", DRK.JobID, -1, "", "")]
+        DRK_SimpleMit = 5034,
+
         [ReplaceSkill(DRK.Souleater)]
         [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Dark Knight)", DRK.JobID, 0, "", "")]
         DRK_SouleaterCombo = 5000,
