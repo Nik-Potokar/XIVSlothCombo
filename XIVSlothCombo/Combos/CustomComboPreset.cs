@@ -1526,6 +1526,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Hypercharge on Main Combo Option", "Add Hypercharge without drifting tools on main combo.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo_Hypercharge = 8053,
 
+        [ParentCombo(MCH_123Tools)]
+        [CustomComboInfo("123 Tools Reassemble Feature", "Adds Reassemble x2 during reopeners. In 10min or more fights, you lose 1 usage. if disabled, uses Reassemble on Chain Saw.", MCH.JobID, 0, "", "")]
+        MCH_123ToolsReassembleUnderBuffs = 8054,
+
+        [ParentCombo(MCH_123Tools)]
+        [CustomComboInfo("123 Tools Queen Feature", "Adds optimal Queen usage to Rotation Feature. If disabled, uses Queen at 50 Battery.", MCH.JobID, 0, "", "")]
+        MCH_123ToolsQueen = 8055,
+
         [ReplaceSkill(MCH.SplitShot)]
         [CustomComboInfo("1-2-3 Combo Feature", "Replace Split Shot with its combo chain.", MCH.JobID, 0, "", "")]
         MCH_ST_MainCombo = 8000,

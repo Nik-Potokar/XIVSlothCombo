@@ -1027,7 +1027,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Queen aka Robot
-                        if (CanWeave(actionID) && !gauge.IsRobotActive && (/*wildfireCDTime >= 2 && */!WasLastAbility(Wildfire)))
+                        if (IsEnabled(CustomComboPreset.MCH_123ToolsQueen) && CanWeave(actionID) && 
+                            !gauge.IsRobotActive && (/*wildfireCDTime >= 2 && */!WasLastAbility(Wildfire)))
                         {
                             // First condition
                             if (gauge.Battery == 50 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
@@ -1054,6 +1055,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 return AutomatonQueen;
                             }
 
+                        }
+
+                        if (!IsEnabled(CustomComboPreset.MCH_123ToolsQueen) && gauge.Battery >= 50 && CanWeave(actionID) && !gauge.IsRobotActive && !WasLastAbility(Wildfire))
+                        {
+                            return AutomatonQueen;
                         }
 
                         //Overheated Reassemble & Heatblast & GaussRico featuring a small ChainSaw addendum
@@ -1129,9 +1135,13 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // TOOLS!! ChainSaw Drill Air Anchor
-                        if ((IsOffCooldown(AirAnchor) || GetCooldownRemainingTime(AirAnchor) < 1.5) && level >= Levels.AirAnchor && inOpener == false)
+                        if ((IsOffCooldown(AirAnchor) || 
+                            GetCooldownRemainingTime(AirAnchor) < 1.2 && IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) ||
+                            GetCooldownRemainingTime(AirAnchor) < 1 && !IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs))
+                            && level >= Levels.AirAnchor && inOpener == false)
                         {
                             if (CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == GetMaxCharges(Reassemble) &&
+                                IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) &&
                                (wildfireCDTime <= 10 || IsOffCooldown(Wildfire)))
                             {
                                 return Reassemble;
@@ -1139,9 +1149,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return AirAnchor;
                         }
 
-                        if ((IsOffCooldown(Drill) || GetCooldownRemainingTime(Drill) < 1.5) && level >= Levels.Drill && inOpener == false)
+                        if ((IsOffCooldown(Drill) || 
+                            GetCooldownRemainingTime(Drill) < 1.2 && IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) ||
+                            GetCooldownRemainingTime(Drill) < 1 && !IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs)) && 
+                            level >= Levels.Drill && inOpener == false)
                         {
                             if (CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 &&
+                                IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) &&
                                (wildfireCDTime <= 8 || IsOffCooldown(Wildfire)))
                             {
                                 return Reassemble;
