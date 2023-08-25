@@ -1160,11 +1160,28 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return Reassemble;
                             }
+
+                            if (CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 &&
+                                !IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) &&
+                                (wildfireCDTime <= 8 || ActionReady(Wildfire)))
+                            {
+                                return Reassemble;
+                            }
                             return Drill;
                         }
 
-                        if ((IsOffCooldown(ChainSaw) || GetCooldownRemainingTime(ChainSaw) < 1) && level >= Levels.ChainSaw && openerFinished && inOpener == false)
+                        if ((IsOffCooldown(ChainSaw) || 
+                            GetCooldownRemainingTime(ChainSaw) < 1.2 && !IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) ||
+                            GetCooldownRemainingTime(ChainSaw) < 1 && IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs)) && 
+                            level >= Levels.ChainSaw && openerFinished && inOpener == false)
                         {
+                            if(CanWeave(actionID) && !HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) > 0 &&
+                                !IsEnabled(CustomComboPreset.MCH_123ToolsReassembleUnderBuffs) &&
+                                wildfireCDTime < 65 && wildfireCDTime > 55)
+                            {
+                                return Reassemble;
+                            }
+
                             return ChainSaw;
                         }
 
@@ -1268,7 +1285,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (step == 0)
                             {
                                 if (WasLastAction(AirAnchor)) step++;
-                                else return AirAnchor; Dalamud.Logging.PluginLog.Log("Time for the Opener!");
+                                else return AirAnchor;
                             }
 
                             if (step == 1)
