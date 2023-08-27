@@ -1359,14 +1359,31 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            if (preset == CustomComboPreset.MCH_ST_SecondWind)
+            if (preset is CustomComboPreset.MCH_ST_Adv_Opener)
+            {
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_OpenerSelection, "Standard Opener", "Uses Standard Opener.", 0);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_OpenerSelection, "123 Tools", "Uses 123 Tools opener.", 1);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_OpenerSelection, "Early Tools", "Uses Early Tools opener.", 2);
+            }
+
+            if (preset is CustomComboPreset.MCH_ST_Adv_Rotation)
+            {
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Opener", "Uses Standard Rotation.", 0);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "Uses 123 Tools Rotation.", 1);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "Uses Early Tools Rotation.", 2);
+            }
+
+            if (preset == CustomComboPreset.MCH_ST_Simple_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.MCH_AoE_SecondWind)
+            if (preset == CustomComboPreset.MCH_ST_Adv_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_AoE_Simple_SecondWind)
                 UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.MCH_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+            if (preset == CustomComboPreset.MCH_AoE_Adv_SecondWind)
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
 
             #endregion
             // ====================================================================================
