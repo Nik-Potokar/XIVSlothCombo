@@ -573,7 +573,6 @@ namespace XIVSlothCombo.Combos.PvE
                 //END_RDM_VERTHUNDERVERAERO
 
                 //NO_CONDITIONS_MET
-                if (!LevelChecked(Jolt)) return Riposte;
                 return actionID;
             }
         }
