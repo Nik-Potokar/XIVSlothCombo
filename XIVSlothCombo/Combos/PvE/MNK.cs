@@ -1036,23 +1036,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Monk Rotation
                     if (HasEffect(Buffs.OpoOpoForm))
-                    {
                         return OriginalHook(ArmOfTheDestroyer);
-                    }
 
-                    if ((HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury))
-                        || HasEffect(Buffs.FormlessFist))
-                    {
-                        return FourPointFury;
-                    }
+                    if (HasEffect(Buffs.RaptorForm) || HasEffect(Buffs.FormlessFist))
+                        return LevelChecked(FourPointFury)
+                            ? FourPointFury
+                            : TwinSnakes;
 
                     if (HasEffect(Buffs.CoerlForm) && LevelChecked(Rockbreaker))
-                    {
                         return Rockbreaker;
-                    }
                 }
                 return actionID;
             }
+
         }
 
         internal class MNK_AOE_AdvancedMode : CustomCombo
@@ -1181,9 +1177,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.OpoOpoForm))
                         return OriginalHook(ArmOfTheDestroyer);
 
-                    if ((HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury))
-                        || HasEffect(Buffs.FormlessFist))
-                        return FourPointFury;
+                    if (HasEffect(Buffs.RaptorForm) || HasEffect(Buffs.FormlessFist))
+                        return LevelChecked(FourPointFury)
+                            ? FourPointFury
+                            : TwinSnakes;
 
                     if (HasEffect(Buffs.CoerlForm) && LevelChecked(Rockbreaker))
                         return Rockbreaker;
