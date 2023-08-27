@@ -596,13 +596,12 @@ namespace XIVSlothCombo.Combos.PvE
                     // Out of combat preparation
                     if (!InCombat())
                     {
-                        if (!inOpener && gauge.Chakra < 5 &&
-                            LevelChecked(Meditation))
+                        if (IsEnabled(CustomComboPreset.MNK_ST_Meditation) &&
+                            !inOpener && gauge.Chakra < 5 && LevelChecked(Meditation))
                             return Meditation;
 
-                        if (!inOpener && LevelChecked(FormShift) &&
-                            !HasEffect(Buffs.FormlessFist) &&
-                            comboTime <= 0)
+                        if (IsEnabled(CustomComboPreset.MNK_ST_FormlessFist) &&
+                            !inOpener && LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
                             return FormShift;
 
                         if (IsEnabled(CustomComboPreset.MNK_ST_ADV_Thunderclap) &&
@@ -886,19 +885,15 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is ArmOfTheDestroyer)
                 {
                     if (HasEffect(Buffs.OpoOpoForm))
-                    {
                         return OriginalHook(ArmOfTheDestroyer);
-                    }
 
-                    if ((HasEffect(Buffs.RaptorForm) && LevelChecked(FourPointFury)) || HasEffect(Buffs.FormlessFist))
-                    {
-                        return FourPointFury;
-                    }
+                    if (HasEffect(Buffs.RaptorForm) || HasEffect(Buffs.FormlessFist))
+                        return LevelChecked(FourPointFury)
+                            ? FourPointFury
+                            : TwinSnakes;
 
                     if (HasEffect(Buffs.CoerlForm) && LevelChecked(Rockbreaker))
-                    {
                         return Rockbreaker;
-                    }
                 }
                 return actionID;
             }
@@ -1048,7 +1043,6 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 return actionID;
             }
-
         }
 
         internal class MNK_AOE_AdvancedMode : CustomCombo
@@ -1068,10 +1062,12 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (!InCombat())
                     {
-                        if (gauge.Chakra < 5 && LevelChecked(Meditation))
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_Meditation) &&
+                            gauge.Chakra < 5 && LevelChecked(Meditation))
                             return Meditation;
 
-                        if (LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                        if (IsEnabled(CustomComboPreset.MNK_AoE_FormlessFist) &&
+                            LevelChecked(FormShift) && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
                             return FormShift;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5

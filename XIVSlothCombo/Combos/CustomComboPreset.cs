@@ -1841,7 +1841,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9031,
 
-        // Last value = 9038
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Formless Fist on AoE Combo", "Adds Formless Fist to the AoE combo.", MNK.JobID, 45, "", "")]
+        MNK_AoE_FormlessFist = 9039,
+
+        [ParentCombo(MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Formless Fist on ST Combo", "Adds Formless Fist to the ST combo.", MNK.JobID, 45, "", "")]
+        MNK_ST_FormlessFist = 9040,
+
+        // Last value = 9040
 
         #endregion
 
