@@ -105,6 +105,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is TrueThrust)
                 {
+                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanDRGWeave(Variant.VariantRampart))
+                        return Variant.VariantRampart;
+
                     // Opener for DRG
                     //2.5 GCD
                     if (level >= 88)
@@ -299,20 +310,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inOpener)
                     {
-                        if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
-                            return Variant.VariantCure;
-
                         // Piercing Talon Uptime Option
                         if (LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
                             return PiercingTalon;
-
-                        if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanWeave(actionID))
-                            return Variant.VariantRampart;
 
                         if (HasEffect(Buffs.PowerSurge))
                         {
@@ -374,10 +374,24 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //1-2-3 Combo
                     if (HasEffect(Buffs.SharperFangAndClaw))
-                        return FangAndClaw;
+                    {
+                        // If we are not on the flank, but need to use Fangs, pop true north if not already up
+                        if (!HasEffect(All.Buffs.TrueNorth) &&
+                            CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
+                            return All.TrueNorth;
+
+                        return OriginalHook(FangAndClaw);
+                    }
 
                     if (HasEffect(Buffs.EnhancedWheelingThrust))
-                        return WheelingThrust;
+                    {
+                        // If we are not on the rear, but need to use Wheeling, pop true north if not already up
+                        if (!HasEffect(All.Buffs.TrueNorth) &&
+                            CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                            return All.TrueNorth;
+
+                        return OriginalHook(WheelingThrust);
+                    }
 
                     if (comboTime > 0)
                     {
@@ -420,8 +434,6 @@ namespace XIVSlothCombo.Combos.PvE
                 int diveOptions = Config.DRG_ST_DiveOptions;
                 int openerSelection = Config.DRG_OpenerOptions;
                 Status? ChaosDoTDebuff;
-                int ST_secondWindTreshold = Config.DRG_STSecondWindThreshold;
-                int ST_bloodBathTreshold = Config.DRG_STBloodbathThreshold;
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
                 bool trueNorthReadyDyn = trueNorthReady;
 
@@ -437,6 +449,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is TrueThrust)
                 {
+                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanDRGWeave(Variant.VariantRampart))
+                        return Variant.VariantRampart;
+
                     // Opener for DRG
                     if (IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88)
                     {
@@ -468,8 +491,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
                                 inOpener = false;
 
-                            if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump) &&
-                                IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88 && openerReady)
+                            if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump))
                                 inOpener = true;
 
                             if (inOpener)
@@ -628,6 +650,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (lastComboMove == WheelingThrust) step++;
                                     else return WheelingThrust;
                                 }
+
                                 inOpener = false;
                             }
                         }
@@ -660,8 +683,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
                                 inOpener = false;
 
-                            if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump) &&
-                                IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88 && openerReady)
+                            if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump))
                                 inOpener = true;
 
                             if (inOpener)
@@ -829,21 +851,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inOpener)
                     {
-                        if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
-                            return Variant.VariantCure;
-
                         // Piercing Talon Uptime Option
                         if (IsEnabled(CustomComboPreset.DRG_ST_RangedUptime) &&
                             LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
                             return PiercingTalon;
-
-                        if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanWeave(actionID))
-                            return Variant.VariantRampart;
 
                         if (HasEffect(Buffs.PowerSurge))
                         {
@@ -868,8 +879,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
                             {
                                 //Life Surge Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && CanDRGWeave(LifeSurge) &&
-                                    !HasEffect(Buffs.LifeSurge) && HasCharges(LifeSurge) &&
+                                if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge) && CanDRGWeave(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
                                     ((HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
                                     (HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
                                     (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) || HasEffect(Buffs.SharperFangAndClaw))) ||
@@ -925,12 +935,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // healing
                     if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
                     {
-                        if (PlayerHealthPercentageHp() <= ST_secondWindTreshold &&
-                            ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_STSecondWindThreshold && ActionReady(All.SecondWind))
                             return All.SecondWind;
 
-                        if (PlayerHealthPercentageHp() <= ST_bloodBathTreshold &&
-                            ActionReady(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_STBloodbathThreshold && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
                     }
 
@@ -994,8 +1002,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is DoomSpike)
                 {
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
                         return Variant.VariantCure;
 
                     // Piercing Talon Uptime Option
@@ -1005,7 +1013,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                        CanDRGWeave(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
                     if (HasEffect(Buffs.PowerSurge))
@@ -1065,8 +1073,18 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is DoomSpike or DraconianFury && LevelChecked(SonicThrust))
-                            return SonicThrust;
+                        if (lastComboMove is DoomSpike or DraconianFury)
+                            return (LevelChecked(SonicThrust) || GetBuffRemainingTime(Buffs.PowerSurge) > 10)
+                                ? SonicThrust
+                                : TrueThrust;
+
+                        if (lastComboMove is TrueThrust)
+                            return Disembowel;
+
+                        if (lastComboMove is Disembowel)
+                            return LevelChecked(OriginalHook(ChaosThrust))
+                            ? ChaosThrust
+                            : DoomSpike;
 
                         if (lastComboMove is SonicThrust && LevelChecked(CoerthanTorment))
                             return CoerthanTorment;
@@ -1087,14 +1105,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 int diveOptions = Config.DRG_AOE_DiveOptions;
-                int AoE_secondWindTreshold = Config.DRG_AoESecondWindThreshold;
-                int AoE_bloodBathTreshold = Config.DRG_AoEBloodbathThreshold;
 
                 if (actionID is DoomSpike)
                 {
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_VariantCure))
+                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
                         return Variant.VariantCure;
 
                     // Piercing Talon Uptime Option
@@ -1102,11 +1118,10 @@ namespace XIVSlothCombo.Combos.PvE
                         LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
                         return PiercingTalon;
 
-
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                        CanDRGWeave(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
                     if (HasEffect(Buffs.PowerSurge))
@@ -1185,19 +1200,27 @@ namespace XIVSlothCombo.Combos.PvE
                     // healing
                     if (IsEnabled(CustomComboPreset.DRG_AoE_ComboHeals))
                     {
-                        if (PlayerHealthPercentageHp() <= AoE_secondWindTreshold &&
-                            ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_AoESecondWindThreshold && ActionReady(All.SecondWind))
                             return All.SecondWind;
 
-                        if (PlayerHealthPercentageHp() <= AoE_bloodBathTreshold &&
-                            ActionReady(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_AoEBloodbathThreshold && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
                     }
 
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is DoomSpike or DraconianFury && LevelChecked(SonicThrust))
-                            return SonicThrust;
+                        if (lastComboMove is DoomSpike or DraconianFury)
+                            return (LevelChecked(SonicThrust) || GetBuffRemainingTime(Buffs.PowerSurge) > 10)
+                                ? SonicThrust
+                                : TrueThrust;
+
+                        if (lastComboMove is TrueThrust)
+                            return Disembowel;
+
+                        if (lastComboMove is Disembowel)
+                            return LevelChecked(OriginalHook(ChaosThrust))
+                            ? ChaosThrust
+                            : DoomSpike;
 
                         if (lastComboMove is SonicThrust && LevelChecked(CoerthanTorment))
                             return CoerthanTorment;
