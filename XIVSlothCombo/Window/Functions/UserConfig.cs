@@ -1483,6 +1483,20 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(PLD.Config.PLD_RequiescatOption, "Holy Circle", "", 5);
             }
 
+            if (preset is CustomComboPreset.PLD_ST_AdvancedMode_Requiescat)
+            {
+                UserConfig.DrawHorizontalRadioButton(PLD.Config.PLD_ST_RequiescatWeave, "Standard Weave", "Weaves Requiescat immediately after Fight or Flight for a standard burst window.", 0, 150, ImGuiColors.ParsedGreen);
+                UserConfig.DrawHorizontalRadioButton(PLD.Config.PLD_ST_RequiescatWeave, "Late Weave", "Late-weaves Requiescat after Fight or Flight.\nEnsures Requiescat's damage falls under the Fight or Flight buff, but may lead to misalignment in longer fights.", 1, 150, ImGuiColors.DalamudYellow);
+                ImGui.Spacing();
+            }
+
+            if (preset is CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat)
+            {
+                UserConfig.DrawHorizontalRadioButton(PLD.Config.PLD_AoE_RequiescatWeave, "Standard Weave", "Weaves Requiescat immediately after Fight or Flight for a standard burst window.", 0, 150, ImGuiColors.ParsedGreen);
+                UserConfig.DrawHorizontalRadioButton(PLD.Config.PLD_AoE_RequiescatWeave, "Late Weave", "Late-weaves Requiescat after Fight or Flight.\nEnsures Requiescat's damage falls under the Fight or Flight buff, but may lead to misalignment in longer fights.", 1, 150, ImGuiColors.DalamudYellow);
+                ImGui.Spacing();
+            }
+
             if (preset == CustomComboPreset.PLD_SpiritsWithin)
             {
                 UserConfig.DrawRadioButton(PLD.Config.PLD_SpiritsWithinOption, "Prioritize Circle of Scorn", "", 1);
