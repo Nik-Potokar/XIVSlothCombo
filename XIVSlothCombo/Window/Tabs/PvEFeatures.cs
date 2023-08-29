@@ -21,13 +21,13 @@ namespace XIVSlothCombo.Window.Tabs
 
         internal static new void Draw()
         {
-#if !DEBUG
-            if (Service.ClassLocked)
+//#if !DEBUG
+            if (IconReplacer.ClassLocked())
             {
                 ImGui.Text("Equip your job stone to re-unlock features.");
                 return;
             }
-#endif
+//#endif
 
             ImGui.Text("This tab allows you to select which PvE combos and features you wish to enable.");
             ImGui.BeginChild("scrolling", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
