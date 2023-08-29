@@ -1021,6 +1021,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (currentMP > MP.FireAoE)
                                 return OriginalHook(Fire2);
+
+                            if (LevelChecked(Flare))
+                                return Flare;
                         }
                     }
 

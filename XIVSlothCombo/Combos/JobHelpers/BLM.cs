@@ -22,6 +22,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
         private static bool HasCooldowns()
         {
             if (CustomComboFunctions.GetRemainingCharges(Sharpcast) < 2) return false;
+            if (CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) return false;
+            if (!CustomComboFunctions.ActionReady(Manafont)) return false;
+            if (!CustomComboFunctions.ActionReady(All.Swiftcast)) return false;
+            if (!CustomComboFunctions.ActionReady(Amplifier)) return false;
+            if (!CustomComboFunctions.ActionReady(All.LucidDreaming) && Config.BLM_Advanced_OpenerSelection == 1) return false;
+            if (!CustomComboFunctions.ActionReady(LeyLines)) return false;
 
             return true;
         }
