@@ -2034,6 +2034,18 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WAR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, WAR.Config.WAR_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.WAR_ST_StormsPath_FellCleave)
+                UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_FellCleaveGauge, "Minimum gauge to spend");
+
+            if (preset == CustomComboPreset.WAR_AoE_Overpower_Decimate)
+                UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, "Minimum gauge to spend");
+
+            if (preset == CustomComboPreset.WAR_ST_StormsPath_Infuriate)
+                UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateSTGauge, "Use when gauge is under or equal to");
+
+            if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
+                UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
+
             #endregion
             // ====================================================================================
             #region WHITE MAGE
