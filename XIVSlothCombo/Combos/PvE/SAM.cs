@@ -907,7 +907,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class SAM_Kyuten_Shoha2_Guren : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Kyuten_Shoha2_Guren;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Kyuten_Shoha2;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
