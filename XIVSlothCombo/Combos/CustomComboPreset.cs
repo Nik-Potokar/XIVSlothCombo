@@ -2716,12 +2716,8 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
-            SGE_ST_Heal_Diagnosis = 14320,
+            SGE_ST_Heal_EDiagnosis = 14320,
                 
-                [ParentCombo(SGE_ST_Heal_Diagnosis)]
-                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID)]
-                SGE_ST_Heal_Diagnosis_IgnoreShield = 14321,
-
             [ParentCombo(SGE_ST_Heal)]
             [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
             SGE_ST_Heal_Soteria = 14330,
