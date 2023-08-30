@@ -1,19 +1,10 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Types;
-using FFXIVClientStructs.FFXIV.Client.Graphics.Scene;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XIVSlothCombo.Combos.JobHelpers.Enums;
-using XIVSlothCombo.CustomComboNS.Functions;
-using static XIVSlothCombo.Combos.JobHelpers.NIN;
-using XIVSlothCombo.Data;
-using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.Services;
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Logging;
+﻿using Dalamud.Game.ClientState.Conditions;
+using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.Logging;
+using XIVSlothCombo.Combos.JobHelpers.Enums;
+using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -21,13 +12,21 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         private static bool HasCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(Sharpcast) < 2) return false;
-            if (CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) return false;
-            if (!CustomComboFunctions.ActionReady(Manafont)) return false;
-            if (!CustomComboFunctions.ActionReady(All.Swiftcast)) return false;
-            if (!CustomComboFunctions.ActionReady(Amplifier)) return false;
-            if (!CustomComboFunctions.ActionReady(All.LucidDreaming) && Config.BLM_Advanced_OpenerSelection == 1) return false;
-            if (!CustomComboFunctions.ActionReady(LeyLines)) return false;
+            if (CustomComboFunctions.GetRemainingCharges(Sharpcast) < 2)
+                return false;
+            if (CustomComboFunctions.GetRemainingCharges(Triplecast) < 2)
+                return false;
+            if (!CustomComboFunctions.ActionReady(Manafont))
+                return false;
+            if (!CustomComboFunctions.ActionReady(All.Swiftcast))
+                return false;
+            if (!CustomComboFunctions.ActionReady(Amplifier))
+                return false;
+            if (!CustomComboFunctions.ActionReady(All.LucidDreaming) &&
+                Config.BLM_Advanced_OpenerSelection == 1)
+                return false;
+            if (!CustomComboFunctions.ActionReady(LeyLines))
+                return false;
 
             return true;
         }
@@ -153,6 +152,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Thunder3) && OpenerStep == 20) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 20) actionID = Thunder3;
                 }
+
                 else
                 {
                     if (CustomComboFunctions.LocalPlayer.CastActionId == Thunder3 && OpenerStep == 1) OpenerStep++;
@@ -229,14 +229,84 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 25) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 25) actionID = Despair;
-
-
                 }
 
                 return true;
             }
 
-            return false;  
+            return false;
+        }
+
+        private bool DoOpenerSimple(ref uint actionID)
+        {
+            if (!LevelChecked) return false;
+
+            if (currentState == OpenerState.InOpener)
+            {
+                if (CustomComboFunctions.LocalPlayer.CastActionId == Thunder3 && OpenerStep == 1) OpenerStep++;
+                else if (OpenerStep == 1) actionID = Thunder3;
+
+                if (CustomComboFunctions.WasLastAction(Triplecast) && OpenerStep == 2) OpenerStep++;
+                else if (OpenerStep == 2) actionID = Triplecast;
+
+                if (CustomComboFunctions.WasLastAction(Fire4) && CustomComboFunctions.GetBuffStacks(Buffs.Triplecast) == 2 && OpenerStep == 3) OpenerStep++;
+                else if (OpenerStep == 3) actionID = Fire4;
+
+                if (CustomComboFunctions.WasLastAction(Fire4) && CustomComboFunctions.GetBuffStacks(Buffs.Triplecast) == 1 && OpenerStep == 4) OpenerStep++;
+                else if (OpenerStep == 4) actionID = Fire4;
+
+                if (CustomComboFunctions.WasLastAction(Amplifier) && OpenerStep == 5) OpenerStep++;
+                else if (OpenerStep == 5) actionID = Amplifier;
+
+                if (CustomComboFunctions.WasLastAction(LeyLines) && OpenerStep == 6) OpenerStep++;
+                else if (OpenerStep == 6) actionID = LeyLines;
+
+                if (CustomComboFunctions.WasLastAction(Fire4) && CustomComboFunctions.GetBuffStacks(Buffs.Triplecast) == 0 && OpenerStep == 7) OpenerStep++;
+                else if (OpenerStep == 7) actionID = Fire4;
+
+                if (CustomComboFunctions.WasLastAction(All.Swiftcast) && OpenerStep == 8) OpenerStep++;
+                else if (OpenerStep == 8) actionID = All.Swiftcast;
+
+                if (CustomComboFunctions.WasLastAction(Fire4) && OpenerStep == 9) OpenerStep++;
+                else if (OpenerStep == 9) actionID = Fire4;
+
+                if (CustomComboFunctions.WasLastAction(Triplecast) && OpenerStep == 10) OpenerStep++;
+                else if (OpenerStep == 10) actionID = Triplecast;
+
+                if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 11) OpenerStep++;
+                else if (OpenerStep == 11) actionID = Despair;
+
+                if (CustomComboFunctions.WasLastAction(Manafont) && OpenerStep == 12) OpenerStep++;
+                else if (OpenerStep == 12) actionID = Manafont;
+
+                if (CustomComboFunctions.WasLastAction(Fire4) && OpenerStep == 13) OpenerStep++;
+                else if (OpenerStep == 13) actionID = Fire4;
+
+                if (CustomComboFunctions.WasLastAction(Sharpcast) && OpenerStep == 14) OpenerStep++;
+                else if (OpenerStep == 14) actionID = Sharpcast;
+
+                if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 15) OpenerStep++;
+                else if (OpenerStep == 15) actionID = Despair;
+
+                if (CustomComboFunctions.WasLastAction(Blizzard3) && OpenerStep == 16) OpenerStep++;
+                else if (OpenerStep == 16) actionID = Blizzard3;
+
+                if (CustomComboFunctions.WasLastAction(Xenoglossy) && OpenerStep == 17) OpenerStep++;
+                else if (OpenerStep == 17) actionID = Xenoglossy;
+
+                if (CustomComboFunctions.WasLastAction(Paradox) && OpenerStep == 18) OpenerStep++;
+                else if (OpenerStep == 18) actionID = Paradox;
+
+                if (CustomComboFunctions.LocalPlayer.CastActionId == Blizzard4 && OpenerStep == 19) OpenerStep++;
+                else if (OpenerStep == 19) actionID = Blizzard4;
+
+                if (CustomComboFunctions.WasLastAction(Thunder3) && OpenerStep == 20) CurrentState = OpenerState.OpenerFinished;
+                else if (OpenerStep == 20) actionID = Thunder3;
+
+                return true;
+            }
+
+            return false;
         }
 
         private void ResetOpener()
@@ -257,6 +327,24 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.InOpener)
                 if (DoOpener(ref actionID)) return true;
+
+            if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
+                ResetOpener();
+
+            return false;
+        }
+
+        public bool DoFullOpenerSimple(ref uint actionID)
+        {
+            if (!LevelChecked) return false;
+
+            if (!openerEventsSetup) { Service.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
+
+            if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
+                if (DoPrePullSteps(ref actionID)) return true;
+
+            if (CurrentState == OpenerState.InOpener)
+                if (DoOpenerSimple(ref actionID)) return true;
 
             if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
                 ResetOpener();
