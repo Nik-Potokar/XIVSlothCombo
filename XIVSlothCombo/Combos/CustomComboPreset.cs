@@ -1518,7 +1518,8 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_WildFire = 8025,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the feature.\nWill have some Single HC during reopeners if most options are checked.", MCH.JobID, -6, "", "")]
+        [ConflictingCombos(MCH_ST_Alt_Hypercharge)]
+        [CustomComboInfo("Hypercharge Option", "Adds Hypercharge to the Delayed Tools rotation feature.\nWill have some Single HC during reopeners if most features are checked.", MCH.JobID, -6, "", "")]
         MCH_ST_Adv_Hypercharge = 8048,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1543,6 +1544,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_Opener = 8041,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
+        [ConflictingCombos(MCH_Alt_QueenUsage)]
         [CustomComboInfo("Turret/Queen Option", "Adds AutoTurret/Automaton Queen to the rotation.\nUses battery values of The Balance.\nUses turret/queen at 100 battery below lvl 90.", MCH.JobID, -1, "", "")]
         MCH_Adv_QueenUsage = 8043,
 
@@ -1552,6 +1554,7 @@ namespace XIVSlothCombo.Combos
         MCH_Alt_QueenUsage = 8057,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
+        [ConflictingCombos(MCH_ST_Alt_Reassembled)]
         [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.\nWill be used on Chainsaw and Air Anchor.\nWill be used on Drill below lvl 76.", MCH.JobID, -7, "", "")]
         MCH_ST_Adv_Reassembled = 8044,
 
@@ -1675,7 +1678,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID, 50, "", "")]
         All_PRanged_Dismantle = 8042,
 
-        // Last value = 8057
+        // Last value = 8053
 
         #endregion
 
