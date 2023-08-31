@@ -32,6 +32,9 @@ namespace XIVSlothCombo.Combos.PvE
             Shadowbringer = 25757,
             Plunge = 3640,
             BloodWeapon = 3625,
+            TheBlackestNight = 7393,
+            Rampart = 7531,
+            ShadowWall = 3636,
             Unmend = 3624;
 
         public static class Buffs
@@ -50,6 +53,15 @@ namespace XIVSlothCombo.Combos.PvE
                 Placeholder = 1;
         }
 
+        public static class Levels
+        {
+            public const byte
+            ShadowWall = 38,
+            TheBlackestNight = 70,
+            Oblation = 82,
+            Rampart = 8;
+        }
+
         public static class Config
         {
             public const string
@@ -58,6 +70,33 @@ namespace XIVSlothCombo.Combos.PvE
                 DRK_VariantCure = "DRKVariantCure";
         }
 
+        internal class DRK_SimpleMit : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_SimpleMit;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is TheBlackestNight)
+                {
+                    if (ActionReady(TheBlackestNight))
+                        return TheBlackestNight;
+
+                    else if ((IsOnCooldown(TheBlackestNight) || level < 70) && (GetCooldownRemainingTime(Rampart) < 1 || ActionReady(Rampart)))
+                        return Rampart;
+
+                    else if (IsOnCooldown(Rampart) && level >= 82 && (GetRemainingCharges(Oblation) > 1))
+                        return Oblation;
+
+                    else if (GetRemainingCharges(Oblation) == 1 && (GetCooldownRemainingTime(ShadowWall) < 1 || ActionReady(ShadowWall)))
+                        return ShadowWall;
+
+                    else if (IsOnCooldown(ShadowWall) && GetRemainingCharges(Oblation) == 1)
+                        return Oblation;
+                }
+                return actionID;
+
+            }
+
+        }
 
         internal class DRK_SouleaterCombo : CustomCombo
         {
