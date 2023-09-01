@@ -1024,6 +1024,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID, 0, "", "")]
         DRK_MainComboCDs_Group = 5099,
 
+        [ReplaceSkill(DRK.TheBlackestNight)]
+        [CustomComboInfo("Simple Mitigation", "Replace TBN with single-target mits.", DRK.JobID, -1, "", "")]
+        DRK_SimpleMit = 5034,
+
         [ReplaceSkill(DRK.Souleater)]
         [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Dark Knight)", DRK.JobID, 0, "", "")]
         DRK_SouleaterCombo = 5000,
@@ -1307,6 +1311,10 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
+        [ReplaceSkill(GNB.HeartofStone)]
+        [CustomComboInfo("Simple Mitigation Feature", "Replace Heart of Stone/Corundum with other mitigation tools to mitigate with 1 button optimally", GNB.JobID, 0, "", "")]
+        GNB_SimpleMit = 7601,
+
         [CustomComboInfo("Skill Speed Support Feature", "Allows for features to support various skill speed rotations.", GNB.JobID, 0)]
         GNB_ST_SkSSupport = 7000,
 
@@ -1483,10 +1491,34 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region MACHINIST
+        [ReplaceSkill(MCH.Dismantle)]
+        [CustomComboInfo("Dismantle/Tactician Feature", "Replace Dismantle with Tactician when Dismantle on cooldown.", MCH.JobID, 0, "", "")]
+        MCH_DismantleTactician = 8060,
 
+        [ReplaceSkill(MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_EarlyToolsRotation)]
+        [CustomComboInfo("123 Tools Rotation Feature", "Uses 123 Tools Opener & Rotation. Only use at lv90 with 100 percent uptime fights.", MCH.JobID, -2, "", "")]
+        MCH_123Tools = 8047,
+
+        [ParentCombo(MCH_123Tools)]
+        [CustomComboInfo("123 Tools Opener Feature", "Adds 123Tools Opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
+        MCH_123ToolsOpener = 8048,
+
+        [ReplaceSkill(MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_123Tools)]
+        [CustomComboInfo("EarlyTools Rotation Feature", "Uses EarlyToolss Rotation specific for P12S P1.", MCH.JobID, -1, "", "")]
+        MCH_EarlyToolsRotation = 8049,
+
+        [ParentCombo(MCH_EarlyToolsRotation)]
+        [CustomComboInfo("EarlyTools Opener Feature", "Adds opener to the Rotation Feature. Always tick this.", MCH.JobID, 0, "", "")]
+        MCH_EarlyToolsOpener = 8050,
+
+        [ParentCombo(MCH_EarlyToolsRotation)]
+        [CustomComboInfo("EarlyTools Queen Feature", "Adds optimal Queen usage (100-90-100 etc.) to the Rotation Feature. If disabled, uses Queen at 50 Battery.", MCH.JobID, 0, "", "")]
+        MCH_EarlyToolsQueen = 8051,
+        
         #region Simple ST
-
+        
         [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_AdvancedMode)]
         [CustomComboInfo("Simple Machinist (Single Target) Feature", "Replaces Splitshot with a full one - button rotation.", MCH.JobID, -4, "", "")]
@@ -1508,7 +1540,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Interrupt Option", "Uses interrupt during the rotation, if applicable.", MCH.JobID, 97, "", "")]
         MCH_ST_Adv_Interrupt = 8021,
-
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Gauss Ricochet Option", "Adds Gauss Round and Ricochet to the feature.\nWill prevent overcapping.", MCH.JobID, -11, "", "")]
         MCH_ST_Adv_GaussRicochet = 8024,
@@ -1542,6 +1573,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Level 90 Opener Option", "Choose which opener to use.", MCH.JobID, -99, "", "")]
         MCH_ST_Adv_Opener = 8041,
+
+        [ParentCombo(MCH_ST_MainCombo)]
+        [CustomComboInfo("Ricochet & Gauss Round Option", "Adds Ricochet and Gauss Round to main combo.\nWill use all charges.", MCH.JobID, 0, "", "")]
+        MCH_ST_MainCombo_RicochetGaussCharges = 8017,
+
+        [ParentCombo(MCH_ST_MainCombo)]
+        [CustomComboInfo("Ricochet & Gauss Round Overcap Protection Option", "Adds Ricochet and Gauss Round to main combo.\nWill leave 1 charge of each.", MCH.JobID, 0, "", "")]
+        MCH_ST_MainCombo_RicochetGauss = 8013,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [ConflictingCombos(MCH_Alt_QueenUsage)]
@@ -3734,8 +3773,6 @@ namespace XIVSlothCombo.Combos
         FSH_Chum_BaitedBreath = 51011,
 
         // Last value = 51011
-
-        #endregion
 
         #endregion
 
