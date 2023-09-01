@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
@@ -1820,72 +1819,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class MCH_AoE_SimpleMode : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == SpreadShot || actionID == Scattergun)
-                {
-                    var canWeave = CanWeave(actionID);
-                    var gauge = GetJobGauge<MCHGauge>();
-                    var battery = GetJobGauge<MCHGauge>().Battery;
-
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        canWeave)
-                        return Variant.VariantRampart;
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_OverCharge) && canWeave)
-                    {
-                        if (battery == 100 && level >= Levels.QueenOverdrive)
-                            return AutomatonQueen;
-                        if (battery == 100 && level >= Levels.RookOverdrive)
-                            return RookAutoturret;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRicochet) && canWeave && (IsEnabled(CustomComboPreset.MCH_AoE_Gauss) || gauge.IsOverheated) && (HasCharges(Ricochet) || HasCharges(GaussRound)))
-                    {
-                        var gaussCharges = GetRemainingCharges(GaussRound);
-                        var ricochetCharges = GetRemainingCharges(Ricochet);
-
-                        if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) &&
-                            level >= Levels.GaussRound)
-                            return GaussRound;
-                        else if (ricochetCharges > 0 && level >= Levels.Ricochet)
-                            return Ricochet;
-
-                    }
-
-                    if (IsOffCooldown(BioBlaster) && level >= Levels.BioBlaster && !gauge.IsOverheated && IsEnabled(CustomComboPreset.MCH_AoE_Simple_Bioblaster))
-                        return BioBlaster;
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Simple_Hypercharge) && canWeave)
-                    {
-                        if (gauge.Heat >= 50 && level >= Levels.AutoCrossbow && !gauge.IsOverheated)
-                            return Hypercharge;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_SecondWind) && CanWeave(actionID, 0.6))
-                    {
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MCH_AoE_SecondWindThreshold) && (LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind)))
-                            return All.SecondWind;
-                    }
-
-                    if (gauge.IsOverheated && level >= Levels.AutoCrossbow)
-                        return AutoCrossbow;
-
-                }
-
-                return actionID;
-            }
-        }
-
         internal class MCH_Overdrive : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_Overdrive;
@@ -1926,6 +1859,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
         internal class MCH_DismantleTactician : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_DismantleTactician;
@@ -1975,7 +1909,6 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-
 
         internal class All_PRanged_Dismantle : CustomCombo
 
