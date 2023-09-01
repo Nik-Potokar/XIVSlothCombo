@@ -80,30 +80,6 @@ namespace XIVSlothCombo.Combos.PvE
                 GNB_VariantCure = "GNB_VariantCure";
         }
 
-        internal class GNB_SimpleMit : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_SimpleMit;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is (HeartofCorundum or HeartofStone))
-                {
-                    if (ActionReady(HeartofStone))
-                        return OriginalHook(HeartofStone);
-
-                    else if ((IsOnCooldown(HeartofCorundum) || level < Levels.HeartofStone) && (GetCooldownRemainingTime(Rampart) < 1 || ActionReady(Rampart)))
-                        return Rampart;
-
-                    else if (IsOnCooldown(Rampart) && (ActionReady(Camouflage) || (GetCooldownRemainingTime(Camouflage) < 1)))
-                        return Camouflage;
-
-                    else if (IsOnCooldown(Camouflage) && (GetCooldownRemainingTime(Nebula) < 1 || ActionReady(Nebula)))
-                        return Nebula;
-                }
-                    return actionID;
-                
-            }
-             
-        }
         internal class GNB_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_MainCombo;
