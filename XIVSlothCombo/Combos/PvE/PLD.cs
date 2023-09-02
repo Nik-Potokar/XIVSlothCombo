@@ -642,7 +642,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID == OriginalHook(SpiritsWithin) && ActionReady(CircleOfScorn))
+                if ((actionID == SpiritsWithin || actionID == Expiacion) && ActionReady(CircleOfScorn))
                 {
                     if (IsOffCooldown(OriginalHook(SpiritsWithin)))
                     {
