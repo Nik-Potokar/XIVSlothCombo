@@ -140,7 +140,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Fire)
                 {
                     // Opener for BLM
-                    if (BLMOpener.DoFullOpenerSimple(ref actionID))
+                    if (BLMOpener.DoFullOpener(ref actionID, true))
                         return actionID;
 
                     // Use under Fire or Ice
@@ -374,7 +374,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Opener for BLM
                     if (IsEnabled(CustomComboPreset.BLM_Adv_Opener))
                     {
-                        if (BLMOpener.DoFullOpener(ref actionID))
+                        if (BLMOpener.DoFullOpener(ref actionID, false))
                             return actionID;
                     }
 

@@ -167,8 +167,17 @@ namespace XIVSlothCombo
             Service.ComboCache?.Dispose();
             ActionWatching.Dispose();
             Combos.JobHelpers.AST.Dispose();
+            DisposeOpeners();
 
             Service.ClientState.Login -= PrintLoginMessage;
+        }
+
+        private void DisposeOpeners()
+        {
+            BLM.BLM_SimpleMode.BLMOpener.Dispose();
+            BLM.BLM_AdvancedMode.BLMOpener.Dispose();
+            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
+            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
 
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;

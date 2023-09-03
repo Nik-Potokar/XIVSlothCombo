@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.Logging;
+using System;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -316,7 +317,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool openerEventsSetup = false;
 
-        public bool DoFullOpener(ref uint actionID)
+        public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
             if (!LevelChecked) return false;
 
@@ -326,25 +327,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (DoPrePullSteps(ref actionID)) return true;
 
             if (CurrentState == OpenerState.InOpener)
-                if (DoOpener(ref actionID)) return true;
-
-            if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
-                ResetOpener();
-
-            return false;
-        }
-
-        public bool DoFullOpenerSimple(ref uint actionID)
-        {
-            if (!LevelChecked) return false;
-
-            if (!openerEventsSetup) { Service.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
-
-            if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
-                if (DoPrePullSteps(ref actionID)) return true;
-
-            if (CurrentState == OpenerState.InOpener)
-                if (DoOpenerSimple(ref actionID)) return true;
+                if (simpleMode)
+                    if (DoOpenerSimple(ref actionID)) return true;
+                else
+                    if (DoOpener(ref actionID)) return true;
 
             if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
                 ResetOpener();
@@ -355,6 +341,11 @@ namespace XIVSlothCombo.Combos.JobHelpers
         private void CheckCombatStatus(ConditionFlag flag, bool value)
         {
             if (flag == ConditionFlag.InCombat && value == false) ResetOpener();
+        }
+
+        internal void Dispose()
+        {
+           Service.Condition.ConditionChange -= CheckCombatStatus;
         }
     }
 
