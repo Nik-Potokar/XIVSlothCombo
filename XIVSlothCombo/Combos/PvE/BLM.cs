@@ -119,7 +119,9 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_Advanced_OpenerSelection = new("BLM_Advanced_OpenerSelection"),
                 BLM_ST_Adv_ThunderHP = new("BLM_ST_Adv_ThunderHP"),
                 BLM_AoE_Adv_ThunderHP = new("BLM_AoE_Adv_ThunderHP"),
-                BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime");
+                BLM_AoE_Adv_ThunderUptime = new("BLM_AoE_Adv_ThunderUptime"),
+                BLM_Adv_ThunderCloud = new("BLM_Adv_ThunderCloud"),
+                BLM_Adv_InitialCast = new("BLM_Adv_InitialCast");
 
             public static UserFloat
                 BLM_AstralFire_Refresh = new("BLM_AstralFire_Refresh");
@@ -378,6 +380,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    //Thundercloud Spender
+                    if (IsEnabled(CustomComboPreset.BLM_ST_Adv_Thunder_ThunderCloud) &&
+                        HasEffect(Buffs.Thundercloud) &&
+                        ((CanSpellWeave(actionID) && Config.BLM_Adv_ThunderCloud == 0) || Config.BLM_Adv_ThunderCloud == 1))
+                        return OriginalHook(Thunder);
+
+
                     // Use under Fire or Ice
                     if (gauge.ElementTimeRemaining > 0)
                     {
@@ -438,20 +447,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Scathe;
                         }
 
-                        // Thunder I/III uptime
-                        if (IsEnabled(CustomComboPreset.BLM_ST_Adv_Thunder) &&
-                            !ThunderList.ContainsKey(lastComboMove) &&
-                            (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
-                        {
-                            if (LevelChecked(Thunder3) &&
-                                (GetDebuffRemainingTime(Debuffs.Thunder3) <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
-                                return Thunder3;
-
-                            if (LevelChecked(Thunder) && !LevelChecked(Thunder3) &&
-                                (GetDebuffRemainingTime(Debuffs.Thunder) <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
-                                return Thunder;
-                        }
-
                         // Start of Transpose rotation - tried to merge with ice part, but it won't behave.. ( think its too low in the order to make this part work correctly if i merge in umbral ince)
                         if (rotationSelection is 1 &&
                             gauge.InUmbralIce && gauge.HasPolyglotStacks() && ActionReady(All.Swiftcast) && level >= 90)
@@ -464,6 +459,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 return All.Swiftcast;
                         }
 
+                        // Sharpcast
+                        if (Config.BLM_Adv_Cooldowns_Choice[1] &&
+                            ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                            !WasLastAction(Thunder3) && CanSpellWeave(actionID))
+                            return Sharpcast;
+
                         // Use Triplecast only with Astral Fire/Umbral Hearts, and we have enough MP to cast Fire IV twice
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
                             ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && GetRemainingCharges(Triplecast) > 0) || GetRemainingCharges(Triplecast) is 2) &&
@@ -475,22 +476,33 @@ namespace XIVSlothCombo.Combos.PvE
                         // Weave Buffs
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID))
                         {
+                            if (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
+                                return LeyLines;
+
                             if (Config.BLM_Adv_Cooldowns_Choice[2] &&
                                 ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
                                 return Amplifier;
+                        }
 
-                            if (Config.BLM_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
-                                return LeyLines;
+                        // Thunder I/III uptime
+                        if (IsEnabled(CustomComboPreset.BLM_ST_Adv_Thunder) &&
+                            !ThunderList.ContainsKey(lastComboMove) &&
+                            (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
+                        {
+                            if (LevelChecked(Thunder) &&
+                                (dotDebuff is null || dotDebuff.RemainingTime <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
+                                return OriginalHook(Thunder);
                         }
                     }
 
                     // Handle initial cast
                     if (gauge.ElementTimeRemaining <= 0)
                     {
-                        if (LevelChecked(Fire3))
-                            return (currentMP >= MP.FireIII)
-                                ? Fire3
-                                : Blizzard3;
+                        if (LevelChecked(Blizzard3) && Config.BLM_Adv_InitialCast == 1)
+                            return Blizzard3;
+
+                        if (LevelChecked(Fire3) && Config.BLM_Adv_InitialCast == 0)
+                            return Fire3;
 
                         return (currentMP >= MP.FireI)
                             ? Fire
@@ -516,7 +528,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.InAstralFire)
                         {
-                            if (HasEffect(Buffs.Firestarter) && currentMP <= 5000)
+                            if (HasEffect(Buffs.Firestarter))
                                 return Fire3;
 
                             return (currentMP < MP.FireI)
@@ -545,9 +557,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? Xenoglossy
                                 : Foul;
 
+
                         // Fire III proc or Swiftcast Fire III during Transpose lines(< 3 Astral Fire stacks)
-                        if (gauge.AstralFireStacks < 3 || (gauge.ElementTimeRemaining <= 3000 && HasEffect(Buffs.Firestarter)))
+                        if (gauge.AstralFireStacks < 3 || HasEffect(Buffs.Firestarter))
                             return Fire3;
+
+                        // Spend Sharpcast on Thunder before using Fire
+                        if (gauge.ElementTimeRemaining <= (astralFireRefresh + 3000) && !HasEffect(Buffs.Thundercloud) && HasEffect(Buffs.Sharpcast) && currentMP >= MP.FireI && IsEnabled(CustomComboPreset.BLM_ST_Adv_Thunder))
+                            return OriginalHook(Thunder);
 
                         // Use Paradox instead of hardcasting Fire if we can
                         if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
@@ -598,12 +615,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return LevelChecked(Xenoglossy)
                                 ? Xenoglossy
                                 : Foul;
-
-                        // Sharpcast
-                        if (Config.BLM_Adv_Cooldowns_Choice[1] &&
-                            ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
-                            !WasLastAction(Thunder3) && CanSpellWeave(actionID))
-                            return Sharpcast;
 
                         // Use Paradox when available
                         if (LevelChecked(Paradox) && gauge.IsParadoxActive)

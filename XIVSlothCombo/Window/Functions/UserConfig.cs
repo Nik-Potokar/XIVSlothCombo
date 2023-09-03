@@ -351,13 +351,10 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="descriptionColor"></param>
         public static void DrawHorizontalRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
         {
-            ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             int output = PluginConfiguration.GetCustomIntValue(config);
+            ImGui.SameLine();
             ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
             bool enabled = output == outputValue;
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
@@ -373,10 +370,10 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.TextUnformatted(checkboxDescription);
                 ImGui.EndTooltip();
             }
-
             ImGui.PopStyleColor();
 
-            ImGui.Unindent();
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(16f, 0));
         }
 
         /// <summary>A true or false configuration. Similar to presets except can be used as part of a condition on another config.</summary>
@@ -1211,7 +1208,13 @@ namespace XIVSlothCombo.Window.Functions
             #region BLACK MAGE
 
             if (preset is CustomComboPreset.BLM_AdvancedMode)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Fire 3 Initial Cast", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Blizzard 3 Initial Cast", "", 1);
+                ImGui.Indent();
                 UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFire_Refresh, "Seconds before refreshing Astral Fire");
+                ImGui.Unindent();
+            }
 
             if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
@@ -1272,6 +1275,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
                 UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderHP, "Target HP% to stop using Thunder");
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder_ThunderCloud)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_ThunderCloud, "Only after quicker casts (weave window)", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_ThunderCloud, "Use as soon as possible", "", 1);
+            }
 
             #endregion
             // ====================================================================================

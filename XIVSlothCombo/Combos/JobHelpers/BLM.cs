@@ -327,10 +327,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (DoPrePullSteps(ref actionID)) return true;
 
             if (CurrentState == OpenerState.InOpener)
+            {
                 if (simpleMode)
+                {
                     if (DoOpenerSimple(ref actionID)) return true;
+                }
                 else
+                {
                     if (DoOpener(ref actionID)) return true;
+                }
+            }
 
             if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
                 ResetOpener();
