@@ -109,6 +109,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             public static UserBoolArray
                 BLM_Adv_Cooldowns_Choice = new("BLM_Adv_Cooldowns_Choice"),
+                BLM_AoE_Adv_Cooldowns_Choice = new("BLM_AoE_Adv_Cooldowns_Choice"),
                 BLM_Adv_Movement_Choice = new("BLM_Adv_Movement_Choice");
 
             public static UserInt
@@ -127,9 +128,9 @@ namespace XIVSlothCombo.Combos.PvE
                 BLM_AstralFire_Refresh = new("BLM_AstralFire_Refresh");
         }
 
-        internal class BLM_SimpleMode : CustomCombo
+        internal class BLM_ST_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_SimpleMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ST_SimpleMode;
             internal static BLMOpenerLogic BLMOpener = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -356,9 +357,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class BLM_AdvancedMode : CustomCombo
+        internal class BLM_ST_AdvancedMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AdvancedMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ST_AdvancedMode;
             internal static BLMOpenerLogic BLMOpener = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -810,6 +811,23 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(Variant.VariantRampart) &&
                             CanSpellWeave(actionID))
                             return Variant.VariantRampart;
+
+                        // Weave Buffs
+                        if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Cooldowns) && CanSpellWeave(actionID))
+                        {
+                            if (Config.BLM_AoE_Adv_Cooldowns_Choice[3] && ActionReady(LeyLines))
+                                return LeyLines;
+
+                            if (Config.BLM_AoE_Adv_Cooldowns_Choice[2] &&
+                                ActionReady(Amplifier) && gauge.PolyglotStacks < 2)
+                                return Amplifier;
+
+                            // Sharpcast
+                            if (Config.BLM_AoE_Adv_Cooldowns_Choice[1] &&
+                                ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
+                                !WasLastAction(Thunder3) && CanSpellWeave(actionID))
+                                return Sharpcast;
+                        }
                     }
 
                     // Astral Fire
@@ -824,7 +842,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Manafont to Flare
                         if (LevelChecked(Flare))
                         {
-                            if (IsEnabled(CustomComboPreset.BLM_AoE_Adv_Manafont) && ActionReady(Manafont) &&
+                            if (Config.BLM_AoE_Adv_Cooldowns_Choice[0] && ActionReady(Manafont) &&
                                 currentMP is 0)
                                 return Manafont;
 

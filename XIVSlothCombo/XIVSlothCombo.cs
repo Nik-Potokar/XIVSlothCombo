@@ -174,8 +174,8 @@ namespace XIVSlothCombo
 
         private void DisposeOpeners()
         {
-            BLM.BLM_SimpleMode.BLMOpener.Dispose();
-            BLM.BLM_AdvancedMode.BLMOpener.Dispose();
+            BLM.BLM_ST_SimpleMode.BLMOpener.Dispose();
+            BLM.BLM_ST_AdvancedMode.BLMOpener.Dispose();
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }

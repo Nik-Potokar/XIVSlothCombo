@@ -1207,7 +1207,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset is CustomComboPreset.BLM_AdvancedMode)
+            if (preset is CustomComboPreset.BLM_ST_AdvancedMode)
             {
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Fire 3 Initial Cast", "", 0);
                 UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Blizzard 3 Initial Cast", "", 1);
@@ -1243,6 +1243,16 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
             {
                 UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, 4, new string[,]{
+                    {"Manafont", "Add Manafont to the rotation." },
+                    {"Sharpcast", "Add Sharpcast to the rotation." },
+                    {"Amplifier", "Add Amplifier to the rotation." },
+                    {"Ley Lines", "Add Ley Lines to the rotation." },
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_Cooldowns)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 4, new string[,]{
                     {"Manafont", "Add Manafont to the rotation." },
                     {"Sharpcast", "Add Sharpcast to the rotation." },
                     {"Amplifier", "Add Amplifier to the rotation." },
