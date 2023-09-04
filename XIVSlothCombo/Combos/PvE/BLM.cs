@@ -260,7 +260,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.InAstralFire)
                         {
-                            if (HasEffect(Buffs.Firestarter) && currentMP <= 5000)
+                            if (HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) <= 27)
                                 return Fire3;
 
                             return (currentMP < MP.FireI)
@@ -528,7 +528,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.InAstralFire)
                         {
-                            if (HasEffect(Buffs.Firestarter))
+                            if (HasEffect(Buffs.Firestarter) && GetBuffRemainingTime(Buffs.Firestarter) <= 27)
                                 return Fire3;
 
                             return (currentMP < MP.FireI)

@@ -351,7 +351,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         internal void Dispose()
         {
-           Service.Condition.ConditionChange -= CheckCombatStatus;
+            Service.Condition.ConditionChange -= CheckCombatStatus;
         }
     }
 

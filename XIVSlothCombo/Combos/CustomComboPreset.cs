@@ -456,7 +456,6 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-
         #region BLUE MAGE
 
         [BlueInactive(BLU.SongOfTorment, BLU.Bristle)]
