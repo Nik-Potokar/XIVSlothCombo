@@ -1496,9 +1496,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Machinist (Single Target) Feature", "Replaces Splitshot with a full one - button rotation.", MCH.JobID, -4, "", "")]
         MCH_ST_SimpleMode = 8049,
 
-        [ParentCombo(MCH_ST_SimpleMode)]
-        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_SecondWind = 8051,
+        [ReplaceSkill(MCH.HeatedSplitShot)]
+        [CustomComboInfo("Basic Combo Feature", "Replaces Heated Splitshot with the basic combo.", MCH.JobID, -99, "", "")]
+        MCH_ST_BasicCombo = 8059,
 
         #endregion
 
@@ -1592,10 +1592,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Machinist (AoE) Feature", "Replaces Spreadshot with a full one - button rotation.", MCH.JobID, -4, "", "")]
         MCH_AoE_SimpleMode = 8050,
 
-        [ParentCombo(MCH_AoE_SimpleMode)]
-        [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID, 0, "", "")]
-        MCH_AoE_Simple_SecondWind = 8053,
-
         #endregion
 
         #region Advanced AoE
@@ -1683,7 +1679,7 @@ namespace XIVSlothCombo.Combos
         All_PRanged_Dismantle = 8042,
 
         [ReplaceSkill(MCH.Dismantle)]
-        [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID, 50, "", "")]
+        [CustomComboInfo("Dismantle - Tactician", "Swap dismantle with tactician when dismantle is on cooldown.", MCH.JobID, 50, "", "")]
         MCH_DismantleTactician = 8058,
 
         // Last value = 8058
