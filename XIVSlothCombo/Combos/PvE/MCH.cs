@@ -361,17 +361,21 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.HeadGraze;
 
                         // Wildfire
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                            (gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && ActionReady(Wildfire) && LevelChecked(Wildfire)) //these try to ensure the correct loops
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire))
                         {
-                            if (CanDelayedWeave(actionID))
+                            if ((gauge.Heat >= 50 || WasLastAbility(Hypercharge)) && ActionReady(Wildfire) && level >= 90) //these try to ensure the correct loops
                             {
-                                if (!gauge.IsOverheated && WasLastWeaponskill(AirAnchor)) //WF EVEN BURST
-                                    return Wildfire;
+                                if (CanDelayedWeave(actionID))
+                                {
+                                    if (!gauge.IsOverheated && WasLastWeaponskill(AirAnchor)) //WF EVEN BURST
+                                        return Wildfire;
 
-                                else if (gauge.IsOverheated && WasLastWeaponskill(HeatBlast))
-                                    return Wildfire;
+                                    else if (gauge.IsOverheated && WasLastWeaponskill(HeatBlast))
+                                        return Wildfire;
+                                }
                             }
+                            else if (gauge.Heat >= 50 && ActionReady(Wildfire))
+                                return Wildfire;
                         }
 
                         // BarrelStabilizer use
@@ -455,9 +459,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         //Heatblast, Gauss, Rico
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
-                            gauge.IsOverheated && LevelChecked(HeatBlast) && CanWeave(actionID))
+                            gauge.IsOverheated && LevelChecked(HeatBlast))
                         {
-                            if (WasLastAction(HeatBlast))
+                            if (WasLastAction(HeatBlast) && CanWeave(actionID))
                             {
                                 if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
                                     return GaussRound;
