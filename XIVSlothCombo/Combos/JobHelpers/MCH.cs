@@ -136,38 +136,38 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Hypercharge) && OpenerStep == 15) OpenerStep++;
                     else if (OpenerStep == 15) actionID = Hypercharge;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 16) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 4 && OpenerStep == 16) OpenerStep++;
                     else if (OpenerStep == 16) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 17) OpenerStep++;
                     else if (OpenerStep == 17) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 18) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 3 && OpenerStep == 18) OpenerStep++;
                     else if (OpenerStep == 18) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 19) OpenerStep++;
                     else if (OpenerStep == 19) actionID = GaussRound;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 20) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 2 && OpenerStep == 20) OpenerStep++;
+                    else if (OpenerStep == 20) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 21) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = Ricochet;
+                    else if (OpenerStep == 21) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 22) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 1 && OpenerStep == 22) OpenerStep++;
+                    else if (OpenerStep == 22) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 23) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = GaussRound;
+                    else if (OpenerStep == 23) actionID = GaussRound;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 24) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 0 && OpenerStep == 24) OpenerStep++;
+                    else if (OpenerStep == 24) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 25) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = Ricochet;
+                    else if (OpenerStep == 25) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(Drill) && OpenerStep == 25) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 20) actionID = Drill;
+                    if (CustomComboFunctions.WasLastAction(Drill) && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
+                    else if (OpenerStep == 26) actionID = Drill;
                 }
 
                 else if (Config.MCH_ST_OpenerSelection == 1)
@@ -214,38 +214,38 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Hypercharge) && OpenerStep == 14) OpenerStep++;
                     else if (OpenerStep == 14) actionID = Hypercharge;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 15) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 4 && OpenerStep == 15) OpenerStep++;
                     else if (OpenerStep == 15) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 16) OpenerStep++;
                     else if (OpenerStep == 16) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 17) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 3 && OpenerStep == 17) OpenerStep++;
                     else if (OpenerStep == 17) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 18) OpenerStep++;
                     else if (OpenerStep == 18) actionID = GaussRound;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 19) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 2 && OpenerStep == 19) OpenerStep++;
                     else if (OpenerStep == 19) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 20) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = Ricochet;
+                    else if (OpenerStep == 20) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 21) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 1 && OpenerStep == 21) OpenerStep++;
+                    else if (OpenerStep == 21) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 22) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = GaussRound;
+                    else if (OpenerStep == 22) actionID = GaussRound;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 23) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 0 && OpenerStep == 23) OpenerStep++;
+                    else if (OpenerStep == 23) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 24) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = Ricochet;
+                    else if (OpenerStep == 24) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatedSplitShot) && OpenerStep == 24) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 20) actionID = HeatedSplitShot;
+                    if (CustomComboFunctions.WasLastAction(HeatedSplitShot) && OpenerStep == 25) CurrentState = OpenerState.OpenerFinished;
+                    else if (OpenerStep == 25) actionID = HeatedSplitShot;
                 }
 
                 else
@@ -301,32 +301,32 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Hypercharge) && OpenerStep == 17) OpenerStep++;
                     else if (OpenerStep == 17) actionID = Hypercharge;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 18) OpenerStep++;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 4 && OpenerStep == 18) OpenerStep++;
                     else if (OpenerStep == 18) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 19) OpenerStep++;
                     else if (OpenerStep == 19) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 20) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 3 && OpenerStep == 20) OpenerStep++;
+                    else if (OpenerStep == 20) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 21) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = GaussRound;
+                    else if (OpenerStep == 21) actionID = GaussRound;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 22) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 2 && OpenerStep == 22) OpenerStep++;
+                    else if (OpenerStep == 22) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 23) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = GaussRound;
+                    else if (OpenerStep == 23) actionID = GaussRound;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 24) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 1 && OpenerStep == 24) OpenerStep++;
+                    else if (OpenerStep == 24) actionID = HeatBlast;
 
                     if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 25) OpenerStep++;
-                    else if (OpenerStep == 19) actionID = Ricochet;
+                    else if (OpenerStep == 25) actionID = Ricochet;
 
-                    if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 25) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 20) actionID = HeatBlast;
+                    if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 0 && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
+                    else if (OpenerStep == 26) actionID = HeatBlast;
                 }
 
                 return true;
@@ -386,38 +386,38 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Hypercharge) && OpenerStep == 15) OpenerStep++;
                 else if (OpenerStep == 15) actionID = Hypercharge;
 
-                if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 16) OpenerStep++;
+                if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 4 && OpenerStep == 16) OpenerStep++;
                 else if (OpenerStep == 16) actionID = HeatBlast;
 
                 if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 17) OpenerStep++;
                 else if (OpenerStep == 17) actionID = Ricochet;
 
-                if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 18) OpenerStep++;
+                if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 3 && OpenerStep == 18) OpenerStep++;
                 else if (OpenerStep == 18) actionID = HeatBlast;
 
                 if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 19) OpenerStep++;
                 else if (OpenerStep == 19) actionID = GaussRound;
 
-                if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 20) OpenerStep++;
-                else if (OpenerStep == 19) actionID = HeatBlast;
+                if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 2 && OpenerStep == 20) OpenerStep++;
+                else if (OpenerStep == 20) actionID = HeatBlast;
 
                 if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 21) OpenerStep++;
-                else if (OpenerStep == 19) actionID = Ricochet;
+                else if (OpenerStep == 21) actionID = Ricochet;
 
-                if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 22) OpenerStep++;
-                else if (OpenerStep == 19) actionID = HeatBlast;
+                if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 1 && OpenerStep == 22) OpenerStep++;
+                else if (OpenerStep == 22) actionID = HeatBlast;
 
                 if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 23) OpenerStep++;
-                else if (OpenerStep == 19) actionID = GaussRound;
+                else if (OpenerStep == 23) actionID = GaussRound;
 
-                if (CustomComboFunctions.WasLastAction(HeatBlast) && OpenerStep == 24) OpenerStep++;
-                else if (OpenerStep == 19) actionID = HeatBlast;
+                if (CustomComboFunctions.WasLastAction(HeatBlast) && CustomComboFunctions.GetBuffStacks(Buffs.Overheated) == 0 && OpenerStep == 24) OpenerStep++;
+                else if (OpenerStep == 24) actionID = HeatBlast;
 
                 if (CustomComboFunctions.WasLastAction(Ricochet) && OpenerStep == 25) OpenerStep++;
-                else if (OpenerStep == 19) actionID = Ricochet;
+                else if (OpenerStep == 25) actionID = Ricochet;
 
-                if (CustomComboFunctions.WasLastAction(Drill) && OpenerStep == 25) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 20) actionID = Drill;
+                if (CustomComboFunctions.WasLastAction(Drill) && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
+                else if (OpenerStep == 26) actionID = Drill;
 
                 return true;
             }
