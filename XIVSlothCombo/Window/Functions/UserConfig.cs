@@ -2038,6 +2038,20 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region WHITE MAGE
 
+            if (preset is CustomComboPreset.WHM_ST_MainCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_MainCombo_Adv, "Advanced Action Options", "Change how actions are handled", isConditionalChoice: true);
+
+                if (WHM.Config.WHM_ST_MainCombo_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(WHM.Config.WHM_ST_MainCombo_Adv_Actions, "On Stone/Glare", "Apply options to all Stones and Glares.", 3, 0);
+                    UserConfig.DrawHorizontalMultiChoice(WHM.Config.WHM_ST_MainCombo_Adv_Actions, "On Aero/Dia", "Apply options to Aeros and Dia.", 3, 1);
+                    UserConfig.DrawHorizontalMultiChoice(WHM.Config.WHM_ST_MainCombo_Adv_Actions, "On Stone II", "Apply options to Stone II.", 3, 2);
+                    ImGui.Unindent();
+                }
+            }
+
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work.", 150, SliderIncrements.Hundreds);
 
