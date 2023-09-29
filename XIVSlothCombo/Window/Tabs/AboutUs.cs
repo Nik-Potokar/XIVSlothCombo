@@ -1,5 +1,6 @@
 ﻿using Dalamud.Interface;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Utility;
 using Dalamud.Plugin;
 using Dalamud.Utility;
 using ECommons.ImGuiMethods;
@@ -8,6 +9,8 @@ using ImGuiScene;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Reflection;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Tabs
 {
@@ -16,9 +19,9 @@ namespace XIVSlothCombo.Window.Tabs
         public static Version version = null!;
 
         private static Dictionary<string, TextureWrap> Images = new();
-        internal static void Draw(IDalamudPlugin P)
+        internal static void Draw()
         {
-            version ??= P.GetType().Assembly.GetName().Version!;
+            version ??= Assembly.GetExecutingAssembly().GetName().Version!;
 
             PvEFeatures.HasToOpenJob = true;
 
@@ -26,7 +29,7 @@ namespace XIVSlothCombo.Window.Tabs
 
             ImGuiEx.ImGuiLineCentered("Header", delegate
             {
-                ImGuiEx.TextUnderlined($"{P.Name} - v{version}");
+                ImGuiEx.TextUnderlined($"XIVSlothCombo - v{version}");
             });
 
             ImGuiEx.ImGuiLineCentered("AboutHeader", delegate

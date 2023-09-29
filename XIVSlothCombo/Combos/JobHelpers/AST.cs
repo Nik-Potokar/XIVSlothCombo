@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Plugin.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             Service.Framework.Update += CheckCards;
         }
 
-        private static void CheckCards(Framework framework)
+        private static void CheckCards(IFramework framework)
         {
             if (Service.ClientState.LocalPlayer is null || Service.ClientState.LocalPlayer.ClassJob.Id != 33)
                 return;

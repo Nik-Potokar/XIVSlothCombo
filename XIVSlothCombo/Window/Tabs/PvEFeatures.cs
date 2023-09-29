@@ -9,6 +9,7 @@ using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
 using XIVSlothCombo.Window.MessagesNS;
+using Dalamud.Interface.Utility;
 
 namespace XIVSlothCombo.Window.Tabs
 {

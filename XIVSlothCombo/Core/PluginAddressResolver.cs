@@ -6,7 +6,7 @@ using FFXIVClientStructs.FFXIV.Client.Game;
 namespace XIVSlothCombo.Core
 {
     /// <summary> Plugin address resolver. </summary>
-    internal class PluginAddressResolver : BaseAddressResolver
+    internal class PluginAddressResolver
     {
         /// <summary> Gets the address of the member ComboTimer. </summary>
         public IntPtr ComboTimer { get; private set; }
@@ -21,7 +21,7 @@ namespace XIVSlothCombo.Core
         public IntPtr IsActionIdReplaceable { get; private set; }
 
         /// <inheritdoc/>
-        protected unsafe override void Setup64Bit(SigScanner scanner)
+        public unsafe void Setup(ISigScanner scanner)
         {
             ComboTimer = new IntPtr(&ActionManager.Instance()->Combo.Timer);
 

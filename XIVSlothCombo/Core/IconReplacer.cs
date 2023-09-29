@@ -29,8 +29,8 @@ namespace XIVSlothCombo.Core
                 .OrderByDescending(x => x.Preset)
                 .ToList();
 
-            getIconHook = Hook<GetIconDelegate>.FromAddress(Service.Address.GetAdjustedActionId, GetIconDetour);
-            isIconReplaceableHook = Hook<IsIconReplaceableDelegate>.FromAddress(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
+            getIconHook = Service.GameInteropProvider.HookFromAddress<GetIconDelegate>(Service.Address.GetAdjustedActionId, GetIconDetour);
+            isIconReplaceableHook = Service.GameInteropProvider.HookFromAddress<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
 
             getIconHook.Enable();
             isIconReplaceableHook.Enable();
