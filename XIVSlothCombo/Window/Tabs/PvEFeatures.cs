@@ -10,6 +10,7 @@ using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
 using XIVSlothCombo.Window.MessagesNS;
 using Dalamud.Interface.Utility;
+using System.Reflection.Metadata.Ecma335;
 
 namespace XIVSlothCombo.Window.Tabs
 {
@@ -170,6 +171,9 @@ namespace XIVSlothCombo.Window.Tabs
 
                 if (id is >= 16 and <= 18)
                     id = DOL.JobID;
+
+                if (id == DOH.JobID)
+                    return;
 
                 if (id is not null)
                 {
