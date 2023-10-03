@@ -265,7 +265,7 @@ namespace XIVSlothCombo.Core
 
         public void ResetFeatures(string config, int[] values)
         {
-            Dalamud.Logging.PluginLog.Debug($"{config} {GetResetValues(config)}");
+            Service.PluginLog.Debug($"{config} {GetResetValues(config)}");
             if (!GetResetValues(config))
             {
                 bool needToResetMessagePrinted = false;
@@ -274,7 +274,7 @@ namespace XIVSlothCombo.Core
 
                 foreach (int value in values)
                 {
-                    Dalamud.Logging.PluginLog.Debug(value.ToString());
+                    Service.PluginLog.Debug(value.ToString());
                     if (presets.Contains(value))
                     {
                         var preset = Enum.GetValues<CustomComboPreset>()

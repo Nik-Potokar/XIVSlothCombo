@@ -59,6 +59,6 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Get if an action is enabled.</summary>
         /// <param name="actionID"> Action ID to check</param>
         /// <returns> If the action is currently enabled.</returns>
-        public unsafe static bool IsEnabled(uint actionID) => ActionManager.Instance()->GetActionStatus(ActionType.Spell, actionID) == 0;
+        public unsafe static bool IsEnabled(uint actionID) => ActionManager.Instance()->GetActionStatus(ActionType.Action, actionID) == 0;
     }
 }

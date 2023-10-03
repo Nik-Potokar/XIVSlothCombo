@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34112.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XIVSlothCombo", "XIVSlothCombo\XIVSlothCombo.csproj", "{619DF476-7225-4783-95A5-D29A8816EE66}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github Actions", "Github Ac
 		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommons", "ECommons\ECommons\ECommons.csproj", "{3E8E720E-9990-4202-9035-12F54C78CF47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -30,6 +32,12 @@ Global
 		{619DF476-7225-4783-95A5-D29A8816EE66}.GitBuild|x64.Build.0 = GitBuild|x64
 		{619DF476-7225-4783-95A5-D29A8816EE66}.Release|x64.ActiveCfg = Release|x64
 		{619DF476-7225-4783-95A5-D29A8816EE66}.Release|x64.Build.0 = Release|x64
+		{3E8E720E-9990-4202-9035-12F54C78CF47}.Debug|x64.ActiveCfg = Debug|x64
+		{3E8E720E-9990-4202-9035-12F54C78CF47}.Debug|x64.Build.0 = Debug|x64
+		{3E8E720E-9990-4202-9035-12F54C78CF47}.GitBuild|x64.ActiveCfg = Debug|x64
+		{3E8E720E-9990-4202-9035-12F54C78CF47}.GitBuild|x64.Build.0 = Debug|x64
+		{3E8E720E-9990-4202-9035-12F54C78CF47}.Release|x64.ActiveCfg = Release|x64
+		{3E8E720E-9990-4202-9035-12F54C78CF47}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
