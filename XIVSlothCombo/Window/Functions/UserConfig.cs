@@ -1368,7 +1368,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.MCH_ST_Adv_Rotation)
             {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Opener", "Uses Standard Rotation.", 0);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "Uses Standard Rotation.", 0);
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "Uses 123 Tools Rotation.", 1);
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "Uses Early Tools Rotation.", 2);
             }

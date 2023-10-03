@@ -354,7 +354,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Standard Rotation
-                    if (rotationSelection is 0)
+                    if ((rotationSelection is 0) || level < 90)
                     {
                         // Interrupt
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Interrupt) && interruptReady)
@@ -391,7 +391,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (level >= 90)
                             {
                                 // First condition
-                                if (gauge.Battery is 50 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
+                                if (gauge.Battery is 50 && CombatEngageDuration().TotalSeconds > 59 && CombatEngageDuration().TotalSeconds < 68)
                                     return OriginalHook(RookAutoturret);
 
                                 // Second condition
@@ -432,27 +432,27 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (LevelChecked(ChainSaw) && GetCooldownRemainingTime(ChainSaw) >= 8)
                                     {
-                                        if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                        if (UseHyperchargeDelayedTools(gauge, wildfireCDTime))
                                             return Hypercharge;
                                     }
 
                                     else if (!LevelChecked(ChainSaw))
                                     {
-                                        if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                        if (UseHyperchargeDelayedTools(gauge, wildfireCDTime))
                                             return Hypercharge;
                                     }
                                 }
 
                                 else if (!LevelChecked(AirAnchor))
                                 {
-                                    if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                    if (UseHyperchargeDelayedTools(gauge, wildfireCDTime))
                                         return Hypercharge;
                                 }
                             }
 
                             else if (!LevelChecked(Drill))
                             {
-                                if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                if (UseHyperchargeDelayedTools(gauge, wildfireCDTime))
                                     return Hypercharge;
                             }
                         }
@@ -461,12 +461,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
                             gauge.IsOverheated && LevelChecked(HeatBlast))
                         {
-                            if (WasLastAction(HeatBlast) && CanWeave(actionID))
+                            if (CanWeave(actionID))
                             {
-                                if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
+                                if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet) && WasLastAction(HeatBlast))
                                     return GaussRound;
 
-                                if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
+                                if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound) && WasLastAction(HeatBlast))
                                     return Ricochet;
                             }
                             return HeatBlast;
@@ -505,10 +505,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
                             CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire))
                         {
-                            if (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound))
+                            if (HasCharges(GaussRound) && (!LevelChecked(Ricochet) ||
+                                GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
                                 return GaussRound;
 
-                            if (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet))
+                            else if (ActionReady(Ricochet))
                                 return Ricochet;
                         }
                     }
@@ -828,24 +829,6 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
 
-            private bool UseHyperchargeStandard(MCHGauge gauge, float wildfireCDTime)
-            {
-                // i really do not remember why i put > 70 here for heat, and im afraid if i remove it itll break it lol
-                if (CombatEngageDuration().Minutes == 0 &&
-                    (gauge.Heat > 70 || CombatEngageDuration().Seconds <= 30) && !WasLastWeaponskill(OriginalHook(CleanShot)))
-                    return true;
-
-                if (CombatEngageDuration().Minutes > 0)
-                {
-                    if (CombatEngageDuration().Minutes % 2 == 1 && gauge.Heat >= 90)
-                        return true;
-
-                    if (CombatEngageDuration().Minutes % 2 == 0)
-                        return true;
-                }
-                return false;
-            }
-
             private bool UseHyperchargeDelayedTools(MCHGauge gauge, float wildfireCDTime)
             {
                 if (CombatEngageDuration().Minutes == 0 && (gauge.Heat == 60 || CombatEngageDuration().Seconds <= 33))
@@ -1015,7 +998,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Hypercharge        
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Hypercharge) &&
-                        gauge.Heat >= 50 && LevelChecked(Hypercharge) && !gauge.IsOverheated)
+                        gauge.Heat >= 50 && LevelChecked(Hypercharge) && LevelChecked(AutoCrossbow) && !gauge.IsOverheated)
                         return Hypercharge;
 
                     //Heatblast, Gauss, Rico
