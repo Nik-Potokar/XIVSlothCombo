@@ -130,7 +130,7 @@ namespace XIVSlothCombo.Data
             if (actionManager == null)
                 return 0;
 
-            int cost = ActionManager.GetActionCost(ActionType.Spell, actionID, 0, 0, 0, 0);
+            int cost = ActionManager.GetActionCost(ActionType.Action, actionID, 0, 0, 0, 0);
 
             return cost;
         }

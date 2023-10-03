@@ -1,5 +1,6 @@
 ﻿using Dalamud.Interface;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Internal;
 using Dalamud.Interface.Utility;
 using Dalamud.Plugin;
 using Dalamud.Utility;
@@ -18,7 +19,7 @@ namespace XIVSlothCombo.Window.Tabs
     {
         public static Version version = null!;
 
-        private static Dictionary<string, TextureWrap> Images = new();
+        private static Dictionary<string, IDalamudTextureWrap> Images = new();
         internal static void Draw()
         {
             version ??= Assembly.GetExecutingAssembly().GetName().Version!;

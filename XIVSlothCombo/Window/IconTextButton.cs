@@ -1,4 +1,5 @@
 ﻿using Dalamud.Interface;
+using Dalamud.Interface.Internal;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using ImGuiScene;
@@ -16,7 +17,7 @@ namespace XIVSlothCombo.Window
             return iconSize;
         }
 
-        public static bool IconImageButton(TextureWrap texture, string text, Vector2 size = new(), bool imageOnRight = false, float imageScale = 0)
+        public static bool IconImageButton(IDalamudTextureWrap texture, string text, Vector2 size = new(), bool imageOnRight = false, float imageScale = 0)
         {
             var buttonClicked = false;
 
