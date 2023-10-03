@@ -86,55 +86,6 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_AoEBloodbathThreshold = new("DRG_AoEBloodbathThreshold");
         }
 
-        internal class DRG_ST_BasicCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_BasicCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                DRGGauge? gauge = GetJobGauge<DRGGauge>();
-                bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany) && IsOffCooldown(DragonSight);
-                Status? ChaosDoTDebuff;
-
-                if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
-                else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
-
-                if (actionID is FullThrust)
-                {
-                    //1-2-3 Combo
-                    if (HasEffect(Buffs.SharperFangAndClaw))
-                        return OriginalHook(FangAndClaw);
-
-                    if (HasEffect(Buffs.EnhancedWheelingThrust))
-                        return OriginalHook(WheelingThrust);
-
-
-                    if (comboTime > 0)
-                    {
-                        if ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6)) ||
-                            GetBuffRemainingTime(Buffs.PowerSurge) < 10)
-                        {
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
-                                return Disembowel;
-
-                            if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
-                                return OriginalHook(ChaosThrust);
-                        }
-
-                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
-                            return VorpalThrust;
-
-                        if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
-                            return OriginalHook(FullThrust);
-                    }
-
-                    return OriginalHook(TrueThrust);
-                }
-
-                return actionID;
-            }
-        }
-
         internal class DRG_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;

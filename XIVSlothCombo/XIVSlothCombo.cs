@@ -171,6 +171,12 @@ namespace XIVSlothCombo
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
+
+        private void DisposeOpeners()
+        {
+            DRG.DRG_ST_AdvancedMode.DRGOpener.Dispose();
+            DRG.DRG_ST_SimpleMode.DRGOpener.Dispose();
+        }
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
         private void OnCommand(string command, string arguments)

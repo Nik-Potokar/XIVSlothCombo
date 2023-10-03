@@ -1159,7 +1159,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode)]
         [CustomComboInfo("Simple ST Dragoon", "Replaces True Thrust with a full one-button rotation.", DRG.JobID, -4, "", "")]
-        DRG_ST_SimpleMode = 6000,
+        DRG_ST_SimpleMode = 6001,
 
         #region Advanced ST Dragoon
 
@@ -1237,11 +1237,11 @@ namespace XIVSlothCombo.Combos
         DRG_ST_Optimized_Rotation = 6115,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 98, "", "")]
+        [CustomComboInfo("Ranged Uptime Option", "Replaces Main Combo with Piercing Talon when you are out of melee range.", DRG.JobID, 0, "", "")]
         DRG_ST_RangedUptime = 6116,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 99, "", "")]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", DRG.JobID, 0, "", "")]
         DRG_ST_ComboHeals = 6117,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
@@ -1251,7 +1251,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DRG_TrueNorthDynamic)]
         [CustomComboInfo("Hold True North option", "Will hold the last charge of True North, even when out of position for Fang And Claw/Wheeling Thrust potency bonuses.", DRG.JobID, 0, "", "")]
         DRG_TrueNorthDynamic_HoldCharge = 6119,
-
 
         #endregion
 
