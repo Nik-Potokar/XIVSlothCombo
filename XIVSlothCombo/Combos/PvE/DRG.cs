@@ -1,13 +1,13 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using static XIVSlothCombo.Combos.JobHelpers.DRG;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class DRG
+    internal class DRG
     {
         public const byte ClassID = 4;
         public const byte JobID = 22;
@@ -78,7 +78,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 DRG_ST_DiveOptions = new("DRG_ST_DiveOptions"),
                 DRG_AOE_DiveOptions = new("DRG_AOE_DiveOptions"),
-                DRG_OpenerOptions = new("DRG_OpenerOptions"),
+                DRG_OpenerChoice = new("DRG_OpenerChoice"),
                 DRG_VariantCure = new("DRG_VariantCure"),
                 DRG_STSecondWindThreshold = new("DRG_STSecondWindThreshold"),
                 DRG_STBloodbathThreshold = new("DRG_STBloodbathThreshold"),
@@ -86,18 +86,63 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_AoEBloodbathThreshold = new("DRG_AoEBloodbathThreshold");
         }
 
-        internal class DRG_ST_SimpleMode : CustomCombo
+        internal class DRG_ST_BasicCombo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
-            internal static bool inOpener = false;
-            internal static bool readyOpener = false;
-            internal static bool openerStarted = false;
-            internal static byte step = 0;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_BasicCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany) && IsOffCooldown(DragonSight);
+                Status? ChaosDoTDebuff;
+
+                if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
+                else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
+
+                if (actionID is FullThrust)
+                {
+                    //1-2-3 Combo
+                    if (HasEffect(Buffs.SharperFangAndClaw))
+                        return OriginalHook(FangAndClaw);
+
+                    if (HasEffect(Buffs.EnhancedWheelingThrust))
+                        return OriginalHook(WheelingThrust);
+
+
+                    if (comboTime > 0)
+                    {
+                        if ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6)) ||
+                            GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                        {
+                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
+                                return Disembowel;
+
+                            if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
+                                return OriginalHook(ChaosThrust);
+                        }
+
+                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
+                            return VorpalThrust;
+
+                        if (lastComboMove is VorpalThrust && LevelChecked(FullThrust))
+                            return OriginalHook(FullThrust);
+                    }
+
+                    return OriginalHook(TrueThrust);
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class DRG_ST_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
+            internal static DRGOpenerLogic DRGOpener = new();
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 Status? ChaosDoTDebuff;
 
                 if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
@@ -113,263 +158,72 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
-                        CanDRGWeave(Variant.VariantRampart))
+                        AnimationLock.CanDRGWeave(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
                     // Opener for DRG
-                    //2.5 GCD
-                    if (level >= 88)
+                    if (DRGOpener.DoFullOpener(ref actionID, true))
+                        return actionID;
+
+                    // Piercing Talon Uptime Option
+                    if (LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
+                        return PiercingTalon;
+
+                    if (HasEffect(Buffs.PowerSurge))
                     {
-                        // Check to start opener
-                        if (openerStarted && HasEffect(All.Buffs.Sprint))
-                        { inOpener = true; openerStarted = false; readyOpener = false; }
+                        //Battle Litany Feature
+                        if (ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
+                            return BattleLitany;
 
-                        if ((readyOpener || openerStarted) && HasEffect(All.Buffs.Sprint) && !inOpener)
-                        { openerStarted = true; return TrueThrust; }
-                        else
-                        { openerStarted = false; }
+                        //Lance Charge Feature
+                        if (ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
+                            return LanceCharge;
 
-                        // Reset check for opener
-                        if (openerReady && !InCombat() && !inOpener && !openerStarted)
+                        //Dragon Sight Feature
+                        if (ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
+                            return DragonSight;
+
+                        //Life Surge Feature
+                        if (!HasEffect(Buffs.LifeSurge) && HasCharges(LifeSurge) && AnimationLock.CanDRGWeave(LifeSurge) &&
+                            ((HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
+                            (HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
+                            (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) || HasEffect(Buffs.SharperFangAndClaw))) ||
+                            (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
+                            return LifeSurge;
+
+                        //Wyrmwind Thrust Feature
+                        if (gauge.FirstmindsFocusCount is 2 && AnimationLock.CanDRGWeave(WyrmwindThrust))
+                            return WyrmwindThrust;
+
+                        //Dives Feature
+                        if (!IsMoving && LevelChecked(LanceCharge))
                         {
-                            readyOpener = true;
-                            inOpener = false;
-                            step = 0;
-                            return TrueThrust;
+                            if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
+                               (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye))) //Dives under LanceCharge and Dragon Sight -- optimized with the balance
+                            {
+                                if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
+                                    return DragonfireDive;
+
+                                if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
+                                    return SpineshatterDive;
+                            }
                         }
-                        else
-                        { readyOpener = false; }
 
-                        // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
-                        if ((step == 0 && lastComboMove is TrueThrust && !HasEffect(All.Buffs.Sprint)) ||
-                            (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
-                            inOpener = false;
+                        //(High) Jump Feature   
+                        if (ActionReady(OriginalHook(Jump)) && !IsMoving && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
+                            return OriginalHook(Jump);
 
-                        if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump) && level >= 88 && openerReady)
-                            inOpener = true;
+                        //Geirskogul and Nastrond Feature
+                        if (IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)) && AnimationLock.CanDRGWeave(OriginalHook(Geirskogul)))
+                            return OriginalHook(Geirskogul);
 
-                        if (inOpener)
-                        {
-                            if (step == 0)
-                            {
-                                if (lastComboMove == TrueThrust) step++;
-                                else return TrueThrust;
-                            }
+                        //Mirage Feature
+                        if (IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady) && AnimationLock.CanDRGWeave(MirageDive))
+                            return MirageDive;
 
-                            if (step == 1)
-                            {
-                                if (lastComboMove == Disembowel) step++;
-                                else return Disembowel;
-                            }
-
-                            if (step == 2)
-                            {
-                                if (IsOnCooldown(LanceCharge)) step++;
-                                else return LanceCharge;
-                            }
-
-                            if (step == 3)
-                            {
-                                if (IsOnCooldown(DragonSight)) step++;
-                                else return DragonSight;
-                            }
-
-                            if (step == 4)
-                            {
-                                if (lastComboMove == ChaoticSpring) step++;
-                                else return ChaoticSpring;
-                            }
-
-                            if (step == 5)
-                            {
-                                if (IsOnCooldown(BattleLitany)) step++;
-                                else return BattleLitany;
-                            }
-
-                            if (step == 6)
-                            {
-                                if (lastComboMove == WheelingThrust) step++;
-                                else return WheelingThrust;
-                            }
-
-                            if (step == 7)
-                            {
-                                if (WasLastAction(Geirskogul)) step++;
-                                else return Geirskogul;
-                            }
-
-                            if (step == 8)
-                            {
-                                if (GetRemainingCharges(LifeSurge) < 2) step++;
-                                else return LifeSurge;
-                            }
-
-                            if (step == 9)
-                            {
-                                if (lastComboMove == FangAndClaw) step++;
-                                else return FangAndClaw;
-                            }
-
-                            if (step == 10)
-                            {
-                                if (IsOnCooldown(HighJump)) step++;
-                                else return HighJump;
-                            }
-
-                            if (step == 11)
-                            {
-                                if (IsOnCooldown(MirageDive)) step++;
-                                else return MirageDive;
-                            }
-
-                            if (step == 12)
-                            {
-                                if (lastComboMove == RaidenThrust) step++;
-                                else return RaidenThrust;
-                            }
-
-                            if (step == 13)
-                            {
-                                if (IsOnCooldown(DragonfireDive)) step++;
-                                else return DragonfireDive;
-                            }
-
-                            if (step == 14)
-                            {
-                                if (lastComboMove == VorpalThrust) step++;
-                                else return VorpalThrust;
-                            }
-
-                            if (step == 15)
-                            {
-                                if (GetRemainingCharges(SpineshatterDive) < 2) step++;
-                                else return SpineshatterDive;
-                            }
-
-                            if (step == 16)
-                            {
-                                if (GetRemainingCharges(LifeSurge) < 1) step++;
-                                else return LifeSurge;
-                            }
-
-                            if (step == 17)
-                            {
-                                if (lastComboMove == HeavensThrust) step++;
-                                else return HeavensThrust;
-                            }
-
-                            if (step == 18)
-                            {
-                                if (GetRemainingCharges(SpineshatterDive) < 1) step++;
-                                else return SpineshatterDive;
-                            }
-
-                            if (step == 19)
-                            {
-                                if (lastComboMove == FangAndClaw) step++;
-                                else return FangAndClaw;
-                            }
-
-                            if (step == 20)
-                            {
-                                if (lastComboMove == WheelingThrust) step++;
-                                else return WheelingThrust;
-                            }
-
-                            if (step == 21)
-                            {
-                                if (lastComboMove == RaidenThrust) step++;
-                                else return RaidenThrust;
-                            }
-
-                            if (step == 22)
-                            {
-                                if (WasLastAction(WyrmwindThrust)) step++;
-                                else return WyrmwindThrust;
-                            }
-                            if (step == 23)
-                            {
-                                if (lastComboMove == Disembowel) step++;
-                                else return Disembowel;
-                            }
-
-                            if (step == 24)
-                            {
-                                if (lastComboMove == ChaoticSpring) step++;
-                                else return ChaoticSpring;
-                            }
-
-                            if (step == 25)
-                            {
-                                if (lastComboMove == WheelingThrust) step++;
-                                else return WheelingThrust;
-                            }
-                            inOpener = false;
-                        }
-                    }
-
-                    if (!inOpener)
-                    {
-                        // Piercing Talon Uptime Option
-                        if (LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
-                            return PiercingTalon;
-
-                        if (HasEffect(Buffs.PowerSurge))
-                        {
-                            //Battle Litany Feature
-                            if (ActionReady(BattleLitany) && CanDRGWeave(BattleLitany))
-                                return BattleLitany;
-
-                            //Lance Charge Feature
-                            if (ActionReady(LanceCharge) && CanDRGWeave(LanceCharge))
-                                return LanceCharge;
-
-                            //Dragon Sight Feature
-                            if (ActionReady(DragonSight) && CanDRGWeave(DragonSight))
-                                return DragonSight;
-
-                            //Life Surge Feature
-                            if (!HasEffect(Buffs.LifeSurge) && HasCharges(LifeSurge) && CanDRGWeave(LifeSurge) &&
-                                ((HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
-                                (HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
-                                (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) || HasEffect(Buffs.SharperFangAndClaw))) ||
-                                (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
-                                return LifeSurge;
-
-                            //Wyrmwind Thrust Feature
-                            if (gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
-                                return WyrmwindThrust;
-
-                            //Dives Feature
-                            if (!IsMoving && LevelChecked(LanceCharge))
-                            {
-                                if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
-                                   (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye))) //Dives under LanceCharge and Dragon Sight -- optimized with the balance
-                                {
-                                    if (ActionReady(DragonfireDive) && CanDRGWeave(DragonfireDive))
-                                        return DragonfireDive;
-
-                                    if (ActionReady(SpineshatterDive) && CanDRGWeave(SpineshatterDive))
-                                        return SpineshatterDive;
-                                }
-                            }
-
-                            //(High) Jump Feature   
-                            if (ActionReady(OriginalHook(Jump)) && !IsMoving && CanDRGWeave(OriginalHook(Jump)))
-                                return OriginalHook(Jump);
-
-                            //Geirskogul and Nastrond Feature
-                            if (IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)) && CanDRGWeave(OriginalHook(Geirskogul)))
-                                return OriginalHook(Geirskogul);
-
-                            //Mirage Feature
-                            if (IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady) && CanDRGWeave(MirageDive))
-                                return MirageDive;
-
-                            //StarDives Feature
-                            if (gauge.IsLOTDActive && ActionReady(Stardiver) && CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                return Stardiver;
-                        }
+                        //StarDives Feature
+                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && AnimationLock.CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                            return Stardiver;
                     }
 
                     //1-2-3 Combo
@@ -377,7 +231,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // If we are not on the flank, but need to use Fangs, pop true north if not already up
                         if (!HasEffect(All.Buffs.TrueNorth) &&
-                            CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
+                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(FangAndClaw);
@@ -387,7 +241,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // If we are not on the rear, but need to use Wheeling, pop true north if not already up
                         if (!HasEffect(All.Buffs.TrueNorth) &&
-                            CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(WheelingThrust);
@@ -422,17 +276,12 @@ namespace XIVSlothCombo.Combos.PvE
         internal class DRG_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
-            internal static bool inOpener = false;
-            internal static bool readyOpener = false;
-            internal static bool openerStarted = false;
-            internal static byte step = 0;
+            internal static DRGOpenerLogic DRGOpener = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
-                bool openerReady = IsOffCooldown(LanceCharge) && IsOffCooldown(BattleLitany) && IsOffCooldown(DragonSight);
                 int diveOptions = Config.DRG_ST_DiveOptions;
-                int openerSelection = Config.DRG_OpenerOptions;
                 Status? ChaosDoTDebuff;
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
                 bool trueNorthReadyDyn = trueNorthReady;
@@ -457,478 +306,93 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
-                        CanDRGWeave(Variant.VariantRampart))
+                        AnimationLock.CanDRGWeave(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
-                    // Opener for DRG
-                    if (IsEnabled(CustomComboPreset.DRG_ST_Opener) && level >= 88)
+                    // Opener for BLM
+                    if (IsEnabled(CustomComboPreset.DRG_ST_Opener))
                     {
-                        // Standard opener - 2.5
-                        if (openerSelection is 0)
-                        {
-                            // Check to start opener
-                            if (openerStarted && HasEffect(All.Buffs.Sprint))
-                            { inOpener = true; openerStarted = false; readyOpener = false; }
-
-                            if ((readyOpener || openerStarted) && HasEffect(All.Buffs.Sprint) && !inOpener)
-                            { openerStarted = true; return TrueThrust; }
-                            else
-                            { openerStarted = false; }
-
-                            // Reset check for opener
-                            if (openerReady && !InCombat() && !inOpener && !openerStarted)
-                            {
-                                readyOpener = true;
-                                inOpener = false;
-                                step = 0;
-                                return TrueThrust;
-                            }
-                            else
-                            { readyOpener = false; }
-
-                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
-                            if ((step == 0 && lastComboMove is TrueThrust && !HasEffect(All.Buffs.Sprint)) ||
-                                (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
-                                inOpener = false;
-
-                            if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump))
-                                inOpener = true;
-
-                            if (inOpener)
-                            {
-                                if (step == 0)
-                                {
-                                    if (lastComboMove == TrueThrust) step++;
-                                    else return TrueThrust;
-                                }
-
-                                if (step == 1)
-                                {
-                                    if (lastComboMove == Disembowel) step++;
-                                    else return Disembowel;
-                                }
-
-                                if (step == 2)
-                                {
-                                    if (IsOnCooldown(LanceCharge)) step++;
-                                    else return LanceCharge;
-                                }
-
-                                if (step == 3)
-                                {
-                                    if (IsOnCooldown(DragonSight)) step++;
-                                    else return DragonSight;
-                                }
-
-                                if (step == 4)
-                                {
-                                    if (lastComboMove == ChaoticSpring) step++;
-                                    else return ChaoticSpring;
-                                }
-
-                                if (step == 5)
-                                {
-                                    if (IsOnCooldown(BattleLitany)) step++;
-                                    else return BattleLitany;
-                                }
-
-                                if (step == 6)
-                                {
-                                    if (lastComboMove == WheelingThrust) step++;
-                                    else return WheelingThrust;
-                                }
-
-                                if (step == 7)
-                                {
-                                    if (WasLastAction(Geirskogul)) step++;
-                                    else return Geirskogul;
-                                }
-
-                                if (step == 8)
-                                {
-                                    if (GetRemainingCharges(LifeSurge) < 2) step++;
-                                    else return LifeSurge;
-                                }
-
-                                if (step == 9)
-                                {
-                                    if (lastComboMove == FangAndClaw) step++;
-                                    else return FangAndClaw;
-                                }
-
-                                if (step == 10)
-                                {
-                                    if (IsOnCooldown(HighJump)) step++;
-                                    else return HighJump;
-                                }
-
-                                if (step == 11)
-                                {
-                                    if (IsOnCooldown(MirageDive)) step++;
-                                    else return MirageDive;
-                                }
-
-                                if (step == 12)
-                                {
-                                    if (lastComboMove == RaidenThrust) step++;
-                                    else return RaidenThrust;
-                                }
-
-                                if (step == 13)
-                                {
-                                    if (IsOnCooldown(DragonfireDive)) step++;
-                                    else return DragonfireDive;
-                                }
-
-                                if (step == 14)
-                                {
-                                    if (lastComboMove == VorpalThrust) step++;
-                                    else return VorpalThrust;
-                                }
-
-                                if (step == 15)
-                                {
-                                    if (GetRemainingCharges(SpineshatterDive) < 2) step++;
-                                    else return SpineshatterDive;
-                                }
-
-                                if (step == 16)
-                                {
-                                    if (GetRemainingCharges(LifeSurge) < 1) step++;
-                                    else return LifeSurge;
-                                }
-
-                                if (step == 17)
-                                {
-                                    if (lastComboMove == HeavensThrust) step++;
-                                    else return HeavensThrust;
-                                }
-
-                                if (step == 18)
-                                {
-                                    if (GetRemainingCharges(SpineshatterDive) < 1) step++;
-                                    else return SpineshatterDive;
-                                }
-
-                                if (step == 19)
-                                {
-                                    if (lastComboMove == FangAndClaw) step++;
-                                    else return FangAndClaw;
-                                }
-
-                                if (step == 20)
-                                {
-                                    if (lastComboMove == WheelingThrust) step++;
-                                    else return WheelingThrust;
-                                }
-
-                                if (step == 21)
-                                {
-                                    if (lastComboMove == RaidenThrust) step++;
-                                    else return RaidenThrust;
-                                }
-
-                                if (step == 22)
-                                {
-                                    if (WasLastAction(WyrmwindThrust)) step++;
-                                    else return WyrmwindThrust;
-                                }
-                                if (step == 23)
-                                {
-                                    if (lastComboMove == Disembowel) step++;
-                                    else return Disembowel;
-                                }
-
-                                if (step == 24)
-                                {
-                                    if (lastComboMove == ChaoticSpring) step++;
-                                    else return ChaoticSpring;
-                                }
-
-                                if (step == 25)
-                                {
-                                    if (lastComboMove == WheelingThrust) step++;
-                                    else return WheelingThrust;
-                                }
-
-                                inOpener = false;
-                            }
-                        }
-
-                        // 2.46 OPENER                         
-                        if (openerSelection is 1)
-                        {
-                            // Check to start opener
-                            if (openerStarted && HasEffect(All.Buffs.Sprint))
-                            { inOpener = true; openerStarted = false; readyOpener = false; }
-
-                            if ((readyOpener || openerStarted) && HasEffect(All.Buffs.Sprint) && !inOpener)
-                            { openerStarted = true; return TrueThrust; }
-                            else
-                            { openerStarted = false; }
-
-                            // Reset check for opener
-                            if (openerReady && !InCombat() && !inOpener && !openerStarted)
-                            {
-                                readyOpener = true;
-                                inOpener = false;
-                                step = 0;
-                                return TrueThrust;
-                            }
-                            else
-                            { readyOpener = false; }
-
-                            // Reset if opener is interrupted, requires step 0 and 1 to be explicit since the InCombat() check can be slow
-                            if ((step == 0 && lastComboMove is TrueThrust && !HasEffect(All.Buffs.Sprint)) ||
-                                (inOpener && step >= 2 && IsOffCooldown(actionID) && !InCombat()))
-                                inOpener = false;
-
-                            if (CombatEngageDuration().TotalSeconds < 10 && IsOnCooldown(ElusiveJump))
-                                inOpener = true;
-
-                            if (inOpener)
-                            {
-                                if (step == 0)
-                                {
-                                    if (lastComboMove == TrueThrust) step++;
-                                    else return TrueThrust;
-                                }
-
-                                if (step == 1)
-                                {
-                                    if (lastComboMove == Disembowel) step++;
-                                    else return Disembowel;
-                                }
-
-                                if (step == 2)
-                                {
-                                    if (IsOnCooldown(LanceCharge)) step++;
-                                    else return LanceCharge;
-                                }
-
-                                if (step == 3)
-                                {
-                                    if (IsOnCooldown(DragonSight)) step++;
-                                    else return DragonSight;
-                                }
-
-                                if (step == 4)
-                                {
-                                    if (lastComboMove == ChaoticSpring) step++;
-                                    else return ChaoticSpring;
-                                }
-
-                                if (step == 5)
-                                {
-                                    if (IsOnCooldown(BattleLitany)) step++;
-                                    else return BattleLitany;
-                                }
-
-                                if (step == 6)
-                                {
-                                    if (WasLastAction(Geirskogul)) step++;
-                                    else return Geirskogul;
-                                }
-
-                                if (step == 7)
-                                {
-                                    if (lastComboMove == WheelingThrust) step++;
-                                    else return WheelingThrust;
-                                }
-
-                                if (step == 8)
-                                {
-                                    if (GetRemainingCharges(SpineshatterDive) < 2) step++;
-                                    else return SpineshatterDive;
-                                }
-
-                                if (step == 9)
-                                {
-                                    if (GetRemainingCharges(LifeSurge) < 2) step++;
-                                    else return LifeSurge;
-                                }
-
-                                if (step == 10)
-                                {
-                                    if (lastComboMove == FangAndClaw) step++;
-                                    else return FangAndClaw;
-                                }
-
-                                if (step == 11)
-                                {
-                                    if (IsOnCooldown(HighJump)) step++;
-                                    else return HighJump;
-                                }
-
-                                if (step == 12)
-                                {
-                                    if (IsOnCooldown(MirageDive)) step++;
-                                    else return MirageDive;
-                                }
-
-                                if (step == 13)
-                                {
-                                    if (lastComboMove == RaidenThrust) step++;
-                                    else return RaidenThrust;
-                                }
-
-                                if (step == 14)
-                                {
-                                    if (IsOnCooldown(DragonfireDive)) step++;
-                                    else return DragonfireDive;
-                                }
-
-                                if (step == 15)
-                                {
-                                    if (lastComboMove == VorpalThrust) step++;
-                                    else return VorpalThrust;
-                                }
-
-                                if (step == 16)
-                                {
-                                    if (GetRemainingCharges(SpineshatterDive) < 1) step++;
-                                    else return SpineshatterDive;
-                                }
-
-                                if (step == 17)
-                                {
-                                    if (GetRemainingCharges(LifeSurge) < 1) step++;
-                                    else return LifeSurge;
-                                }
-
-                                if (step == 18)
-                                {
-                                    if (lastComboMove == HeavensThrust) step++;
-                                    else return HeavensThrust;
-                                }
-
-                                if (step == 19)
-                                {
-                                    if (lastComboMove == FangAndClaw) step++;
-                                    else return FangAndClaw;
-                                }
-
-                                if (step == 20)
-                                {
-                                    if (lastComboMove == WheelingThrust) step++;
-                                    else return WheelingThrust;
-                                }
-
-                                if (step == 21)
-                                {
-                                    if (lastComboMove == RaidenThrust) step++;
-                                    else return RaidenThrust;
-                                }
-
-                                if (step == 22)
-                                {
-                                    if (WasLastAction(WyrmwindThrust)) step++;
-                                    else return WyrmwindThrust;
-                                }
-
-                                if (step == 23)
-                                {
-                                    if (lastComboMove == Disembowel) step++;
-                                    else return Disembowel;
-                                }
-
-                                if (step == 24)
-                                {
-                                    if (lastComboMove == ChaoticSpring) step++;
-                                    else return ChaoticSpring;
-                                }
-
-                                if (step == 25)
-                                {
-                                    if (lastComboMove == WheelingThrust) step++;
-                                    else return WheelingThrust;
-                                }
-
-                                inOpener = false;
-                            }
-                        }
+                        if (DRGOpener.DoFullOpener(ref actionID, false))
+                            return actionID;
                     }
 
-                    if (!inOpener)
+                    // Piercing Talon Uptime Option
+                    if (IsEnabled(CustomComboPreset.DRG_ST_RangedUptime) &&
+                        LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
+                        return PiercingTalon;
+
+                    if (HasEffect(Buffs.PowerSurge))
                     {
-                        // Piercing Talon Uptime Option
-                        if (IsEnabled(CustomComboPreset.DRG_ST_RangedUptime) &&
-                            LevelChecked(PiercingTalon) && !InMeleeRange() && HasBattleTarget())
-                            return PiercingTalon;
-
-                        if (HasEffect(Buffs.PowerSurge))
+                        if (IsEnabled(CustomComboPreset.DRG_ST_Buffs))
                         {
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Buffs))
+                            //Battle Litany Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Litany) &&
+                                ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
+                                return BattleLitany;
+
+                            //Lance Charge Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Lance) &&
+                                ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
+                                return LanceCharge;
+
+                            //Dragon Sight Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_DragonSight) &&
+                                ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
+                                return DragonSight;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
+                        {
+                            //Life Surge Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge) && AnimationLock.CanDRGWeave(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
+                                ((HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
+                                (HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
+                                (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) || HasEffect(Buffs.SharperFangAndClaw))) ||
+                                (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
+                                return LifeSurge;
+
+                            //Wyrmwind Thrust Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
+                                gauge.FirstmindsFocusCount is 2 && AnimationLock.CanDRGWeave(WyrmwindThrust))
+                                return WyrmwindThrust;
+
+                            //Dives Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives) &&
+                                (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) &&
+                                GetTargetDistance() <= 1)) && !IsMoving && LevelChecked(LanceCharge))
                             {
-                                //Battle Litany Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Litany) &&
-                                    ActionReady(BattleLitany) && CanDRGWeave(BattleLitany))
-                                    return BattleLitany;
-
-                                //Lance Charge Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Lance) &&
-                                    ActionReady(LanceCharge) && CanDRGWeave(LanceCharge))
-                                    return LanceCharge;
-
-                                //Dragon Sight Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_DragonSight) &&
-                                    ActionReady(DragonSight) && CanDRGWeave(DragonSight))
-                                    return DragonSight;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
-                            {
-                                //Life Surge Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge) && CanDRGWeave(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
-                                    ((HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
-                                    (HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
-                                    (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) || HasEffect(Buffs.SharperFangAndClaw))) ||
-                                    (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
-                                    return LifeSurge;
-
-                                //Wyrmwind Thrust Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
-                                    gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
-                                    return WyrmwindThrust;
-
-                                //Dives Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Dives) &&
-                                    (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) &&
-                                    GetTargetDistance() <= 1)) && !IsMoving && LevelChecked(LanceCharge))
+                                if (diveOptions is 0 || //Dives on cooldown
+                                   (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
+                                   (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
+                                   (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                 {
-                                    if (diveOptions is 0 || //Dives on cooldown
-                                       (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
-                                       (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
-                                       (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
-                                    {
-                                        if (ActionReady(DragonfireDive) && CanDRGWeave(DragonfireDive))
-                                            return DragonfireDive;
+                                    if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
+                                        return DragonfireDive;
 
-                                        if (ActionReady(SpineshatterDive) && CanDRGWeave(SpineshatterDive))
-                                            return SpineshatterDive;
-                                    }
+                                    if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
+                                        return SpineshatterDive;
                                 }
-
-                                //(High) Jump Feature   
-                                if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
-                                    ActionReady(OriginalHook(Jump)) && !IsMoving && CanDRGWeave(OriginalHook(Jump)))
-                                    return OriginalHook(Jump);
-
-                                //Geirskogul and Nastrond Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && CanDRGWeave(OriginalHook(Geirskogul)) && (ActionReady(OriginalHook(Geirskogul)) ||
-                                    (IsEnabled(CustomComboPreset.DRG_ST_Optimized_Rotation) && IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)))))
-                                    return OriginalHook(Geirskogul);
-
-                                //Mirage Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && CanDRGWeave(MirageDive) && (HasEffect(Buffs.DiveReady) ||
-                                   (IsEnabled(CustomComboPreset.DRG_ST_Optimized_Rotation) && IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady))))
-                                    return MirageDive;
-
-                                //StarDives Feature
-                                if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && CanDRGWeave(Stardiver) &&
-                                    gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
-                                    return Stardiver;
                             }
+
+                            //(High) Jump Feature   
+                            if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
+                                ActionReady(OriginalHook(Jump)) && !IsMoving && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
+                                return OriginalHook(Jump);
+
+                            //Geirskogul and Nastrond Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && AnimationLock.CanDRGWeave(OriginalHook(Geirskogul)) && (ActionReady(OriginalHook(Geirskogul)) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_Optimized_Rotation) && IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)))))
+                                return OriginalHook(Geirskogul);
+
+                            //Mirage Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && AnimationLock.CanDRGWeave(MirageDive) && (HasEffect(Buffs.DiveReady) ||
+                               (IsEnabled(CustomComboPreset.DRG_ST_Optimized_Rotation) && IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady))))
+                                return MirageDive;
+
+                            //StarDives Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && AnimationLock.CanDRGWeave(Stardiver) &&
+                                gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                                return Stardiver;
                         }
                     }
 
@@ -948,7 +412,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // If we are not on the flank, but need to use Fangs, pop true north if not already up
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
                             trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) &&
-                            CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
+                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(FangAndClaw);
@@ -959,7 +423,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // If we are not on the rear, but need to use Wheeling, pop true north if not already up
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
                             trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) &&
-                            CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(WheelingThrust);
@@ -1013,31 +477,31 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
-                        CanDRGWeave(Variant.VariantRampart))
+                        AnimationLock.CanDRGWeave(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
                     if (HasEffect(Buffs.PowerSurge))
                     {
                         //Battle Litany Feature
-                        if (ActionReady(BattleLitany) && CanDRGWeave(BattleLitany))
+                        if (ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
                             return BattleLitany;
 
                         //Lance Charge Feature
-                        if (ActionReady(LanceCharge) && CanDRGWeave(LanceCharge))
+                        if (ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
                             return LanceCharge;
 
                         //Dragon Sight Feature
-                        if (ActionReady(DragonSight) && CanDRGWeave(DragonSight))
+                        if (ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
                             return DragonSight;
 
                         //Life Surge Feature
                         if (!HasEffect(Buffs.LifeSurge) && HasCharges(LifeSurge) &&
-                                lastComboMove is SonicThrust && LevelChecked(CoerthanTorment) && CanDRGWeave(LifeSurge))
+                                lastComboMove is SonicThrust && LevelChecked(CoerthanTorment) && AnimationLock.CanDRGWeave(LifeSurge))
                             return LifeSurge;
 
 
                         //Wyrmwind Thrust Feature
-                        if (gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
+                        if (gauge.FirstmindsFocusCount is 2 && AnimationLock.CanDRGWeave(WyrmwindThrust))
                             return WyrmwindThrust;
 
                         //Dives Feature
@@ -1046,28 +510,28 @@ namespace XIVSlothCombo.Combos.PvE
                             if ((!TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
                                (HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye))) //Dives under LanceCharge and Dragon Sight -- optimized with the balance
                             {
-                                if (ActionReady(DragonfireDive) && CanDRGWeave(DragonfireDive))
+                                if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
                                     return DragonfireDive;
 
-                                if (ActionReady(SpineshatterDive) && CanDRGWeave(SpineshatterDive))
+                                if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
                                     return SpineshatterDive;
                             }
                         }
 
                         //(High) Jump Feature   
-                        if (ActionReady(OriginalHook(Jump)) && !IsMoving && CanDRGWeave(OriginalHook(Jump)))
+                        if (ActionReady(OriginalHook(Jump)) && !IsMoving && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
                             return OriginalHook(Jump);
 
                         //Geirskogul and Nastrond Feature
-                        if (IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)) && CanDRGWeave(OriginalHook(Geirskogul)))
+                        if (IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)) && AnimationLock.CanDRGWeave(OriginalHook(Geirskogul)))
                             return OriginalHook(Geirskogul);
 
                         //Mirage Feature
-                        if (IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady) && CanDRGWeave(MirageDive))
+                        if (IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady) && AnimationLock.CanDRGWeave(MirageDive))
                             return MirageDive;
 
                         //StarDives Feature
-                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && AnimationLock.CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                             return Stardiver;
                     }
 
@@ -1121,7 +585,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
-                        CanDRGWeave(Variant.VariantRampart))
+                        AnimationLock.CanDRGWeave(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
                     if (HasEffect(Buffs.PowerSurge))
@@ -1130,17 +594,17 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Battle Litany Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Litany) &&
-                                ActionReady(BattleLitany) && CanDRGWeave(BattleLitany))
+                                ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
                                 return BattleLitany;
 
                             //Lance Charge Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Lance) &&
-                                ActionReady(LanceCharge) && CanDRGWeave(LanceCharge))
+                                ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
                                 return LanceCharge;
 
                             //Dragon Sight Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_DragonSight) &&
-                                ActionReady(DragonSight) && CanDRGWeave(DragonSight))
+                                ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
                                 return DragonSight;
                         }
 
@@ -1149,12 +613,12 @@ namespace XIVSlothCombo.Combos.PvE
                             //Life Surge Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_LifeSurge) &&
                                !HasEffect(Buffs.LifeSurge) && HasCharges(LifeSurge) &&
-                                lastComboMove is SonicThrust && LevelChecked(CoerthanTorment) && CanDRGWeave(LifeSurge))
+                                lastComboMove is SonicThrust && LevelChecked(CoerthanTorment) && AnimationLock.CanDRGWeave(LifeSurge))
                                 return LifeSurge;
 
                             //Wyrmwind Thrust Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Wyrmwind) &&
-                                gauge.FirstmindsFocusCount is 2 && CanDRGWeave(WyrmwindThrust))
+                                gauge.FirstmindsFocusCount is 2 && AnimationLock.CanDRGWeave(WyrmwindThrust))
                                 return WyrmwindThrust;
 
                             //Dives Feature
@@ -1167,31 +631,31 @@ namespace XIVSlothCombo.Combos.PvE
                                    (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
                                    (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
                                 {
-                                    if (ActionReady(DragonfireDive) && CanDRGWeave(DragonfireDive))
+                                    if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
                                         return DragonfireDive;
 
-                                    if (ActionReady(SpineshatterDive) && CanDRGWeave(SpineshatterDive))
+                                    if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
                                         return SpineshatterDive;
                                 }
                             }
 
                             //(High) Jump Feature   
                             if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) &&
-                                ActionReady(OriginalHook(Jump)) && !IsMoving && CanDRGWeave(OriginalHook(Jump)))
+                                ActionReady(OriginalHook(Jump)) && !IsMoving && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
                                 return OriginalHook(Jump);
 
                             //Geirskogul and Nastrond Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_GeirskogulNastrond) && CanDRGWeave(OriginalHook(Geirskogul)) && (ActionReady(OriginalHook(Geirskogul)) ||
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_GeirskogulNastrond) && AnimationLock.CanDRGWeave(OriginalHook(Geirskogul)) && (ActionReady(OriginalHook(Geirskogul)) ||
                                 (IsEnabled(CustomComboPreset.DRG_AoE_Optimized_Rotation) && IsOnCooldown(OriginalHook(Jump)) && ActionReady(OriginalHook(Geirskogul)))))
                                 return OriginalHook(Geirskogul);
 
                             //Mirage Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Mirage) && CanDRGWeave(MirageDive) && (HasEffect(Buffs.DiveReady) ||
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Mirage) && AnimationLock.CanDRGWeave(MirageDive) && (HasEffect(Buffs.DiveReady) ||
                                (IsEnabled(CustomComboPreset.DRG_AoE_Optimized_Rotation) && IsOnCooldown(OriginalHook(Geirskogul)) && HasEffect(Buffs.DiveReady))))
                                 return MirageDive;
 
                             //StarDives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && CanDRGWeave(Stardiver) &&
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && AnimationLock.CanDRGWeave(Stardiver) &&
                                gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                 return Stardiver;
                         }
