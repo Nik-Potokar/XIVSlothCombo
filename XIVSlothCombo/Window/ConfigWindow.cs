@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Dalamud.Interface;
+using Dalamud.Interface.Utility;
 using Dalamud.Plugin;
 using Dalamud.Utility;
 using FFXIVClientStructs.FFXIV.Client.UI;
@@ -124,7 +125,7 @@ namespace XIVSlothCombo.Window
 
                     if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
                     {
-                        AboutUs.Draw(Plugin);
+                        AboutUs.Draw();
                         ImGui.EndTabItem();
                     }
 
