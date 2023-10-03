@@ -7,6 +7,7 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using DalamudStatus = Dalamud.Game.ClientState.Statuses; // conflicts with structs if not defined
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Services;
+using Dalamud.Plugin.Services;
 
 namespace XIVSlothCombo.Data
 {
@@ -129,7 +130,7 @@ namespace XIVSlothCombo.Data
             if (actionManager == null)
                 return 0;
 
-            int cost = ActionManager.GetActionCost(ActionType.Spell, actionID, 0, 0, 0, 0);
+            int cost = ActionManager.GetActionCost(ActionType.Action, actionID, 0, 0, 0, 0);
 
             return cost;
         }
@@ -148,7 +149,7 @@ namespace XIVSlothCombo.Data
         }
 
         /// <summary> Triggers when the game framework updates. Clears cooldown and status caches. </summary>
-        private unsafe void Framework_Update(Framework framework)
+        private unsafe void Framework_Update(IFramework framework)
         {
             statusCache.Clear();
             cooldownCache.Clear();

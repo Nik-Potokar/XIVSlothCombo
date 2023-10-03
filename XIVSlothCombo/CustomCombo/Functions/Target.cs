@@ -120,7 +120,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
         {
             GameObject? healTarget = null;
-            TargetManager tm = Service.TargetManager;
+            ITargetManager tm = Service.TargetManager;
             
             if (HasFriendlyTarget(tm.SoftTarget)) healTarget = tm.SoftTarget;
             if (healTarget is null && HasFriendlyTarget(CurrentTarget) && !restrictToMouseover) healTarget = CurrentTarget;
