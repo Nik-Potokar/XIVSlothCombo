@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Party;
+using Dalamud.Plugin.Services;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
@@ -12,7 +13,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets the party list </summary>
         /// <returns> Current party list. </returns>
-        public static PartyList GetPartyMembers() => Service.PartyList;
+        public static IPartyList GetPartyMembers() => Service.PartyList;
 
         public unsafe static GameObject? GetPartySlot(int slot)
         {
