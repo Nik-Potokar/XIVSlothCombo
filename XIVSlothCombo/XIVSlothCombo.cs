@@ -42,7 +42,7 @@ namespace XIVSlothCombo
             {
                 if (jobID != value)
                 {
-                    Dalamud.Logging.PluginLog.Debug($"Switched to job {value}");
+                    Service.PluginLog.Debug($"Switched to job {value}");
                     PvEFeatures.HasToOpenJob = true;
                 }
                 jobID = value;
@@ -148,7 +148,7 @@ namespace XIVSlothCombo
 
             catch (Exception ex)
             {
-                Dalamud.Logging.PluginLog.Error(ex, "Unable to retrieve MotD");
+                Service.PluginLog.Error(ex, "Unable to retrieve MotD");
             }
         }
 
@@ -507,7 +507,7 @@ namespace XIVSlothCombo
 
                         catch (Exception ex)
                         {
-                            Dalamud.Logging.PluginLog.Error(ex, "Debug Log");
+                            Service.PluginLog.Error(ex, "Debug Log");
                             Service.ChatGui.Print("Unable to write Debug log.");
                             break;
                         }
@@ -519,7 +519,7 @@ namespace XIVSlothCombo
                     {
                         var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
                         var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
-                        Dalamud.Logging.PluginLog.Debug($"{jobname}");
+                        Service.PluginLog.Debug($"{jobname}");
                         PvEFeatures.HeaderToOpen = header;
                     }
                     break;

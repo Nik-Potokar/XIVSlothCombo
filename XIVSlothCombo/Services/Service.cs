@@ -107,5 +107,8 @@ namespace XIVSlothCombo.Services
 
         [PluginService]
         internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
+
+        [PluginService]
+        internal static IPluginLog PluginLog { get; private set; } = null!;
     }
 }
