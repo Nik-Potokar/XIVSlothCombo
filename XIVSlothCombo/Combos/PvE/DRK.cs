@@ -70,34 +70,6 @@ namespace XIVSlothCombo.Combos.PvE
                 DRK_VariantCure = "DRKVariantCure";
         }
 
-        internal class DRK_SimpleMit : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_SimpleMit;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is TheBlackestNight)
-                {
-                    if (ActionReady(TheBlackestNight))
-                        return TheBlackestNight;
-
-                    else if ((IsOnCooldown(TheBlackestNight) || level < 70) && (GetCooldownRemainingTime(Rampart) < 1 || ActionReady(Rampart)))
-                        return Rampart;
-
-                    else if (IsOnCooldown(Rampart) && level >= 82 && (GetRemainingCharges(Oblation) > 1))
-                        return Oblation;
-
-                    else if (GetRemainingCharges(Oblation) == 1 && (GetCooldownRemainingTime(ShadowWall) < 1 || ActionReady(ShadowWall)))
-                        return ShadowWall;
-
-                    else if (IsOnCooldown(ShadowWall) && GetRemainingCharges(Oblation) == 1)
-                        return Oblation;
-                }
-                return actionID;
-
-            }
-
-        }
-
         internal class DRK_SouleaterCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_SouleaterCombo;
