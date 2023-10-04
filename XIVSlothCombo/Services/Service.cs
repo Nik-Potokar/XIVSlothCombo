@@ -13,6 +13,7 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.IoC;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 
@@ -26,44 +27,44 @@ namespace XIVSlothCombo.Services
 
         /// <summary> Gets the Dalamud buddy list. </summary>
         [PluginService]
-        internal static BuddyList BuddyList { get; private set; } = null!;
+        internal static IBuddyList BuddyList { get; private set; } = null!;
 
         /// <summary> Gets the Dalamud chat gui. </summary>
         [PluginService]
-        internal static ChatGui ChatGui { get; private set; } = null!;
+        internal static IChatGui ChatGui { get; private set; } = null!;
 
         /// <summary> Facilitates class-based locking. </summary>
         internal static bool ClassLocked { get; set; } = true;
 
         /// <summary> Gets the Dalamud client state. </summary>
         [PluginService]
-        internal static ClientState ClientState { get; private set; } = null!;
+        internal static IClientState ClientState { get; private set; } = null!;
 
         /// <summary> Gets or sets the plugin caching mechanism. </summary>
         internal static CustomComboCache ComboCache { get; set; } = null!;
 
         /// <summary> Gets the Dalamud command manager. </summary>
         [PluginService]
-        internal static CommandManager CommandManager { get; private set; } = null!;
+        internal static ICommandManager CommandManager { get; private set; } = null!;
 
         /// <summary> Gets the Dalamud condition. </summary>
         [PluginService]
-        internal static Condition Condition { get; private set; } = null!;
+        internal static ICondition Condition { get; private set; } = null!;
 
         /// <summary> Gets or sets the plugin configuration. </summary>
         internal static PluginConfiguration Configuration { get; set; } = null!;
 
         /// <summary> Gets the Dalamud data manager. </summary>
         [PluginService]
-        internal static DataManager DataManager { get; private set; } = null!;
+        internal static IDataManager DataManager { get; private set; } = null!;
 
         /// <summary> Gets the Dalamud framework manager. </summary>
         [PluginService]
-        internal static Framework Framework { get; private set; } = null!;
+        internal static IFramework Framework { get; private set; } = null!;
 
         /// <summary> Handles the in-game UI. </summary>
         [PluginService]
-        internal static GameGui GameGui { get; private set; } = null!;
+        internal static IGameGui GameGui { get; private set; } = null!;
 
         /// <summary> Gets or sets the plugin icon replacer. </summary>
         internal static IconReplacer IconReplacer { get; set; } = null!;
@@ -74,11 +75,11 @@ namespace XIVSlothCombo.Services
 
         /// <summary> Gets the Dalamud job gauges. </summary>
         [PluginService]
-        internal static JobGauges JobGauges { get; private set; } = null!;
+        internal static IJobGauges JobGauges { get; private set; } = null!;
 
         /// <summary> Gets the Dalamud object table. </summary>
         [PluginService]
-        internal static ObjectTable ObjectTable { get; private set; } = null!;
+        internal static IObjectTable ObjectTable { get; private set; } = null!;
 
         /// <summary> Returns the Plugin Folder location </summary>
         public static string PluginFolder
@@ -94,14 +95,20 @@ namespace XIVSlothCombo.Services
 
         /// <summary> Gets the Dalamud party list. </summary>
         [PluginService]
-        internal static PartyList PartyList { get; private set; } = null!;
+        internal static IPartyList PartyList { get; private set; } = null!;
 
         /// <summary> Facilitates searching for memory signatures. </summary>
         [PluginService]
-        internal static SigScanner SigScanner { get; private set; } = null!;
+        internal static ISigScanner SigScanner { get; private set; } = null!;
 
         /// <summary> Gets the Dalamud target manager. </summary>
         [PluginService]
-        internal static TargetManager TargetManager { get; private set; } = null!;
+        internal static ITargetManager TargetManager { get; private set; } = null!;
+
+        [PluginService]
+        internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
+
+        [PluginService]
+        internal static IPluginLog PluginLog { get; private set; } = null!;
     }
 }

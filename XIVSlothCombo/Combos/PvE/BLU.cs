@@ -401,8 +401,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class BLU_NewMoonFluteOpener : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_NewMoonFluteOpener;
-            private static bool surpanakhaReady = false;
-
+           
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 if (actionID is MoonFlute)

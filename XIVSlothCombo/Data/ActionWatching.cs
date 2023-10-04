@@ -94,7 +94,7 @@ namespace XIVSlothCombo.Data
             }
             catch (Exception ex)
             {
-                Dalamud.Logging.PluginLog.Error(ex, "SendActionDetour");
+                Service.PluginLog.Error(ex, "SendActionDetour");
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
             }
         }
@@ -204,8 +204,8 @@ namespace XIVSlothCombo.Data
 
         static unsafe ActionWatching()
         {
-            ReceiveActionEffectHook ??= Hook<ReceiveActionEffectDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00"), ReceiveActionEffectDetour);
-            SendActionHook ??= Hook<SendActionDelegate>.FromAddress(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF"), SendActionDetour);
+            ReceiveActionEffectHook ??= Service.GameInteropProvider.HookFromSignature<ReceiveActionEffectDelegate>("E8 ?? ?? ?? ?? 48 8B 8D F0 03 00 00", ReceiveActionEffectDetour);
+            SendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? F3 0F 10 3D ?? ?? ?? ?? 48 8D 4D BF", SendActionDetour);
         }
 
 
