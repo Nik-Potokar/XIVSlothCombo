@@ -2284,8 +2284,12 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_ComboHeals = 12006,
 
         [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe (or Harvest Moon, if available) when outside of melee range. Will not override Communio.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe when outside of melee range. Will not override Communio.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_RangedFiller = 12007,
+
+        [ParentCombo(RPR_ST_SliceCombo_RangedFiller)]
+        [CustomComboInfo("Ranged Filler Option", "Uses Harvest Moon over Harpe when avaliable when outside of melee range. Will not override Communio.", RPR.JobID, 0, "", "")]
+        RPR_ST_SliceCombo_HarvestMoonRangedFiller = 12069,
 
         [ParentCombo(RPR_ST_SliceCombo)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the combo when at 50 Shroud or greater and when current target is afflicted with Death's Design.", RPR.JobID, 0, "", "")]
@@ -2469,7 +2473,7 @@ namespace XIVSlothCombo.Combos
         RPR_Variant_Rampart = 12068,
         #endregion
 
-        // Last value = 12068
+        // Last value = 12069
 
         #endregion
 

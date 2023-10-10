@@ -207,7 +207,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Enshrouded) && gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
                             return Communio;
 
-                        if (harvestMoonReady)
+                        if (harvestMoonReady && IsEnabled(CustomComboPreset.RPR_ST_SliceCombo_HarvestMoonRangedFiller))
                         {
                             return (IsEnabled(CustomComboPreset.RPR_Soulsow_HarpeHarvestMoon_EnhancedHarpe) && HasEffect(Buffs.EnhancedHarpe)) ||
                                 (IsEnabled(CustomComboPreset.RPR_Soulsow_HarpeHarvestMoon_CombatHarpe) && !InCombat())
