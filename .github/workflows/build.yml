@@ -50,7 +50,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: ${{ env.PERSONAL_PLUGIN_REPO }}
-        token: ${{ secrets.XIVCOMBO_TOKEN }}
+        token: ${{ secrets.DALAXIV_TOKEN }}
     - uses: actions/download-artifact@v2
       with:
         name: PluginRepoZip
