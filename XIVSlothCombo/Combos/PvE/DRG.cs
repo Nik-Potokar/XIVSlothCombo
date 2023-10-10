@@ -222,10 +222,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (HasEffect(Buffs.PowerSurge))
                                 {
-                                    //Wyrmwind Thrust Feature
-                                    if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
-                                        return WyrmwindThrust;
-
                                     if (IsEnabled(CustomComboPreset.DRG_ST_Buffs))
                                     {
                                         //Lance Charge Feature
@@ -240,6 +236,10 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && LevelChecked(BattleLitany) && IsOffCooldown(BattleLitany) && CanWeave(actionID, 1.3))
                                             return BattleLitany;
                                     }
+
+                                    //Wyrmwind Thrust Feature
+                                    if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
+                                        return WyrmwindThrust;
 
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
                                     {
