@@ -1580,6 +1580,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Gadget Option", "Adds Automaton Queen or Rook Autoturret uses to the feature, based on your current level.\nAttempts to use Automaton Queen at optimal intervals between :55 to :05 windows.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Gadget = 8022,
 
+        [ParentCombo(MCH_ST_Simple_Gadget)]
+        [CustomComboInfo("Delayed Tools Opener", "Uses Delayed Tools Opener based on Balance.", MCH.JobID, 0, "", "")]
+        MCH_ST_Simple_Delayed = 8047,
+
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Assembling = 8023,
@@ -1678,7 +1682,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bioblaster Pooling Option", "Only use Bioblaster when you have max charges of Reassemble.", MCH.JobID)]
         MCH_AoE_Simple_Assembling_Bioblaster_MaxCharges = 8046,
 
-        // Last value = 8046
+        // Last value = 8047
 
         #endregion
 
