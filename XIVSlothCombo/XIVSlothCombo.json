@@ -1,7 +1,7 @@
 {
     "Author": "levinkin",
-    "Name": "XIVSlothCombo",
-    "InternalName": "XIVSlothCombo",
+    "Name": "XIVSlotherCombo",
+    "InternalName": "XIVSlotherCombo",
     "DalamudApiLevel": 9,
     "Punchline": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
     "Description": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
