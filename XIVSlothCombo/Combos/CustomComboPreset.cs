@@ -2288,7 +2288,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_SliceCombo_RangedFiller = 12007,
 
         [ParentCombo(RPR_ST_SliceCombo_RangedFiller)]
-        [CustomComboInfo("Ranged Filler Option", "Uses Harvest Moon over Harpe when avaliable when outside of melee range. Will not override Communio.", RPR.JobID, 0, "", "")]
+        [CustomComboInfo("Use Harvest Moon When Ranged Option", "Uses Harvest Moon over Harpe when avaliable when outside of melee range. Will not override Communio.", RPR.JobID, 0, "", "")]
         RPR_ST_SliceCombo_HarvestMoonRangedFiller = 12069,
 
         [ParentCombo(RPR_ST_SliceCombo)]
