@@ -1,10 +1,10 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using ECommons.Logging;
-using System;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.JobHelpers
@@ -28,6 +28,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             if (!CustomComboFunctions.ActionReady(LeyLines))
                 return false;
+            if (CustomComboFunctions.LocalPlayer.CurrentMp < 10000)
+                return false;
 
             return true;
         }
@@ -42,7 +44,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool CanOpener => HasCooldowns() && LevelChecked;
 
-        private OpenerState currentState = OpenerState.OpenerFinished;
+        private OpenerState currentState = OpenerState.PrePull;
 
         public OpenerState CurrentState
         {
@@ -56,8 +58,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 {
                     if (value == OpenerState.PrePull) PrePullStep = 1;
                     if (value == OpenerState.InOpener) OpenerStep = 1;
-                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener) { PrePullStep = 0; OpenerStep = 0; }
-                    if (value == OpenerState.OpenerFinished) DuoLog.Information("Opener Finished");
+                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener) { if (value == OpenerState.FailedOpener) Svc.Log.Information("Opener Failed"); ResetOpener(); }
+                    if (value == OpenerState.OpenerFinished) Svc.Log.Information("Opener Finished");
 
                     currentState = value;
                 }
@@ -232,6 +234,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 25) actionID = Despair;
                 }
 
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
+                    CurrentState = OpenerState.FailedOpener;
+
                 return true;
             }
 
@@ -304,6 +312,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Thunder3) && OpenerStep == 20) CurrentState = OpenerState.OpenerFinished;
                 else if (OpenerStep == 20) actionID = Thunder3;
 
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
+                    CurrentState = OpenerState.FailedOpener;
+
                 return true;
             }
 
@@ -312,7 +326,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private void ResetOpener()
         {
-            CurrentState = OpenerState.FailedOpener;
+            PrePullStep = 0;
+            OpenerStep = 0;
         }
 
         private bool openerEventsSetup = false;
@@ -337,9 +352,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (DoOpener(ref actionID)) return true;
                 }
             }
-
-            if (CurrentState == OpenerState.OpenerFinished && !CustomComboFunctions.InCombat())
-                ResetOpener();
 
             return false;
         }
