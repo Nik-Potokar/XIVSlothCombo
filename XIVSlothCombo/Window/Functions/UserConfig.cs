@@ -10,8 +10,8 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
-using XIVSlothCombo.Services;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -57,7 +57,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
                     Vector2 height = ImGui.GetItemRectSize();
-                    float lines = (height.Y / ImGui.GetFontSize());
+                    float lines = height.Y / ImGui.GetFontSize();
                     Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
@@ -158,7 +158,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
                     Vector2 height = ImGui.GetItemRectSize();
-                    float lines = (height.Y / ImGui.GetFontSize());
+                    float lines = height.Y / ImGui.GetFontSize();
                     Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
@@ -253,7 +253,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudWhite);
                     ImGui.Text($"{sliderDescription}");
                     Vector2 height = ImGui.GetItemRectSize();
-                    float lines = (height.Y / ImGui.GetFontSize());
+                    float lines = height.Y / ImGui.GetFontSize();
                     Vector2 textLength = ImGui.CalcTextSize(sliderDescription);
                     string newLines = "";
                     for (int i = 1; i < lines; i++)
@@ -351,13 +351,10 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="descriptionColor"></param>
         public static void DrawHorizontalRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
         {
-            ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             int output = PluginConfiguration.GetCustomIntValue(config);
+            ImGui.SameLine();
             ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
             bool enabled = output == outputValue;
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
@@ -373,10 +370,10 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.TextUnformatted(checkboxDescription);
                 ImGui.EndTooltip();
             }
-
             ImGui.PopStyleColor();
 
-            ImGui.Unindent();
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(16f, 0));
         }
 
         /// <summary>A true or false configuration. Similar to presets except can be used as part of a condition on another config.</summary>
@@ -417,7 +414,7 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.PopStyleColor();
             }
 
-            //if (!isConditionalChoice)
+            //!isConditionalChoice
             ImGui.Unindent();
             ImGui.Spacing();
         }
@@ -475,6 +472,60 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.PopStyleColor();
             ImGui.Unindent();
+        }
+
+        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        {
+            int totalChoices = nameAndDesc.GetLength(0);
+            if (totalChoices > 0)
+            {
+                ImGui.Indent();
+                if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
+                //ImGui.PushItemWidth(itemWidth);
+                //ImGui.SameLine();
+                //ImGui.Dummy(new Vector2(21, 0));
+                //ImGui.SameLine();
+                bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
+
+                //If new saved options or amount of choices changed, resize and save
+                if (values.Length == 0 || values.Length != totalChoices)
+                {
+                    Array.Resize(ref values, totalChoices);
+                    PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                    Service.Configuration.Save();
+                }
+
+                ImGui.BeginTable($"Grid###{config}", 4);
+                ImGui.TableNextRow();
+                //Convert the 2D array of names and descriptions into radio buttons
+                for (int idx = 0; idx < totalChoices; idx++)
+                {
+                    ImGui.TableNextColumn();
+                    string checkBoxName = nameAndDesc[idx, 0];
+                    string checkboxDescription = nameAndDesc[idx, 1];
+
+                    ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+                    if (ImGui.Checkbox($"{checkBoxName}###{config}{idx}", ref values[idx]))
+                    {
+                        PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                        Service.Configuration.Save();
+                    }
+
+                    if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.TextUnformatted(checkboxDescription);
+                        ImGui.EndTooltip();
+                    }
+
+                    ImGui.PopStyleColor();
+
+                    if (((idx + 1) % columns) == 0)
+                        ImGui.TableNextRow();
+                }
+                ImGui.EndTable();
+                ImGui.Unindent();
+            }
         }
 
         public static void DrawPvPStatusMultiChoice(string config)
@@ -1156,17 +1207,90 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset == CustomComboPreset.BLM_AoE_Simple_Foul)
-                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_PolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
+            if (preset is CustomComboPreset.BLM_ST_AdvancedMode)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Fire 3 Initial Cast", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Blizzard 3 Initial Cast", "", 1);
+                ImGui.Indent();
+                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFire_Refresh, "Seconds before refreshing Astral Fire");
+                ImGui.Unindent();
+            }
 
-            if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_Simple_Transpose)
-                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
-
-            if (preset == CustomComboPreset.BLM_Simple_CastMovement)
-                UserConfig.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BLM_MovementTime, "Seconds of movement before using the movement feature.");
-
-            if (preset == CustomComboPreset.BLM_Variant_Cure)
+            if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
+
+            if (preset is CustomComboPreset.BLM_Adv_Opener)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Standard Opener", "Uses Standard Opener.", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Double Transpose Opener", "Uses Fire III opener - Double Transpose variation.", 1);
+            }
+
+            if (preset is CustomComboPreset.BLM_Adv_Rotation)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 1);
+
+                if (BLM.Config.BLM_Adv_Rotation_Options == 0)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawAdditionalBoolChoice(BLM.Config.BLM_Adv_Xeno_Burst, "Use Xenoglossy for burst", "Will save Xenoglossy for every minute burst window.");
+                    ImGui.Unindent();
+                    ImGui.Spacing();
+                }
+
+            }
+
+            if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, 4, new string[,]{
+                    {"Manafont", "Add Manafont to the rotation." },
+                    {"Sharpcast", "Add Sharpcast to the rotation." },
+                    {"Amplifier", "Add Amplifier to the rotation." },
+                    {"Ley Lines", "Add Ley Lines to the rotation." },
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_Cooldowns)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 4, new string[,]{
+                    {"Manafont", "Add Manafont to the rotation." },
+                    {"Sharpcast", "Add Sharpcast to the rotation." },
+                    {"Amplifier", "Add Amplifier to the rotation." },
+                    {"Ley Lines", "Add Ley Lines to the rotation." },
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_Adv_Movement)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, 4, new string[,]{
+                    {"Sharpcast", "Add Sharpcast." },
+                    {"Thunder", "Add Thunder I/Thunder III." },
+                    {"Firestarter", "Add Firestarter when in Astral Fire." },
+                    {"Paradox", "Add Paradox when in Umbral Ice." },
+                    {"Xenoglossy", "Add Xenoglossy.\nOne charge will be held for rotation." },
+                    {"Swiftcast", "Add Swiftcast." },
+                    {"Triplecast", "Add (pooled) Triplecast." },
+                    {"Scathe", "Add Scathe." }
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_Adv_Thunder, "Seconds remaining before refreshing Thunder");
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_ST_Adv_ThunderHP, "Target HP% to stop using Thunder");
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderHP, "Target HP% to stop using Thunder");
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder_ThunderCloud)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_ThunderCloud, "Only after quicker casts (weave window)", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_ThunderCloud, "Use as soon as possible", "", 1);
+            }
 
             #endregion
             // ====================================================================================
@@ -1576,7 +1700,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_OnAction_Adv, "Advanced Action Options.", "Changes which action this option will replace.", isConditionalChoice: true);
                 if (RDM.Config.RDM_ST_oGCD_OnAction_Adv)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Jolts", "", 4, 0, descriptionColor: ImGuiColors.DalamudYellow);
                     UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Fleche", "", 4, 1, descriptionColor: ImGuiColors.DalamudYellow);
                     UserConfig.DrawHorizontalMultiChoice(RDM.Config.RDM_ST_oGCD_OnAction, "Riposte", "", 4, 2, descriptionColor: ImGuiColors.DalamudYellow);
@@ -1596,7 +1720,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps, "Corp-a-Corps", "", isConditionalChoice: true);
                 if (RDM.Config.RDM_ST_oGCD_CorpACorps)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Melee, "Use only in melee range.", "");
                     UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_CorpACorps_Pooling, "Pool one charge for manual use.", "");
                     ImGui.Unindent();
@@ -1784,7 +1908,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
-                    "Check for Enhanced Kerachole Trait (Heal over Time)", 
+                    "Check for Enhanced Kerachole Trait (Heal over Time)",
                     "Enabling this will prevent Kerachole from being used when the Heal over Time trait is unavailable.");
 
             if (preset is CustomComboPreset.SGE_Eukrasia)
@@ -1859,7 +1983,7 @@ namespace XIVSlothCombo.Window.Functions
 
                 if (SCH.Config.SCH_ST_DPS_Adv)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin/Broils", "Apply options to Ruin and all Broils.", 3, 0);
                     UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Bio/Bio II/Biolysis", "Apply options to Bio and Biolysis.", 3, 1);
                     UserConfig.DrawHorizontalMultiChoice(SCH.Config.SCH_ST_DPS_Adv_Actions, "On Ruin II", "Apply options to Ruin II.", 3, 2);
@@ -1888,7 +2012,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_DPS_EnergyDrain)
             {
-                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv, "Advanced Options","", isConditionalChoice: true);
+                UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_ST_DPS_EnergyDrain_Adv, "Advanced Options", "", isConditionalChoice: true);
                 if (SCH.Config.SCH_ST_DPS_EnergyDrain_Adv)
                 {
                     ImGui.Indent();
@@ -1916,10 +2040,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_ST_Heal_LucidOption, "MP Threshold", 150, SliderIncrements.Hundreds);
-            
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Adloquium)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_AdloquiumOption, "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
-            
+
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
 
@@ -1948,12 +2072,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Excog, "On Excogitation", "", isConditionalChoice: true);
                 if (SCH.Config.SCH_Aetherflow_Recite_Excog)
                 {
-                    ImGui.Indent();ImGui.Spacing();
+                    ImGui.Indent(); ImGui.Spacing();
                     UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Only when out of Aetherflow Stacks", "", 0);
                     UserConfig.DrawRadioButton(SCH.Config.SCH_Aetherflow_Recite_ExcogMode, "Always when available", "", 1);
                     ImGui.Unindent();
                 }
-                
+
                 UserConfig.DrawAdditionalBoolChoice(SCH.Config.SCH_Aetherflow_Recite_Indom, "On Indominability", "", isConditionalChoice: true);
                 if (SCH.Config.SCH_Aetherflow_Recite_Indom)
                 {
