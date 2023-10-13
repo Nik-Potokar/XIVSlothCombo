@@ -496,7 +496,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // Lvl90+ Opener
+                    /*// Lvl90+ Opener
                     if (!inCombat && IsEnabled(CustomComboPreset.MCH_ST_Simple_Delayed) && level >= 90)
                     {
                         inOpener = true;
@@ -560,7 +560,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         return OriginalHook(SplitShot);
 
-                    }
+                    }*/
 
                     if (!inOpener)
                     {
