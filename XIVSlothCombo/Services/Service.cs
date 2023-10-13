@@ -33,9 +33,6 @@ namespace XIVSlothCombo.Services
         [PluginService]
         internal static IChatGui ChatGui { get; private set; } = null!;
 
-        /// <summary> Facilitates class-based locking. </summary>
-        internal static bool ClassLocked { get; set; } = true;
-
         /// <summary> Gets the Dalamud client state. </summary>
         [PluginService]
         internal static IClientState ClientState { get; private set; } = null!;

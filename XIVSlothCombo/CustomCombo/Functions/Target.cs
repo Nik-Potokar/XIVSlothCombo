@@ -128,15 +128,14 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (checkMOPartyUI)
             {
                 StructsObject.GameObject* t = PartyTargetingService.UITarget;
-                if (t != null)
+                if (t != null && t->ObjectID != 0)
                 {
-                    long o = PartyTargetingService.GetObjectID(t);
-                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == o).First();
-                    if (HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
-                }
+                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == t->ObjectID).FirstOrDefault();
+                    if (uiTarget != null && HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
 
-                if (restrictToMouseover)
-                    return healTarget;
+                    if (restrictToMouseover)
+                        return healTarget;
+                }
             }
             healTarget ??= LocalPlayer;
             return healTarget;
