@@ -264,7 +264,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Dives Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                         {
-                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) && CanWeave(actionID, 2))
+                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) && CanWeave(actionID, 1.6) && GetCooldownRemainingTime(OriginalHook(Jump)) > 4)
                                                 return Stardiver;
 
                                             if (diveOptions is 0 or 1 || //Dives on cooldown
