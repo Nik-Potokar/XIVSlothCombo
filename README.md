@@ -70,7 +70,7 @@
 <a href="#installation" alt="Installation"><img src="/res/readme_images/Installation.png" height="50px" /></a>
   
 * Copy the following repository link: <br>
-`https://raw.githubusercontent.com/levinkin/MyDalamudPlugins/main/pluginmaster.json` <br><br>
+`https://raw.githubusercontent.com/Nik-Potokar/MyDalamudPlugins/main/pluginmaster.json` <br><br>
 * Type `/xlsettings` in the game chat window to open the Dalamud Settings window.
 * Navigate to the "Experimental" tab.
   <br><br><a><img src="/res/readme_images/experimental_tab.png" width="300" /></a><br><br>
