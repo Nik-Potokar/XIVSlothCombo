@@ -1580,9 +1580,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Gadget Option", "Adds Automaton Queen or Rook Autoturret uses to the feature, based on your current level.\nAttempts to use Automaton Queen at optimal intervals between :55 to :05 windows.", MCH.JobID, 0, "", "")]
         MCH_ST_Simple_Gadget = 8022,
 
-        [ParentCombo(MCH_ST_Simple_Gadget)]
+        /*[ParentCombo(MCH_ST_Simple_Gadget)]
         [CustomComboInfo("Delayed Tools Opener", "Uses Delayed Tools Opener based on Balance.", MCH.JobID, 0, "", "")]
-        MCH_ST_Simple_Delayed = 8047,
+        MCH_ST_Simple_Delayed = 8047,*/
 
         [ParentCombo(MCH_ST_SimpleMode)]
         [CustomComboInfo("Simple Assembling Option", "Pairs reassemble uses with the following skills.\nBefore acquiring Drill it will be used with Clean Shot.", MCH.JobID, 0, "", "")]
