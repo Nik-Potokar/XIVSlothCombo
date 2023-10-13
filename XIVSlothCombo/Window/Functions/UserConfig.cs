@@ -1195,7 +1195,175 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region DANCER
 
-            if (preset == CustomComboPreset.DNC_DanceComboReplacer)
+            // Fan Dance Combo Feature
+            if (preset is CustomComboPreset.DNC_FanDanceCombos)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_FanDanceCombos_13, "Fan Dance —> III Option", "Changes Fan Dance to Fan Dance III when available.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_FanDanceCombos_14, "Fan Dance —> IV Option", "Changes Fan Dance to Fan Dance IV when available.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_FanDanceCombos_23, "Fan Dance II —> III Option", "Changes Fan Dance II to Fan Dance III when available.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_FanDanceCombos_24, "Fan Dance II —> IV Option", "Changes Fan Dance II to Fan Dance IV when available.");
+            }
+
+            #region Simple ST/AoE
+
+            if (preset is CustomComboPreset.DNC_SimpleST)
+            {
+                ImGui.Indent();
+                ImGui.Spacing();
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleST_Dances, "Standard Step", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2, 0, 150, ImGuiColors.ParsedGold);
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleST_Dances, "Technical Step", "Adds Technical Step, all dance steps and Technical Finish to the rotation.", 2, 1, 150, Colors.Blue);
+                ImGui.Unindent();
+            }
+
+            if (preset is CustomComboPreset.DNC_SimpleAoE)
+            {
+                ImGui.Indent();
+                ImGui.Spacing();
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleAoE_Dances, "Standard Step", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2, 0, 150, ImGuiColors.ParsedGold);
+                UserConfig.DrawHorizontalMultiChoice(DNC.Config.DNC_SimpleAoE_Dances, "Technical Step", "Adds Technical Step, all dance steps and Technical Finish to the rotation.", 2, 1, 150, Colors.Blue);
+                ImGui.Unindent();
+            }
+
+            #endregion
+
+            #region Advanced ST
+
+            // SS Config
+            if (preset is CustomComboPreset.DNC_AdvST_SS)
+            {
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_SS_Options, "Resolve", "Adds ONLY Standard dance steps and Standard Finish to the rotation.\nStandard Step itself must be initiated manually when using this option.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_SS_Options, "Initiate + Resolve", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2);
+
+                if (DNC.Config.DNC_AdvST_SS_Options == 2)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_SSBurstPct, " Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
+                    ImGui.Unindent();
+                    UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AdvST_SS_Options_Burst, "Standard Dance Burst Option", "Additionally triggers Standard Step in the burst with low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.");
+                }
+
+                ImGui.Spacing();
+            }
+
+            // TS Config
+            if (preset is CustomComboPreset.DNC_AdvST_TS)
+            {
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1, 150, Colors.Blue);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2, 150, Colors.Blue);
+
+                if (DNC.Config.DNC_AdvST_TS_Options == 2)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_TSBurstPct, " Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
+                    ImGui.Unindent();
+                }
+
+                ImGui.Spacing();
+            }
+
+            // Pooled Feathers HP% dump
+            if (preset is CustomComboPreset.DNC_AdvST_Feathers)
+            {
+                ImGui.Indent(); ImGui.Indent();
+                UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvST_FeatherBurstPct, " Target HP% to dump all pooled feathers below", 75, SliderIncrements.Ones);
+                ImGui.Unindent(); ImGui.Unindent();
+            }
+
+            // Saber Dance Esprit threshold
+            if (preset is CustomComboPreset.DNC_AdvST_SaberDance)
+            {
+                ImGui.Indent(); ImGui.Indent();
+                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_AdvST_SaberThreshold, " Esprit", 150, SliderIncrements.Fives);
+                ImGui.Unindent(); ImGui.Unindent();
+            }
+
+            // Curing Waltz & Second Wind HP%
+            if (preset is CustomComboPreset.DNC_AdvST_PanicHeals)
+            {
+                ImGui.Indent(); ImGui.Indent();
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWaltzPct, " Curing Waltz HP%", 200, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvST_PanicWindPct, " Second Wind HP%", 200, SliderIncrements.Fives);
+                ImGui.Unindent(); ImGui.Unindent();
+            }
+
+            // Interrupt
+            if (preset is CustomComboPreset.DNC_AdvST_Interrupt)
+            {
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0, 150, ImGuiColors.ParsedGreen);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1, 150, ImGuiColors.DalamudYellow);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvST_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window.\nUSE WITH CAUTION.", 2, 150, ImGuiColors.DalamudRed);
+                ImGui.Spacing();
+            }
+
+            #endregion
+
+            #region Advanced AoE
+
+            // SS Config
+            if (preset is CustomComboPreset.DNC_AdvAoE_SS)
+            {
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_SS_Options, "Resolve", "Adds ONLY Standard dance steps and Standard Finish to the rotation.\nStandard Step itself must be initiated manually when using this option.", 1);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_SS_Options, "Initiate + Resolve", "Adds Standard Step, all dance steps and Standard Finish to the rotation.", 2);
+
+                if (DNC.Config.DNC_AdvAoE_SS_Options == 2)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvAoE_SSBurstPct, " Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
+                    ImGui.Unindent();
+                    UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_AdvAoE_SS_Options_Burst, "AoE Standard Dance Burst Option", "Additionally triggers Standard Step in the burst with low priority, provided there is enough time to fully execute Standard Finish and you are unlikely to generate enough Esprit for another Saber Dance during burst.");
+                }
+
+                ImGui.Spacing();
+            }
+
+            // TS Config
+            if (preset is CustomComboPreset.DNC_AdvAoE_TS)
+            {
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Resolve", "Adds ONLY Technical dance steps and Standard Finish to the rotation.\nTechnical Step itself must be initiated manually when using this option.", 1, 150, Colors.Blue);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_TS_Options, "Initiate + Resolve", "Adds Technical Step, all dance steps and Standard Finish to the rotation.", 2, 150, Colors.Blue);
+
+                if (DNC.Config.DNC_AdvAoE_TS_Options == 2)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(0, 5, DNC.Config.DNC_AdvAoE_TSBurstPct, " Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
+                    ImGui.Unindent();
+                }
+
+                ImGui.Spacing();
+            }
+
+            // Saber Dance Esprit threshold
+            if (preset is CustomComboPreset.DNC_AdvAoE_SaberDance)
+            {
+                ImGui.Indent(); ImGui.Indent();
+                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_AdvAoE_SaberThreshold, " Esprit", 150, SliderIncrements.Fives);
+                ImGui.Unindent(); ImGui.Unindent();
+            }
+
+            // Curing Waltz & Second Wind HP%
+            if (preset is CustomComboPreset.DNC_AdvAoE_PanicHeals)
+            {
+                ImGui.Indent(); ImGui.Indent();
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWaltzPct, " Curing Waltz HP%", 200, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_AdvAoE_PanicWindPct, " Second Wind HP%", 200, SliderIncrements.Fives);
+                ImGui.Unindent(); ImGui.Unindent();
+            }
+
+            // Interrupt
+            if (preset is CustomComboPreset.DNC_AdvAoE_Interrupt)
+            {
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Late Weave", "Includes Head Graze during the second weave window.\nSuitable for most interrupt cases.", 0, 150, ImGuiColors.ParsedGreen);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Early Weave", "Includes Head Graze during the first weave window.\nWill take priority over most other weaves, pushing them to the late window.", 1, 150, ImGuiColors.DalamudYellow);
+                UserConfig.DrawHorizontalRadioButton(DNC.Config.DNC_AdvAoE_Interrupt, "Interrupt at any time", "Allows Head Graze to trigger at any time, regardless of GCD.\nThis will cause the interrupt to be used in a way which is both extremely fast and may delay your GCD window.\nUSE WITH CAUTION.", 2, 150, ImGuiColors.DalamudRed);
+                ImGui.Spacing();
+            }
+
+            #endregion
+
+            #region Legacy
+
+            // Dance Combo Replacer
+            if (preset is CustomComboPreset.DNC_Legacy_Dance_DanceActionReplacer)
             {
                 int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
                 bool inputChanged = false;
@@ -1214,60 +1382,47 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Spacing();
             }
 
-            if (preset == CustomComboPreset.DNC_ST_EspritOvercap)
-                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Fives);
+            // ST Multibutton Feature
+            if (preset is CustomComboPreset.DNC_LegacyST_MultiButton)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyST_Multi_Esprit, "Esprit Overcap Option", "Adds Saber Dance when Esprit is at or above the set threshold.");
 
-            if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
-                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Fives);
+                if (DNC.Config.DNC_LegacyST_Multi_Esprit == true)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyST_Multi_EspritThreshold, " Esprit", 150, SliderIncrements.Fives);
+                    ImGui.Unindent();
+                }
 
-            if (preset == CustomComboPreset.DNC_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNCVariantCurePercent, "HP% to be at or under", 200);
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyST_Multi_FanOvercap, "Fan Dance Overcap Protection Option", "Adds Fan Dance I when Fourfold Feathers are full.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyST_Multi_FanDance34, "Fan Dance Option", "Adds Fan Dance III/IV when available.");
+            }
 
-            #region Simple ST Sliders
+            // AoE Multibutton Feature
+            if (preset is CustomComboPreset.DNC_LegacyAoE_MultiButton)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyAoE_Multi_Esprit, "AoE Esprit Overcap Option", "Adds Saber Dance when Esprit is at or above the set threshold.");
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_SS)
-                UserConfig.DrawSliderInt(0, 5, DNC.Config.DNCSimpleSSBurstPercent, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
+                if (DNC.Config.DNC_LegacyAoE_Multi_Esprit == true)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawSliderInt(50, 100, DNC.Config.DNC_LegacyAoE_Multi_EspritThreshold, " Esprit", 150, SliderIncrements.Fives);
+                    ImGui.Unindent();
+                }
 
-            if (preset == CustomComboPreset.DNC_ST_Simple_TS)
-                UserConfig.DrawSliderInt(0, 5, DNC.Config.DNCSimpleTSBurstPercent, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_ST_Simple_Feathers)
-                UserConfig.DrawSliderInt(0, 5, DNC.Config.DNCSimpleFeatherBurstPercent, "Target HP% to dump all pooled feathers below", 75, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_ST_Simple_SaberDance)
-                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCSimpleSaberThreshold, "Esprit", 150, SliderIncrements.Fives);
-
-            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWaltzPercent, "Curing Waltz HP%", 200, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_ST_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimplePanicHealWindPercent, "Second Wind HP%", 200, SliderIncrements.Ones);
-
-            #endregion
-
-            #region Simple AoE Sliders
-
-            if (preset == CustomComboPreset.DNC_AoE_Simple_SS)
-                UserConfig.DrawSliderInt(0, 10, DNC.Config.DNCSimpleSSAoEBurstPercent, "Target HP% to stop using Standard Step below", 75, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_AoE_Simple_TS)
-                UserConfig.DrawSliderInt(0, 10, DNC.Config.DNCSimpleTSAoEBurstPercent, "Target HP% to stop using Technical Step below", 75, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_AoE_Simple_SaberDance)
-                UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCSimpleAoESaberThreshold, "Esprit", 150, SliderIncrements.Fives);
-
-            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWaltzPercent, "Curing Waltz HP%", 200, SliderIncrements.Ones);
-
-            if (preset == CustomComboPreset.DNC_AoE_Simple_PanicHeals)
-                UserConfig.DrawSliderInt(0, 100, DNC.Config.DNCSimpleAoEPanicHealWindPercent, "Second Wind HP%", 200, SliderIncrements.Ones);
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyAoE_Multi_FanOvercap, "AoE Fan Dance Overcap Protection Option", "Adds Fan Dance II when Fourfold Feathers are full.");
+                UserConfig.DrawAdditionalBoolChoice(DNC.Config.DNC_LegacyAoE_Multi_FanDance34, "AoE Fan Dance Option", "Adds Fan Dance III/IV when available.");
+            }
 
             #endregion
 
-            #region PvP Sliders
+            if (preset is CustomComboPreset.DNC_VariantCure)
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNC_VariantCurePct, " HP% to be at or under", 200, 5);
+
+            #region PvP
 
             if (preset == CustomComboPreset.DNCPvP_BurstMode_CuringWaltz)
-                UserConfig.DrawSliderInt(0, 90, DNCPvP.Config.DNCPvP_WaltzThreshold, "Curing Waltz HP% - caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 90, DNCPvP.Config.DNCPvP_WaltzThreshold, " Curing Waltz HP% - caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
             #endregion
 
