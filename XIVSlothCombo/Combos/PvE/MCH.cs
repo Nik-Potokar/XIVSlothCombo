@@ -475,7 +475,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
                     var inCombat = InCombat();
-                    var delayedOpener = IsEnabled(CustomComboPreset.MCH_ST_Simple_Delayed);
+                    /*var delayedOpener = IsEnabled(CustomComboPreset.MCH_ST_Simple_Delayed);*/
 
                     var gauge = GetJobGauge<MCHGauge>();
 
