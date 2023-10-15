@@ -2717,13 +2717,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 305, "", "")]
         SGE_ST_Heal_Kardia = 14310,
 
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
-            SGE_ST_Heal_EDiagnosis = 14320,
-                
-            [ParentCombo(SGE_ST_Heal)]
-            [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
-            SGE_ST_Heal_Soteria = 14330,
+        [ParentCombo(SGE_ST_Heal)]
+        [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
+        SGE_ST_Heal_EDiagnosis = 14320,
+
+        [ParentCombo(SGE_ST_Heal)]
+        [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
+        SGE_ST_Heal_Soteria = 14330,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 307, "", "")]

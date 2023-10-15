@@ -184,7 +184,7 @@ namespace XIVSlothCombo
             BLM.BLM_ST_AdvancedMode.BLMOpener.Dispose();
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
-            MCH.MCH_ST_Simplemode.MCHOpener.Dispose();
+            MCH.MCH_ST_SimpleMode.MCHOpener.Dispose();
             MCH.MCH_ST_AdvancedMode.MCHOpener.Dispose();
         }
 
