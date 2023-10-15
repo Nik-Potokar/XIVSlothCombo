@@ -665,7 +665,7 @@ namespace XIVSlothCombo.Combos.PvE
                 uint currentMP = LocalPlayer.CurrentMp;
                 BLMGauge? gauge = GetJobGauge<BLMGauge>();
 
-                if (actionID is Blizzard2)
+                if (actionID is Blizzard2 or HighBlizzard2)
                 {
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
@@ -784,7 +784,7 @@ namespace XIVSlothCombo.Combos.PvE
                 BLMGauge? gauge = GetJobGauge<BLMGauge>();
                 int ThunderHP = Config.BLM_AoE_Adv_ThunderHP;
 
-                if (actionID is Blizzard2)
+                if (actionID is Blizzard2 or HighBlizzard2)
                 {
                     // 2xHF2 Transpose with Freeze [A7]
                     if (gauge.ElementTimeRemaining <= 0)
