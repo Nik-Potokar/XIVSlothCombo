@@ -58,7 +58,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 {
                     if (value == OpenerState.PrePull) PrePullStep = 1;
                     if (value == OpenerState.InOpener) OpenerStep = 1;
-                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener) { if (value == OpenerState.FailedOpener) Svc.Log.Information("Opener Failed"); ResetOpener(); }
+                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
+                    {
+                        if (value == OpenerState.FailedOpener) 
+                            Svc.Log.Information("Opener Failed");
+                        
+                        ResetOpener();
+                    }
                     if (value == OpenerState.OpenerFinished) Svc.Log.Information("Opener Finished");
 
                     currentState = value;
@@ -79,6 +85,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (CustomComboFunctions.LocalPlayer.CastActionId == Fire3 && PrePullStep == 2) CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 2) actionID = Fire3;
+
+                if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(BLM.Buffs.Sharpcast))
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (PrePullStep > 1 && CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
+                    CurrentState = OpenerState.FailedOpener;
 
                 return true;
             }
@@ -328,6 +340,11 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             PrePullStep = 0;
             OpenerStep = 0;
+            ActionWatching.CombatActions.Clear();
+            ActionWatching.LastAction = 0;
+            ActionWatching.LastAbility = 0;
+            ActionWatching.LastSpell = 0;
+            ActionWatching.LastWeaponskill = 0;
         }
 
         private bool openerEventsSetup = false;
