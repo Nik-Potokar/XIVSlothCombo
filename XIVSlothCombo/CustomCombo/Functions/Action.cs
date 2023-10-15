@@ -83,7 +83,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
         //Note: Testing so far shows non charge skills have a max charge of 1, and it's zero during cooldown
-        public static bool ActionReady(uint id) => LevelChecked(id) && HasCharges(id);
+        public static bool ActionReady(uint id) => LevelChecked(id) && (HasCharges(id) || GetCooldown(id).CooldownTotal <= 3);
 
         /// <summary> Checks if the last action performed was the passed ID. </summary>
         /// <param name="id"> ID of the action. </param>

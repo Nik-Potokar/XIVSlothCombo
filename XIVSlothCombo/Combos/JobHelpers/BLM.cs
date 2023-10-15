@@ -36,7 +36,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private static uint OpenerLevel => 90;
 
-        public uint PrePullStep = 1;
+        public uint PrePullStep = 0;
 
         public uint OpenerStep = 1;
 
@@ -59,7 +59,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (value == OpenerState.PrePull)
                     {
                         Svc.Log.Debug($"Entered PrePull Opener");
-                        PrePullStep = 1;
                     }
                     if (value == OpenerState.InOpener) OpenerStep = 1;
                     if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
@@ -80,7 +79,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             if (!LevelChecked) return false;
 
-            if (CanOpener && PrePullStep == 0 && !CustomComboFunctions.InCombat()) { CurrentState = OpenerState.PrePull; }
+            if (CanOpener && PrePullStep == 0)
+            {
+                PrePullStep = 1;
+            }
+
+            if (PrePullStep < 1)
+                return false;
 
             if (CurrentState == OpenerState.PrePull)
             {
