@@ -607,6 +607,11 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             }
 
+            internal void Dispose()
+            {
+                Service.Condition.ConditionChange -= CheckCombatStatus;
+            }
+
             private void CheckCombatStatus(ConditionFlag flag, bool value)
             {
                 if (flag == ConditionFlag.InCombat && value == false) ResetOpener();

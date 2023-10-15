@@ -351,13 +351,10 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="descriptionColor"></param>
         public static void DrawHorizontalRadioButton(string config, string checkBoxName, string checkboxDescription, int outputValue, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
         {
-            ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudYellow;
             int output = PluginConfiguration.GetCustomIntValue(config);
+            ImGui.SameLine();
             ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
             bool enabled = output == outputValue;
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
@@ -373,10 +370,10 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.TextUnformatted(checkboxDescription);
                 ImGui.EndTooltip();
             }
-
             ImGui.PopStyleColor();
 
-            ImGui.Unindent();
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(16f, 0));
         }
 
         /// <summary>A true or false configuration. Similar to presets except can be used as part of a condition on another config.</summary>
@@ -417,7 +414,7 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.PopStyleColor();
             }
 
-            //if (!isConditionalChoice)
+            //!isConditionalChoice
             ImGui.Unindent();
             ImGui.Spacing();
         }
@@ -475,6 +472,60 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.PopStyleColor();
             ImGui.Unindent();
+        }
+
+        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        {
+            int totalChoices = nameAndDesc.GetLength(0);
+            if (totalChoices > 0)
+            {
+                ImGui.Indent();
+                if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
+                //ImGui.PushItemWidth(itemWidth);
+                //ImGui.SameLine();
+                //ImGui.Dummy(new Vector2(21, 0));
+                //ImGui.SameLine();
+                bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
+
+                //If new saved options or amount of choices changed, resize and save
+                if (values.Length == 0 || values.Length != totalChoices)
+                {
+                    Array.Resize(ref values, totalChoices);
+                    PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                    Service.Configuration.Save();
+                }
+
+                ImGui.BeginTable($"Grid###{config}", 4);
+                ImGui.TableNextRow();
+                //Convert the 2D array of names and descriptions into radio buttons
+                for (int idx = 0; idx < totalChoices; idx++)
+                {
+                    ImGui.TableNextColumn();
+                    string checkBoxName = nameAndDesc[idx, 0];
+                    string checkboxDescription = nameAndDesc[idx, 1];
+
+                    ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+                    if (ImGui.Checkbox($"{checkBoxName}###{config}{idx}", ref values[idx]))
+                    {
+                        PluginConfiguration.SetCustomBoolArrayValue(config, values);
+                        Service.Configuration.Save();
+                    }
+
+                    if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
+                    {
+                        ImGui.BeginTooltip();
+                        ImGui.TextUnformatted(checkboxDescription);
+                        ImGui.EndTooltip();
+                    }
+
+                    ImGui.PopStyleColor();
+
+                    if (((idx + 1) % columns) == 0)
+                        ImGui.TableNextRow();
+                }
+                ImGui.EndTable();
+                ImGui.Unindent();
+            }
         }
 
         public static void DrawPvPStatusMultiChoice(string config)
@@ -1156,17 +1207,90 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BLACK MAGE
 
-            if (preset == CustomComboPreset.BLM_AoE_Simple_Foul)
-                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_PolyglotsStored, "Number of Polyglot charges to store.\n(2 = Only use Polyglot with Manafont)");
+            if (preset is CustomComboPreset.BLM_ST_AdvancedMode)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Fire 3 Initial Cast", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_InitialCast, "Blizzard 3 Initial Cast", "", 1);
+                ImGui.Indent();
+                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFire_Refresh, "Seconds before refreshing Astral Fire");
+                ImGui.Unindent();
+            }
 
-            if (preset is CustomComboPreset.BLM_SimpleMode or CustomComboPreset.BLM_Simple_Transpose)
-                UserConfig.DrawRoundedSliderFloat(3.0f, 8.0f, BLM.Config.BLM_AstralFireRefresh, "Seconds before refreshing Astral Fire.\n(6s = Recommended)");
-
-            if (preset == CustomComboPreset.BLM_Simple_CastMovement)
-                UserConfig.DrawRoundedSliderFloat(0.0f, 1.0f, BLM.Config.BLM_MovementTime, "Seconds of movement before using the movement feature.");
-
-            if (preset == CustomComboPreset.BLM_Variant_Cure)
+            if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
+
+            if (preset is CustomComboPreset.BLM_Adv_Opener)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Standard Opener", "Uses Standard Opener.", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Advanced_OpenerSelection, "Double Transpose Opener", "Uses Fire III opener - Double Transpose variation.", 1);
+            }
+
+            if (preset is CustomComboPreset.BLM_Adv_Rotation)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Standard Rotation", "Uses Standard Rotation.", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_Rotation_Options, "Double Transpose Rotation", "Uses Double Transpose rotation.\nOnly works at Lv.90.", 1);
+
+                if (BLM.Config.BLM_Adv_Rotation_Options == 0)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawAdditionalBoolChoice(BLM.Config.BLM_Adv_Xeno_Burst, "Use Xenoglossy for burst", "Will save Xenoglossy for every minute burst window.");
+                    ImGui.Unindent();
+                    ImGui.Spacing();
+                }
+
+            }
+
+            if (preset is CustomComboPreset.BLM_Adv_Cooldowns)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Cooldowns_Choice, 4, new string[,]{
+                    {"Manafont", "Add Manafont to the rotation." },
+                    {"Sharpcast", "Add Sharpcast to the rotation." },
+                    {"Amplifier", "Add Amplifier to the rotation." },
+                    {"Ley Lines", "Add Ley Lines to the rotation." },
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_Cooldowns)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 4, new string[,]{
+                    {"Manafont", "Add Manafont to the rotation." },
+                    {"Sharpcast", "Add Sharpcast to the rotation." },
+                    {"Amplifier", "Add Amplifier to the rotation." },
+                    {"Ley Lines", "Add Ley Lines to the rotation." },
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_Adv_Movement)
+            {
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_Adv_Movement_Choice, 4, new string[,]{
+                    {"Sharpcast", "Add Sharpcast." },
+                    {"Thunder", "Add Thunder I/Thunder III." },
+                    {"Firestarter", "Add Firestarter when in Astral Fire." },
+                    {"Paradox", "Add Paradox when in Umbral Ice." },
+                    {"Xenoglossy", "Add Xenoglossy.\nOne charge will be held for rotation." },
+                    {"Swiftcast", "Add Swiftcast." },
+                    {"Triplecast", "Add (pooled) Triplecast." },
+                    {"Scathe", "Add Scathe." }
+                });
+            }
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_Adv_Thunder, "Seconds remaining before refreshing Thunder");
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderUptime, "Seconds remaining before refreshing Thunder");
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_ST_Adv_ThunderHP, "Target HP% to stop using Thunder");
+
+            if (preset is CustomComboPreset.BLM_AoE_Adv_ThunderUptime)
+                UserConfig.DrawSliderInt(0, 5, BLM.Config.BLM_AoE_Adv_ThunderHP, "Target HP% to stop using Thunder");
+
+            if (preset is CustomComboPreset.BLM_ST_Adv_Thunder_ThunderCloud)
+            {
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_ThunderCloud, "Only after quicker casts (weave window)", "", 0);
+                UserConfig.DrawHorizontalRadioButton(BLM.Config.BLM_Adv_ThunderCloud, "Use as soon as possible", "", 1);
+            }
 
             #endregion
             // ====================================================================================
@@ -1783,8 +1907,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Use Druochole when Target HP is at or below set percentage");
 
-            if (preset is CustomComboPreset.SGE_ST_Heal_Diagnosis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Diagnosis, "Use Diagnosis when Target HP is at or below set percentage");
+            if (preset is CustomComboPreset.SGE_ST_Heal_EDiagnosis)
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, "Use Eukrasian Diagnosis when Target HP is at or below set percentage");
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", 2, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Check for Scholar Galvenize", "Enable to not override an existing Scholar's shield.", 2, 1);
+            }
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
@@ -2038,9 +2166,35 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WAR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, WAR.Config.WAR_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.WAR_ST_StormsPath_FellCleave)
+                UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_FellCleaveGauge, "Minimum gauge to spend");
+
+            if (preset == CustomComboPreset.WAR_AoE_Overpower_Decimate)
+                UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, "Minimum gauge to spend");
+
+            if (preset == CustomComboPreset.WAR_ST_StormsPath_Infuriate)
+                UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateSTGauge, "Use when gauge is under or equal to");
+
+            if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
+                UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
+
             #endregion
             // ====================================================================================
             #region WHITE MAGE
+
+            if (preset is CustomComboPreset.WHM_ST_MainCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_MainCombo_Adv, "Advanced Action Options", "Change how actions are handled", isConditionalChoice: true);
+
+                if (WHM.Config.WHM_ST_MainCombo_Adv)
+                {
+                    ImGui.Indent(); ImGui.Spacing();
+                    UserConfig.DrawHorizontalMultiChoice(WHM.Config.WHM_ST_MainCombo_Adv_Actions, "On Stone/Glare", "Apply options to all Stones and Glares.", 3, 0);
+                    UserConfig.DrawHorizontalMultiChoice(WHM.Config.WHM_ST_MainCombo_Adv_Actions, "On Aero/Dia", "Apply options to Aeros and Dia.", 3, 1);
+                    UserConfig.DrawHorizontalMultiChoice(WHM.Config.WHM_ST_MainCombo_Adv_Actions, "On Stone II", "Apply options to Stone II.", 3, 2);
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work.", 150, SliderIncrements.Hundreds);
