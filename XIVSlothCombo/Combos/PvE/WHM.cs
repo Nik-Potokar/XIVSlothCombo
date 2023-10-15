@@ -44,6 +44,10 @@ namespace XIVSlothCombo.Combos.PvE
             ThinAir = 7430,
             PresenceOfMind = 136;
 
+        //Action Groups
+        internal static readonly List<uint>
+            StoneGlareList = new() { Stone1, Stone2, Stone3, Stone4, Glare1, Glare3 };
+
         public static class Buffs
         {
             public const ushort
@@ -69,6 +73,8 @@ namespace XIVSlothCombo.Combos.PvE
                 { Dia, Debuffs.Dia }
             };
 
+
+
         public static class Config
         {
             internal static UserInt
@@ -79,12 +85,15 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_Medica_ThinAir = new("WHM_Medica_ThinAir");
             internal static UserBool
                 WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
+                WHM_ST_MainCombo_Adv = new("WHM_ST_MainCombo_Adv"),
                 WHM_Afflatus_Adv = new("WHM_Afflatus_Adv"),
                 WHM_Afflatus_UIMouseOver = new("WHM_Afflatus_UIMouseOver");
             internal static UserFloat
                 WHM_ST_MainCombo_DoT_Threshold = new("WHM_ST_MainCombo_DoT_Threshold");
+            public static UserBoolArray
+                WHM_ST_MainCombo_Adv_Actions = new("WHM_ST_MainCombo_Adv_Actions");
         }
-
+        
         internal class WHM_SolaceMisery : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_SolaceMisery;
@@ -199,7 +208,18 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Glare3 or Glare1 or Stone1 or Stone2 or Stone3 or Stone4)
+                bool ActionFound;
+
+                if (Config.WHM_ST_MainCombo_Adv && Config.WHM_ST_MainCombo_Adv_Actions.Count > 0)
+                {
+                    bool onStones = Config.WHM_ST_MainCombo_Adv_Actions[0] && StoneGlareList.Contains(actionID);
+                    bool onAeros = Config.WHM_ST_MainCombo_Adv_Actions[1] && AeroList.ContainsKey(actionID);
+                    bool onStone2 = Config.WHM_ST_MainCombo_Adv_Actions[2] && actionID is Stone2;
+                    ActionFound = onStones || onAeros || onStone2;
+                }
+                else ActionFound = StoneGlareList.Contains(actionID); //default handling
+
+                if (ActionFound)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool openerDelayComplete = glare3Count >= 3;

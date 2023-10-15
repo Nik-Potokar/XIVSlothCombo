@@ -164,7 +164,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal MudraCasting mudraState = new();
 
-            protected internal NINOpenerLogic openerLogic = new();
+            protected internal static NINOpenerLogic NINOpener = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -207,7 +207,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener) && NINOpenerLogic.LevelChecked && openerLogic.DoFullOpener(ref actionID, mudraState))
+                    if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_BalanceOpener) && NINOpenerLogic.LevelChecked && NINOpener.DoFullOpener(ref actionID, mudraState))
                         return actionID;
 
                     if (HasEffect(Buffs.TenChiJin))
@@ -631,7 +631,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected internal MudraCasting mudraState = new();
 
-            protected internal NINOpenerLogic openerLogic = new();
+            protected internal static NINOpenerLogic NINOpener = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -646,7 +646,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
 
-                    if (IsEnabled(CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener) && NINOpenerLogic.LevelChecked && openerLogic.DoFullOpener(ref actionID, mudraState))
+                    if (IsEnabled(CustomComboPreset.NIN_ST_SimpleMode_BalanceOpener) && NINOpenerLogic.LevelChecked && NINOpener.DoFullOpener(ref actionID, mudraState))
                         return actionID;
 
                     if (HasEffect(Buffs.TenChiJin))
