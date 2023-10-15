@@ -21,6 +21,8 @@ using XIVSlothCombo.Window;
 using XIVSlothCombo.Window.Tabs;
 using ECommons;
 using Dalamud.Plugin.Services;
+using System.Reflection;
+using ECommons.DalamudServices;
 
 namespace XIVSlothCombo
 {
@@ -112,6 +114,7 @@ namespace XIVSlothCombo
             Service.Configuration.ResetFeatures("v3.0.18.0_GNBCleanup", Enumerable.Range(7000, 700).ToArray());
             Service.Configuration.ResetFeatures("v3.0.18.0_PvPCleanup", Enumerable.Range(80000, 11000).ToArray());
             Service.Configuration.ResetFeatures("v3.0.18.1_PLDRework", Enumerable.Range(11000, 100).ToArray());
+            Service.Configuration.ResetFeatures("v3.1.0.1_BLMRework", Enumerable.Range(2000, 100).ToArray());
         }
 
         private void DrawUI() => configWindow.Draw();
@@ -128,6 +131,7 @@ namespace XIVSlothCombo
         {
             try
             {
+                string basicMessage = $"Welcome to XIVSlothCombo v{this.GetType().Assembly.GetName().Version}!";
                 using HttpResponseMessage? motd = httpClient.GetAsync("https://raw.githubusercontent.com/Nik-Potokar/XIVSlothCombo/main/res/motd.txt").Result;
                 motd.EnsureSuccessStatusCode();
                 string? data = motd.Content.ReadAsStringAsync().Result;
@@ -135,7 +139,7 @@ namespace XIVSlothCombo
                 {
                     starterMotd,
                     EmphasisItalicPayload.ItalicsOn,
-                    new TextPayload(data.Trim()),
+                    string.IsNullOrEmpty(data) ? new TextPayload(basicMessage) : new TextPayload(data.Trim()),
                     EmphasisItalicPayload.ItalicsOff
                 };
 
