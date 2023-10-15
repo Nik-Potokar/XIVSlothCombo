@@ -372,14 +372,14 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        [ReplaceSkill(BLM.Blizzard2)]
+        [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
         #region Advanced AoE
 
-        [ReplaceSkill(BLM.Blizzard2)]
+        [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_AdvancedMode = 2054,
