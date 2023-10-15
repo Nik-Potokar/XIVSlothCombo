@@ -319,124 +319,97 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region BLACK MAGE
-        [ReplaceSkill(BLM.Transpose)]
-        [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
-        BLM_Mana = 2001,
-
-        [ReplaceSkill(BLM.LeyLines)]
-        [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Ley Lines when Ley Lines is active.", BLM.JobID, 0, "", "")]
-        BLM_LeyLines = 2002,
-
-        [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
-        [CustomComboInfo("Blizzard 1/2/3 Feature", "Replaces Blizzard 1 with Blizzard 3 when out of Umbral Ice. Replaces Freeze with Blizzard 2 when synced.", BLM.JobID, 0, "", "")]
-        BLM_Blizzard = 2003,
-
-        [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_SimpleMode, BLM_Simple_Transpose, BLM_Paradox)]
-        [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID, 0, "", "")]
-        BLM_ScatheXeno = 2004,
 
         [ReplaceSkill(BLM.Fire)]
-        [CustomComboInfo("Fire 1/3 Feature", "Replaces Fire 1 with Fire 3 outside of Astral Fire or when Firestarter proc is up.", BLM.JobID, 0, "", "")]
-        BLM_Fire_1to3 = 2005,
+        [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Black Mage (Single Target) Feature", "Replaces Fire with a full one-button rotation.", BLM.JobID, -10, "", "")]
+        BLM_ST_SimpleMode = 2012,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Thundercloud Option", "Adds Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available to Simple BLM.", BLM.JobID, 0, "", "")]
-        BLM_Thunder = 2006,
+        #region Advanced ST
 
-        [ReplaceSkill(BLM.Flare)]
-        [CustomComboInfo("Simple AoE Feature", "Replaces Flare with a full one button rotation.", BLM.JobID, -1, "", "")]
+        [ReplaceSkill(BLM.Fire)]
+        [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Black Mage (Single Target) Feature", "Replaces Fire with a full one-button rotation.", BLM.JobID, -9, "", "")]
+        BLM_ST_AdvancedMode = 2021,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Thunder I/III Option", "Adds Thunder I/Thunder III when the debuff isn't present or is expiring.", BLM.JobID, 0, "", "")]
+        BLM_ST_Adv_Thunder = 2029,
+
+        [ParentCombo(BLM_ST_Adv_Thunder)]
+        [CustomComboInfo("Thundercloud Spender Option", "Spends Thundercloud as soon as possible rather than waiting until Thunder is expiring.", BLM.JobID, 0, "", "")]
+        BLM_ST_Adv_Thunder_ThunderCloud = 2030,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
+        BLM_Adv_UmbralSoul = 2035,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Movement Options", "Choose options to be used during movement.", BLM.JobID, 0, "", "")]
+        BLM_Adv_Movement = 2036,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Triplecast/Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
+        BLM_Adv_Casts = 2039,
+
+        [ParentCombo(BLM_Adv_Casts)]
+        [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID, 0, "", "")]
+        BLM_Adv_Triplecast_Pooling = 2040,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, -8, "", "")]
+        BLM_Adv_Cooldowns = 2042,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
+            "\nWill default to the Standard opener when nothing is selected.", BLM.JobID, -10, "", "")]
+        BLM_Adv_Opener = 2043,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Rotation Option", "Choose which rotation to use." +
+            "\nWill default to the Standard rotation when nothing is selected.", BLM.JobID, -9, "", "")]
+        BLM_Adv_Rotation = 2045,
+
+        #endregion
+
+        [ReplaceSkill(BLM.Blizzard2)]
+        [ConflictingCombos(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
-        [ParentCombo(BLM_Thunder)]
-        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Simple BLM.", BLM.JobID, 0, "", "")]
-        BLM_ThunderUptime = 2011,
+        #region Advanced AoE
 
-        [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ScatheXeno, BLM_Simple_Transpose, BLM_Paradox)]
-        [CustomComboInfo("Simple BLM Feature", "Replaces Scathe with a full one button rotation.", BLM.JobID, -3, "", "")]
-        BLM_SimpleMode = 2012,
+        [ReplaceSkill(BLM.Blizzard2)]
+        [ConflictingCombos(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
+        BLM_AoE_AdvancedMode = 2054,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Cooldowns Option", "Adds Manafont, Sharpcast, Amplifier onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Buffs = 2013,
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II/Thunder IV during Umbral Ice.", BLM.JobID, 1, "", "")]
+        BLM_AoE_Adv_ThunderUptime = 2055,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Buffs_LeyLines = 2014,
+        [ParentCombo(BLM_AoE_Adv_ThunderUptime)]
+        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during Astral Fire.", BLM.JobID, 1, "", "")]
+        BLM_AoE_Adv_ThunderUptime_AstralFire = 2056,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Triplecast / Swiftcast Option", "Adds Triplecast/Swiftcast onto the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Casts = 2015,
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 2, "", "")]
+        BLM_AoE_Adv_Foul = 2044,
 
-        [ParentCombo(BLM_Simple_Casts)]
-        [CustomComboInfo("Pool Triplecast / Swiftcast Option", "Keep one triplecast usage and swiftcast for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Casts_Pooling = 2016,
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 99, "", "")]
+        BLM_AoE_Adv_UmbralSoul = 2049,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Pool Xenoglossy Option", "Keep one xenoglossy usage for movement in the Simple BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_XenoPooling = 2017,
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, 1, "", "")]
+        BLM_AoE_Adv_Cooldowns = 2052,
 
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Fire 3 Opener", "Adds the Fire 3 Opener to Simple BLM.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Opener = 2018,
+        #endregion
 
-        [ParentCombo(BLM_Simple_Opener)]
-        [CustomComboInfo("Fire 3 Opener - 1 Triplecast", "Modifies the Simple Fire 3 Opener to only use 1 Triplecast.", BLM.JobID, 0, "", "")]
-        BLM_Simple_OpenerAlternate = 2019,
-
-        [ParentCombo(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Foul / Manafont Flare Option", "Adds Foul when available during Astral Fire. Weaves Manafont after Foul for additional Flare", BLM.JobID, 0, "", "")]
-        BLM_AoE_Simple_Foul = 2020,
-
-        [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Paradox)]
-        [CustomComboInfo("Advanced BLM Feature", "Replaces Scathe with a full one button rotation that uses Transpose. Requires level 90.", BLM.JobID, -2, "", "")]
-        BLM_Simple_Transpose = 2021,
-
-        [ParentCombo(BLM_Simple_Transpose)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one triplecast usage for movement in the Advanced BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Transpose_Pooling = 2022,
-
-        [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ScatheXeno, BLM_SimpleMode, BLM_Simple_Transpose)]
-        [CustomComboInfo("Paradox BLM Feature", "Replaces Scathe with a full one button rotation that has minimal casts (~9-13%% less damage than Simple BLM). Requires level 90.", BLM.JobID, -2, "", "")]
-        BLM_Paradox = 2023,
-
-        [ParentCombo(BLM_Simple_Transpose)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Advanced BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Simple_Transpose_LeyLines = 2024,
-
-        [ParentCombo(BLM_Paradox)]
-        [CustomComboInfo("Ley Lines Option", "Adds Ley Lines onto the Paradox BLM feature.", BLM.JobID, 0, "", "")]
-        BLM_Paradox_LeyLines = 2025,
-
-        [ParentCombo(BLM_SimpleMode)]
-        [CustomComboInfo("Swiftcast/Triplecast Moving Option", "Use Swiftcast/Triplecast when moving.", BLM.JobID, 0, "", "")]
-        BLM_Simple_CastMovement = 2026,
-
-        [ParentCombo(BLM_Simple_CastMovement)]
-        [CustomComboInfo("Xenoglossy Moving Option", "Use Xenoglossy when moving.", BLM.JobID, 0, "", "")]
-        BLM_Simple_CastMovement_Xeno = 2027,
-
-        [ParentCombo(BLM_Simple_CastMovement)]
-        [CustomComboInfo("Scathe Moving Option", "Use Scathe when moving.", BLM.JobID, 0, "", "")]
-        BLM_Simple_CastMovement_Scathe = 2028,
-
-        [ParentCombo(BLM_Simple_Transpose)]
-        [CustomComboInfo("Thundercloud Option", "Adds Thunder 1/3 when the debuff isn't present or expiring and Thundercloud is available to Advanced BLM.", BLM.JobID, 0, "", "")]
-        BLM_TransposeThunder = 2029,
-
-        [ParentCombo(BLM_TransposeThunder)]
-        [CustomComboInfo("Thunder 1/3 Option", "Adds Thunder 1/3 when the debuff isn't present or expiring to Advanced BLM.", BLM.JobID, 0, "", "")]
-        BLM_TransposeThunderUptime = 2030,
-
-        [ReplaceSkill(BLM.AetherialManipulation)]
-        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
-        BLM_AetherialManipulation = 2031,
+        #region Variant
 
         [Variant]
-        [VariantParent(BLM_SimpleMode, BLM_AoE_SimpleMode)]
+        [VariantParent(BLM_ST_SimpleMode, BLM_ST_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", BLM.JobID)]
         BLM_Variant_Rampart = 2032,
 
@@ -445,11 +418,41 @@ namespace XIVSlothCombo.Combos
         BLM_Variant_Raise = 2033,
 
         [Variant]
-        [VariantParent(BLM_SimpleMode, BLM_AoE_SimpleMode)]
+        [VariantParent(BLM_ST_SimpleMode, BLM_ST_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
         BLM_Variant_Cure = 2034,
 
-        // Last value = 2034
+        #endregion
+
+        #region Miscellaneous
+        [ReplaceSkill(BLM.Transpose)]
+        [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID, 0, "", "")]
+        BLM_UmbralSoul = 2001,
+
+        [ReplaceSkill(BLM.LeyLines)]
+        [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Lines when Ley Lines is active.", BLM.JobID, 0, "", "")]
+        BLM_Between_The_LeyLines = 2002,
+
+        [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
+        [CustomComboInfo("Blizzard I/III Feature", "Replaces Blizzard I with Blizzard III when out of Umbral Ice." +
+            "\nReplaces Freeze with Blizzard II when synced below Lv.40.", BLM.JobID, 0, "", "")]
+        BLM_Blizzard_1to3 = 2003,
+
+        [ReplaceSkill(BLM.Scathe)]
+        [ConflictingCombos(BLM_ST_SimpleMode, BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID, 0, "", "")]
+        BLM_Scathe_Xeno = 2004,
+
+        [ReplaceSkill(BLM.Fire)]
+        [CustomComboInfo("Fire I/III Feature", "Replaces Fire I with Fire III outside of Astral Fire or when Firestarter is up.", BLM.JobID, 0, "", "")]
+        BLM_Fire_1to3 = 2005,
+
+        [ReplaceSkill(BLM.AetherialManipulation)]
+        [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when you are out of active Ley Lines and standing still.", BLM.JobID, 0, "", "")]
+        BLM_Aetherial_Manipulation = 2046,
+        #endregion
+
+        // Last value = 2057
 
         #endregion
 
@@ -2714,17 +2717,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 305, "", "")]
         SGE_ST_Heal_Kardia = 14310,
 
-        [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
-        SGE_ST_Heal_Diagnosis = 14320,
-
-        [ParentCombo(SGE_ST_Heal_Diagnosis)]
-        [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", SGE.JobID)]
-        SGE_ST_Heal_Diagnosis_IgnoreShield = 14321,
-
-        [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
-        SGE_ST_Heal_Soteria = 14330,
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
+            SGE_ST_Heal_EDiagnosis = 14320,
+                
+            [ParentCombo(SGE_ST_Heal)]
+            [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
+            SGE_ST_Heal_Soteria = 14330,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 307, "", "")]
@@ -3400,72 +3399,68 @@ namespace XIVSlothCombo.Combos
         #region WARRIOR
 
         [ReplaceSkill(WAR.StormsPath)]
-        [CustomComboInfo("Storm's Path Combo Feature", "All in one main combo feature, adds Storm's Eye/Path.\nIf all sub-options and Fell Cleave/Decimate Options are toggled, will turn into a full one button rotation (Advanced Warrior).", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath = 18000,
 
-        [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 0, "", "")]
-        War_ST_StormsEye = 18001,
-
-        [ReplaceSkill(WAR.Overpower)]
-        [CustomComboInfo("Overpower Combo Feature", "Add combos to Overpower.", WAR.JobID, 0, "", "")]
-        WAR_AoE_Overpower = 18002,
-
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Warrior Gauge Overcap Option", "Replace Single target or AoE combo with gauge spender if you are about to overcap and are before a step of a combo that would generate Beast gauge.", WAR.JobID, 0, "", "")]
-        WAR_ST_StormsPath_OvercapProtection = 18003,
-
-        [ReplaceSkill(WAR.NascentFlash)]
-        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76.", WAR.JobID, 0, "", "")]
-        WAR_NascentFlash = 18005,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Upheaval Option", "Adds Upheaval into maincombo if you have Surging Tempest.", WAR.JobID, 0, "", "")]
-        WAR_ST_StormsPath_Upheaval = 18007,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Option", "Replaces Inner Beast and Steel Cyclone with Primal Rend when available (also added onto main AoE combo).", WAR.JobID, 0, "", "")]
-        WAR_ST_StormsPath_PrimalRend = 18008,
-
-        [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Orogeny Option", "Adds Orogeny onto main AoE combo when you are buffed with Surging Tempest.", WAR.JobID, 0, "", "")]
-        WAR_AoE_Overpower_Orogeny = 18009,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Fell Cleave/Decimate Option", "Adds Fell Cleave to main combo when gauge is at 50 or more and adds Decimate to the AoE combo.\nWill use Inner Chaos/Chaotic Cyclone if Infuriate is used and Fell Cleave/Steel Cyclone during Inner Release.\nWill begin pooling resources when Inner Release is under 30s.", WAR.JobID, 0, "", "")]
-        WAR_ST_StormsPath_Spender = 18011,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Storm's Path feature combo if you are under Surging Tempest Buff.", WAR.JobID, 0, "", "")]
-        WAR_ST_StormsPath_Onslaught = 18012,
-
-        [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Infuriate AoE Option", "Adds Infuriate to AoE combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
-        WAR_AoE_Overpower_Infuriate = 18013,
-
-        [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Inner Release AoE Option", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
-        WAR_AoE_Overpower_InnerRelease = 18014,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Tomahawk Uptime Option", "Replace Storm's Path Combo Feature with Tomahawk when you are out of range.", WAR.JobID, 0, "", "")]
-        WAR_ST_StormsPath_RangedUptime = 18016,
-
-        [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
-        [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 0, "", "")]
-        WAR_InfuriateFellCleave = 18018,
-
-        [ReplaceSkill(WAR.InnerRelease)]
-        [CustomComboInfo("Primal Rend Feature", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 0, "", "")]
-        WAR_PrimalRend_InnerRelease = 18019,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Inner Release on Storm's Path Option", "Adds Inner Release to Storm's Path combo.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID, 0, "", "")]
         WAR_ST_StormsPath_InnerRelease = 18020,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Infuriate on Storm's Path Option", "Adds Infuriate to Storm's Path combo when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
+        [CustomComboInfo("Tomahawk Uptime Option", "Adds Tomahawk to Advanced Mode when you are out of range.", WAR.JobID, 1, "", "")]
+        WAR_ST_StormsPath_RangedUptime = 18016,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Inner Beast / Fell Cleave Option", "Adds Inner Beast / Fell Cleave to Advanced Mode. Will use when you have the set minimum gauge, or under the effect of Inner Release. Will also use Nascent Chaos.", WAR.JobID, 2, "", "")]
+        WAR_ST_StormsPath_FellCleave = 18011,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode.", WAR.JobID, 3, "", "")]
         WAR_ST_StormsPath_Infuriate = 18021,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Advanced Mode if you are under Surging Tempest Buff.", WAR.JobID, 4, "", "")]
+        WAR_ST_StormsPath_Onslaught = 18012,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Upheaval Option", "Adds Upheaval to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_StormsPath_Upheaval = 18007,
+
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Orogeny Option", "Adds Orogeny to Advanced Mode when you are buffed with Surging Tempest.", WAR.JobID, 6, "", "")]
+        WAR_AoE_Overpower_Orogeny = 18009,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode.", WAR.JobID, 7, "", "")]
+        WAR_ST_StormsPath_PrimalRend = 18008,
+
+        [ReplaceSkill(WAR.StormsEye)]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 2, "", "")]
+        War_ST_StormsEye = 18001,
+
+        [ReplaceSkill(WAR.Overpower)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1, "", "")]
+        WAR_AoE_Overpower = 18002,
+
+        [ReplaceSkill(WAR.NascentFlash)]
+        [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76.", WAR.JobID, 5, "", "")]
+        WAR_NascentFlash = 18005,
+
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode when gauge is below 50 and not under Inner Release.", WAR.JobID, 0, "", "")]
+        WAR_AoE_Overpower_Infuriate = 18013,
+
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID, 0, "", "")]
+        WAR_AoE_Overpower_InnerRelease = 18014,
+
+        [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
+        [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 4, "", "")]
+        WAR_InfuriateFellCleave = 18018,
+
+        [ReplaceSkill(WAR.InnerRelease)]
+        [CustomComboInfo("Primal Rend Feature", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 3, "", "")]
+        WAR_PrimalRend_InnerRelease = 18019,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID, 0, "", "")]
@@ -3494,7 +3489,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
         WAR_Variant_Ultimatum = 18027,
 
-        // Last value = 18027
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Steel Cyclone / Decimate Option", "Adds Steel Cyclone / Decimate to Advanced Mode.", WAR.JobID)]
+        WAR_AoE_Overpower_Decimate = 18028,
+
+        // Last value = 18028
 
         #endregion
 
@@ -4222,3 +4221,4 @@ namespace XIVSlothCombo.Combos
         #endregion
     }
 }
+

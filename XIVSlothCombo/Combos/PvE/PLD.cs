@@ -313,7 +313,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // (arguably better to delay by less than a whole GCD and just stop moving to cast)
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) &&
                                 ShieldLob.LevelChecked() &&
-                                ((HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp) || (!HolySpirit.LevelChecked())))
+                                ((HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp) || (!HolySpirit.LevelChecked())) || IsMoving)
                                 return ShieldLob;
                         }
 
@@ -642,7 +642,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID == OriginalHook(SpiritsWithin) && ActionReady(CircleOfScorn))
+                if ((actionID == SpiritsWithin || actionID == Expiacion) && ActionReady(CircleOfScorn))
                 {
                     if (IsOffCooldown(OriginalHook(SpiritsWithin)))
                     {
