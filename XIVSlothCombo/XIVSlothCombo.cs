@@ -42,7 +42,7 @@ namespace XIVSlothCombo
             get => jobID;
             set
             {
-                if (jobID != value)
+                if (jobID != value && value != null)
                 {
                     Service.PluginLog.Debug($"Switched to job {value}");
                     PvEFeatures.HasToOpenJob = true;
@@ -165,7 +165,7 @@ namespace XIVSlothCombo
             configWindow?.Dispose();
 
             Service.CommandManager.RemoveHandler(Command);
-
+            Service.Framework.Update -= CheckCurrentJob;
             Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
             Service.Interface.UiBuilder.Draw -= DrawUI;
 

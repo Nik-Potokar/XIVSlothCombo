@@ -296,9 +296,12 @@ namespace XIVSlothCombo.Combos
         AST_Cards_DrawOnPlay = 1000,
 
         [ParentCombo(AST_Cards_DrawOnPlay)]
-        [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
+        [CustomComboInfo("Redraw Feature", "Sets Play to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
         AST_Cards_Redraw = 1032,
 
+        [ReplaceSkill(AST.Draw)]
+        [CustomComboInfo("Redraw on Draw", "Sets Draw to Redraw if you have the Clarifying Draw buff.", AST.JobID)]
+        AST_Cards_RedrawStandalone = 1040,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
