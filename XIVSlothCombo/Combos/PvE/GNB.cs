@@ -38,23 +38,9 @@ namespace XIVSlothCombo.Combos.PvE
             Bloodfest = 16164,
             Hypervelocity = 25759,
             RoughDivide = 16154,
-            LightningShot = 16143,
-            HeartofStone = 16161,
-            HeartofCorundum = 25758,
-            Camouflage = 16140,
-            Rampart = 7531,
-            Nebula = 16148;
+            LightningShot = 16143;
 
-        public static class Levels
-        {
-            public const byte
-            HeartofStone = 68,
-            HeartofCorundum = 82,
-            Camouflage = 6,
-            Rampart = 8,
-            Nebula = 38;
-        }
-            public static class Buffs
+        public static class Buffs
         {
             public const ushort
                 NoMercy = 1831,

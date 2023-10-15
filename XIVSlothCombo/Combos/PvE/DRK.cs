@@ -32,9 +32,6 @@ namespace XIVSlothCombo.Combos.PvE
             Shadowbringer = 25757,
             Plunge = 3640,
             BloodWeapon = 3625,
-            TheBlackestNight = 7393,
-            Rampart = 7531,
-            ShadowWall = 3636,
             Unmend = 3624;
 
         public static class Buffs
@@ -51,15 +48,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
                 Placeholder = 1;
-        }
-
-        public static class Levels
-        {
-            public const byte
-            ShadowWall = 38,
-            TheBlackestNight = 70,
-            Oblation = 82,
-            Rampart = 8;
         }
 
         public static class Config
@@ -139,7 +127,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (IsEnabled(CustomComboPreset.DRK_SaltedEarth) && LevelChecked(SaltedEarth))
                                     {
                                         if ((IsOffCooldown(SaltedEarth) && !HasEffect(Buffs.SaltedEarth)) || //Salted Earth
-                                            (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && LevelChecked(SaltAndDarkness)) && GetBuffRemainingTime(Buffs.SaltedEarth) < 9) //Salt and Darkness
+                                            (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && LevelChecked(SaltAndDarkness) && GetBuffRemainingTime(Buffs.SaltedEarth) < 9)) //Salt and Darkness
                                             return OriginalHook(SaltedEarth);
                                     }
 
