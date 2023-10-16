@@ -246,7 +246,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     {
                                         //Geirskogul and Nastrond Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Geirskogul) && ((gauge.IsLOTDActive && IsOffCooldown(Nastrond) &&
-                                            (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
+                                            !(IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
                                             (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
                                             (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || (HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust))))))) || IsOffCooldown(Geirskogul)))
                                             return OriginalHook(Geirskogul);
