@@ -1,11 +1,9 @@
-﻿using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -63,9 +61,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (value == OpenerState.InOpener) OpenerStep = 1;
                     if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
                     {
-                        if (value == OpenerState.FailedOpener) 
-                            Svc.Log.Information("Opener Failed");
-                        
+                        if (value == OpenerState.FailedOpener)
+                            Svc.Log.Information($"Opener Failed at step {OpenerStep}");
+
                         ResetOpener();
                     }
                     if (value == OpenerState.OpenerFinished) Svc.Log.Information("Opener Finished");
@@ -248,11 +246,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if ((CustomComboFunctions.LocalPlayer.CastActionId == Fire3 || CustomComboFunctions.WasLastAction(Fire3)) && OpenerStep == 23) OpenerStep++;
                     else if (OpenerStep == 23) actionID = Fire3;
 
-                    if ((CustomComboFunctions.LocalPlayer.CastActionId == Fire4 || CustomComboFunctions.WasLastAction(Fire4)) && OpenerStep == 24) OpenerStep++;
+                    if ((CustomComboFunctions.LocalPlayer.CastActionId == Fire4 || CustomComboFunctions.WasLastAction(Fire4)) && OpenerStep == 24 && ActionWatching.CombatActions.Count == 24) OpenerStep++;
                     else if (OpenerStep == 24) actionID = Fire4;
 
-                    if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 25) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 25) actionID = Despair;
+                    if ((CustomComboFunctions.LocalPlayer.CastActionId == Fire4 || CustomComboFunctions.WasLastAction(Fire4)) && OpenerStep == 25 && ActionWatching.CombatActions.Count == 25) OpenerStep++;
+                    else if (OpenerStep == 25) actionID = Fire4;
+
+                    if ((CustomComboFunctions.LocalPlayer.CastActionId == Fire4 || CustomComboFunctions.WasLastAction(Fire4)) && OpenerStep == 26 && ActionWatching.CombatActions.Count == 26) OpenerStep++;
+                    else if (OpenerStep == 26) actionID = Fire4;
+
+                    if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 27) CurrentState = OpenerState.OpenerFinished;
+                    else if (OpenerStep == 27) actionID = Despair;
                 }
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
