@@ -1208,12 +1208,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dives Option", "Adds Spineshatter Dive and Dragonfire Dive to the rotation.\n Select options below for when to use dives.", DRG.JobID, -7, "", "")]
         DRG_ST_Dives = 6108,
 
-        [ParentCombo(DRG_ST_Dives)]
-        [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 0, "", "")]
-        DRG_ST_Dives_Melee = 6109,
-
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("StarDiver Option", "Uses Stardiver when under 1 buff", DRG.JobID, -7, "", "")]
+        [CustomComboInfo("StarDiver Option", "Uses Stardiver when under at least 1 buff", DRG.JobID, -7, "", "")]
         DRG_ST_Stardiver = 6110,
 
         [ParentCombo(DRG_ST_CDs)]
@@ -1302,12 +1298,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dives AoE Feature", "Includes Spineshatter Dive and Dragonfire Dive to the AoE rotation.\n Select options below for when to use dives.", DRG.JobID, 0, "", "")]
         DRG_AoE_Dives = 6208,
 
-        [ParentCombo(DRG_AoE_Dives)]
-        [CustomComboInfo("Melee Dives Option", "Uses Spineshatter Dive, Dragonfire Dive, and Stardiver when in the target's target ring (1 yalm) and closer.", DRG.JobID, 0, "", "")]
-        DRG_AoE_Dives_Melee = 6209,
-
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("StarDiver Option", "Uses Stardiver when under 1 buff", DRG.JobID, -7, "", "")]
+        [CustomComboInfo("StarDiver Option", "Uses Stardiver when under at least 1 buff", DRG.JobID, -7, "", "")]
         DRG_AoE_Stardiver = 6210,
 
         [ParentCombo(DRG_AoE_CDs)]

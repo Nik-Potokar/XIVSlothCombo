@@ -308,9 +308,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return WyrmwindThrust;
 
                             //Dives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives) &&
-                                (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) &&
-                                GetTargetDistance() <= 1)) && !IsMoving && LevelChecked(LanceCharge))
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && !IsMoving && LevelChecked(LanceCharge))
                             {
                                 if (diveOptions is 0 || //Dives on cooldown
                                    (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
@@ -482,7 +480,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return MirageDive;
 
                         //StarDives Feature
-                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && AnimationLock.CanDRGWeave(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                        if (gauge.IsLOTDActive && ActionReady(Stardiver) && AnimationLock.CanDRGWeave(Stardiver) && !IsMoving &&
+                            (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                             return Stardiver;
                     }
 
@@ -573,9 +572,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return WyrmwindThrust;
 
                             //Dives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Dives) &&
-                                (IsNotEnabled(CustomComboPreset.DRG_AoE_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_AoE_Dives_Melee) &&
-                                GetTargetDistance() <= 1)) && !IsMoving && LevelChecked(LanceCharge))
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Dives) && !IsMoving && LevelChecked(LanceCharge))
                             {
                                 if (diveOptions is 0 || //Dives on cooldown
                                    (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
@@ -607,7 +604,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //StarDives Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && AnimationLock.CanDRGWeave(Stardiver) &&
-                               gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                               gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving &&
+                               (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
                                 return Stardiver;
                         }
                     }
