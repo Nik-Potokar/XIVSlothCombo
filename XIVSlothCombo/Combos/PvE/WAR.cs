@@ -56,7 +56,11 @@ namespace XIVSlothCombo.Combos.PvE
                 WAR_InfuriateRange = "WarInfuriateRange",
                 WAR_SurgingRefreshRange = "WarSurgingRefreshRange",
                 WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges",
-                WAR_VariantCure = "WAR_VariantCure";
+                WAR_VariantCure = "WAR_VariantCure",
+                WAR_FellCleaveGauge = "WAR_FellCleaveGauge",
+                WAR_DecimateGauge = "WAR_DecimateGauge",
+                WAR_InfuriateSTGauge = "WAR_InfuriateSTGauge",
+                WAR_InfuriateAoEGauge = "WAR_InfuriateAoEGauge";
         }
 
         // Replace Storm's Path with Storm's Path combo and overcap feature on main combo to fellcleave
@@ -71,6 +75,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
                     var surgingThreshold = PluginConfiguration.GetCustomIntValue(Config.WAR_SurgingRefreshRange);
                     var onslaughtChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
+                    var fellCleaveGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_FellCleaveGauge);
+                    var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateSTGauge);
 
                     if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
                         return Variant.VariantCure;
@@ -78,7 +84,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && LevelChecked(Tomahawk) && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
-                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && gauge <= 40 && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && gauge <= infuriateGauge && CanWeave(actionID))
                         return Infuriate;
 
                     //Sub Storm's Eye level check
@@ -119,11 +125,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return PrimalRend;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Spender) && LevelChecked(InnerBeast))
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
                         {
-                            if (gauge >= 50 && (IsOffCooldown(InnerRelease) || GetCooldownRemainingTime(InnerRelease) > 35 || HasEffect(Buffs.NascentChaos)))
-                                return OriginalHook(InnerBeast);
-                            if (HasEffect(Buffs.InnerRelease))
+                            if (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos))
                                 return OriginalHook(InnerBeast);
                         }
 
@@ -131,17 +135,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast) && (!LevelChecked(StormsEye) || HasEffectAny(Buffs.SurgingTempest)) && gauge >= fellCleaveGaugeSpend)
+                            return OriginalHook(InnerBeast);
+
                         if (lastComboMove == HeavySwing && LevelChecked(Maim))
                         {
-                            if (gauge == 100 && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_OvercapProtection) && LevelChecked(InnerBeast))
-                                return OriginalHook(InnerBeast);
                             return Maim;
                         }
 
                         if (lastComboMove == Maim && LevelChecked(StormsPath))
                         {
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_OvercapProtection) && LevelChecked(InnerBeast) && (!LevelChecked(StormsEye) || HasEffectAny(Buffs.SurgingTempest)) && gauge >= 90)
-                                return OriginalHook(InnerBeast);
                             if ((GetBuffRemainingTime(Buffs.SurgingTempest) <= surgingThreshold) && LevelChecked(StormsEye))
                                 return StormsEye;
                             return StormsPath;
@@ -188,15 +191,17 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID == Overpower)
                 {
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
+                    var decimateGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_DecimateGauge);
+                    var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateAoEGauge);
 
                     if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && gauge <= 50 && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && gauge <= infuriateGauge && CanWeave(actionID))
                         return Infuriate;
 
                     //Sub Mythril Tempest level check
-                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && LevelChecked(Berserk) && !LevelChecked(MythrilTempest) && InCombat())
+                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && LevelChecked(Berserk) && !LevelChecked(MythrilTempest) && InCombat())
                         return OriginalHook(Berserk);
 
                     if (HasEffect(Buffs.SurgingTempest) && InCombat())
@@ -212,7 +217,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
                                 return Variant.VariantUltimatum;
 
-                            if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanDelayedWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && LevelChecked(Berserk))
+                            if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && LevelChecked(Berserk))
                                 return OriginalHook(Berserk);
                             if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Orogeny) && IsOffCooldown(Orogeny) && LevelChecked(Orogeny) && HasEffect(Buffs.SurgingTempest))
                                 return Orogeny;
@@ -226,7 +231,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return PrimalRend;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Spender) && LevelChecked(SteelCyclone) && (gauge >= 50 || HasEffect(Buffs.InnerRelease)))
+                        if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Decimate) && LevelChecked(SteelCyclone) && (gauge >= decimateGaugeSpend || HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)))
                             return OriginalHook(SteelCyclone);
                     }
 
@@ -234,8 +239,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove == Overpower && LevelChecked(MythrilTempest))
                         {
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_OvercapProtection) && gauge >= 90 && LevelChecked(SteelCyclone))
-                                return OriginalHook(SteelCyclone);
                             return MythrilTempest;
                         }
                     }

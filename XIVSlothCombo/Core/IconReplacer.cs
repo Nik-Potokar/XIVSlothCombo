@@ -5,6 +5,8 @@ using System.Reflection;
 using Dalamud.Hooking;
 using Dalamud.Logging;
 using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using Lumina.Excel.GeneratedSheets;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
 
@@ -87,19 +89,24 @@ namespace XIVSlothCombo.Core
         }
 
         // Class locking
-        private static bool ClassLocked()
+        public unsafe static bool ClassLocked()
         {
-            if (Service.ClientState.LocalPlayer.Level <= 35) Service.ClassLocked = false;
+            if (Service.ClientState.LocalPlayer is null) return false;
+
+            if (Service.ClientState.LocalPlayer.Level <= 35) return false;
 
             if (Service.ClientState.LocalPlayer.ClassJob.Id is
                 (>= 8 and <= 25) or 27 or 28 or >= 30)
-                Service.ClassLocked = false;
+                return false;
+
+            if (!UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(66049))
+                return false;
 
             if ((Service.ClientState.LocalPlayer.ClassJob.Id is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
-                !Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
-                Service.ClientState.LocalPlayer.Level > 35) Service.ClassLocked = true;
+                Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
+                Service.ClientState.LocalPlayer.Level > 35) return true;
 
-            return Service.ClassLocked;
+            return false;
         }
 
         private ulong IsIconReplaceableDetour(uint actionID) => 1;
