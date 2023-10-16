@@ -248,11 +248,10 @@ namespace XIVSlothCombo.Combos.PvE
                                         if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Geirskogul) && ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
                                         {
                                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
-                                            (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is not VorpalThrust) ||
+                                            (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && (lastComboMove is not VorpalThrust) || GetRemainingCharges(LifeSurge) == 0) ||
                                             (HasEffect(Buffs.BattleLitany) && (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))))) {
                                                 return OriginalHook(Geirskogul);
                                             }
-                                            return OriginalHook(Geirskogul);
                                         }
 
                                         //(High) Jump Feature
