@@ -47,6 +47,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
+                Bloodbath = 1982,
                 TrueNorth = 1250,
                 LanceCharge = 1864,
                 RightEye = 1910,
@@ -111,7 +112,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         inOpener = false;
 
-                        if (HasEffect(Buffs.TrueNorth) && openerReady)
+                        if ((HasEffect(Buffs.TrueNorth) || HasEffect(Buffs.Bloodbath) && openerReady)
                             inOpener = true;
                         if (inOpener)
                             return OriginalHook(TrueThrust);
