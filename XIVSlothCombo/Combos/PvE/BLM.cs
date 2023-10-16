@@ -493,7 +493,8 @@ namespace XIVSlothCombo.Combos.PvE
                             (currentMP >= MP.ThunderST || (HasEffect(Buffs.Sharpcast) && HasEffect(Buffs.Thundercloud))))
                         {
                             if (LevelChecked(Thunder) &&
-                                (dotDebuff is null || dotDebuff.RemainingTime <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP)
+                                (dotDebuff is null || dotDebuff.RemainingTime <= thunderRefreshTime) && GetTargetHPPercent() > ThunderHP &&
+                                gauge.ElementTimeRemaining >= 6000) // Never let AF/UI gauge drop to 0 
                                 return OriginalHook(Thunder);
                         }
                     }
