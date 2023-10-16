@@ -36,7 +36,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private static uint OpenerLevel => 90;
 
-        public uint PrePullStep = 1;
+        public uint PrePullStep = 0;
 
         public uint OpenerStep = 1;
 
@@ -56,7 +56,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 if (value != currentState)
                 {
-                    if (value == OpenerState.PrePull) PrePullStep = 1;
+                    if (value == OpenerState.PrePull)
+                    {
+                        Svc.Log.Debug($"Entered PrePull Opener");
+                    }
                     if (value == OpenerState.InOpener) OpenerStep = 1;
                     if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
                     {
@@ -76,7 +79,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             if (!LevelChecked) return false;
 
-            if (CanOpener && PrePullStep == 0 && !CustomComboFunctions.InCombat()) { CurrentState = OpenerState.PrePull; }
+            if (CanOpener && PrePullStep == 0)
+            {
+                PrePullStep = 1;
+            }
+
+            if (PrePullStep < 1)
+                return false;
 
             if (CurrentState == OpenerState.PrePull)
             {
@@ -340,6 +349,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             PrePullStep = 0;
             OpenerStep = 0;
+            CurrentState = OpenerState.PrePull;
             ActionWatching.CombatActions.Clear();
             ActionWatching.LastAction = 0;
             ActionWatching.LastAbility = 0;
@@ -347,13 +357,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
             ActionWatching.LastWeaponskill = 0;
         }
 
-        private bool openerEventsSetup = false;
-
         public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
             if (!LevelChecked) return false;
-
-            if (!openerEventsSetup) { Service.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
 
             if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
                 if (DoPrePullSteps(ref actionID)) return true;
@@ -370,17 +376,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 }
             }
 
+            if (!CustomComboFunctions.InCombat() && CurrentState is not OpenerState.PrePull)
+                ResetOpener();
+
             return false;
-        }
-
-        private void CheckCombatStatus(ConditionFlag flag, bool value)
-        {
-            if (flag == ConditionFlag.InCombat && value == false) ResetOpener();
-        }
-
-        internal void Dispose()
-        {
-            Service.Condition.ConditionChange -= CheckCombatStatus;
         }
     }
 

@@ -181,8 +181,10 @@ namespace XIVSlothCombo
 
         private void DisposeOpeners()
         {
-            DRG.DRG_ST_AdvancedMode.DRGOpener.Dispose();
-            DRG.DRG_ST_SimpleMode.DRGOpener.Dispose();
+            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
+            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
+            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
+            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 

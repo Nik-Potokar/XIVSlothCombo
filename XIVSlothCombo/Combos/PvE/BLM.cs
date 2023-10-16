@@ -5,6 +5,7 @@ using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -302,7 +303,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Manafont;
 
                         // Cast Fire IV after Manafont
-                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
+                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont) && Fire4.LevelChecked())
                             return Fire4;
 
                         // Blizzard III/Despair when below Fire IV + Despair MP
