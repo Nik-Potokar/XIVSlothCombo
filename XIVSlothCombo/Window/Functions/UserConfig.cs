@@ -495,7 +495,7 @@ namespace XIVSlothCombo.Window.Functions
                     Service.Configuration.Save();
                 }
 
-                ImGui.BeginTable($"Grid###{config}", 4);
+                ImGui.BeginTable($"Grid###{config}", columns);
                 ImGui.TableNextRow();
                 //Convert the 2D array of names and descriptions into radio buttons
                 for (int idx = 0; idx < totalChoices; idx++)
@@ -1252,11 +1252,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_AoE_Adv_Cooldowns)
             {
-                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 4, new string[,]{
-                    {"Manafont", "Add Manafont to the rotation." },
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 5, new string[,]{
+                    {$"Manafont", "Add Manafont to the rotation." },
                     {"Sharpcast", "Add Sharpcast to the rotation." },
                     {"Amplifier", "Add Amplifier to the rotation." },
                     {"Ley Lines", "Add Ley Lines to the rotation." },
+                    {"Triplecast", "Add Triplecast to the rotation" }
                 });
             }
 
