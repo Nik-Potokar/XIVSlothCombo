@@ -246,12 +246,36 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Geirskogul;
                                         }
 
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Nastrond) && IsOffCooldown(Nastrond) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
+                                        if (gauge.IsLOTDActive && IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Nastrond) && IsOffCooldown(Nastrond) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
                                         {
-                                            if (gauge.IsLOTDActive && IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
-                                            (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is not VorpalThrust) ||
-                                            (HasEffect(Buffs.BattleLitany) && (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))) || GetRemainingCharges(LifeSurge) == 0 ||
-                                            (!HasEffect(Buffs.RightEye) && !HasEffect(Buffs.LanceCharge) && !HasEffect(Buffs.BattleLitany)))) {
+                                            if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge))
+                                            {
+                                                if (HasEffect(Buffs.LifeSurge))
+                                                {
+                                                    return Nastrond;
+                                                }
+                                                else
+                                                {
+                                                    if (HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge) || GetCooldownRemainingTime(LanceCharge) > 30)
+                                                    {
+                                                        if (lastComboMove is not VorpalThrust)
+                                                        {
+                                                            return Nastrond;
+                                                        }
+                                                    }
+                                                    if (HasEffect(Buffs.BattleLitany))
+                                                    {
+                                                        if (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))
+                                                            return Nastrond;
+                                                    }
+                                                    else
+                                                    {
+                                                        return Nastrond;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
                                                 return Nastrond;
                                             }
                                         }
@@ -261,11 +285,36 @@ namespace XIVSlothCombo.Combos.PvE
                                             return OriginalHook(Jump);
 
                                         //Life Surge Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 &&
-                                            (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is VorpalThrust) ||
-                                            (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || (HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust))))))
-                                            return LifeSurge;
-
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && !HasEffect(Buffs.LifeSurge) && GetRemainingCharges(LifeSurge) > 0 )
+                                        {   
+                                            if (HasEffect(Buffs.LanceCharge))
+                                            {
+                                                if (lastComboMove is VorpalThrust)
+                                                {
+                                                    return LifeSurge;
+                                                }
+                                                if (GetCooldownRemainingTime(LanceCharge) < 47 && GetRemainingCharges(LifeSurge) == 1) {
+                                                    return LifeSurge;
+                                                }
+                                                if (GetBuffRemainingTime(Buffs.LanceCharge) < 7.5)
+                                                {
+                                                    if ((HasEffect(Buffs.EnhancedWheelingThrust) && lastComboMove is FangAndClaw) || (HasEffect(Buffs.SharperFangAndClaw) && lastComboMove is WheelingThrust))
+                                                    {
+                                                        return LifeSurge;
+                                                    }
+                                                }
+                                            }
+                                            if (lastComboMove is VorpalThrust && GetCooldownRemainingTime(LanceCharge) > 30) {
+                                                return LifeSurge;
+                                            }
+                                            if ((HasEffect(Buffs.EnhancedWheelingThrust) && lastComboMove is FangAndClaw) || (HasEffect(Buffs.SharperFangAndClaw) && lastComboMove is WheelingThrust)) {
+                                                if (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.BattleLitany))
+                                                {
+                                                    return LifeSurge;
+                                                }
+                                            }
+                                        }
+                                            
                                         //Wyrmwind Thrust Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
                                             return WyrmwindThrust;
@@ -275,11 +324,31 @@ namespace XIVSlothCombo.Combos.PvE
                                         {
                                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge))
                                             {
-                                                if (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is not VorpalThrust) ||
-                                                    (HasEffect(Buffs.BattleLitany) && (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))) || GetRemainingCharges(LifeSurge) == 0) {
+                                                if (HasEffect(Buffs.LifeSurge))
+                                                {
                                                     return MirageDive;
                                                 }
-                                            } else
+                                                else
+                                                {
+                                                    if (HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge) || GetCooldownRemainingTime(LanceCharge) > 30)
+                                                    {
+                                                        if (lastComboMove is not VorpalThrust)
+                                                        {
+                                                            return MirageDive;
+                                                        }
+                                                    }
+                                                    if (HasEffect(Buffs.BattleLitany))
+                                                    {
+                                                        if (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))
+                                                            return MirageDive;
+                                                    }
+                                                    else
+                                                    {
+                                                        return MirageDive;
+                                                    }
+                                                }
+                                            }
+                                            else
                                             {
                                                 return MirageDive;
                                             }
