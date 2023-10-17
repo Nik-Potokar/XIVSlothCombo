@@ -234,7 +234,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return DragonSight;
 
                                         //Battle Litany Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && LevelChecked(BattleLitany) && IsOffCooldown(BattleLitany) && CanWeave(actionID, 1.3))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_Litany) && LevelChecked(BattleLitany) && IsOffCooldown(BattleLitany))
                                             return BattleLitany;
                                     }
 
