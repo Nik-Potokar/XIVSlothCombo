@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using ECommons.DalamudServices;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -72,7 +71,9 @@ namespace XIVSlothCombo.Combos.PvE
                 PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
                 PLD_SheltronOption = new("PLD_SheltronOption"),
                 PLD_ST_RequiescatWeave = new("PLD_ST_RequiescatWeave"),
-                PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave");
+                PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave"),
+                PLD_ST_AtonementTiming = new("PLD_ST_EquilibriumTiming"),
+                PLD_ST_DivineMightTiming = new("PLD_ST_DivineMightTiming");
             public static UserBool
                 PLD_Intervene_MeleeOnly = new("PLD_Intervene_MeleeOnly");
         }
@@ -463,16 +464,27 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
                             {
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                    HasEffect(Buffs.SwordOath) && InMeleeRange())
+                                    HasEffect(Buffs.SwordOath) && InMeleeRange() && Config.PLD_ST_AtonementTiming == 2)
                                     return Atonement;
 
                                 return (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
                                     HasEffect(Buffs.DivineMight) &&
-                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                                    Config.PLD_ST_DivineMightTiming == 2)
                                     ? HolySpirit
                                     : OriginalHook(RageOfHalone);
                             }
                         }
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
+                            HasEffect(Buffs.SwordOath) && InMeleeRange() && Config.PLD_ST_AtonementTiming == 1)
+                            return Atonement;
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                            HasEffect(Buffs.DivineMight) &&
+                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                            Config.PLD_ST_DivineMightTiming == 1)
+                            return HolySpirit;
                     }
                 }
 

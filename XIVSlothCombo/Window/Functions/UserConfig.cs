@@ -1641,6 +1641,17 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.PLD_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, PLD.Config.PLD_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Atonement)
+            {
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_AtonementTiming, "Early Spend", "Uses Atonement before restarting the basic combo.", 1);
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_AtonementTiming, "Late Spend", "Uses Atonement before the end of the basic combo.", 2);
+            }
+
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit)
+            {
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Early Spend", "When under the effect of Divine Might, use Holy Spirit before restarting the basic combo.", 1);
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Late Spend", "When under the effect of Divine Might, uses Holy Spirit before the end of the basic combo.", 2);
+            }
 
             #endregion
             // ====================================================================================
