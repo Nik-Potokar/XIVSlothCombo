@@ -47,7 +47,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
-                Bloodbath = 1982,
+                Bloodbath = 84,
                 TrueNorth = 1250,
                 LanceCharge = 1864,
                 RightEye = 1910,
@@ -245,12 +245,18 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
                                     {
                                         //Geirskogul and Nastrond Feature
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Geirskogul) && ((gauge.IsLOTDActive && IsOffCooldown(Nastrond)) || IsOffCooldown(Geirskogul)))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Geirskogul) && IsOffCooldown(Geirskogul))
                                         {
-                                            if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
+                                            return Geirskogul;
+                                        }
+
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Nastrond) && IsOffCooldown(Nastrond))
+                                        {
+                                            if (gauge.IsLOTDActive && IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
                                             (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is not VorpalThrust) ||
-                                            (HasEffect(Buffs.BattleLitany) && (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))) || GetRemainingCharges(LifeSurge) == 0)) {
-                                                return OriginalHook(Geirskogul);
+                                            (HasEffect(Buffs.BattleLitany) && (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))) || GetRemainingCharges(LifeSurge) == 0 ||
+                                            (!HasEffect(Buffs.RightEye) && !HasEffect(Buffs.LanceCharge) && !HasEffect(Buffs.BattleLitany)))) {
+                                                return Nastrond;
                                             }
                                         }
 
