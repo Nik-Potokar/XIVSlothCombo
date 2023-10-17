@@ -272,7 +272,18 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         //Mirage Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
-                                            return MirageDive;
+                                        {
+                                            if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge))
+                                            {
+                                                if (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is not VorpalThrust) ||
+                                                    (HasEffect(Buffs.BattleLitany) && (!(HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || !(HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust)))) || GetRemainingCharges(LifeSurge) == 0) {
+                                                    return MirageDive;
+                                                }
+                                            } else
+                                            {
+                                                return MirageDive;
+                                            }
+                                        }
 
                                         //Dives Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
