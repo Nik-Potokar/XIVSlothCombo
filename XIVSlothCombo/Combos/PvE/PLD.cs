@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.DalamudServices;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -313,7 +314,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // (arguably better to delay by less than a whole GCD and just stop moving to cast)
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) &&
                                 ShieldLob.LevelChecked() &&
-                                ((HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp) || (!HolySpirit.LevelChecked())) || IsMoving)
+                                ((HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp) || (!HolySpirit.LevelChecked()) || IsMoving))
                                 return ShieldLob;
                         }
 
