@@ -364,11 +364,11 @@ namespace XIVSlothCombo.Combos.PvE
                                                (diveOptions is 2 && ((gauge.IsLOTDActive && LevelChecked(Nastrond)) || !LevelChecked(Nastrond)) && HasEffectAny(Buffs.BattleLitany)) || //Dives under Litany and Life of the Dragon
                                                (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) && GetCooldownRemainingTime(OriginalHook(Jump)) > 2) //Dives under Lance Charge Feature
                                             {
-                                                if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive) && CanWeave(actionID, 0.8) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
+                                                if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive) && CanWeave(actionID, 0.8) && GetCooldownRemainingTime(OriginalHook(Jump)) >= 0.8)
                                                 {
                                                     return DragonfireDive;
                                                 }
-                                                if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0 && CanWeave(actionID, 0.8) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
+                                                if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0 && CanWeave(actionID, 0.8) && GetCooldownRemainingTime(OriginalHook(Jump)) >= 0.8)
                                                     return SpineshatterDive;
                                             }
                                         }
