@@ -112,7 +112,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         inOpener = false;
 
-                        if ((HasEffect(Buffs.TrueNorth) || HasEffect(Buffs.Bloodbath) && openerReady)
+                        if ((HasEffect(Buffs.TrueNorth) || HasEffect(Buffs.Bloodbath)) && openerReady)
                             inOpener = true;
                         if (inOpener)
                             return OriginalHook(TrueThrust);
