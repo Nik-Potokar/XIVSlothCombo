@@ -238,10 +238,6 @@ namespace XIVSlothCombo.Combos.PvE
                                             return BattleLitany;
                                     }
 
-                                    //Wyrmwind Thrust Feature
-                                    if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
-                                        return WyrmwindThrust;
-
                                     if (IsEnabled(CustomComboPreset.DRG_ST_CDs))
                                     {
                                         //Geirskogul and Nastrond Feature
@@ -250,7 +246,7 @@ namespace XIVSlothCombo.Combos.PvE
                                             return Geirskogul;
                                         }
 
-                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Nastrond) && IsOffCooldown(Nastrond))
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_GeirskogulNastrond) && LevelChecked(Nastrond) && IsOffCooldown(Nastrond) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
                                         {
                                             if (gauge.IsLOTDActive && IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
                                             (((HasEffect(Buffs.RightEye) || HasEffect(Buffs.LanceCharge)) && lastComboMove is not VorpalThrust) ||
@@ -270,6 +266,10 @@ namespace XIVSlothCombo.Combos.PvE
                                             (HasEffect(Buffs.BattleLitany) && ((HasEffect(Buffs.EnhancedWheelingThrust) && WasLastWeaponskill(FangAndClaw)) || (HasEffect(Buffs.SharperFangAndClaw) && WasLastWeaponskill(WheelingThrust))))))
                                             return LifeSurge;
 
+                                        //Wyrmwind Thrust Feature
+                                        if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
+                                            return WyrmwindThrust;
+
                                         //Mirage Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && HasEffect(Buffs.DiveReady))
                                             return MirageDive;
@@ -277,23 +277,27 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Dives Feature
                                         if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && (IsNotEnabled(CustomComboPreset.DRG_ST_Dives_Melee) || (IsEnabled(CustomComboPreset.DRG_ST_Dives_Melee) && GetTargetDistance() <= 1)))
                                         {
-                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) && CanWeave(actionID, 1.6) && GetCooldownRemainingTime(OriginalHook(Jump)) > 4)
+                                            if (diveOptions is 0 or 1 or 2 or 3 && gauge.IsLOTDActive && ActionReady(Stardiver) && IsOnCooldown(DragonfireDive) && CanWeave(actionID, 1.6) && GetCooldownRemainingTime(OriginalHook(Jump)) > 4.2)
                                                 return Stardiver;
 
-                                            if (diveOptions is 0 or 1 || //Dives on cooldown
+                                            if ((diveOptions is 0 or 1 || //Dives on cooldown
                                                (diveOptions is 2 && ((gauge.IsLOTDActive && LevelChecked(Nastrond)) || !LevelChecked(Nastrond)) && HasEffectAny(Buffs.BattleLitany)) || //Dives under Litany and Life of the Dragon
-                                               (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
+                                               (diveOptions is 3 && HasEffect(Buffs.LanceCharge))) && GetCooldownRemainingTime(OriginalHook(Jump)) > 2) //Dives under Lance Charge Feature
                                             {
-                                                if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive) && CanWeave(actionID, 0.8))
+                                                if (LevelChecked(DragonfireDive) && IsOffCooldown(DragonfireDive) && CanWeave(actionID, 0.8) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
                                                 {
                                                     return DragonfireDive;
                                                 }
-                                                if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0 && CanWeave(actionID, 0.8))
+                                                if (LevelChecked(SpineshatterDive) && GetRemainingCharges(SpineshatterDive) > 0 && CanWeave(actionID, 0.8) && GetCooldownRemainingTime(OriginalHook(Jump)) > 1.7)
                                                     return SpineshatterDive;
                                             }
                                         }
 
                                     }
+                                    
+                                    //Wyrmwind Thrust Feature
+                                    if (IsEnabled(CustomComboPreset.DRG_ST_CDs) && IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && gauge.FirstmindsFocusCount is 2)
+                                        return WyrmwindThrust;
                                 }
 
                                 // healing - please move if not appropriate this high priority
