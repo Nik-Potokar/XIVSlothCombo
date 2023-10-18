@@ -271,10 +271,28 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Hakaze;
 
                             if (meikyostacks == 3)
-                                return Gekko;
+                            {
+                                if (OnTargetsRear() && !gauge.Sen.HasFlag(Sen.GETSU))
+                                {
+                                    return Gekko;
+                                }
+                                else
+                                {
+                                    return Kasha;
+                                }
+                            }
 
                             if (meikyostacks == 2 && !HasEffect(Buffs.OgiNamikiriReady) && gauge.Kaeshi == Kaeshi.NONE)
-                                return Kasha;
+                            {
+                                if (OnTargetsFlank() && !gauge.Sen.HasFlag(Sen.KA))
+                                {
+                                    return Kasha;
+                                }
+                                else
+                                {
+                                    return Gekko;
+                                }
+                            }
 
                             if (meikyostacks == 1)
                             {
@@ -282,7 +300,16 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Yukikaze;
 
                                 if (gauge.MeditationStacks == 0 || !HasEffect(Buffs.OgiNamikiriReady))
-                                    return Gekko;
+                                {
+                                    if (!gauge.Sen.HasFlag(Sen.GETSU))
+                                    {
+                                        return Gekko;
+                                    }
+                                    else
+                                    {
+                                        return Kasha;
+                                    }
+                                }
                             }
 
                             if (GetRemainingCharges(TsubameGaeshi) == 0)
