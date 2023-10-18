@@ -192,7 +192,16 @@ namespace XIVSlothCombo.Combos.PvE
                         return Enpi;
 
                     if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SAM_TrueNorth) && TargetNeedsPositionals() && GetBuffStacks(Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked())
-                        return All.TrueNorth;
+                    {
+                        if ((!OnTargetsFlank() && (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && ((!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka))))) {
+                            return All.TrueNorth;
+                        }
+                        else if ((!OnTargetsRear() && (!HasEffect(Buffs.Fugetsu) || (!gauge.Sen.HasFlag(Sen.GETSU) && HasEffect(Buffs.Fuka)))))
+                        {
+                            return All.TrueNorth;
+                        }
+                    }
+                        
 
                     if (InCombat())
                     {
