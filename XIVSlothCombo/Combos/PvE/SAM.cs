@@ -193,13 +193,29 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanSpellWeave(actionID) && IsEnabled(CustomComboPreset.SAM_TrueNorth) && TargetNeedsPositionals() && GetBuffStacks(Buffs.MeikyoShisui) > 0 && !HasEffect(All.Buffs.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked())
                     {
-                        if ((!OnTargetsFlank() && (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && ((!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka)))))
+                        if (IsEnabled(CustomComboPreset.SAM_TrueNorth_Opener))
                         {
-                            return All.TrueNorth;
+                            if (!inOpener)
+                            {
+                                if ((!OnTargetsFlank() && (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && ((!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka)))))
+                                {
+                                    return All.TrueNorth;
+                                }
+                                else if ((!OnTargetsRear() && (!HasEffect(Buffs.Fugetsu) || (!gauge.Sen.HasFlag(Sen.GETSU) && HasEffect(Buffs.Fuka)))))
+                                {
+                                    return All.TrueNorth;
+                                }
+                            }
                         }
-                        else if ((!OnTargetsRear() && (!HasEffect(Buffs.Fugetsu) || (!gauge.Sen.HasFlag(Sen.GETSU) && HasEffect(Buffs.Fuka)))))
-                        {
-                            return All.TrueNorth;
+                        else {
+                            if ((!OnTargetsFlank() && (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && ((!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka)))))
+                            {
+                                return All.TrueNorth;
+                            }
+                            else if ((!OnTargetsRear() && (!HasEffect(Buffs.Fugetsu) || (!gauge.Sen.HasFlag(Sen.GETSU) && HasEffect(Buffs.Fuka)))))
+                            {
+                                return All.TrueNorth;
+                            }
                         }
                     }
 
