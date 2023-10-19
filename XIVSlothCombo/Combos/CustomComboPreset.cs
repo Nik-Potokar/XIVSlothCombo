@@ -2845,6 +2845,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID, 0, "", "")]
         SAM_ST_Overcap = 15001,
 
+        [ParentCombo(SAM_ST_Overcap)]
+        [ReplaceSkill(SAM.Kasha, SAM.Gekko, SAM.Yukikaze)]
+        [CustomComboInfo("Ikishoten Overcap Feature", "Dumps Kenki when Ikishoten is about to go off cd and would overcap when used", SAM.JobID, 0, "", "")]
+        SAM_ST_Overcap_Dump = 15050,
+
         [ReplaceSkill(SAM.Mangetsu, SAM.Oka)]
         [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "", "")]
         SAM_AoE_Overcap = 15002,

@@ -133,6 +133,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool hasDied = false;
             internal static bool fillerComplete = false;
             internal static bool fastFillerReady = false;
+            internal static bool morbingTime = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -280,6 +281,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Kaeshi == Kaeshi.GOKEN)
                                 return OriginalHook(TsubameGaeshi);
+                                
 
                             //1-2-3 Logic
                             if (lastComboMove == Hakaze)
@@ -328,6 +330,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
+                            if (WasLastAction(KaeshiSetsugekka))
+                            {
+                                morbingTime = true;
+                            }
                             if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
                                 return Variant.VariantCure;
 
@@ -508,7 +514,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst))
                                         {
-                                            if (nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && WasLastAction(KaeshiSetsugekka)))
+                                            if (nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && morbingTime))
                                                 return MeikyoShisui;
                                         }
                                     }
@@ -526,7 +532,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                             if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Senei_Burst))
                                             {
-                                                if (hasDied || nonOpener || GetCooldownRemainingTime(Ikishoten) <= 100 || ((gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Sen == Sen.NONE) && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10))
+                                                if (nonOpener || GetCooldownRemainingTime(Ikishoten) <= 100 || ((gauge.Kaeshi == Kaeshi.SETSUGEKKA || gauge.Sen == Sen.NONE) && WasLastAction(Setsugekka)))
                                                     return Senei;
                                             }
                                         }
@@ -544,9 +550,15 @@ namespace XIVSlothCombo.Combos.PvE
                                         //Dumps Kenki in preparation for Ikishoten
                                         if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
                                             return Shinten;
-
                                         if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
                                             return Ikishoten;
+                                    }
+
+                                    if (IsEnabled(CustomComboPreset.SAM_ST_Overcap_Dump) && Ikishoten.LevelChecked())
+                                    {
+                                        //Dumps Kenki in preparation for Ikishoten
+                                        if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
+                                            return Shinten;
                                     }
 
                                     if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Shoha) && Shoha.LevelChecked() && gauge.MeditationStacks == 3)
@@ -556,8 +568,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 // Iaijutsu Features
                                 if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_Iaijutsu) && Higanbana.LevelChecked())
                                 {
-                                    if (gauge.Kaeshi == Kaeshi.SETSUGEKKA && TsubameGaeshi.LevelChecked() && GetRemainingCharges(TsubameGaeshi) > 0)
+                                    if (gauge.Kaeshi == Kaeshi.SETSUGEKKA && TsubameGaeshi.LevelChecked() && GetRemainingCharges(TsubameGaeshi) > 0) {
                                         return OriginalHook(TsubameGaeshi);
+                                    }
 
                                     if (!IsMoving)
                                     {
