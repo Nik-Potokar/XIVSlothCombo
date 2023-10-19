@@ -33,6 +33,7 @@ namespace XIVSlothCombo.Combos.PvE
             Higanbana = 7489,
             TenkaGoken = 7488,
             Setsugekka = 7487,
+            KaeshiSetsugekka = 16486,
             Shinten = 7490,
             Kyuten = 7491,
             Hagakure = 7495,
@@ -507,7 +508,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst))
                                         {
-                                            if (hasDied || nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && GetDebuffRemainingTime(Debuffs.Higanbana) <= 15))
+                                            if (nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && WasLastAction(KaeshiSetsugekka)))
                                                 return MeikyoShisui;
                                         }
                                     }
