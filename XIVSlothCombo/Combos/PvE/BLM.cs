@@ -5,6 +5,7 @@ using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -90,6 +91,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static int BlizzardAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Blizzard2));
             public static int BlizzardI => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Blizzard));
 
+            public static int Freeze => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(BLM.Freeze));
         }
 
         // Debuff Pairs of Actions and Debuff
@@ -302,7 +304,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Manafont;
 
                         // Cast Fire IV after Manafont
-                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont))
+                        if (IsOnCooldown(Manafont) && WasLastAction(Manafont) && Fire4.LevelChecked())
                             return Fire4;
 
                         // Blizzard III/Despair when below Fire IV + Despair MP
@@ -617,10 +619,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? Xenoglossy
                                 : Foul;
 
-                        // Use Paradox when available
-                        if (LevelChecked(Paradox) && gauge.IsParadoxActive)
-                            return Paradox;
-
                         // Transpose rotation Ice phase
                         if (rotationSelection is 1 && level >= 90 && HasEffect(All.Buffs.LucidDreaming))
                         {
@@ -645,10 +643,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     ? Xenoglossy
                                     : Foul;
 
+                        // Use Paradox when available
+                        if (LevelChecked(Paradox) && gauge.IsParadoxActive && gauge.UmbralHearts is 3 && currentMP == MP.MaxMP)
+                            return Paradox;
+
                         // Fire III when at max Umbral Hearts
                         return (gauge.UmbralHearts is 3 && currentMP == MP.MaxMP)
                             ? Fire3
                             : Blizzard4;
+
                     }
 
                 }
@@ -711,10 +714,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
                             return Foul;
 
-                        // Transpose to Umbral Ice
+                        // Blizzard to Umbral Ice
                         if ((currentMP is 0 && WasLastAction(Flare)) ||
                             (currentMP < MP.FireAoE && !LevelChecked(Flare)))
-                            return Transpose;
+                            return  OriginalHook(Blizzard2);
 
                         if (currentMP >= MP.AllMPSpells)
                         {
@@ -731,6 +734,11 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE) &&
+                                ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast))
+                                return Triplecast;
+
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
                                 (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
 
@@ -742,7 +750,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Umbral Ice
                     if (gauge.InUmbralIce)
                     {
-                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze))
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze) && currentMP >= MP.Freeze)
                             return Freeze;
 
                         // Thunder II/IV uptime
@@ -757,7 +765,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze))
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && currentMP >= MP.Freeze)
                             return Freeze;
 
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
@@ -855,10 +863,10 @@ namespace XIVSlothCombo.Combos.PvE
                             gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
                             return Foul;
 
-                        // Transpose to Umbral Ice
+                        // Blizzard to Umbral Ice
                         if ((currentMP is 0 && WasLastAction(Flare)) ||
                             (currentMP < MP.FireAoE && !LevelChecked(Flare)))
-                            return Transpose;
+                            return OriginalHook(Blizzard2);
 
                         if (currentMP >= MP.AllMPSpells)
                         {
@@ -876,6 +884,11 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && TraitLevelChecked(Traits.Enochian) &&
+                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE) && Config.BLM_AoE_Adv_Cooldowns_Choice[4] && IsEnabled(CustomComboPreset.BLM_AoE_Adv_Cooldowns) &&
+                                ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast))
+                                return Triplecast;
+
+                                if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && TraitLevelChecked(Traits.Enochian) &&
                                 (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
 
@@ -896,7 +909,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (gauge.PolyglotStacks is 1 && !TraitLevelChecked(Traits.EnhancedPolyGlot))))
                             return Foul;
 
-                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze))
+                        if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze) && currentMP >= MP.Freeze)
                             return Freeze;
 
                         // Thunder II/IV uptime
@@ -912,7 +925,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && LevelChecked(Freeze))
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && LevelChecked(Freeze) && currentMP >= MP.Freeze)
                             return Freeze;
 
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
