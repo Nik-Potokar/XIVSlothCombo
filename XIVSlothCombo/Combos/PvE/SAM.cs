@@ -272,26 +272,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (meikyostacks == 3)
                             {
-                                if (OnTargetsRear() && !gauge.Sen.HasFlag(Sen.GETSU))
-                                {
-                                    return Gekko;
-                                }
-                                else
-                                {
-                                    return Kasha;
-                                }
+                                return Gekko;
                             }
 
                             if (meikyostacks == 2 && !HasEffect(Buffs.OgiNamikiriReady) && gauge.Kaeshi == Kaeshi.NONE)
                             {
-                                if (OnTargetsFlank() && !gauge.Sen.HasFlag(Sen.KA))
-                                {
-                                    return Kasha;
-                                }
-                                else
-                                {
-                                    return Gekko;
-                                }
+                                return Kasha;
                             }
 
                             if (meikyostacks == 1)
