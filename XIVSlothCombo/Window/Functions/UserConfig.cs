@@ -2187,6 +2187,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
 
+            if (preset == CustomComboPreset.WARPvP_BurstMode_Blota)
+            {
+                UserConfig.DrawHorizontalRadioButton(WARPvP.Config.WARPVP_BlotaTiming, "Before Primal Rend", "", 0);
+                UserConfig.DrawHorizontalRadioButton(WARPvP.Config.WARPVP_BlotaTiming, "After Primal Rend", "", 1);
+            }
+
             #endregion
             // ====================================================================================
             #region WHITE MAGE

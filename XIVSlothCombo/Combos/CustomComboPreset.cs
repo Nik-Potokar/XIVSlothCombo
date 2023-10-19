@@ -4184,8 +4184,13 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Blota Option", "Removes Blota from Burst Mode if Primal Rend has 5 seconds or less on its cooldown.", WARPvP.JobID)]
-        WARPvP_BurstMode_Blota = 128002,
+        [CustomComboInfo("Blota Option", "Adds Blota to Burst Mode when not in melee range.", WARPvP.JobID)]
+        WARPvP_BurstMode_Blota = 128003,
+
+        [SecretCustomCombo]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Burst Mode.", WARPvP.JobID)]
+        WARPvP_BurstMode_PrimalRend = 128004,
 
         // Last value = 128002
 
