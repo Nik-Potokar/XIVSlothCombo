@@ -582,7 +582,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (HasEffect(Buffs.MeikyoShisui))
                         {
-                            if (OnTargetsFlank())
+                            if (OnTargetsFlank() && TargetNeedsPositionals())
                             {
                                 if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && ((!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka)))
                                     return Kasha;
@@ -612,7 +612,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Yukikaze) && !gauge.Sen.HasFlag(Sen.SETSU) && Yukikaze.LevelChecked() && HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                                     return Yukikaze;
-                                if (OnTargetsFlank())
+                                if (OnTargetsFlank() && TargetNeedsPositionals())
                                 {
                                     if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_Kasha) && LevelChecked(Shifu) &&
                                         ((!Kasha.LevelChecked() && ((GetBuffRemainingTime(Buffs.Fuka) < GetBuffRemainingTime(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka))) ||
@@ -895,7 +895,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (HasEffect(Buffs.MeikyoShisui))
                     {
-                        if (OnTargetsFlank())
+                        if (OnTargetsFlank() && TargetNeedsPositionals())
                         {
                             if (!HasEffect(Buffs.Fuka) || gauge.Sen.HasFlag(Sen.KA) == false)
                                 return Kasha;
