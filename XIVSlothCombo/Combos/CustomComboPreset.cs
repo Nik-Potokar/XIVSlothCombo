@@ -652,6 +652,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID, 0, "", "")]
         BRD_Buffs = 3013,
 
+        [ReplaceSkill(BRD.WanderersMinuet)]
         [CustomComboInfo("One Button Songs Feature", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID, 0, "", "")]
         BRD_OneButtonSongs = 3014,
 
