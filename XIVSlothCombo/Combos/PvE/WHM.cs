@@ -49,7 +49,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         //Action Groups
         internal static readonly List<uint>
-            StoneGlareList = new() { Stone1, Stone2, Stone3, Stone4, Glare1, Glare3 };
+            StoneGlareList = [Stone1, Stone2, Stone3, Stone4, Glare1, Glare3];
 
         public static class Buffs
         {
@@ -90,7 +90,8 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
                 WHM_ST_MainCombo_Adv = new("WHM_ST_MainCombo_Adv"),
                 WHM_Afflatus_Adv = new("WHM_Afflatus_Adv"),
-                WHM_Afflatus_UIMouseOver = new("WHM_Afflatus_UIMouseOver");
+                WHM_Afflatus_UIMouseOver = new("WHM_Afflatus_UIMouseOver"),
+                WHM_ST_Opener_Swiftcast = new("WHM_ST_Opener_Swiftcast");
             internal static UserFloat
                 WHM_ST_MainCombo_DoT_Threshold = new("WHM_ST_MainCombo_DoT_Threshold");
             public static UserBoolArray
@@ -206,7 +207,8 @@ namespace XIVSlothCombo.Combos.PvE
         internal class WHM_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
-            internal static int glare3Count => ActionWatching.CombatActions.Count(x => x == Glare3);
+            internal static int Glare3Count => ActionWatching.CombatActions.Count(x => x == OriginalHook(Glare3));
+            internal static int DiaCount => ActionWatching.CombatActions.Count(x => x == OriginalHook(Dia));
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -224,14 +226,41 @@ namespace XIVSlothCombo.Combos.PvE
                 if (ActionFound)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
-                    bool openerDelayComplete = glare3Count >= 3;
+                    bool inOpener = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Opener) && Glare3Count < 4;
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
 
-                    if (!openerDelayComplete && IsEnabled(CustomComboPreset.WHM_ST_MainCombo_NoSwiftOpener) && Glare3.LevelChecked())
-                        return OriginalHook(Glare3);
+                    if (inOpener && ActionReady(Assize) && ActionReady(PresenceOfMind))
+                    {
+                        if (Glare3Count == 0)
+                            return OriginalHook(Glare3);
 
-                    if (CanSpellWeave(actionID) && openerDelayComplete)
+                        if (DiaCount == 0)
+                            return OriginalHook(Dia);
+
+                        if (Glare3Count == 3 && CanWeave(actionID))
+                        {
+                            if (ActionReady(All.Swiftcast) && Config.WHM_ST_Opener_Swiftcast)
+                                return OriginalHook(All.Swiftcast);
+
+                            return PresenceOfMind;
+                        }
+
+                        if (Glare3Count == 4)
+                        {
+                            if (ActionReady(PresenceOfMind) && Config.WHM_ST_Opener_Swiftcast)
+                                return OriginalHook(PresenceOfMind);
+
+                            return Assize;
+                        }
+
+                        if (Glare3Count > 0)
+                            return OriginalHook(Glare3);
+
+
+                    }
+
+                    if (CanSpellWeave(actionID))
                     {
                         bool lucidReady = IsOffCooldown(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_ST_Lucid;
                         bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
@@ -279,7 +308,7 @@ namespace XIVSlothCombo.Combos.PvE
                         (liliesFull || liliesNearlyFull))
                         return AfflatusRapture;
                     if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Misery_oGCD) && LevelChecked(AfflatusMisery) &&
-                        gauge.BloodLily >= 3 && openerDelayComplete)
+                        gauge.BloodLily >= 3)
                         return AfflatusMisery;
 
                     return OriginalHook(Stone1);

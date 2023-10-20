@@ -2251,6 +2251,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WHM_Medica_ThinAir)
                 UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_Medica_ThinAir, "How many charges to keep ready? (0 = Use all)");
 
+            if (preset == CustomComboPreset.WHM_ST_MainCombo_Opener)
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_Opener_Swiftcast, "Swiftcast Option", "Adds Swiftcast to the opener.");
+
             #endregion
             // ====================================================================================
             #region DOH

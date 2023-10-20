@@ -3509,9 +3509,8 @@ namespace XIVSlothCombo.Combos
         WHM_ST_MainCombo = 19099,
 
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Glare III Opener Option", "Delays all oGCDs until after third Glare III cast." +
-        "\nOnly works with Glare III.", WHM.JobID, 11, "", "")]
-        WHM_ST_MainCombo_NoSwiftOpener = 19023,
+        [CustomComboInfo("Opener Option", "Use the Balance opener from level 56+.", WHM.JobID, 11, "", "")]
+        WHM_ST_MainCombo_Opener = 19023,
 
         [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Aero/Dia Uptime Option", "Adds Aero/Dia to the single target combo if the debuff is not present on current target, or is about to expire.", WHM.JobID, 12, "", "")]
@@ -3665,7 +3664,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", WHM.JobID)]
         WHM_DPS_Variant_Rampart = 19026,
 
-        // Last value = 19026
+        // Last value = 19027
 
         #endregion
 
