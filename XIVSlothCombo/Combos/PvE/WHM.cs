@@ -2,9 +2,12 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
+using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -203,8 +206,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class WHM_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_ST_MainCombo;
-            internal static uint glare3Count = 0;
-            internal static bool usedGlare3 = false;
+            internal static int glare3Count => ActionWatching.CombatActions.Count(x => x == Glare3);
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -225,24 +227,9 @@ namespace XIVSlothCombo.Combos.PvE
                     bool openerDelayComplete = glare3Count >= 3;
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
-                    float glare3CD = GetCooldownRemainingTime(Glare3);
 
-                    // No-Swift Opener
-                    // Counter reset
-                    if (!InCombat()) glare3Count = 0;
-
-                    // Check Glare3 use
-                    if (InCombat() && usedGlare3 == false && lastComboMove == Glare3 && glare3CD > 1)
-                    {
-                        usedGlare3 = true;  // Registers that Glare3 was used and blocks further incrementation of glare3Count
-                        glare3Count++;      // Increments Glare3 counter
-                    }
-
-                    // Check Glare3 use reset
-                    if (usedGlare3 == true && glare3CD < 1) usedGlare3 = false; // Resets block to allow "Check Glare3 use"
-
-                    // Bypass counter when disabled
-                    if (IsNotEnabled(CustomComboPreset.WHM_ST_MainCombo_NoSwiftOpener) || !LevelChecked(Glare3)) glare3Count = 3;
+                    if (!openerDelayComplete && IsEnabled(CustomComboPreset.WHM_ST_MainCombo_NoSwiftOpener) && Glare3.LevelChecked())
+                        return OriginalHook(Glare3);
 
                     if (CanSpellWeave(actionID) && openerDelayComplete)
                     {
@@ -294,6 +281,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Misery_oGCD) && LevelChecked(AfflatusMisery) &&
                         gauge.BloodLily >= 3 && openerDelayComplete)
                         return AfflatusMisery;
+
+                    return OriginalHook(Stone1);
                 }
 
                 return actionID;

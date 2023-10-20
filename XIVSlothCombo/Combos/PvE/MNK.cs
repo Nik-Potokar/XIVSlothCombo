@@ -230,8 +230,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(ArmOfTheDestroyer);
                     }
 
-
-
                     if (HasEffect(Buffs.RaptorForm))
                     {
                         if (FourPointFury.LevelChecked())
