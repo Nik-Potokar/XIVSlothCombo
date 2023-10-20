@@ -230,7 +230,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
 
-                    if (inOpener && ActionReady(Assize) && ActionReady(PresenceOfMind))
+                    if (inOpener)
                     {
                         if (Glare3Count == 0)
                             return OriginalHook(Glare3);
@@ -243,6 +243,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(All.Swiftcast) && Config.WHM_ST_Opener_Swiftcast)
                                 return OriginalHook(All.Swiftcast);
 
+                            if (ActionReady(PresenceOfMind))
                             return PresenceOfMind;
                         }
 
@@ -251,13 +252,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(PresenceOfMind) && Config.WHM_ST_Opener_Swiftcast)
                                 return OriginalHook(PresenceOfMind);
 
+                            if (ActionReady(Assize))
                             return Assize;
                         }
 
                         if (Glare3Count > 0)
                             return OriginalHook(Glare3);
-
-
                     }
 
                     if (CanSpellWeave(actionID))
@@ -284,34 +284,37 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.LucidDreaming;
                     }
 
-                    // DoTs
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && InCombat() && LevelChecked(Aero) && HasBattleTarget())
+                    if (InCombat())
                     {
-                        Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
-                        if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
-                            IsEnabled(Variant.VariantSpiritDart) &&
-                            (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
-                            CanSpellWeave(actionID))
-                            return Variant.VariantSpiritDart;
+                        // DoTs
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && LevelChecked(Aero) && HasBattleTarget())
+                        {
+                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
+                            if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                                CanSpellWeave(actionID))
+                                return Variant.VariantSpiritDart;
 
-                        uint dot = OriginalHook(Aero); //Grab the appropriate DoT Action
-                        Status? dotDebuff = FindTargetEffect(AeroList[dot]); //Match it with it's Debuff ID, and check for the Debuff
+                            uint dot = OriginalHook(Aero); //Grab the appropriate DoT Action
+                            Status? dotDebuff = FindTargetEffect(AeroList[dot]); //Match it with it's Debuff ID, and check for the Debuff
 
-                        // DoT Uptime & HP% threshold
-                        float refreshtimer = Config.WHM_ST_MainCombo_DoT_Adv ? Config.WHM_ST_MainCombo_DoT_Threshold : 3;
-                        if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
-                            GetTargetHPPercent() > Config.WHM_ST_MainCombo_DoT)
-                            return OriginalHook(Aero);
+                            // DoT Uptime & HP% threshold
+                            float refreshtimer = Config.WHM_ST_MainCombo_DoT_Adv ? Config.WHM_ST_MainCombo_DoT_Threshold : 3;
+                            if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
+                                GetTargetHPPercent() > Config.WHM_ST_MainCombo_DoT)
+                                return OriginalHook(Aero);
+                        }
+
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
+                            (liliesFull || liliesNearlyFull))
+                            return AfflatusRapture;
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Misery_oGCD) && LevelChecked(AfflatusMisery) &&
+                            gauge.BloodLily >= 3)
+                            return AfflatusMisery;
+
+                        return OriginalHook(Stone1);
                     }
-
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
-                        (liliesFull || liliesNearlyFull))
-                        return AfflatusRapture;
-                    if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Misery_oGCD) && LevelChecked(AfflatusMisery) &&
-                        gauge.BloodLily >= 3)
-                        return AfflatusMisery;
-
-                    return OriginalHook(Stone1);
                 }
 
                 return actionID;
