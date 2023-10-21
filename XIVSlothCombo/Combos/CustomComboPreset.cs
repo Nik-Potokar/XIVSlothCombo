@@ -1468,7 +1468,7 @@ namespace XIVSlothCombo.Combos
         GNB_NoMercy_Cooldowns_SonicBreakBowShock = 7502,
         #endregion
 
-        [CustomComboInfo("Aurora Protection Feature", "Turns Aurora into Nascent Flash if Aurora's effect is on the player.", GNB.JobID, 0, "", "")]
+        [CustomComboInfo("Aurora Protection Feature", "Locks out Aurora if Aurora's effect is on the target.", GNB.JobID, 0, "", "")]
         GNB_AuroraProtection = 7600,
 
         [Variant]
