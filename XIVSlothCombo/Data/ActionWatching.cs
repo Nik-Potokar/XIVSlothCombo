@@ -37,9 +37,9 @@ namespace XIVSlothCombo.Data
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
         private static void ReceiveActionEffectDetour(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
         {
+            if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
             TimeLastActionUsed = DateTime.Now;
-            if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is 13 or 2) return;

@@ -116,6 +116,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
         /// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
+        /// <param name="checkMOPartyUI">Checks for a mouseover target.</param>
+        /// <param name="restrictToMouseover">Forces only the mouseover target, may return null.</param>
         /// <returns> GameObject of a player target. </returns>
         public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
         {
@@ -136,6 +138,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     if (restrictToMouseover)
                         return healTarget;
                 }
+
+                if (restrictToMouseover)
+                    return healTarget;
             }
             healTarget ??= LocalPlayer;
             return healTarget;
