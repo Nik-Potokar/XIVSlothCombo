@@ -82,10 +82,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 PrePullStep = 1;
             }
 
-            if (PrePullStep < 1)
-                return false;
-
-            if (CurrentState == OpenerState.PrePull)
+            if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
                 if (CustomComboFunctions.WasLastAction(Sharpcast) && PrePullStep == 1) PrePullStep++;
                 else if (PrePullStep == 1) actionID = Sharpcast;
@@ -173,6 +170,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Thunder3) && OpenerStep == 20) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 20) actionID = Thunder3;
+
+                    if (OpenerStep == 1 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2 ||
+                        OpenerStep == 4 && CustomComboFunctions.IsOnCooldown(Amplifier) ||
+                        OpenerStep == 5 && CustomComboFunctions.IsOnCooldown(LeyLines) ||
+                        OpenerStep == 7 && CustomComboFunctions.IsOnCooldown(All.Swiftcast) ||
+                        OpenerStep == 9 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 1 ||
+                        OpenerStep == 11 && CustomComboFunctions.IsOnCooldown(Manafont) ||
+                        OpenerStep == 13 && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1 ||
+                        OpenerStep == 16 && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1 ||
+                        OpenerStep == 17 && !Svc.Gauges.Get<BLMGauge>().IsParadoxActive)
+                        CurrentState = OpenerState.FailedOpener;
                 }
 
                 else
@@ -257,6 +265,18 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 27) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 27) actionID = Despair;
+
+                    if ((OpenerStep == 2 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) ||
+                        (OpenerStep == 5 && CustomComboFunctions.IsOnCooldown(Amplifier)) ||
+                        (OpenerStep == 6 && CustomComboFunctions.IsOnCooldown(LeyLines)) ||
+                        (OpenerStep == 8 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 1) ||
+                        (OpenerStep == 9 && CustomComboFunctions.IsOnCooldown(All.LucidDreaming)) ||
+                        (OpenerStep == 11 && CustomComboFunctions.IsOnCooldown(Manafont))||
+                        (OpenerStep == 13 && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1) ||
+                        (OpenerStep == 16 && !Svc.Gauges.Get<BLMGauge>().IsParadoxActive) ||
+                        (OpenerStep == 17 && CustomComboFunctions.IsOnCooldown(All.Swiftcast)) ||
+                        (OpenerStep == 18 && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1))
+                        CurrentState = OpenerState.FailedOpener;
                 }
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
@@ -341,6 +361,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CurrentState = OpenerState.FailedOpener;
 
                 if (CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (OpenerStep == 1 && CustomComboFunctions.GetRemainingCharges(Triplecast) == 0 ||
+                    OpenerStep == 4 && CustomComboFunctions.IsOnCooldown(Amplifier) ||
+                    OpenerStep == 5 && CustomComboFunctions.IsOnCooldown(LeyLines) ||
+                    OpenerStep == 7 && CustomComboFunctions.IsOnCooldown(All.Swiftcast) ||
+                    OpenerStep == 9 && CustomComboFunctions.GetRemainingCharges(Triplecast) == 0 ||
+                    OpenerStep == 11 && CustomComboFunctions.IsOnCooldown(Manafont) ||
+                    OpenerStep == 13 && CustomComboFunctions.GetRemainingCharges(Sharpcast) == 0 ||
+                    OpenerStep == 16 && Svc.Gauges.Get<BLMGauge>().PolyglotStacks == 0 ||
+                    OpenerStep == 17 && !Svc.Gauges.Get<BLMGauge>().IsParadoxActive)
                     CurrentState = OpenerState.FailedOpener;
 
                 return true;
