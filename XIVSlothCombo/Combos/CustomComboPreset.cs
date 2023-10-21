@@ -4218,6 +4218,18 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #endregion
+
+        [CustomComboInfo("Unlock Job Early?", "Unlocks Viper early. I'm BFFs with Yoshi-P, he say's it's fine.", 41)]
+        UnlockGag = 250000,
+
+        [CustomComboInfo("Super Speed Mode", "Cut fast, cut quick, cut cut cut", 41)]
+        SuperSpeedGag = 250001,
+
+        [CustomComboInfo("Snake Mode", "Kept you waiting huh?", 41)]
+        SnakeGag = 250002,
+
+        [CustomComboInfo("Gun Combo", "Swap your swords out for a couple of AK-47s", 41)]
+        GunGag = 250003,
     }
 }
 
