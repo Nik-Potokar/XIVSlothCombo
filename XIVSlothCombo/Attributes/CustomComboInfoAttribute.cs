@@ -55,6 +55,9 @@ namespace XIVSlothCombo.Attributes
 
         private string JobIDToShorthand(byte key)
         {
+            if (key == 41)
+                return "VPR";
+
             if (ClassJobs.TryGetValue(key, out var job))
             {
                 return job.Abbreviation.RawString;
@@ -69,6 +72,9 @@ namespace XIVSlothCombo.Attributes
 
         public static string JobIDToName(byte key)
         {
+            if (key == 41)
+                return "Viper";
+
             //Override DOH/DOL
             if (key is DOH.JobID) key = 08; //Set to Carpenter
             if (key is DOL.JobID) key = 16; //Set to Miner

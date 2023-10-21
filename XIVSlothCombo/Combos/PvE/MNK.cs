@@ -5,6 +5,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -229,9 +230,13 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(ArmOfTheDestroyer);
                     }
 
-                    if (HasEffect(Buffs.RaptorForm) && level >= Levels.FourPointFury)
+                    if (HasEffect(Buffs.RaptorForm))
                     {
+                        if (FourPointFury.LevelChecked())
                         return FourPointFury;
+
+                        if (TwinSnakes.LevelChecked())
+                            return TwinSnakes;
                     }
 
                     if (HasEffect(Buffs.CoerlForm) && level >= Levels.Rockbreaker)
