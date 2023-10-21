@@ -1,5 +1,6 @@
 ﻿using Dalamud.Interface.Colors;
 using Dalamud.Utility;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using System;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Numerics;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
@@ -16,7 +18,7 @@ namespace XIVSlothCombo.Window.Functions
 {
     internal class Presets : ConfigWindow
     {
-        internal static void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
+        internal unsafe static void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = PluginConfiguration.IsSecret(preset);
@@ -30,6 +32,27 @@ namespace XIVSlothCombo.Window.Functions
             {
                 if (enabled)
                 {
+                    if (preset == CustomComboPreset.UnlockGag)
+                    {
+                        Util.OpenLink("https://www.youtube.com/watch?v=qo__6MZIg6U");
+                    }
+
+                    if (preset == CustomComboPreset.SuperSpeedGag)
+                    {
+                        if (ActionManager.Instance()->GetActionStatus(ActionType.Action, All.Sprint) == 0)
+                            ActionManager.Instance()->UseAction(ActionType.Action, All.Sprint);
+                    }
+
+                    if (preset == CustomComboPreset.SnakeGag)
+                    {
+                        Util.OpenLink("https://youtu.be/r6gGcrjDmec");
+                    }
+
+                    if (preset == CustomComboPreset.GunGag)
+                    {
+                        Util.OpenLink("https://youtu.be/51CTM49rcrs");
+                    }
+
                     EnableParentPresets(preset);
                     Service.Configuration.EnabledActions.Add(preset);
                     foreach (var conflict in conflicts)
