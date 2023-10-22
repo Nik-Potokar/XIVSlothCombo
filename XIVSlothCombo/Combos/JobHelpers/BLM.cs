@@ -1,5 +1,8 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
+using System;
+using System.Linq;
+using System.Security.Cryptography;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -11,8 +14,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         private static bool HasCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(Sharpcast) < 2)
-                return false;
             if (CustomComboFunctions.GetRemainingCharges(Triplecast) < 2)
                 return false;
             if (!CustomComboFunctions.ActionReady(Manafont))
@@ -26,6 +27,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             if (!CustomComboFunctions.ActionReady(LeyLines))
                 return false;
+
+            return true;
+        }
+
+        public static bool HasPrePullCooldowns()
+        {
+            if (CustomComboFunctions.GetRemainingCharges(Sharpcast) < 2)
+                return false;
+
             if (CustomComboFunctions.LocalPlayer.CurrentMp < 10000)
                 return false;
 
@@ -40,7 +50,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-        private bool CanOpener => HasCooldowns() && LevelChecked;
+        private static bool CanOpener => HasCooldowns() && HasPrePullCooldowns() && LevelChecked;
 
         private OpenerState currentState = OpenerState.PrePull;
 
@@ -82,9 +92,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 PrePullStep = 1;
             }
 
+            if (!HasCooldowns())
+            {
+                PrePullStep = 0;
+            }
+
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (CustomComboFunctions.WasLastAction(Sharpcast) && PrePullStep == 1) PrePullStep++;
+                if (CustomComboFunctions.HasEffect(Buffs.Sharpcast) && PrePullStep == 1) PrePullStep++;
                 else if (PrePullStep == 1) actionID = Sharpcast;
 
                 if (CustomComboFunctions.LocalPlayer.CastActionId == Fire3 && PrePullStep == 2) CurrentState = OpenerState.InOpener;
@@ -94,6 +109,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CurrentState = OpenerState.FailedOpener;
 
                 if (PrePullStep > 1 && CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
                     CurrentState = OpenerState.FailedOpener;
 
                 return true;
@@ -171,20 +189,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Thunder3) && OpenerStep == 20) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 20) actionID = Thunder3;
 
-                    if (OpenerStep == 1 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2 ||
-                        OpenerStep == 4 && CustomComboFunctions.IsOnCooldown(Amplifier) ||
-                        OpenerStep == 5 && CustomComboFunctions.IsOnCooldown(LeyLines) ||
-                        OpenerStep == 7 && CustomComboFunctions.IsOnCooldown(All.Swiftcast) ||
-                        OpenerStep == 9 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 1 ||
-                        OpenerStep == 11 && CustomComboFunctions.IsOnCooldown(Manafont) ||
-                        OpenerStep == 13 && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1 ||
-                        OpenerStep == 16 && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1 ||
-                        OpenerStep == 17 && !Svc.Gauges.Get<BLMGauge>().IsParadoxActive)
+                    if (((actionID == Triplecast && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) ||
+                        (actionID == Amplifier && CustomComboFunctions.IsOnCooldown(Amplifier)) ||
+                        (actionID == LeyLines && CustomComboFunctions.IsOnCooldown(LeyLines)) ||
+                        (actionID == All.LucidDreaming && CustomComboFunctions.IsOnCooldown(All.LucidDreaming)) ||
+                        (actionID == Manafont && CustomComboFunctions.IsOnCooldown(Manafont)) ||
+                        (actionID == Sharpcast && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1) ||
+                        (actionID == All.Swiftcast && CustomComboFunctions.IsOnCooldown(All.Swiftcast)) ||
+                        (actionID == Xenoglossy && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                    {
                         CurrentState = OpenerState.FailedOpener;
+                        return false;
+                    }
                 }
 
                 else
                 {
+
                     if (CustomComboFunctions.LocalPlayer.CastActionId == Thunder3 && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = Thunder3;
 
@@ -265,18 +286,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(Despair) && OpenerStep == 27) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 27) actionID = Despair;
-
-                    if ((OpenerStep == 2 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) ||
-                        (OpenerStep == 5 && CustomComboFunctions.IsOnCooldown(Amplifier)) ||
-                        (OpenerStep == 6 && CustomComboFunctions.IsOnCooldown(LeyLines)) ||
-                        (OpenerStep == 8 && CustomComboFunctions.GetRemainingCharges(Triplecast) < 1) ||
-                        (OpenerStep == 9 && CustomComboFunctions.IsOnCooldown(All.LucidDreaming)) ||
-                        (OpenerStep == 11 && CustomComboFunctions.IsOnCooldown(Manafont))||
-                        (OpenerStep == 13 && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1) ||
-                        (OpenerStep == 16 && !Svc.Gauges.Get<BLMGauge>().IsParadoxActive) ||
-                        (OpenerStep == 17 && CustomComboFunctions.IsOnCooldown(All.Swiftcast)) ||
-                        (OpenerStep == 18 && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1))
-                        CurrentState = OpenerState.FailedOpener;
                 }
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
@@ -284,6 +293,19 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
                     CurrentState = OpenerState.FailedOpener;
+
+                if (((actionID == Triplecast && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) ||
+                    (actionID == Amplifier && CustomComboFunctions.IsOnCooldown(Amplifier)) ||
+                    (actionID == LeyLines && CustomComboFunctions.IsOnCooldown(LeyLines)) ||
+                    (actionID == All.LucidDreaming && CustomComboFunctions.IsOnCooldown(All.LucidDreaming)) ||
+                    (actionID == Manafont && CustomComboFunctions.IsOnCooldown(Manafont)) ||
+                    (actionID == Sharpcast && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1) ||
+                    (actionID == All.Swiftcast && CustomComboFunctions.IsOnCooldown(All.Swiftcast)) ||
+                    (actionID == Xenoglossy && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
 
                 return true;
             }
@@ -363,16 +385,18 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
                     CurrentState = OpenerState.FailedOpener;
 
-                if (OpenerStep == 1 && CustomComboFunctions.GetRemainingCharges(Triplecast) == 0 ||
-                    OpenerStep == 4 && CustomComboFunctions.IsOnCooldown(Amplifier) ||
-                    OpenerStep == 5 && CustomComboFunctions.IsOnCooldown(LeyLines) ||
-                    OpenerStep == 7 && CustomComboFunctions.IsOnCooldown(All.Swiftcast) ||
-                    OpenerStep == 9 && CustomComboFunctions.GetRemainingCharges(Triplecast) == 0 ||
-                    OpenerStep == 11 && CustomComboFunctions.IsOnCooldown(Manafont) ||
-                    OpenerStep == 13 && CustomComboFunctions.GetRemainingCharges(Sharpcast) == 0 ||
-                    OpenerStep == 16 && Svc.Gauges.Get<BLMGauge>().PolyglotStacks == 0 ||
-                    OpenerStep == 17 && !Svc.Gauges.Get<BLMGauge>().IsParadoxActive)
+                if (((actionID == Triplecast && CustomComboFunctions.GetRemainingCharges(Triplecast) < 2) ||
+                    (actionID == Amplifier && CustomComboFunctions.IsOnCooldown(Amplifier)) ||
+                    (actionID == LeyLines && CustomComboFunctions.IsOnCooldown(LeyLines)) ||
+                    (actionID == All.LucidDreaming && CustomComboFunctions.IsOnCooldown(All.LucidDreaming)) ||
+                    (actionID == Manafont && CustomComboFunctions.IsOnCooldown(Manafont)) ||
+                    (actionID == Sharpcast && CustomComboFunctions.GetRemainingCharges(Sharpcast) < 1) ||
+                    (actionID == All.Swiftcast && CustomComboFunctions.IsOnCooldown(All.Swiftcast)) ||
+                    (actionID == Xenoglossy && Svc.Gauges.Get<BLMGauge>().PolyglotStacks < 1)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                {
                     CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
 
                 return true;
             }
@@ -384,19 +408,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             PrePullStep = 0;
             OpenerStep = 0;
-            CurrentState = OpenerState.PrePull;
-            ActionWatching.CombatActions.Clear();
-            ActionWatching.LastAction = 0;
-            ActionWatching.LastAbility = 0;
-            ActionWatching.LastSpell = 0;
-            ActionWatching.LastWeaponskill = 0;
         }
 
         public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
             if (!LevelChecked) return false;
 
-            if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
+            if (CurrentState == OpenerState.PrePull)
                 if (DoPrePullSteps(ref actionID)) return true;
 
             if (CurrentState == OpenerState.InOpener)
@@ -411,8 +429,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 }
             }
 
-            if (!CustomComboFunctions.InCombat() && CurrentState is not OpenerState.PrePull)
+            if (!CustomComboFunctions.InCombat())
+            {
                 ResetOpener();
+                CurrentState = OpenerState.PrePull;
+            }
+                
 
             return false;
         }
