@@ -133,7 +133,6 @@ namespace XIVSlothCombo.Combos.PvE
             internal static bool hasDied = false;
             internal static bool fillerComplete = false;
             internal static bool fastFillerReady = false;
-            internal static bool morbingTime = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -330,10 +329,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
-                            if (WasLastAction(KaeshiSetsugekka))
-                            {
-                                morbingTime = true;
-                            }
                             if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
                                 return Variant.VariantCure;
 
@@ -514,7 +509,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                         if (IsEnabled(CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst))
                                         {
-                                            if (nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && morbingTime))
+                                            if (hasDied || nonOpener || GetRemainingCharges(MeikyoShisui) == 2 || (gauge.Kaeshi == Kaeshi.NONE && gauge.Sen == Sen.NONE && GetDebuffRemainingTime(Debuffs.Higanbana) <= 15))
                                                 return MeikyoShisui;
                                         }
                                     }
