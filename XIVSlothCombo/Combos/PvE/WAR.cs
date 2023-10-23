@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -127,8 +128,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
                         {
-                            if (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos))
+                            if (HasEffect(Buffs.InnerRelease) || (HasEffect(Buffs.NascentChaos) && InnerChaos.LevelChecked()))
                                 return OriginalHook(InnerBeast);
+
+                            if (HasEffect(Buffs.NascentChaos) && !InnerChaos.LevelChecked())
+                                return OriginalHook(Decimate);
                         }
 
                     }
