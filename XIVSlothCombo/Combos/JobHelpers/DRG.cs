@@ -86,6 +86,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (PrePullStep == 1 && CustomComboFunctions.WasLastAction(All.Sprint))
                     CurrentState = OpenerState.InOpener;
 
+                if (PrePullStep == 1 && CustomComboFunctions.IsOnCooldown(All.Sprint))
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
+                    CurrentState = OpenerState.FailedOpener;
+
                 return true;
             }
 
@@ -179,6 +185,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(WheelingThrust) && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 26) actionID = WheelingThrust;
 
+                    if (((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) < 2) ||
+                      (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
+                      (actionID == DragonSight && CustomComboFunctions.IsOnCooldown(DragonSight)) ||
+                      (actionID == DragonfireDive && CustomComboFunctions.IsOnCooldown(DragonfireDive)) ||
+                      (actionID == LifeSurge && CustomComboFunctions.GetRemainingCharges(LifeSurge) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+
+                    {
+                        CurrentState = OpenerState.FailedOpener;
+                        return false;
+                    }
                 }
 
                 else
@@ -265,6 +281,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
+
+                if (((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) < 2) ||
+                      (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
+                      (actionID == DragonSight && CustomComboFunctions.IsOnCooldown(DragonSight)) ||
+                      (actionID == DragonfireDive && CustomComboFunctions.IsOnCooldown(DragonfireDive)) ||
+                      (actionID == LifeSurge && CustomComboFunctions.GetRemainingCharges(LifeSurge) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
 
                 return true;
             }
@@ -359,6 +386,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
+                if (((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) < 2) ||
+                      (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
+                      (actionID == DragonSight && CustomComboFunctions.IsOnCooldown(DragonSight)) ||
+                      (actionID == DragonfireDive && CustomComboFunctions.IsOnCooldown(DragonfireDive)) ||
+                      (actionID == LifeSurge && CustomComboFunctions.GetRemainingCharges(LifeSurge) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
+
                 return true;
             }
 
@@ -397,10 +435,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 CurrentState = OpenerState.PrePull;
             }
 
+
             return false;
         }
     }
-
 
     internal class AnimationLock
     {
