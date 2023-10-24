@@ -1,4 +1,6 @@
+using ECommons.DalamudServices;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvP
 {
@@ -23,6 +25,12 @@ namespace XIVSlothCombo.Combos.PvP
                 InnerRelease = 1303;
         }
 
+        public static class Config
+        {
+            public static UserInt
+                WARPVP_BlotaTiming = new("WARPVP_BlotaTiming");
+
+        }
         internal class WARPvP_BurstMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WARPvP_BurstMode;
@@ -36,11 +44,13 @@ namespace XIVSlothCombo.Combos.PvP
                     if (!GetCooldown(Bloodwhetting).IsCooldown && (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Bloodwhetting) || canWeave))
                         return OriginalHook(Bloodwhetting);
 
-                    if (!GetCooldown(PrimalRend).IsCooldown)
+                    if (!InMeleeRange() && IsOffCooldown(Blota) && !TargetHasEffectAny(PvPCommon.Debuffs.Stun) && IsEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) && Config.WARPVP_BlotaTiming == 0 && IsOffCooldown(PrimalRend))
+                        return OriginalHook(Blota);
+
+                    if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_PrimalRend) && IsOffCooldown(PrimalRend))
                         return OriginalHook(PrimalRend);
 
-                    if (!InMeleeRange() && !GetCooldown(Blota).IsCooldown && !TargetHasEffectAny(PvPCommon.Debuffs.Stun) &&
-                        (IsNotEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) || GetCooldown(PrimalRend).CooldownRemaining >= 5))
+                    if (!InMeleeRange() && IsOffCooldown(Blota) && !TargetHasEffectAny(PvPCommon.Debuffs.Stun) && IsEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) && Config.WARPVP_BlotaTiming == 1 && IsOnCooldown(PrimalRend))
                         return OriginalHook(Blota);
 
                     if (!GetCooldown(Onslaught).IsCooldown && canWeave)

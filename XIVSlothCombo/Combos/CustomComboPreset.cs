@@ -296,9 +296,12 @@ namespace XIVSlothCombo.Combos
         AST_Cards_DrawOnPlay = 1000,
 
         [ParentCombo(AST_Cards_DrawOnPlay)]
-        [CustomComboInfo("Redraw Feature", "Sets Draw to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
+        [CustomComboInfo("Redraw Feature", "Sets Play to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
         AST_Cards_Redraw = 1032,
 
+        [ReplaceSkill(AST.Draw)]
+        [CustomComboInfo("Redraw on Draw", "Sets Draw to Redraw if you have the Clarifying Draw buff.", AST.JobID)]
+        AST_Cards_RedrawStandalone = 1040,
 
         [ReplaceSkill(AST.Play)]
         //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
@@ -372,14 +375,14 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        [ReplaceSkill(BLM.Blizzard2)]
+        [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
 
         #region Advanced AoE
 
-        [ReplaceSkill(BLM.Blizzard2)]
+        [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Black Mage (AoE) Feature", "Replaces Blizzard II with a full one-button rotation.", BLM.JobID, -8, "", "")]
         BLM_AoE_AdvancedMode = 2054,
@@ -649,6 +652,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID, 0, "", "")]
         BRD_Buffs = 3013,
 
+        [ReplaceSkill(BRD.WanderersMinuet)]
         [CustomComboInfo("One Button Songs Feature", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID, 0, "", "")]
         BRD_OneButtonSongs = 3014,
 
@@ -3506,9 +3510,8 @@ namespace XIVSlothCombo.Combos
         WHM_ST_MainCombo = 19099,
 
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Glare III Opener Option", "Delays all oGCDs until after third Glare III cast." +
-        "\nOnly works with Glare III.", WHM.JobID, 11, "", "")]
-        WHM_ST_MainCombo_NoSwiftOpener = 19023,
+        [CustomComboInfo("Opener Option", "Use the Balance opener from level 56+.", WHM.JobID, 11, "", "")]
+        WHM_ST_MainCombo_Opener = 19023,
 
         [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Aero/Dia Uptime Option", "Adds Aero/Dia to the single target combo if the debuff is not present on current target, or is about to expire.", WHM.JobID, 12, "", "")]
@@ -3662,7 +3665,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", WHM.JobID)]
         WHM_DPS_Variant_Rampart = 19026,
 
-        // Last value = 19026
+        // Last value = 19027
 
         #endregion
 
@@ -4182,8 +4185,13 @@ namespace XIVSlothCombo.Combos
 
         [SecretCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Blota Option", "Removes Blota from Burst Mode if Primal Rend has 5 seconds or less on its cooldown.", WARPvP.JobID)]
-        WARPvP_BurstMode_Blota = 128002,
+        [CustomComboInfo("Blota Option", "Adds Blota to Burst Mode when not in melee range.", WARPvP.JobID)]
+        WARPvP_BurstMode_Blota = 128003,
+
+        [SecretCustomCombo]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Burst Mode.", WARPvP.JobID)]
+        WARPvP_BurstMode_PrimalRend = 128004,
 
         // Last value = 128002
 
@@ -4219,6 +4227,18 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #endregion
+
+        [CustomComboInfo("Unlock Job Early?", "Unlocks Viper early. I'm BFFs with Yoshi-P, he say's it's fine.", 41)]
+        UnlockGag = 250000,
+
+        [CustomComboInfo("Super Speed Mode", "Cut fast, cut quick, cut cut cut", 41)]
+        SuperSpeedGag = 250001,
+
+        [CustomComboInfo("Snake Mode", "Kept you waiting huh?", 41)]
+        SnakeGag = 250002,
+
+        [CustomComboInfo("Gun Combo", "Swap your swords out for a couple of AK-47s", 41)]
+        GunGag = 250003,
     }
 }
 

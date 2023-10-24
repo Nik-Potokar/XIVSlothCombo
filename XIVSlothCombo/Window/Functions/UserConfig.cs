@@ -495,7 +495,7 @@ namespace XIVSlothCombo.Window.Functions
                     Service.Configuration.Save();
                 }
 
-                ImGui.BeginTable($"Grid###{config}", 4);
+                ImGui.BeginTable($"Grid###{config}", columns);
                 ImGui.TableNextRow();
                 //Convert the 2D array of names and descriptions into radio buttons
                 for (int idx = 0; idx < totalChoices; idx++)
@@ -1252,11 +1252,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.BLM_AoE_Adv_Cooldowns)
             {
-                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 4, new string[,]{
-                    {"Manafont", "Add Manafont to the rotation." },
+                UserConfig.DrawGridMultiChoice(BLM.Config.BLM_AoE_Adv_Cooldowns_Choice, 5, new string[,]{
+                    {$"Manafont", "Add Manafont to the rotation." },
                     {"Sharpcast", "Add Sharpcast to the rotation." },
                     {"Amplifier", "Add Amplifier to the rotation." },
                     {"Ley Lines", "Add Ley Lines to the rotation." },
+                    {"Triplecast", "Add Triplecast to the rotation" }
                 });
             }
 
@@ -1652,6 +1653,19 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.PLD_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, PLD.Config.PLD_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Atonement)
+            {
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_AtonementTiming, "Early Spend", "Uses Atonement before restarting the basic combo.", 1);
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_AtonementTiming, "Late Spend", "Uses Atonement before the end of the basic combo.", 2);
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_AtonementTiming, "Alternate Spend", "Switches between early and and late depending on how often Flight or Fight is used.", 3);
+            }
+
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit)
+            {
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Early Spend", "When under the effect of Divine Might, use Holy Spirit before restarting the basic combo.", 1);
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Late Spend", "When under the effect of Divine Might, uses Holy Spirit before the end of the basic combo.", 2);
+                UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Alternate Spend", "When under the effect of Divine Might, switches between early and late depending on how often Flight or Fight is used.", 3);
+            }
 
             #endregion
             // ====================================================================================
@@ -2185,6 +2199,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
 
+            if (preset == CustomComboPreset.WARPvP_BurstMode_Blota)
+            {
+                UserConfig.DrawHorizontalRadioButton(WARPvP.Config.WARPVP_BlotaTiming, "Before Primal Rend", "", 0);
+                UserConfig.DrawHorizontalRadioButton(WARPvP.Config.WARPVP_BlotaTiming, "After Primal Rend", "", 1);
+            }
+
             #endregion
             // ====================================================================================
             #region WHITE MAGE
@@ -2241,6 +2261,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WHM_Medica_ThinAir)
                 UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_Medica_ThinAir, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.WHM_ST_MainCombo_Opener)
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_Opener_Swiftcast, "Swiftcast Option", "Adds Swiftcast to the opener.");
 
             #endregion
             // ====================================================================================

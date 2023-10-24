@@ -390,6 +390,19 @@ namespace XIVSlothCombo.Combos.PvE
                     : actionID;
         }
 
+        internal class AST_Cards_RedrawStandalone : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_RedrawStandalone;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is Draw && HasEffect(Buffs.ClarifyingDraw))
+                    return Redraw;
+
+                return actionID;
+            }
+        }
+
         internal class AST_ST_SimpleHeals : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_SimpleHeals;
