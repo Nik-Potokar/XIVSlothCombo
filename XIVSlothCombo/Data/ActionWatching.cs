@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Objects;
 using Dalamud.Hooking;
+using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
@@ -37,9 +38,9 @@ namespace XIVSlothCombo.Data
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
         private static void ReceiveActionEffectDetour(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
         {
+            if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
             TimeLastActionUsed = DateTime.Now;
-            if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is 13 or 2) return;
@@ -113,7 +114,7 @@ namespace XIVSlothCombo.Data
                         targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
                         break;
                     case 1:
-                        if (Service.ClientState.LocalPlayer.TargetObject is not null)
+                        if (CustomComboFunctions.HasFriendlyTarget())
                             targetObjectId = Service.ClientState.LocalPlayer.TargetObject.ObjectId;
                         else
                             targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
@@ -125,7 +126,6 @@ namespace XIVSlothCombo.Data
                             targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
                         break;
                 }
-
             }
         }
 

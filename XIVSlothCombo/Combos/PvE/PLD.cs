@@ -71,7 +71,9 @@ namespace XIVSlothCombo.Combos.PvE
                 PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
                 PLD_SheltronOption = new("PLD_SheltronOption"),
                 PLD_ST_RequiescatWeave = new("PLD_ST_RequiescatWeave"),
-                PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave");
+                PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave"),
+                PLD_ST_AtonementTiming = new("PLD_ST_EquilibriumTiming"),
+                PLD_ST_DivineMightTiming = new("PLD_ST_DivineMightTiming");
             public static UserBool
                 PLD_Intervene_MeleeOnly = new("PLD_Intervene_MeleeOnly");
         }
@@ -313,7 +315,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // (arguably better to delay by less than a whole GCD and just stop moving to cast)
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) &&
                                 ShieldLob.LevelChecked() &&
-                                ((HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp) || (!HolySpirit.LevelChecked())) || IsMoving)
+                                ((HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) > LocalPlayer.CurrentMp) || (!HolySpirit.LevelChecked()) || IsMoving))
                                 return ShieldLob;
                         }
 
@@ -452,6 +454,10 @@ namespace XIVSlothCombo.Combos.PvE
                             GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                             return HolySpirit;
 
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
+                            GetBuffStacks(Buffs.SwordOath) is < 3 and > 0 && InMeleeRange())
+                            return Atonement;
+
                         // Base combo
                         if (comboTime > 0)
                         {
@@ -462,16 +468,29 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
                             {
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                    HasEffect(Buffs.SwordOath) && InMeleeRange())
+                                    HasEffect(Buffs.SwordOath) && InMeleeRange() && 
+                                    (Config.PLD_ST_AtonementTiming == 2 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 0)))
                                     return Atonement;
 
                                 return (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
                                     HasEffect(Buffs.DivineMight) &&
-                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                                    (Config.PLD_ST_DivineMightTiming == 2 || (Config.PLD_ST_DivineMightTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 1)))
                                     ? HolySpirit
                                     : OriginalHook(RageOfHalone);
                             }
                         }
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
+                            HasEffect(Buffs.SwordOath) && InMeleeRange() &&
+                            (Config.PLD_ST_AtonementTiming == 1 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 1)))
+                            return Atonement;
+
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
+                            HasEffect(Buffs.DivineMight) &&
+                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                            (Config.PLD_ST_DivineMightTiming == 1 || (Config.PLD_ST_DivineMightTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 0)))
+                            return HolySpirit;
                     }
                 }
 
