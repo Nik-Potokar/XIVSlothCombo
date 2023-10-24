@@ -1,13 +1,10 @@
-﻿using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge.Types;
-using ECommons.DalamudServices;
+﻿using ECommons.DalamudServices;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -25,10 +22,11 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             if (!CustomComboFunctions.ActionReady(DragonfireDive))
                 return false;
+
             return true;
         }
 
-        private static uint OpenerLevel => 90;
+        private static uint OpenerLevel => 88;
 
         public uint PrePullStep = 0;
 
@@ -36,7 +34,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-        private bool CanOpener => HasCooldowns() && LevelChecked;
+        private static bool CanOpener => HasCooldowns() && LevelChecked;
 
         private OpenerState currentState = OpenerState.PrePull;
 
@@ -78,13 +76,21 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 PrePullStep = 1;
             }
 
-            if (PrePullStep < 1)
-                return false;
+            if (!HasCooldowns())
+            {
+                PrePullStep = 0;
+            }
 
-            if (CurrentState == OpenerState.PrePull)
+            if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
                 if (PrePullStep == 1 && CustomComboFunctions.WasLastAction(All.Sprint))
                     CurrentState = OpenerState.InOpener;
+
+                if (PrePullStep == 1 && CustomComboFunctions.IsOnCooldown(All.Sprint))
+                    CurrentState = OpenerState.FailedOpener;
+
+                if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
+                    CurrentState = OpenerState.FailedOpener;
 
                 return true;
             }
@@ -178,6 +184,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(WheelingThrust) && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 26) actionID = WheelingThrust;
+
+                    if ((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) < 2) ||
+                       (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
+                       (actionID == DragonSight && CustomComboFunctions.IsOnCooldown(DragonSight)) ||
+                       (actionID == DragonfireDive && CustomComboFunctions.IsOnCooldown(DragonfireDive)) ||
+                       (actionID == LifeSurge && CustomComboFunctions.GetRemainingCharges(LifeSurge) < 2))
+                    {
+                        CurrentState = OpenerState.FailedOpener;
+                        return false;
+                    }
                 }
 
                 else
@@ -264,6 +280,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
+
+                if ((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) < 2) ||
+                      (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
+                      (actionID == DragonSight && CustomComboFunctions.IsOnCooldown(DragonSight)) ||
+                      (actionID == DragonfireDive && CustomComboFunctions.IsOnCooldown(DragonfireDive)) ||
+                      (actionID == LifeSurge && CustomComboFunctions.GetRemainingCharges(LifeSurge) < 2))
+
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
 
                 return true;
             }
@@ -358,28 +385,35 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
+                if ((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) < 2) ||
+                      (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
+                      (actionID == DragonSight && CustomComboFunctions.IsOnCooldown(DragonSight)) ||
+                      (actionID == DragonfireDive && CustomComboFunctions.IsOnCooldown(DragonfireDive)) ||
+                      (actionID == LifeSurge && CustomComboFunctions.GetRemainingCharges(LifeSurge) < 2))
+
+                {
+                    CurrentState = OpenerState.FailedOpener;
+                    return false;
+                }
+
                 return true;
             }
 
             return false;
         }
 
+
         private void ResetOpener()
         {
             PrePullStep = 0;
             OpenerStep = 0;
-            CurrentState = OpenerState.PrePull;
-            ActionWatching.CombatActions.Clear();
-            ActionWatching.LastAction = 0;
-            ActionWatching.LastAbility = 0;
-            ActionWatching.LastSpell = 0;
-            ActionWatching.LastWeaponskill = 0;
         }
+
         public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
             if (!LevelChecked) return false;
 
-            if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
+            if (CurrentState == OpenerState.PrePull)
                 if (DoPrePullSteps(ref actionID)) return true;
 
             if (CurrentState == OpenerState.InOpener)
@@ -394,8 +428,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 }
             }
 
-            if (!CustomComboFunctions.InCombat() && CurrentState is not OpenerState.PrePull)
+            if (!CustomComboFunctions.InCombat())
+            {
                 ResetOpener();
+                CurrentState = OpenerState.PrePull;
+            }
+
 
             return false;
         }
