@@ -1183,6 +1183,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
+            
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_Esuna)
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_ST_SimpleHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.AST_Cards_QuickTargetCards)
             {
@@ -1896,6 +1899,9 @@ namespace XIVSlothCombo.Window.Functions
                 }
             }
 
+            if (preset is CustomComboPreset.SGE_ST_Heal_Esuna)
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
+
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
 
@@ -2064,6 +2070,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
+
+            if (preset is CustomComboPreset.SCH_ST_Heal_Esuna)
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_EsunaOption, "Stop using when below HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SCH_DeploymentTactics)
             {
@@ -2244,6 +2253,9 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.Unindent();
                 }
             }
+
+            if (preset is CustomComboPreset.WHM_Cure2_Esuna)
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_Cure2_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
             if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");

@@ -85,7 +85,8 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_ST_MainCombo_DoT = new("WHM_ST_MainCombo_DoT"),
                 WHM_AoE_Lucid = new("WHM_AoE_Lucid"),
                 WHM_oGCDHeals = new("WHMogcdHealsShieldsFeature"),
-                WHM_Medica_ThinAir = new("WHM_Medica_ThinAir");
+                WHM_Medica_ThinAir = new("WHM_Medica_ThinAir"),
+                WHM_Cure2_Esuna = new("WHM_Cure2_Esuna");
             internal static UserBool
                 WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
                 WHM_ST_MainCombo_Adv = new("WHM_ST_MainCombo_Adv"),
@@ -159,6 +160,7 @@ namespace XIVSlothCombo.Combos.PvE
                     GameObject? healTarget = GetHealTarget(Config.WHM_Afflatus_Adv && Config.WHM_Afflatus_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.WHM_Cure2_Esuna) && ActionReady(All.Esuna) &&
+                        GetTargetHPPercent(healTarget) >= Config.WHM_Cure2_Esuna &&
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 
