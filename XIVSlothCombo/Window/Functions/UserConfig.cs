@@ -6,6 +6,7 @@ using ImGuiNET;
 using System;
 using System.Linq;
 using System.Numerics;
+using System.Security.Permissions;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
@@ -28,6 +29,7 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="additonalChoiceCondition">What the condition is to convey to the user what triggers it.</param>
         public static void DrawSliderInt(int minValue, int maxValue, string config, string sliderDescription, float itemWidth = 150, uint sliderIncrement = SliderIncrements.Ones, bool hasAdditionalChoice = false, string additonalChoiceCondition = "")
         {
+            ImGui.Indent();
             int output = PluginConfiguration.GetCustomIntValue(config, minValue);
             if (output < minValue)
             {
@@ -116,6 +118,7 @@ namespace XIVSlothCombo.Window.Functions
 
             box.Draw();
             ImGui.Spacing();
+            ImGui.Unindent();
         }
 
         /// <summary> Draws a slider that lets the user set a given value for their feature. </summary>
@@ -1183,7 +1186,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
-            
+
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_ST_SimpleHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
@@ -2233,11 +2236,11 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_ST_Lucid, "Set value for your MP to be at or under for this feature to work.", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_STDPS_Lucid, "Set value for your MP to be at or under for this feature to work.", 150, SliderIncrements.Hundreds);
 
             if (preset is CustomComboPreset.WHM_ST_MainCombo_DoT)
             {
-                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_ST_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check.");
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_STDPS_MainCombo_DoT, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
                 UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_MainCombo_DoT_Adv, "Advanced Options", "", isConditionalChoice: true);
                 if (PluginConfiguration.GetCustomBoolValue(WHM.Config.WHM_ST_MainCombo_DoT_Adv))
@@ -2249,33 +2252,59 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid)
-                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoE_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoEDPS_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset is CustomComboPreset.WHM_Afflatus)
-            {
-                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_Afflatus_Adv, "Advanced Options", "", isConditionalChoice: true);
-                if (WHM.Config.WHM_Afflatus_Adv)
-                {
-                    ImGui.Indent(); ImGui.Spacing();
-                    UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_Afflatus_UIMouseOver,
-                        "Party UI Mouseover Checking",
-                        "Check party member's HP & Debuffs by using mouseover on the party list.\n" +
-                        "To be used in conjunction with Redirect/Reaction/etc");
-                    ImGui.Unindent();
-                }
-            }
+            if (preset == CustomComboPreset.WHM_AoEHeals_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoEHeals_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset is CustomComboPreset.WHM_Cure2_Esuna)
-                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_Cure2_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
+            if (preset == CustomComboPreset.WHM_STHeals_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_STHeals_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.WHM_Afflatus_oGCDHeals)
-                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_oGCDHeals, "Set HP% to use Tetragrammaton on target at:");
 
-            if (preset == CustomComboPreset.WHM_Medica_ThinAir)
-                UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_Medica_ThinAir, "How many charges to keep ready? (0 = Use all)");
+            if (preset is CustomComboPreset.WHM_STHeals_Esuna)
+                UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_STHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
+
+            if (preset == CustomComboPreset.WHM_AoeHeals_ThinAir)
+                UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_AoEHeals_ThinAir, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.WHM_AoEHeals_Cure3)
+                UserConfig.DrawSliderInt(0, 10000, WHM.Config.WHM_AoEHeals_Cure3MP, "Use when MP is above", sliderIncrement: 100);
+
+            if (preset == CustomComboPreset.WHM_STHeals)
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_UIMouseOver, "Party UI Mousover Checking", "Check party member's HP & Debuffs by using mouseover on the party list.\nTo be used in conjunction with Redirect/Reaction/etc");
+
+            if (preset == CustomComboPreset.WHM_STHeals_ThinAir)
+                UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_STHeals_ThinAir, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.WHM_STHeals_Regen)
+                UserConfig.DrawRoundedSliderFloat(0f, 6f, WHM.Config.WHM_STHeals_RegenTimer, "Time Remaining Before Refreshing");
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Opener)
                 UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_Opener_Swiftcast, "Swiftcast Option", "Adds Swiftcast to the opener.");
+
+            if (preset == CustomComboPreset.WHM_STHeals_Benediction)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_BenedictionWeave, "Only Weave", "");
+                UserConfig.DrawSliderInt(1, 100, WHM.Config.WHM_STHeals_BenedictionHP, "Use when target HP% is at or below.");
+            }
+
+            if (preset == CustomComboPreset.WHM_STHeals_Tetragrammaton)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_TetraWeave, "Only Weave", "");
+                UserConfig.DrawSliderInt(1, 100, WHM.Config.WHM_STHeals_TetraHP, "Use when target HP% is at or below.");
+            }
+
+            if (preset == CustomComboPreset.WHM_STHeals_Benison)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_BenisonWeave, "Only Weave", "");
+                UserConfig.DrawSliderInt(1, 100, WHM.Config.WHM_STHeals_BenisonHP, "Use when target HP% is at or below.");
+            }
+
+            if (preset == CustomComboPreset.WHM_STHeals_Aquaveil)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_AquaveilWeave, "Only Weave", "");
+                UserConfig.DrawSliderInt(1, 100, WHM.Config.WHM_STHeals_AquaveilHP, "Use when target HP% is at or below.");
+            }
 
             #endregion
             // ====================================================================================

@@ -3563,7 +3563,7 @@ namespace XIVSlothCombo.Combos
         #region Single Target DPS Feature
 
         [ReplaceSkill(WHM.Stone1, WHM.Stone2, WHM.Stone3, WHM.Stone4, WHM.Glare1, WHM.Glare3)]
-        [CustomComboInfo("Single Target DPS Feature", "Collection of cooldowns and spell features on Glare/Stone.", WHM.JobID, 10, "", "")]
+        [CustomComboInfo("Single Target DPS Feature", "Collection of cooldowns and spell features on Glare/Stone.", WHM.JobID, 1, "", "")]
         WHM_ST_MainCombo = 19099,
 
         [ParentCombo(WHM_ST_MainCombo)]
@@ -3599,7 +3599,7 @@ namespace XIVSlothCombo.Combos
         #region AoE DPS Feature
 
         [ReplaceSkill(WHM.Holy, WHM.Holy3)]
-        [CustomComboInfo("AoE DPS Feature", "Collection of cooldowns and spell features on Holy/Holy III.", WHM.JobID, 20, "", "")]
+        [CustomComboInfo("AoE DPS Feature", "Collection of cooldowns and spell features on Holy/Holy III.", WHM.JobID, 2, "", "")]
         WHM_AoE_DPS = 19190,
 
         [ParentCombo(WHM_AoE_DPS)]
@@ -3632,70 +3632,83 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rapture into Misery Feature", "Replaces Afflatus Rapture with Afflatus Misery when it is ready to be used.", WHM.JobID, 40, "", "")]
         WHM_RaptureMisery = 19001,
 
-        #region Afflatus Feature
+        #region AoE Heals Feature
 
-        [ReplaceSkill(WHM.Cure2)]
-        [CustomComboInfo("Afflatus Feature", "Changes Cure II into Afflatus Solace when Lilies are up." +
-        "\nChanges Medica into Afflatus Rapture when Lilies are up.", WHM.JobID, 50, "", "")]
-        WHM_Afflatus = 19003,
+        [ReplaceSkill(WHM.Medica)]
+        [CustomComboInfo("Simple Heals (AoE)", "Replaces Medica with a one button AoE healing setup.", WHM.JobID, 4, "", "")]
+        WHM_AoEHeals = 19007,
 
-        [ParentCombo(WHM_Afflatus)]
-        [ReplaceSkill(WHM.Cure2)]
-        [CustomComboInfo("Afflatus Misery Heal Feature", "Changes Cure II into Afflatus Misery when Misery is ready to be used.", WHM.JobID, 51, "", "")]
-        WHM_Cure2_Misery = 19012,
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 61, "", "")]
+        WHM_AoEHeals_Rapture = 19011,
 
-        [ParentCombo(WHM_Afflatus)]
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 62, "", "")]
+        WHM_AoEHeals_Misery = 19010,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 63, "", "")]
+        WHM_AoeHeals_ThinAir = 19200,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID)]
+        WHM_AoEHeals_Cure3 = 19201,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID)]
+        WHM_AoEHeals_Assize = 19202,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID)]
+        WHM_AoEHeals_Plenary = 19203,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID)]
+        WHM_AoEHeals_Lucid = 19204,
+
+        #endregion
+
+        #region Single Target Heals
+
+        [ReplaceSkill(WHM.Cure)]
+        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Cure with a one button single target healing setup.", WHM.JobID, 3)]
+        WHM_STHeals = 19300,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Regen Option", "Applies Regen to the target if missing.", WHM.JobID)]
+        WHM_STHeals_Regen = 19301,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Benediction Option", "Uses Benediction when target is below HP threshold.", WHM.JobID)]
+        WHM_STHeals_Benediction = 19302,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Afflatus Solace Option", "Uses Afflatus Solace when available.", WHM.JobID)]
+        WHM_STHeals_Solace = 19303,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID)]
+        WHM_STHeals_ThinAir = 19304,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Tetragrammaton Option", "Uses Tetragrammaton when available.", WHM.JobID)]
+        WHM_STHeals_Tetragrammaton = 19305,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Divine Benison Option", "Uses Divine Benison when available.", WHM.JobID)]
+        WHM_STHeals_Benison = 19306,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Aqualveil Option", "Uses Aquaveil when available.", WHM.JobID)]
+        WHM_STHeals_Aquaveil = 19307,
+
+        [ParentCombo(WHM_STHeals)]
+        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID)]
+        WHM_STHeals_Lucid = 19308,
+
+        [ParentCombo(WHM_STHeals)]
         [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", WHM.JobID)]
-        WHM_Cure2_Esuna = 19027,
-
-        #region oGCD Heals/Shields Option
-
-        [ParentCombo(WHM_Afflatus)]
-        [CustomComboInfo("oGCD Heals/Shields Option", "Adds oGCD Healing and Shields to Cure II.", WHM.JobID, 52, "", "")]
-        WHM_Afflatus_oGCDHeals = 19018,
-
-        [ParentCombo(WHM_Afflatus_oGCDHeals)]
-        [CustomComboInfo("Use Tetragrammaton on oGCD Option", "Only shows Tetragrammaton during oGCD weave window when HP conditions are met.", WHM.JobID, 53, "", "")]
-        WHM_Afflatus_oGCDHeals_TetraWeave = 19019,
-
-        [ParentCombo(WHM_Afflatus_oGCDHeals)]
-        [CustomComboInfo("Use Tetragrammaton on GCD Option", "Shows Tetragrammaton when HP conditions are met.", WHM.JobID, 54, "", "")]
-        WHM_Afflatus_oGCDHeals_Tetra = 19020,
-
-        [ParentCombo(WHM_Afflatus_oGCDHeals)]
-        [CustomComboInfo("Use Divine Benison on oGCD Option", "Only shows Divine Benison during oGCD weave window when target is not already under the effect.", WHM.JobID, 55, "", "")]
-        WHM_Afflatus_oGCDHeals_BenisonWeave = 19021,
-
-        [ParentCombo(WHM_Afflatus_oGCDHeals)]
-        [CustomComboInfo("Use Divine Benison on GCD Option", "Shows Divine Benison when target is not already under the effect.", WHM.JobID, 56, "", "")]
-        WHM_Afflatus_oGCDHeals_Benison = 19022,
-
-        [ParentCombo(WHM_Afflatus_oGCDHeals)]
-        [CustomComboInfo("Prioritize oGCDs Option", "Displays oGCD Heals/Shields over Afflatus" +
-        "\n(only applies to GCD options for Tetragrammaton and Divine Benison).", WHM.JobID, 57, "", "")]
-        WHM_Afflatus_oGCDHeals_Prio = 19024,
-
-        #endregion
-
-        #endregion
-
-        #region Medica Feature
-
-        [ReplaceSkill(WHM.Medica2)]
-        [CustomComboInfo("Medica II Feature", "Replaces Medica II with Medica whenever you are under Medica II's regen effect or below Lv.50.", WHM.JobID, 60, "", "")]
-        WHM_Medica = 19007,
-
-        [ParentCombo(WHM_Medica)]
-        [CustomComboInfo("Afflatus Rapture Option", "Adds Afflatus Rapture when available.", WHM.JobID, 61, "", "")]
-        WHM_Medica_Rapture = 19011,
-
-        [ParentCombo(WHM_Medica)]
-        [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery when available.", WHM.JobID, 62, "", "")]
-        WHM_Medica_Misery = 19010,
-
-        [ParentCombo(WHM_Medica)]
-        [CustomComboInfo("Thin Air Option", "Adds Thin Air when available.", WHM.JobID, 63, "", "")]
-        WHM_Medica_ThinAir = 19200,
+        WHM_STHeals_Esuna = 19309,
 
         #endregion
 
