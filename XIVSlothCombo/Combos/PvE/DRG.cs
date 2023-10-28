@@ -95,6 +95,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 Status? ChaosDoTDebuff;
+                bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
 
                 if (LevelChecked(ChaoticSpring)) ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
                 else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
@@ -181,8 +182,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.SharperFangAndClaw))
                     {
                         // If we are not on the flank, but need to use Fangs, pop true north if not already up
-                        if (!HasEffect(All.Buffs.TrueNorth) &&
-                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
+                        if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(FangAndClaw);
@@ -191,8 +192,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.EnhancedWheelingThrust))
                     {
                         // If we are not on the rear, but need to use Wheeling, pop true north if not already up
-                        if (!HasEffect(All.Buffs.TrueNorth) &&
-                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                        if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            !OnTargetsRear() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(WheelingThrust);
@@ -235,17 +236,10 @@ namespace XIVSlothCombo.Combos.PvE
                 int diveOptions = Config.DRG_ST_DiveOptions;
                 Status? ChaosDoTDebuff;
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
-                bool trueNorthReadyDyn = trueNorthReady;
 
                 if (LevelChecked(ChaoticSpring))
                     ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
                 else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
-
-                // Prevent the dynamic true north option from using the last charge
-                if (trueNorthReady && IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                    IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic_HoldCharge) && GetRemainingCharges(All.TrueNorth) < 2)
-                    trueNorthReadyDyn = false;
-
 
                 if (actionID is TrueThrust)
                 {
@@ -360,8 +354,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // If we are not on the flank, but need to use Fangs, pop true north if not already up
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                            trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) &&
-                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
+                            trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(FangAndClaw);
@@ -371,8 +365,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // If we are not on the rear, but need to use Wheeling, pop true north if not already up
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                            trueNorthReadyDyn && !HasEffect(All.Buffs.TrueNorth) &&
-                            AnimationLock.CanDRGWeave(All.TrueNorth) && !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                            trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            !OnTargetsRear() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
                         return OriginalHook(WheelingThrust);
@@ -651,7 +645,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_Jump;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is DRG.Jump or DRG.HighJump && HasEffect(DRG.Buffs.DiveReady) ? DRG.MirageDive : actionID;
+                actionID is Jump or HighJump && HasEffect(Buffs.DiveReady) ? MirageDive : actionID;
         }
 
         internal class DRG_StardiverFeature : CustomCombo
