@@ -103,12 +103,14 @@ namespace XIVSlothCombo.Combos.PvE
             internal static UserBool
                 WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
                 WHM_ST_MainCombo_Adv = new("WHM_ST_MainCombo_Adv"),
+                WHM_ST_MainCombo_Opener_Swiftcast = new("WHM_ST_Opener_Swiftcast"),
                 WHM_STHeals_UIMouseOver = new("WHM_STHeals_UIMouseOver"),
-                WHM_ST_Opener_Swiftcast = new("WHM_ST_Opener_Swiftcast"),
                 WHM_STHeals_BenedictionWeave = new("WHM_STHeals_BenedictionWeave"),
                 WHM_STHeals_TetraWeave = new("WHM_STHeals_TetraWeave"),
                 WHM_STHeals_BenisonWeave = new("WHM_STHeals_BenisonWeave"),
-                WHM_STHeals_AquaveilWeave = new("WHM_STHeals_AquaveilWeave");
+                WHM_STHeals_AquaveilWeave = new("WHM_STHeals_AquaveilWeave"),
+                WHM_AoEHeals_PlenaryWeave = new("WHM_AoEHeals_PlenaryWeave"),
+                WHM_AoEHeals_AssizeWeave = new("WHM_AoEHeals_AssizeWeave");
             internal static UserFloat
                 WHM_ST_MainCombo_DoT_Threshold = new("WHM_ST_MainCombo_DoT_Threshold"),
                 WHM_STHeals_RegenTimer = new("WHM_STHeals_RegenTimer");
@@ -213,7 +215,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (Glare3Count == 3 && CanWeave(actionID))
                         {
-                            if (ActionReady(All.Swiftcast) && Config.WHM_ST_Opener_Swiftcast)
+                            if (ActionReady(All.Swiftcast) && Config.WHM_ST_MainCombo_Opener_Swiftcast)
                                 return OriginalHook(All.Swiftcast);
 
                             if (ActionReady(PresenceOfMind))
@@ -222,7 +224,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (Glare3Count == 4)
                         {
-                            if (ActionReady(PresenceOfMind) && Config.WHM_ST_Opener_Swiftcast)
+                            if (ActionReady(PresenceOfMind) && Config.WHM_ST_MainCombo_Opener_Swiftcast)
                                 return OriginalHook(PresenceOfMind);
 
                             if (ActionReady(Assize))
@@ -305,11 +307,14 @@ namespace XIVSlothCombo.Combos.PvE
                     bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > Config.WHM_AoEHeals_ThinAir;
                     var canWeave = CanSpellWeave(actionID, 0.3);
                     bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_AoEHeals_Lucid;
+                    bool plenaryReady = ActionReady(PlenaryIndulgence) && (!Config.WHM_AoEHeals_PlenaryWeave || (Config.WHM_AoEHeals_PlenaryWeave && canWeave));
+                    bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Assize) && canWeave && ActionReady(Assize))
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Assize) && assizeReady)
                         return Assize;
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Plenary) && ActionReady(PlenaryIndulgence))
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Plenary) && plenaryReady)
                         return PlenaryIndulgence;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Lucid) && canWeave && lucidReady)

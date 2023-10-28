@@ -3879,7 +3879,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Burst Mode", "Turns Powerful Shot into an all-in-one damage button.", BRDPvP.JobID)]
         BRDPvP_BurstMode = 113000,
 
-        // Last value = 113000
+        [SecretCustomCombo]
+        [ParentCombo(BRDPvP_BurstMode)]
+        [CustomComboInfo("Silent Nocturne Option", "Adds Silent Nocturne to Burst Mode.", BRD.JobID)]
+        BRDPvP_SilentNocturne = 113001,
+
+        // Last value = 113001
 
         #endregion
 

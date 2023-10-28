@@ -2260,7 +2260,6 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WHM_STHeals_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_STHeals_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
-
             if (preset is CustomComboPreset.WHM_STHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_STHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
@@ -2280,7 +2279,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRoundedSliderFloat(0f, 6f, WHM.Config.WHM_STHeals_RegenTimer, "Time Remaining Before Refreshing");
 
             if (preset == CustomComboPreset.WHM_ST_MainCombo_Opener)
-                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_Opener_Swiftcast, "Swiftcast Option", "Adds Swiftcast to the opener.");
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_ST_MainCombo_Opener_Swiftcast, "Swiftcast Option", "Adds Swiftcast to the opener.");
 
             if (preset == CustomComboPreset.WHM_STHeals_Benediction)
             {
@@ -2304,6 +2303,16 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_AquaveilWeave, "Only Weave", "");
                 UserConfig.DrawSliderInt(1, 100, WHM.Config.WHM_STHeals_AquaveilHP, "Use when target HP% is at or below.");
+            }
+
+            if (preset == CustomComboPreset.WHM_AoEHeals_Assize)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_AssizeWeave, "Only Weave", "");
+            }
+
+            if (preset == CustomComboPreset.WHM_AoEHeals_Plenary)
+            {
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_PlenaryWeave, "Only Weave", "");
             }
 
             #endregion
