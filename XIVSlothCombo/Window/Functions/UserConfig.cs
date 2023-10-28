@@ -1420,22 +1420,22 @@ namespace XIVSlothCombo.Window.Functions
             #region DRAGOON
             if (preset == CustomComboPreset.DRG_ST_Dives && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "On Cooldown", "Single Weave friendly. Uses skills on cooldown.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Battle Litany and Life of the Dragon", "Requires Double Weaving. Uses Spineshatter Dive and Dragonfire Dive under Battle Litany and Life of the Dragon, and Stardiver under Life of the Dragon.", 2);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Lance Charge", "Single Weave friendly. Uses Spineshatter Dive and Dragonfire Dive under Lance Charge, and Stardiver under Life of the Dragon.", 3);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "On Cooldown", "Single Weave friendly.\nUses skills on cooldown.", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Lance Charge and Dragon Sight", "Requires Double Weaving.\nUses 2 Spinishatter Dive charges and Dragonfire Dive under Lance Charge and Dragon Sight.\nUses Stardiver under Life of the Dragon when having a buff active.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Lance Charge", "Single Weave friendly.\nUses Spineshatter Dive and Dragonfire Dive under Lance Charge. \nUses Stardiver under Life of the Dragon when having a buff active.", 2);
             }
 
             if (preset == CustomComboPreset.DRG_AoE_Dives && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "On Cooldown", "Single Weave friendly. Uses skills on cooldown.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Battle Litany and Life of the Dragon", "Requires Double Weaving. Uses Spineshatter Dive and Dragonfire Dive under Battle Litany and Life of the Dragon, and Stardiver under Life of the Dragon.", 2);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge", "Single Weave friendly. Uses Spineshatter Dive and Dragonfire Dive under Lance Charge, and Stardiver under Life of the Dragon.", 3);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "On Cooldown", "Single Weave friendly.\nUses skills on cooldown.", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge and Dragon Sight", "Requires Double Weaving.\nUses 2 Spinishatter Dive charges and Dragonfire Dive under Lance Charge and Dragon Sight.\nUses Stardiver under Life of the Dragon when having a buff active.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge", "Single Weave friendly.\nUses Spineshatter Dive and Dragonfire Dive under Lance Charge. \nUses Stardiver under Life of the Dragon when having a buff active.", 2);
             }
 
             if (preset == CustomComboPreset.DRG_ST_Opener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Standard Opener", "Uses the Standard Tincture Opener.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerOptions, "Low Ping Opener", "Uses the Low Ping Opener. Use Lance Charge after True Thrust for the No Tincture opener.", 2);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerChoice, "2.5 Opener", "Uses the 2.5 Opener.", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerChoice, "2.46 Opener", "Uses the 2.46 Opener.", 1);
             }
 
             if (preset == CustomComboPreset.DRG_ST_ComboHeals)

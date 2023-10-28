@@ -178,12 +178,14 @@ namespace XIVSlothCombo
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
+
         private void DisposeOpeners()
         {
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
+            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
+            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
-
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
         private void OnCommand(string command, string arguments)
