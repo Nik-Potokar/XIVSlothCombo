@@ -435,13 +435,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             var gcdTimer = CustomComboFunctions.GetCooldownRemainingTime(PvE.DRG.TrueThrust);
 
-            if (FastLocks.Any(x => x == oGCD) && gcdTimer >= 1.1f)
+            if (FastLocks.Any(x => x == oGCD) && gcdTimer >= 0.6f)
                 return true;
 
-            if (MidLocks.Any(x => x == oGCD) && gcdTimer >= 1.4f)
+            if (MidLocks.Any(x => x == oGCD) && gcdTimer >= 0.8f)
                 return true;
 
-            if (SlowLock == oGCD && gcdTimer >= 2.2f)
+            if (SlowLock == oGCD && gcdTimer >= 1.5f)
                 return true;
 
             return false;
