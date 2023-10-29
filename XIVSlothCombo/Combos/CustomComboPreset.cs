@@ -1164,14 +1164,14 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Simple ST Dragoon", "Replaces True Thrust with a full one-button rotation.", DRG.JobID, -4, "", "")]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID, -4, "", "")]
         DRG_ST_SimpleMode = 6001,
 
         #region Advanced ST Dragoon
 
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_SimpleMode)]
-        [CustomComboInfo("Advanced ST Dragoon", "Replaces True Thrust with the entire ST combo chain.", DRG.JobID, -3, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", DRG.JobID, -3, "", "")]
         DRG_ST_AdvancedMode = 6100,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
@@ -1235,7 +1235,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("optimized rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 0, "", "")]
+        [CustomComboInfo("Optimized Rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 0, "", "")]
         DRG_ST_Optimized_Rotation = 6115,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
@@ -1258,14 +1258,14 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRG.DoomSpike)]
         [ConflictingCombos(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Simple Dragoon AoE", "Replaces Doom Spike with a full one-button rotation.", DRG.JobID, -2, "", "")]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID, -2, "", "")]
         DRG_AOE_SimpleMode = 6200,
 
         #region Advanced AoE Dragoon
 
         [ReplaceSkill(DRG.DoomSpike)]
         [ConflictingCombos(DRG_AOE_SimpleMode)]
-        [CustomComboInfo("Advanced Dragoon AoE", "Replaces Doom Spike with a full one-button rotation.", DRG.JobID, -1, "", "")]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", DRG.JobID, -1, "", "")]
         DRG_AOE_AdvancedMode = 6201,
 
         #region Buffs AoE
@@ -1325,7 +1325,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("optimized rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 0, "", "")]
+        [CustomComboInfo("Optimized Rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 0, "", "")]
         DRG_AoE_Optimized_Rotation = 6215,
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
