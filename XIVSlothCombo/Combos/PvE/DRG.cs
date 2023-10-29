@@ -491,7 +491,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is Disembowel)
                             return LevelChecked(OriginalHook(ChaosThrust))
-                            ? ChaosThrust
+                            ? OriginalHook(ChaosThrust)
                             : DoomSpike;
 
                         if (lastComboMove is SonicThrust && LevelChecked(CoerthanTorment))
@@ -626,7 +626,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is Disembowel)
                             return LevelChecked(OriginalHook(ChaosThrust))
-                            ? ChaosThrust
+                            ? OriginalHook(ChaosThrust)
                             : DoomSpike;
 
                         if (lastComboMove is SonicThrust && LevelChecked(CoerthanTorment))
