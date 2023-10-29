@@ -40,7 +40,6 @@ namespace XIVSlothCombo.Data
         {
             if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
-            TimeLastActionUsed = DateTime.Now;
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is 13 or 2) return;
@@ -48,6 +47,7 @@ namespace XIVSlothCombo.Data
                 header.ActionId != 8 &&
                 sourceObjectId == Service.ClientState.LocalPlayer.ObjectId)
             {
+                TimeLastActionUsed = DateTime.Now;
                 LastActionUseCount++;
                 if (header.ActionId != LastAction)
                 {
