@@ -4,6 +4,7 @@ using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -481,24 +482,25 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is DoomSpike or DraconianFury)
-                            return (LevelChecked(SonicThrust) || GetBuffRemainingTime(Buffs.PowerSurge) > 10)
-                                ? SonicThrust
-                                : TrueThrust;
+                        if (!SonicThrust.LevelChecked())
+                        {
+                            if (lastComboMove == TrueThrust)
+                                return Disembowel;
 
-                        if (lastComboMove is TrueThrust)
-                            return Disembowel;
+                            if (lastComboMove == Disembowel && OriginalHook(ChaosThrust).LevelChecked())
+                                return OriginalHook(ChaosThrust);
+                        }
+                        else
+                        {
+                            if (lastComboMove is DoomSpike or DraconianFury)
+                                return SonicThrust;
 
-                        if (lastComboMove is Disembowel)
-                            return LevelChecked(OriginalHook(ChaosThrust))
-                            ? OriginalHook(ChaosThrust)
-                            : DoomSpike;
-
-                        if (lastComboMove is SonicThrust && LevelChecked(CoerthanTorment))
-                            return CoerthanTorment;
+                            if (lastComboMove == SonicThrust && CoerthanTorment.LevelChecked())
+                                return CoerthanTorment;
+                        }
                     }
 
-                    return OriginalHook(DoomSpike);
+                    return HasEffect(Buffs.PowerSurge) || SonicThrust.LevelChecked() ? OriginalHook(DoomSpike) : OriginalHook(TrueThrust);
                 }
 
                 return actionID;
@@ -616,24 +618,26 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is DoomSpike or DraconianFury)
-                            return (LevelChecked(SonicThrust) || GetBuffRemainingTime(Buffs.PowerSurge) > 10)
-                                ? SonicThrust
-                                : TrueThrust;
+                        if (!SonicThrust.LevelChecked())
+                        {
+                            if (lastComboMove == TrueThrust)
+                                return Disembowel;
 
-                        if (lastComboMove is TrueThrust)
-                            return Disembowel;
+                            if (lastComboMove == Disembowel && OriginalHook(ChaosThrust).LevelChecked())
+                                return OriginalHook(ChaosThrust);
+                        }
+                        else
+                        {
+                            if (lastComboMove is DoomSpike or DraconianFury)
+                                return SonicThrust;
 
-                        if (lastComboMove is Disembowel)
-                            return LevelChecked(OriginalHook(ChaosThrust))
-                            ? OriginalHook(ChaosThrust)
-                            : DoomSpike;
-
-                        if (lastComboMove is SonicThrust && LevelChecked(CoerthanTorment))
-                            return CoerthanTorment;
+                            if (lastComboMove == SonicThrust && CoerthanTorment.LevelChecked())
+                                return CoerthanTorment;
+                        }
                     }
 
-                    return OriginalHook(DoomSpike);
+                    return HasEffect(Buffs.PowerSurge) || SonicThrust.LevelChecked() ? OriginalHook(DoomSpike) : OriginalHook(TrueThrust);
+
                 }
 
                 return actionID;
