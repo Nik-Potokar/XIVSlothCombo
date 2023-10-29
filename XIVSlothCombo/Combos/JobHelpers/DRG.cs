@@ -158,10 +158,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     if (CustomComboFunctions.WasLastAction(WheelingThrust) && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 26) actionID = WheelingThrust;
-
-                    if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                        CurrentState = OpenerState.FailedOpener;
-
                 }
                 else
                 {
@@ -244,6 +240,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 26) actionID = WheelingThrust;
 
                 }
+
+                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                    CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) == 0) ||
                   (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
@@ -349,6 +348,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (CustomComboFunctions.WasLastAction(WheelingThrust) && OpenerStep == 26) CurrentState = OpenerState.OpenerFinished;
                 else if (OpenerStep == 26) actionID = WheelingThrust;
+
+                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                    CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == SpineshatterDive && CustomComboFunctions.GetRemainingCharges(SpineshatterDive) == 0) ||
                   (actionID == BattleLitany && CustomComboFunctions.IsOnCooldown(BattleLitany)) ||
