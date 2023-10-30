@@ -2857,32 +2857,32 @@ namespace XIVSlothCombo.Combos
         #region Main Combo (Gekko) Features
         [ReplaceSkill(SAM.Gekko)]
         [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.\nIf all sub options are selected will turn into a full one button rotation (Advanced Samurai)", SAM.JobID, 0, "", "")]
-        SAM_ST_GekkoCombo = 15003,
+        SAM_ST_AdvancedMode = 15003,
 
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Enpi Uptime Feature", "Replace main combo with Enpi when you are out of range.", SAM.JobID, 0, "", "")]
         SAM_ST_GekkoCombo_RangedUptime = 15004,
 
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Yukikaze Combo on Main Combo", "Adds Yukikaze combo to main combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID, 0, "", "")]
         SAM_ST_GekkoCombo_Yukikaze = 15005,
 
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Kasha Combo on Main Combo", "Adds Kasha combo to main combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID, 0, "", "")]
         SAM_ST_GekkoCombo_Kasha = 15006,
 
         [ConflictingCombos(SAM_GyotenYaten)]
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the main combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation. \nIf the Opener is interrupted, it will exit the opener via a Goken and a Kaeshi: Goken at the end or via the last Yukikaze. If the latter, CDs will be used on cooldown regardless of burst options.", SAM.JobID, 0, "", "")]
         SAM_ST_GekkoCombo_Opener = 15007,
 
         [ConflictingCombos(SAM_GyotenYaten)]
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Filler Combo Feature", "Adds selected Filler combos to main combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.\nWill disable if you die or if you don't activate the opener.", SAM.JobID, 0, "", "")]
         SAM_ST_GekkoCombo_FillerCombos = 15008,
 
         #region CDs on Main Combo
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("CDs on Main Combo", "Collection of CD features on main combo.", SAM.JobID, 0, "", "")]
         SAM_ST_GekkoCombo_CDs = 15099,
 
@@ -3053,7 +3053,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("True North Feature", "Adds True North on all single target combos if Meikyo Shisui's buff is on you.", SAM.JobID, 0, "", "")]
         SAM_TrueNorth = 15038,
 
-        [ParentCombo(SAM_ST_GekkoCombo)]
+        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
         SAM_ST_ComboHeals = 15043,
 
@@ -3062,12 +3062,12 @@ namespace XIVSlothCombo.Combos
         SAM_AoE_ComboHeals = 15045,
 
         [Variant]
-        [VariantParent(SAM_ST_GekkoCombo, SAM_AoE_MangetsuCombo)]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_MangetsuCombo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SAM.JobID)]
         SAM_Variant_Cure = 15047,
 
         [Variant]
-        [VariantParent(SAM_ST_GekkoCombo, SAM_AoE_MangetsuCombo)]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_MangetsuCombo)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
         SAM_Variant_Rampart = 15048,
         #endregion
