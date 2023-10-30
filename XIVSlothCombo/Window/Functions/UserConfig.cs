@@ -1456,6 +1456,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.DRG_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, DRG.Config.DRG_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.DRG_TrueNorthDynamic)
+            {
+                UserConfig.DrawAdditionalBoolChoice(DRG.Config.DRG_ST_TrueNorth_Moving, "Only When Not Moving", "");
+                UserConfig.DrawAdditionalBoolChoice(DRG.Config.DRG_ST_TrueNorth_FirstOnly, "Only On First Positional", "When you have back-to-back positionals, True North will only trigger on the first one allowing you to move in time for the second positional.");
+            }
+
             #region Dragoon PvP
             if (preset is CustomComboPreset.DRGPvP_Nastrond)
                 UserConfig.DrawSliderInt(0, 100, DRGPvP.Config.DRGPvP_LOTD_HPValue, "Ends Life of the Dragon if HP falls below the set percentage", 150, SliderIncrements.Ones);

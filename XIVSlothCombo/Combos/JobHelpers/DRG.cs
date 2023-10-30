@@ -413,8 +413,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             PvE.DRG.Geirskogul,
             PvE.DRG.Nastrond,
             PvE.DRG.MirageDive,
-            PvE.DRG.WyrmwindThrust,
-            PvE.All.TrueNorth
+            PvE.DRG.WyrmwindThrust
         };
 
         internal static readonly List<uint> MidLocks = new()

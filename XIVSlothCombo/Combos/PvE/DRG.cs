@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -85,6 +86,9 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_STBloodbathThreshold = new("DRG_STBloodbathThreshold"),
                 DRG_AoESecondWindThreshold = new("DRG_AoESecondWindThreshold"),
                 DRG_AoEBloodbathThreshold = new("DRG_AoEBloodbathThreshold");
+            public static UserBool
+                DRG_ST_TrueNorth_Moving = new("DRG_ST_TrueNorth_Moving"),
+                DRG_ST_TrueNorth_FirstOnly = new("DRG_ST_TrueNorth_FirstOnly");
         }
 
         internal class DRG_ST_SimpleMode : CustomCombo
@@ -237,6 +241,9 @@ namespace XIVSlothCombo.Combos.PvE
                 int diveOptions = Config.DRG_ST_DiveOptions;
                 Status? ChaosDoTDebuff;
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
+                bool tnMoving = (Config.DRG_ST_TrueNorth_Moving && !IsMoving) || (!Config.DRG_ST_TrueNorth_Moving);
+                bool tnFirstOnly = (Config.DRG_ST_TrueNorth_FirstOnly && !WasLastWeaponskill(OriginalHook(WheelingThrust)) && !WasLastWeaponskill(OriginalHook(FangAndClaw))) || (!Config.DRG_ST_TrueNorth_FirstOnly);
+                bool allowedToTN = tnMoving && tnFirstOnly;
 
                 if (LevelChecked(ChaoticSpring))
                     ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
@@ -355,7 +362,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // If we are not on the flank, but need to use Fangs, pop true north if not already up
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                            trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            trueNorthReady && allowedToTN && CanDelayedWeave(actionID) &&
                             !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
@@ -366,7 +373,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // If we are not on the rear, but need to use Wheeling, pop true north if not already up
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                            trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            trueNorthReady && allowedToTN && CanDelayedWeave(actionID) &&
                             !OnTargetsRear() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
