@@ -88,87 +88,6 @@ namespace XIVSlothCombo.Combos.PvE
                  SAM_MeikyoChoice = new("SAM_MeikyoChoice"),
                 SAM_VariantCure = new("SAM_VariantCure");
         }
-
-        internal class SAM_ST_YukikazeCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_YukikazeCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Yukikaze)
-                {
-                    SAMGauge? gauge = GetJobGauge<SAMGauge>();
-                    int SamKenkiOvercapAmount = Config.SAM_ST_KenkiOvercapAmount;
-                    bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
-
-                    if (CanWeave(actionID))
-                    {
-                        if (IsEnabled(CustomComboPreset.SAM_TrueNorth) &&
-                            trueNorthReady && GetBuffStacks(Buffs.MeikyoShisui) > 0)
-                            return All.TrueNorth;
-
-                        if (IsEnabled(CustomComboPreset.SAM_ST_Overcap) &&
-                            gauge.Kenki >= SamKenkiOvercapAmount && Shinten.LevelChecked())
-                            return Shinten;
-                    }
-
-                    if (HasEffect(Buffs.MeikyoShisui) && Yukikaze.LevelChecked())
-                        return Yukikaze;
-
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove == Hakaze && Yukikaze.LevelChecked())
-                            return Yukikaze;
-                    }
-
-                    return Hakaze;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class SAM_ST_KashaCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_KashaCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte levels)
-            {
-                SAMGauge? gauge = GetJobGauge<SAMGauge>();
-                int SamKenkiOvercapAmount = Config.SAM_ST_KenkiOvercapAmount;
-                bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
-
-                if (actionID is Kasha)
-                {
-                    if (CanWeave(actionID))
-                    {
-                        if (IsEnabled(CustomComboPreset.SAM_TrueNorth) &&
-                            trueNorthReady && GetBuffStacks(Buffs.MeikyoShisui) > 0)
-                            return All.TrueNorth;
-
-                        if (IsEnabled(CustomComboPreset.SAM_ST_Overcap) &&
-                            gauge.Kenki >= SamKenkiOvercapAmount && Shinten.LevelChecked())
-                            return Shinten;
-                    }
-                    if (HasEffect(Buffs.MeikyoShisui))
-                        return Kasha;
-
-                    if (comboTime > 0)
-                    {
-                        if (lastComboMove == Hakaze && Shifu.LevelChecked())
-                            return Shifu;
-
-                        if (lastComboMove == Shifu && Kasha.LevelChecked())
-                            return Kasha;
-                    }
-
-                    return Hakaze;
-                }
-
-                return actionID;
-            }
-        }
-
         internal class SAM_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_AdvancedMode;
@@ -263,16 +182,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (gauge.Kenki >= 25 && IsOnCooldown(Shoha))
                             return Shinten;
-
-                        // healing - please move if not appropriate this high priority
-                        if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
-                        {
-                            if (PlayerHealthPercentageHp() <= Config.SAM_STSecondWindThreshold && ActionReady(All.SecondWind))
-                                return All.SecondWind;
-
-                            if (PlayerHealthPercentageHp() <= Config.SAM_STBloodbathThreshold && ActionReady(All.Bloodbath))
-                                return All.Bloodbath;
-                        }
                     }
 
                     //GCDs
@@ -551,8 +460,9 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                     }
+
                     // healing - please move if not appropriate this high priority
-                    if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals) && CanSpellWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.SAM_ST_ComboHeals))
                     {
                         if (PlayerHealthPercentageHp() <= Config.SAM_STSecondWindThreshold && ActionReady(All.SecondWind))
                             return All.SecondWind;
@@ -599,6 +509,85 @@ namespace XIVSlothCombo.Combos.PvE
 
                     return Hakaze;
                 }
+                return actionID;
+            }
+        }
+        internal class SAM_ST_YukikazeCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_YukikazeCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Yukikaze)
+                {
+                    SAMGauge? gauge = GetJobGauge<SAMGauge>();
+                    int SamKenkiOvercapAmount = Config.SAM_ST_KenkiOvercapAmount;
+                    bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
+
+                    if (CanWeave(actionID))
+                    {
+                        if (IsEnabled(CustomComboPreset.SAM_TrueNorth) &&
+                            trueNorthReady && GetBuffStacks(Buffs.MeikyoShisui) > 0)
+                            return All.TrueNorth;
+
+                        if (IsEnabled(CustomComboPreset.SAM_ST_Overcap) &&
+                            gauge.Kenki >= SamKenkiOvercapAmount && Shinten.LevelChecked())
+                            return Shinten;
+                    }
+
+                    if (HasEffect(Buffs.MeikyoShisui) && Yukikaze.LevelChecked())
+                        return Yukikaze;
+
+                    if (comboTime > 0)
+                    {
+                        if (lastComboMove == Hakaze && Yukikaze.LevelChecked())
+                            return Yukikaze;
+                    }
+
+                    return Hakaze;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class SAM_ST_KashaCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_KashaCombo;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte levels)
+            {
+                SAMGauge? gauge = GetJobGauge<SAMGauge>();
+                int SamKenkiOvercapAmount = Config.SAM_ST_KenkiOvercapAmount;
+                bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
+
+                if (actionID is Kasha)
+                {
+                    if (CanWeave(actionID))
+                    {
+                        if (IsEnabled(CustomComboPreset.SAM_TrueNorth) &&
+                            trueNorthReady && GetBuffStacks(Buffs.MeikyoShisui) > 0)
+                            return All.TrueNorth;
+
+                        if (IsEnabled(CustomComboPreset.SAM_ST_Overcap) &&
+                            gauge.Kenki >= SamKenkiOvercapAmount && Shinten.LevelChecked())
+                            return Shinten;
+                    }
+                    if (HasEffect(Buffs.MeikyoShisui))
+                        return Kasha;
+
+                    if (comboTime > 0)
+                    {
+                        if (lastComboMove == Hakaze && Shifu.LevelChecked())
+                            return Shifu;
+
+                        if (lastComboMove == Shifu && Kasha.LevelChecked())
+                            return Kasha;
+                    }
+
+                    return Hakaze;
+                }
+
                 return actionID;
             }
         }
