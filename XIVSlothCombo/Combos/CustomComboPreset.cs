@@ -1,6 +1,8 @@
-﻿using XIVSlothCombo.Attributes;
+﻿using System.Configuration;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using static XIVSlothCombo.Combos.PvE.SAM;
 
 namespace XIVSlothCombo.Combos
 {
@@ -2846,17 +2848,17 @@ namespace XIVSlothCombo.Combos
 
         #region Overcap Features
         [ReplaceSkill(SAM.Kasha, SAM.Gekko, SAM.Yukikaze)]
-        [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID, 0, "", "")]
+        [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID, -99, "", "")]
         SAM_ST_Overcap = 15001,
 
         [ReplaceSkill(SAM.Mangetsu, SAM.Oka)]
-        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, 0, "", "")]
+        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID, -98, "", "")]
         SAM_AoE_Overcap = 15002,
         #endregion
 
         #region Main Combo (Gekko) Features
         [ReplaceSkill(SAM.Gekko)]
-        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.\nIf all sub options are selected will turn into a full one button rotation (Advanced Samurai)", SAM.JobID, 0, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replace Gekko with its combo chain.\nIf all sub options are selected will turn into a full one button rotation", SAM.JobID, -50, "", "")]
         SAM_ST_AdvancedMode = 15003,
 
         [ParentCombo(SAM_ST_AdvancedMode)]
@@ -2945,41 +2947,48 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region AoE Combos
-        [ReplaceSkill(SAM.Mangetsu)]
-        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.\nIf all sub options are toggled will turn into a full one button AoE rotation.", SAM.JobID, 0, "", "")]
-        SAM_AoE_MangetsuCombo = 15020,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ReplaceSkill(SAM.Mangetsu)]
+        [ConflictingCombos(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replace Mangetsu with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", SAM.JobID, -49, "", "")]
+        SAM_AoE_SimpleMode = 15049,
+
+        [ReplaceSkill(SAM.Mangetsu)]
+        [ConflictingCombos(SAM_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replace Mangetsu with its combo chain.\nIf all sub options are toggled will turn into a full one button AoE rotation.", SAM.JobID, -48, "", "")]
+        SAM_AoE_AdvancedMode = 15020,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [ConflictingCombos(SAM_AoE_OkaCombo_TwoTarget)]
         [CustomComboInfo("Oka to Mangetsu Combo", "Adds Oka combo after Mangetsu combo loop.\nWill add Oka if needed during Meikyo Shisui.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_Oka = 15021,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Iaijutsu on Mangetsu Combo", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_TenkaGoken = 15022,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Ogi Namikiri on Mangetsu Combo", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to Mangetsu combo.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_OgiNamikiri = 15023,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Shoha 2 on Mangetsu Combo", "Adds Shoha 2 when you have 3 meditation stacks to Mangetsu combo.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_Shoha2 = 15024,
 
         [ConflictingCombos(SAM_Kyuten_Shoha2_Guren)]
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Guren on Mangetsu Combo", "Adds Guren when it's off cooldown and you have 25 Kenki to Mangetsu combo.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_Guren = 15025,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Meikyo Shisui on Mangetsu Combo", "Adds Meikyo Shisui to Mangetsu combo.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_MeikyoShisui = 15039,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Ikishoten on Mangetsu Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID, 0, "", "")]
         SAM_AOE_GekkoCombo_CDs_Ikishoten = 15040,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Hagakure on Mangetsu Combo", "Adds Hagakure to Mangetsu combo when there are three Sen.", SAM.JobID, 0, "", "")]
         SAM_AoE_MangetsuCombo_Hagakure = 15041,
 
@@ -3057,17 +3066,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
         SAM_ST_ComboHeals = 15043,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID, 0, "", "")]
         SAM_AoE_ComboHeals = 15045,
 
         [Variant]
-        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_MangetsuCombo)]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SAM.JobID)]
         SAM_Variant_Cure = 15047,
 
         [Variant]
-        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_MangetsuCombo)]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
         SAM_Variant_Rampart = 15048,
         #endregion
