@@ -1,4 +1,5 @@
-﻿using ECommons.DalamudServices;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -332,6 +333,148 @@ namespace XIVSlothCombo.Combos.JobHelpers
             }
 
             return false;
+        }
+    }
+
+    internal class SAMFillerLogic : PvE.SAM
+    {
+        bool oddMinute = CombatEngageDuration().Minutes % 2 == 1 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
+        bool evenMinute = !HasEffect(Buffs.MeikyoShisui) && CombatEngageDuration().Minutes % 2 == 0 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
+        int SamFillerCombo = Config.SAM_FillerCombo;
+        internal static bool inOddFiller = false;
+        internal static bool inEvenFiller = false;
+        internal static bool fillerComplete = false;
+        internal static bool fastFillerReady = false;
+
+        private bool Filler(ref uint actionID)
+        {
+            if (GetDebuffRemainingTime(Debuffs.Higanbana) < 42)
+            {
+                if (inOddFiller || inEvenFiller)
+                {
+                    inOddFiller = false;
+                    inEvenFiller = false;
+                    fillerComplete = false;
+                    fastFillerReady = false;
+                }
+            }
+
+            if (!inEvenFiller && evenMinute)
+                inEvenFiller = true;
+
+            if (inEvenFiller)
+            {
+                if (hasDied || fillerComplete)
+                {
+                    inEvenFiller = false;
+                    fillerComplete = false;
+                }
+
+                if (SamFillerCombo == 2)
+                {
+                    if (WasLastAbility(Gyoten))
+                        fillerComplete = true;
+
+                    if (WasLastAction(Enpi) && IsOffCooldown(Gyoten))
+                        return Gyoten;
+
+                    if (WasLastAction(Yaten))
+                        return Enpi;
+
+                    if (gauge.Sen == 0 && gauge.Kenki >= 10 && CanSpellWeave(actionID) && IsOffCooldown(Yaten))
+                        return Yaten;
+                }
+
+                if (SamFillerCombo == 3)
+                {
+                    if (WasLastAbility(Hagakure))
+                        fillerComplete = true;
+
+                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                        return Shinten;
+
+                    if (gauge.Sen == Sen.SETSU)
+                        return Hagakure;
+
+                    if (lastComboMove == Hakaze)
+                        return Yukikaze;
+
+                    if (gauge.Sen == 0)
+                        return Hakaze;
+                }
+            }
+
+            if (!inOddFiller && oddMinute)
+                inOddFiller = true;
+
+            if (inOddFiller)
+            {
+                if (hasDied || fillerComplete)
+                {
+                    fastFillerReady = false;
+                    inOddFiller = false;
+                    fillerComplete = false;
+                }
+
+                if (SamFillerCombo == 1)
+                {
+                    if (WasLastAbility(Hagakure))
+                        fillerComplete = true;
+
+                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                        return Shinten;
+
+                    if (gauge.Sen == Sen.SETSU)
+                        return Hagakure;
+
+                    if (lastComboMove == Hakaze)
+                        return Yukikaze;
+
+                    if (gauge.Sen == 0)
+                        return Hakaze;
+                }
+
+                if (SamFillerCombo == 2)
+                {
+                    if (WasLastAbility(Hagakure))
+                        fillerComplete = true;
+
+                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                        return Shinten;
+
+                    if (gauge.Sen == Sen.GETSU)
+                        return Hagakure;
+
+                    if (lastComboMove == Jinpu)
+                        return Gekko;
+
+                    if (lastComboMove == Hakaze)
+                        return Jinpu;
+
+                    if (gauge.Sen == 0)
+                        return Hakaze;
+                }
+
+                if (SamFillerCombo == 3)
+                {
+                    if (WasLastAbility(Hagakure))
+                        fillerComplete = true;
+                    if (WasLastWeaponskill(Hakaze) && gauge.Sen == Sen.SETSU)
+                        fastFillerReady = true;
+
+                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                        return Shinten;
+
+                    if (gauge.Sen == Sen.SETSU && WasLastWeaponskill(Yukikaze) && fastFillerReady)
+                        return Hagakure;
+
+                    if (lastComboMove == Hakaze)
+                        return Yukikaze;
+
+                    if (gauge.Sen == 0 || gauge.Sen == Sen.SETSU)
+                        return Hakaze;
+                }
+            }
         }
     }
 }
