@@ -10,24 +10,25 @@ namespace XIVSlothCombo.Combos.PvE.Content
             VariantRaise2 = 29734;
         //1069 = The Sil'dihn Subterrane
         //1137 = Mount Rokkon
+        //1176 = Aloalo Island
         public static uint VariantCure => Service.ClientState.TerritoryType switch
         {
             1069 => 29729,
-            1137 => 33862,
+            1137 or 1176 => 33862,
             _ => 0
         };
 
         public static uint VariantSpiritDart => Service.ClientState.TerritoryType switch
         {
             1069 => 29732,
-            1137 => 33863,
+            1137 or 1176 => 33863,
             _ => 0
         };
 
         public static uint VariantRampart => Service.ClientState.TerritoryType switch
         {
             1069 => 29733,
-            1137 => 33864,
+            1137 or 1176 => 33864,
             _ => 0
         };
 
