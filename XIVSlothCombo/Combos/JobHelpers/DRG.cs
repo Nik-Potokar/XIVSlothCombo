@@ -79,7 +79,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener && OpenerStep > 0)
             {
-                if (Config.DRG_OpenerChoice == 0)
+                if (Config.DRG_Opener_Choice == 0)
                 {
                     if (CustomComboFunctions.WasLastAction(TrueThrust) && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = TrueThrust;

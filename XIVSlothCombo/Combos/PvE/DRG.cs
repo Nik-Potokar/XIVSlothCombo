@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -78,17 +77,24 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                DRG_ST_DiveOptions = new("DRG_ST_DiveOptions"),
-                DRG_AOE_DiveOptions = new("DRG_AOE_DiveOptions"),
-                DRG_OpenerChoice = new("DRG_OpenerChoice"),
-                DRG_VariantCure = new("DRG_VariantCure"),
-                DRG_STSecondWindThreshold = new("DRG_STSecondWindThreshold"),
-                DRG_STBloodbathThreshold = new("DRG_STBloodbathThreshold"),
-                DRG_AoESecondWindThreshold = new("DRG_AoESecondWindThreshold"),
-                DRG_AoEBloodbathThreshold = new("DRG_AoEBloodbathThreshold");
+                DRG_Opener_Choice = new("DRG_OpenerChoice"),
+                DRG_Variant_Cure = new("DRG_VariantCure"),
+                DRG_ST_LitanyHP = new("DRG_ST_LitanyHP"),
+                DRG_ST_SightHP = new("DRG_ST_SightHP"),
+                DRG_ST_LanceChargeHP = new("DRG_ST_LanceChargeHP"),
+                DRG_ST_SecondWind_Threshold = new("DRG_STSecondWindThreshold"),
+                DRG_ST_Bloodbath_Threshold = new("DRG_STBloodbathThreshold"),
+                DRG_AoE_LitanyHP = new("DRG_AoE_LitanyHP"),
+                DRG_AoE_SightHP = new("DRG_AoE_SightHP"),
+                DRG_AoE_LanceChargeHP = new("DRG_AoE_LanceChargeHP"),
+                DRG_AoE_SecondWind_Threshold = new("DRG_AoESecondWindThreshold"),
+                DRG_AoEBloodbath_Threshold = new("DRG_AoEBloodbathThreshold");
             public static UserBool
                 DRG_ST_TrueNorth_Moving = new("DRG_ST_TrueNorth_Moving"),
                 DRG_ST_TrueNorth_FirstOnly = new("DRG_ST_TrueNorth_FirstOnly");
+            public static UserBoolArray
+                DRG_ST_DivesOption = new("DRG_ST_DivesOption"),
+                DRG_AoE_DivesOption = new("DRG_AOE_DivesOption");
         }
 
         internal class DRG_ST_SimpleMode : CustomCombo
@@ -109,7 +115,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
+                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
@@ -238,11 +244,11 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
-                int diveOptions = Config.DRG_ST_DiveOptions;
                 Status? ChaosDoTDebuff;
+                bool divesAny = Config.DRG_ST_DivesOption.All(x => x == false);
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
                 bool tnMoving = (Config.DRG_ST_TrueNorth_Moving && !IsMoving) || (!Config.DRG_ST_TrueNorth_Moving);
-                bool tnFirstOnly = (Config.DRG_ST_TrueNorth_FirstOnly && !WasLastWeaponskill(OriginalHook(WheelingThrust)) && !WasLastWeaponskill(OriginalHook(FangAndClaw))) || (!Config.DRG_ST_TrueNorth_FirstOnly);
+                bool tnFirstOnly = (Config.DRG_ST_TrueNorth_FirstOnly && !WasLastWeaponskill(OriginalHook(WheelingThrust)) && !WasLastWeaponskill(OriginalHook(FangAndClaw)) && !WasLastWeaponskill(OriginalHook(ChaosThrust))) || (!Config.DRG_ST_TrueNorth_FirstOnly);
                 bool allowedToTN = tnMoving && tnFirstOnly;
 
                 if (LevelChecked(ChaoticSpring))
@@ -253,7 +259,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
+                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
@@ -280,17 +286,20 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Battle Litany Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Litany) &&
-                                ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
+                                ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany) &&
+                                GetTargetHPPercent() >=  Config.DRG_ST_LitanyHP)
                                 return BattleLitany;
 
                             //Lance Charge Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Lance) &&
-                                ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
+                                ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge) &&
+                                GetTargetHPPercent() >= Config.DRG_ST_LanceChargeHP)
                                 return LanceCharge;
 
                             //Dragon Sight Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_DragonSight) &&
-                                ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
+                                ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight) &&
+                                GetTargetHPPercent() >= Config.DRG_ST_SightHP)
                                 return DragonSight;
                         }
 
@@ -312,10 +321,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Dives Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && !IsMoving && LevelChecked(LanceCharge))
                             {
-                                if (diveOptions is 0 || //Dives on cooldown
-                                   (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
-                                   (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
-                                   (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
+                                if (divesAny || //Dives on cooldown
+                                   (((Config.DRG_ST_DivesOption[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_ST_DivesOption[0]) || (!LanceCharge.LevelChecked())) &&
+                                   ((Config.DRG_ST_DivesOption[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_ST_DivesOption[1]) || (!DragonSight.LevelChecked())) &&
+                                   ((Config.DRG_ST_DivesOption[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_ST_DivesOption[2]) || (!BattleLitany.LevelChecked()))))
                                 {
                                     if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
                                         return DragonfireDive;
@@ -342,7 +351,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //StarDives Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && AnimationLock.CanDRGWeave(Stardiver) &&
-                                gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany)))
+                                gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && (HasEffect(Buffs.LanceCharge) || HasEffect(Buffs.RightEye) || HasEffect(Buffs.BattleLitany) || gauge.LOTDTimer <= 4000))
                                 return Stardiver;
                         }
                     }
@@ -350,10 +359,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // healing
                     if (IsEnabled(CustomComboPreset.DRG_ST_ComboHeals))
                     {
-                        if (PlayerHealthPercentageHp() <= Config.DRG_STSecondWindThreshold && ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_ST_SecondWind_Threshold && ActionReady(All.SecondWind))
                             return All.SecondWind;
 
-                        if (PlayerHealthPercentageHp() <= Config.DRG_STBloodbathThreshold && ActionReady(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_ST_Bloodbath_Threshold && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
                     }
 
@@ -388,6 +397,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
                                 return Disembowel;
 
+                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                                trueNorthReady && allowedToTN && CanDelayedWeave(actionID) &&
+                                !OnTargetsRear() && !HasEffect(Buffs.RightEye))
+                                return All.TrueNorth;
+
                             if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
                                 return OriginalHook(ChaosThrust);
                         }
@@ -418,7 +432,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
+                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
                         return Variant.VariantCure;
 
                     // Piercing Talon Uptime Option
@@ -434,15 +448,18 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.PowerSurge))
                     {
                         //Battle Litany Feature
-                        if (ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
+                        if (ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany) &&
+                            GetTargetHPPercent() >= Config.DRG_AoE_LitanyHP)
                             return BattleLitany;
 
                         //Lance Charge Feature
-                        if (ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
+                        if (ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge) &&
+                            GetTargetHPPercent() >= Config.DRG_AoE_LanceChargeHP)
                             return LanceCharge;
 
                         //Dragon Sight Feature
-                        if (ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
+                        if (ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight) &&
+                            GetTargetHPPercent() >= Config.DRG_AoE_SightHP)
                             return DragonSight;
 
                         //Life Surge Feature
@@ -521,13 +538,13 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
-                int diveOptions = Config.DRG_AOE_DiveOptions;
+                bool divesAny = Config.DRG_AoE_DivesOption.All(x => x == false);
 
                 if (actionID is DoomSpike)
                 {
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_VariantCure)
+                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
                         return Variant.VariantCure;
 
                     // Piercing Talon Uptime Option
@@ -577,10 +594,10 @@ namespace XIVSlothCombo.Combos.PvE
                             //Dives Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Dives) && !IsMoving && LevelChecked(LanceCharge))
                             {
-                                if (diveOptions is 0 || //Dives on cooldown
-                                   (diveOptions is 1 && !TraitLevelChecked(Traits.EnhancedSpineshatterDive) && HasEffect(Buffs.LanceCharge)) || //Dives for synched
-                                   (diveOptions is 1 && HasEffect(Buffs.LanceCharge) && HasEffect(Buffs.RightEye)) || //Dives under LanceCharge and Dragon Sight -- optimized with the balance
-                                   (diveOptions is 2 && HasEffect(Buffs.LanceCharge))) //Dives under Lance Charge Feature
+                                if (divesAny || //Dives on cooldown
+                                   (((Config.DRG_AoE_DivesOption[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_AoE_DivesOption[0]) || (!LanceCharge.LevelChecked())) &&
+                                   ((Config.DRG_AoE_DivesOption[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_AoE_DivesOption[1]) || (!DragonSight.LevelChecked())) &&
+                                   ((Config.DRG_AoE_DivesOption[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_AoE_DivesOption[2]) || (!BattleLitany.LevelChecked()))))
                                 {
                                     if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
                                         return DragonfireDive;
@@ -616,10 +633,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // healing
                     if (IsEnabled(CustomComboPreset.DRG_AoE_ComboHeals))
                     {
-                        if (PlayerHealthPercentageHp() <= Config.DRG_AoESecondWindThreshold && ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_AoE_SecondWind_Threshold && ActionReady(All.SecondWind))
                             return All.SecondWind;
 
-                        if (PlayerHealthPercentageHp() <= Config.DRG_AoEBloodbathThreshold && ActionReady(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= Config.DRG_AoEBloodbath_Threshold && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
                     }
 

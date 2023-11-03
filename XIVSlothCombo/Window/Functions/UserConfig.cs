@@ -1421,46 +1421,69 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region DRAGOON
-            if (preset == CustomComboPreset.DRG_ST_Dives && enabled)
+            if (preset == CustomComboPreset.DRG_ST_Dives)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "On Cooldown", "Single Weave friendly.\nUses skills on cooldown.", 0);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Lance Charge and Dragon Sight", "Requires Double Weaving.\nUses 2 Spinishatter Dive charges and Dragonfire Dive under Lance Charge and Dragon Sight.\nUses Stardiver under Life of the Dragon when having a buff active.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_ST_DiveOptions, "Under Lance Charge", "Single Weave friendly.\nUses Spineshatter Dive and Dragonfire Dive under Lance Charge. \nUses Stardiver under Life of the Dragon when having a buff active.", 2);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption, "Under Lance Charge", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption, "Under Dragon Sight", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption, "Under Battle Litany", "", 3, 2);
             }
 
-            if (preset == CustomComboPreset.DRG_AoE_Dives && enabled)
+            if (preset == CustomComboPreset.DRG_AoE_Dives)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "On Cooldown", "Single Weave friendly.\nUses skills on cooldown.", 0);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge and Dragon Sight", "Requires Double Weaving.\nUses 2 Spinishatter Dive charges and Dragonfire Dive under Lance Charge and Dragon Sight.\nUses Stardiver under Life of the Dragon when having a buff active.", 1);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_AOE_DiveOptions, "Under Lance Charge", "Single Weave friendly.\nUses Spineshatter Dive and Dragonfire Dive under Lance Charge. \nUses Stardiver under Life of the Dragon when having a buff active.", 2);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption, "Under Lance Charge", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption, "Under Dragon Sight", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption, "Under Battle Litany", "", 3, 2);
             }
 
-            if (preset == CustomComboPreset.DRG_ST_Opener && enabled)
+            if (preset == CustomComboPreset.DRG_ST_Opener)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerChoice, "2.5 Skill Speed Opener", "Uses the 2.5 sks Opener.", 0);
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_OpenerChoice, "2.46 Skill Speed Opener", "Uses the 2.46 sks Opener.", 1);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener","", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.46 Skill Speed Opener", "", 1);
             }
 
             if (preset == CustomComboPreset.DRG_ST_ComboHeals)
             {
-                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_STSecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.DRG_AoE_ComboHeals)
             {
-                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoE_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoEBloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.DRG_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DRG.Config.DRG_VariantCure, "HP% to be at or under", 200);
+                UserConfig.DrawSliderInt(1, 100, DRG.Config.DRG_Variant_Cure, "HP% to be at or under", 200);
 
             if (preset == CustomComboPreset.DRG_TrueNorthDynamic)
             {
                 UserConfig.DrawAdditionalBoolChoice(DRG.Config.DRG_ST_TrueNorth_Moving, "Only When Not Moving", "");
                 UserConfig.DrawAdditionalBoolChoice(DRG.Config.DRG_ST_TrueNorth_FirstOnly, "Only On First Positional", "When you have back-to-back positionals, True North will only trigger on the first one allowing you to move in time for the second positional.");
             }
+
+            if (preset == CustomComboPreset.DRG_ST_Litany)
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LitanyHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+            
+
+            if (preset == CustomComboPreset.DRG_ST_DragonSight)
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_SightHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+            
+
+            if (preset == CustomComboPreset.DRG_ST_Lance)
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LanceChargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
+            if (preset == CustomComboPreset.DRG_AoE_Litany)
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoE_LitanyHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
+
+            if (preset == CustomComboPreset.DRG_AoE_DragonSight)
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoE_SightHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
+
+            if (preset == CustomComboPreset.DRG_AoE_Lance)
+                UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_AoE_LanceChargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
 
             #region Dragoon PvP
             if (preset is CustomComboPreset.DRGPvP_Nastrond)
