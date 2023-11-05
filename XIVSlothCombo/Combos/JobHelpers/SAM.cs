@@ -338,17 +338,24 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
     internal class SAMFillerLogic : PvE.SAM
     {
-        bool oddMinute = CombatEngageDuration().Minutes % 2 == 1 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
-        bool evenMinute = !HasEffect(Buffs.MeikyoShisui) && CombatEngageDuration().Minutes % 2 == 0 && gauge.Sen == Sen.NONE && GetRemainingCharges(TsubameGaeshi) == 0 && GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
+        bool oddMinute = CustomComboFunctions.CombatEngageDuration().Minutes % 2 == 1 && 
+            gauge.Sen == Sen.NONE && !CustomComboFunctions.HasEffect(Buffs.MeikyoShisui) && CustomComboFunctions.GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && 
+            CustomComboFunctions.GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
+
+        bool evenMinute = !CustomComboFunctions.HasEffect(Buffs.MeikyoShisui) && CustomComboFunctions.CombatEngageDuration().Minutes % 2 == 0 && 
+            gauge.Sen == Sen.NONE && CustomComboFunctions.GetRemainingCharges(TsubameGaeshi) == 0 && 
+            CustomComboFunctions.GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && CustomComboFunctions.GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
+
         int SamFillerCombo = Config.SAM_FillerCombo;
+
         internal static bool inOddFiller = false;
         internal static bool inEvenFiller = false;
         internal static bool fillerComplete = false;
         internal static bool fastFillerReady = false;
 
-        private bool Filler(ref uint actionID)
+        private bool Filler(uint actionID, uint lastComboMove)
         {
-            if (GetDebuffRemainingTime(Debuffs.Higanbana) < 42)
+            if (CustomComboFunctions.GetDebuffRemainingTime(Debuffs.Higanbana) < 42)
             {
                 if (inOddFiller || inEvenFiller)
                 {
@@ -364,7 +371,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (inEvenFiller)
             {
-                if (hasDied || fillerComplete)
+                if (fillerComplete)
                 {
                     inEvenFiller = false;
                     fillerComplete = false;
@@ -372,25 +379,25 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (SamFillerCombo == 2)
                 {
-                    if (WasLastAbility(Gyoten))
+                    if (CustomComboFunctions.WasLastAbility(Gyoten))
                         fillerComplete = true;
 
-                    if (WasLastAction(Enpi) && IsOffCooldown(Gyoten))
+                    if (CustomComboFunctions.WasLastAction(Enpi) && CustomComboFunctions.IsOffCooldown(Gyoten))
                         return Gyoten;
 
-                    if (WasLastAction(Yaten))
+                    if (CustomComboFunctions.WasLastAction(Yaten))
                         return Enpi;
 
-                    if (gauge.Sen == 0 && gauge.Kenki >= 10 && CanSpellWeave(actionID) && IsOffCooldown(Yaten))
+                    if (gauge.Sen == 0 && gauge.Kenki >= 10 && CustomComboFunctions.CanSpellWeave(actionID) && CustomComboFunctions.IsOffCooldown(Yaten))
                         return Yaten;
                 }
 
                 if (SamFillerCombo == 3)
                 {
-                    if (WasLastAbility(Hagakure))
+                    if (CustomComboFunctions.WasLastAbility(Hagakure))
                         fillerComplete = true;
 
-                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                    if (gauge.Kenki >= 75 && CustomComboFunctions.CanWeave(actionID))
                         return Shinten;
 
                     if (gauge.Sen == Sen.SETSU)
@@ -409,7 +416,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (inOddFiller)
             {
-                if (hasDied || fillerComplete)
+                if (fillerComplete)
                 {
                     fastFillerReady = false;
                     inOddFiller = false;
@@ -418,10 +425,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (SamFillerCombo == 1)
                 {
-                    if (WasLastAbility(Hagakure))
+                    if (CustomComboFunctions.WasLastAbility(Hagakure))
                         fillerComplete = true;
 
-                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                    if (gauge.Kenki >= 75 && CustomComboFunctions.CanWeave(actionID))
                         return Shinten;
 
                     if (gauge.Sen == Sen.SETSU)
@@ -436,10 +443,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (SamFillerCombo == 2)
                 {
-                    if (WasLastAbility(Hagakure))
+                    if (CustomComboFunctions.WasLastAbility(Hagakure))
                         fillerComplete = true;
 
-                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                    if (gauge.Kenki >= 75 && CustomComboFunctions.CanWeave(actionID))
                         return Shinten;
 
                     if (gauge.Sen == Sen.GETSU)
@@ -457,15 +464,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (SamFillerCombo == 3)
                 {
-                    if (WasLastAbility(Hagakure))
+                    if (CustomComboFunctions.WasLastAbility(Hagakure))
                         fillerComplete = true;
-                    if (WasLastWeaponskill(Hakaze) && gauge.Sen == Sen.SETSU)
+                    if (CustomComboFunctions.WasLastWeaponskill(Hakaze) && gauge.Sen == Sen.SETSU)
                         fastFillerReady = true;
 
-                    if (gauge.Kenki >= 75 && CanWeave(actionID))
+                    if (gauge.Kenki >= 75 && CustomComboFunctions.CanWeave(actionID))
                         return Shinten;
 
-                    if (gauge.Sen == Sen.SETSU && WasLastWeaponskill(Yukikaze) && fastFillerReady)
+                    if (gauge.Sen == Sen.SETSU && CustomComboFunctions.WasLastWeaponskill(Yukikaze) && fastFillerReady)
                         return Hagakure;
 
                     if (lastComboMove == Hakaze)
