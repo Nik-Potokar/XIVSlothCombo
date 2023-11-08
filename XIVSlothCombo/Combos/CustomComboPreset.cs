@@ -1690,6 +1690,8 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
+        #region ST
+
         [ReplaceSkill(MNK.Bootshine)]
         [CustomComboInfo("Basic Rotation - Single Target", "Replaces Bootshine with Monk's basic single target combo on one button.", MNK.JobID, 1, "", "")]
         MNK_ST_BasicCombo = 9002,
@@ -1704,60 +1706,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub-options are selected will turn into a full one button rotation. Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, 10, "", "")]
         MNK_ST_AdvancedMode = 9006,
 
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_SimpleMode)]
-        [CustomComboInfo("Basic Rotation - AoE", "Replace Arms Of The Destroyer with Monk's basic AoE Combo on one button.", MNK.JobID, 30, "", "")]
-        MNK_AOE_BasicCombo = 9034,
-
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_BasicCombo)]
-        [CustomComboInfo("Simple Mode - AoE", "Replace Arms Of The Destroyer with a one-button full AoE target rotation.", MNK.JobID, 31, "", "")]
-        MNK_AOE_SimpleMode = 9033,
-
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [ConflictingCombos(MNK_AOE_SimpleMode, MNK_AOE_BasicCombo)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replace Arms Of The Destroyer with its combo chain. \nIf all-sub options are selected will turn into a full one button rotation.", MNK.JobID, 32, "", "")]
-        MNK_AOE_AdvancedMode = 9000,
-
-        [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 61, "", "")]
-        MNK_DragonKick_Bootshine = 9001,
-
-        [ReplaceSkill(MNK.TrueStrike)]
-        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 62, "", "")]
-        MNK_TrueStrike_TwinSnakes = 9011,
-
-        [ReplaceSkill(MNK.SnapPunch)]
-        [CustomComboInfo("Demolish Feature", "Replaces Snap Punch with Demolish if Demolish is not applied or is less than 6 seconds from falling off.", MNK.JobID, 62, "", "")]
-        MNK_SnapPunch_Demolish = 9035,
-
-        [ReplaceSkill(MNK.PerfectBalance)]
-        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 63, "", "")]
-        MNK_PerfectBalance = 9003,
-
-        [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, 64, "", "")]
-        MNK_BootshineBalance = 9004,
-
-        [ReplaceSkill(MNK.HowlingFist, MNK.Enlightenment)]
-        [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, 65, "", "")]
-        MNK_HowlingFistMeditation = 9005,
-
-        [ReplaceSkill(MNK.MasterfulBlitz)]
-        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active.", MNK.JobID, 66, "", "")]
-        MNK_PerfectBalance_Plus = 9007,
-
         [ParentCombo(MNK_ST_ADV_CDs)]
         [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the main combo", MNK.JobID, 11, "", "")]
-        MNK_ST_MasterfulBlitz = 9008,
-
-        [ParentCombo(MNK_AoE_ADV_CDs)]
-        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID, 41, "", "")]
-        MNK_AoE_MasterfulBlitz = 9009,
-
-        [ReplaceSkill(MNK.RiddleOfFire)]
-        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 36, "", "")]
-        MNK_Riddle_Brotherhood = 9012,
+        MNK_ST_Adv_MasterfulBlitz = 9008,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the main combo.", MNK.JobID, 12, "", "")]
@@ -1784,8 +1735,55 @@ namespace XIVSlothCombo.Combos
         MNK_ST_Meditation = 9017,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the main combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID, 18, "", "")]
-        MNK_ST_LunarSolarOpener = 9018,
+        [CustomComboInfo("Opener", "choose which opener to use. \nRecommended GCD of 1.94.", MNK.JobID, 0, "", "")]
+        MNK_ST_Adv_Opener = 9018,
+
+        [ParentCombo(MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 19, "", "")]
+        MNK_ST_ADV_Thunderclap = 9025,
+
+        [ParentCombo(MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 20, "", "")]
+        MNK_ST_ComboHeals = 9026,
+
+        [ParentCombo(MNK_ST_Meditation)]
+        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 17, "", "")]
+        MNK_ST_Meditation_Uptime = 9028,
+
+        [ParentCombo(MNK_ST_SimpleMode)]
+        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
+        MNK_ST_Simple_Thunderclap = 9038,
+
+        [ParentCombo(MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID, 68, "", "")]
+        MNK_ST_AdV_TrueNorthDynamic = 9029,
+
+        #endregion
+
+        #region AoE
+
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 48, "", "")]
+        MNK_AoE_ComboHeals = 9027,
+
+        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
+        [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_SimpleMode)]
+        [CustomComboInfo("Basic Rotation - AoE", "Replace Arms Of The Destroyer with Monk's basic AoE Combo on one button.", MNK.JobID, 30, "", "")]
+        MNK_AOE_BasicCombo = 9034,
+
+        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
+        [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_BasicCombo)]
+        [CustomComboInfo("Simple Mode - AoE", "Replace Arms Of The Destroyer with a one-button full AoE target rotation.", MNK.JobID, 31, "", "")]
+        MNK_AOE_SimpleMode = 9033,
+
+        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
+        [ConflictingCombos(MNK_AOE_SimpleMode, MNK_AOE_BasicCombo)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replace Arms Of The Destroyer with its combo chain. \nIf all-sub options are selected will turn into a full one button rotation.", MNK.JobID, 32, "", "")]
+        MNK_AOE_AdvancedMode = 9000,
+
+        [ParentCombo(MNK_AoE_ADV_CDs)]
+        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID, 41, "", "")]
+        MNK_AoE_MasterfulBlitz = 9009,
 
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE combo.", MNK.JobID, 42, "", "")]
@@ -1815,28 +1813,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Thunderclap on AoE Combo", "Adds Thunderclap when out of combat to the AoE combo.", MNK.JobID, 47, "", "")]
         MNK_AoE_Thunderclap = 9024,
 
-        [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 19, "", "")]
-        MNK_ST_ADV_Thunderclap = 9025,
-
-        [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 20, "", "")]
-        MNK_ST_ComboHeals = 9026,
-
         [ParentCombo(MNK_AOE_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 48, "", "")]
-        MNK_AoE_ComboHeals = 9027,
+        [CustomComboInfo("Formless Fist on AoE Combo", "Adds Formless Fist to the AoE combo.", MNK.JobID, 45, "", "")]
+        MNK_AoE_FormlessFist = 9039,
 
-        [ParentCombo(MNK_ST_Meditation)]
-        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID, 17, "", "")]
-        MNK_ST_Meditation_Uptime = 9028,
+        #endregion
 
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID, 0, "", "")]
-        MNK_ST_Simple_Thunderclap = 9038,
-
-        [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID, 68, "", "")]
-        MNK_TrueNorthDynamic = 9029,
+        #region Variant
 
         [Variant]
         [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_AdvancedMode, MNK_ST_SimpleMode, MNK_AOE_SimpleMode)]
@@ -1848,9 +1831,41 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9031,
 
-        [ParentCombo(MNK_AOE_AdvancedMode)]
-        [CustomComboInfo("Formless Fist on AoE Combo", "Adds Formless Fist to the AoE combo.", MNK.JobID, 45, "", "")]
-        MNK_AoE_FormlessFist = 9039,
+        #endregion
+
+        [ReplaceSkill(MNK.DragonKick)]
+        [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 61, "", "")]
+        MNK_DragonKick_Bootshine = 9001,
+
+        [ReplaceSkill(MNK.TrueStrike)]
+        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID, 62, "", "")]
+        MNK_TrueStrike_TwinSnakes = 9011,
+
+        [ReplaceSkill(MNK.SnapPunch)]
+        [CustomComboInfo("Demolish Feature", "Replaces Snap Punch with Demolish if Demolish is not applied or is less than 6 seconds from falling off.", MNK.JobID, 62, "", "")]
+        MNK_SnapPunch_Demolish = 9035,
+
+        [ReplaceSkill(MNK.PerfectBalance)]
+        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID, 63, "", "")]
+        MNK_PerfectBalance = 9003,
+
+        [ReplaceSkill(MNK.DragonKick)]
+        [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID, 64, "", "")]
+        MNK_BootshineBalance = 9004,
+
+        [ReplaceSkill(MNK.HowlingFist, MNK.Enlightenment)]
+        [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID, 65, "", "")]
+        MNK_HowlingFistMeditation = 9005,
+
+        [ReplaceSkill(MNK.MasterfulBlitz)]
+        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active.", MNK.JobID, 66, "", "")]
+        MNK_PerfectBalance_Plus = 9007,
+
+        [ReplaceSkill(MNK.RiddleOfFire)]
+        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 36, "", "")]
+        MNK_Riddle_Brotherhood = 9012,
+
+
 
         [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Formless Fist on ST Combo", "Adds Formless Fist to the ST combo.", MNK.JobID, 16, "", "")]
