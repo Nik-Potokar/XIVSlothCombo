@@ -364,7 +364,6 @@ namespace XIVSlothCombo.Combos.PvE
                 bool canSolar = gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
                 bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
 
-
                 if (actionID is DragonKick)
                 {
                     if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
@@ -464,7 +463,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.MNK_ST_Adv_MasterfulBlitz) &&
-                        LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance))
+                        LevelChecked(MasterfulBlitz))
                     {
                         // Masterful Blitz ElixirField/RisingPhoenix
                         if ((OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix) &&
@@ -475,10 +474,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (OriginalHook(MasterfulBlitz) != MasterfulBlitz &&
                             !(OriginalHook(MasterfulBlitz) == ElixirField || OriginalHook(MasterfulBlitz) == RisingPhoenix))
                             return OriginalHook(MasterfulBlitz);
-
-                        //force twinsnakes for looping reasons
-                        if (WasLastAction(ElixirField))
-                            return TwinSnakes;
 
                         // Beast chackra's
                         if (HasEffect(Buffs.PerfectBalance))
@@ -517,6 +512,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 : DragonKick;
                         }
                     }
+
+                    //force twinsnakes for looping reasons
+                    if (WasLastAction(ElixirField))
+                        return TwinSnakes;
 
                     // Healing
                     if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
