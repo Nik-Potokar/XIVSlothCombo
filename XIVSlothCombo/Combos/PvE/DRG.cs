@@ -298,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return WheelingThrust;
                         if (comboTime > 0)
                         {
-                            if (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6 || GetBuffRemainingTime(Buffs.PowerSurge) < 10)
+                            if ((LevelChecked(ChaosThrust) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 6)) || GetBuffRemainingTime(Buffs.PowerSurge) < 10)
                             {
                                 if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(Disembowel))
                                     return Disembowel;
