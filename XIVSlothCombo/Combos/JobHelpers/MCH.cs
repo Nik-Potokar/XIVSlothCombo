@@ -27,11 +27,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public static bool HasPrePullCooldowns()
         {
-            if (Svc.Gauges.Get<MCHGauge>().Heat > 0)
-                return false;
-
-            if (Svc.Gauges.Get<MCHGauge>().Battery > 0)
-                return false;
+            if (CustomComboFunctions.GetRemainingCharges(Reassemble) == 0 && Config.MCH_ST_RotationSelection == 2) return false;
 
             return true;
         }
@@ -94,7 +90,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (Config.MCH_ST_OpenerSelection == 0 || Config.MCH_ST_OpenerSelection == 1)
+                if (Config.MCH_ST_RotationSelection == 0 || Config.MCH_ST_RotationSelection == 1)
                 {
                     if (CustomComboFunctions.WasLastAction(HeatedSplitShot) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
                     else if (PrePullStep == 1) actionID = HeatedSplitShot;
@@ -103,7 +99,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                         CurrentState = OpenerState.FailedOpener;
                 }
 
-                if (Config.MCH_ST_OpenerSelection == 2)
+                if (Config.MCH_ST_RotationSelection == 2)
                 {
                     if (CustomComboFunctions.HasEffect(Buffs.Reassembled) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
                     else if (PrePullStep == 1) actionID = Reassemble;
@@ -128,7 +124,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
-                if (Config.MCH_ST_OpenerSelection == 0)
+                if (Config.MCH_ST_RotationSelection == 0)
                 {
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = GaussRound;
@@ -222,7 +218,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
                 }
 
-                else if (Config.MCH_ST_OpenerSelection == 1)
+                else if (Config.MCH_ST_RotationSelection == 1)
                 {
                     if (CustomComboFunctions.WasLastAction(GaussRound) && OpenerStep == 1) OpenerStep++;
                     else if (OpenerStep == 1) actionID = GaussRound;

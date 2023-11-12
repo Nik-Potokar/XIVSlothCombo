@@ -93,8 +93,10 @@ namespace XIVSlothCombo.Combos.PvE
                 DRG_ST_TrueNorth_Moving = new("DRG_ST_TrueNorth_Moving"),
                 DRG_ST_TrueNorth_FirstOnly = new("DRG_ST_TrueNorth_FirstOnly");
             public static UserBoolArray
-                DRG_ST_DivesOption = new("DRG_ST_DivesOption"),
-                DRG_AoE_DivesOption = new("DRG_AOE_DivesOption");
+                DRG_ST_DivesOption_Dragonfire = new("DRG_ST_DivesOption_Dragonfire"),
+                DRG_ST_DivesOption_Spineshatter = new("DRG_ST_DivesOption_Spineshatter"),
+                DRG_AoE_DivesOption_Dragonfire = new("DRG_AoE_DivesOption_Dragonfire"),
+                DRG_AoE_DivesOption_Spineshatter = new("DRG_AoE_DivesOption_Spineshatter");
         }
 
         internal class DRG_ST_SimpleMode : CustomCombo
@@ -245,7 +247,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
                 Status? ChaosDoTDebuff;
-                bool divesAny = Config.DRG_ST_DivesOption.All(x => x == false);
+                bool dragonfireAny = Config.DRG_ST_DivesOption_Dragonfire.All(x => x == false);
+                bool spineshatterAny = Config.DRG_ST_DivesOption_Spineshatter.All(x => x == false);
                 bool trueNorthReady = TargetNeedsPositionals() && HasCharges(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth);
                 bool tnMoving = (Config.DRG_ST_TrueNorth_Moving && !IsMoving) || (!Config.DRG_ST_TrueNorth_Moving);
                 bool tnFirstOnly = (Config.DRG_ST_TrueNorth_FirstOnly && !WasLastWeaponskill(OriginalHook(WheelingThrust)) && !WasLastWeaponskill(OriginalHook(FangAndClaw)) && !WasLastWeaponskill(OriginalHook(ChaosThrust))) || (!Config.DRG_ST_TrueNorth_FirstOnly);
@@ -287,7 +290,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Battle Litany Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Litany) &&
                                 ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany) &&
-                                GetTargetHPPercent() >=  Config.DRG_ST_LitanyHP)
+                                GetTargetHPPercent() >= Config.DRG_ST_LitanyHP)
                                 return BattleLitany;
 
                             //Lance Charge Feature
@@ -319,20 +322,31 @@ namespace XIVSlothCombo.Combos.PvE
                                 return WyrmwindThrust;
 
                             //Dives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives) && !IsMoving && LevelChecked(LanceCharge))
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives_Dragonfire) && !IsMoving && LevelChecked(LanceCharge))
                             {
-                                if (divesAny || //Dives on cooldown
-                                   (((Config.DRG_ST_DivesOption[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_ST_DivesOption[0]) || (!LanceCharge.LevelChecked())) &&
-                                   ((Config.DRG_ST_DivesOption[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_ST_DivesOption[1]) || (!DragonSight.LevelChecked())) &&
-                                   ((Config.DRG_ST_DivesOption[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_ST_DivesOption[2]) || (!BattleLitany.LevelChecked()))))
+                                if (dragonfireAny || //Dives on cooldown
+                                   (((Config.DRG_ST_DivesOption_Dragonfire[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_ST_DivesOption_Dragonfire[0]) || (!LanceCharge.LevelChecked())) &&
+                                   ((Config.DRG_ST_DivesOption_Dragonfire[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_ST_DivesOption_Dragonfire[1]) || (!DragonSight.LevelChecked())) &&
+                                   ((Config.DRG_ST_DivesOption_Dragonfire[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_ST_DivesOption_Dragonfire[2]) || (!BattleLitany.LevelChecked()))))
                                 {
                                     if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
                                         return DragonfireDive;
 
+                                }
+                            }
+
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_Spineshatter_Dive) && !IsMoving && LevelChecked(LanceCharge))
+                            {
+                                if (spineshatterAny || //Dives on cooldown
+                                   (((Config.DRG_ST_DivesOption_Spineshatter[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_ST_DivesOption_Spineshatter[0]) || (!LanceCharge.LevelChecked())) &&
+                                   ((Config.DRG_ST_DivesOption_Spineshatter[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_ST_DivesOption_Spineshatter[1]) || (!DragonSight.LevelChecked())) &&
+                                   ((Config.DRG_ST_DivesOption_Spineshatter[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_ST_DivesOption_Spineshatter[2]) || (!BattleLitany.LevelChecked()))))
+                                {
                                     if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
                                         return SpineshatterDive;
                                 }
                             }
+
 
                             //(High) Jump Feature   
                             if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
@@ -448,18 +462,15 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.PowerSurge))
                     {
                         //Battle Litany Feature
-                        if (ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany) &&
-                            GetTargetHPPercent() >= Config.DRG_AoE_LitanyHP)
+                        if (ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
                             return BattleLitany;
 
                         //Lance Charge Feature
-                        if (ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge) &&
-                            GetTargetHPPercent() >= Config.DRG_AoE_LanceChargeHP)
+                        if (ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
                             return LanceCharge;
 
                         //Dragon Sight Feature
-                        if (ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight) &&
-                            GetTargetHPPercent() >= Config.DRG_AoE_SightHP)
+                        if (ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
                             return DragonSight;
 
                         //Life Surge Feature
@@ -538,7 +549,8 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 DRGGauge? gauge = GetJobGauge<DRGGauge>();
-                bool divesAny = Config.DRG_AoE_DivesOption.All(x => x == false);
+                bool dragonfireAny = Config.DRG_AoE_DivesOption_Dragonfire.All(x => x == false);
+                bool spineshatterAny = Config.DRG_AoE_DivesOption_Spineshatter.All(x => x == false);
 
                 if (actionID is DoomSpike)
                 {
@@ -564,17 +576,20 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Battle Litany Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Litany) &&
-                                ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany))
+                                ActionReady(BattleLitany) && AnimationLock.CanDRGWeave(BattleLitany) &&
+                                GetTargetHPPercent() >= Config.DRG_AoE_LitanyHP)
                                 return BattleLitany;
 
                             //Lance Charge Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Lance) &&
-                                ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge))
+                                ActionReady(LanceCharge) && AnimationLock.CanDRGWeave(LanceCharge) &&
+                                GetTargetHPPercent() >= Config.DRG_AoE_LanceChargeHP)
                                 return LanceCharge;
 
                             //Dragon Sight Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_DragonSight) &&
-                                ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight))
+                                ActionReady(DragonSight) && AnimationLock.CanDRGWeave(DragonSight) &&
+                                GetTargetHPPercent() >= Config.DRG_AoE_SightHP)
                                 return DragonSight;
                         }
 
@@ -591,19 +606,30 @@ namespace XIVSlothCombo.Combos.PvE
                                 gauge.FirstmindsFocusCount is 2 && AnimationLock.CanDRGWeave(WyrmwindThrust))
                                 return WyrmwindThrust;
 
-                            //Dives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Dives) && !IsMoving && LevelChecked(LanceCharge))
+                            if (!IsMoving)
                             {
-                                if (divesAny || //Dives on cooldown
-                                   (((Config.DRG_AoE_DivesOption[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_AoE_DivesOption[0]) || (!LanceCharge.LevelChecked())) &&
-                                   ((Config.DRG_AoE_DivesOption[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_AoE_DivesOption[1]) || (!DragonSight.LevelChecked())) &&
-                                   ((Config.DRG_AoE_DivesOption[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_AoE_DivesOption[2]) || (!BattleLitany.LevelChecked()))))
+                                if (IsEnabled(CustomComboPreset.DRG_AoE_Dragonfire_Dive))
                                 {
-                                    if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
-                                        return DragonfireDive;
+                                    if (dragonfireAny || //Dives on cooldown
+                                       (((Config.DRG_AoE_DivesOption_Dragonfire[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_AoE_DivesOption_Dragonfire[0]) || (!LanceCharge.LevelChecked())) &&
+                                       ((Config.DRG_AoE_DivesOption_Dragonfire[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_AoE_DivesOption_Dragonfire[1]) || (!DragonSight.LevelChecked())) &&
+                                       ((Config.DRG_AoE_DivesOption_Dragonfire[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_AoE_DivesOption_Dragonfire[2]) || (!BattleLitany.LevelChecked()))))
+                                    {
+                                        if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive))
+                                            return DragonfireDive;
+                                    }
+                                }
 
-                                    if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
-                                        return SpineshatterDive;
+                                if (IsEnabled(CustomComboPreset.DRG_AoE_Spineshatter_Dive))
+                                {
+                                    if (spineshatterAny || //Dives on cooldown
+                                       (((Config.DRG_AoE_DivesOption_Spineshatter[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_AoE_DivesOption_Spineshatter[0]) || (!LanceCharge.LevelChecked())) &&
+                                       ((Config.DRG_AoE_DivesOption_Spineshatter[1] && HasEffect(Buffs.RightEye)) || (!Config.DRG_AoE_DivesOption_Spineshatter[1]) || (!DragonSight.LevelChecked())) &&
+                                       ((Config.DRG_AoE_DivesOption_Spineshatter[2] && HasEffect(Buffs.BattleLitany)) || (!Config.DRG_AoE_DivesOption_Spineshatter[2]) || (!BattleLitany.LevelChecked()))))
+                                    {
+                                        if (ActionReady(SpineshatterDive) && AnimationLock.CanDRGWeave(SpineshatterDive))
+                                            return SpineshatterDive;
+                                    }
                                 }
                             }
 

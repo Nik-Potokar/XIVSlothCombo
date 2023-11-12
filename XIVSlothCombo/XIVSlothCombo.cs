@@ -56,6 +56,7 @@ namespace XIVSlothCombo
         public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
             pluginInterface.Create<Service>();
+            ECommonsMain.Init(pluginInterface, this);
 
             Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             Service.Address = new PluginAddressResolver();
@@ -69,7 +70,6 @@ namespace XIVSlothCombo
             ActionWatching.Enable();
             Combos.JobHelpers.AST.Init();
 
-            ECommonsMain.Init(pluginInterface, this);
             configWindow = new ConfigWindow(this);
 
             Service.Interface.UiBuilder.Draw += DrawUI;
@@ -87,10 +87,16 @@ namespace XIVSlothCombo
             Service.Framework.Update += CheckCurrentJob;
 
             KillRedundantIDs();
+
+#if DEBUG
+            PvEFeatures.HasToOpenJob = false;
+            configWindow.Visible = true;
+#endif
         }
 
         private static void CheckCurrentJob(IFramework framework)
         {
+            if (Service.ClientState.LocalPlayer is not null)
             JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
         }
         private static void KillRedundantIDs()

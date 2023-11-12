@@ -1,7 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Utility;
 using Dalamud.Utility;
+using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System;
 using System.Linq;
@@ -430,24 +432,13 @@ namespace XIVSlothCombo.Window.Functions
         /// /// <param name="choice"> If the user ticks this box, this is the value the config will be set to. </param>
         /// <param name="itemWidth"></param>
         /// <param name="descriptionColor"></param>
-        public static void DrawHorizontalMultiChoice(string config, string checkBoxName, string checkboxDescription, int totalChoices, int choice, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        public static void DrawHorizontalMultiChoice(string config, string checkBoxName, string checkboxDescription, int totalChoices, int choice, Vector4 descriptionColor = new Vector4())
         {
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
-            ImGui.PushItemWidth(itemWidth);
-            ImGui.SameLine();
-            ImGui.Dummy(new Vector2(21, 0));
-            ImGui.SameLine();
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
+            var textSize = ImGui.CalcTextSize(checkBoxName);
 
-            if (ImGui.GetColumnsCount() == totalChoices)
-            {
-                ImGui.NextColumn();
-            }
-            else
-            {
-                ImGui.Columns(totalChoices, null, false);
-            }
             //If new saved options or amount of choices changed, resize and save
             if (values.Length == 0 || values.Length != totalChoices)
             {
@@ -457,12 +448,18 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             ImGui.PushStyleColor(ImGuiCol.Text, descriptionColor);
+            if (choice > 0)
+            {
+                ImGui.SameLine();
+                ImGui.Dummy(new Vector2(12f, 0));
+                ImGui.SameLine();
+            }
+
             if (ImGui.Checkbox($"{checkBoxName}###{config}{choice}", ref values[choice]))
             {
                 PluginConfiguration.SetCustomBoolArrayValue(config, values);
                 Service.Configuration.Save();
             }
-
             if (!checkboxDescription.IsNullOrEmpty() && ImGui.IsItemHovered())
             {
                 ImGui.BeginTooltip();
@@ -470,8 +467,6 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.EndTooltip();
             }
 
-            if (ImGui.GetColumnIndex() == totalChoices - 1)
-                ImGui.Columns(1);
 
             ImGui.PopStyleColor();
             ImGui.Unindent();
@@ -1421,18 +1416,32 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region DRAGOON
-            if (preset == CustomComboPreset.DRG_ST_Dives)
+            if (preset == CustomComboPreset.DRG_ST_Dives_Dragonfire)
             {
-                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption, "Under Lance Charge", "", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption, "Under Dragon Sight", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption, "Under Battle Litany", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption_Dragonfire, "Under Lance Charge", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption_Dragonfire, "Under Dragon Sight", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption_Dragonfire, "Under Battle Litany", "", 3, 2);
             }
 
-            if (preset == CustomComboPreset.DRG_AoE_Dives)
+            if (preset == CustomComboPreset.DRG_ST_Dives_Spineshatter)
             {
-                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption, "Under Lance Charge", "", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption, "Under Dragon Sight", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption, "Under Battle Litany", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption_Spineshatter, "Under Lance Charge", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption_Spineshatter, "Under Dragon Sight", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_ST_DivesOption_Spineshatter, "Under Battle Litany", "", 3, 2);
+            }
+
+            if (preset == CustomComboPreset.DRG_AoE_Dragonfire_Dive)
+            {
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption_Dragonfire, "Under Lance Charge", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption_Dragonfire, "Under Dragon Sight", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption_Dragonfire, "Under Battle Litany", "", 3, 2);
+            }
+
+            if (preset == CustomComboPreset.DRG_AoE_Spineshatter_Dive)
+            {
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption_Spineshatter, "Under Lance Charge", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption_Spineshatter, "Under Dragon Sight", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(DRG.Config.DRG_AoE_DivesOption_Spineshatter, "Under Battle Litany", "", 3, 2);
             }
 
             if (preset == CustomComboPreset.DRG_ST_Opener)
@@ -1519,25 +1528,44 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            if (preset is CustomComboPreset.MCH_ST_Adv_Opener)
-            {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_OpenerSelection, "Standard Opener", "Uses Standard Opener.", 0);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_OpenerSelection, "123 Tools", "Uses 123 Tools opener.", 1);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_OpenerSelection, "Early Tools", "Uses Early Tools opener.", 2);
-            }
-
-            if (preset is CustomComboPreset.MCH_ST_Adv_Rotation)
+            if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
             {
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "Uses Standard Rotation.", 0);
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "Uses 123 Tools Rotation.", 1);
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "Uses Early Tools Rotation.", 2);
             }
 
+            if (preset is CustomComboPreset.MCH_Adv_TurretQueen)
+            {
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_TurretUsage, "Early Use", "Uses at 50 battery or above", 0);
+                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_TurretUsage, "Dynamic Use", "Used at different values depending on current state, as per the Balance guidance.", 1);
+            }
+
+            if (preset is CustomComboPreset.MCH_ST_Adv_Reassembled)
+            {
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+            }
+
+            if (preset is CustomComboPreset.MCH_AoE_Adv_Reassemble)
+            {
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.SpreadShot)}/{ActionWatching.GetActionName(MCH.Scattergun)}", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.AutoCrossbow)}", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+            }
+
             if (preset == CustomComboPreset.MCH_ST_Adv_SecondWind)
-                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_SecondWindThreshold, $"{ActionWatching.GetActionName(All.SecondWind)} HP percentage threshold", 150, SliderIncrements.Ones);
 
             if (preset == CustomComboPreset.MCH_AoE_Adv_SecondWind)
-                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, "Second Wind HP percentage threshold", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_SecondWindThreshold, $"{ActionWatching.GetActionName(All.SecondWind)} HP percentage threshold", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.MCH_AoE_Adv_Queen)
+                UserConfig.DrawSliderInt(50, 100, MCH.Config.MCH_AoE_TurretUsage, "Battery threshold", sliderIncrement: 5);
+
+            if (preset == CustomComboPreset.MCH_AoE_Adv_GaussRicochet)
+                UserConfig.DrawAdditionalBoolChoice(MCH.Config.MCH_AoE_Hypercharge, $"Use Outwith {ActionWatching.GetActionName(MCH.Hypercharge)}", "");
 
             #endregion
             // ====================================================================================
