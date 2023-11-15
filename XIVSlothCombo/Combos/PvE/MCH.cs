@@ -319,9 +319,6 @@ namespace XIVSlothCombo.Combos.PvE
                 MCHGauge? gauge = GetJobGauge<MCHGauge>();
                 int rotationSelection = Config.MCH_ST_RotationSelection;
                 bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy();
-                bool reassembledAnchor = (Config.MCH_ST_Reassembled[0] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
-                bool reassembledDrill = (Config.MCH_ST_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
-                bool reassembledChainsaw = (Config.MCH_ST_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
 
                 if (actionID is SplitShot)
                 {
@@ -463,31 +460,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HeatBlast;
                         }
 
-                        // OGCD's
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassembled) && !HasEffect(Buffs.Wildfire) &&
-                            !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
-                            ((GetCooldownRemainingTime(OriginalHook(HotShot)) < 1 && Config.MCH_ST_Reassembled[0] && HotShot.LevelChecked()) ||
-                            (GetCooldownRemainingTime(OriginalHook(Drill)) < 1 && Config.MCH_ST_Reassembled[1] && Drill.LevelChecked()) ||
-                            (GetCooldownRemainingTime(OriginalHook(ChainSaw)) < 1 && Config.MCH_ST_Reassembled[2]) && ChainSaw.LevelChecked()))
-                            return Reassemble;
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_ChainSaw) &&
-                            reassembledChainsaw &&
-                            ((LevelChecked(ChainSaw) && GetCooldownRemainingTime(ChainSaw) < 1) ||
-                            ActionReady(ChainSaw)))
-                            return ChainSaw;
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_AirAnchor) &&
-                            reassembledAnchor &&
-                            ((LevelChecked(AirAnchor) && GetCooldownRemainingTime(AirAnchor) < 1) ||
-                            (!LevelChecked(AirAnchor) && ActionReady(HotShot)) ||
-                            ActionReady(AirAnchor)))
-                            return OriginalHook(AirAnchor);
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
-                            reassembledDrill &&
-                            ((LevelChecked(Drill) && GetCooldownRemainingTime(Drill) < 1) || ActionReady(Drill)))
-                            return Drill;
+                        if (ReassembledTools(ref actionID))
+                            return actionID;
 
                         //gauss and ricochet overcap protection
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
@@ -610,30 +584,9 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // TOOLS!! ChainSaw Drill Air Anchor
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassembled) && !HasEffect(Buffs.Wildfire) &&
-                            !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
-                            ((GetCooldownRemainingTime(OriginalHook(HotShot)) < 1 && Config.MCH_ST_Reassembled[0] && HotShot.LevelChecked()) ||
-                            (GetCooldownRemainingTime(OriginalHook(Drill)) < 1 && Config.MCH_ST_Reassembled[1] && Drill.LevelChecked()) ||
-                            (GetCooldownRemainingTime(OriginalHook(ChainSaw)) < 1 && Config.MCH_ST_Reassembled[2]) && ChainSaw.LevelChecked()))
-                            return Reassemble;
 
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_ChainSaw) &&
-                            reassembledChainsaw &&
-                            (GetCooldownRemainingTime(ChainSaw) < 1 || ActionReady(ChainSaw)))
-                            return ChainSaw;
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_AirAnchor) &&
-                            reassembledAnchor &&
-                            (GetCooldownRemainingTime(AirAnchor) < 1 ||
-                            (!LevelChecked(AirAnchor) && ActionReady(HotShot)) ||
-                            ActionReady(AirAnchor)))
-                            return OriginalHook(AirAnchor);
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
-                            reassembledDrill &&
-                            (GetCooldownRemainingTime(Drill) < 1 || ActionReady(Drill)))
-                            return Drill;
+                        if (ReassembledTools(ref actionID))
+                            return actionID;
 
                         //gauss and ricochet overcap protection
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
@@ -757,30 +710,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // TOOLS!! ChainSaw Drill Air Anchor
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassembled) && !HasEffect(Buffs.Wildfire) &&
-                            !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
-                            ((GetCooldownRemainingTime(OriginalHook(HotShot)) < 1 && Config.MCH_ST_Reassembled[0] && HotShot.LevelChecked()) ||
-                            (GetCooldownRemainingTime(OriginalHook(Drill)) < 1 && Config.MCH_ST_Reassembled[1] && Drill.LevelChecked()) ||
-                            (GetCooldownRemainingTime(OriginalHook(ChainSaw)) < 1 && Config.MCH_ST_Reassembled[2]) && ChainSaw.LevelChecked()))
-                            return Reassemble;
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_ChainSaw) &&
-                            reassembledChainsaw &&
-                            (GetCooldownRemainingTime(ChainSaw) < 1 || ActionReady(ChainSaw)))
-                            return ChainSaw;
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_AirAnchor) &&
-                            reassembledAnchor &&
-                            (GetCooldownRemainingTime(AirAnchor) < 1 ||
-                            (!LevelChecked(AirAnchor) && ActionReady(HotShot)) ||
-                            ActionReady(AirAnchor)))
-                            return OriginalHook(AirAnchor);
-
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
-                            reassembledDrill &&
-                            (GetCooldownRemainingTime(Drill) < 1 || ActionReady(Drill)))
-                            return Drill;
+                        if (ReassembledTools(ref actionID))
+                            return actionID;
 
                         //gauss and ricochet overcap protection
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
@@ -812,6 +743,51 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 return actionID;
+            }
+
+            private bool ReassembledTools(ref uint actionId)
+            {
+                bool reassembledAnchor = (Config.MCH_ST_Reassembled[0] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
+                bool reassembledDrill = (Config.MCH_ST_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
+                bool reassembledChainsaw = (Config.MCH_ST_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
+
+                // TOOLS!! ChainSaw Drill Air Anchor
+                if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassembled) && !HasEffect(Buffs.Wildfire) &&
+                    !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
+                    ((GetCooldownRemainingTime(OriginalHook(HotShot)) < 1 && Config.MCH_ST_Reassembled[0] && AirAnchor.LevelChecked()) ||
+                    (GetCooldownRemainingTime(OriginalHook(Drill)) < 1 && Config.MCH_ST_Reassembled[1] && Drill.LevelChecked()) ||
+                    (GetCooldownRemainingTime(OriginalHook(ChainSaw)) < 1 && Config.MCH_ST_Reassembled[2]) && ChainSaw.LevelChecked()))
+                {
+                    actionId = Reassemble;
+                    return true;
+                }
+
+                if (IsEnabled(CustomComboPreset.MCH_ST_Adv_ChainSaw) &&
+                    reassembledChainsaw &&
+                    (GetCooldownRemainingTime(ChainSaw) < 1 || ActionReady(ChainSaw)))
+                {
+                    actionId = ChainSaw;
+                    return true;
+                }
+
+                if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
+                    reassembledDrill &&
+                    (GetCooldownRemainingTime(Drill) < 1 || ActionReady(Drill)))
+                {
+                    actionId = Drill;
+                    return true;
+                }
+                if (IsEnabled(CustomComboPreset.MCH_ST_Adv_AirAnchor) &&
+                    reassembledAnchor &&
+                    (GetCooldownRemainingTime(AirAnchor) < 1 ||
+                    (!LevelChecked(AirAnchor) && ActionReady(HotShot)) ||
+                    ActionReady(AirAnchor)))
+                {
+                    actionId = OriginalHook(AirAnchor);
+                    return true;
+                }
+
+                return false;
             }
 
             private bool UseHyperchargeDelayedTools(MCHGauge gauge, float wildfireCDTime)
@@ -951,7 +927,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SpreadShot)
                 {
                     MCHGauge? gauge = GetJobGauge<MCHGauge>();
-                    bool reassembledScattergun = (Config.MCH_AoE_Reassembled[0] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_AoE_Reassembled[0] && !HasEffect(Buffs.Reassembled));
+                    bool reassembledScattergun = (Config.MCH_AoE_Reassembled[0] && HasEffect(Buffs.Reassembled));
                     bool reassembledCrossbow = (Config.MCH_AoE_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_AoE_Reassembled[1] && !HasEffect(Buffs.Reassembled));
                     bool reassembledChainsaw = (Config.MCH_AoE_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_AoE_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
 
@@ -1004,8 +980,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Hypercharge        
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Hypercharge) &&
                         gauge.Heat >= 50 && LevelChecked(Hypercharge) && LevelChecked(AutoCrossbow) && !gauge.IsOverheated &&
-                        ((BioBlaster.LevelChecked() && GetCooldownRemainingTime(BioBlaster) > 10) || !BioBlaster.LevelChecked()) &&
-                        ((Flamethrower.LevelChecked() && GetCooldownRemainingTime(Flamethrower) > 10) || !Flamethrower.LevelChecked()))
+                        ((BioBlaster.LevelChecked() && GetCooldownRemainingTime(BioBlaster) > 10) || !BioBlaster.LevelChecked() || IsNotEnabled(CustomComboPreset.MCH_AoE_Adv_Bioblaster)) &&
+                        ((Flamethrower.LevelChecked() && GetCooldownRemainingTime(Flamethrower) > 10) || !Flamethrower.LevelChecked() || IsNotEnabled(CustomComboPreset.MCH_AoE_Adv_FlameThrower)))
                         return Hypercharge;
 
                     //Heatblast, Gauss, Rico
