@@ -223,10 +223,10 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (WasLastAction(HeatBlast) && CanWeave(actionID))
                         {
-                            if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
+                            if (ActionReady(GaussRound) && GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
                                 return GaussRound;
 
-                            if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
+                            if (ActionReady(Ricochet) && GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
                                 return Ricochet;
                         }
                         return HeatBlast;
@@ -259,10 +259,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //gauss and ricochet overcap protection
                     if (CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire))
                     {
-                        if (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound))
+                        if (ActionReady(GaussRound) && GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound))
                             return GaussRound;
 
-                        if (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet))
+                        if (ActionReady(Ricochet) && GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet))
                             return Ricochet;
                     }
 
@@ -876,10 +876,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //gauss and ricochet overcap protection
                     if (CanWeave(actionID) && !gauge.IsOverheated)
                     {
-                        if (GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound))
+                        if (ActionReady(GaussRound)&& GetRemainingCharges(GaussRound) >= GetMaxCharges(GaussRound))
                             return GaussRound;
 
-                        if (GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet))
+                        if (ActionReady(Ricochet) && GetRemainingCharges(Ricochet) >= GetMaxCharges(Ricochet))
                             return Ricochet;
                     }
 
@@ -892,10 +892,10 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (WasLastAction(AutoCrossbow) && CanWeave(actionID))
                         {
-                            if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
+                            if (ActionReady(GaussRound) && GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
                                 return GaussRound;
 
-                            if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
+                            if (ActionReady(Ricochet) && GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound))
                                 return Ricochet;
                         }
                         return AutoCrossbow;
