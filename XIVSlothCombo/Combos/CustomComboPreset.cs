@@ -3265,18 +3265,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Egi Attacks Combo Option", "Adds Gemshine and Precious Brilliance to the single target and AoE combos, respectively.", SMN.JobID, 4, "", "")]
         SMN_Advanced_Combo_EgiSummons_Attacks = 17004,
 
-        [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Garuda Slipstream Option", "Adds Slipstream to the single target and AoE combos.", SMN.JobID, 6, "", "")]
-        SMN_Garuda_Slipstream = 17005,
-
-        [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Ifrit Cyclone Option", "Adds Crimson Cyclone and Crimson Strike to the single target and AoE combos.", SMN.JobID, 7, "", "")]
-        SMN_Ifrit_Cyclone = 17006,
-
-        [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Titan Mountain Buster Option", "Adds Mountain Buster to the single target and AoE combos.", SMN.JobID, 5, "", "")]
-        SMN_Titan_MountainBuster = 17007,
-
         [ReplaceSkill(SMN.Fester)]
         [CustomComboInfo("Energy Drain to Fester Feature", "Change Fester into Energy Drain when out of Aetherflow stacks.", SMN.JobID, 6, "", "")]
         SMN_EDFester = 17008,
@@ -3363,9 +3351,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ruin IV Painflare Option", "Changes Painflare to Ruin IV when out of Aetherflow stacks, Energy Siphon is on cooldown, and Ruin IV is up.", SMN.JobID, 0, "", "")]
         SMN_ESPainflare_Ruin4 = 17039,
 
-        [ParentCombo(SMN_Ifrit_Cyclone)]
-        [CustomComboInfo("Crimson Cyclone Option", "Only uses Crimson Cyclone if you are not moving, or have no remaining Ifrit Attunement charges.", SMN.JobID, 0, "", "")]
-        SMN_Ifrit_Cyclone_Option = 17040,
+        [ParentCombo(SMN_Advanced_Combo)]
+        [CustomComboInfo("Add Egi Astralflow", "Choose which Egi Astralflows to add to the rotation.", SMN.JobID, 0, "", "")]
+        SMN_ST_Egi_AstralFlow = 17048,
 
         [ConflictingCombos(SMN_Advanced_Combo)]
         [ReplaceSkill(SMN.Ruin, SMN.Ruin2, SMN.Outburst, SMN.Tridisaster)]
@@ -3379,6 +3367,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_DemiEgiMenu_oGCDPooling)]
         [CustomComboInfo("Any Searing Burst Option", "Checks for any Searing light for bursting rather than just your own.\nUse this option if partied with multiple SMN and are worried about your Searing being overwritten.", SMN.JobID, 1, "", "")]
         SMN_Advanced_Burst_Any_Option = 17044,
+
+        [ParentCombo(SMN_ST_Egi_AstralFlow)]
+        [CustomComboInfo("Only in Melee range", "Use Crimson Cyclone only in Melee range.", SMN.JobID, 0, "", "")]
+        SMN_ST_CrimsonCycloneMelee = 17049,
 
         [Variant]
         [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
@@ -3394,6 +3386,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SMN.JobID)]
         SMN_Variant_Cure = 17047,
+
+
 
         // Last value = 17047 (170181)
 
