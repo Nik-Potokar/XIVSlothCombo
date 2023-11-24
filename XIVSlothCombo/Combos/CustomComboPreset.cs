@@ -1705,24 +1705,32 @@ namespace XIVSlothCombo.Combos
         MCH_HotShotDrillChainSaw = 8004,
 
         [ReplaceSkill(MCH.HeatBlast)]
-        [CustomComboInfo("Single Button Heat Blast Feature", "Switches Heat Blast to Hypercharge.", MCH.JobID)]
-        MCH_HeatblastGaussRicochet = 8006,
+        [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
+        MCH_Heatblast = 8006,
 
-        [ParentCombo(MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Heat Blast Feature when below 50 Heat Gauge and it is off cooldown", MCH.JobID)]
-        MCH_HeatblastGaussRicochet_AutoBarrel = 8052,
+        [ParentCombo(MCH_Heatblast)]
+        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when below 50 Heat Gauge.", MCH.JobID)]
+        MCH_Heatblast_AutoBarrel = 8052,
 
-        [ParentCombo(MCH_HeatblastGaussRicochet)]
-        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the Single Button Heat Blast Feature if Wildfire is off cooldown and you have enough Heat Gauge for Hypercharge then Hypercharge will be replaced with Wildfire.\nAlso weaves Ricochet/Gauss Round on Heat Blast when necessary.", MCH.JobID)]
-        MCH_ST_Wildfire = 8015,
+        [ParentCombo(MCH_Heatblast)]
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the feature when at or above 50 heat.", MCH.JobID)]
+        MCH_Heatblast_Wildfire = 8015,
+
+        [ParentCombo(MCH_Heatblast)]
+        [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Heat Blast and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
+        MCH_Heatblast_GaussRound = 8016,
 
         [ReplaceSkill(MCH.AutoCrossbow)]
-        [CustomComboInfo("Single Button Auto Crossbow Feature", "Switches Auto Crossbow to Hypercharge and weaves Gauss Round/Ricochet.", MCH.JobID)]
-        MCH_AutoCrossbowGaussRicochet = 8018,
+        [CustomComboInfo("Single Button Auto Crossbow Feature", "Turns Auto Crossbow into Hypercharge when at or above 50 heat.", MCH.JobID)]
+        MCH_AutoCrossbow = 8018,
 
-        [ParentCombo(MCH_AutoCrossbowGaussRicochet)]
-        [CustomComboInfo("Barrel Feature", "Adds Barrel Stabilizer to Single Button Auto Crossbow Feature when below 50 Heat Gauge and it is off cooldown", MCH.JobID)]
-        MCH_AutoCrossbowGaussRicochet_AutoBarrel = 8019,
+        [ParentCombo(MCH_AutoCrossbow)]
+        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when below 50 Heat Gauge.", MCH.JobID)]
+        MCH_AutoCrossbow_AutoBarrel = 8019,
+
+        [ParentCombo(MCH_AutoCrossbow)]
+        [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Auto Crossbow and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
+        MCH_AutoCrossbow_GaussRound = 8020,
 
         [ReplaceSkill(MCH.Dismantle)]
         [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID)]

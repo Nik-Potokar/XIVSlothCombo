@@ -1009,37 +1009,40 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MCH_HeatblastGaussRicochet : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HeatblastGaussRicochet;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_Heatblast;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 MCHGauge? gauge = GetJobGauge<MCHGauge>();
                 if (actionID is HeatBlast)
                 {
-                    if (IsEnabled(CustomComboPreset.MCH_AutoCrossbowGaussRicochet_AutoBarrel)
-                        && ActionReady(BarrelStabilizer)
-                        && gauge.Heat < 50
-                        && !HasEffect(Buffs.Overheated))
+                    if (IsEnabled(CustomComboPreset.MCH_Heatblast_AutoBarrel) && 
+                        ActionReady(BarrelStabilizer) && 
+                        gauge.Heat < 50 && 
+                        !gauge.IsOverheated)
                         return BarrelStabilizer;
 
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire)
-                        && ActionReady(Hypercharge)
-                        && ActionReady(Wildfire)
-                        && gauge.Heat >= 50)
+                    if (IsEnabled(CustomComboPreset.MCH_Heatblast_Wildfire) && 
+                        ActionReady(Hypercharge) && 
+                        ActionReady(Wildfire) && 
+                        gauge.Heat >= 50)
                         return Wildfire;
 
-                    if (!HasEffect(Buffs.Overheated) && LevelChecked(Hypercharge))
+                    if (!gauge.IsOverheated && LevelChecked(Hypercharge) && gauge.Heat >= 50)
                         return Hypercharge;
 
                     if (GetCooldownRemainingTime(HeatBlast) < 0.7 && LevelChecked(HeatBlast)) // Prioritize Heat Blast
                         return HeatBlast;
 
-                    if (!LevelChecked(Ricochet))
-                        return GaussRound;
+                    if (IsEnabled(CustomComboPreset.MCH_Heatblast_GaussRound) && gauge.IsOverheated)
+                    {
+                        if (!LevelChecked(Ricochet))
+                            return GaussRound;
 
-                    if (GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet))
-                        return GaussRound;
-                    return Ricochet;
+                        if (GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet))
+                            return GaussRound;
+                        return Ricochet;
+                    }
                 }
                 return actionID;
             }
@@ -1135,7 +1138,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MCH_AutoCrossbowGaussRicochet : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AutoCrossbowGaussRicochet;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AutoCrossbow;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -1146,22 +1149,27 @@ namespace XIVSlothCombo.Combos.PvE
                     var ricochetCD = GetCooldown(Ricochet);
                     MCHGauge? gauge = GetJobGauge<MCHGauge>();
 
-                    if (IsEnabled(CustomComboPreset.MCH_AutoCrossbowGaussRicochet_AutoBarrel)
-                        && ActionReady(BarrelStabilizer)
-                        && gauge.Heat < 50
-                        && !HasEffect(Buffs.Overheated)
-                       ) return BarrelStabilizer;
+                    if (IsEnabled(CustomComboPreset.MCH_AutoCrossbow_AutoBarrel) && 
+                        ActionReady(BarrelStabilizer) && 
+                        gauge.Heat < 50 && 
+                        !gauge.IsOverheated) 
+                        return BarrelStabilizer;
 
-                    if (!HasEffect(Buffs.Overheated) && ActionReady(Hypercharge))
+                    if (!gauge.IsOverheated && ActionReady(Hypercharge) && gauge.Heat >= 50)
                         return Hypercharge;
+
                     if (heatBlastCD.CooldownRemaining < 0.7 && LevelChecked(AutoCrossbow)) // prioritize autocrossbow
                         return AutoCrossbow;
-                    if (!LevelChecked(Ricochet))
-                        return GaussRound;
-                    if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
-                        return GaussRound;
-                    else
-                        return Ricochet;
+
+                    if (IsEnabled(CustomComboPreset.MCH_AutoCrossbow_GaussRound) && gauge.IsOverheated)
+                    {
+                        if (!LevelChecked(Ricochet))
+                            return GaussRound;
+                        if (gaussCD.CooldownRemaining < ricochetCD.CooldownRemaining)
+                            return GaussRound;
+                        else
+                            return Ricochet;
+                    }
                 }
 
                 return actionID;
