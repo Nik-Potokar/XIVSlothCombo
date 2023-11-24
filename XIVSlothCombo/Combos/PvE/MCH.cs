@@ -219,9 +219,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Heatblast, Gauss, Rico
-                    if (gauge.IsOverheated && LevelChecked(HeatBlast) && CanWeave(actionID))
+                    if (gauge.IsOverheated && LevelChecked(HeatBlast))
                     {
-                        if (WasLastAction(HeatBlast))
+                        if (WasLastAction(HeatBlast) && CanWeave(actionID))
                         {
                             if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet))
                                 return GaussRound;
