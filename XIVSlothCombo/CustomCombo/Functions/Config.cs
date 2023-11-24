@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 
@@ -59,6 +60,13 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 }
                 return PluginConfiguration.GetCustomBoolArrayValue(this.pName)[index];
             }
+        }
+
+        public bool All(Func<bool, bool> predicate)
+        {
+            var array = PluginConfiguration.GetCustomBoolArrayValue(this.pName);
+            return array.All(predicate);
+
         }
     }
 

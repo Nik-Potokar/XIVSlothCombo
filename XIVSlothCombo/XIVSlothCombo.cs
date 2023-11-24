@@ -56,6 +56,7 @@ namespace XIVSlothCombo
         public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
             pluginInterface.Create<Service>();
+            ECommonsMain.Init(pluginInterface, this);
 
             Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             Service.Address = new PluginAddressResolver();
@@ -69,7 +70,6 @@ namespace XIVSlothCombo
             ActionWatching.Enable();
             Combos.JobHelpers.AST.Init();
 
-            ECommonsMain.Init(pluginInterface, this);
             configWindow = new ConfigWindow(this);
 
             Service.Interface.UiBuilder.Draw += DrawUI;
@@ -87,10 +87,16 @@ namespace XIVSlothCombo
             Service.Framework.Update += CheckCurrentJob;
 
             KillRedundantIDs();
+
+#if DEBUG
+            PvEFeatures.HasToOpenJob = false;
+            configWindow.Visible = true;
+#endif
         }
 
         private static void CheckCurrentJob(IFramework framework)
         {
+            if (Service.ClientState.LocalPlayer is not null)
             JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
         }
         private static void KillRedundantIDs()
@@ -115,6 +121,7 @@ namespace XIVSlothCombo
             Service.Configuration.ResetFeatures("v3.0.18.0_PvPCleanup", Enumerable.Range(80000, 11000).ToArray());
             Service.Configuration.ResetFeatures("v3.0.18.1_PLDRework", Enumerable.Range(11000, 100).ToArray());
             Service.Configuration.ResetFeatures("v3.1.0.1_BLMRework", Enumerable.Range(2000, 100).ToArray());
+            Service.Configuration.ResetFeatures("v3.1.1.0_DRGRework", Enumerable.Range(6000, 800).ToArray());
         }
 
         private void DrawUI() => configWindow.Draw();
@@ -178,12 +185,14 @@ namespace XIVSlothCombo
             Service.ClientState.Login -= PrintLoginMessage;
         }
 
+
         private void DisposeOpeners()
         {
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
+            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
+            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
-
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
         private void OnCommand(string command, string arguments)
