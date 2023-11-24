@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects;
+﻿using Dalamud.Game.ClientState.Conditions;
+using Dalamud.Game.ClientState.Objects;
 using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
@@ -40,7 +41,6 @@ namespace XIVSlothCombo.Data
         {
             if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
-            TimeLastActionUsed = DateTime.Now;
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
             if (ActionType is 13 or 2) return;
@@ -48,6 +48,7 @@ namespace XIVSlothCombo.Data
                 header.ActionId != 8 &&
                 sourceObjectId == Service.ClientState.LocalPlayer.ObjectId)
             {
+                TimeLastActionUsed = DateTime.Now;
                 LastActionUseCount++;
                 if (header.ActionId != LastAction)
                 {
@@ -213,12 +214,26 @@ namespace XIVSlothCombo.Data
         {
             ReceiveActionEffectHook?.Enable();
             SendActionHook?.Enable();
+            Svc.Condition.ConditionChange += ResetActions;
+        }
+
+        private static void ResetActions(ConditionFlag flag, bool value)
+        {
+            if (flag == ConditionFlag.InCombat && !value)
+            {
+                CombatActions.Clear();
+                LastAbility = 0;
+                LastAction = 0;
+                LastWeaponskill = 0;
+                LastSpell = 0;
+            }
         }
 
         public static void Disable()
         {
             ReceiveActionEffectHook.Disable();
             SendActionHook?.Disable();
+            Svc.Condition.ConditionChange -= ResetActions;
         }
 
         public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;

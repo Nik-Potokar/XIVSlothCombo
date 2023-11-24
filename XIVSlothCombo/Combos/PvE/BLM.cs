@@ -501,7 +501,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Handle initial cast
                     if (gauge.ElementTimeRemaining <= 0)
                     {
-                        if (LevelChecked(Blizzard3) && Config.BLM_Adv_InitialCast == 1)
+                        if ((LevelChecked(Blizzard3) && Config.BLM_Adv_InitialCast == 1) || (LevelChecked(Fire3) && Config.BLM_Adv_InitialCast == 0 && currentMP < MP.FireIII))
                             return Blizzard3;
 
                         if (LevelChecked(Fire3) && Config.BLM_Adv_InitialCast == 0)

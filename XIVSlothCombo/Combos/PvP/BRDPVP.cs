@@ -42,7 +42,7 @@ namespace XIVSlothCombo.Combos.PvP
                         if (GetCooldown(EmpyrealArrow).RemainingCharges == 3)
                             return OriginalHook(EmpyrealArrow);
 
-                        if (!GetCooldown(SilentNocturne).IsCooldown)
+                        if (IsEnabled(CustomComboPreset.BRDPvP_SilentNocturne) && !GetCooldown(SilentNocturne).IsCooldown)
                             return OriginalHook(SilentNocturne);
                     }
 
