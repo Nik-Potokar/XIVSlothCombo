@@ -152,7 +152,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(MCH.Tactician, BRD.Troubadour, DNC.ShieldSamba)]
         [ParentCombo(ALL_Ranged_Menu)]
-        [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects by replacing it with Stardiver.", ADV.JobID)]
+        [CustomComboInfo("Physical Ranged DPS: Double Mitigation Protection", "Prevents the use of Tactician/Troubadour/Shield Samba when target already has one of those three effects.", ADV.JobID)]
         ALL_Ranged_Mitigation = 100040,
 
         [ReplaceSkill(All.FootGraze)]
@@ -1556,7 +1556,7 @@ namespace XIVSlothCombo.Combos
         #region Simple ST
 
         [ReplaceSkill(MCH.SplitShot)]
-        [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_AdvancedMode)]
+        [ConflictingCombos(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
         MCH_ST_SimpleMode = 8000,
 
@@ -1565,7 +1565,7 @@ namespace XIVSlothCombo.Combos
         #region Advanced ST
 
         [ReplaceSkill(MCH.SplitShot)]
-        [ConflictingCombos(MCH_HeatblastGaussRicochet, MCH_ST_SimpleMode)]
+        [ConflictingCombos(MCH_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MCH.JobID)]
         MCH_ST_AdvancedMode = 8100,
 

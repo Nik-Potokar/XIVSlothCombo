@@ -340,7 +340,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Standard Rotation
-                    if ((rotationSelection is 0) || level < 90)
+                    if (rotationSelection is 0)
                     {
                         // Interrupt
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Interrupt) && interruptReady)
@@ -374,30 +374,25 @@ namespace XIVSlothCombo.Combos.PvE
                         //queen
                         if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(actionID) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)))
                         {
-                            if (level >= 90)
-                            {
-                                // First condition
-                                if (gauge.Battery is 50 && CombatEngageDuration().TotalSeconds > 59 && CombatEngageDuration().TotalSeconds < 68)
-                                    return OriginalHook(RookAutoturret);
+                            // First condition
+                            if (gauge.Battery is 50 && CombatEngageDuration().TotalSeconds > 59 && CombatEngageDuration().TotalSeconds < 68)
+                                return OriginalHook(RookAutoturret);
 
-                                // Second condition
-                                if (gauge.Battery is 100 && gauge.LastSummonBatteryPower == 50 &&
-                                    (GetCooldownRemainingTime(AirAnchor) <= 3 || ActionReady(AirAnchor)))
-                                    return OriginalHook(RookAutoturret);
+                            // Second condition
+                            if (gauge.Battery is 100 && gauge.LastSummonBatteryPower == 50 &&
+                                (GetCooldownRemainingTime(AirAnchor) <= 3 || ActionReady(AirAnchor)))
+                                return OriginalHook(RookAutoturret);
 
-                                // Third condition
-                                if (gauge.LastSummonBatteryPower == 100 && gauge.Battery >= 90)
-                                    return OriginalHook(RookAutoturret);
+                            // Third condition
+                            if (gauge.LastSummonBatteryPower == 100 && gauge.Battery >= 90)
+                                return OriginalHook(RookAutoturret);
 
-                                // Fourth condition
-                                else if (gauge.LastSummonBatteryPower == 90 && wildfireCDTime < 70 && wildfireCDTime > 45 && gauge.Battery >= 90)
-                                    return OriginalHook(RookAutoturret);
+                            // Fourth condition
+                            else if (gauge.LastSummonBatteryPower == 90 && wildfireCDTime < 70 && wildfireCDTime > 45 && gauge.Battery >= 90)
+                                return OriginalHook(RookAutoturret);
 
-                                // Fifth condition
-                                else if (gauge.LastSummonBatteryPower != 50 && (wildfireCDTime <= 4 || (ActionReady(AirAnchor) && ActionReady(Wildfire))))
-                                    return OriginalHook(RookAutoturret);
-                            }
-                            else if (LevelChecked(RookOverdrive) && gauge.Battery >= 50)
+                            // Fifth condition
+                            else if (gauge.LastSummonBatteryPower != 50 && (wildfireCDTime <= 4 || (ActionReady(AirAnchor) && ActionReady(Wildfire))))
                                 return OriginalHook(RookAutoturret);
                         }
 
@@ -477,7 +472,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //123Tools Rotation
-                    if (rotationSelection is 1 && level >= 90)
+                    if (rotationSelection is 1)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Interrupt) && interruptReady)
                             return All.HeadGraze;
@@ -491,7 +486,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         //Wildfire stuff
                         //these TRY to ensure the correct loop, HC > CS > WF
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) && IsOffCooldown(Wildfire))
+                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) && ActionReady(Wildfire))
                         {
                             if (CanDelayedWeave(actionID, 0.8) && gauge.IsOverheated && WasLastWeaponskill(ChainSaw))
                                 return Wildfire;
@@ -501,24 +496,24 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Queen aka Robot
-                        if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(actionID) && !gauge.IsRobotActive && (!WasLastAbility(Wildfire)))
+                        if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(actionID) && !gauge.IsRobotActive && (!WasLastAbility(Wildfire)) && LevelChecked(OriginalHook(RookAutoturret)))
                         {
                             // First condition
                             if (gauge.Battery == 50 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
 
                             // Second condition
                             if (!WasLastAction(OriginalHook(CleanShot)) && gauge.Battery == 100 && gauge.LastSummonBatteryPower == 50 &&
-                                (GetCooldownRemainingTime(AirAnchor) <= 3 || IsOffCooldown(AirAnchor)))
-                                return AutomatonQueen;
+                                (GetCooldownRemainingTime(AirAnchor) <= 3 || ActionReady(AirAnchor)) && AirAnchor.LevelChecked())
+                                return OriginalHook(RookAutoturret);
 
                             // Third condition
                             while (gauge.LastSummonBatteryPower == 100 && gauge.Battery >= 90) //was previously 80 with 30 overcap for 10mins
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
 
                             // Fourth condition
-                            while (gauge.LastSummonBatteryPower != 50 && gauge.Battery == 100 && (GetCooldownRemainingTime(AirAnchor) <= 3 || IsOffCooldown(AirAnchor)))
-                                return AutomatonQueen;
+                            while (gauge.LastSummonBatteryPower != 50 && gauge.Battery == 100 && (GetCooldownRemainingTime(AirAnchor) <= 3 || ActionReady(AirAnchor)) && AirAnchor.LevelChecked())
+                                return OriginalHook(RookAutoturret);
                         }
 
                         if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
@@ -527,11 +522,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(RookAutoturret);
 
                         //Overheated Reassemble & Heatblast & GaussRico featuring a small ChainSaw addendum
-                        if (gauge.IsOverheated && LevelChecked(HeatBlast))
+                        if (gauge.IsOverheated && LevelChecked(HeatBlast) && IsEnabled(CustomComboPreset.MCH_ST_Adv_HeatBlast))
                         {
-                            if (CanWeave(actionID, 0.6) && wildfireCDTime > 2) //check to see if this prevents Gauss/Rico from weaving on reopener deaths later
+                            if (CanWeave(actionID, 0.6) && wildfireCDTime > 2 && IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet)) //check to see if this prevents Gauss/Rico from weaving on reopener deaths later
                             {
-
                                 if (HasCharges(GaussRound) && (!LevelChecked(Ricochet) || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
                                     return GaussRound;
 
@@ -539,11 +533,10 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Ricochet;
                             }
 
-                            if (GetCooldownRemainingTime(ChainSaw) <= 1 || (IsOffCooldown(ChainSaw) && (wildfireCDTime < 3 || IsOffCooldown(Wildfire))))
+                            if ((GetCooldownRemainingTime(ChainSaw) <= 1 || IsOffCooldown(ChainSaw)) && (wildfireCDTime < 3 || IsOffCooldown(Wildfire)) && ChainSaw.LevelChecked() && IsEnabled(CustomComboPreset.MCH_ST_Adv_ChainSaw))
                                 return ChainSaw;
 
-                            if (IsEnabled(CustomComboPreset.MCH_ST_Adv_HeatBlast))
-                                return HeatBlast;
+                            return HeatBlast;
                         }
 
                         //HYPERCHARGE!!
@@ -602,7 +595,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Early Tools Rotation
-                    if (rotationSelection is 2 && level >= 90)
+                    if (rotationSelection is 2)
                     {
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Interrupt) && interruptReady)
                             return All.HeadGraze;
@@ -628,28 +621,28 @@ namespace XIVSlothCombo.Combos.PvE
 
                         //Queen aka Robot
                         if (CanWeave(actionID) && IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 &&
-                            !gauge.IsRobotActive && !WasLastAbility(Wildfire))
+                            !gauge.IsRobotActive && !WasLastAbility(Wildfire) && OriginalHook(RookAutoturret).LevelChecked())
                         {
                             // First condition
                             if (gauge.Battery == 70 && CombatEngageDuration().TotalSeconds > 61 && CombatEngageDuration().TotalSeconds < 68)
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
 
                             // Second condition
                             if (!WasLastAction(OriginalHook(CleanShot)) &&
                                 gauge.Battery >= 90 && gauge.LastSummonBatteryPower == 70)
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
 
                             // Third condition
                             if (gauge.LastSummonBatteryPower >= 90 && gauge.Battery >= 90)
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
 
                             // Fourth condition
                             while (gauge.LastSummonBatteryPower != 50 && gauge.Battery == 100)
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
 
                             // Fifth condition
                             while (gauge.LastSummonBatteryPower == 100 && gauge.Battery >= 90) //was previously 80 with 30 overcap for 10mins
-                                return AutomatonQueen;
+                                return OriginalHook(RookAutoturret);
                         }
 
                         if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
@@ -660,9 +653,9 @@ namespace XIVSlothCombo.Combos.PvE
                         //Overheated Reassemble & Heatblast & GaussRico featuring a small ChainSaw addendum
                         if (gauge.IsOverheated && LevelChecked(HeatBlast))
                         {
-                            if (CanWeave(actionID, 0.6))
+                            if (CanWeave(actionID, 0.6) && IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet))
                             {
-                                if (HasCharges(GaussRound) && (!LevelChecked(Ricochet) || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
+                                if (ActionReady(GaussRound) && (!LevelChecked(Ricochet) || GetCooldownRemainingTime(GaussRound) < GetCooldownRemainingTime(Ricochet)))
                                     return GaussRound;
 
                                 else if (ActionReady(Ricochet))
@@ -764,6 +757,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_ChainSaw) &&
                     reassembledChainsaw &&
+                    ChainSaw.LevelChecked() &&
                     (GetCooldownRemainingTime(ChainSaw) < 1 || ActionReady(ChainSaw)))
                 {
                     actionId = ChainSaw;
@@ -772,16 +766,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
                     reassembledDrill &&
+                    Drill.LevelChecked() &&
                     (GetCooldownRemainingTime(Drill) < 1 || ActionReady(Drill)))
                 {
                     actionId = Drill;
                     return true;
                 }
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_AirAnchor) &&
-                    reassembledAnchor &&
-                    (GetCooldownRemainingTime(AirAnchor) < 1 ||
-                    (!LevelChecked(AirAnchor) && ActionReady(HotShot)) ||
-                    ActionReady(AirAnchor)))
+                    reassembledAnchor && 
+                    OriginalHook(AirAnchor).LevelChecked() &&
+                    (GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1 || ActionReady(OriginalHook(AirAnchor))))
                 {
                     actionId = OriginalHook(AirAnchor);
                     return true;
