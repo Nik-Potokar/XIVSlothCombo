@@ -152,7 +152,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return BarrelStabilizer;
 
                     //queen
-                    if (CanWeave(actionID) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)))
+                    if (CanWeave(actionID) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive)
                     {
                         if (level >= 90)
                         {
@@ -372,7 +372,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return BarrelStabilizer;
 
                         //queen
-                        if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(actionID) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)))
+                        if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 && CanWeave(actionID) && !gauge.IsOverheated && LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive)
                         {
                             // First condition
                             if (gauge.Battery is 50 && CombatEngageDuration().TotalSeconds > 59 && CombatEngageDuration().TotalSeconds < 68)
@@ -518,7 +518,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
                             Config.MCH_ST_TurretUsage == 0 &&
-                            LevelChecked(OriginalHook(RookAutoturret)) && gauge.Battery >= 50)
+                            LevelChecked(OriginalHook(RookAutoturret)) && gauge.Battery >= 50 && !gauge.IsRobotActive)
                             return OriginalHook(RookAutoturret);
 
                         //Overheated Reassemble & Heatblast & GaussRico featuring a small ChainSaw addendum
@@ -647,7 +647,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
                             Config.MCH_ST_TurretUsage == 0 &&
-                            LevelChecked(OriginalHook(RookAutoturret)) && gauge.Battery >= 50)
+                            LevelChecked(OriginalHook(RookAutoturret)) && gauge.Battery >= 50 && !gauge.IsRobotActive)
                             return OriginalHook(RookAutoturret);
 
                         //Overheated Reassemble & Heatblast & GaussRico featuring a small ChainSaw addendum

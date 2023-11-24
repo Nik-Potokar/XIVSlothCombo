@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -335,7 +336,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Spineshatter_Dive) && !IsMoving && LevelChecked(LanceCharge))
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives_Spineshatter) && !IsMoving && LevelChecked(LanceCharge))
                             {
                                 if (spineshatterAny || //Dives on cooldown
                                    (((Config.DRG_ST_DivesOption_Spineshatter[0] && HasEffect(Buffs.LanceCharge)) || (!Config.DRG_ST_DivesOption_Spineshatter[0]) || (!LanceCharge.LevelChecked())) &&
