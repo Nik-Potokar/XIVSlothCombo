@@ -423,7 +423,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Devilment
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
                         CanWeave(actionID) && ActionReady(Devilment) &&
-                        (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                        (HasEffect(Buffs.TechnicalFinish) || WasLastAction(TechnicalFinish4) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // ST Flourish
@@ -591,7 +591,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Devilment
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
                         CanWeave(actionID) && ActionReady(Devilment) &&
-                        (HasEffect(Buffs.TechnicalFinish) || !LevelChecked(TechnicalStep)))
+                        (HasEffect(Buffs.TechnicalFinish) || WasLastAction(TechnicalFinish4) || !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // AoE Flourish
