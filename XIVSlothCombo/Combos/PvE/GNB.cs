@@ -66,7 +66,6 @@ namespace XIVSlothCombo.Combos.PvE
                 GNB_VariantCure = "GNB_VariantCure";
         }
 
-
         internal class GNB_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_MainCombo;

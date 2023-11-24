@@ -130,6 +130,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 AST_LucidDreaming = new("ASTLucidDreamingFeature"),
                 AST_EssentialDignity = new("ASTCustomEssentialDignity"),
+                AST_ST_SimpleHeals_Esuna = new("AST_ST_SimpleHeals_Esuna"),
                 AST_DPS_AltMode = new("AST_DPS_AltMode"),
                 AST_DPS_DivinationOption = new("AST_DPS_DivinationOption"),
                 AST_DPS_LightSpeedOption = new("AST_DPS_LightSpeedOption"),
@@ -414,6 +415,7 @@ namespace XIVSlothCombo.Combos.PvE
                     GameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Esuna) && ActionReady(All.Esuna) &&
+                        GetTargetHPPercent(healTarget) >= Config.AST_ST_SimpleHeals_Esuna &&
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 

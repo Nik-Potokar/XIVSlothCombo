@@ -51,7 +51,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Rampart = 1191,
                 Peloton = 1199,
                 LucidDreaming = 1204,
-                TrueNorth = 1250;
+                TrueNorth = 1250,
+                Sprint = 50;
         }
 
         public static class Debuffs
@@ -118,7 +119,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Reprisal)
                 {
                     if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
-                        return WHM.Stone1;
+                        return OriginalHook(11);
                 }
 
                 return actionID;
@@ -158,7 +159,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Addle)
                 {
                     if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
-                        return WAR.FellCleave;
+                        return OriginalHook(11);
                 }
 
                 return actionID;
@@ -194,7 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Feint)
                 {
                     if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
-                        return BLM.Fire;
+                        return OriginalHook(11);
                 }
 
                 return actionID;
@@ -210,7 +211,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is TrueNorth)
                 {
                     if (HasEffect(Buffs.TrueNorth))
-                        return BLM.Fire;
+                        return OriginalHook(11);
                 }
 
                 return actionID;
@@ -227,7 +228,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba)
                 {
                     if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)) && IsOffCooldown(actionID))
-                        return DRG.Stardiver;
+                        return OriginalHook(11);
                 }
 
                 return actionID;

@@ -123,7 +123,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SCH_AoE_Heal_LucidOption = new("SCH_AoE_Heal_LucidOption"),
                 SCH_ST_Heal_LucidOption = new("SCH_ST_Heal_LucidOption"),
                 SCH_ST_Heal_AdloquiumOption = new("SCH_ST_Heal_AdloquiumOption"),
-                SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption");
+                SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption"),
+                SCH_ST_Heal_EsunaOption = new("SCH_ST_Heal_EsunaOption");
             public static UserBool
                 SCH_ST_Heal_Adv = new("SCH_ST_Heal_Adv"),
                 SCH_ST_Heal_UIMouseOver = new("SCH_ST_Heal_UIMouseOver"),
@@ -551,6 +552,7 @@ namespace XIVSlothCombo.Combos.PvE
                     GameObject? healTarget = GetHealTarget(Config.SCH_ST_Heal_Adv && Config.SCH_ST_Heal_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
+                        GetTargetHPPercent(healTarget) >= Config.SCH_ST_Heal_EsunaOption &&
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 
