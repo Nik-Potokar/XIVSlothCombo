@@ -51,6 +51,7 @@
 	<PropertyGroup Label="Documentation">
 		<DocumentationFile></DocumentationFile>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

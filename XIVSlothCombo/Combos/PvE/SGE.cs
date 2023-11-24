@@ -128,7 +128,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_Heal_Soteria = new("SGE_ST_Heal_Soteria"),
                 SGE_ST_Heal_EDiagnosisHP = new("SGE_ST_Heal_EDiagnosisHP"),
                 SGE_ST_Heal_Druochole = new("SGE_ST_Heal_Druochole"),
-                SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole");                
+                SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole"),
+                SGE_ST_Heal_Esuna = new("SGE_ST_Heal_Esuna");                
             public static UserBoolArray
                 SGE_ST_Heal_EDiagnosisOpts = new("SGE_ST_Heal_EDiagnosisOpts");
             #endregion
@@ -423,6 +424,7 @@ namespace XIVSlothCombo.Combos.PvE
                     GameObject? healTarget = GetHealTarget(Config.SGE_ST_Heal_Adv && Config.SGE_ST_Heal_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
+                        GetTargetHPPercent(healTarget) >= Config.SGE_ST_Heal_Esuna &&
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 
