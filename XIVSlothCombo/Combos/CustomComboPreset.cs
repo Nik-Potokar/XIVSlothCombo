@@ -1,4 +1,7 @@
-﻿using XIVSlothCombo.Attributes;
+﻿using ImGuizmoNET;
+using System.Security.AccessControl;
+using System.Security.Policy;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 
@@ -1741,17 +1744,13 @@ namespace XIVSlothCombo.Combos
         #region ST
 
         [ReplaceSkill(MNK.Bootshine)]
-        [CustomComboInfo("Basic Rotation - Single Target", "Replaces Bootshine with Monk's basic single target combo on one button.", MNK.JobID, 1, "", "")]
-        MNK_ST_BasicCombo = 9002,
-
-        [ReplaceSkill(MNK.DragonKick)]
         [ConflictingCombos(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.", MNK.JobID, 2, "", "")]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine Thrust with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", MNK.JobID, 2, "", "")]
         MNK_ST_SimpleMode = 9032,
 
-        [ReplaceSkill(MNK.DragonKick)]
+        [ReplaceSkill(MNK.Bootshine)]
         [ConflictingCombos(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replace Bootshine with its combo chain. \nIf all sub-options are selected will turn into a full one button rotation. Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, 10, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Bootshine with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID, 10, "", "")]
         MNK_ST_AdvancedMode = 9006,
 
         [ParentCombo(MNK_ST_ADV_CDs)]
@@ -1810,25 +1809,18 @@ namespace XIVSlothCombo.Combos
 
         #region AoE
 
+        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
+        [ConflictingCombos(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Arms of the Destroyer with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", MNK.JobID, 31, "", "")]
+        MNK_AOE_SimpleMode = 9033,
+
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 48, "", "")]
         MNK_AoE_ComboHeals = 9027,
-
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_SimpleMode)]
-        [CustomComboInfo("Basic Rotation - AoE", "Replace Arms Of The Destroyer with Monk's basic AoE Combo on one button.", MNK.JobID, 30, "", "")]
-        MNK_AOE_BasicCombo = 9034,
-
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [ConflictingCombos(MNK_AOE_AdvancedMode, MNK_AOE_BasicCombo)]
-        [CustomComboInfo("Simple Mode - AoE", "Replace Arms Of The Destroyer with a one-button full AoE target rotation.", MNK.JobID, 31, "", "")]
-        MNK_AOE_SimpleMode = 9033,
-
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [ConflictingCombos(MNK_AOE_SimpleMode, MNK_AOE_BasicCombo)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replace Arms Of The Destroyer with its combo chain. \nIf all-sub options are selected will turn into a full one button rotation.", MNK.JobID, 32, "", "")]
+        [ConflictingCombos(MNK_AOE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Arms of the Destroyer with a full one - button AoE rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID, 32, "", "")]
         MNK_AOE_AdvancedMode = 9000,
-
         [ParentCombo(MNK_AoE_ADV_CDs)]
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID, 41, "", "")]
         MNK_AoE_MasterfulBlitz = 9009,

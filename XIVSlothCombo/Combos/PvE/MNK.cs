@@ -104,49 +104,6 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_VariantCure = new("MNK_VariantCure");
         }
 
-        internal class MNK_ST_BasicCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_BasicCombo;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Bootshine)
-                {
-                    // Monk Rotation
-                    if (!HasEffect(Buffs.PerfectBalance))
-                    {
-                        if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
-                        {
-                            return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
-                                ? Bootshine
-                                : DragonKick;
-                        }
-                    }
-
-                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
-                    {
-                        if (!LevelChecked(TrueStrike))
-                            return Bootshine;
-                        return !LevelChecked(TwinSnakes) ||
-                            GetBuffRemainingTime(Buffs.DisciplinedFist) >= Config.MNK_DisciplinedFist_Apply
-                            ? TrueStrike
-                            : TwinSnakes;
-                    }
-
-                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
-                    {
-                        return !LevelChecked(SnapPunch)
-                            ? Bootshine
-                            : !LevelChecked(Demolish) ||
-                            (GetDebuffRemainingTime(Debuffs.Demolish) >= Config.MNK_Demolish_Apply) ||
-                            (GetTargetHPPercent() < Config.MNK_DemolishTreshhold)
-                                ? SnapPunch
-                                : Demolish;
-                    }
-                }
-                return actionID;
-            }
-        }
-
         internal class MNK_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_SimpleMode;
@@ -160,7 +117,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool solarNadi = gauge.Nadi == Nadi.SOLAR;
                 float demolishTreshold = Config.MNK_DemolishTreshhold;
 
-                if (actionID is DragonKick)
+                if (actionID is Bootshine)
                 {
                     if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
@@ -364,7 +321,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool canSolar = gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
                 bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
 
-                if (actionID is DragonKick)
+                if (actionID is Bootshine)
                 {
                     if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
@@ -561,29 +518,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? SnapPunch
                                 : Demolish;
                     }
-                }
-                return actionID;
-            }
-        }
-
-        internal class MNK_AOE_BasicCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_AOE_BasicCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is ArmOfTheDestroyer)
-                {
-                    if (HasEffect(Buffs.OpoOpoForm))
-                        return OriginalHook(ArmOfTheDestroyer);
-
-                    if (HasEffect(Buffs.RaptorForm) || HasEffect(Buffs.FormlessFist))
-                        return LevelChecked(FourPointFury)
-                            ? FourPointFury
-                            : TwinSnakes;
-
-                    if (HasEffect(Buffs.CoerlForm) && LevelChecked(Rockbreaker))
-                        return Rockbreaker;
                 }
                 return actionID;
             }
