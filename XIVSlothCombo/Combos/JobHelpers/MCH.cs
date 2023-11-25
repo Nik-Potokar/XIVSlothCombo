@@ -517,22 +517,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
             OpenerStep = 0;
         }
 
-        public bool DoFullOpener(ref uint actionID, bool simpleMode)
+        public bool DoFullOpener(bool simpleMode, out uint openerId)
         {
+            openerId = 0;
             if (!LevelChecked) return false;
 
             if (CurrentState == OpenerState.PrePull)
-                if (DoPrePullSteps(ref actionID)) return true;
+                if (DoPrePullSteps(ref openerId)) return true;
 
             if (CurrentState == OpenerState.InOpener)
             {
                 if (simpleMode)
                 {
-                    if (DoOpenerSimple(ref actionID)) return true;
+                    if (DoOpenerSimple(ref openerId)) return true;
                 }
                 else
                 {
-                    if (DoOpener(ref actionID)) return true;
+                    if (DoOpener(ref openerId)) return true;
                 }
             }
 

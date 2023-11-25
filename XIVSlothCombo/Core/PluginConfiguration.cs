@@ -69,10 +69,6 @@ namespace XIVSlothCombo.Core
         [JsonProperty("EnabledActionsV5")]
         public HashSet<CustomComboPreset> EnabledActions { get; set; } = new();
 
-        /// <summary> Gets or sets the collection of enabled combos. </summary>
-        [JsonProperty("EnabledActionsV4")]
-        public HashSet<CustomComboPreset> EnabledActions4 { get; set; } = new();
-
         #endregion
 
         #region Settings Options

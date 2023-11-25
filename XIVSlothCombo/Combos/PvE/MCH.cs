@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -67,7 +68,9 @@ namespace XIVSlothCombo.Combos.PvE
                 MCH_ST_RotationSelection = new("MCH_ST_RotationSelection"),
                 MCH_VariantCure = new("MCH_VariantCure"),
                 MCH_ST_TurretUsage = new("MCH_ST_Adv_TurretGauge"),
-                MCH_AoE_TurretUsage = new("MCH_AoE_TurretUsage");
+                MCH_AoE_TurretUsage = new("MCH_AoE_TurretUsage"),
+                MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool"),
+                MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool");
             public static UserBoolArray
                 MCH_ST_Reassembled = new("MCH_ST_Reassembled"),
                 MCH_AoE_Reassembled = new("MCH_AoE_Reassembled");
@@ -114,7 +117,7 @@ namespace XIVSlothCombo.Combos.PvE
                 float wildfireCDTime = GetCooldownRemainingTime(Wildfire);
                 bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy();
 
-                if (actionID is SplitShot)
+                if (actionID is SplitShot or HeatedSplitShot)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
                     IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
@@ -127,8 +130,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
 
                     // Opener for MCH
-                    if (MCHOpener.DoFullOpener(ref actionID, false))
-                        return actionID;
+                    if (MCHOpener.DoFullOpener(false, out var openerId))
+                        return openerId;
 
                     // Interrupt
                     if (interruptReady)
@@ -320,7 +323,7 @@ namespace XIVSlothCombo.Combos.PvE
                 int rotationSelection = Config.MCH_ST_RotationSelection;
                 bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy();
 
-                if (actionID is SplitShot)
+                if (actionID is SplitShot or HeatedSplitShot)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
                     IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
@@ -335,8 +338,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // Opener for MCH
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener))
                     {
-                        if (MCHOpener.DoFullOpener(ref actionID, false))
-                            return actionID;
+                        if (MCHOpener.DoFullOpener(false, out var openerId))
+                            return openerId;
                     }
 
                     //Standard Rotation
@@ -740,13 +743,14 @@ namespace XIVSlothCombo.Combos.PvE
 
             private bool ReassembledTools(ref uint actionId)
             {
-                bool reassembledAnchor = (Config.MCH_ST_Reassembled[0] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
-                bool reassembledDrill = (Config.MCH_ST_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
-                bool reassembledChainsaw = (Config.MCH_ST_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
+                bool reassembledAnchor = (Config.MCH_ST_Reassembled[0] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool);
+                bool reassembledDrill = (Config.MCH_ST_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool);
+                bool reassembledChainsaw = (Config.MCH_ST_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_ST_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool);
 
                 // TOOLS!! ChainSaw Drill Air Anchor
-                if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassembled) && !HasEffect(Buffs.Wildfire) &&
+                if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !HasEffect(Buffs.Wildfire) &&
                     !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
+                    GetRemainingCharges(Reassemble) > Config.MCH_ST_ReassemblePool &&
                     ((GetCooldownRemainingTime(OriginalHook(HotShot)) < 1 && Config.MCH_ST_Reassembled[0] && AirAnchor.LevelChecked()) ||
                     (GetCooldownRemainingTime(OriginalHook(Drill)) < 1 && Config.MCH_ST_Reassembled[1] && Drill.LevelChecked()) ||
                     (GetCooldownRemainingTime(OriginalHook(ChainSaw)) < 1 && Config.MCH_ST_Reassembled[2]) && ChainSaw.LevelChecked()))
@@ -923,7 +927,7 @@ namespace XIVSlothCombo.Combos.PvE
                     MCHGauge? gauge = GetJobGauge<MCHGauge>();
                     bool reassembledScattergun = (Config.MCH_AoE_Reassembled[0] && HasEffect(Buffs.Reassembled));
                     bool reassembledCrossbow = (Config.MCH_AoE_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_AoE_Reassembled[1] && !HasEffect(Buffs.Reassembled));
-                    bool reassembledChainsaw = (Config.MCH_AoE_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_AoE_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) == 0);
+                    bool reassembledChainsaw = (Config.MCH_AoE_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (!Config.MCH_AoE_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_AoE_ReassemblePool);
 
 
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
@@ -941,6 +945,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !HasEffect(Buffs.Wildfire) &&
                         !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
+                        GetRemainingCharges(Reassemble) > Config.MCH_AoE_ReassemblePool &&
                         ((Config.MCH_AoE_Reassembled[0] && Scattergun.LevelChecked()) ||
                         (gauge.IsOverheated && Config.MCH_AoE_Reassembled[1] && AutoCrossbow.LevelChecked()) ||
                         (GetCooldownRemainingTime(OriginalHook(ChainSaw)) < 1 && Config.MCH_AoE_Reassembled[2] && ChainSaw.LevelChecked())))
@@ -1056,7 +1061,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
 
                 if (actionID is GaussRound or Ricochet)
-
                 {
                     var gaussCharges = GetRemainingCharges(GaussRound);
                     var ricochetCharges = GetRemainingCharges(Ricochet);
@@ -1186,7 +1190,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Dismantle)
                     if (TargetHasEffectAny(Debuffs.Dismantled) && IsOffCooldown(Dismantle))
-                        return BLM.Fire;
+                        return OriginalHook(11);
 
                 return actionID;
             }

@@ -1555,8 +1555,8 @@ namespace XIVSlothCombo.Combos
 
         #region Simple ST
 
-        [ReplaceSkill(MCH.SplitShot)]
-        [ConflictingCombos(MCH_ST_AdvancedMode)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_AdvancedMode, MCH_Overdrive, MCH_GaussRoundRicochet, MCH_HotShotDrillChainSaw, MCH_Heatblast)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
         MCH_ST_SimpleMode = 8000,
 
@@ -1564,8 +1564,8 @@ namespace XIVSlothCombo.Combos
 
         #region Advanced ST
 
-        [ReplaceSkill(MCH.SplitShot)]
-        [ConflictingCombos(MCH_ST_SimpleMode)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_Overdrive, MCH_GaussRoundRicochet, MCH_HotShotDrillChainSaw, MCH_Heatblast)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MCH.JobID)]
         MCH_ST_AdvancedMode = 8100,
 
@@ -1579,7 +1579,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Reassemble Option", "Adds Reassemble to the rotation.", MCH.JobID)]
-        MCH_ST_Adv_Reassembled = 8103,
+        MCH_ST_Adv_Reassemble = 8103,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round and Ricochet to the rotation.\nWill prevent overcapping.", MCH.JobID)]
@@ -1631,7 +1631,7 @@ namespace XIVSlothCombo.Combos
         #region Simple AoE
 
         [ReplaceSkill(MCH.SpreadShot)]
-        [ConflictingCombos(MCH_AoE_AdvancedMode)]
+        [ConflictingCombos(MCH_AoE_AdvancedMode, MCH_GaussRoundRicochet)]
         [CustomComboInfo("Simple Mode - AoE", "Replaces Spread Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
         MCH_AoE_SimpleMode = 8200,
 
@@ -1640,7 +1640,7 @@ namespace XIVSlothCombo.Combos
         #region Advanced AoE
 
         [ReplaceSkill(MCH.SpreadShot)]
-        [ConflictingCombos(MCH_AoE_SimpleMode)]
+        [ConflictingCombos(MCH_AoE_SimpleMode, MCH_Overdrive, MCH_GaussRoundRicochet, MCH_AutoCrossbow)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Spread Shot with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MCH.JobID)]
         MCH_AoE_AdvancedMode = 8300,
 
@@ -1693,18 +1693,22 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(MCH.RookAutoturret, MCH.AutomatonQueen)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_ST_AdvancedMode, MCH_AoE_SimpleMode, MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Overdrive Feature", "Replace Rook Autoturret and Automaton Queen with Overdrive while active.", MCH.JobID)]
         MCH_Overdrive = 8002,
 
         [ReplaceSkill(MCH.GaussRound, MCH.Ricochet)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_ST_AdvancedMode, MCH_AoE_SimpleMode, MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Gauss Round/Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
         [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_ST_AdvancedMode)]
         [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
         MCH_HotShotDrillChainSaw = 8004,
 
         [ReplaceSkill(MCH.HeatBlast)]
+        [ConflictingCombos(MCH_ST_SimpleMode, MCH_ST_AdvancedMode)]
         [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
         MCH_Heatblast = 8006,
 
@@ -1721,6 +1725,7 @@ namespace XIVSlothCombo.Combos
         MCH_Heatblast_GaussRound = 8016,
 
         [ReplaceSkill(MCH.AutoCrossbow)]
+        [ConflictingCombos(MCH_AoE_SimpleMode, MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Single Button Auto Crossbow Feature", "Turns Auto Crossbow into Hypercharge when at or above 50 heat.", MCH.JobID)]
         MCH_AutoCrossbow = 8018,
 
@@ -3458,7 +3463,7 @@ namespace XIVSlothCombo.Combos
         #region WARRIOR
 
         [ReplaceSkill(WAR.StormsPath)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1)]
         WAR_ST_StormsPath = 18000,
 
         [ParentCombo(WAR_ST_StormsPath)]
@@ -3494,11 +3499,11 @@ namespace XIVSlothCombo.Combos
         WAR_ST_StormsPath_PrimalRend = 18008,
 
         [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 2, "", "")]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
         War_ST_StormsEye = 18001,
 
         [ReplaceSkill(WAR.Overpower)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1, "", "")]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 2, "", "")]
         WAR_AoE_Overpower = 18002,
 
         [ReplaceSkill(WAR.NascentFlash)]
@@ -3637,32 +3642,36 @@ namespace XIVSlothCombo.Combos
         WHM_AoEHeals = 19007,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 61, "", "")]
+        [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 2, "", "")]
         WHM_AoEHeals_Rapture = 19011,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 62, "", "")]
+        [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 3, "", "")]
         WHM_AoEHeals_Misery = 19010,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 63, "", "")]
-        WHM_AoeHeals_ThinAir = 19200,
+        [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 4, "", "")]
+        WHM_AoEHeals_ThinAir = 19200,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID)]
+        [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID, 5)]
         WHM_AoEHeals_Cure3 = 19201,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID)]
+        [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID, 6)]
         WHM_AoEHeals_Assize = 19202,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID)]
+        [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID, 7)]
         WHM_AoEHeals_Plenary = 19203,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID)]
+        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 8)]
         WHM_AoEHeals_Lucid = 19204,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Medica II Option", "Uses Medica II when current target doesn't have Medica II buff.", WHM.JobID, 1)]
+        WHM_AoEHeals_Medica2 = 19205,
 
         #endregion
 
