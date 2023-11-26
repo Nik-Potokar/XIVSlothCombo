@@ -1070,13 +1070,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!LevelChecked(Ricochet))
                         return GaussRound;
 
-                    if (IsOffCooldown(GaussRound) && IsOffCooldown(Ricochet))
-                        return actionID;
-
-                    if ((gaussCharges >= ricochetCharges || level < Levels.Ricochet) &&
-                        level >= Levels.GaussRound)
+                    if (gaussCharges >= ricochetCharges)
                         return GaussRound;
-                    else if (ricochetCharges > 0 && level >= Levels.Ricochet)
+                    else if (ricochetCharges > 0)
                         return Ricochet;
                 }
 
