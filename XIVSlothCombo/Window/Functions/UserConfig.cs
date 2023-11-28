@@ -1573,6 +1573,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.MCH_AoE_Adv_GaussRicochet)
                 UserConfig.DrawAdditionalBoolChoice(MCH.Config.MCH_AoE_Hypercharge, $"Use Outwith {ActionWatching.GetActionName(MCH.Hypercharge)}", "");
 
+            if (preset == CustomComboPreset.MCH_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region MONK

@@ -472,7 +472,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
                             ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && GetRemainingCharges(Triplecast) > 0) || GetRemainingCharges(Triplecast) is 2) &&
                             LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                            (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
+                            (gauge.InAstralFire) &&
                             currentMP >= MP.FireI * 2)
                             return Triplecast;
 

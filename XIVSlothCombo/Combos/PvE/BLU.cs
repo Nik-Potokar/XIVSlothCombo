@@ -417,13 +417,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsSpellActive(RoseOfDestruction) && GetCooldown(RoseOfDestruction).CooldownRemaining < 1f)
                             return RoseOfDestruction;
 
-                        if (IsSpellActive(JKick) && IsOffCooldown(JKick))
-                            return JKick;
-
                         if (IsSpellActive(MoonFlute))
                             return MoonFlute;
                     }
 
+                    if (IsSpellActive(JKick) && IsOffCooldown(JKick))
+                        return JKick;
 
                     if (IsSpellActive(TripleTrident) && IsOffCooldown(TripleTrident))
                         return TripleTrident;
@@ -493,7 +492,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(PhantomFlurry);
 
                     if (HasEffect(Buffs.MoonFlute))
-                        return BLM.Fire;
+                        return OriginalHook(11);
                 }
 
                 return actionID;

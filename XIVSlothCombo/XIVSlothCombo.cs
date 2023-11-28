@@ -212,8 +212,6 @@ namespace XIVSlothCombo
         {
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
-            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
-            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
         private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
 
