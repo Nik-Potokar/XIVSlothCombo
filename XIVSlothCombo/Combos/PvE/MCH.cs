@@ -989,10 +989,10 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if ((WasLastAction(SpreadShot) || WasLastAction(AutoCrossbow) || Config.MCH_AoE_Hypercharge) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
                         {
-                            if (GetRemainingCharges(Ricochet) > 0)
+                            if (ActionReady(Ricochet) && GetRemainingCharges(Ricochet) > 0)
                                 return Ricochet;
 
-                            if (GetRemainingCharges(GaussRound) > 0)
+                            if (ActionReady(Ricochet) && GetRemainingCharges(GaussRound) > 0)
                                 return GaussRound;
 
                         }
