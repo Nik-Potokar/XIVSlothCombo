@@ -1639,7 +1639,7 @@ namespace XIVSlothCombo.Combos
 
         #region Advanced AoE
 
-        [ReplaceSkill(MCH.SpreadShot)]
+        [ReplaceSkill(MCH.SpreadShot, MCH.Scattergun)]
         [ConflictingCombos(MCH_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Spread Shot with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MCH.JobID)]
         MCH_AoE_AdvancedMode = 8300,
