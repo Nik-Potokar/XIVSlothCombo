@@ -99,35 +99,10 @@ namespace XIVSlothCombo.Combos.PvE
                 Mug = 638;
         }
 
-        public static class Levels
+        public static class Traits
         {
-            public const byte
-                SpinningEdge = 1,
-                ShadeShift = 2,
-                GustSlash = 4,
-                Mug = 15,
-                AeolianEdge = 26,
-                Ten = 30,
-                Chi = 35,
-                Jin = 45,
-                Doton = 45,
-                Assassinate = 40,
-                Kassatsu = 50,
-                HakkeMujinsatsu = 52,
-                ArmorCrush = 54,
-                Huraijin = 60,
-                Bhavacakra = 68,
-                Meisui = 72,
-                EnhancedKassatsu = 76,
-                Bunshin = 80,
-                PhantomKamaitachi = 82,
-                ForkedRaiju = 90;
-        }
-
-        public static class TraitLevels
-        {
-            public const byte
-                Shukiho = 66;
+            public const uint
+                EnhancedKasatsu = 250;
         }
 
         public static class Config
@@ -1003,10 +978,10 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Huraijin)
                 {
-                    if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Fleeting) && level >= Levels.ForkedRaiju && HasEffect(Buffs.RaijuReady))
+                    if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Fleeting) && ForkedRaiju.LevelChecked() && HasEffect(Buffs.RaijuReady))
                         return FleetingRaiju;
 
-                    if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Forked) && level >= Levels.ForkedRaiju && HasEffect(Buffs.RaijuReady))
+                    if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Forked) && ForkedRaiju.LevelChecked() && HasEffect(Buffs.RaijuReady))
                         return ForkedRaiju;
                 }
                 return actionID;
@@ -1028,45 +1003,45 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (mudrapath == 1)
                         {
-                            if (level >= Levels.Ten && actionID == Ten)
+                            if (Ten.LevelChecked() && actionID == Ten)
                             {
-                                if (level >= Levels.Jin && (OriginalHook(Ninjutsu) is Raiton))
+                                if (Jin.LevelChecked() && (OriginalHook(Ninjutsu) is Raiton))
                                 {
                                     return OriginalHook(JinCombo);
                                 }
 
-                                if (level >= Levels.Chi && (OriginalHook(Ninjutsu) is HyoshoRanryu))
+                                if (Chi.LevelChecked() && (OriginalHook(Ninjutsu) is HyoshoRanryu))
                                 {
                                     return OriginalHook(ChiCombo);
                                 }
 
                                 if (OriginalHook(Ninjutsu) == FumaShuriken)
                                 {
-                                    if (HasEffect(Buffs.Kassatsu) && level >= Levels.EnhancedKassatsu)
+                                    if (HasEffect(Buffs.Kassatsu) && Traits.EnhancedKasatsu.TraitLevelChecked())
                                         return JinCombo;
 
-                                    if (level >= Levels.Chi)
+                                    if (Chi.LevelChecked())
                                         return OriginalHook(ChiCombo);
 
-                                    if (level >= Levels.Jin)
+                                    if (Jin.LevelChecked())
                                         return OriginalHook(JinCombo);
                                 }
                             }
 
-                            if (level >= Levels.Chi && actionID == Chi)
+                            if (Chi.LevelChecked() && actionID == Chi)
                             {
                                 if (OriginalHook(Ninjutsu) is Hyoton)
                                 {
                                     return OriginalHook(TenCombo);
                                 }
 
-                                if (level >= Levels.Jin && OriginalHook(Ninjutsu) == FumaShuriken)
+                                if (Jin.LevelChecked() && OriginalHook(Ninjutsu) == FumaShuriken)
                                 {
                                     return OriginalHook(JinCombo);
                                 }
                             }
 
-                            if (level >= Levels.Jin && actionID == Jin)
+                            if (Jin.LevelChecked() && actionID == Jin)
                             {
                                 if (OriginalHook(Ninjutsu) is GokaMekkyaku or Katon)
                                 {
@@ -1084,26 +1059,26 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (mudrapath == 2)
                         {
-                            if (level >= Levels.Ten && actionID == Ten)
+                            if (Ten.LevelChecked() && actionID == Ten)
                             {
-                                if (level >= Levels.Chi && (OriginalHook(Ninjutsu) is Hyoton or HyoshoRanryu))
+                                if (Chi.LevelChecked() && (OriginalHook(Ninjutsu) is Hyoton or HyoshoRanryu))
                                 {
                                     return OriginalHook(Chi);
                                 }
 
                                 if (OriginalHook(Ninjutsu) == FumaShuriken)
                                 {
-                                    if (level >= Levels.Jin)
+                                    if (Jin.LevelChecked())
                                         return OriginalHook(JinCombo);
 
-                                    else if (level >= Levels.Chi)
+                                    else if (Chi.LevelChecked())
                                         return OriginalHook(ChiCombo);
                                 }
                             }
 
-                            if (level >= Levels.Chi && actionID == Chi)
+                            if (Chi.LevelChecked() && actionID == Chi)
                             {
-                                if (level >= Levels.Jin && (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku))
+                                if (Jin.LevelChecked() && (OriginalHook(Ninjutsu) is Katon or GokaMekkyaku))
                                 {
                                     return OriginalHook(Jin);
                                 }
@@ -1114,7 +1089,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
-                            if (level >= Levels.Jin && actionID == Jin)
+                            if (Jin.LevelChecked() && actionID == Jin)
                             {
                                 if (OriginalHook(Ninjutsu) is Raiton)
                                 {
@@ -1128,7 +1103,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (OriginalHook(Ninjutsu) == FumaShuriken)
                                 {
-                                    if (HasEffect(Buffs.Kassatsu) && level >= Levels.EnhancedKassatsu)
+                                    if (HasEffect(Buffs.Kassatsu) && Traits.EnhancedKasatsu.TraitLevelChecked())
                                         return OriginalHook(Ten);
                                     return OriginalHook(Chi);
                                 }
