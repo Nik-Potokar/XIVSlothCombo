@@ -136,6 +136,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             public static UserInt
                 SGE_Eukrasia_Mode = new("SGE_Eukrasia_Mode");
+            public static UserUIntArray
+                SGE_Heal_Priority = new("SGE_Heal_Priority");
         }
 
         internal static class Traits
@@ -423,57 +425,73 @@ namespace XIVSlothCombo.Combos.PvE
 
                     GameObject? healTarget = GetHealTarget(Config.SGE_ST_Heal_Adv && Config.SGE_ST_Heal_UIMouseOver);
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
-                        GetTargetHPPercent(healTarget) >= Config.SGE_ST_Heal_Esuna &&
-                        HasCleansableDebuff(healTarget))
-                        return All.Esuna;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && ActionReady(Druochole) &&
-                        Gauge.HasAddersgall() &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Druochole)
-                        return Druochole;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && ActionReady(Taurochole) &&
-                        Gauge.HasAddersgall() &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Taurochole)
-                        return Taurochole;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && ActionReady(Rhizomata) &&
-                        !Gauge.HasAddersgall())
-                        return Rhizomata;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) && LevelChecked(Kardia) &&
-                        FindEffect(Buffs.Kardia) is null &&
-                        FindEffect(Buffs.Kardion, healTarget, LocalPlayer?.ObjectId) is null)
-                        return Kardia;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && ActionReady(Soteria) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Soteria)
-                        return Soteria;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && ActionReady(Zoe) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Zoe)
-                        return Zoe;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && ActionReady(Krasis) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Krasis)
-                        return Krasis;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && ActionReady(Pepsis) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Pepsis &&
-                        FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is not null)
-                        return Pepsis;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && ActionReady(Haima) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Haima)
-                        return Haima;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_EDiagnosis) && LevelChecked(Eukrasia) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_EDiagnosisHP &&
-                        (Config.SGE_ST_Heal_EDiagnosisOpts[0] || FindEffectOnMember(Buffs.EukrasianDiagnosis, healTarget) is null) && //Ignore existing shield check
-                        (!Config.SGE_ST_Heal_EDiagnosisOpts[1] || FindEffectOnMember(SCH.Buffs.Galvanize, healTarget) is null)) //Galvenize Check
-                        return Eukrasia;
-
+                    for (int i = 0; i < Config.SGE_Heal_Priority.Count; i++)
+                    {
+                        switch (Config.SGE_Heal_Priority[i])
+                        {
+                            case All.Esuna:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
+                                    HasCleansableDebuff(healTarget)) 
+                                    return All.Esuna;
+                                break;
+                            case Druochole:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && ActionReady(Druochole) &&
+                                    Gauge.HasAddersgall() &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Druochole)
+                                    return Druochole;
+                                break;
+                            case Taurochole:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && ActionReady(Taurochole) &&
+                                    Gauge.HasAddersgall() &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Taurochole)
+                                    return Taurochole;
+                                break;
+                            case Rhizomata:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && ActionReady(Rhizomata) &&
+                                    !Gauge.HasAddersgall())
+                                    return Rhizomata;
+                                break;
+                            case Kardia:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Kardia) && LevelChecked(Kardia) &&
+                                    FindEffect(Buffs.Kardia) is null &&
+                                    FindEffect(Buffs.Kardion, healTarget, LocalPlayer?.ObjectId) is null)
+                                    return Kardia;
+                                break;
+                            case Soteria:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && ActionReady(Soteria) &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Soteria)
+                                    return Soteria;
+                                break;
+                            case Zoe:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && ActionReady(Zoe) &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Zoe)
+                                    return Zoe;
+                                break;
+                            case Krasis:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && ActionReady(Krasis) &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Krasis)
+                                    return Krasis;
+                                break;
+                            case Pepsis:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && ActionReady(Pepsis) &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Pepsis &&
+                                    FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is not null)
+                                    return Pepsis;
+                                break;
+                            case Haima:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && ActionReady(Haima) &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Haima)
+                                    return Haima;
+                                break;
+                            case Eukrasia:
+                                if (IsEnabled(CustomComboPreset.SGE_ST_Heal_EDiagnosis) && LevelChecked(Eukrasia) &&
+                                    GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_EDiagnosisHP &&
+                                    (Config.SGE_ST_Heal_EDiagnosisOpts[0] || FindEffectOnMember(Buffs.EukrasianDiagnosis, healTarget) is null) && //Ignore existing shield check
+                                    (!Config.SGE_ST_Heal_EDiagnosisOpts[1] || FindEffectOnMember(SCH.Buffs.Galvanize, healTarget) is null)) //Galvenize Check
+                                    return Eukrasia;
+                                break;
+                        }
+                    }
                 }
 
                 return actionID;

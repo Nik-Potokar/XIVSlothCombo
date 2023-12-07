@@ -1,14 +1,14 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
-using Dalamud.Interface.Utility;
 using Dalamud.Utility;
-using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
-using System.Security.Permissions;
+using System.Windows.Markup;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
@@ -469,6 +469,64 @@ namespace XIVSlothCombo.Window.Functions
 
 
             ImGui.PopStyleColor();
+            ImGui.Unindent();
+        }
+
+        /// <summary> Draws a list box of actions with Up and Down buttons to multi choice checkboxes in a horizontal configuration. </summary>
+        /// <param name="config"> The config ID. </param>
+        /// <param name="listBoxName"> The name of the feature. </param>
+        /// <param name="actionIDs"> Array of action IDs to display in the box. </param>
+        /// <param name="itemWidth"></param>
+        /// <param name="descriptionColor"></param>
+        public static void DrawListBox(string config, string listBoxName, uint[] actionIDs, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        {
+            //Start of UI
+            ImGui.Indent();
+            if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
+            ImGui.PushItemWidth(itemWidth);
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(21, 0));
+            //ImGui.SameLine();
+
+            uint[] values = PluginConfiguration.GetCustomUIntArrayValue(config);
+
+            //If new saved options or amount of choices changed, resize, repopulate defaults, and save.
+            if (values.Length == 0 || values.Length != actionIDs.Length)
+            {
+                Array.Resize(ref values, actionIDs.Length);
+                Array.Copy(actionIDs, values, actionIDs.Length);
+                PluginConfiguration.SetCustomUIntArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            //TODO: Figure out how to keep Selection persistent. Needs to not reset every damn refresh without saving to UserOpts
+            int selection = Array.IndexOf(values, ActionWatching.LastAction); // -1 failure will deselect, totally fine for now.
+
+            //Converting array of ids to list of names
+            string[] displaylist = values.Select(ActionWatching.GetActionName).ToArray();
+            
+            //Not sure if child is needed but it nukes the size of the listbox if it's on
+            //ImGui.BeginChild($"ListBox###{config}");
+            //Also not sure why Listboxname is off to the side?
+            ImGui.ListBox(listBoxName, ref selection, displaylist, values.Length);
+            ImGui.SameLine();
+
+            int newidx = selection;
+            if (ImGui.Button("Up") && (selection > 0)) newidx--; //move "up" in array by -1
+            ImGui.SameLine();
+            if (ImGui.Button("Down") && (selection != values.Length - 1)) newidx++; //move "down" in array by +1
+
+            if (selection != newidx)
+            {
+                //Swap values using truple shuple
+                (values[selection], values[newidx]) = (values[newidx], values[selection]);
+                selection = newidx; //update selection index
+                PluginConfiguration.SetCustomUIntArrayValue(config, values);
+                Service.Configuration.Save();
+            }
+
+            //ImGui.EndChild();
+            
             ImGui.Unindent();
         }
 
@@ -1958,6 +2016,19 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_ST_Heal)
             {
+                UserConfig.DrawListBox(SGE.Config.SGE_Heal_Priority, "Action Priority.\nUse Action to Select in List",
+                    [All.Esuna,
+                    SGE.Druochole,
+                    SGE.Taurochole,
+                    SGE.Rhizomata,
+                    SGE.Soteria,
+                    SGE.Zoe,
+                    SGE.Krasis,
+                    SGE.Pepsis,
+                    SGE.Haima,
+                    SGE.Eukrasia]);
+
+
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_Heal_Adv, "Advanced Options", "", isConditionalChoice: true);
                 if (SGE.Config.SGE_ST_Heal_Adv)
                 {
