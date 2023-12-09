@@ -16,28 +16,52 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static float GetOptionFloat(string SliderID) => PluginConfiguration.GetCustomFloatValue(SliderID);
     }
 
-    internal class UserData
+    internal class UserData(string v)
     {
-        protected string pName;
-        public UserData(string v) => pName = v;
+        protected string pName = v;
         public static implicit operator string(UserData o) => (o.pName);
     }
 
     internal class UserFloat : UserData
     {
         public UserFloat(string v) : base(v) { }
+        public UserFloat(string v, float defaults) : base(v) //Overload constructor to preload data
+        {
+            if (PluginConfiguration.GetCustomFloatValue(this.pName, -5000) == -5000) //If not already configured, runs only once from testing
+            {
+                PluginConfiguration.SetCustomFloatValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
         public static implicit operator float(UserFloat o) => PluginConfiguration.GetCustomFloatValue(o.pName);
     }
 
     internal class UserInt : UserData
     {
         public UserInt(string v) : base(v) { }
+        public UserInt(string v, int defaults) : base(v) //Overload constructor to preload data
+        {
+            if (PluginConfiguration.GetCustomIntValue(this.pName, -5000) == -5000) //If not already configured, runs only once from testing
+            {
+                PluginConfiguration.SetCustomIntValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
         public static implicit operator int(UserInt o) => PluginConfiguration.GetCustomIntValue(o.pName);
     }
 
     internal class UserBool : UserData
     {
         public UserBool(string v) : base(v) { }
+        public UserBool(string v, bool defaults) : base(v) //Overload constructor to preload data
+        {
+            //Not bothering to check, default is false. I mean this should only run once.
+            if (defaults)
+            {
+                PluginConfiguration.SetCustomBoolValue(this.pName, true);
+                Service.Configuration.Save();
+            }
+        }
         public static implicit operator bool(UserBool o) => PluginConfiguration.GetCustomBoolValue(o.pName);
     }
 
