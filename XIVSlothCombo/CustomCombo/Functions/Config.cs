@@ -19,22 +19,61 @@ namespace XIVSlothCombo.CustomComboNS.Functions
     internal class UserData(string v)
     {
         protected string pName = v;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1dd63f21 (Added optional default value passing for UserOptions)
         public static implicit operator string(UserData o) => (o.pName);
     }
 
     internal class UserFloat(string v) : UserData(v)
     {
+<<<<<<< HEAD
+=======
+        public UserFloat(string v) : base(v) { }
+        public UserFloat(string v, float defaults) : base(v) //Overload constructor to preload data
+        {
+            if (!PluginConfiguration.CustomFloatValues.ContainsKey(this.pName)) //if it isn't there, set
+            {
+                PluginConfiguration.SetCustomFloatValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
+>>>>>>> 1dd63f21 (Added optional default value passing for UserOptions)
         public static implicit operator float(UserFloat o) => PluginConfiguration.GetCustomFloatValue(o.pName);
     }
 
     internal class UserInt(string v) : UserData(v)
     {
+<<<<<<< HEAD
+=======
+        public UserInt(string v) : base(v) { }
+        public UserInt(string v, int defaults) : base(v) //Overload constructor to preload data
+        {
+            if (!PluginConfiguration.CustomIntValues.ContainsKey(this.pName)) //if it isn't there, set
+            {
+                PluginConfiguration.SetCustomIntValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
+>>>>>>> 1dd63f21 (Added optional default value passing for UserOptions)
         public static implicit operator int(UserInt o) => PluginConfiguration.GetCustomIntValue(o.pName);
     }
 
     internal class UserBool(string v) : UserData(v)
     {
+<<<<<<< HEAD
+=======
+        public UserBool(string v) : base(v) { }
+        public UserBool(string v, bool defaults) : base(v) //Overload constructor to preload data
+        {
+            if (!PluginConfiguration.CustomBoolValues.ContainsKey(this.pName)) //if it isn't there, set
+            {
+                PluginConfiguration.SetCustomBoolValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
+>>>>>>> 1dd63f21 (Added optional default value passing for UserOptions)
         public static implicit operator bool(UserBool o) => PluginConfiguration.GetCustomBoolValue(o.pName);
     }
 
