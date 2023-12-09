@@ -13,6 +13,7 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
@@ -1108,6 +1109,71 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Spacing();
         }
 
+        internal static void DrawPriorityInput(UserIntArray config, int maxValues, int currentItem, string customLabel = "")
+        {
+            if (config.Count != maxValues || config.Any(x => x == 0))
+            {
+                config.Clear(maxValues);
+                for (int i = 1; i <= maxValues; i++)
+                {
+                    config[i - 1] = i;
+                }
+            }
+
+            int curVal = config[currentItem];
+            int oldVal = config[currentItem];
+
+            InfoBox box = new()
+            {
+                Color = Colors.Blue,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    if (customLabel.IsNullOrEmpty())
+                    {
+                        ImGui.TextUnformatted($"Priority: ");
+                    }
+                    else
+                    {
+                        ImGui.TextUnformatted(customLabel);
+                    }
+                    ImGui.SameLine();
+                    ImGui.PushItemWidth(100f);
+
+                    if (ImGui.InputInt($"###Priority{config.Name}{currentItem}", ref curVal))
+                    {
+                        for (int i = 0; i < maxValues; i++)
+                        {
+                            if (i == currentItem)
+                                continue;
+
+                            if (config[i] == curVal)
+                            {
+                                config[i] = oldVal;
+                                config[currentItem] = curVal;
+                                break;
+                            }
+                        }
+                    }
+                }
+            };
+
+            ImGui.Indent();
+            box.Draw();
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.Text("Smaller Number = Higher Priority");
+                ImGui.EndTooltip();
+            }
+            ImGui.Unindent();
+            ImGui.Spacing();
+        }
+
         public static int RoundOff(this int i, uint sliderIncrement)
         {
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);
@@ -1983,29 +2049,50 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, $"Use {ActionWatching.GetActionName(SGE.Soteria)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 0, $"{ActionWatching.GetActionName(SGE.Soteria)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Use Zoe when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, $"Use {ActionWatching.GetActionName(SGE.Zoe)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 1, $"{ActionWatching.GetActionName(SGE.Zoe)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Use Pepsis when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, $"Use {ActionWatching.GetActionName(SGE.Pepsis)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 2, $"{ActionWatching.GetActionName(SGE.Pepsis)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Use Taurochole when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, $"Use {ActionWatching.GetActionName(SGE.Taurochole)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 3, $"{ActionWatching.GetActionName(SGE.Taurochole)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Use Haima when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, $"Use {ActionWatching.GetActionName(SGE.Haima)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 4, $"{ActionWatching.GetActionName(SGE.Haima)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Use Krasis when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, $"Use {ActionWatching.GetActionName(SGE.Krasis)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 5, $"{ActionWatching.GetActionName(SGE.Krasis)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Use Druochole when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, $"Use {ActionWatching.GetActionName(SGE.Druochole)} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 6, $"{ActionWatching.GetActionName(SGE.Druochole)} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_EDiagnosis)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, "Use Eukrasian Diagnosis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, $"Use {ActionWatching.GetActionName(SGE.EukrasianDiagnosis)} when Target HP is at or below set percentage");
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", 2, 0);
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Check for Scholar Galvenize", "Enable to not override an existing Scholar's shield.", 2, 1);
             }

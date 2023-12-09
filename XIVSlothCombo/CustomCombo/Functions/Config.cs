@@ -41,6 +41,59 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static implicit operator bool(UserBool o) => PluginConfiguration.GetCustomBoolValue(o.pName);
     }
 
+    internal class UserIntArray : UserData
+    {
+        public UserIntArray(string v) : base(v) { }
+        public string Name => pName;
+        public int Count => PluginConfiguration.GetCustomIntArrayValue(this.pName).Length;
+        public bool Any(Func<int, bool> func) => PluginConfiguration.GetCustomIntArrayValue(this.pName).Any(func);
+        public int[] Items => PluginConfiguration.GetCustomIntArrayValue(this.pName);
+        public int IndexOf(int item)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (Items[i] == item)
+                    return i;
+            }
+            return -1;
+        }
+
+        public void Clear(int maxValues)
+        {
+            var array = PluginConfiguration.GetCustomIntArrayValue(this.pName);
+            Array.Resize<int>(ref array, maxValues);
+            PluginConfiguration.SetCustomIntArrayValue(this.pName, array);
+            Service.Configuration.Save();
+        }
+
+        public static implicit operator int[](UserIntArray o) => PluginConfiguration.GetCustomIntArrayValue(o.pName);
+
+        public int this[int index]
+        {
+            get
+            {
+                if (index >= this.Count)
+                {
+                    var array = PluginConfiguration.GetCustomIntArrayValue(this.pName);
+                    Array.Resize(ref array, index + 1);
+                    array[index] = 0;
+                    PluginConfiguration.SetCustomIntArrayValue(this.pName, array);
+                    Service.Configuration.Save();
+                }
+                return PluginConfiguration.GetCustomIntArrayValue(this.pName)[index];
+            }
+            set
+            {
+                if (index < this.Count)
+                {
+                    var array = PluginConfiguration.GetCustomIntArrayValue(this.pName);
+                    array[index] = value;
+                    Service.Configuration.Save();
+                }
+            }
+        }
+    }
+
     internal class UserBoolArray : UserData
     {
         public UserBoolArray(string v) : base(v) { }

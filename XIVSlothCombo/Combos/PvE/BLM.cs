@@ -573,7 +573,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
                             return OriginalHook(Fire);
 
-                        if (Config.BLM_Adv_Cooldowns_Choice[0] &&
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && 
+                            Config.BLM_Adv_Cooldowns_Choice[0] &&
                             ActionReady(Manafont) && WasLastAction(Despair))
                             return Manafont;
 

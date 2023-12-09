@@ -2765,47 +2765,47 @@ namespace XIVSlothCombo.Combos
         SGE_ST_Heal = 14300,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 301, "", "")]
+        [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 11, "", "")]
         SGE_ST_Heal_Esuna = 14301,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 305, "", "")]
+        [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 1, "", "")]
         SGE_ST_Heal_Kardia = 14310,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 313, "", "")]
+        [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 2, "", "")]
         SGE_ST_Heal_EDiagnosis = 14320,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 306, "", "")]
+        [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 3, "", "")]
         SGE_ST_Heal_Soteria = 14330,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 307, "", "")]
+        [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 4, "", "")]
         SGE_ST_Heal_Zoe = 14340,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 309, "", "")]
+        [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 5, "", "")]
         SGE_ST_Heal_Pepsis = 14350,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 303, "", "")]
+        [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 6, "", "")]
         SGE_ST_Heal_Taurochole = 14360,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 310, "", "")]
+        [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 7, "", "")]
         SGE_ST_Heal_Haima = 14370,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 304, "", "")]
+        [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 10, "", "")]
         SGE_ST_Heal_Rhizomata = 14380,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 308, "", "")]
+        [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 8, "", "")]
         SGE_ST_Heal_Krasis = 14390,
 
         [ParentCombo(SGE_ST_Heal)]
-        [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 302, "", "")]
+        [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 9, "", "")]
         SGE_ST_Heal_Druochole = 14400,
         #endregion
 

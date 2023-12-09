@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
+using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -90,9 +91,9 @@ namespace XIVSlothCombo.Combos.PvE
             };
 
         // Sage Gauge & Extensions
-        private static SGEGauge Gauge => CustomComboFunctions.GetJobGauge<SGEGauge>();
-        private static bool HasAddersgall(this SGEGauge gauge) => gauge.Addersgall > 0;
-        private static bool HasAddersting(this SGEGauge gauge) => gauge.Addersting > 0;
+        public static SGEGauge Gauge => CustomComboFunctions.GetJobGauge<SGEGauge>();
+        public static bool HasAddersgall(this SGEGauge gauge) => gauge.Addersgall > 0;
+        public static bool HasAddersting(this SGEGauge gauge) => gauge.Addersting > 0;
 
         public static class Config
         {
@@ -129,7 +130,9 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_Heal_EDiagnosisHP = new("SGE_ST_Heal_EDiagnosisHP"),
                 SGE_ST_Heal_Druochole = new("SGE_ST_Heal_Druochole"),
                 SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole"),
-                SGE_ST_Heal_Esuna = new("SGE_ST_Heal_Esuna");                
+                SGE_ST_Heal_Esuna = new("SGE_ST_Heal_Esuna");
+            public static UserIntArray
+                SGE_ST_Heals_Priority = new("SGE_ST_Heals_Priority");
             public static UserBoolArray
                 SGE_ST_Heal_EDiagnosisOpts = new("SGE_ST_Heal_EDiagnosisOpts");
             #endregion
@@ -140,7 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal static class Traits
         {
-            internal const ushort 
+            internal const ushort
                 EnhancedKerachole = 375;
         }
 
@@ -274,7 +277,8 @@ namespace XIVSlothCombo.Combos.PvE
                     ActionFound = (!Config.SGE_ST_DPS_Adv_D2 && DosisList.ContainsKey(actionID)) || //not restricted to Dosis 2
                                   actionID is Dosis2 ||                                             //Dosis 2 is always allowed
                                   GroupInstants;                                                    //Group Instants on Toxikon
-                } else ActionFound = DosisList.ContainsKey(actionID); //default handling
+                }
+                else ActionFound = DosisList.ContainsKey(actionID); //default handling
 
                 if (ActionFound)
                 {
@@ -355,7 +359,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (GroupInstants)
                     {
                         if (HasEffect(Buffs.Eukrasia)) return OriginalHook(Dosis);
-                        
+
                         if (Config.SGE_ST_DPS_Adv_GroupInstants_Addl.Count == 2)
                         {
                             // Toxikon
@@ -428,15 +432,6 @@ namespace XIVSlothCombo.Combos.PvE
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && ActionReady(Druochole) &&
-                        Gauge.HasAddersgall() &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Druochole)
-                        return Druochole;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && ActionReady(Taurochole) &&
-                        Gauge.HasAddersgall() &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Taurochole)
-                        return Taurochole;
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Rhizomata) && ActionReady(Rhizomata) &&
                         !Gauge.HasAddersgall())
@@ -447,26 +442,18 @@ namespace XIVSlothCombo.Combos.PvE
                         FindEffect(Buffs.Kardion, healTarget, LocalPlayer?.ObjectId) is null)
                         return Kardia;
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria) && ActionReady(Soteria) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Soteria)
-                        return Soteria;
+                    foreach (var prio in Config.SGE_ST_Heals_Priority.Items.OrderBy(x => x))
+                    {
+                        var index = Config.SGE_ST_Heals_Priority.IndexOf(prio);
+                        var config = JobHelpers.SGE.GetMatchingConfigST(index, out var spell, out bool enabled);
 
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe) && ActionReady(Zoe) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Zoe)
-                        return Zoe;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis) && ActionReady(Krasis) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Krasis)
-                        return Krasis;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && ActionReady(Pepsis) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Pepsis &&
-                        FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is not null)
-                        return Pepsis;
-
-                    if (IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima) && ActionReady(Haima) &&
-                        GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_Haima)
-                        return Haima;
+                        if (enabled)
+                        {
+                            if (GetTargetHPPercent(healTarget) <= config &&
+                                ActionReady(spell))
+                                return spell;
+                        }
+                    }
 
                     if (IsEnabled(CustomComboPreset.SGE_ST_Heal_EDiagnosis) && LevelChecked(Eukrasia) &&
                         GetTargetHPPercent(healTarget) <= Config.SGE_ST_Heal_EDiagnosisHP &&
