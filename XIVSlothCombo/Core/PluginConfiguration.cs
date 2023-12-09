@@ -230,6 +230,28 @@ namespace XIVSlothCombo.Core
 
         #endregion
 
+        #region Custom UInt Array Values
+
+        [JsonProperty]
+        internal static Dictionary<string, uint[]> CustomUIntArrayValues { get; set; } = new Dictionary<string, uint[]>();
+
+        /// <summary> Gets a custom uint array value. </summary>
+        public static uint[] GetCustomUIntArrayValue(string config)
+        {
+            if (!CustomUIntArrayValues.TryGetValue(config, out uint[]? configValue))
+            {
+                SetCustomUIntArrayValue(config, Array.Empty<uint>());
+                return [];
+            }
+
+            return configValue;
+        }
+
+        /// <summary> Sets a custom uint array value. </summary>
+        public static void SetCustomUIntArrayValue(string config, uint[] value) => CustomUIntArrayValues[config] = value;
+
+        #endregion
+
         #region Job-specific
 
         /// <summary> Gets active Blue Mage (BLU) spells. </summary>
