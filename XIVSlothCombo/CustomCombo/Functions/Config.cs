@@ -55,10 +55,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public UserBool(string v) : base(v) { }
         public UserBool(string v, bool defaults) : base(v) //Overload constructor to preload data
         {
-            //Not bothering to check, default is false. I mean this should only run once.
-            if (defaults)
+            if (!PluginConfiguration.CustomBoolValues.ContainsKey(this.pName)) //if it isn't there, set
             {
-                PluginConfiguration.SetCustomBoolValue(this.pName, true);
+                PluginConfiguration.SetCustomBoolValue(this.pName, defaults);
                 Service.Configuration.Save();
             }
         }
