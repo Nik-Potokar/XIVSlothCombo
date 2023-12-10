@@ -27,7 +27,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public UserFloat(string v) : base(v) { }
         public UserFloat(string v, float defaults) : base(v) //Overload constructor to preload data
         {
-            if (PluginConfiguration.GetCustomFloatValue(this.pName, -5000) == -5000) //If not already configured, runs only once from testing
+            if (!PluginConfiguration.CustomFloatValues.ContainsKey(this.pName)) //if it isn't there, set
             {
                 PluginConfiguration.SetCustomFloatValue(this.pName, defaults);
                 Service.Configuration.Save();
@@ -41,7 +41,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public UserInt(string v) : base(v) { }
         public UserInt(string v, int defaults) : base(v) //Overload constructor to preload data
         {
-            if (PluginConfiguration.GetCustomIntValue(this.pName, -5000) == -5000) //If not already configured, runs only once from testing
+            if (!PluginConfiguration.CustomIntValues.ContainsKey(this.pName)) //if it isn't there, set
             {
                 PluginConfiguration.SetCustomIntValue(this.pName, defaults);
                 Service.Configuration.Save();
