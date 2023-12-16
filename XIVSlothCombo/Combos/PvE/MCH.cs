@@ -442,16 +442,18 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Heatblast, Gauss, Rico
-                        if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
-                            gauge.IsOverheated && LevelChecked(HeatBlast))
+                        if (gauge.IsOverheated && LevelChecked(HeatBlast))
                         {
-                            if (CanWeave(actionID))
+                            if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet))
                             {
-                                if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet) && WasLastAction(HeatBlast))
-                                    return GaussRound;
+                                if (CanWeave(actionID))
+                                {
+                                    if (GetRemainingCharges(GaussRound) >= GetRemainingCharges(Ricochet) && WasLastAction(HeatBlast))
+                                        return GaussRound;
 
-                                if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound) && WasLastAction(HeatBlast))
-                                    return Ricochet;
+                                    if (GetRemainingCharges(Ricochet) >= GetRemainingCharges(GaussRound) && WasLastAction(HeatBlast))
+                                        return Ricochet;
+                                }
                             }
 
                             if (IsEnabled(CustomComboPreset.MCH_ST_Adv_HeatBlast))

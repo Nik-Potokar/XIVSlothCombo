@@ -132,7 +132,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_Heal_Taurochole = new("SGE_ST_Heal_Taurochole"),
                 SGE_ST_Heal_Esuna = new("SGE_ST_Heal_Esuna");
             public static UserIntArray
-                SGE_ST_Heals_Priority = new("SGE_ST_Heals_Priority");
+                SGE_ST_Heals_Priority = new("SGE_ST_Heals_Priority"),
+                SGE_AoE_Heals_Priority = new("SGE_AoE_Heals_Priority");
             public static UserBoolArray
                 SGE_ST_Heal_EDiagnosisOpts = new("SGE_ST_Heal_EDiagnosisOpts");
             #endregion
@@ -486,31 +487,17 @@ namespace XIVSlothCombo.Combos.PvE
                         !Gauge.HasAddersgall())
                         return Rhizomata;
 
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) &&
-                        ActionReady(Kerachole) &&
-                        (!Config.SGE_AoE_Heal_KeracholeTrait || (Config.SGE_AoE_Heal_KeracholeTrait && TraitLevelChecked(Traits.EnhancedKerachole))) &&
-                        Gauge.HasAddersgall())
-                        return Kerachole;
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && ActionReady(Ixochole) &&
-                        Gauge.HasAddersgall())
-                        return Ixochole;
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis))
+                    foreach (var prio in Config.SGE_AoE_Heals_Priority.Items.OrderBy(x => x))
                     {
-                        uint physis = OriginalHook(Physis);
-                        if (ActionReady(physis)) return physis;
+                        var index = Config.SGE_AoE_Heals_Priority.IndexOf(prio);
+                        var config = JobHelpers.SGE.GetMatchingConfigAoE(index, out var spell, out bool enabled);
+
+                        if (enabled)
+                        {
+                            if (ActionReady(spell))
+                                return spell;
+                        }
                     }
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos) && ActionReady(Holos))
-                        return Holos;
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima) && ActionReady(Panhaima))
-                        return Panhaima;
-
-                    if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && ActionReady(Pepsis) &&
-                        FindEffect(Buffs.EukrasianPrognosis) is not null)
-                        return Pepsis;
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && LevelChecked(Eukrasia) &&
                         (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis_IgnoreShield) ||

@@ -15,6 +15,7 @@ using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Functions
@@ -2050,52 +2051,71 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, $"Use {ActionWatching.GetActionName(SGE.Soteria)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 0, $"{ActionWatching.GetActionName(SGE.Soteria)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, $"Use {SGE.Soteria.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 0, $"{SGE.Soteria.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, $"Use {ActionWatching.GetActionName(SGE.Zoe)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 1, $"{ActionWatching.GetActionName(SGE.Zoe)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, $"Use {SGE.Zoe.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 1, $"{SGE.Zoe.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, $"Use {ActionWatching.GetActionName(SGE.Pepsis)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 2, $"{ActionWatching.GetActionName(SGE.Pepsis)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, $"Use {SGE.Pepsis.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 2, $"{SGE.Pepsis.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, $"Use {ActionWatching.GetActionName(SGE.Taurochole)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 3, $"{ActionWatching.GetActionName(SGE.Taurochole)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, $"Use {SGE.Taurochole.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 3, $"{SGE.Taurochole.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, $"Use {ActionWatching.GetActionName(SGE.Haima)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 4, $"{ActionWatching.GetActionName(SGE.Haima)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, $"Use {SGE.Haima.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 4, $"{SGE.Haima.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, $"Use {ActionWatching.GetActionName(SGE.Krasis)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 5, $"{ActionWatching.GetActionName(SGE.Krasis)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, $"Use {SGE.Krasis.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 5, $"{SGE.Krasis.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, $"Use {ActionWatching.GetActionName(SGE.Druochole)} when Target HP is at or below set percentage");
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 6, $"{ActionWatching.GetActionName(SGE.Druochole)} Priority: ");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, $"Use {SGE.Druochole.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 6, $"{SGE.Druochole.ActionName()} Priority: ");
             }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_EDiagnosis)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, $"Use {ActionWatching.GetActionName(SGE.EukrasianDiagnosis)} when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, $"Use {SGE.EukrasianDiagnosis.ActionName()} when Target HP is at or below set percentage");
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", 2, 0);
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Check for Scholar Galvenize", "Enable to not override an existing Scholar's shield.", 2, 1);
             }
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 0, $"{SGE.Kerachole.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Ixochole)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 1, $"{SGE.Ixochole.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Physis)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 2, $"{SGE.Physis.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Holos)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 3, $"{SGE.Holos.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Panhaima)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 4, $"{SGE.Panhaima.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Pepsis)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 5, $"{SGE.Pepsis.ActionName()} Priority: ");
+
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
