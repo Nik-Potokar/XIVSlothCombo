@@ -137,6 +137,18 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Jolt or Jolt2)
                 {
+                    //VARIANTS
+                    if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_VariantCure))
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
                     //RDM_BALANCE_OPENER
                     if (IsEnabled(CustomComboPreset.RDM_Balance_Opener) && level >= 90)
                     {
@@ -308,17 +320,6 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     //END_RDM_BALANCE_OPENER
 
-                    //VARIANTS
-                    if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_VariantCure))
-                        return Variant.VariantCure;
-
-                    if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
-                        return Variant.VariantRampart;
                 }
 
                 //Lucid Dreaming
@@ -586,6 +587,18 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 int black = Gauge.BlackMana;
                 int white = Gauge.WhiteMana;
+
+                //VARIANTS
+                if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) &&
+                    IsEnabled(Variant.VariantCure) &&
+                    PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_VariantCure))
+                    return Variant.VariantCure;
+
+                if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) &&
+                    IsEnabled(Variant.VariantRampart) &&
+                    IsOffCooldown(Variant.VariantRampart) &&
+                    CanSpellWeave(actionID))
+                    return Variant.VariantRampart;
 
                 // LUCID
                 if (IsEnabled(CustomComboPreset.RDM_AoE_Lucid)

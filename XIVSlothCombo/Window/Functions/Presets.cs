@@ -119,6 +119,7 @@ namespace XIVSlothCombo.Window.Functions
 
                     }
 
+                    if (!string.IsNullOrEmpty(comboInfo.JobShorthand))
                     conflictBuilder.Insert(0, $"[{comboInfo.JobShorthand}] ");
 
                     ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, CustomComboNS.Functions.CustomComboFunctions.IsEnabled(conflict) ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed, 1500), $"- {conflictBuilder}");
