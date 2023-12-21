@@ -1973,6 +1973,11 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.RDM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, RDM.Config.RDM_VariantCure, "HP% to be at or under", 200);
 
+            if (preset is CustomComboPreset.RDM_ST_MeleeCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_MeleeEnforced, "Enforced Melee Check", "Once the melee combo has started, don't switch away even if target is out of range.");
+            }
+
             #endregion
             // ====================================================================================
             #region SAGE
