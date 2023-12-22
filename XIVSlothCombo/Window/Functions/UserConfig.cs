@@ -2355,6 +2355,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Mountain Buster", "", 3, 0);
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Crimson Cyclone", "", 3, 1);
                 UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Slipstream", "", 3, 2);
+
+                if (SMN.Config.SMN_ST_Egi_AstralFlow[1])
+                    UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_CrimsonCycloneMelee, "Enforced Crimson Cyclone Melee Check", "Only uses Crimson Cyclone within melee range.");
             }
 
 

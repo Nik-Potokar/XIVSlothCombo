@@ -3420,10 +3420,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Any Searing Burst Option", "Checks for any Searing light for bursting rather than just your own.\nUse this option if partied with multiple SMN and are worried about your Searing being overwritten.", SMN.JobID, 1, "", "")]
         SMN_Advanced_Burst_Any_Option = 17044,
 
-        [ParentCombo(SMN_ST_Egi_AstralFlow)]
-        [CustomComboInfo("Enforced Crimson Cyclone Melee Check", "Use Crimson Cyclone only in Melee range.", SMN.JobID, 0, "", "")]
-        SMN_ST_CrimsonCycloneMelee = 17049,
-
         [Variant]
         [VariantParent(SMN_Simple_Combo, SMN_Advanced_Combo)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SMN.JobID)]
