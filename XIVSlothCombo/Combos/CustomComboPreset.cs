@@ -4040,7 +4040,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Riddle of Earth Option", "Adds Riddle of Earth and Earth's Reply to Burst Mode when in combat.", MNK.JobID)]
         MNKPvP_Burst_RiddleOfEarth = 119002,
 
-        // Last value = 119002
+        [ParentCombo(MNKPvP_Burst)]
+        [SecretCustomCombo]
+        [CustomComboInfo("Six-sided Star Option", "Adds Six-sided Star to Burst Mode.", MNK.JobID)]
+        MNKPvP_Burst_SixSidedStar = 119003,
+
+        // Last value = 119003
 
         #endregion
 
