@@ -3421,7 +3421,7 @@ namespace XIVSlothCombo.Combos
         SMN_Advanced_Burst_Any_Option = 17044,
 
         [ParentCombo(SMN_ST_Egi_AstralFlow)]
-        [CustomComboInfo("Only in Melee range", "Use Crimson Cyclone only in Melee range.", SMN.JobID, 0, "", "")]
+        [CustomComboInfo("Enforced Crimson Cyclone Melee Check", "Use Crimson Cyclone only in Melee range.", SMN.JobID, 0, "", "")]
         SMN_ST_CrimsonCycloneMelee = 17049,
 
         [Variant]
