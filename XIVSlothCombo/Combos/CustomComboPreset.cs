@@ -364,6 +364,10 @@ namespace XIVSlothCombo.Combos
         BLM_Adv_Cooldowns = 2042,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Foul/Xenoglossy", "Adds Foul / Xenoglossy to the rotation.", BLM.JobID, -8, "", "")]
+        BLM_Adv_UsePolyglotStacks = 2058,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
         [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
             "\nWill default to the Standard opener when nothing is selected.", BLM.JobID, -10, "", "")]
         BLM_Adv_Opener = 2043,
@@ -455,7 +459,7 @@ namespace XIVSlothCombo.Combos
         BLM_Aetherial_Manipulation = 2046,
         #endregion
 
-        // Last value = 2057
+        // Last value = 2058
 
         #endregion
 
