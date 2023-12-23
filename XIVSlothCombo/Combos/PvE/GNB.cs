@@ -222,7 +222,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && LevelChecked(GnashingFang))
                     {
                         bool activeNoMercy = GetCooldownRemainingTime(NoMercy) > 50 || HasEffect(Buffs.NoMercy);
-                        if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Starter) && IsOffCooldown(GnashingFang) && gauge.AmmoComboStep == 0 &&
+                        if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Starter) && GetCooldownRemainingTime(GnashingFang) <= GetCooldownRemainingTime(KeenEdge) && gauge.AmmoComboStep == 0 &&
                             ((gauge.Ammo == MaxCartridges(level) && activeNoMercy && ((CombatEngageDuration().Minutes != 2 && regularSkS) || slowSkS)) || //Regular 60 second GF/NM timing
                             (gauge.Ammo == MaxCartridges(level) && activeNoMercy && CombatEngageDuration().Minutes == 2 && GetCooldownRemainingTime(DoubleDown) <= 1 && regularSkS) || //2 min delay for regular SkS
                             (gauge.Ammo == 1 && HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) > 50) || //NMDDGF windows/Scuffed windows
