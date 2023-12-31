@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using ImGuiNET;
+using System;
 using System.Linq;
 using System.Numerics;
-using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Statuses;
-using ImGuiNET;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
+using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 #if DEBUG
 namespace XIVSlothCombo.Window.Tabs
@@ -25,7 +26,7 @@ namespace XIVSlothCombo.Window.Tabs
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) => actionID;
         }
 
-        internal static new void Draw()
+        internal unsafe static new void Draw()
         {
             PlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
             DebugCombo? comboClass = new();
@@ -36,13 +37,13 @@ namespace XIVSlothCombo.Window.Tabs
                 {
                     foreach (Status? status in chara.StatusList)
                     {
-                        ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime,1)}");
+                        ImGui.TextUnformatted($"TARGET STATUS CHECK: {chara.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime, 1)}");
                     }
                 }
 
                 foreach (Status? status in (Service.ClientState.LocalPlayer as BattleChara).StatusList)
                 {
-                    ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime,1)}");
+                    ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime, 1)}");
                 }
 
                 ImGui.TextUnformatted($"TERRITORY: {Service.ClientState.TerritoryType}");
@@ -63,7 +64,8 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.BeginChild("BLUSPELLS", new Vector2(250, 100), false);
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
-                ImGui.Text($"{ActionWatching.CombatActions.Count}");
+
+
             }
 
             else

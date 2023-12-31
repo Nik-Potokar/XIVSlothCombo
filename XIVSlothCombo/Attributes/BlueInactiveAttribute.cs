@@ -15,14 +15,20 @@ namespace XIVSlothCombo.Attributes
             if (Service.Configuration is null)
                 return;
 
+            NoneSet = true;
             foreach (uint id in actionIDs)
             {
                 if (Service.Configuration.ActiveBLUSpells.Contains(id))
+                {
+                    NoneSet = false;
                     continue;
+                }
+
                 Actions.Add(id);
             }
         }
 
         internal List<uint> Actions { get; set; } = new();
+        internal bool NoneSet { get; set; } = false;
     }
 }
