@@ -83,7 +83,7 @@ namespace XIVSlothCombo
             Service.ClientState.Login += PrintLoginMessage;
             if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
-            Service.Framework.Update += CheckCurrentJob;
+            Service.Framework.Update += OnFrameworkUpdate;
 
             KillRedundantIDs();
             HandleConflictedCombos();
@@ -116,10 +116,12 @@ namespace XIVSlothCombo
             }
         }
 
-        private static void CheckCurrentJob(IFramework framework)
+        private static void OnFrameworkUpdate(IFramework framework)
         {
             if (Service.ClientState.LocalPlayer is not null)
             JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+
+            BlueMageService.PopulateBLUSpells();
         }
         private static void KillRedundantIDs()
         {
@@ -194,7 +196,7 @@ namespace XIVSlothCombo
             configWindow?.Dispose();
 
             Service.CommandManager.RemoveHandler(Command);
-            Service.Framework.Update -= CheckCurrentJob;
+            Service.Framework.Update -= OnFrameworkUpdate;
             Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
             Service.Interface.UiBuilder.Draw -= DrawUI;
 
