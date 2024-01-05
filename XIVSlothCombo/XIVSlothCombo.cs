@@ -34,7 +34,7 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow configWindow;
-        private HttpClient httpClient = new();
+        private readonly HttpClient httpClient = new();
         
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
@@ -94,7 +94,7 @@ namespace XIVSlothCombo
 #endif
         }
 
-        private void HandleConflictedCombos()
+        private static void HandleConflictedCombos()
         {
             var enabledCopy = Service.Configuration.EnabledActions.ToHashSet(); //Prevents issues later removing during enumeration
             foreach (var preset in enabledCopy)
@@ -166,13 +166,13 @@ namespace XIVSlothCombo
                 using HttpResponseMessage? motd = httpClient.GetAsync("https://raw.githubusercontent.com/Nik-Potokar/XIVSlothCombo/main/res/motd.txt").Result;
                 motd.EnsureSuccessStatusCode();
                 string? data = motd.Content.ReadAsStringAsync().Result;
-                List<Payload>? payloads = new()
-                {
+                List<Payload>? payloads =
+                [
                     starterMotd,
                     EmphasisItalicPayload.ItalicsOn,
                     string.IsNullOrEmpty(data) ? new TextPayload(basicMessage) : new TextPayload(data.Trim()),
                     EmphasisItalicPayload.ItalicsOff
-                };
+                ];
 
                 Service.ChatGui.Print(new XivChatEntry
                 {
@@ -188,7 +188,7 @@ namespace XIVSlothCombo
         }
 
         /// <inheritdoc/>
-        public string Name => "XIVSlothCombo";
+        public static string Name => "XIVSlothCombo";
 
         /// <inheritdoc/>
         public void Dispose()
@@ -210,7 +210,7 @@ namespace XIVSlothCombo
         }
 
 
-        private void DisposeOpeners()
+        private static void DisposeOpeners()
         {
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
@@ -486,26 +486,26 @@ namespace XIVSlothCombo
                                     _ => throw new NotImplementedException(),
                                 };
 
-                                foreach (var config in whichConfig.GetMembers().Where(x => x.MemberType == System.Reflection.MemberTypes.Field || x.MemberType == System.Reflection.MemberTypes.Property))
+                                foreach (var config in whichConfig.GetMembers().Where(x => x.MemberType == MemberTypes.Field || x.MemberType == MemberTypes.Property))
                                 {
                                     string key = config.Name!;
 
-                                    if (PluginConfiguration.CustomIntValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomIntValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomFloatValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomFloatValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomBoolValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolArrayValues.ContainsKey(key)) { file.WriteLine($"{key} - {string.Join(", ", PluginConfiguration.CustomBoolArrayValues[key])}"); continue; }
+                                    if (PluginConfiguration.CustomIntValues.TryGetValue(key, out int intvalue)) { file.WriteLine($"{key} - {intvalue}"); continue; }
+                                    if (PluginConfiguration.CustomFloatValues.TryGetValue(key, out float floatvalue)) { file.WriteLine($"{key} - {floatvalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolValues.TryGetValue(key, out bool boolvalue)) { file.WriteLine($"{key} - {boolvalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolArrayValues.TryGetValue(key, out bool[]? boolarrayvalue)) { file.WriteLine($"{key} - {string.Join(", ", boolarrayvalue)}"); continue; }
 
                                     file.WriteLine($"{key} - NOT SET");
                                 }
 
-                                foreach (var config in typeof(PvPCommon.Config).GetMembers().Where(x => x.MemberType == System.Reflection.MemberTypes.Field || x.MemberType == System.Reflection.MemberTypes.Property))
+                                foreach (var config in typeof(PvPCommon.Config).GetMembers().Where(x => x.MemberType == MemberTypes.Field || x.MemberType == MemberTypes.Property))
                                 {
                                     string key = config.Name!;
 
-                                    if (PluginConfiguration.CustomIntValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomIntValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomFloatValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomFloatValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomBoolValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolArrayValues.ContainsKey(key)) { file.WriteLine($"{key} - {string.Join(", ", PluginConfiguration.CustomBoolArrayValues[key])}"); continue; }
+                                    if (PluginConfiguration.CustomIntValues.TryGetValue(key, out int intvalue)) { file.WriteLine($"{key} - {intvalue}"); continue; }
+                                    if (PluginConfiguration.CustomFloatValues.TryGetValue(key, out float floatalue)) { file.WriteLine($"{key} - {floatalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolValues.TryGetValue(key, out bool boolvalue)) { file.WriteLine($"{key} - {boolvalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolArrayValues.TryGetValue(key, out bool[]? boolarrayvalue)) { file.WriteLine($"{key} - {string.Join(", ", boolarrayvalue)}"); continue; }
 
                                     file.WriteLine($"{key} - NOT SET");
                                 }

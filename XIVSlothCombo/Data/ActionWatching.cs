@@ -31,9 +31,9 @@ namespace XIVSlothCombo.Data
         internal static Dictionary<uint, BNpcBase> BNpcSheet = Service.DataManager.GetExcelSheet<BNpcBase>()!
             .ToDictionary(i => i.RowId, i => i);
 
-        private static readonly Dictionary<string, List<uint>> statusCache = new();
+        private static readonly Dictionary<string, List<uint>> statusCache = [];
 
-        internal readonly static List<uint> CombatActions = new();
+        internal readonly static List<uint> CombatActions = [];
 
         private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
@@ -174,7 +174,7 @@ namespace XIVSlothCombo.Data
         {
             if (CombatActions.Count < 2) return false;
             var lastAction = CombatActions.Last();
-            var secondLastAction = CombatActions[CombatActions.Count - 2];
+            var secondLastAction = CombatActions[^2];
 
             return (GetAttackType(lastAction) == GetAttackType(secondLastAction) && GetAttackType(lastAction) == ActionAttackType.Ability);
         }

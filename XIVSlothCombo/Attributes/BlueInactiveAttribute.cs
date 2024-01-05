@@ -28,7 +28,7 @@ namespace XIVSlothCombo.Attributes
             }
         }
 
-        internal List<uint> Actions { get; set; } = new();
+        internal List<uint> Actions { get; set; } = [];
         internal bool NoneSet { get; set; } = false;
     }
 }

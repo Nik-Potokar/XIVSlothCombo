@@ -432,14 +432,12 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="checkboxDescription"> The description of the feature. </param>
         /// <param name="totalChoices"> The total number of options for the feature </param>
         /// /// <param name="choice"> If the user ticks this box, this is the value the config will be set to. </param>
-        /// <param name="itemWidth"></param>
         /// <param name="descriptionColor"></param>
         public static void DrawHorizontalMultiChoice(string config, string checkBoxName, string checkboxDescription, int totalChoices, int choice, Vector4 descriptionColor = new Vector4())
         {
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
-            var textSize = ImGui.CalcTextSize(checkBoxName);
 
             //If new saved options or amount of choices changed, resize and save
             if (values.Length == 0 || values.Length != totalChoices)
@@ -474,7 +472,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Unindent();
         }
 
-        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, Vector4 descriptionColor = new Vector4())
         {
             int totalChoices = nameAndDesc.GetLength(0);
             if (totalChoices > 0)
@@ -1822,13 +1820,30 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
                 UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
+            if (preset == CustomComboPreset.ReaperPositionalConfigST && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 3);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 4);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
             }
+
+            if (preset == CustomComboPreset.ReaperPositionalConfigAoE && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
+            }
+
+            if (preset == CustomComboPreset.RPR_EnshroudProtection_Positional && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
+            }
+
 
             if (preset == CustomComboPreset.RPR_ST_SliceCombo_SoD && enabled)
             {

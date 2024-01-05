@@ -49,7 +49,6 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"TERRITORY: {Service.ClientState.TerritoryType}");
                 ImGui.TextUnformatted($"TARGET OBJECT KIND: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
                 ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Service.ClientState.LocalPlayer.TargetObject is BattleChara}");
-                ImGui.TextUnformatted($"PLAYER IS BATTLE CHARA: {LocalPlayer is BattleChara}");
                 ImGui.TextUnformatted($"IN COMBAT: {CustomComboFunctions.InCombat()}");
                 ImGui.TextUnformatted($"IN MELEE RANGE: {CustomComboFunctions.InMeleeRange()}");
                 ImGui.TextUnformatted($"DISTANCE FROM TARGET: {CustomComboFunctions.GetTargetDistance()}");

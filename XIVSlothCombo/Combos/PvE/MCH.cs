@@ -196,27 +196,27 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (LevelChecked(ChainSaw) && GetCooldownRemainingTime(ChainSaw) >= 8)
                                 {
-                                    if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                    if (UseHyperchargeStandard(gauge))
                                         return Hypercharge;
                                 }
 
                                 else if (!LevelChecked(ChainSaw))
                                 {
-                                    if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                    if (UseHyperchargeStandard(gauge))
                                         return Hypercharge;
                                 }
                             }
 
                             else if (!LevelChecked(AirAnchor))
                             {
-                                if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                                if (UseHyperchargeStandard(gauge))
                                     return Hypercharge;
                             }
                         }
 
                         else if (!LevelChecked(Drill))
                         {
-                            if (UseHyperchargeStandard(gauge, wildfireCDTime))
+                            if (UseHyperchargeStandard(gauge))
                                 return Hypercharge;
                         }
                     }
@@ -291,7 +291,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
 
-            private bool UseHyperchargeStandard(MCHGauge gauge, float wildfireCDTime)
+            private bool UseHyperchargeStandard(MCHGauge gauge)
             {
                 // i really do not remember why i put > 70 here for heat, and im afraid if i remove it itll break it lol
                 if (CombatEngageDuration().Minutes == 0 &&
@@ -743,7 +743,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
 
-            private bool ReassembledTools(ref uint actionId)
+            private static bool ReassembledTools(ref uint actionId)
             {
                 bool reassembledAnchor = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[0] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
                 bool reassembledDrill = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));

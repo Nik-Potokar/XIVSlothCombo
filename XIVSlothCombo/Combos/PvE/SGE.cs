@@ -59,8 +59,8 @@ namespace XIVSlothCombo.Combos.PvE
 
         // Action Groups
         internal static readonly List<uint>
-            AddersgallList = new() { Taurochole, Druochole, Ixochole, Kerachole },
-            PhlegmaList = new() { Phlegma, Phlegma2, Phlegma3 };
+            AddersgallList = [Taurochole, Druochole, Ixochole, Kerachole],
+            PhlegmaList = [Phlegma, Phlegma2, Phlegma3];
 
         // Action Buffs
         internal static class Buffs

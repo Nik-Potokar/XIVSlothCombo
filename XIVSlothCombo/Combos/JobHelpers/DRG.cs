@@ -404,8 +404,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
     internal class AnimationLock
     {
-        internal static readonly List<uint> FastLocks = new()
-        {
+        internal static readonly List<uint> FastLocks =
+        [
             PvE.DRG.BattleLitany,
             PvE.DRG.LanceCharge,
             PvE.DRG.DragonSight,
@@ -415,15 +415,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
             PvE.DRG.MirageDive,
             PvE.DRG.WyrmwindThrust,
             PvE.Content.Variant.VariantRampart
-        };
+        ];
 
-        internal static readonly List<uint> MidLocks = new()
-        {
+        internal static readonly List<uint> MidLocks =
+        [
             PvE.DRG.Jump,
             PvE.DRG.HighJump,
             PvE.DRG.DragonfireDive,
             PvE.DRG.SpineshatterDive
-        };
+        ];
 
         internal static uint SlowLock => PvE.DRG.Stardiver;
 
