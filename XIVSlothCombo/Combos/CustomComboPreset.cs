@@ -1817,10 +1817,12 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID, 48, "", "")]
         MNK_AoE_ComboHeals = 9027,
+
         [ReplaceSkill(MNK.ArmOfTheDestroyer)]
         [ConflictingCombos(MNK_AOE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Arms of the Destroyer with a full one - button AoE rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID, 32, "", "")]
         MNK_AOE_AdvancedMode = 9000,
+
         [ParentCombo(MNK_AoE_ADV_CDs)]
         [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID, 41, "", "")]
         MNK_AoE_MasterfulBlitz = 9009,
@@ -1873,6 +1875,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region Miscellaneous
+
         [ReplaceSkill(MNK.DragonKick)]
         [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID, 61, "", "")]
         MNK_DragonKick_Bootshine = 9001,
@@ -1904,6 +1908,8 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(MNK.RiddleOfFire)]
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 36, "", "")]
         MNK_Riddle_Brotherhood = 9012,
+
+        #endregion
 
         // Last value = 9039
 
