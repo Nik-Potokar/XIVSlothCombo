@@ -1905,11 +1905,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID, 36, "", "")]
         MNK_Riddle_Brotherhood = 9012,
 
-        [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Formless Fist on ST Combo", "Adds Formless Fist to the ST combo.", MNK.JobID, 16, "", "")]
-        MNK_ST_FormlessFist = 9040,
-
-        // Last value = 9040
+        // Last value = 9039
 
         #endregion
 
