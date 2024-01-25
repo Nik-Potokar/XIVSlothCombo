@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 
@@ -126,13 +125,13 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public static string
-                SMN_Lucid = "SMN_Lucid",
-                SMN_BurstPhase = "SMN_BurstPhase",
-                SMN_PrimalChoice = "SMN_PrimalChoice",
-                SMN_SwiftcastPhase = "SMN_SwiftcastPhase",
-                SMN_Burst_Delay = "SMN_Burst_Delay",
-                SMN_VariantCure = "SMN_VariantCure";
+            public static UserInt
+                SMN_Lucid = new("SMN_Lucid"),
+                SMN_BurstPhase = new("SMN_BurstPhase"),
+                SMN_PrimalChoice = new("SMN_PrimalChoice"),
+                SMN_SwiftcastPhase = new("SMN_SwiftcastPhase"),
+                SMN_Burst_Delay = new("SMN_Burst_Delay"),
+                SMN_VariantCure = new("SMN_VariantCure");
 
             public static UserBoolArray
                 SMN_ST_Egi_AstralFlow = new("SMN_ST_Egi_AstralFlow");
@@ -162,13 +161,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Ruin4)
-                {
-                    var furtherRuin = HasEffect(Buffs.FurtherRuin);
+                if (actionID is Ruin4 && !HasEffect(Buffs.FurtherRuin))
+                    return Ruin3;
 
-                    if (!furtherRuin)
-                        return Ruin3;
-                }
                 return actionID;
             }
         }
@@ -179,9 +174,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Fester)
+                if (actionID is Fester)
                 {
-                    var gauge = GetJobGauge<SMNGauge>();
+                    SMNGauge? gauge = GetJobGauge<SMNGauge>();
                     if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergyDrain) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_EDFester_Ruin4))
                         return Ruin4;
 
@@ -199,9 +194,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
+                SMNGauge? gauge = GetJobGauge<SMNGauge>();
 
-                if (actionID == Painflare && LevelChecked(Painflare) && !gauge.HasAetherflowStacks)
+                if (actionID is Painflare && LevelChecked(Painflare) && !gauge.HasAetherflowStacks)
                 {
                     if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergySiphon) && IsEnabled(CustomComboPreset.SMN_ESPainflare_Ruin4))
                         return Ruin4;
@@ -223,9 +218,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
-                var STCombo = actionID is Ruin or Ruin2;
-                var AoECombo = actionID is Outburst or Tridisaster;
+                SMNGauge? gauge = GetJobGauge<SMNGauge>();
+                bool STCombo = actionID is Ruin or Ruin2;
+                bool AoECombo = actionID is Outburst or Tridisaster;
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
@@ -355,6 +350,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
         internal class SMN_Advanced_Combo : CustomCombo
         {
             internal static uint DemiAttackCount = 0;
@@ -363,15 +359,15 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                var gauge = GetJobGauge<SMNGauge>();
-                var summonerPrimalChoice = PluginConfiguration.GetCustomIntValue(Config.SMN_PrimalChoice);
-                var SummonerBurstPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_BurstPhase);
-                var lucidThreshold = PluginConfiguration.GetCustomIntValue(Config.SMN_Lucid);
-                var swiftcastPhase = PluginConfiguration.GetCustomIntValue(Config.SMN_SwiftcastPhase);
-                var burstDelay = PluginConfiguration.GetCustomIntValue(Config.SMN_Burst_Delay);
-                var inOpener = CombatEngageDuration().TotalSeconds < 40;
-                var STCombo = actionID is Ruin or Ruin2;
-                var AoECombo = actionID is Outburst or Tridisaster;
+                SMNGauge? gauge = GetJobGauge<SMNGauge>();
+                int summonerPrimalChoice = Config.SMN_PrimalChoice;
+                int SummonerBurstPhase = Config.SMN_BurstPhase;
+                int lucidThreshold = Config.SMN_Lucid;
+                int swiftcastPhase = Config.SMN_SwiftcastPhase;
+                int burstDelay = Config.SMN_Burst_Delay;
+                bool inOpener = CombatEngageDuration().TotalSeconds < 40;
+                bool STCombo = actionID is Ruin or Ruin2;
+                bool AoECombo = actionID is Outburst or Tridisaster;
 
                 if (WasLastAction(OriginalHook(Aethercharge))) DemiAttackCount = 0;    // Resets counter
 
@@ -684,7 +680,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     presentTime = DateTime.Now;
                     int deltaTime = (presentTime - noPetTime).Milliseconds;
-                    var gauge = GetJobGauge<SMNGauge>();
+                    SMNGauge? gauge = GetJobGauge<SMNGauge>();
 
                     if (HasPetPresent())
                     {
