@@ -360,15 +360,16 @@ namespace XIVSlothCombo.Combos.PvE
                          && LevelChecked(Meditation) && gauge.Chakra == 5 && CanWeave(actionID) &&
                         (HasEffect(Buffs.DisciplinedFist) || !LevelChecked(TwinSnakes)))
                     {
-                        //Meditation spender
-                        if (!LevelChecked(RiddleOfFire) ||
-                            (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && !WasLastAction(RiddleOfFire)))
-                            return OriginalHook(Meditation);
 
                         // Meditation Uptime
                         if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) &&
                             !InMeleeRange() && gauge.Chakra < 5)
                             return Meditation;
+
+                        //Meditation spender
+                        if (!LevelChecked(RiddleOfFire) ||
+                            (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && !WasLastAction(RiddleOfFire)))
+                            return OriginalHook(Meditation);
                     }
 
                     if (IsEnabled(CustomComboPreset.MNK_ST_Adv_MasterfulBlitz) &&
