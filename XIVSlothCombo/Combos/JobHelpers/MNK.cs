@@ -116,8 +116,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 4) OpenerStep++;
                     else if (OpenerStep == 4) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 5) OpenerStep++;
-                    else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 5) OpenerStep++;
+                    else if (OpenerStep == 5) actionID = ForbiddenChakra;
 
                     if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 6) OpenerStep++;
                     else if (OpenerStep == 6) actionID = Bootshine;
@@ -140,8 +140,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(DragonKick) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 12) OpenerStep++;
                     else if (OpenerStep == 12) actionID = DragonKick;
 
-                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 13) OpenerStep++;
-                    else if (OpenerStep == 13) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 13) OpenerStep++;
+                    else if (OpenerStep == 13) actionID = ForbiddenChakra;
 
                     if (CustomComboFunctions.WasLastAction(ElixirField) && OpenerStep == 14) OpenerStep++;
                     else if (OpenerStep == 14) actionID = ElixirField;
@@ -170,6 +170,18 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(SnapPunch) && OpenerStep == 22) CurrentState = OpenerState.OpenerFinished;
                     else if (OpenerStep == 22) actionID = SnapPunch;
 
+                    if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                        CurrentState = OpenerState.FailedOpener;
+
+                    if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0) ||
+                           (actionID == Brotherhood && CustomComboFunctions.IsOnCooldown(Brotherhood)) ||
+                           (actionID == RiddleOfFire && CustomComboFunctions.IsOnCooldown(RiddleOfFire)) ||
+                           (actionID == RiddleOfWind && CustomComboFunctions.IsOnCooldown(RiddleOfWind))) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                    {
+                        CurrentState = OpenerState.FailedOpener;
+                        return false;
+                    }
+
                 }
 
                 else
@@ -189,8 +201,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Demolish) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 1 && OpenerStep == 5) OpenerStep++;
                     else if (OpenerStep == 5) actionID = Demolish;
 
-                    if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 6) OpenerStep++;
-                    else if (OpenerStep == 6) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                    if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 6) OpenerStep++;
+                    else if (OpenerStep == 6) actionID = ForbiddenChakra;
 
                     if (CustomComboFunctions.WasLastAction(Bootshine) && CustomComboFunctions.GetBuffStacks(Buffs.PerfectBalance) == 0 && OpenerStep == 7) OpenerStep++;
                     else if (OpenerStep == 7) actionID = Bootshine;
@@ -232,7 +244,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 19) actionID = Demolish;
                 }
 
-                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0) ||
@@ -268,8 +280,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 4) OpenerStep++;
                 else if (OpenerStep == 4) actionID = Demolish;
 
-                if (CustomComboFunctions.WasLastAction(CustomComboFunctions.OriginalHook(Meditation)) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = CustomComboFunctions.OriginalHook(Meditation);
+                if (CustomComboFunctions.WasLastAction(ForbiddenChakra) && OpenerStep == 5) OpenerStep++;
+                else if (OpenerStep == 5) actionID = ForbiddenChakra;
 
                 if (CustomComboFunctions.WasLastAction(Bootshine) && OpenerStep == 6) OpenerStep++;
                 else if (OpenerStep == 6) actionID = Bootshine;
@@ -320,7 +332,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else if (OpenerStep == 21) actionID = SnapPunch;
 
 
-                if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0) ||
@@ -346,25 +358,20 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
-            if (!LevelChecked)
-                return false;
+            if (!LevelChecked) return false;
 
             if (CurrentState == OpenerState.PrePull)
-                if (DoPrePullSteps(ref actionID))
-                    return true;
+                if (DoPrePullSteps(ref actionID)) return true;
 
             if (CurrentState == OpenerState.InOpener)
             {
                 if (simpleMode)
                 {
-                    if (DoOpenerSimple(ref actionID))
-                        return true;
+                    if (DoOpenerSimple(ref actionID)) return true;
                 }
-
                 else
                 {
-                    if (DoOpener(ref actionID))
-                        return true;
+                    if (DoOpener(ref actionID)) return true;
                 }
             }
 
@@ -373,6 +380,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 ResetOpener();
                 CurrentState = OpenerState.PrePull;
             }
+
 
             return false;
         }
