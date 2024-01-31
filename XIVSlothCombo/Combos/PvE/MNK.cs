@@ -132,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Thunderclap;
 
                     // Opener for MNK
-                    if (MNKOpener.DoFullOpener(ref actionID, false))
+                    if (MNKOpener.DoFullOpener(ref actionID, true))
                         return actionID;
 
                     // Buffs
