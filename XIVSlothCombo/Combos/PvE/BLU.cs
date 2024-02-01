@@ -280,7 +280,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.PhantomFlurry))
                     {
-                        if (FindEffect(Buffs.WingedReprobation)?.StackCount > 1 && IsOffCooldown(WingedRepropbation))
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_WingedReprobation) && FindEffect(Buffs.WingedReprobation)?.StackCount > 1 && IsOffCooldown(WingedRepropbation))
                             return OriginalHook(WingedRepropbation);
 
                         if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain) &&

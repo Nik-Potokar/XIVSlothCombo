@@ -96,7 +96,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasBattleTarget())
                     {
                         if (!InMeleeRange() && HolySpirit.LevelChecked() &&
-                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && !IsMoving)
+                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && (!IsMoving || HasEffect(Buffs.DivineMight)))
                             return HolySpirit;
 
                         if (!InMeleeRange() && ShieldLob.LevelChecked())
@@ -307,7 +307,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // HS when out of range
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                                !IsMoving &&
+                                (!IsMoving || HasEffect(Buffs.DivineMight)) &&
                                 HolySpirit.LevelChecked() &&
                                 GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                 return HolySpirit;

@@ -32,26 +32,6 @@ namespace XIVSlothCombo.Window.Functions
             {
                 if (enabled)
                 {
-                    if (preset == CustomComboPreset.UnlockGag)
-                    {
-                        Util.OpenLink("https://www.youtube.com/watch?v=qo__6MZIg6U");
-                    }
-
-                    if (preset == CustomComboPreset.SuperSpeedGag)
-                    {
-                        if (ActionManager.Instance()->GetActionStatus(ActionType.Action, All.Sprint) == 0)
-                            ActionManager.Instance()->UseAction(ActionType.Action, All.Sprint);
-                    }
-
-                    if (preset == CustomComboPreset.SnakeGag)
-                    {
-                        Util.OpenLink("https://youtu.be/r6gGcrjDmec");
-                    }
-
-                    if (preset == CustomComboPreset.GunGag)
-                    {
-                        Util.OpenLink("https://youtu.be/51CTM49rcrs");
-                    }
 
                     EnableParentPresets(preset);
                     Service.Configuration.EnabledActions.Add(preset);
