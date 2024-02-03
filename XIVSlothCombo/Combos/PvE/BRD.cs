@@ -491,9 +491,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songArmy = gauge.Song == Song.ARMY;
                     bool canInterrupt = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze);
                     int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_NoWasteHPPercentage);
-                    bool isEnemyHealthHigh = IsEnabled(CustomComboPreset.BRD_Simple_NoWaste)
-                        ? GetTargetHPPercent() > targetHPThreshold
-                        : true;
+                    bool isEnemyHealthHigh = !IsEnabled(CustomComboPreset.BRD_Simple_NoWaste) || GetTargetHPPercent() > targetHPThreshold;
 
                     if (!InCombat() && (inOpener || openerFinished))
                     {
