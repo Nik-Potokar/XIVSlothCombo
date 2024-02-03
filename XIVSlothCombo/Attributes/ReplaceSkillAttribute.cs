@@ -21,6 +21,6 @@ namespace XIVSlothCombo.Attributes
             }
         }
 
-        internal List<string> ActionNames { get; set; } = new();
+        internal List<string> ActionNames { get; set; } = [];
     }
 }

@@ -105,7 +105,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.LocalPlayer.CastActionId == Fire3 && PrePullStep == 2) CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 2) actionID = Fire3;
 
-                if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(BLM.Buffs.Sharpcast))
+                if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(Buffs.Sharpcast))
                     CurrentState = OpenerState.FailedOpener;
 
                 if (PrePullStep > 1 && CustomComboFunctions.GetResourceCost(actionID) > CustomComboFunctions.LocalPlayer.CurrentMp && ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)

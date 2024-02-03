@@ -19,7 +19,7 @@ namespace XIVSlothCombo.Window.Tabs
     {
         public static Version version = null!;
 
-        private static Dictionary<string, IDalamudTextureWrap> Images = new();
+        private static Dictionary<string, IDalamudTextureWrap> Images = [];
         internal static new void Draw()
         {
             version ??= Assembly.GetExecutingAssembly().GetName().Version!;

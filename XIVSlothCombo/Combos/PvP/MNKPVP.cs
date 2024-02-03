@@ -57,7 +57,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                         if (CanWeave(actionID))
                         {
-                            if (IsOffCooldown(SixSidedStar))
+                            if (IsEnabled(CustomComboPreset.MNKPvP_Burst_SixSidedStar) && IsOffCooldown(SixSidedStar))
                                 return OriginalHook(SixSidedStar);
 
                             if (IsEnabled(CustomComboPreset.MNKPvP_Burst_RiddleOfEarth) && HasEffect(Buffs.EarthResonance) && GetBuffRemainingTime(Buffs.EarthResonance) < 6)

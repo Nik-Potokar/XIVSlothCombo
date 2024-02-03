@@ -472,7 +472,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
                             ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && GetRemainingCharges(Triplecast) > 0) || GetRemainingCharges(Triplecast) is 2) &&
                             LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                            (gauge.InAstralFire || gauge.UmbralHearts is 3) &&
+                            (gauge.InAstralFire) &&
                             currentMP >= MP.FireI * 2)
                             return Triplecast;
 
@@ -573,7 +573,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
                             return OriginalHook(Fire);
 
-                        if (Config.BLM_Adv_Cooldowns_Choice[0] &&
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && 
+                            Config.BLM_Adv_Cooldowns_Choice[0] &&
                             ActionReady(Manafont) && WasLastAction(Despair))
                             return Manafont;
 
@@ -765,9 +766,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
-                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && currentMP >= MP.Freeze)
+                        if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && Freeze.LevelChecked() && currentMP >= MP.Freeze)
                             return Freeze;
-
+                        
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 

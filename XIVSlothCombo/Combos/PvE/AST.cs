@@ -69,8 +69,8 @@ namespace XIVSlothCombo.Combos.PvE
 
         //Action Groups
         internal static readonly List<uint>
-            MaleficList = new() { Malefic, Malefic2, Malefic3, Malefic4, FallMalefic },
-            GravityList = new() { Gravity, Gravity2 };
+            MaleficList = [Malefic, Malefic2, Malefic3, Malefic4, FallMalefic],
+            GravityList = [Gravity, Gravity2];
 
         internal static class Buffs
         {

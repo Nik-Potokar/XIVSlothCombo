@@ -13,7 +13,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         internal class MudraCasting : PvE.NIN
         {
             ///<summary> Checks if the player is in a state to be able to cast a ninjitsu.</summary>
-            private bool CanCast()
+            private static bool CanCast()
             {
                 var gcd = CustomComboFunctions.GetCooldown(GustSlash).CooldownTotal;
 
@@ -440,7 +440,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-            private bool CanOpener => HasCooldowns() && LevelChecked;
+            private static bool CanOpener => HasCooldowns() && LevelChecked;
 
             private OpenerState currentState = OpenerState.OpenerFinished;
 

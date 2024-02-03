@@ -94,7 +94,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         public static float PlayerHealthPercentageHp() => (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 
-        public static bool HasBattleTarget() => (CurrentTarget as BattleNpc)?.BattleNpcKind is BattleNpcSubKind.Enemy or (BattleNpcSubKind)1;
+        public static bool HasBattleTarget() => CurrentTarget is BattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy or (BattleNpcSubKind)1 };
 
         public static bool HasFriendlyTarget(GameObject? OurTarget = null)
         {
@@ -274,15 +274,13 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// Get angle to target.
         /// </summary>
         /// <returns>Angle relative to target</returns>
-        public float angleToTarget()
+        public static float AngleToTarget()
         {
             if (CurrentTarget is null || LocalPlayer is null)
                return 0;
-
-            if (CurrentTarget is not BattleChara chara || CurrentTarget.ObjectKind != Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+            if (CurrentTarget is not BattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
                 return 0;
 
-            var targetPosition = new Vector2(CurrentTarget.Position.X, CurrentTarget.Position.Z);
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
@@ -309,15 +307,13 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// Is player on target's rear.
         /// </summary>
         /// <returns>True or false.</returns>
-        public bool OnTargetsRear()
+        public static bool OnTargetsRear()
         {
             if (CurrentTarget is null || LocalPlayer is null)
                 return false;
-
-            if (CurrentTarget is not BattleChara chara || CurrentTarget.ObjectKind != Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+            if (CurrentTarget is not BattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
                 return false;
 
-            var targetPosition = new Vector2(CurrentTarget.Position.X, CurrentTarget.Position.Z);
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
@@ -335,15 +331,14 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// Is player on target's flank.
         /// </summary>
         /// <returns>True or false.</returns>
-        public bool OnTargetsFlank()
+        public static bool OnTargetsFlank()
         {
             if (CurrentTarget is null || LocalPlayer is null)
                 return false;
-
-            if (CurrentTarget is not BattleChara chara || CurrentTarget.ObjectKind != Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+            if (CurrentTarget is not BattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
                 return false;
 
-            var targetPosition = new Vector2(CurrentTarget.Position.X, CurrentTarget.Position.Z);
+
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
