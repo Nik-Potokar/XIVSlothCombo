@@ -200,15 +200,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Use Xenoglossy to weave ogcd
-                        if (gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                            ((level >= 70 && level < 80) ||
-                            GetCooldownRemainingTime(Manafont) < 1 ||
+                        if (gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && level < 80 &&
+                            (GetCooldownRemainingTime(Manafont) < 1 ||
                             GetCooldownRemainingTime(LeyLines) < 1 ||
                             GetCooldownRemainingTime(Amplifier) < 1 ||
                             GetCooldownRemainingTime(Sharpcast) < 1))
-                            return LevelChecked(Xenoglossy)
-                                ? Xenoglossy
-                                : Foul;
+                            return Xenoglossy;
+
+                        if (gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && level >= 70 && level < 80)
+                            return Foul;
 
                         // Sharpcast
                         if (ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) &&
@@ -475,9 +475,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Casts) &&
                             ((IsNotEnabled(CustomComboPreset.BLM_Adv_Triplecast_Pooling) && GetRemainingCharges(Triplecast) > 0) || GetRemainingCharges(Triplecast) is 2) &&
                             LevelChecked(Triplecast) && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
-                            (gauge.InAstralFire) &&
+                            gauge.InAstralFire &&
                             currentMP >= MP.FireI * 2)
                             return Triplecast;
+
                         // Use Xenoglossy to weave ogcd
                         if (rotationSelection is 0 && IsEnabled(CustomComboPreset.BLM_Adv_UsePolyglotStacks) &&
                             gauge.HasPolyglotStacks() && !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) &&
@@ -491,7 +492,6 @@ namespace XIVSlothCombo.Combos.PvE
                         // Weave Buffs
                         if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && CanSpellWeave(actionID) && WasLastAction(Xenoglossy))
                         {
-
                             if (Config.BLM_Adv_Cooldowns_Choice[1] &&
                                 ActionReady(Sharpcast) && !HasEffect(Buffs.Sharpcast) && !WasLastAction(Thunder3))
                                 return Sharpcast;
@@ -782,7 +782,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && LevelChecked(Freeze) && currentMP >= MP.Freeze)
                             return Freeze;
-                        
+
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
