@@ -88,8 +88,10 @@ namespace XIVSlothCombo.Data
             RecastDetail* cooldownPtr = actionManager->GetRecastGroupDetail(cooldownGroup - 1);
             if (cooldownPtr is null)
             {
-                CooldownData data = new();
-                data.CooldownTotal = -1;
+                CooldownData data = new()
+                {
+                    CooldownTotal = -1
+                };
 
                 return cooldownCache[actionID] = data;
             }

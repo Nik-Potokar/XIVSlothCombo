@@ -23,6 +23,8 @@ using ECommons;
 using Dalamud.Plugin.Services;
 using System.Reflection;
 using ECommons.DalamudServices;
+using Dalamud.Utility;
+using XIVSlothCombo.Attributes;
 
 namespace XIVSlothCombo
 {
@@ -32,7 +34,7 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow configWindow;
-        private HttpClient httpClient = new();
+        private readonly HttpClient httpClient = new();
         
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
@@ -62,9 +64,6 @@ namespace XIVSlothCombo
             Service.Address = new PluginAddressResolver();
             Service.Address.Setup(Service.SigScanner);
 
-            if (Service.Configuration.Version == 4)
-                UpgradeConfig4();
-
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
             ActionWatching.Enable();
@@ -84,9 +83,10 @@ namespace XIVSlothCombo
             Service.ClientState.Login += PrintLoginMessage;
             if (Service.ClientState.IsLoggedIn) ResetFeatures();
 
-            Service.Framework.Update += CheckCurrentJob;
+            Service.Framework.Update += OnFrameworkUpdate;
 
             KillRedundantIDs();
+            HandleConflictedCombos();
 
 #if DEBUG
             PvEFeatures.HasToOpenJob = false;
@@ -94,10 +94,34 @@ namespace XIVSlothCombo
 #endif
         }
 
-        private static void CheckCurrentJob(IFramework framework)
+        private static void HandleConflictedCombos()
+        {
+            var enabledCopy = Service.Configuration.EnabledActions.ToHashSet(); //Prevents issues later removing during enumeration
+            foreach (var preset in enabledCopy)
+            {
+                if (!Service.Configuration.IsEnabled(preset)) continue;
+
+                var conflictingCombos = preset.GetAttribute<ConflictingCombosAttribute>();
+                if (conflictingCombos != null)
+                {
+                    foreach (var conflict in conflictingCombos.ConflictingPresets)
+                    {
+                        if (Service.Configuration.IsEnabled(conflict))
+                        {
+                            Service.Configuration.EnabledActions.Remove(conflict);
+                            Service.Configuration.Save();
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void OnFrameworkUpdate(IFramework framework)
         {
             if (Service.ClientState.LocalPlayer is not null)
             JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+
+            BlueMageService.PopulateBLUSpells();
         }
         private static void KillRedundantIDs()
         {
@@ -142,13 +166,13 @@ namespace XIVSlothCombo
                 using HttpResponseMessage? motd = httpClient.GetAsync("https://raw.githubusercontent.com/Nik-Potokar/XIVSlothCombo/main/res/motd.txt").Result;
                 motd.EnsureSuccessStatusCode();
                 string? data = motd.Content.ReadAsStringAsync().Result;
-                List<Payload>? payloads = new()
-                {
+                List<Payload>? payloads =
+                [
                     starterMotd,
                     EmphasisItalicPayload.ItalicsOn,
                     string.IsNullOrEmpty(data) ? new TextPayload(basicMessage) : new TextPayload(data.Trim()),
                     EmphasisItalicPayload.ItalicsOff
-                };
+                ];
 
                 Service.ChatGui.Print(new XivChatEntry
                 {
@@ -164,7 +188,7 @@ namespace XIVSlothCombo
         }
 
         /// <inheritdoc/>
-        public string Name => "XIVSlothCombo";
+        public static string Name => "XIVSlothCombo";
 
         /// <inheritdoc/>
         public void Dispose()
@@ -172,7 +196,7 @@ namespace XIVSlothCombo
             configWindow?.Dispose();
 
             Service.CommandManager.RemoveHandler(Command);
-            Service.Framework.Update -= CheckCurrentJob;
+            Service.Framework.Update -= OnFrameworkUpdate;
             Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
             Service.Interface.UiBuilder.Draw -= DrawUI;
 
@@ -186,10 +210,8 @@ namespace XIVSlothCombo
         }
 
 
-        private void DisposeOpeners()
+        private static void DisposeOpeners()
         {
-            NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
-            NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
@@ -464,26 +486,26 @@ namespace XIVSlothCombo
                                     _ => throw new NotImplementedException(),
                                 };
 
-                                foreach (var config in whichConfig.GetMembers().Where(x => x.MemberType == System.Reflection.MemberTypes.Field || x.MemberType == System.Reflection.MemberTypes.Property))
+                                foreach (var config in whichConfig.GetMembers().Where(x => x.MemberType == MemberTypes.Field || x.MemberType == MemberTypes.Property))
                                 {
                                     string key = config.Name!;
 
-                                    if (PluginConfiguration.CustomIntValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomIntValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomFloatValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomFloatValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomBoolValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolArrayValues.ContainsKey(key)) { file.WriteLine($"{key} - {string.Join(", ", PluginConfiguration.CustomBoolArrayValues[key])}"); continue; }
+                                    if (PluginConfiguration.CustomIntValues.TryGetValue(key, out int intvalue)) { file.WriteLine($"{key} - {intvalue}"); continue; }
+                                    if (PluginConfiguration.CustomFloatValues.TryGetValue(key, out float floatvalue)) { file.WriteLine($"{key} - {floatvalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolValues.TryGetValue(key, out bool boolvalue)) { file.WriteLine($"{key} - {boolvalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolArrayValues.TryGetValue(key, out bool[]? boolarrayvalue)) { file.WriteLine($"{key} - {string.Join(", ", boolarrayvalue)}"); continue; }
 
                                     file.WriteLine($"{key} - NOT SET");
                                 }
 
-                                foreach (var config in typeof(PvPCommon.Config).GetMembers().Where(x => x.MemberType == System.Reflection.MemberTypes.Field || x.MemberType == System.Reflection.MemberTypes.Property))
+                                foreach (var config in typeof(PvPCommon.Config).GetMembers().Where(x => x.MemberType == MemberTypes.Field || x.MemberType == MemberTypes.Property))
                                 {
                                     string key = config.Name!;
 
-                                    if (PluginConfiguration.CustomIntValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomIntValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomFloatValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomFloatValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolValues.ContainsKey(key)) { file.WriteLine($"{key} - {PluginConfiguration.CustomBoolValues[key]}"); continue; }
-                                    if (PluginConfiguration.CustomBoolArrayValues.ContainsKey(key)) { file.WriteLine($"{key} - {string.Join(", ", PluginConfiguration.CustomBoolArrayValues[key])}"); continue; }
+                                    if (PluginConfiguration.CustomIntValues.TryGetValue(key, out int intvalue)) { file.WriteLine($"{key} - {intvalue}"); continue; }
+                                    if (PluginConfiguration.CustomFloatValues.TryGetValue(key, out float floatalue)) { file.WriteLine($"{key} - {floatalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolValues.TryGetValue(key, out bool boolvalue)) { file.WriteLine($"{key} - {boolvalue}"); continue; }
+                                    if (PluginConfiguration.CustomBoolArrayValues.TryGetValue(key, out bool[]? boolarrayvalue)) { file.WriteLine($"{key} - {string.Join(", ", boolarrayvalue)}"); continue; }
 
                                     file.WriteLine($"{key} - NOT SET");
                                 }
@@ -545,118 +567,6 @@ namespace XIVSlothCombo
                     break;
             }
 
-            Service.Configuration.Save();
-        }
-
-        private static void UpgradeConfig4()
-        {
-            Service.Configuration.Version = 5;
-            Service.Configuration.EnabledActions = Service.Configuration.EnabledActions4
-                .Select(preset => (int)preset switch
-                    {
-                        27 => 3301,
-                        75 => 3302,
-                        73 => 3303,
-                        25 => 2501,
-                        26 => 2502,
-                        56 => 2503,
-                        70 => 2504,
-                        71 => 2505,
-                        110 => 2506,
-                        95 => 2507,
-                        41 => 2301,
-                        42 => 2302,
-                        63 => 2303,
-                        74 => 2304,
-                        33 => 3801,
-                        31 => 3802,
-                        34 => 3803,
-                        43 => 3804,
-                        50 => 3805,
-                        72 => 3806,
-                        103 => 3807,
-                        44 => 2201,
-                        0 => 2202,
-                        1 => 2203,
-                        2 => 2204,
-                        3 => 3201,
-                        4 => 3202,
-                        57 => 3203,
-                        85 => 3204,
-                        20 => 3701,
-                        52 => 3702,
-                        96 => 3703,
-                        97 => 3704,
-                        22 => 3705,
-                        30 => 3706,
-                        83 => 3707,
-                        84 => 3708,
-                        23 => 3101,
-                        24 => 3102,
-                        47 => 3103,
-                        58 => 3104,
-                        66 => 3105,
-                        102 => 3106,
-                        54 => 2001,
-                        82 => 2002,
-                        106 => 2003,
-                        17 => 3001,
-                        18 => 3002,
-                        19 => 3003,
-                        87 => 3004,
-                        88 => 3005,
-                        89 => 3006,
-                        90 => 3007,
-                        91 => 3008,
-                        92 => 3009,
-                        107 => 3010,
-                        108 => 3011,
-                        5 => 1901,
-                        6 => 1902,
-                        59 => 1903,
-                        7 => 1904,
-                        55 => 1905,
-                        86 => 1906,
-                        69 => 1907,
-                        48 => 3501,
-                        49 => 3502,
-                        68 => 3503,
-                        53 => 3504,
-                        93 => 3505,
-                        101 => 3506,
-                        94 => 3507,
-                        11 => 3401,
-                        12 => 3402,
-                        13 => 3403,
-                        14 => 3404,
-                        15 => 3405,
-                        81 => 3406,
-                        60 => 3407,
-                        61 => 3408,
-                        64 => 3409,
-                        65 => 3410,
-                        109 => 3411,
-                        29 => 2801,
-                        37 => 2802,
-                        39 => 2701,
-                        40 => 2702,
-                        8 => 2101,
-                        9 => 2102,
-                        10 => 2103,
-                        78 => 2104,
-                        79 => 2105,
-                        67 => 2106,
-                        104 => 2107,
-                        35 => 2401,
-                        36 => 2402,
-                        76 => 2403,
-                        77 => 2404,
-                        _ => 0,
-                    })
-                .Where(id => id != 0)
-                .Select(id => (CustomComboPreset)id)
-                .ToHashSet();
-            Service.Configuration.EnabledActions4 = new();
             Service.Configuration.Save();
         }
     }

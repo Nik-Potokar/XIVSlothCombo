@@ -782,7 +782,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && LevelChecked(Freeze) && currentMP >= MP.Freeze)
                             return Freeze;
-
+                        
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 

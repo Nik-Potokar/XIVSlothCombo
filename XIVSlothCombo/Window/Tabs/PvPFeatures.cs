@@ -76,8 +76,8 @@ namespace XIVSlothCombo.Window.Tabs
 
                 if (Service.Configuration.HideConflictedCombos)
                 {
-                    var conflictOriginals = Service.Configuration.GetConflicts(preset); // Presets that are contained within a ConflictedAttribute
-                    var conflictsSource = Service.Configuration.GetAllConflicts();      // Presets with the ConflictedAttribute
+                    var conflictOriginals = PluginConfiguration.GetConflicts(preset); // Presets that are contained within a ConflictedAttribute
+                    var conflictsSource = PluginConfiguration.GetAllConflicts();      // Presets with the ConflictedAttribute
 
                     if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
                     {

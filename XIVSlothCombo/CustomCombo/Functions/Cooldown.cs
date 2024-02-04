@@ -38,8 +38,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Check if the Cooldown was just used. </summary>
         /// <param name="actionID"> Action ID to check. </param>
+        /// <param name="variance"> Variance of how long to check the elapsed cooldown</param>
         /// <returns> True or false. </returns>
-        public static bool JustUsed(uint actionID) => IsOnCooldown(actionID) && GetCooldownRemainingTime(actionID) > (GetCooldown(actionID).CooldownTotal - 3);
+        public static bool JustUsed(uint actionID, float variance = 3f) => IsOnCooldown(actionID) && GetCooldownElapsed(actionID) <= variance;
 
         /// <summary> Gets a value indicating whether an action has any available charges. </summary>
         /// <param name="actionID"> Action ID to check. </param>
