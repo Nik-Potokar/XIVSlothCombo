@@ -486,7 +486,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (GetTargetDistance() <= 3 || Config.RDM_ST_MeleeEnforced)
                         {
                             if ((lastComboMove is Riposte or EnchantedRiposte)
-                                && LevelChecked(Zwerchhau) 
+                                && LevelChecked(Zwerchhau)
                                 && comboTime > 0f)
                                 return OriginalHook(Zwerchhau);
 
@@ -522,6 +522,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (HasCharges(Acceleration)) return Acceleration;
                             }
+                            if (GetTargetDistance() <= 3)
                             return OriginalHook(Riposte);
                         }
 
