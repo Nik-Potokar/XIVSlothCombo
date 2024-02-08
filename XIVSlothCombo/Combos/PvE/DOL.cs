@@ -77,11 +77,11 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 //MIN
-                if (actionID is DOL.LayOfTheLand && !HasEffect(Buffs.Prospect)) return DOL.Prospect;
-                if (actionID is DOL.LayOfTheLand2 && LevelChecked(TruthOfMountains) && !HasEffect(Buffs.TruthOfMountains)) return DOL.TruthOfMountains;
+                if (actionID is DOL.LayOfTheLand && !HasEffect(Buffs.Prospect)) return Prospect;
+                if (actionID is DOL.LayOfTheLand2 && LevelChecked(TruthOfMountains) && !HasEffect(Buffs.TruthOfMountains)) return TruthOfMountains;
                 //BTN
-                if (actionID is DOL.ArborCall && !HasEffect(Buffs.Triangulate)) return DOL.Triangulate;
-                if (actionID is DOL.ArborCall2 && LevelChecked(TruthOfForests) && !HasEffect(Buffs.TruthOfForests)) return DOL.TruthOfForests;
+                if (actionID is DOL.ArborCall && !HasEffect(Buffs.Triangulate)) return Triangulate;
+                if (actionID is DOL.ArborCall2 && LevelChecked(TruthOfForests) && !HasEffect(Buffs.TruthOfForests)) return TruthOfForests;
                 return actionID;
             }
         }

@@ -105,7 +105,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.HasEffect(Buffs.Reassembled) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
                     else if (PrePullStep == 1) actionID = Reassemble;
 
-                    if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(MCH.Buffs.Reassembled))
+                    if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(Buffs.Reassembled))
                         CurrentState = OpenerState.FailedOpener;
 
                     if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())

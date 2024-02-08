@@ -53,7 +53,7 @@ namespace XIVSlothCombo.Attributes
 
         public string JobShorthand => JobIDToShorthand(JobID);
 
-        private string JobIDToShorthand(byte key)
+        private static string JobIDToShorthand(byte key)
         {
             if (key == 41)
                 return "VPR";

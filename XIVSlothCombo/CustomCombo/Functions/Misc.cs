@@ -20,17 +20,17 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public class JobIDs
         {
             //  Job IDs     ClassIDs (no jobstone) (Lancer, Pugilist, etc)
-            public static readonly List<byte> Melee = new()
-            {
+            public static readonly List<byte> Melee =
+            [
                 DRG.JobID, DRG.ClassID,
                 MNK.JobID, MNK.ClassID,
                 NIN.JobID, NIN.ClassID,
                 RPR.JobID,
                 SAM.JobID
-            };
+            ];
 
-            public static readonly List<byte> Ranged = new()
-            {
+            public static readonly List<byte> Ranged =
+            [
                 BLM.JobID, BLM.ClassID,
                 BRD.JobID, BRD.ClassID,
                 SMN.JobID, SMN.ClassID,
@@ -38,23 +38,23 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 RDM.JobID,
                 DNC.JobID,
                 BLU.JobID
-            };
+            ];
 
-            public static readonly List<byte> Tank = new()
-            {
+            public static readonly List<byte> Tank =
+            [
                 PLD.JobID, PLD.ClassID,
                 WAR.JobID, WAR.ClassID,
                 DRK.JobID,
                 GNB.JobID
-            };
+            ];
 
-            public static readonly List<byte> Healer = new()
-            {
+            public static readonly List<byte> Healer =
+            [
                 WHM.JobID, WHM.ClassID,
                 SCH.JobID,
                 AST.JobID,
                 SGE.JobID
-            };
+            ];
 
         }
     }

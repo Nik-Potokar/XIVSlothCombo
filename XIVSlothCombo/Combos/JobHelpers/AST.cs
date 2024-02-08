@@ -43,7 +43,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         internal class AST_QuickTargetCards : CustomComboFunctions
         {
 
-            internal static List<GameObject> PartyTargets = new();
+            internal static List<GameObject> PartyTargets = [];
 
             internal static GameObject? SelectedRandomMember;
 
