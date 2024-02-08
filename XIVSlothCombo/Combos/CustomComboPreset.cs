@@ -1700,7 +1700,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gauss Round/Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
-        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
+        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot, MCH.ChainSaw)]
         [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
         MCH_HotShotDrillChainSaw = 8004,
 
