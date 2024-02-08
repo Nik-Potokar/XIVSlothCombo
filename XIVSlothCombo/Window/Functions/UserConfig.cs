@@ -13,7 +13,9 @@ using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.Core;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Functions
@@ -430,14 +432,12 @@ namespace XIVSlothCombo.Window.Functions
         /// <param name="checkboxDescription"> The description of the feature. </param>
         /// <param name="totalChoices"> The total number of options for the feature </param>
         /// /// <param name="choice"> If the user ticks this box, this is the value the config will be set to. </param>
-        /// <param name="itemWidth"></param>
         /// <param name="descriptionColor"></param>
         public static void DrawHorizontalMultiChoice(string config, string checkBoxName, string checkboxDescription, int totalChoices, int choice, Vector4 descriptionColor = new Vector4())
         {
             ImGui.Indent();
             if (descriptionColor == new Vector4()) descriptionColor = ImGuiColors.DalamudWhite;
             bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
-            var textSize = ImGui.CalcTextSize(checkBoxName);
 
             //If new saved options or amount of choices changed, resize and save
             if (values.Length == 0 || values.Length != totalChoices)
@@ -472,7 +472,7 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Unindent();
         }
 
-        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, float itemWidth = 150, Vector4 descriptionColor = new Vector4())
+        public static void DrawGridMultiChoice(string config, byte columns, string[,] nameAndDesc, Vector4 descriptionColor = new Vector4())
         {
             int totalChoices = nameAndDesc.GetLength(0);
             if (totalChoices > 0)
@@ -1108,6 +1108,71 @@ namespace XIVSlothCombo.Window.Functions
             ImGui.Spacing();
         }
 
+        internal static void DrawPriorityInput(UserIntArray config, int maxValues, int currentItem, string customLabel = "")
+        {
+            if (config.Count != maxValues || config.Any(x => x == 0))
+            {
+                config.Clear(maxValues);
+                for (int i = 1; i <= maxValues; i++)
+                {
+                    config[i - 1] = i;
+                }
+            }
+
+            int curVal = config[currentItem];
+            int oldVal = config[currentItem];
+
+            InfoBox box = new()
+            {
+                Color = Colors.Blue,
+                BorderThickness = 1f,
+                CurveRadius = 3f,
+                AutoResize = true,
+                HasMaxWidth = true,
+                IsSubBox = true,
+                ContentsAction = () =>
+                {
+                    if (customLabel.IsNullOrEmpty())
+                    {
+                        ImGui.TextUnformatted($"Priority: ");
+                    }
+                    else
+                    {
+                        ImGui.TextUnformatted(customLabel);
+                    }
+                    ImGui.SameLine();
+                    ImGui.PushItemWidth(100f);
+
+                    if (ImGui.InputInt($"###Priority{config.Name}{currentItem}", ref curVal))
+                    {
+                        for (int i = 0; i < maxValues; i++)
+                        {
+                            if (i == currentItem)
+                                continue;
+
+                            if (config[i] == curVal)
+                            {
+                                config[i] = oldVal;
+                                config[currentItem] = curVal;
+                                break;
+                            }
+                        }
+                    }
+                }
+            };
+
+            ImGui.Indent();
+            box.Draw();
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.Text("Smaller Number = Higher Priority");
+                ImGui.EndTooltip();
+            }
+            ImGui.Unindent();
+            ImGui.Spacing();
+        }
+
         public static int RoundOff(this int i, uint sliderIncrement)
         {
             double sliderAsDouble = Convert.ToDouble(sliderIncrement);
@@ -1541,7 +1606,13 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_TurretUsage, "Dynamic Use", "Used at different values depending on current state, as per the Balance guidance.", 1);
             }
 
-            if (preset is CustomComboPreset.MCH_ST_Adv_Reassembled)
+            if (preset == CustomComboPreset.MCH_ST_Adv_Reassemble)
+                UserConfig.DrawSliderInt(0, 1, MCH.Config.MCH_ST_ReassemblePool, "Number of Charges to Save for Manual Use");
+
+            if (preset == CustomComboPreset.MCH_AoE_Adv_Reassemble)
+                UserConfig.DrawSliderInt(0, 1, MCH.Config.MCH_AoE_ReassemblePool, "Number of Charges to Save for Manual Use");
+
+            if (preset is CustomComboPreset.MCH_ST_Adv_Reassemble)
             {
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 3, 0);
                 UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 3, 1);
@@ -1566,6 +1637,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_AoE_Adv_GaussRicochet)
                 UserConfig.DrawAdditionalBoolChoice(MCH.Config.MCH_AoE_Hypercharge, $"Use Outwith {ActionWatching.GetActionName(MCH.Hypercharge)}", "");
+
+            if (preset == CustomComboPreset.MCH_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
@@ -1756,13 +1830,30 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
                 UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.ReaperPositionalConfig && enabled)
+            if (preset == CustomComboPreset.ReaperPositionalConfigST && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 1);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 2);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 3);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalChoice, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 4);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
             }
+
+            if (preset == CustomComboPreset.ReaperPositionalConfigAoE && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
+            }
+
+            if (preset == CustomComboPreset.RPR_EnshroudProtection_Positional && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
+            }
+
 
             if (preset == CustomComboPreset.RPR_ST_SliceCombo_SoD && enabled)
             {
@@ -1907,6 +1998,11 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.RDM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, RDM.Config.RDM_VariantCure, "HP% to be at or under", 200);
 
+            if (preset is CustomComboPreset.RDM_ST_MeleeCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_MeleeEnforced, "Enforced Melee Check", "Once the melee combo has started, don't switch away even if target is out of range.");
+            }
+
             #endregion
             // ====================================================================================
             #region SAGE
@@ -1984,32 +2080,72 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Soteria)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, "Use Soteria when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Soteria, $"Use {SGE.Soteria.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 0, $"{SGE.Soteria.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Zoe)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, "Use Zoe when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Zoe, $"Use {SGE.Zoe.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 1, $"{SGE.Zoe.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Pepsis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, "Use Pepsis when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Pepsis, $"Use {SGE.Pepsis.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 2, $"{SGE.Pepsis.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Taurochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, "Use Taurochole when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Taurochole, $"Use {SGE.Taurochole.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 3, $"{SGE.Taurochole.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Haima)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, "Use Haima when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Haima, $"Use {SGE.Haima.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 4, $"{SGE.Haima.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Krasis)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, "Use Krasis when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Krasis, $"Use {SGE.Krasis.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 5, $"{SGE.Krasis.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_Druochole)
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, "Use Druochole when Target HP is at or below set percentage");
+            {
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_Druochole, $"Use {SGE.Druochole.ActionName()} when Target HP is at or below set percentage");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_ST_Heals_Priority, 7, 6, $"{SGE.Druochole.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SGE_ST_Heal_EDiagnosis)
             {
-                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, "Use Eukrasian Diagnosis when Target HP is at or below set percentage");
+                UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, $"Use {SGE.EukrasianDiagnosis.ActionName()} when Target HP is at or below set percentage");
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", 2, 0);
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Check for Scholar Galvenize", "Enable to not override an existing Scholar's shield.", 2, 1);
             }
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 0, $"{SGE.Kerachole.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Ixochole)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 1, $"{SGE.Ixochole.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Physis)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 2, $"{SGE.Physis.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Holos)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 3, $"{SGE.Holos.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Panhaima)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 4, $"{SGE.Panhaima.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Pepsis)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 5, $"{SGE.Pepsis.ActionName()} Priority: ");
+
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
@@ -2238,6 +2374,19 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, SMN.Config.SMN_VariantCure, "HP% to be at or under", 200);
+
+            if (preset == CustomComboPreset.SMN_ST_Egi_AstralFlow)
+            {
+                UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Mountain Buster", "", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Crimson Cyclone", "", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(SMN.Config.SMN_ST_Egi_AstralFlow, "Add Slipstream", "", 3, 2);
+
+                if (SMN.Config.SMN_ST_Egi_AstralFlow[1])
+                    UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_CrimsonCycloneMelee, "Enforced Crimson Cyclone Melee Check", "Only uses Crimson Cyclone within melee range.");
+            }
+
+
+
             #endregion
 
             #region PvP
@@ -2330,14 +2479,14 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.WHM_STHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, WHM.Config.WHM_STHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
-            if (preset == CustomComboPreset.WHM_AoeHeals_ThinAir)
+            if (preset == CustomComboPreset.WHM_AoEHeals_ThinAir)
                 UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_AoEHeals_ThinAir, "How many charges to keep ready? (0 = Use all)");
 
             if (preset == CustomComboPreset.WHM_AoEHeals_Cure3)
                 UserConfig.DrawSliderInt(0, 10000, WHM.Config.WHM_AoEHeals_Cure3MP, "Use when MP is above", sliderIncrement: 100);
 
             if (preset == CustomComboPreset.WHM_STHeals)
-                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_UIMouseOver, "Party UI Mousover Checking", "Check party member's HP & Debuffs by using mouseover on the party list.\nTo be used in conjunction with Redirect/Reaction/etc");
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_UIMouseOver, "Party UI Mousover Checking", "Check party member's HP & Debuffs by using mouseover on the party list.\nTo be used in conjunction with Redirect/Reaction/etc.");
 
             if (preset == CustomComboPreset.WHM_STHeals_ThinAir)
                 UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_STHeals_ThinAir, "How many charges to keep ready? (0 = Use all)");
@@ -2380,6 +2529,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WHM_AoEHeals_Plenary)
             {
                 UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_PlenaryWeave, "Only Weave", "");
+            }
+
+            if (preset == CustomComboPreset.WHM_AoEHeals_Medica2)
+            {
+                UserConfig.DrawRoundedSliderFloat(0f, 6f, WHM.Config.WHM_AoEHeals_Medica2Time, "Time Remaining on Buff to Renew");
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_Medica2MO, "Party UI Mousover Checking", "Check your mouseover target for the Medica II buff.\nTo be used in conjunction with Redirect/Reaction/etc.");
             }
 
             #endregion

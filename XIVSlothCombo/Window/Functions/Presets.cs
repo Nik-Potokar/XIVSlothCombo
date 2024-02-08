@@ -22,7 +22,7 @@ namespace XIVSlothCombo.Window.Functions
         {
             var enabled = Service.Configuration.IsEnabled(preset);
             var secret = PluginConfiguration.IsSecret(preset);
-            var conflicts = Service.Configuration.GetConflicts(preset);
+            var conflicts = PluginConfiguration.GetConflicts(preset);
             var parent = PluginConfiguration.GetParent(preset);
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
@@ -32,26 +32,6 @@ namespace XIVSlothCombo.Window.Functions
             {
                 if (enabled)
                 {
-                    if (preset == CustomComboPreset.UnlockGag)
-                    {
-                        Util.OpenLink("https://www.youtube.com/watch?v=qo__6MZIg6U");
-                    }
-
-                    if (preset == CustomComboPreset.SuperSpeedGag)
-                    {
-                        if (ActionManager.Instance()->GetActionStatus(ActionType.Action, All.Sprint) == 0)
-                            ActionManager.Instance()->UseAction(ActionType.Action, All.Sprint);
-                    }
-
-                    if (preset == CustomComboPreset.SnakeGag)
-                    {
-                        Util.OpenLink("https://youtu.be/r6gGcrjDmec");
-                    }
-
-                    if (preset == CustomComboPreset.GunGag)
-                    {
-                        Util.OpenLink("https://youtu.be/51CTM49rcrs");
-                    }
 
                     EnableParentPresets(preset);
                     Service.Configuration.EnabledActions.Add(preset);
@@ -119,6 +99,7 @@ namespace XIVSlothCombo.Window.Functions
 
                     }
 
+                    if (!string.IsNullOrEmpty(comboInfo.JobShorthand))
                     conflictBuilder.Insert(0, $"[{comboInfo.JobShorthand}] ");
 
                     ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, CustomComboNS.Functions.CustomComboFunctions.IsEnabled(conflict) ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed, 1500), $"- {conflictBuilder}");
@@ -132,8 +113,8 @@ namespace XIVSlothCombo.Window.Functions
             {
                 if (blueAttr.Actions.Count > 0)
                 {
-                    ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudOrange);
-                    ImGui.Text($"Missing active spells: {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetActionName(x)))}");
+                    ImGui.PushStyleColor(ImGuiCol.Text, blueAttr.NoneSet ? ImGuiColors.DPSRed : ImGuiColors.DalamudOrange);
+                    ImGui.Text($"{(blueAttr.NoneSet ? "No Required Spells Active:" : "Missing active spells:")} {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetActionName(x)))}");
                     ImGui.PopStyleColor();
                 }
 
@@ -243,8 +224,8 @@ namespace XIVSlothCombo.Window.Functions
                     {
                         if (Service.Configuration.HideConflictedCombos)
                         {
-                            var conflictOriginals = Service.Configuration.GetConflicts(childPreset);    // Presets that are contained within a ConflictedAttribute
-                            var conflictsSource = Service.Configuration.GetAllConflicts();              // Presets with the ConflictedAttribute
+                            var conflictOriginals = PluginConfiguration.GetConflicts(childPreset);    // Presets that are contained within a ConflictedAttribute
+                            var conflictsSource = PluginConfiguration.GetAllConflicts();              // Presets with the ConflictedAttribute
 
                             if (!conflictsSource.Where(x => x == childPreset || x == preset).Any() || conflictOriginals.Length == 0)
                             {
@@ -324,7 +305,7 @@ namespace XIVSlothCombo.Window.Functions
                 if (!Service.Configuration.EnabledActions.Contains(parent))
                 {
                     Service.Configuration.EnabledActions.Add(parent);
-                    foreach (var conflict in Service.Configuration.GetConflicts(parent))
+                    foreach (var conflict in PluginConfiguration.GetConflicts(parent))
                     {
                         Service.Configuration.EnabledActions.Remove(conflict);
                     }

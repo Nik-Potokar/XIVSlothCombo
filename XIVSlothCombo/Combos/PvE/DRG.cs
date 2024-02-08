@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -196,7 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.SharperFangAndClaw))
                     {
                         // If we are not on the flank, but need to use Fangs, pop true north if not already up
-                        if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                        if (trueNorthReady && CanDelayedWeave(actionID) &&
                             !OnTargetsFlank() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
@@ -206,7 +205,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.EnhancedWheelingThrust))
                     {
                         // If we are not on the rear, but need to use Wheeling, pop true north if not already up
-                        if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                        if (trueNorthReady && CanDelayedWeave(All.TrueNorth) &&
                             !OnTargetsRear() && !HasEffect(Buffs.RightEye))
                             return All.TrueNorth;
 
@@ -222,7 +221,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Disembowel;
 
                             if (lastComboMove is Disembowel && LevelChecked(OriginalHook(ChaosThrust)))
-                                return OriginalHook(ChaosThrust);
+                                return trueNorthReady && CanDelayedWeave(All.TrueNorth) &&
+                                    !OnTargetsRear() && !HasEffect(Buffs.RightEye)
+                                    ? All.TrueNorth
+                                    : OriginalHook(ChaosThrust);
                         }
 
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
@@ -748,3 +750,4 @@ namespace XIVSlothCombo.Combos.PvE
         }
     }
 }
+

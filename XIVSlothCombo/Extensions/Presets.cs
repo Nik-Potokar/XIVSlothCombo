@@ -7,9 +7,9 @@ namespace XIVSlothCombo.Extensions
 {
     internal static class PresetExtensions
     {
-        internal static Dictionary<CustomComboPreset, ReplaceSkillAttribute> replaceSkillCache = new();
-        internal static Dictionary<CustomComboPreset, CustomComboInfoAttribute> comboInfoCache = new();
-        internal static Dictionary<CustomComboPreset, HoverInfoAttribute> hoverInfoCache = new();
+        internal static Dictionary<CustomComboPreset, ReplaceSkillAttribute> replaceSkillCache = [];
+        internal static Dictionary<CustomComboPreset, CustomComboInfoAttribute> comboInfoCache = [];
+        internal static Dictionary<CustomComboPreset, HoverInfoAttribute> hoverInfoCache = [];
 
         ///<summary> Retrieves the <see cref="ReplaceSkillAttribute"/> for the preset if it exists.</summary>
         internal static ReplaceSkillAttribute? GetReplaceAttribute(this CustomComboPreset preset)
