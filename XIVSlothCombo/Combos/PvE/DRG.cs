@@ -152,7 +152,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!HasEffect(Buffs.LifeSurge) && HasCharges(LifeSurge) && AnimationLock.CanDRGWeave(LifeSurge) &&
                             ((HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
                             (HasEffect(Buffs.LanceCharge) && lastComboMove is VorpalThrust) ||
-                            (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) || HasEffect(Buffs.SharperFangAndClaw))) ||
+                            (HasEffect(Buffs.RightEye) && HasEffect(Buffs.LanceCharge) && (HasEffect(Buffs.EnhancedWheelingThrust) && lastComboMove is FangAndClaw || HasEffect(Buffs.SharperFangAndClaw) and lastComboMove is WheelingThrust)) ||
                             (IsOnCooldown(DragonSight) && IsOnCooldown(LanceCharge) && lastComboMove is VorpalThrust)))
                             return LifeSurge;
 
