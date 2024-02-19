@@ -434,7 +434,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 ResetOpener();
                 CurrentState = OpenerState.PrePull;
             }
-                
+
 
             return false;
         }
