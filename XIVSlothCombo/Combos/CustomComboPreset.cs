@@ -325,91 +325,101 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BLM.Fire)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10, "", "")]
-        BLM_ST_SimpleMode = 2012,
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID)]
+        BLM_ST_SimpleMode = 2000,
 
         #region Advanced ST
 
         [ReplaceSkill(BLM.Fire)]
         [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID, -9, "", "")]
-        BLM_ST_AdvancedMode = 2021,
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID)]
+        BLM_ST_AdvancedMode = 2001,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Level 90 Opener Option", "Uses the Balance opener depending on which rotation is selected above.", BLM.JobID)]
+        BLM_Adv_Opener = 2002,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
         [CustomComboInfo("Thunder I/III Option", "Adds Thunder I/Thunder III when the debuff isn't present or is expiring.", BLM.JobID)]
-        BLM_ST_Adv_Thunder = 2029,
+        BLM_ST_Adv_Thunder = 2004,
 
         [ParentCombo(BLM_ST_Adv_Thunder)]
         [CustomComboInfo("Thundercloud Spender Option", "Spends Thundercloud as soon as possible rather than waiting until Thunder is expiring.", BLM.JobID)]
-        BLM_ST_Adv_Thunder_ThunderCloud = 2030,
+        BLM_ST_Adv_Thunder_ThunderCloud = 2005,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
-        BLM_Adv_UmbralSoul = 2035,
+        [CustomComboInfo("Firestarter", "Adds Firestarter to the rotation.", BLM.JobID)]
+        BLM_Adv_UseFirestarter = 2006,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Movement Options", "Choose options to be used during movement.", BLM.JobID)]
-        BLM_Adv_Movement = 2036,
+        [CustomComboInfo("Foul/Xenoglossy", "Adds Foul / Xenoglossy to the rotation.", BLM.JobID)]
+        BLM_Adv_UsePolyglotStacks = 2007,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Triplecast/Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Casts = 2039,
+        [CustomComboInfo("Despair", "Adds Despair to the rotation.", BLM.JobID)]
+        BLM_Adv_UseDespair = 2008,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Paradox", "Adds Paradox to the rotation.", BLM.JobID)]
+        BLM_Adv_UseParadox = 2009,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID)]
+        BLM_Adv_Cooldowns = 2010,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Triplecast/Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID)]
+        BLM_Adv_Casts = 2011,
 
         [ParentCombo(BLM_Adv_Casts)]
         [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID)]
-        BLM_Adv_Triplecast_Pooling = 2040,
+        BLM_Adv_Triplecast_Pooling = 2012,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Cooldowns = 2042,
+        [CustomComboInfo("Movement Options", "Choose options to be used during movement.", BLM.JobID)]
+        BLM_Adv_Movement = 2013,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Foul/Xenoglossy", "Adds Foul / Xenoglossy to the rotation.", BLM.JobID, -8, "", "")]
-        BLM_Adv_UsePolyglotStacks = 2058,
+        [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID)]
+        BLM_Adv_UmbralSoul = 2014,
 
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
-            "\nWill default to the Standard opener when nothing is selected.", BLM.JobID, -10, "", "")]
-        BLM_Adv_Opener = 2043,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Rotation Option", "Choose which rotation to use." +
-            "\nWill default to the Standard rotation when nothing is selected.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Rotation = 2045,
+        // Last value = 2014
 
         #endregion
 
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -8, "", "")]
-        BLM_AoE_SimpleMode = 2008,
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID)]
+        BLM_AoE_SimpleMode = 2100,
 
         #region Advanced AoE
 
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
         [ConflictingCombos(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID, -8, "", "")]
-        BLM_AoE_AdvancedMode = 2054,
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID)]
+        BLM_AoE_AdvancedMode = 2101,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II/Thunder IV during Umbral Ice.", BLM.JobID, 1, "", "")]
-        BLM_AoE_Adv_ThunderUptime = 2055,
+        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II/Thunder IV during Umbral Ice.", BLM.JobID)]
+        BLM_AoE_Adv_ThunderUptime = 2102,
 
         [ParentCombo(BLM_AoE_Adv_ThunderUptime)]
-        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during Astral Fire.", BLM.JobID, 1, "", "")]
-        BLM_AoE_Adv_ThunderUptime_AstralFire = 2056,
+        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during Astral Fire.", BLM.JobID)]
+        BLM_AoE_Adv_ThunderUptime_AstralFire = 2103,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 2, "", "")]
-        BLM_AoE_Adv_Foul = 2044,
+        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID)]
+        BLM_AoE_Adv_Foul = 2104,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 99, "", "")]
-        BLM_AoE_Adv_UmbralSoul = 2049,
+        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID)]
+        BLM_AoE_Adv_Cooldowns = 2105,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, 1, "", "")]
-        BLM_AoE_Adv_Cooldowns = 2052,
+        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID)]
+        BLM_AoE_Adv_UmbralSoul = 2106,
+
+        // Last value = 2106
 
         #endregion
 
@@ -418,48 +428,51 @@ namespace XIVSlothCombo.Combos
         [Variant]
         [VariantParent(BLM_ST_SimpleMode, BLM_ST_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", BLM.JobID)]
-        BLM_Variant_Rampart = 2032,
+        BLM_Variant_Rampart = 2201,
 
         [Variant]
         [CustomComboInfo("Raise Option", "Turn Swiftcast into Variant Raise whenever you have the Swiftcast buff.", BLM.JobID)]
-        BLM_Variant_Raise = 2033,
+        BLM_Variant_Raise = 2202,
 
         [Variant]
         [VariantParent(BLM_ST_SimpleMode, BLM_ST_AdvancedMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
-        BLM_Variant_Cure = 2034,
+        BLM_Variant_Cure = 2203,
+
+        // Last value = 2203
 
         #endregion
 
         #region Miscellaneous
+
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID)]
-        BLM_UmbralSoul = 2001,
+        BLM_UmbralSoul = 2301,
 
         [ReplaceSkill(BLM.LeyLines)]
         [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Lines when Ley Lines is active.", BLM.JobID)]
-        BLM_Between_The_LeyLines = 2002,
+        BLM_Between_The_LeyLines = 2302,
 
         [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
         [CustomComboInfo("Blizzard I/III Feature", "Replaces Blizzard I with Blizzard III when out of Umbral Ice." +
             "\nReplaces Freeze with Blizzard II when synced below Lv.40.", BLM.JobID)]
-        BLM_Blizzard_1to3 = 2003,
+        BLM_Blizzard_1to3 = 2303,
 
         [ReplaceSkill(BLM.Scathe)]
         [ConflictingCombos(BLM_ST_SimpleMode, BLM_ST_AdvancedMode)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID)]
-        BLM_Scathe_Xeno = 2004,
+        BLM_Scathe_Xeno = 2304,
 
         [ReplaceSkill(BLM.Fire)]
         [CustomComboInfo("Fire I/III Feature", "Replaces Fire I with Fire III outside of Astral Fire or when Firestarter is up.", BLM.JobID)]
-        BLM_Fire_1to3 = 2005,
+        BLM_Fire_1to3 = 2305,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when you are out of active Ley Lines and standing still.", BLM.JobID)]
-        BLM_Aetherial_Manipulation = 2046,
+        BLM_Aetherial_Manipulation = 2306,
         #endregion
 
-        // Last value = 2058
+        // Last value = 2306
 
         #endregion
 
