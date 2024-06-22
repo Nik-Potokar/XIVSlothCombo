@@ -17,10 +17,13 @@ namespace XIVSlothCombo.Attributes
                 if (ActionWatching.ActionSheet.TryGetValue(id, out var action) && action != null)
                 {
                     ActionNames.Add($"{action.Name}");
+                    ActionIcons.Add(action.Icon);
                 }
             }
         }
 
         internal List<string> ActionNames { get; set; } = [];
+
+        internal List<ushort> ActionIcons { get; set; } = [];
     }
 }

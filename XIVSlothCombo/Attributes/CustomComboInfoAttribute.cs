@@ -1,3 +1,4 @@
+using ECommons.DalamudServices;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,17 @@ namespace XIVSlothCombo.Attributes
         /// <summary> Gets the job ID. </summary>
         public byte JobID { get; }
 
+        /// <summary> Gets the job role. </summary>
+        public int Role => JobIDToRole(JobID);
+
+        private int JobIDToRole(byte jobID)
+        {
+            if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
+                return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).Role;
+
+            return 0;
+        }
+
         /// <summary> Gets the display order. </summary>
         public int Order { get; }
 
@@ -75,9 +87,6 @@ namespace XIVSlothCombo.Attributes
 
         public static string JobIDToName(byte key)
         {
-            if (key == 41)
-                return "Viper";
-
             if (key == 0)
                 return "General/Multiple Jobs";
 
