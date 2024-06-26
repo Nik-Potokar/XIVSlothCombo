@@ -1,15 +1,19 @@
+using Dalamud.Interface.Components;
+using Dalamud.Interface.ManagedFontAtlas;
+using Dalamud.Interface.Utility;
+using Dalamud.Interface.Utility.Raii;
+using Dalamud.Utility;
+using ECommons.DalamudServices;
+using ECommons.ImGuiMethods;
+using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Component.GUI;
+using ImGuiNET;
+using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using Dalamud.Interface;
-using Dalamud.Interface.Utility;
-using Dalamud.Plugin;
-using Dalamud.Utility;
-using FFXIVClientStructs.FFXIV.Client.UI;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using ImGuiNET;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
@@ -21,20 +25,25 @@ using XIVSlothCombo.Window.Tabs;
 namespace XIVSlothCombo.Window
 {
     /// <summary> Plugin configuration window. </summary>
-    internal class ConfigWindow : Dalamud.Interface.Windowing.Window, IDisposable
+    internal class ConfigWindow : Dalamud.Interface.Windowing.Window
     {
         internal static readonly Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> groupedPresets = GetGroupedPresets();
         internal static readonly Dictionary<CustomComboPreset, (CustomComboPreset Preset, CustomComboInfoAttribute Info)[]> presetChildren = GetPresetChildren();
 
-        private readonly IDalamudPlugin Plugin;
         internal static Dictionary<string, List<(CustomComboPreset Preset, CustomComboInfoAttribute Info)>> GetGroupedPresets()
         {
             return Enum
             .GetValues<CustomComboPreset>()
             .Where(preset => (int)preset > 100 && preset != CustomComboPreset.Disabled)
             .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-            .Where(tpl => tpl.Info != null && PluginConfiguration.GetParent(tpl.Preset) == null)
+            .Where(tpl => tpl.Info != null && PresetStorage.GetParent(tpl.Preset) == null)
             .OrderByDescending(tpl => tpl.Info.JobID == 0)
+            .ThenByDescending(tpl => tpl.Info.JobID == DOL.JobID)
+            .ThenByDescending(tpl => tpl.Info.JobID == DOH.JobID)
+            .ThenByDescending(tpl => tpl.Info.Role == 1)
+            .ThenByDescending(tpl => tpl.Info.Role == 4)
+            .ThenByDescending(tpl => tpl.Info.Role == 2)
+            .ThenByDescending(tpl => tpl.Info.Role == 3)
             .ThenBy(tpl => tpl.Info.JobName)
             .ThenBy(tpl => tpl.Info.Order)
             .GroupBy(tpl => tpl.Info.JobName)
@@ -63,80 +72,121 @@ namespace XIVSlothCombo.Window
                     .OrderBy(tpl => tpl.Info.Order).ToArray())!;
         }
 
-        private bool visible = false;
-        public bool Visible
-        {
-            get => visible;
-            set
-            {
-                if (!value)
-                {
-                    PvEFeatures.HasToOpenJob = true;
-                }
-                visible = value;
-            }
-        }
+        public OpenWindow OpenWindow { get; set; } = OpenWindow.PvE;
 
         /// <summary> Initializes a new instance of the <see cref="ConfigWindow"/> class. </summary>
-        public ConfigWindow(XIVSlothCombo plugin = null!) : base("XIVSlothCombo Configuration", ImGuiWindowFlags.AlwaysAutoResize)
+        public ConfigWindow() : base($"{P.Name} {P.GetType().Assembly.GetName().Version}###Artisan")
         {
             RespectCloseHotkey = true;
 
             SizeCondition = ImGuiCond.FirstUseEver;
-            Size = new Vector2(740, 490);
+            Size = new Vector2(800, 650);
+            SetMinSize();
 
-            Plugin = plugin;
+            Svc.PluginInterface.UiBuilder.DefaultFontHandle.ImFontChanged += SetMinSize;
+        }
+
+        private void SetMinSize(IFontHandle? fontHandle = null, ILockedImFont? lockedFont = null)
+        {
+            SizeConstraints = new()
+            {
+                MinimumSize = new Vector2(700f.Scale(), 10f.Scale())
+            };
         }
 
         public override void Draw()
         {
-            DrawConfig();
-        }
-
-        public void DrawConfig()
-        {
             DrawTargetHelper();
-            if (!Visible)
-            {
-                return;
-            }
 
-            if (ImGui.Begin("XIVSlothCombo Configuration", ref visible))
+            var region = ImGui.GetContentRegionAvail();
+            var itemSpacing = ImGui.GetStyle().ItemSpacing;
+
+            var topLeftSideHeight = region.Y;
+
+            using (var style = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(4, 0)))
             {
-                if (ImGui.BeginTabBar("Config Tabs"))
+                using (var table = ImRaii.Table("###MainTable", 2, ImGuiTableFlags.Resizable))
                 {
-                    if (ImGui.BeginTabItem("PvE Features"))
-                    {
-                        PvEFeatures.Draw();
-                        ImGui.EndTabItem();
-                    }
+                    if (!table)
+                        return;
 
-                    if (ImGui.BeginTabItem("PvP Features"))
-                    {
-                        PvPFeatures.Draw();
-                        ImGui.EndTabItem();
-                    }
 
-                    if (ImGui.BeginTabItem("Settings"))
-                    {
-                        Settings.Draw();
-                        ImGui.EndTabItem();
-                    }
+                    ImGui.TableSetupColumn("##LeftColumn", ImGuiTableColumnFlags.WidthFixed, ImGui.GetWindowWidth() / 3);
 
-                    if (ImGui.BeginTabItem("About XIVSlothCombo / Report an Issue"))
+                    ImGui.TableNextColumn();
+
+                    var regionSize = ImGui.GetContentRegionAvail();
+
+                    ImGui.PushStyleVar(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f));
+
+                    using (var leftChild = ImRaii.Child($"###SlothLeftSide", regionSize with { Y = topLeftSideHeight }, false, ImGuiWindowFlags.NoDecoration))
                     {
-                        AboutUs.Draw();
-                        ImGui.EndTabItem();
-                    }
+                        if (ThreadLoadImageHandler.TryGetTextureWrap(@"https://github.com/Taurenkey/XIVSlothCombo/blob/main/res/plugin/xivslothcombo.png?raw=true", out var logo))
+                        {
+                            ImGuiEx.LineCentered("###SlothLogo", () =>
+                            {
+                                ImGui.Image(logo.ImGuiHandle, new(125f.Scale(), 125f.Scale()));
+                            });
+
+                        }
+                        ImGui.Spacing();
+                        ImGui.Separator();
+
+                        if (ImGui.Selectable("PvE Features", OpenWindow == OpenWindow.PvE))
+                        {
+                            OpenWindow = OpenWindow.PvE;
+                        }
+                        if (ImGui.Selectable("PvP Features", OpenWindow == OpenWindow.PvP))
+                        {
+                            OpenWindow = OpenWindow.PvP;
+                        }
+                        ImGui.Spacing();
+                        if (ImGui.Selectable("Misc. Settings", OpenWindow == OpenWindow.Settings))
+                        {
+                            OpenWindow = OpenWindow.Settings;
+                        }
+                        ImGui.Spacing();
+                        if (ImGui.Selectable("About", OpenWindow == OpenWindow.About))
+                        {
+                            OpenWindow = OpenWindow.About;
+                        }
 
 #if DEBUG
-                    if (ImGui.BeginTabItem("Debug Mode"))
-                    {
-                        Debug.Draw();
-                        ImGui.EndTabItem();
-                    }
+                        ImGui.Spacing();
+                        if (ImGui.Selectable("DEBUG", OpenWindow == OpenWindow.Debug))
+                        {
+                            OpenWindow = OpenWindow.Debug;
+                        }
+                        ImGui.Spacing();
 #endif
-                    ImGui.EndTabBar();
+
+                    }
+
+                    ImGui.PopStyleVar();
+                    ImGui.TableNextColumn();
+                    using (var rightChild = ImRaii.Child($"###SlothRightSide", Vector2.Zero, false))
+                    {
+                        switch (OpenWindow)
+                        {
+                            case OpenWindow.PvE:
+                                PvEFeatures.Draw();
+                                break;
+                            case OpenWindow.PvP:
+                                PvPFeatures.Draw();
+                                break;
+                            case OpenWindow.Settings:
+                                Settings.Draw();
+                                break;
+                            case OpenWindow.About:
+                                P.AboutUs.Draw();
+                                break;
+                            case OpenWindow.Debug:
+                                Debug.Draw();
+                                break;
+                            default:
+                                break;
+                        };
+                    }
                 }
             }
         }
@@ -169,7 +219,7 @@ namespace XIVSlothCombo.Window
                         };
 
                         DrawOutline(member->AtkResNode.PrevSiblingNode);
-                        
+
                     }
                 }
             }
@@ -215,7 +265,17 @@ namespace XIVSlothCombo.Window
 
         public void Dispose()
         {
-            
+            Svc.PluginInterface.UiBuilder.DefaultFontHandle.ImFontChanged -= SetMinSize;
         }
+    }
+
+    public enum OpenWindow
+    {
+        None = 0,
+        PvE = 1,
+        PvP = 2,
+        Settings = 3,
+        About = 4,
+        Debug = 5,
     }
 }

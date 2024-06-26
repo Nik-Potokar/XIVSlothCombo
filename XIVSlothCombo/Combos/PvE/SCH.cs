@@ -324,6 +324,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (ActionFound)
                 {
+                    //Ruin 2 Movement 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
+                        LevelChecked(Ruin2) &&
+                        IsMoving) return OriginalHook(Ruin2); //Who knows in the future
+
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     if (!incombat)
                     {
@@ -404,11 +409,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)
                                 return dot; //Use appropriate DoT Action
                         }
-
-                        //Ruin 2 Movement 
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
-                            LevelChecked(Ruin2) && InCombat() &&
-                            IsMoving) return OriginalHook(Ruin2); //Who knows in the future
                     }
                 }
                 return actionID;

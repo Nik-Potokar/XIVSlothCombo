@@ -64,7 +64,10 @@ namespace XIVSlothCombo.Core
                 if (Service.ClientState.LocalPlayer == null)
                     return OriginalHook(actionID);
 
-                if (ClassLocked()) return OriginalHook(actionID);
+                if (ClassLocked() || 
+                    (DisabledJobsPVE.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && !Service.ClientState.IsPvP) || 
+                    (DisabledJobsPVP.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && Service.ClientState.IsPvP)) 
+                    return OriginalHook(actionID);
 
                 uint lastComboMove = *(uint*)Service.Address.LastComboMove;
                 float comboTime = *(float*)Service.Address.ComboTimer;

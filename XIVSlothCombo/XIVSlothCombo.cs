@@ -25,6 +25,7 @@ using System.Reflection;
 using ECommons.DalamudServices;
 using Dalamud.Utility;
 using XIVSlothCombo.Attributes;
+using Dalamud.Interface.Windowing;
 
 namespace XIVSlothCombo
 {
@@ -33,11 +34,66 @@ namespace XIVSlothCombo
     {
         private const string Command = "/scombo";
 
-        private readonly ConfigWindow configWindow;
+        private readonly ConfigWindow ConfigWindow;
+        internal readonly AboutUs AboutUs;
+        internal static XIVSlothCombo P = null!;
+        internal WindowSystem ws;
         private readonly HttpClient httpClient = new();
         
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
+
+        public static readonly List<uint> DisabledJobsPVE = new List<uint>()
+        {
+            ADV.JobID,
+            //AST.JobID,
+            BLM.JobID,
+            BLU.JobID,
+            BRD.JobID,
+            DNC.JobID,
+            DOL.JobID,
+            DRG.JobID,
+            DRK.JobID,
+            GNB.JobID,
+            MCH.JobID,
+            MNK.JobID,
+            NIN.JobID,
+            PLD.JobID,
+            RDM.JobID,
+            RPR.JobID,
+            SAM.JobID,
+            SCH.JobID,
+            SGE.JobID,
+            SMN.JobID,
+            WAR.JobID,
+            WHM.JobID
+        };
+
+        public static readonly List<uint> DisabledJobsPVP = new List<uint>()
+        {
+            ADV.JobID,
+            AST.JobID,
+            BLM.JobID,
+            BLU.JobID,
+            //BRD.JobID,
+            DNC.JobID,
+            DOL.JobID,
+            DRG.JobID,
+            DRK.JobID,
+            GNB.JobID,
+            MCH.JobID,
+            MNK.JobID,
+            NIN.JobID,
+            PLD.JobID,
+            RDM.JobID,
+            RPR.JobID,
+            SAM.JobID,
+            SCH.JobID,
+            SGE.JobID,
+            SMN.JobID,
+            WAR.JobID,
+            WHM.JobID
+        };
 
         public static uint? JobID
         {
@@ -57,21 +113,26 @@ namespace XIVSlothCombo
         /// <param name="pluginInterface"> Dalamud plugin interface. </param>
         public XIVSlothCombo(DalamudPluginInterface pluginInterface)
         {
+            P = this;
             pluginInterface.Create<Service>();
             ECommonsMain.Init(pluginInterface, this);
 
             Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             Service.Address = new PluginAddressResolver();
             Service.Address.Setup(Service.SigScanner);
+            PresetStorage.Init();
 
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
             ActionWatching.Enable();
             Combos.JobHelpers.AST.Init();
 
-            configWindow = new ConfigWindow(this);
+            ConfigWindow = new ConfigWindow();
+            AboutUs = new();
+            ws = new();
+            ws.AddWindow(ConfigWindow);
 
-            Service.Interface.UiBuilder.Draw += DrawUI;
+            Service.Interface.UiBuilder.Draw += ws.Draw;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 
             Service.CommandManager.AddHandler(Command, new CommandInfo(OnCommand)
@@ -90,7 +151,7 @@ namespace XIVSlothCombo
 
 #if DEBUG
             PvEFeatures.HasToOpenJob = false;
-            configWindow.Visible = true;
+            ConfigWindow.IsOpen = true;
 #endif
         }
 
@@ -99,14 +160,14 @@ namespace XIVSlothCombo
             var enabledCopy = Service.Configuration.EnabledActions.ToHashSet(); //Prevents issues later removing during enumeration
             foreach (var preset in enabledCopy)
             {
-                if (!Service.Configuration.IsEnabled(preset)) continue;
+                if (!PresetStorage.IsEnabled(preset)) continue;
 
                 var conflictingCombos = preset.GetAttribute<ConflictingCombosAttribute>();
                 if (conflictingCombos != null)
                 {
                     foreach (var conflict in conflictingCombos.ConflictingPresets)
                     {
-                        if (Service.Configuration.IsEnabled(conflict))
+                        if (PresetStorage.IsEnabled(conflict))
                         {
                             Service.Configuration.EnabledActions.Remove(conflict);
                             Service.Configuration.Save();
@@ -148,7 +209,7 @@ namespace XIVSlothCombo
             Service.Configuration.ResetFeatures("v3.1.1.0_DRGRework", Enumerable.Range(6000, 800).ToArray());
         }
 
-        private void DrawUI() => configWindow.Draw();
+        private void DrawUI() => ConfigWindow.Draw();
 
         private void PrintLoginMessage()
         {
@@ -188,13 +249,14 @@ namespace XIVSlothCombo
         }
 
         /// <inheritdoc/>
-        public static string Name => "XIVSlothCombo";
+        public string Name => "XIVSlothCombo";
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            configWindow?.Dispose();
+            ConfigWindow?.Dispose();
 
+            ws.RemoveAllWindows();
             Service.CommandManager.RemoveHandler(Command);
             Service.Framework.Update -= OnFrameworkUpdate;
             Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
@@ -207,6 +269,7 @@ namespace XIVSlothCombo
             DisposeOpeners();
 
             Service.ClientState.Login -= PrintLoginMessage;
+            P = null;
         }
 
 
@@ -215,7 +278,7 @@ namespace XIVSlothCombo
             NIN.NIN_ST_SimpleMode.NINOpener.Dispose();
             NIN.NIN_ST_AdvancedMode.NINOpener.Dispose();
         }
-        private void OnOpenConfigUi() => configWindow.Visible = !configWindow.Visible;
+        private void OnOpenConfigUi() => ConfigWindow.IsOpen = !ConfigWindow.IsOpen;
 
         private void OnCommand(string command, string arguments)
         {
@@ -328,7 +391,7 @@ namespace XIVSlothCombo
                         if (filter == "set") // list set features
                         {
                             foreach (bool preset in Enum.GetValues<CustomComboPreset>()
-                                .Select(preset => Service.Configuration.IsEnabled(preset)))
+                                .Select(preset => PresetStorage.IsEnabled(preset)))
                             {
                                 Service.ChatGui.Print(preset.ToString());
                             }
@@ -337,7 +400,7 @@ namespace XIVSlothCombo
                         else if (filter == "unset") // list unset features
                         {
                             foreach (bool preset in Enum.GetValues<CustomComboPreset>()
-                                .Select(preset => !Service.Configuration.IsEnabled(preset)))
+                                .Select(preset => !PresetStorage.IsEnabled(preset)))
                             {
                                 Service.ChatGui.Print(preset.ToString());
                             }
@@ -555,7 +618,7 @@ namespace XIVSlothCombo
                         }
                     }
                 default:
-                    configWindow.Visible = !configWindow.Visible;
+                    ConfigWindow.IsOpen = !ConfigWindow.IsOpen;
                     PvEFeatures.HasToOpenJob = true;
                     if (argumentsParts[0].Length > 0)
                     {

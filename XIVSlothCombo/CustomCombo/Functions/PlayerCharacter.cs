@@ -1,5 +1,8 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using Lumina.Excel.GeneratedSheets;
 using XIVSlothCombo.Services;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
@@ -30,5 +33,14 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player is in a PVP enabled zone. </summary>
         /// <returns> A value indicating whether the player is in a PVP enabled zone. </returns>
         public static bool InPvP() => GameMain.IsInPvPArea() || GameMain.IsInPvPInstance();
+
+        /// <summary> Checks if the player has completed the required job quest for the ability. </summary>
+        /// <returns> A value indicating a quest has been completed for a job action.</returns>
+        public static unsafe bool IsActionUnlocked(uint id)
+        {
+            var unlockLink = Svc.Data.GetExcelSheet<Action>().GetRow(id).UnlockLink;
+            if (unlockLink == 0) return true;
+            return UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(unlockLink);
+        }
     }
 }
