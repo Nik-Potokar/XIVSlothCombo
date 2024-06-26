@@ -1,3 +1,5 @@
+using Dalamud.Interface.Components;
+using Dalamud.Interface.ManagedFontAtlas;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Utility;
@@ -78,7 +80,18 @@ namespace XIVSlothCombo.Window
             RespectCloseHotkey = true;
 
             SizeCondition = ImGuiCond.FirstUseEver;
-            Size = new Vector2(740, 490);
+            Size = new Vector2(800, 650);
+            SetMinSize();
+
+            Svc.PluginInterface.UiBuilder.DefaultFontHandle.ImFontChanged += SetMinSize;
+        }
+
+        private void SetMinSize(IFontHandle? fontHandle = null, ILockedImFont? lockedFont = null)
+        {
+            SizeConstraints = new()
+            {
+                MinimumSize = new Vector2(700f.Scale(), 10f.Scale())
+            };
         }
 
         public override void Draw()
@@ -252,7 +265,7 @@ namespace XIVSlothCombo.Window
 
         public void Dispose()
         {
-
+            Svc.PluginInterface.UiBuilder.DefaultFontHandle.ImFontChanged -= SetMinSize;
         }
     }
 

@@ -50,7 +50,6 @@ namespace XIVSlothCombo.Core
 
         #endregion
 
-
         #region Custom Float Values
 
         [JsonProperty("CustomFloatValuesV6")]
@@ -231,11 +230,6 @@ namespace XIVSlothCombo.Core
             SetResetValues(config, true);
             Save();
         }
-
-        #endregion
-
-        #region UI Settings
-        public bool AutomaticallyOpenToCurrentJob { get; set; } = false;
 
         #endregion
 

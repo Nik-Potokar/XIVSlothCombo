@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using Dalamud.Interface;
 using Dalamud.Interface.Internal;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
+using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using XIVSlothCombo.Core;
@@ -24,18 +26,21 @@ namespace XIVSlothCombo.Window.Tabs
             {
                 int i = 1;
 
+                var indentwidth = 12f.Scale();
+                var indentwidth2 = indentwidth + 42f.Scale();
+
                 if (OpenJob == string.Empty)
                 {
                     ImGuiEx.LineCentered("pvpDesc", () =>
                     {
                         ImGui.PushFont(UiBuilder.IconFont);
-                        ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+                        ImGui.TextWrapped($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
                         ImGui.PopFont();
                         ImGui.SameLine();
-                        ImGui.TextUnformatted("These are PvP features. They will only work in PvP-enabled zones.");
+                        ImGui.TextWrapped("These are PvP features. They will only work in PvP-enabled zones.");
                         ImGui.SameLine();
                         ImGui.PushFont(UiBuilder.IconFont);
-                        ImGui.Text($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
+                        ImGui.TextWrapped($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
                         ImGui.PopFont();
                     });
                     ImGuiEx.LineCentered($"pvpDesc2", () => {
@@ -43,8 +48,6 @@ namespace XIVSlothCombo.Window.Tabs
                     });
                     ImGui.Spacing();
 
-                    var indentwidth = ImGui.GetContentRegionAvail().X / 3.25f;
-                    var indentwidth2 = ImGui.GetContentRegionAvail().X / 2.75f;
                     foreach (string? jobName in groupedPresets.Keys)
                     {
                         string abbreviation = groupedPresets[jobName].First().Info.JobShorthand;
@@ -69,7 +72,10 @@ namespace XIVSlothCombo.Window.Tabs
                 }
                 else
                 {
-                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, 24f.Scale())))
+                    var id = groupedPresets[OpenJob].First().Info.JobID;
+                    IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
+
+                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, (icon.Size.Y / 2f.Scale()) + 4f)))
                     {
                         if (ImGui.Button("Back"))
                         {
@@ -77,16 +83,11 @@ namespace XIVSlothCombo.Window.Tabs
                             return;
                         }
 
-                        var indentwidth = ImGui.GetContentRegionAvail().X / 3.25f;
-                        var indentwidth2 = ImGui.GetContentRegionAvail().X / 2.75f;
-
-                        var id = groupedPresets[OpenJob].First().Info.JobID;
-                        IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
-                        ImGui.SameLine(indentwidth);
+                        ImGui.SameLine(ImGui.GetContentRegionAvail().X / 2);
                         if (icon != null)
                         {
-                            ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f) * ImGui.GetIO().FontGlobalScale);
-                            ImGui.SameLine(indentwidth2);
+                            ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f.Scale()));
+                            ImGui.SameLine((ImGui.GetContentRegionAvail().X / 2) + 42f.Scale());
                         }
                         ImGuiEx.Text($"{OpenJob}");
 

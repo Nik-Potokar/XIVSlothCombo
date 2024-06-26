@@ -28,7 +28,7 @@ namespace XIVSlothCombo.Window.Functions
             var parent = PresetStorage.GetParent(preset);
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
-            ImGui.PushItemWidth(200);
+            ImGui.Spacing();
 
             if (ImGui.Checkbox($"{info.FancyName}###{info.FancyName}{i}", ref enabled))
             {
@@ -51,7 +51,6 @@ namespace XIVSlothCombo.Window.Functions
                 Service.Configuration.Save();
             }
 
-            ImGui.PopItemWidth();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudGrey);
 
             DrawReplaceAttribute(preset);

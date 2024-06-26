@@ -1,13 +1,10 @@
 ﻿using Dalamud.Interface.Internal;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
-using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
@@ -35,14 +32,16 @@ namespace XIVSlothCombo.Window.Tabs
             using (var scrolling = ImRaii.Child("scrolling", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true))
             {
                 int i = 1;
-
+                var indentwidth = 12f.Scale();
+                var indentwidth2 = indentwidth + 42f.Scale();
                 if (OpenJob == string.Empty)
                 {
-                    ImGuiEx.LineCentered("pveDesc", () => ImGuiEx.TextUnderlined("Select a job from below to enable and configure features for it."));
-                    ImGui.Spacing();
+                    ImGui.SameLine(indentwidth);
+                    ImGuiEx.LineCentered(() =>
+                    {
+                        ImGuiEx.TextUnderlined("Select a job from below to enable and configure features for it.");
+                    });
 
-                    var indentwidth = ImGui.GetContentRegionAvail().X / 3.25f;
-                    var indentwidth2 = ImGui.GetContentRegionAvail().X / 2.75f;
                     foreach (string? jobName in groupedPresets.Keys)
                     {
                         string abbreviation = groupedPresets[jobName].First().Info.JobShorthand;
@@ -67,26 +66,26 @@ namespace XIVSlothCombo.Window.Tabs
                 }
                 else
                 {
-                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, 24f.Scale())))
+                    var id = groupedPresets[OpenJob].First().Info.JobID;
+                    IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
+
+                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, (icon.Size.Y / 2f.Scale()) + 4f)))
                     {
                         if (ImGui.Button("Back"))
                         {
                             OpenJob = "";
                             return;
                         }
-
-                        var indentwidth = ImGui.GetContentRegionAvail().X / 3.25f;
-                        var indentwidth2 = ImGui.GetContentRegionAvail().X / 2.75f;
-
-                        var id = groupedPresets[OpenJob].First().Info.JobID;
-                        IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
-                        ImGui.SameLine(indentwidth);
-                        if (icon != null)
+                        ImGui.SameLine();
+                        ImGuiEx.LineCentered(() =>
                         {
-                            ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f) * ImGui.GetIO().FontGlobalScale);
-                            ImGui.SameLine(indentwidth2);
-                        }
-                        ImGuiEx.Text($"{OpenJob}");
+                            if (icon != null)
+                            {
+                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f.Scale()));
+                                ImGui.SameLine();
+                            }
+                            ImGuiEx.Text($"{OpenJob}");
+                        });
 
                     }
 
@@ -159,7 +158,7 @@ namespace XIVSlothCombo.Window.Tabs
                                                                                 !PresetStorage.IsBozja(x.Preset) &&
                                                                                 !PresetStorage.IsEureka(x.Preset)))
             {
-                InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
+                InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 2f.Scale(), ContentsOffset = 5f.Scale(), ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
 
                 if (Service.Configuration.HideConflictedCombos)
                 {
@@ -182,7 +181,7 @@ namespace XIVSlothCombo.Window.Tabs
                     else
                     {
                         presetBox.Draw();
-                        ImGuiHelpers.ScaledDummy(12.0f);
+                        
                         continue;
                     }
                 }
