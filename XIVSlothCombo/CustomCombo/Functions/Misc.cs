@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
@@ -10,7 +11,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Determine if the given preset is enabled. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> A value indicating whether the preset is enabled. </returns>
-        public static bool IsEnabled(CustomComboPreset preset) => (int)preset < 100 || Service.Configuration.IsEnabled(preset);
+        public static bool IsEnabled(CustomComboPreset preset) => (int)preset < 100 || PresetStorage.IsEnabled(preset);
 
         /// <summary> Determine if the given preset is not enabled. </summary>
         /// <param name="preset"> Preset to check. </param>

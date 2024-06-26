@@ -146,23 +146,6 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"Used for {CustomComboInfoAttribute.JobIDToName(33)} card targeting features.\r\nSet Alpha to 0 to hide the box.");
                 ImGui.EndTooltip();
             }
-            #region UI Settings
-
-            bool openAtJob = Service.Configuration.AutomaticallyOpenToCurrentJob;
-            if (ImGui.Checkbox("Automatically open [PvE Features] to your current job", ref openAtJob))
-            {
-                Service.Configuration.AutomaticallyOpenToCurrentJob = openAtJob;
-                Service.Configuration.Save();
-            }
-
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.BeginTooltip();
-                ImGui.TextUnformatted("Whenever you open the PvE features tab, the plugin will automatically open\r\nat the job you're currently playing as.");
-                ImGui.EndTooltip();
-            }
-
-            #endregion
 
             ImGui.EndChild();
         }
