@@ -1,12 +1,8 @@
-﻿using Dalamud.Game;
-using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
@@ -110,7 +106,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (SelectedRandomMember is not null)
                 {
-                    if (PartyTargets.Any(x => x.ObjectId == SelectedRandomMember.ObjectId))
+                    if (PartyTargets.Any(x => x.GameObjectId == SelectedRandomMember.GameObjectId))
                     {
                         //TargetObject(SelectedRandomMember);
                         return true;

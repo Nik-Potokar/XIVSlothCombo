@@ -2,18 +2,13 @@
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Internal;
 using Dalamud.Interface.Utility;
-using Dalamud.Plugin;
 using Dalamud.Utility;
-using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using ImGuiScene;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
-using System.Threading.Tasks;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Window.Tabs
 {

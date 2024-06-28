@@ -1,7 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using XIVSlothCombo.Services;
 

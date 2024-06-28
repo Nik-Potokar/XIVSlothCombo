@@ -29,7 +29,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (CurrentTarget is not BattleChara chara)
                 return 0;
 
-            if (CurrentTarget.ObjectId == LocalPlayer.ObjectId)
+            if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
                 return 0;
 
             Vector2 position = new(chara.Position.X, chara.Position.Z);
@@ -130,9 +130,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (checkMOPartyUI)
             {
                 StructsObject.GameObject* t = PartyTargetingService.UITarget;
-                if (t != null && t->ObjectID != 0)
+                if (t != null && t->GetGameObjectId().ObjectId != 0)
                 {
-                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == t->ObjectID).FirstOrDefault();
+                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.GameObjectId == t->GetGameObjectId().ObjectId).FirstOrDefault();
                     if (uiTarget != null && HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
 
                     if (restrictToMouseover)
@@ -187,8 +187,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             StructsObject.GameObject* t = GetTarget(target);
             if (t == null) return;
-            long o = PartyTargetingService.GetObjectID(t);
-            GameObject? p = Service.ObjectTable.Where(x => x.ObjectId == o).First();
+            ulong o = PartyTargetingService.GetObjectID(t);
+            GameObject? p = Service.ObjectTable.Where(x => x.GameObjectId == o).First();
 
             if (IsInRange(p)) SetTarget(p);
         }

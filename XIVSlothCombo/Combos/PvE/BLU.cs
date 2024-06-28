@@ -1,8 +1,5 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
-using System;
-using System.Linq;
 using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {

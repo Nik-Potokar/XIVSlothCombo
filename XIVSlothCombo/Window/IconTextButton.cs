@@ -2,7 +2,6 @@
 using Dalamud.Interface.Internal;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
-using ImGuiScene;
 using System.Numerics;
 
 namespace XIVSlothCombo.Window

@@ -1,4 +1,3 @@
-using Dalamud.Interface.Components;
 using Dalamud.Interface.ManagedFontAtlas;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
@@ -8,7 +7,6 @@ using ECommons.ImGuiMethods;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
-using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -207,15 +205,15 @@ namespace XIVSlothCombo.Window
 
                         var member = i switch
                         {
-                            1 => plist.PartyMember.PartyMember0.TargetGlow,
-                            2 => plist.PartyMember.PartyMember1.TargetGlow,
-                            3 => plist.PartyMember.PartyMember2.TargetGlow,
-                            4 => plist.PartyMember.PartyMember3.TargetGlow,
-                            5 => plist.PartyMember.PartyMember4.TargetGlow,
-                            6 => plist.PartyMember.PartyMember5.TargetGlow,
-                            7 => plist.PartyMember.PartyMember6.TargetGlow,
-                            8 => plist.PartyMember.PartyMember7.TargetGlow,
-                            _ => plist.PartyMember.PartyMember0.TargetGlow,
+                            1 => plist.PartyMembers[0].TargetGlow,
+                            2 => plist.PartyMembers[1].TargetGlow,
+                            3 => plist.PartyMembers[2].TargetGlow,
+                            4 => plist.PartyMembers[3].TargetGlow,
+                            5 => plist.PartyMembers[4].TargetGlow,
+                            6 => plist.PartyMembers[5].TargetGlow,
+                            7 => plist.PartyMembers[6].TargetGlow,
+                            8 => plist.PartyMembers[7].TargetGlow,
+                            _ => plist.PartyMembers[0].TargetGlow,
                         };
 
                         DrawOutline(member->AtkResNode.PrevSiblingNode);

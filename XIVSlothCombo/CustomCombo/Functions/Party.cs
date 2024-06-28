@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Party;
 using Dalamud.Plugin.Services;
 using XIVSlothCombo.Services;
 
@@ -31,9 +30,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     8 => GetTarget(TargetType.P8),
                     _ => GetTarget(TargetType.Self),
                 };
-                long i = PartyTargetingService.GetObjectID(o);
-                return Service.ObjectTable.Where(x => x.ObjectId == i).Any()
-                    ? Service.ObjectTable.Where(x => x.ObjectId == i).First()
+                ulong i = PartyTargetingService.GetObjectID(o);
+                return Service.ObjectTable.Where(x => x.GameObjectId == i).Any()
+                    ? Service.ObjectTable.Where(x => x.GameObjectId == i).First()
                     : null;
             }
 

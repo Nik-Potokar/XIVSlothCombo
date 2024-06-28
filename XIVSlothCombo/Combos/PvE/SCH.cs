@@ -285,7 +285,7 @@ namespace XIVSlothCombo.Combos.PvE
                     GameObject? healTarget = GetHealTarget(Config.SCH_DeploymentTactics_Adv && Config.SCH_DeploymentTactics_UIMouseOver);
 
                     //Check for the Galvanize shield buff. Start applying if it doesn't exist
-                    if (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.ObjectId) is null)
+                    if (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.GameObjectId) is null)
                     {
                         if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
                             return Recitation;

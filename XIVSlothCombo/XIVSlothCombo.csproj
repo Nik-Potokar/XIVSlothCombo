@@ -111,6 +111,11 @@
 			<Private>False</Private>
 		</Reference>
 
+		<Reference Include="InteropGenerator.Runtime">
+			<HintPath>$(DalamudLibPath)InteropGenerator.Runtime.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
 	</ItemGroup>
 
 </Project>

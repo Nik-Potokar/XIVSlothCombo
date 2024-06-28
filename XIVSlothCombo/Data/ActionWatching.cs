@@ -1,5 +1,4 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
@@ -35,9 +34,9 @@ namespace XIVSlothCombo.Data
 
         internal readonly static List<uint> CombatActions = [];
 
-        private delegate void ReceiveActionEffectDelegate(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
+        private delegate void ReceiveActionEffectDelegate(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
         private readonly static Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
-        private static void ReceiveActionEffectDetour(int sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
+        private static void ReceiveActionEffectDetour(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
         {
             if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
@@ -46,7 +45,7 @@ namespace XIVSlothCombo.Data
             if (ActionType is 13 or 2) return;
             if (header.ActionId != 7 &&
                 header.ActionId != 8 &&
-                sourceObjectId == Service.ClientState.LocalPlayer.ObjectId)
+                sourceObjectId == Service.ClientState.LocalPlayer.GameObjectId)
             {
                 TimeLastActionUsed = DateTime.Now;
                 LastActionUseCount++;
@@ -81,9 +80,9 @@ namespace XIVSlothCombo.Data
             }
         }
 
-        private delegate void SendActionDelegate(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9);
+        private delegate void SendActionDelegate(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9);
         private static readonly Hook<SendActionDelegate>? SendActionHook;
-        private unsafe static void SendActionDetour(long targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
+        private unsafe static void SendActionDetour(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
         {
             try
             {
@@ -101,7 +100,7 @@ namespace XIVSlothCombo.Data
             }
         }
 
-        private unsafe static void CheckForChangedTarget(uint actionId, ref long targetObjectId)
+        private unsafe static void CheckForChangedTarget(uint actionId, ref ulong targetObjectId)
         {
             if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear &&
                 Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
@@ -112,19 +111,19 @@ namespace XIVSlothCombo.Data
                 switch (targetOptions)
                 {
                     case 0:
-                        targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                        targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                     case 1:
                         if (CustomComboFunctions.HasFriendlyTarget())
-                            targetObjectId = Service.ClientState.LocalPlayer.TargetObject.ObjectId;
+                            targetObjectId = Service.ClientState.LocalPlayer.TargetObject.GameObjectId;
                         else
-                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                     case 2:
                         if (CustomComboFunctions.GetHealTarget(true, true) is not null)
-                            targetObjectId = CustomComboFunctions.GetHealTarget(true, true).ObjectId;
+                            targetObjectId = CustomComboFunctions.GetHealTarget(true, true).GameObjectId;
                         else
-                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.ObjectId;
+                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                 }
             }

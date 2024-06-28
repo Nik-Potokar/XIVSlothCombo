@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dalamud.Hooking;
-using Dalamud.Logging;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using Lumina.Excel.GeneratedSheets;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
 

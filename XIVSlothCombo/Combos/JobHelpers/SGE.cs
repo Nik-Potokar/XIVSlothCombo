@@ -21,7 +21,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return PvE.SGE.Config.SGE_ST_Heal_Zoe;
                 case 2:
                     action = PvE.SGE.Pepsis;
-                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && FindEffect(PvE.SGE.Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.ObjectId) is not null;
+                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && FindEffect(PvE.SGE.Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.GameObjectId) is not null;
                     return PvE.SGE.Config.SGE_ST_Heal_Pepsis;
                 case 3:
                     action = PvE.SGE.Taurochole;
