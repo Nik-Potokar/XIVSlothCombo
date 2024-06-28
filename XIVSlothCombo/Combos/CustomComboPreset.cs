@@ -2179,6 +2179,17 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region PICTOMANCER
+        [ReplaceSkill(PCT.FireInRed)]
+        [CustomComboInfo("Combined Aetherhues Feature", "Combines aetherhue actions onto one button for their respective target types.", PCT.JobID)]
+        CombinedAetherhues = 20000,
+
+        [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
+        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button.", PCT.JobID)]
+        CombinedMotifs = 20001,
+
+        #endregion
+
         #region PALADIN
 
         //// Last value = 11032

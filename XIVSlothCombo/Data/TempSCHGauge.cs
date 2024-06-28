@@ -1,7 +1,11 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
+using System;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using XIVSlothCombo.Services;
+using XIVSlothCombo.Window.Tabs;
 
 namespace XIVSlothCombo.Data;
 
@@ -23,6 +27,36 @@ public unsafe class TmpSCHGauge
     }
 }
 
+public unsafe class TmpPCTGauge
+{
+    public byte PalleteGauge => Struct->PalleteGauge;
+
+    public byte WhitePaint => Struct->WhitePaint;
+
+    public bool CreatureMotifDrawn => Struct->CreatureMotifDrawn;
+
+    public bool WeaponMotifDrawn => Struct->WeaponMotifDrawn;
+
+    public bool LandscapeMotifDrawn => Struct->LandscapeMotifDrawn;
+
+    public bool MooglePortraitReady => Struct->MooglePortraitReady;
+
+    private protected PictoGauge* Struct;
+
+    public byte GetOffset(int offset)
+    {
+        var val = IntPtr.Add(Address, offset);
+        return Marshal.ReadByte(val);
+    }
+
+    private nint Address;
+    public TmpPCTGauge()
+    {
+        Address = Svc.SigScanner.GetStaticAddressFromSig("48 8B 3D ?? ?? ?? ?? 33 ED") + 0x8;
+        Struct = (PictoGauge*)Address;
+    }
+}
+
 [StructLayout(LayoutKind.Explicit, Size = 0x10)]
 public struct TmpScholarGauge
 {
@@ -32,3 +66,32 @@ public struct TmpScholarGauge
     [FieldOffset(0x0C)] public byte DismissedFairy;
 }
 
+[StructLayout(LayoutKind.Explicit, Size = 0x10)]
+public struct PictoGauge
+{
+    [FieldOffset(0x08)] public byte PalleteGauge;
+    [FieldOffset(0x0A)] public byte WhitePaint;
+    [FieldOffset(0x0B)] public CanvasFlags CanvasFlags;
+    [FieldOffset(0x0C)] public CreatureFlags CreatureFlags;
+
+    public bool CreatureMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Pom) || CanvasFlags.HasFlag(CanvasFlags.Wing); //TODO Update at level 96
+    public bool WeaponMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Weapon);
+    public bool LandscapeMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Landscape);
+    public bool MooglePortraitReady => CreatureFlags.HasFlag(CreatureFlags.Wings);
+}
+
+[Flags]
+public enum CanvasFlags : byte
+{
+    Pom = 1,
+    Wing = 2,
+    Weapon = 16,
+    Landscape = 32,
+}
+
+[Flags]
+public enum CreatureFlags : byte
+{
+    Pom = 1,
+    Wings = 16
+}

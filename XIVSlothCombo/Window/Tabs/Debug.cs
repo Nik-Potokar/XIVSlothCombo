@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons.DalamudServices;
 using ImGuiNET;
 using System;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace XIVSlothCombo.Window.Tabs
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) => actionID;
         }
 
+        public static int debugNum = 0;
         internal unsafe static new void Draw()
         {
             PlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
@@ -63,6 +65,15 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
 
+                var pctGauge = new TmpPCTGauge();
+                ImGui.InputInt("DebugNum", ref debugNum);
+                ImGui.Text($"{pctGauge.GetOffset(debugNum)}");
+                ImGui.Text($"Pallete: {pctGauge.PalleteGauge}");
+                ImGui.Text($"White Paint: {pctGauge.WhitePaint}");
+                ImGui.Text($"Creature: {pctGauge.CreatureMotifDrawn}");
+                ImGui.Text($"Weapon: {pctGauge.WeaponMotifDrawn}");
+                ImGui.Text($"Landscape: {pctGauge.LandscapeMotifDrawn}");
+                ImGui.Text($"Moogle Potrait: {pctGauge.MooglePortraitReady}");
 
             }
 
