@@ -7,7 +7,7 @@ namespace XIVSlothCombo.Window
     {
         public static IDalamudTextureWrap? GetJobIcon(uint jobId)
         {
-            if (jobId == 0) return null;
+            if (jobId == 0 || jobId > 42) return null;
             return Svc.Texture.GetFromGameIcon(new Dalamud.Interface.Textures.GameIconLookup(62100 + jobId)).GetWrapOrEmpty();
         }
     }
