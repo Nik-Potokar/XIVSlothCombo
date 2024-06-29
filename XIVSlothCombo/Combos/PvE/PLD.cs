@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Linq;
+using ECommons.Logging;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -38,6 +39,8 @@ namespace XIVSlothCombo.Combos.PvE
             BladeOfValor = 25750,
             FightOrFlight = 20,
             Atonement = 16460,
+            Supplication = 36918, // Second Atonement
+            Sepulchre = 36919, // Third Atonement
             Intervene = 16461,
             Sheltron = 3542;
 
@@ -46,6 +49,9 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 Requiescat = 1368,
                 SwordOath = 1902,
+                SupplicationReady = 3827, //Second Atonement buff
+                SepulchreReady = 3828, // Third Atonement buff
+                GoringBladeReady = 3847, //Goring Blade Buff after use of FoF
                 FightOrFlight = 76,
                 ConfiteorReady = 3019,
                 DivineMight = 2673,
@@ -132,7 +138,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (ActionReady(GoringBlade))
+                            if (HasEffect(Buffs.GoringBladeReady))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -156,7 +162,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // FoF (Starts burst)
                             if (ActionReady(FightOrFlight) &&
-                                ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any()) // Check RA has been used for opener exception
+                                // ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any()) // Check RA has been used for opener exception - Currently not available use lastComboActionID instead.
+                                lastComboActionID == RoyalAuthority) // TempFix
                                 return FightOrFlight;
 
                             // Usage outside of burst
@@ -182,6 +189,12 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (HasEffect(Buffs.SwordOath))
                                     return Atonement;
+
+                                if (HasEffect(Buffs.SepulchreReady))
+                                    return Sepulchre;
+
+                                if (HasEffect(Buffs.SupplicationReady))
+                                    return Supplication;
 
                                 return (HasEffect(Buffs.DivineMight) &&
                                     GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
