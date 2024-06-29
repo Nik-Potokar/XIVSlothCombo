@@ -161,8 +161,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // FoF (Starts burst)
                             if (ActionReady(FightOrFlight) &&
-                                // ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any()) // Check RA has been used for opener exception - Currently not available use lastComboActionID instead.
-                                lastComboActionID == RoyalAuthority) // TempFix
+                                ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any()) // Check RA has been used for opener exception
                                 return FightOrFlight;
 
                             // Usage outside of burst
