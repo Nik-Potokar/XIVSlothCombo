@@ -2188,6 +2188,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button.", PCT.JobID)]
         CombinedMotifs = 20001,
 
+        [ReplaceSkill(PCT.HolyInWhite)]
+        [CustomComboInfo("One Button Paint", "Combines Paint actions into one button.", PCT.JobID)]
+        CombinedPaint = 20002,
+
         #endregion
 
         #region PALADIN

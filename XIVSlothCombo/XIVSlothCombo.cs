@@ -109,7 +109,7 @@ namespace XIVSlothCombo
 
         /// <summary> Initializes a new instance of the <see cref="XIVSlothCombo"/> class. </summary>
         /// <param name="pluginInterface"> Dalamud plugin interface. </param>
-        public XIVSlothCombo(DalamudPluginInterface pluginInterface)
+        public XIVSlothCombo(IDalamudPluginInterface pluginInterface)
         {
             P = this;
             pluginInterface.Create<Service>();

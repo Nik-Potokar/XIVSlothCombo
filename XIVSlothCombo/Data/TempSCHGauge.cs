@@ -31,7 +31,7 @@ public unsafe class TmpPCTGauge
 {
     public byte PalleteGauge => Struct->PalleteGauge;
 
-    public byte WhitePaint => Struct->WhitePaint;
+    public byte Paint => Struct->Paint;
 
     public bool CreatureMotifDrawn => Struct->CreatureMotifDrawn;
 
@@ -70,7 +70,7 @@ public struct TmpScholarGauge
 public struct PictoGauge
 {
     [FieldOffset(0x08)] public byte PalleteGauge;
-    [FieldOffset(0x0A)] public byte WhitePaint;
+    [FieldOffset(0x0A)] public byte Paint;
     [FieldOffset(0x0B)] public CanvasFlags CanvasFlags;
     [FieldOffset(0x0C)] public CreatureFlags CreatureFlags;
 

@@ -69,7 +69,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.InputInt("DebugNum", ref debugNum);
                 ImGui.Text($"{pctGauge.GetOffset(debugNum)}");
                 ImGui.Text($"Pallete: {pctGauge.PalleteGauge}");
-                ImGui.Text($"White Paint: {pctGauge.WhitePaint}");
+                ImGui.Text($"Paint: {pctGauge.Paint}");
                 ImGui.Text($"Creature: {pctGauge.CreatureMotifDrawn}");
                 ImGui.Text($"Weapon: {pctGauge.WeaponMotifDrawn}");
                 ImGui.Text($"Landscape: {pctGauge.LandscapeMotifDrawn}");

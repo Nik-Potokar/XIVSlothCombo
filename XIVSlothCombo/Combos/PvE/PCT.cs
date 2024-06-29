@@ -14,11 +14,12 @@ namespace XIVSlothCombo.Combos.PvE
             BlizzardinCyan = 34653,
             BlizzardIIinCyan = 34659,
             ClawMotif = 34666,
-            CometinBlack = 39199,
+            CometinBlack = 34663,
             CreatureMotif = 34689,
             FireInRed = 34650,
             FireIIinRed = 34656,
             HammerStamp = 34678,
+            HolyInWhite = 34662,
             LandscapeMotif = 34691,
             LivingMuse = 35347,
             MawMotif = 34667,
@@ -46,7 +47,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
                 SubtractivePalette = 3674,
-                HammerTime = 3680;
+                HammerTime = 3680,
+                MonochromeTones = 3691;
         }
 
         public static class Debuffs
@@ -118,6 +120,22 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (gauge.LandscapeMotifDrawn)
                         return OriginalHook(ScenicMuse);
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class CombinedPaint : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CombinedPaint;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID == HolyInWhite)
+                {
+                    if (HasEffect(Buffs.MonochromeTones))
+                        return CometinBlack;
                 }
 
                 return actionID;
