@@ -1,5 +1,4 @@
-﻿using FFXIVClientStructs.FFXIV.Client.Game;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data

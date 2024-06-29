@@ -13,7 +13,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
     internal abstract partial class CustomComboFunctions
     {
         /// <summary> Gets the current target or null. </summary>
-        public static GameObject? CurrentTarget => Service.TargetManager.Target;
+        public static IGameObject? CurrentTarget => Service.TargetManager.Target;
 
         /// <summary> Find if the player has a target. </summary>
         /// <returns> A value indicating whether the player has a target. </returns>
@@ -26,10 +26,10 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (CurrentTarget is null || LocalPlayer is null)
                 return 0;
 
-            if (CurrentTarget is not BattleChara chara)
+            if (CurrentTarget is not IBattleChara chara)
                 return 0;
 
-            if (CurrentTarget.ObjectId == LocalPlayer.ObjectId)
+            if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
                 return 0;
 
             Vector2 position = new(chara.Position.X, chara.Position.Z);
@@ -58,7 +58,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets a value indicating target's HP Percent. CurrentTarget is default unless specified </summary>
         /// <returns> Double indicating percentage. </returns>
-        public static float GetTargetHPPercent(GameObject? OurTarget = null)
+        public static float GetTargetHPPercent(IGameObject? OurTarget = null)
         {
             if (OurTarget is null)
             {
@@ -67,7 +67,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     return 0;
             }
 
-            return OurTarget is not BattleChara chara
+            return OurTarget is not IBattleChara chara
                 ? 0
                 : (float)chara.CurrentHp / chara.MaxHp * 100;
         }
@@ -76,7 +76,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (CurrentTarget is null)
                 return 0;
-            if (CurrentTarget is not BattleChara chara)
+            if (CurrentTarget is not IBattleChara chara)
                 return 0;
 
             return chara.MaxHp;
@@ -86,7 +86,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (CurrentTarget is null)
                 return 0;
-            if (CurrentTarget is not BattleChara chara)
+            if (CurrentTarget is not IBattleChara chara)
                 return 0;
 
             return chara.CurrentHp;
@@ -94,9 +94,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         public static float PlayerHealthPercentageHp() => (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 
-        public static bool HasBattleTarget() => CurrentTarget is BattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy or (BattleNpcSubKind)1 };
+        public static bool HasBattleTarget() => CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy or (BattleNpcSubKind)1 };
 
-        public static bool HasFriendlyTarget(GameObject? OurTarget = null)
+        public static bool HasFriendlyTarget(IGameObject? OurTarget = null)
         {
             if (OurTarget is null)
             {
@@ -110,7 +110,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (OurTarget.ObjectKind is ObjectKind.Player)
                 return true;
             //AI
-            if (OurTarget is BattleNpc) return (OurTarget as BattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
+            if (OurTarget is IBattleNpc) return (OurTarget as IBattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
             return false;
         }
 
@@ -118,10 +118,10 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
         /// <param name="checkMOPartyUI">Checks for a mouseover target.</param>
         /// <param name="restrictToMouseover">Forces only the mouseover target, may return null.</param>
-        /// <returns> GameObject of a player target. </returns>
-        public static unsafe GameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
+        /// <returns> IGameObject of a player target. </returns>
+        public static unsafe IGameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
         {
-            GameObject? healTarget = null;
+            IGameObject? healTarget = null;
             ITargetManager tm = Service.TargetManager;
             
             if (HasFriendlyTarget(tm.SoftTarget)) healTarget = tm.SoftTarget;
@@ -130,9 +130,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             if (checkMOPartyUI)
             {
                 StructsObject.GameObject* t = PartyTargetingService.UITarget;
-                if (t != null && t->ObjectID != 0)
+                if (t != null && t->GetGameObjectId().ObjectId != 0)
                 {
-                    GameObject? uiTarget =  Service.ObjectTable.Where(x => x.ObjectId == t->ObjectID).FirstOrDefault();
+                    IGameObject? uiTarget =  Service.ObjectTable.Where(x => x.GameObjectId == t->GetGameObjectId().ObjectId).FirstOrDefault();
                     if (uiTarget != null && HasFriendlyTarget(uiTarget)) healTarget = uiTarget;
 
                     if (restrictToMouseover)
@@ -152,7 +152,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (CurrentTarget is null)
                 return false;
-            if (CurrentTarget is not BattleChara chara)
+            if (CurrentTarget is not IBattleChara chara)
                 return false;
             if (chara.IsCasting)
                 return chara.IsCastInterruptible;
@@ -162,11 +162,11 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Sets the player's target. </summary>
         /// <param name="target"> Target must be a game object that the player can normally click and target. </param>
-        public static void SetTarget(GameObject? target) => Service.TargetManager.Target = target;
+        public static void SetTarget(IGameObject? target) => Service.TargetManager.Target = target;
 
         /// <summary> Checks if target is in appropriate range for targeting </summary>
         /// <param name="target"> The target object to check </param>
-        public static bool IsInRange(GameObject? target)
+        public static bool IsInRange(IGameObject? target)
         {
             if (target == null || target.YalmDistanceX >= 30)
                 return false;
@@ -187,20 +187,20 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             StructsObject.GameObject* t = GetTarget(target);
             if (t == null) return;
-            long o = PartyTargetingService.GetObjectID(t);
-            GameObject? p = Service.ObjectTable.Where(x => x.ObjectId == o).First();
+            ulong o = PartyTargetingService.GetObjectID(t);
+            IGameObject? p = Service.ObjectTable.Where(x => x.GameObjectId == o).First();
 
             if (IsInRange(p)) SetTarget(p);
         }
 
-        public static void TargetObject(GameObject? target)
+        public static void TargetObject(IGameObject? target)
         {
             if (IsInRange(target)) SetTarget(target);
         }
 
         public unsafe static StructsObject.GameObject* GetTarget(TargetType target)
         {
-            GameObject? o = null;
+            IGameObject? o = null;
 
             switch (target)
             {
@@ -278,7 +278,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (CurrentTarget is null || LocalPlayer is null)
                return 0;
-            if (CurrentTarget is not BattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+            if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
                 return 0;
 
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
@@ -311,7 +311,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (CurrentTarget is null || LocalPlayer is null)
                 return false;
-            if (CurrentTarget is not BattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+            if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
                 return false;
 
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
@@ -335,7 +335,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         {
             if (CurrentTarget is null || LocalPlayer is null)
                 return false;
-            if (CurrentTarget is not BattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+            if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
                 return false;
 
 
@@ -376,7 +376,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             }
         }
 
-        internal unsafe static bool OutOfRange(uint actionID, GameObject target) => ActionWatching.OutOfRange(actionID, (StructsObject.GameObject*)Service.ClientState.LocalPlayer.Address, (StructsObject.GameObject*)target.Address);
+        internal unsafe static bool OutOfRange(uint actionID, IGameObject target) => ActionWatching.OutOfRange(actionID, (StructsObject.GameObject*)Service.ClientState.LocalPlayer.Address, (StructsObject.GameObject*)target.Address);
 
     }
 }

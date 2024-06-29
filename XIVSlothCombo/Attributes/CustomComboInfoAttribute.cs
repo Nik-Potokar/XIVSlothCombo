@@ -100,9 +100,9 @@ namespace XIVSlothCombo.Attributes
                 //Job names are all lowercase by default. This capitalizes based on regional rules
                 string cultureID = Service.ClientState.ClientLanguage switch
                 {
-                    Dalamud.ClientLanguage.French => "fr-FR",
-                    Dalamud.ClientLanguage.Japanese => "ja-JP",
-                    Dalamud.ClientLanguage.German => "de-DE",
+                    Dalamud.Game.ClientLanguage.French => "fr-FR",
+                    Dalamud.Game.ClientLanguage.Japanese => "ja-JP",
+                    Dalamud.Game.ClientLanguage.German => "de-DE",
                     _ => "en-us",
                 };
                 TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;

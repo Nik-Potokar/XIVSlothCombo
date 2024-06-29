@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Dalamud.Game;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
@@ -18,7 +16,7 @@ namespace XIVSlothCombo.Data
         private const uint InvalidObjectID = 0xE000_0000;
 
         // Invalidate these
-        private readonly ConcurrentDictionary<(uint StatusID, uint? TargetID, uint? SourceID), DalamudStatus.Status?> statusCache = new();
+        private readonly ConcurrentDictionary<(uint StatusID, ulong? TargetID, ulong? SourceID), DalamudStatus.Status?> statusCache = new();
         private readonly ConcurrentDictionary<uint, CooldownData> cooldownCache = new();
 
         // Do not invalidate these
@@ -50,16 +48,16 @@ namespace XIVSlothCombo.Data
         /// <param name="obj"> Object to look for effects on. </param>
         /// <param name="sourceID"> Source object ID. </param>
         /// <returns> Status object or null. </returns>
-        internal DalamudStatus.Status? GetStatus(uint statusID, GameObject? obj, uint? sourceID)
+        internal DalamudStatus.Status? GetStatus(uint statusID, IGameObject? obj, ulong? sourceID)
         {
-            var key = (statusID, obj?.ObjectId, sourceID);
+            var key = (statusID, obj?.GameObjectId, sourceID);
             if (statusCache.TryGetValue(key, out DalamudStatus.Status? found))
                 return found;
 
             if (obj is null)
                 return statusCache[key] = null;
 
-            if (obj is not BattleChara chara)
+            if (obj is not IBattleChara chara)
                 return statusCache[key] = null;
 
             foreach (DalamudStatus.Status? status in chara.StatusList)
@@ -96,7 +94,7 @@ namespace XIVSlothCombo.Data
                 return cooldownCache[actionID] = data;
             }
 
-            cooldownPtr->ActionID = actionID;
+            cooldownPtr->ActionId = actionID;
 
             return cooldownCache[actionID] = *(CooldownData*)cooldownPtr;
         }
@@ -106,7 +104,7 @@ namespace XIVSlothCombo.Data
         /// <returns> Max number of charges at current and max level. </returns>
         internal unsafe (ushort Current, ushort Max) GetMaxCharges(uint actionID)
         {
-            PlayerCharacter? player = Service.ClientState.LocalPlayer;
+            IPlayerCharacter? player = Service.ClientState.LocalPlayer;
             if (player == null)
                 return (0, 0);
 

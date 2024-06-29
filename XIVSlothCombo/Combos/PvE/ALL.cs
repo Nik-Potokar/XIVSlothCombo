@@ -6,7 +6,7 @@ namespace XIVSlothCombo.Combos.PvE
 {
     internal class All
     {
-        public const byte JobID = 99;
+        public const byte JobID = 0;
 
         public const uint
             Rampart = 7531,

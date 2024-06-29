@@ -27,7 +27,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Finds an effect on the player. The effect must be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> Status object or null. </returns>
-        public static Status? FindEffect(ushort effectID) => FindEffect(effectID, LocalPlayer, LocalPlayer?.ObjectId);
+        public static Status? FindEffect(ushort effectID) => FindEffect(effectID, LocalPlayer, LocalPlayer?.GameObjectId);
 
         /// <summary> Find if an effect on the target exists. The effect must be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
@@ -37,7 +37,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Finds an effect on the current target. The effect must be owned by the player or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <returns> Status object or null. </returns>
-        public static Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.ObjectId);
+        public static Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 
         /// <summary></summary>
         public static float GetDebuffRemainingTime(ushort effectId)
@@ -71,13 +71,13 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="obj"> Object to look for effects on. </param>
         /// <param name="sourceID"> Source object ID. </param>
         /// <returns> Status object or null. </returns>
-        public static Status? FindEffect(ushort effectID, GameObject? obj, uint? sourceID) => Service.ComboCache.GetStatus(effectID, obj, sourceID);
+        public static Status? FindEffect(ushort effectID, IGameObject? obj, ulong? sourceID) => Service.ComboCache.GetStatus(effectID, obj, sourceID);
 
         ///<summary> Checks a member object for an effect. The effect may be owned by anyone or unowned. </summary>
         /// <param name="effectID"> Status effect ID. </param>
         /// <param name="obj"></param>
         /// <return> Status object or null. </return>
-        public static Status? FindEffectOnMember(ushort effectID, GameObject? obj) => Service.ComboCache.GetStatus(effectID, obj, null);
+        public static Status? FindEffectOnMember(ushort effectID, IGameObject? obj) => Service.ComboCache.GetStatus(effectID, obj, null);
 
         /// <summary> Returns the name of a status effect from its ID. </summary>
         /// <param name="id"> ID of the status. </param>
@@ -120,7 +120,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return false;
         }
 
-        public static bool TargetHasDamageDown(GameObject? target)
+        public static bool TargetHasDamageDown(IGameObject? target)
         {
             foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(62)))
             {
@@ -130,7 +130,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return false;
         }
 
-        public static bool TargetHasRezWeakness(GameObject? target)
+        public static bool TargetHasRezWeakness(IGameObject? target)
         {
             foreach (var status in ActionWatching.GetStatusesByName(GetStatusName(43)))
             {
@@ -145,10 +145,10 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         }
 
 
-        public static bool HasCleansableDebuff(GameObject? OurTarget = null)
+        public static bool HasCleansableDebuff(IGameObject? OurTarget = null)
         {
             OurTarget ??= CurrentTarget;
-            if (HasFriendlyTarget(OurTarget) && (OurTarget is BattleChara chara))
+            if (HasFriendlyTarget(OurTarget) && (OurTarget is IBattleChara chara))
             {
                 foreach (Status status in chara.StatusList)
                 {
