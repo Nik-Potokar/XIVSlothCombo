@@ -2180,7 +2180,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region PICTOMANCER
-        [ReplaceSkill(PCT.FireInRed)]
+        [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
         [CustomComboInfo("Combined Aetherhues Feature", "Combines aetherhue actions onto one button for their respective target types.", PCT.JobID)]
         CombinedAetherhues = 20000,
 
@@ -2189,7 +2189,7 @@ namespace XIVSlothCombo.Combos
         CombinedMotifs = 20001,
 
         [ReplaceSkill(PCT.HolyInWhite)]
-        [CustomComboInfo("One Button Paint", "Combines Paint actions into one button.", PCT.JobID)]
+        [CustomComboInfo("One Button Paint", "Combines paint consuming actions into one button.", PCT.JobID)]
         CombinedPaint = 20002,
 
         #endregion
