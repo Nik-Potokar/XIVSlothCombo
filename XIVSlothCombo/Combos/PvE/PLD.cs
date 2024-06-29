@@ -185,17 +185,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade &&
                                 RageOfHalone.LevelChecked())
                             {
-                                if (HasEffect(Buffs.SwordOath))
-                                    return Atonement;
-
-                                if (HasEffect(Buffs.SepulchreReady))
-                                    return Sepulchre;
-
-                                if (HasEffect(Buffs.SupplicationReady))
-                                    return Supplication;
-
+                                if (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
+                                    return OriginalHook(Atonement);
+                                
                                 return (HasEffect(Buffs.DivineMight) &&
-                                    GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                        GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     ? HolySpirit
                                     : OriginalHook(RageOfHalone);
                             }
@@ -389,7 +383,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                ActionReady(GoringBlade) && InMeleeRange())
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange())
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -417,8 +411,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolySpirit;
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                HasEffect(Buffs.SwordOath))
-                                return Atonement;
+                                (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)))
+                                return OriginalHook(Atonement);
                         }
 
                         // FoF (Starts burst)
