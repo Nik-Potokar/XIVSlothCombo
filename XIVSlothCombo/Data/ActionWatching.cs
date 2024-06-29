@@ -241,6 +241,14 @@ namespace XIVSlothCombo.Data
         public static int GetActionEffectRange(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.EffectRange : -1;
         public static int GetTraitLevel(uint id) => TraitSheet.TryGetValue(id, out var trait) ? trait.Level : 255;
         public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
+
+        public static string GetBLUIndex(uint id)
+        {
+            var aozKey = Svc.Data.GetExcelSheet<AozAction>()!.First(x => x.Action.Row == id).RowId;
+            var index = Svc.Data.GetExcelSheet<AozActionTransient>().GetRow(aozKey).Number;
+
+            return $"#{index} ";
+        }
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
         public static List<uint>? GetStatusesByName(string status)

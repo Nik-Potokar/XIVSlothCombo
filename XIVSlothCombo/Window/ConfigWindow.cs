@@ -7,6 +7,7 @@ using ECommons.ImGuiMethods;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
+using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace XIVSlothCombo.Window
             .ThenByDescending(tpl => tpl.Info.Role == 4)
             .ThenByDescending(tpl => tpl.Info.Role == 2)
             .ThenByDescending(tpl => tpl.Info.Role == 3)
+            .ThenBy(tpl => tpl.Info.ClassJobCategory)
             .ThenBy(tpl => tpl.Info.JobName)
             .ThenBy(tpl => tpl.Info.Order)
             .GroupBy(tpl => tpl.Info.JobName)
