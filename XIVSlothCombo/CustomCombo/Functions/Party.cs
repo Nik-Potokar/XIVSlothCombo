@@ -14,7 +14,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> Current party list. </returns>
         public static IPartyList GetPartyMembers() => Service.PartyList;
 
-        public unsafe static GameObject? GetPartySlot(int slot)
+        public unsafe static IGameObject? GetPartySlot(int slot)
         {
             try
             {

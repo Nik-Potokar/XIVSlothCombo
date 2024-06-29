@@ -48,7 +48,7 @@ namespace XIVSlothCombo.Data
         /// <param name="obj"> Object to look for effects on. </param>
         /// <param name="sourceID"> Source object ID. </param>
         /// <returns> Status object or null. </returns>
-        internal DalamudStatus.Status? GetStatus(uint statusID, GameObject? obj, ulong? sourceID)
+        internal DalamudStatus.Status? GetStatus(uint statusID, IGameObject? obj, ulong? sourceID)
         {
             var key = (statusID, obj?.GameObjectId, sourceID);
             if (statusCache.TryGetValue(key, out DalamudStatus.Status? found))
@@ -57,7 +57,7 @@ namespace XIVSlothCombo.Data
             if (obj is null)
                 return statusCache[key] = null;
 
-            if (obj is not BattleChara chara)
+            if (obj is not IBattleChara chara)
                 return statusCache[key] = null;
 
             foreach (DalamudStatus.Status? status in chara.StatusList)
@@ -104,7 +104,7 @@ namespace XIVSlothCombo.Data
         /// <returns> Max number of charges at current and max level. </returns>
         internal unsafe (ushort Current, ushort Max) GetMaxCharges(uint actionID)
         {
-            PlayerCharacter? player = Service.ClientState.LocalPlayer;
+            IPlayerCharacter? player = Service.ClientState.LocalPlayer;
             if (player == null)
                 return (0, 0);
 

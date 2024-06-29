@@ -282,7 +282,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is DeploymentTactics && ActionReady(DeploymentTactics))
                 {
                     //Grab our target (Soft->Hard->Self)
-                    GameObject? healTarget = GetHealTarget(Config.SCH_DeploymentTactics_Adv && Config.SCH_DeploymentTactics_UIMouseOver);
+                    IGameObject? healTarget = GetHealTarget(Config.SCH_DeploymentTactics_Adv && Config.SCH_DeploymentTactics_UIMouseOver);
 
                     //Check for the Galvanize shield buff. Start applying if it doesn't exist
                     if (FindEffect(Buffs.Galvanize, healTarget, LocalPlayer.GameObjectId) is null)
@@ -549,7 +549,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     //Grab our target (Soft->Hard->Self)
-                    GameObject? healTarget = GetHealTarget(Config.SCH_ST_Heal_Adv && Config.SCH_ST_Heal_UIMouseOver);
+                    IGameObject? healTarget = GetHealTarget(Config.SCH_ST_Heal_Adv && Config.SCH_ST_Heal_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Esuna) && ActionReady(All.Esuna) &&
                         GetTargetHPPercent(healTarget) >= Config.SCH_ST_Heal_EsunaOption &&

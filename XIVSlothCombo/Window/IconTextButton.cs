@@ -1,5 +1,6 @@
 ﻿using Dalamud.Interface;
 using Dalamud.Interface.Internal;
+using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System.Numerics;
