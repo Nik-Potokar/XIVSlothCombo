@@ -22,7 +22,7 @@ namespace XIVSlothCombo.Core
         {
             ComboTimer = new IntPtr(&ActionManager.Instance()->Combo.Timer);
 
-            //IsActionIdReplaceable = scanner.ScanText("E8 ?? ?? ?? ?? 84 C0 74 4C 8B D3");
+            IsActionIdReplaceable = scanner.ScanText("40 53 48 83 EC 20 8B D9 48 8B 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 85 C0 74 1F");
 
             Service.PluginLog.Verbose("===== X I V S L O T H C O M B O =====");
             Service.PluginLog.Verbose($"{nameof(IsActionIdReplaceable)} 0x{IsActionIdReplaceable:X}");
