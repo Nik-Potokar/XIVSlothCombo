@@ -2536,7 +2536,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region PvP VALUES
 
-            PlayerCharacter? pc = Service.ClientState.LocalPlayer;
+            IPlayerCharacter? pc = Service.ClientState.LocalPlayer;
 
             if (preset == CustomComboPreset.PvP_EmergencyHeals)
             {
