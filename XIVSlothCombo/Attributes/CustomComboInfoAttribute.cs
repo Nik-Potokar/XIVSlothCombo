@@ -49,10 +49,20 @@ namespace XIVSlothCombo.Attributes
         /// <summary> Gets the job role. </summary>
         public int Role => JobIDToRole(JobID);
 
+        public uint ClassJobCategory => JobIDToClassJobCategory(JobID);
+
         private int JobIDToRole(byte jobID)
         {
             if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
                 return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).Role;
+
+            return 0;
+        }
+
+        private uint JobIDToClassJobCategory(byte jobID)
+        {
+            if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
+                return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Row;
 
             return 0;
         }
