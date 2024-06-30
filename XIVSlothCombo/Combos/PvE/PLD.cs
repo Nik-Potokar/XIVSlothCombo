@@ -38,9 +38,10 @@ namespace XIVSlothCombo.Combos.PvE
             BladeOfValor = 25750,
             FightOrFlight = 20,
             Atonement = 16460,
-            Supplication = 36918, // Second Atonement
-            Sepulchre = 36919, // Third Atonement
+            //Supplication = 36918, // Second Atonement
+            //Sepulchre = 36919, // Third Atonement
             Intervene = 16461,
+            //BladeOfHonor = 36922,
             Sheltron = 3542;
 
         public static class Buffs
@@ -51,6 +52,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SupplicationReady = 3827, //Second Atonement buff
                 SepulchreReady = 3828, // Third Atonement buff
                 GoringBladeReady = 3847, //Goring Blade Buff after use of FoF
+                BladeOfHonor = 3831, // BladeOfHonor Buff after Confitiour Combo. (oGCD)
                 FightOrFlight = 76,
                 ConfiteorReady = 3019,
                 DivineMight = 2673,
@@ -123,7 +125,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Requiescat inside burst (checking for FoF buff causes a late weave and can misalign over long fights with some ping)
                         if (CanWeave(actionID) && (WasLastAbility(FightOrFlight) || JustUsed(FightOrFlight, 6f)) && ActionReady(Requiescat))
-                            return Requiescat;
+                            return OriginalHook(Requiescat);
 
                         // Actions under FoF burst
                         if (HasEffect(Buffs.FightOrFlight))
@@ -150,6 +152,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
                             }
+                            
+                            // New Spell after Confi Combo (Weave)
+                            if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor))
+                                return OriginalHook(Requiescat);
 
                             // HS under DM
                             if (HasEffect(Buffs.DivineMight) &&
@@ -229,7 +235,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Requiescat inside burst (checking for FoF buff causes a late weave and can misalign over long fights with some ping)
                     if (CanWeave(actionID) && (WasLastAbility(FightOrFlight) || JustUsed(FightOrFlight, 6f)) && ActionReady(Requiescat))
-                        return Requiescat;
+                        return OriginalHook(Requiescat);
 
                     // Actions under FoF burst
                     if (HasEffect(Buffs.FightOrFlight))
@@ -353,7 +359,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if ((Config.PLD_ST_RequiescatWeave == 0 && CanWeave(actionID) ||
                                 (Config.PLD_ST_RequiescatWeave == 1 && CanDelayedWeave(actionID, 2.0, 0.6)))) // These weave timings make no sense but they work for some reason
-                                return Requiescat;
+                                return OriginalHook(Requiescat);
                         }
 
                         // Actions under FoF burst
@@ -403,6 +409,10 @@ namespace XIVSlothCombo.Combos.PvE
                                     GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
                             }
+                            
+                            // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
+                            if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
+                                return OriginalHook(Requiescat);
 
                             // HS under DM
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
@@ -435,7 +445,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SpiritsWithin);
                         }
 
-                        // Goring on cooldown (burst features disabled)
+                        // Goring on cooldown (burst features disabled) -- Goring Blade is only available with FoF
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             ActionReady(GoringBlade) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
