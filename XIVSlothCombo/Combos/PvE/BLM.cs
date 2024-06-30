@@ -44,12 +44,16 @@ namespace XIVSlothCombo.Combos.PvE
             HighFire2 = 25794,
             HighBlizzard2 = 25795,
             Amplifier = 25796,
-            Paradox = 25797;
+            Paradox = 25797,
+            HighThunder = 36986,
+            HighThunder2 = 36987,
+            Retrace = 36988,
+            FlareStar = 36989; 
 
         public static class Buffs
         {
             public const ushort
-                Thundercloud = 164,
+                Thundercloud = 3870, // now named thunderhead
                 Firestarter = 165,
                 LeyLines = 737,
                 CircleOfPower = 738,
