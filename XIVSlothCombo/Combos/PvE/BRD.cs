@@ -40,12 +40,14 @@ namespace XIVSlothCombo.Combos.PvE
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
-            RadiantFinale = 25785;
+            RadiantFinale = 25785,
+            ResonantArrow = 36976,
+            RadiantEncore = 36977;
 
         public static class Buffs
         {
             public const ushort
-                StraightShotReady = 122,
+                StraightShotReady = 3861, //now called hawk's eye
                 RagingStrikes = 125,
                 Barrage = 128,
                 MagesBallad = 135,
@@ -55,7 +57,9 @@ namespace XIVSlothCombo.Combos.PvE
                 Troubadour = 1934,
                 BlastArrowReady = 2692,
                 RadiantFinale = 2722,
-                ShadowbiteReady = 3002;
+                ShadowbiteReady = 3861, //requires hawk's eye buff
+                ResonantArrowReady = 3862,
+                RadiantEncoreReady = 3863;
         }
 
         public static class Debuffs
