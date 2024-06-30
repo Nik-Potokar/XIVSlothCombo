@@ -259,7 +259,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanSpellWeave(actionID))
                     {
-                        if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && (!LevelChecked(SummonSolarBahamut) && OriginalHook(Ruin) is AstralImpulse || OriginalHook(Ruin) is UmbralImpulse))
+                        if (IsOffCooldown(SearingLight) && LevelChecked(SearingLight) && ((!LevelChecked(SummonSolarBahamut) && OriginalHook(Ruin) is AstralImpulse) || OriginalHook(Ruin) is UmbralImpulse))
                             return SearingLight;
 
                         if (!gauge.HasAetherflowStacks && IsOffCooldown(EnergyDrain))
@@ -440,7 +440,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.SMN_SearingLight_Burst))
                             {
-                                if ((SummonerBurstPhase is 0 or 1 && OriginalHook(Ruin) is AstralImpulse or UmbralImpulse) ||
+                                if (SummonerBurstPhase is 0 or 1 && ((!LevelChecked(SummonSolarBahamut) && OriginalHook(Ruin) is AstralImpulse) || OriginalHook(Ruin) is UmbralImpulse) ||
                                     (SummonerBurstPhase == 2 && OriginalHook(Ruin) == FountainOfFire) ||
                                     (SummonerBurstPhase == 3 && OriginalHook(Ruin) is AstralImpulse or UmbralImpulse or FountainOfFire) ||
                                     (SummonerBurstPhase == 4))
@@ -449,7 +449,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return SearingLight;
                                 }
                             }
-                            return SearingLight;
+                            else return SearingLight;
                         }
 
                         // Emergency priority Demi Nuke to prevent waste if you can't get demi attacks out to satisfy the slider check.
@@ -587,7 +587,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons))
                     {
                         if (gauge.SummonTimerRemaining == 0 && IsOffCooldown(OriginalHook(Aethercharge)) &&
-                            ((LevelChecked(Aethercharge) && !LevelChecked(SummonBahamut)) ||   // Pre-Bahamut Phase
+                            ((LevelChecked(Aethercharge) && !LevelChecked(SummonBahamut) && InCombat()) ||   // Pre-Bahamut Phase
                              (IsBahamutReady && LevelChecked(SummonBahamut)) ||            // Bahamut Phase
                              (IsPhoenixReady && LevelChecked(SummonPhoenix)) ||            // Phoenix Phase
                              (IsSolarBahamutReady && LevelChecked(SummonSolarBahamut))))   // Solar Bahamut Phase
