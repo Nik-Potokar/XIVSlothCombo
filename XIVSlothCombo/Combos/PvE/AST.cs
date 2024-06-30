@@ -28,9 +28,11 @@ namespace XIVSlothCombo.Combos.PvE
             Gravity2 = 25872,
 
             //Cards
-            Draw = 3590,
-            Play = 17055,
-            Redraw = 3593,
+            AstralDraw = 37017,
+            UmbralDraw = 37018,
+            Play1 = 37019,
+            Play2 = 37020,
+            Play3 = 37021,
             //Obsolete? Left just incase it's needed
             Balance = 4401,
             Bole = 4404,
@@ -46,6 +48,9 @@ namespace XIVSlothCombo.Combos.PvE
             //Utility
             Divination = 16552,
             Lightspeed = 3606,
+            Oracle = 37029,
+            NeutralSect = 16559,
+            SunSign = 37031,
 
             //DoT
             Combust = 3599,
@@ -58,6 +63,7 @@ namespace XIVSlothCombo.Combos.PvE
             AspectedBenefic = 3595,
             Helios = 3600,
             AspectedHelios = 3601,
+            HeliosConjunction = 37030,
             Ascend = 3603,
             EssentialDignity = 3614,
             CelestialOpposition = 16553,
