@@ -76,6 +76,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Text($"Landscape: {pctGauge.LandscapeMotifDrawn}");
                 ImGui.Text($"Moogle Potrait: {pctGauge.MooglePortraitReady}");
 
+                ImGui.Text($"{CustomComboFunctions.GetCooldown(CustomComboFunctions.OriginalHook(PCT.FireInRed)).CooldownRemaining}");
             }
 
             else

@@ -2,6 +2,7 @@
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -77,17 +78,22 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireInRed)
                 {
                     TmpPCTGauge gauge = new TmpPCTGauge();
+                    bool canWeave = CanWeave(OriginalHook(FireInRed));
 
-                    if (!gauge.CreatureMotifDrawn && HasCharges(LivingMuse))
+                    if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn && (HasCharges(LivingMuse) || GetCooldownChargeRemainingTime(LivingMuse) <= GetActionCastTime(OriginalHook(CreatureMotif))))
                         return OriginalHook(CreatureMotif);
 
-                    if (!gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)))
+                    if (WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= GetActionCastTime(OriginalHook(WeaponMotif))))
                         return OriginalHook(WeaponMotif);
 
-                    if (!gauge.LandscapeMotifDrawn && GetCooldownRemainingTime(ScenicMuse) <= GetActionCastTime(OriginalHook(LandscapeMotif)))
+                    if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && GetCooldownRemainingTime(ScenicMuse) <= GetActionCastTime(OriginalHook(LandscapeMotif)))
                         return OriginalHook(LandscapeMotif);
 
+                    if (MogoftheAges.LevelChecked() && gauge.MooglePortraitReady && IsOffCooldown(OriginalHook(MogoftheAges)) && canWeave)
+                        return OriginalHook(MogoftheAges);
 
+                    if (gauge.CreatureMotifDrawn && HasCharges(OriginalHook(LivingMuse)) && canWeave)
+                        return OriginalHook(LivingMuse);
 
                 }
                 return actionID;
