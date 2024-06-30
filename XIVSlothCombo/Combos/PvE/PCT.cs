@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.CustomComboNS;
+﻿using Lumina.Excel.GeneratedSheets;
+using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 
@@ -64,6 +65,43 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
                 CombinedMotifsWeapon = new("CombinedMotifsWeapon");
+        }
+
+
+        internal class PCT_ST_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_ST_SimpleMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is FireInRed)
+                {
+                    TmpPCTGauge gauge = new TmpPCTGauge();
+
+                    if (!gauge.CreatureMotifDrawn && HasCharges(LivingMuse))
+                        return OriginalHook(CreatureMotif);
+
+                    if (!gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)))
+                        return OriginalHook(WeaponMotif);
+
+                    if (!gauge.LandscapeMotifDrawn && GetCooldownRemainingTime(ScenicMuse) <= GetActionCastTime(OriginalHook(LandscapeMotif)))
+                        return OriginalHook(LandscapeMotif);
+
+
+
+                }
+                return actionID;
+            }
+        }
+
+        internal class PCT_AoE_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_AoE_SimpleMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                return actionID;
+            }
         }
 
         internal class CombinedAetherhues : CustomCombo
