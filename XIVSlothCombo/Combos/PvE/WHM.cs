@@ -29,12 +29,15 @@ namespace XIVSlothCombo.Combos.PvE
             AfflatusMisery = 16535,
             Medica1 = 124,
             Medica2 = 133,
+            Medica3 = 37010,
             Tetragrammaton = 3570,
             DivineBenison = 7432,
             Aquaveil = 25861,
+            DivineCaress = 37011
             // DPS
             Glare1 = 16533,
             Glare3 = 25859,
+            Glare4 = 37009,
             Stone1 = 119,
             Stone2 = 127,
             Stone3 = 3568,
@@ -60,10 +63,12 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
             Regen = 158,
             Medica2 = 150,
+            Medica3 = 3880,
             PresenceOfMind = 157,
             ThinAir = 1217,
             DivineBenison = 1218,
-            Aquaveil = 2708;
+            Aquaveil = 2708,
+            DivineGrace = 3881;
         }
 
         public static class Debuffs
