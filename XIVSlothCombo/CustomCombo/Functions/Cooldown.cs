@@ -50,7 +50,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Get the current number of charges remaining for an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> Number of charges. </returns>
-        public static uint GetRemainingCharges(uint actionID) => GetCooldown(actionID).RemainingCharges;
+        public static ushort GetRemainingCharges(uint actionID) => GetCooldown(actionID).RemainingCharges;
 
         /// <summary> Get the maximum number of charges for an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>

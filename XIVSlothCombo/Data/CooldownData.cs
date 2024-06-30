@@ -1,55 +1,114 @@
-﻿using FFXIVClientStructs.FFXIV.Client.Game;
+﻿using System.Runtime.InteropServices;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
 {
-    internal class CooldownData
+    /// <summary> Internal cooldown data. </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    internal struct CooldownData
     {
+        [FieldOffset(0x0)]
+        private readonly bool isCooldown;
+
+        [FieldOffset(0x4)]
+        private readonly uint actionID;
+
+        [FieldOffset(0x8)]
+        private readonly float cooldownElapsed;
+
+        [FieldOffset(0xC)]
+        private float cooldownTotal;
+
         /// <summary> Gets a value indicating whether the action is on cooldown. </summary>
-        public bool IsCooldown
+        public readonly bool IsCooldown
         {
             get
             {
-                return RemainingCharges == MaxCharges
-                    ? false
-                    : CooldownElapsed < CooldownTotal;
+                var (cur, max) = Service.ComboCache.GetMaxCharges(ActionID);
+                return cur == max
+                    ? isCooldown
+                    : cooldownElapsed < CooldownTotal;
             }
         }
 
         /// <summary> Gets the action ID on cooldown. </summary>
-        public uint ActionID;
+        public readonly uint ActionID => actionID;
 
         /// <summary> Gets the elapsed cooldown time. </summary>
-        public unsafe float CooldownElapsed => ActionManager.Instance()->GetRecastGroupDetail(ActionManager.Instance()->GetRecastGroup(1, ActionID))->Elapsed;
+        public readonly float CooldownElapsed
+        {
+            get
+            {
+                if (cooldownElapsed == 0)
+                    return 0;
+
+                if (cooldownElapsed > CooldownTotal)
+                    return 0;
+
+                return cooldownElapsed;
+            }
+        }
 
         /// <summary> Gets the total cooldown time. </summary>
-        public unsafe float CooldownTotal => (ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f) * MaxCharges;
+        public float CooldownTotal
+        {
+            readonly get
+            {
+                if (cooldownTotal == 0)
+                    return 0;
+
+                var (cur, max) = Service.ComboCache.GetMaxCharges(ActionID);
+
+                if (cur == max)
+                    return cooldownTotal;
+
+                // Rebase to the current charge count
+                float total = cooldownTotal / max * cur;
+
+                return cooldownElapsed > total
+                    ? 0
+                    : total;
+            }
+            set
+            {
+                cooldownTotal = value;
+            }
+        }
 
         /// <summary> Gets the cooldown time remaining. </summary>
-        public unsafe float CooldownRemaining => CooldownTotal - CooldownElapsed;
+        public readonly float CooldownRemaining => IsCooldown ? CooldownTotal - CooldownElapsed : 0;
 
         /// <summary> Gets the maximum number of charges for an action at the current level. </summary>
         /// <returns> Number of charges. </returns>
-        public ushort MaxCharges => Service.ComboCache.GetMaxCharges(ActionID);
+        public readonly ushort MaxCharges => Service.ComboCache.GetMaxCharges(ActionID).Current;
 
         /// <summary> Gets a value indicating whether the action has charges, not charges available. </summary>
-        public bool HasCharges => MaxCharges > 1;
+        public readonly bool HasCharges => MaxCharges > 1;
 
         /// <summary> Gets the remaining number of charges for an action. </summary>
-        public unsafe uint RemainingCharges => ActionManager.Instance()->GetCurrentCharges(ActionID);
+        public readonly ushort RemainingCharges
+        {
+            get
+            {
+                var (cur, _) = Service.ComboCache.GetMaxCharges(ActionID);
+
+                return !IsCooldown
+                    ? cur
+                    : (ushort)(CooldownElapsed / (CooldownTotal / MaxCharges));
+            }
+        }
 
         /// <summary> Gets the cooldown time remaining until the next charge. </summary>
-        public float ChargeCooldownRemaining
+        public readonly float ChargeCooldownRemaining
         {
             get
             {
                 if (!IsCooldown)
                     return 0;
 
-                var maxCharges = ActionManager.GetMaxCharges(ActionID, 100);
-                var timePerCharge = CooldownTotal / maxCharges;
+                var (cur, _) = Service.ComboCache.GetMaxCharges(ActionID);
 
-                return CooldownRemaining % (CooldownTotal / MaxCharges);
+                return CooldownRemaining % (CooldownTotal / cur);
             }
         }
     }

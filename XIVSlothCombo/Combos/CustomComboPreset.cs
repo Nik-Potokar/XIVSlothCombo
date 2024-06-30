@@ -2179,31 +2179,6 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region PICTOMANCER
-        [ReplaceSkill(PCT.FireInRed)]
-        [ConflictingCombos(CombinedAetherhues)]
-        [CustomComboInfo("Simple Mode - Single Target", $"Replaces Fire in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID)]
-        PCT_ST_SimpleMode = 20000,
-
-        [ReplaceSkill(PCT.FireIIinRed)]
-        [ConflictingCombos(CombinedAetherhues)]
-        [CustomComboInfo("Simple Mode - AoE", $"Replaces Fire II in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID)]
-        PCT_AoE_SimpleMode = 20001,
-
-        [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
-        [CustomComboInfo("Combined Aetherhues Feature", "Combines aetherhue actions onto one button for their respective target types.", PCT.JobID)]
-        CombinedAetherhues = 20002,
-
-        [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
-        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button.", PCT.JobID)]
-        CombinedMotifs = 20003,
-
-        [ReplaceSkill(PCT.HolyInWhite)]
-        [CustomComboInfo("One Button Paint", "Combines paint consuming actions into one button.", PCT.JobID)]
-        CombinedPaint = 20004,
-
-        #endregion
-
         #region PALADIN
 
         //// Last value = 11032

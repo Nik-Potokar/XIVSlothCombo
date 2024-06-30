@@ -654,7 +654,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
-                            uint bloodletterCharges = GetRemainingCharges(Bloodletter);
+                            ushort bloodletterCharges = GetRemainingCharges(Bloodletter);
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && LevelChecked(WanderersMinuet))
                             {
