@@ -34,11 +34,13 @@ namespace XIVSlothCombo.Combos.PvE
             TechnicalFinish2 = 16194,
             TechnicalFinish3 = 16195,
             TechnicalFinish4 = 16196,
+            FinishingMove = 36984,
             // Fan Dances
             FanDance1 = 16007,
             FanDance2 = 16008,
             FanDance3 = 16009,
             FanDance4 = 25791,
+            DanceoftheDawn = 36985,
             // Other
             Peloton = 7557,
             SaberDance = 16005,
@@ -69,9 +71,11 @@ namespace XIVSlothCombo.Combos.PvE
                 TechnicalStep = 1819,
                 StandardFinish = 1821,
                 TechnicalFinish = 1822,
+                FinishingMoveReady = 3868,
                 // Fan Dances
                 ThreeFoldFanDance = 1820,
                 FourFoldFanDance = 2699,
+                DanceoftheDawnReady = 3869,
                 // Other
                 Peloton = 1199,
                 ShieldSamba = 1826;
