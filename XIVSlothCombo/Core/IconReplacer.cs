@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Dalamud.Hooking;
-using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using XIVSlothCombo.CustomComboNS;
@@ -15,6 +14,7 @@ namespace XIVSlothCombo.Core
     internal sealed partial class IconReplacer : IDisposable
     {
         private readonly List<CustomCombo> customCombos;
+        private readonly Hook<IsIconReplaceableDelegate> isIconReplaceableHook;
         private readonly Hook<GetIconDelegate> getIconHook;
 
         private IntPtr actionManager = IntPtr.Zero;
@@ -31,8 +31,13 @@ namespace XIVSlothCombo.Core
                 .ToList();
 
             getIconHook = Service.GameInteropProvider.HookFromAddress<GetIconDelegate>((nint)ActionManager.Addresses.GetAdjustedActionId.Value, GetIconDetour);
+            isIconReplaceableHook = Service.GameInteropProvider.HookFromAddress<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
+
             getIconHook.Enable();
+            isIconReplaceableHook.Enable();
         }
+
+        private delegate ulong IsIconReplaceableDelegate(uint actionID);
 
         private delegate uint GetIconDelegate(IntPtr actionManager, uint actionID);
 
@@ -40,6 +45,7 @@ namespace XIVSlothCombo.Core
         public void Dispose()
         {
             getIconHook?.Dispose();
+            isIconReplaceableHook?.Dispose();
         }
 
         /// <summary> Calls the original hook. </summary>
@@ -56,9 +62,9 @@ namespace XIVSlothCombo.Core
                 if (Service.ClientState.LocalPlayer == null)
                     return OriginalHook(actionID);
 
-                if (ClassLocked() || 
-                    (DisabledJobsPVE.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && !Service.ClientState.IsPvP) || 
-                    (DisabledJobsPVP.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && Service.ClientState.IsPvP)) 
+                if (ClassLocked() ||
+                    (DisabledJobsPVE.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && !Service.ClientState.IsPvP) ||
+                    (DisabledJobsPVP.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && Service.ClientState.IsPvP))
                     return OriginalHook(actionID);
 
                 uint lastComboMove = *(uint*)Service.Address.LastComboMove;
