@@ -26,7 +26,7 @@ namespace XIVSlothCombo.Data
         public unsafe float CooldownTotal => (ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f) * MaxCharges;
 
         /// <summary> Gets the cooldown time remaining. </summary>
-        public unsafe float CooldownRemaining => CooldownTotal - CooldownElapsed;
+        public unsafe float CooldownRemaining => IsCooldown ? CooldownTotal - CooldownElapsed : 0;
 
         /// <summary> Gets the maximum number of charges for an action at the current level. </summary>
         /// <returns> Number of charges. </returns>
