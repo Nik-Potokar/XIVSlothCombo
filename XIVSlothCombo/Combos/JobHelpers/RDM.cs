@@ -9,7 +9,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         static float GetBuffRemainingTime(ushort effectid) => CustomComboFunctions.GetBuffRemainingTime(effectid);
         static bool LevelChecked(uint id) => CustomComboFunctions.LevelChecked(id);
         static float GetActionCastTime(uint actionID) => CustomComboFunctions.GetActionCastTime(actionID);
-        static ushort GetRemainingCharges(uint actionID) => CustomComboFunctions.GetRemainingCharges(actionID);
+        static uint GetRemainingCharges(uint actionID) => CustomComboFunctions.GetRemainingCharges(actionID);
         static float GetCooldownRemainingTime(uint actionID) => CustomComboFunctions.GetCooldownRemainingTime(actionID);
         static bool ActionReady(uint id) => CustomComboFunctions.ActionReady(id);
         static bool CanSpellWeave(uint id) => CustomComboFunctions.CanSpellWeave(id);
