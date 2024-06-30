@@ -3356,11 +3356,15 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(SMN_Advanced_Combo)]
         [CustomComboInfo("Searing Light Combo Option", "Adds Searing Light to the single target and AoE combos.\nWill be used on cooldown.", SMN.JobID, 9, "", "")]
-        SMN_SearingLight = 17018,
+        SMN_SearingLight = 17017,
 
         [ParentCombo(SMN_SearingLight)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Demi phases.\nReflects Demi choice selected under 'Pooled oGCDs Option'.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
-        SMN_SearingLight_Burst = 170181, // Genesis, why must you be like this -K
+        SMN_SearingLight_Burst = 17018,
+        
+        [ParentCombo(SMN_SearingLight)]
+        [CustomComboInfo("Searing Flash Combo Option", "Adds Searing Flash to the single target and AoE combos.", SMN.JobID, 1, "", "")]
+        SMN_SearingFlash = 17019,
 
         [ParentCombo(SMN_Advanced_Combo)]
         [CustomComboInfo("Demi Summons Combo Option", "Adds Demi summons to the single target and AoE combos.", SMN.JobID, 10, "", "")]
