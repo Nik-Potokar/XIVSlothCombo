@@ -40,6 +40,7 @@ namespace XIVSlothCombo.Combos.PvE
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
+            HeartbreakShot = 36975, //bloodletter upgrade
             RadiantFinale = 25785,
             ResonantArrow = 36976,
             RadiantEncore = 36977;
