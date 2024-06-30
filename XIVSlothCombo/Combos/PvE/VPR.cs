@@ -69,7 +69,6 @@ namespace XIVSlothCombo.Combos.PvE
                 VPR_NoxiousRefreshRange = new("VPR_NoxiousRefreshRange"),
                 VPR_ST_SecondWind_Threshold = new("VPR_STSecondWindThreshold"),
                 VPR_ST_Bloodbath_Threshold = new("VPR_STBloodbathThreshold");
-
         }
 
         internal class VPR_ST_AdvancedMode : CustomCombo
@@ -96,9 +95,37 @@ namespace XIVSlothCombo.Combos.PvE
                         LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
                         return WrithingSnap;
 
-                    if (IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
-                        ActionReady(Dreadwinder) && comboTime is 0.0f && HasEffect(Buffs.Swiftscaled))
-                        return Dreadwinder;
+                    if (TargetHasEffect(Debuffs.NoxiousGnash))
+                    {
+                        if (IsEnabled(CustomComboPreset.VPR_ST_CDs))
+                        {
+                            //Serpents Ire usage
+                            if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
+                                ActionReady(SerpentsIre) && CanWeave(actionID))
+                                return SerpentsIre;
+
+                            // Dreadwinder usage
+                            if (IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder))
+                            {
+                                // Twinbites hunters coil combo
+                                if (WasLastWeaponskill(HuntersCoil) || WasLastWeaponskill(SwiftskinsCoil))
+                                {
+                                    if (HasEffect(Buffs.HuntersVenom))
+                                        return OriginalHook(Twinfang);
+
+                                    if (HasEffect(Buffs.SwiftskinsVenom))
+                                        return OriginalHook(Twinblood);
+                                }
+
+                                if (WasLastWeaponskill(Dreadwinder) && ActionReady(HuntersCoil))
+                                    return OriginalHook(HuntersCoil);
+
+                                if (WasLastWeaponskill(HuntersCoil))
+                                    return OriginalHook(SwiftskinsCoil);
+                            }
+                        }
+                    }
+
 
                     // healing
                     if (IsEnabled(CustomComboPreset.VPR_ST_ComboHeals))
@@ -111,52 +138,46 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //1-2-3 (4-5-6) Combo
-                    if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) &&
-                        CanWeave(actionID) && LevelChecked(SerpentsTail) &&
-                        (lastComboMove is HindstingStrike or HindsbaneFang or FlankstingStrike or FlanksbaneFang))
-                        return OriginalHook(SerpentsTail);
-
-                    if (GetBuffRemainingTime(Buffs.Swiftscaled) < 10 ||
-                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) <= NoxiousRefreshRange)
-                        return OriginalHook(DreadFangs);
-
-                    if (GetBuffRemainingTime(Buffs.HuntersInstinct) < 10 ||
-                        (GetBuffRemainingTime(Buffs.Swiftscaled) > 10 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) > NoxiousRefreshRange))
-                        return OriginalHook(SteelFangs);
-
                     if (comboTime > 0)
                     {
-                        if (LevelChecked(SwiftskinsSting) &&
-                            (lastComboMove is DreadFangs or SteelFangs) &&
-                            (HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom)))
-                            return OriginalHook(DreadFangs);
-
-                        if (lastComboMove is SwiftskinsSting && LevelChecked(HindstingStrike))
+                        if (lastComboMove is DreadFangs or SteelFangs)
                         {
-                            if (HasEffect(Buffs.HindstungVenom))
+                            if (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom))
                                 return OriginalHook(SteelFangs);
 
-                            if (HasEffect(Buffs.HindsbaneVenom))
-                                return OriginalHook(DreadFangs);
-
-                            if (!HasEffect(Buffs.HindsbaneVenom) && !HasEffect(Buffs.HindstungVenom))
+                            if (HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom))
                                 return OriginalHook(DreadFangs);
                         }
 
-                        if (LevelChecked(HuntersSting) &&
-                            (lastComboMove is DreadFangs or SteelFangs) &&
-                            (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)))
-                            return OriginalHook(SteelFangs);
-
-                        if (lastComboMove is HuntersSting && LevelChecked(FlankstingStrike))
+                        if (lastComboMove is HuntersSting or SwiftskinsSting)
                         {
-                            if (HasEffect(Buffs.FlankstungVenom))
+                            if (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.HindstungVenom))
                                 return OriginalHook(SteelFangs);
 
-                            if (HasEffect(Buffs.FlanksbaneVenom))
+                            if (HasEffect(Buffs.FlanksbaneVenom) || HasEffect(Buffs.HindsbaneVenom))
+                                return OriginalHook(DreadFangs);
+                        }
+
+                        if (lastComboMove is HindstingStrike or HindsbaneFang or FlankstingStrike or FlanksbaneFang)
+                        {
+                            if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) &&
+                                CanWeave(actionID) && LevelChecked(SerpentsTail))
+                                return OriginalHook(SerpentsTail);
+
+                            if (GetBuffRemainingTime(Buffs.Swiftscaled) < 10 ||
+                                (GetDebuffRemainingTime(Debuffs.NoxiousGnash) <= NoxiousRefreshRange))
                                 return OriginalHook(DreadFangs);
 
-                            if (!HasEffect(Buffs.FlankstungVenom) && !HasEffect(Buffs.FlanksbaneVenom))
+                            if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) &&
+                                ActionReady(UncoiledFury))
+                                return UncoiledFury;
+
+                            if (IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
+                                ActionReady(Dreadwinder))
+                                return Dreadwinder;
+
+                            if (GetBuffRemainingTime(Buffs.HuntersInstinct) < 10 ||
+                                (GetDebuffRemainingTime(Debuffs.NoxiousGnash) > NoxiousRefreshRange))
                                 return OriginalHook(SteelFangs);
                         }
                     }

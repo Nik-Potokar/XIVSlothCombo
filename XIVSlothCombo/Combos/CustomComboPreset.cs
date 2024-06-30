@@ -3456,7 +3456,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
         VPR_ST_SimpleMode = 20000,
 
-        #region Advanced ST Dragoon
+        #region Advanced ST Viper
 
         [ReplaceSkill(VPR.SteelFangs)]
         [ConflictingCombos(VPR_ST_SimpleMode)]
@@ -3467,35 +3467,39 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", VPR.JobID)]
         VPR_ST_Opener = 20002,
 
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
+        VPR_ST_NoxiousGnash = 20003,
+
         #region Cooldowns ST
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", VPR.JobID)]
-        VPR_ST_CDs = 20003,
+        VPR_ST_CDs = 20004,
 
         [ParentCombo(VPR_ST_CDs)]
         [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
-        VPR_ST_SerpentsIre = 20004,
+        VPR_ST_SerpentsIre = 20005,
 
         [ParentCombo(VPR_ST_CDs)]
         [CustomComboInfo("Dreadwinder", "Adds Dreadwinder to the rotation.", VPR.JobID)]
-        VPR_ST_Dreadwinder = 20005,
+        VPR_ST_Dreadwinder = 20006,
 
         #endregion
-
-        [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
-        VPR_ST_NoxiousGnash = 20006,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
         VPR_ST_SerpentsTail = 20007,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
+        VPR_ST_UncoiledFury = 20008,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Uptime Option", "Adds Writhing Snap to the rotation when you are out of melee range.", VPR.JobID)]
         VPR_ST_RangedUptime = 20997,
 
-        [ParentCombo(DRG_ST_AdvancedMode)]
+        [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", VPR.JobID)]
         VPR_ST_ComboHeals = 20998,
 
