@@ -67,8 +67,8 @@ namespace XIVSlothCombo.Core
                     (DisabledJobsPVP.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && Service.ClientState.IsPvP))
                     return OriginalHook(actionID);
 
-                uint lastComboMove = *(uint*)Service.Address.LastComboMove;
-                float comboTime = *(float*)Service.Address.ComboTimer;
+                uint lastComboMove = ActionManager.Instance()->Combo.Action;
+                float comboTime = ActionManager.Instance()->Combo.Timer;
                 byte level = Service.ClientState.LocalPlayer?.Level ?? 0;
 
                 foreach (CustomCombo? combo in customCombos)
