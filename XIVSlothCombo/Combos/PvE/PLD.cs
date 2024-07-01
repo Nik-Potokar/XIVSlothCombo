@@ -583,6 +583,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolyCircle;
 
                         }
+                        
+                        // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
+                        if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
+                            return OriginalHook(Requiescat);
 
                         // HC under DM/Req
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
@@ -606,7 +610,7 @@ namespace XIVSlothCombo.Combos.PvE
                             !ActionWatching.WasLast2ActionsAbilities())
                         {
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && ActionReady(Requiescat))
-                                return Requiescat;
+                                return OriginalHook(Requiescat);
 
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) && ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
@@ -627,6 +631,10 @@ namespace XIVSlothCombo.Combos.PvE
                         GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)) &&
                         IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF))
                         return OriginalHook(Confiteor);
+                    
+                    // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
+                    if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
+                        return OriginalHook(Requiescat);
 
                     // HS under DM (outside of burst)
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) &&
