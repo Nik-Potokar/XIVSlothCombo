@@ -92,7 +92,7 @@ namespace XIVSlothCombo.Data
         /// <summary> Get the maximum number of charges for an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>
         /// <returns> Max number of charges at current level. </returns>
-        internal unsafe ushort GetMaxCharges(uint actionID) => ActionManager.GetMaxCharges(actionID, 0);
+        internal unsafe ushort GetMaxCharges(uint actionID) => GetCooldown(actionID).MaxCharges;
 
         /// <summary> Get the resource cost of an action. </summary>
         /// <param name="actionID"> Action ID to check. </param>

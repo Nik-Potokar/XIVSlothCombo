@@ -29,7 +29,7 @@ namespace XIVSlothCombo.Data
 
         /// <summary> Gets the maximum number of charges for an action at the current level. </summary>
         /// <returns> Number of charges. </returns>
-        public ushort MaxCharges => Service.ComboCache.GetMaxCharges(ActionID);
+        public ushort MaxCharges => ActionManager.GetMaxCharges(ActionID, 0);
 
         /// <summary> Gets a value indicating whether the action has charges, not charges available. </summary>
         public bool HasCharges => MaxCharges > 1;
@@ -42,9 +42,6 @@ namespace XIVSlothCombo.Data
         {
             get
             {
-                var maxCharges = ActionManager.GetMaxCharges(ActionID, 0);
-                var timePerCharge = CooldownTotal / maxCharges;
-
                 return CooldownRemaining % (CooldownTotal / MaxCharges);
             }
         }
