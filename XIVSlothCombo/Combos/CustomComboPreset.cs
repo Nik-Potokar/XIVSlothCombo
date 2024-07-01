@@ -3592,7 +3592,7 @@ namespace XIVSlothCombo.Combos
         VPR_DreadwinderCoils = 20200,
 
         [ReplaceSkill(VPR.PitofDread)]
-        [CustomComboInfo("Pits Of Dread - Dens", "Replaces Pits Of Dread with the Dens.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        [CustomComboInfo("Pit Of Dread - Dens", "Replaces Pits Of Dread with the Dens.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
         VPR_PitOfDreadDens = 20201,
 
         [ReplaceSkill(VPR.UncoiledFury)]
