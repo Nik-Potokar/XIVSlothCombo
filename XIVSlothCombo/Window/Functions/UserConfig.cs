@@ -2389,13 +2389,20 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region VIPER
+
             if (preset == CustomComboPreset.VPR_ST_ComboHeals)
             {
                 UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_ST_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
-            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
+            if (preset == CustomComboPreset.VPR_AoE_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_AoE_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_AoE_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash || preset == CustomComboPreset.VPR_AoE_NoxiousGnash)
             {
                 UserConfig.DrawSliderInt(0, 10, VPR.Config.VPR_NoxiousRefreshRange, "Seconds remaining before refreshing Noxious Gnash.", 150, SliderIncrements.Ones);
             }

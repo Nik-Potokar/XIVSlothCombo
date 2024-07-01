@@ -3481,31 +3481,94 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
         VPR_ST_SerpentsIre = 20005,
 
+        [ParentCombo(VPR_ST_SerpentsIre)]
+        [CustomComboInfo("Ready To Reawaken", "Adds Ready to Reawaken buff.", VPR.JobID)]
+        VPR_ST_ReadyToReawaken = 20006,
+
         [ParentCombo(VPR_ST_CDs)]
         [CustomComboInfo("Dreadwinder", "Adds Dreadwinder to the rotation.", VPR.JobID)]
-        VPR_ST_Dreadwinder = 20006,
+        VPR_ST_Dreadwinder = 20007,
 
         #endregion
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
-        VPR_ST_SerpentsTail = 20007,
+        VPR_ST_SerpentsTail = 20008,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
-        VPR_ST_UncoiledFury = 20008,
+        VPR_ST_UncoiledFury = 20009,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
+        VPR_ST_Reawaken = 20010,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Uptime Option", "Adds Writhing Snap to the rotation when you are out of melee range.", VPR.JobID)]
-        VPR_ST_RangedUptime = 20997,
+        VPR_ST_RangedUptime = 20097,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", VPR.JobID)]
-        VPR_ST_ComboHeals = 20998,
+        VPR_ST_ComboHeals = 20098,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
-        VPR_TrueNorthDynamic = 20999,
+        VPR_TrueNorthDynamic = 20099,
+
+        #endregion
+
+        [ReplaceSkill(VPR.SteelMaw)]
+        [ConflictingCombos(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        VPR_AoE_SimpleMode = 20100,
+
+        #region Advanced AoE Viper
+
+        [ReplaceSkill(VPR.SteelMaw)]
+        [ConflictingCombos(VPR_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", VPR.JobID)]
+        VPR_AoE_AdvancedMode = 20101,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
+        VPR_AoE_NoxiousGnash = 20102,
+
+        #region Cooldowns AoE
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", VPR.JobID)]
+        VPR_AoE_CDs = 20103,
+
+        [ParentCombo(VPR_AoE_CDs)]
+        [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
+        VPR_AoE_SerpentsIre = 20104,
+
+        [ParentCombo(VPR_AoE_SerpentsIre)]
+        [CustomComboInfo("Ready To Reawaken", "Adds Ready to Reawaken buff.", VPR.JobID)]
+        VPR_AoE_ReadyToReawaken = 200105,
+
+
+        [ParentCombo(VPR_AoE_CDs)]
+        [CustomComboInfo("Pit Of Dread", "Adds Pit Of Dread to the rotation.", VPR.JobID)]
+        VPR_AoE_PitOfDread = 20106,
+
+        #endregion
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
+        VPR_AoE_SerpentsTail = 20107,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
+        VPR_AoE_UncoiledFury = 20108,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
+        VPR_AoE_Reawaken = 20109,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", VPR.JobID)]
+        VPR_AoE_ComboHeals = 20199,
 
         #endregion
 
