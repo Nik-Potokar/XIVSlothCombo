@@ -447,10 +447,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Goring on cooldown (burst features disabled) -- Goring Blade is only available with FoF
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                            ActionReady(GoringBlade) &&
+                            HasEffect(Buffs.GoringBladeReady) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
                             return GoringBlade;
 
+                        //Req without FoF
+                        if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
+                            return OriginalHook(Requiescat);
+                        
+                        // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
+                        if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)) && IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
+                            return OriginalHook(Requiescat);
+                        
+                        
                         // Confiteor & Blades
                         if (((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
                             Confiteor.LevelChecked() &&
