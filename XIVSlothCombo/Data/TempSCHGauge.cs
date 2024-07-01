@@ -41,6 +41,10 @@ public unsafe class TmpPCTGauge
 
     public bool MooglePortraitReady => Struct->MooglePortraitReady;
 
+    public bool MadeenPortraitReady => Struct->MadeenPortraitReady;
+
+    public CreatureFlags Flags => Struct->CreatureFlags;
+
     private protected PictoGauge* Struct;
 
     public byte GetOffset(int offset)
@@ -74,10 +78,12 @@ public struct PictoGauge
     [FieldOffset(0x0B)] public CanvasFlags CanvasFlags;
     [FieldOffset(0x0C)] public CreatureFlags CreatureFlags;
 
-    public bool CreatureMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Pom) || CanvasFlags.HasFlag(CanvasFlags.Wing); //TODO Update at level 96
+    public bool CreatureMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Pom) || CanvasFlags.HasFlag(CanvasFlags.Wing) || CanvasFlags.HasFlag(CanvasFlags.Claw) || CanvasFlags.HasFlag(CanvasFlags.Maw);
     public bool WeaponMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Weapon);
     public bool LandscapeMotifDrawn => CanvasFlags.HasFlag(CanvasFlags.Landscape);
-    public bool MooglePortraitReady => CreatureFlags.HasFlag(CreatureFlags.Wings);
+    public bool MooglePortraitReady => CreatureFlags.HasFlag(CreatureFlags.MooglePortrait);
+    public bool MadeenPortraitReady => CreatureFlags.HasFlag(CreatureFlags.MadeenPortrait);
+
 }
 
 [Flags]
@@ -85,6 +91,8 @@ public enum CanvasFlags : byte
 {
     Pom = 1,
     Wing = 2,
+    Claw = 4,
+    Maw = 8,
     Weapon = 16,
     Landscape = 32,
 }
@@ -93,5 +101,9 @@ public enum CanvasFlags : byte
 public enum CreatureFlags : byte
 {
     Pom = 1,
-    Wings = 16
+    Wings = 2,
+    Claw = 4,
+   
+    MooglePortrait = 16,
+    MadeenPortrait = 32,
 }
