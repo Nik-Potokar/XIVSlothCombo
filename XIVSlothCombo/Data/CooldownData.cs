@@ -1,6 +1,5 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
 {
@@ -35,7 +34,16 @@ namespace XIVSlothCombo.Data
         public bool HasCharges => MaxCharges > 1;
 
         /// <summary> Gets the remaining number of charges for an action. </summary>
-        public unsafe uint RemainingCharges => ActionManager.Instance()->GetCurrentCharges(ActionID);
+        public unsafe uint RemainingCharges
+        {
+            get
+            {
+                if (MaxCharges == 1)
+                    return CooldownRemaining == 0 ? 1 : 0u;
+
+                return ActionManager.Instance()->GetCurrentCharges(ActionID);
+            }
+        }
 
         /// <summary> Gets the cooldown time remaining until the next charge. </summary>
         public float ChargeCooldownRemaining
