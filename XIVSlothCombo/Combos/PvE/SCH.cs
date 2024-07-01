@@ -65,7 +65,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             internal const ushort
                 Galvanize = 297,
-                Recitation = 1896;
+                SacredSoil = 299,
+                Recitation = 1896,
+                ImpactImminent = 3882;
         }
 
         internal static class Debuffs
@@ -290,7 +292,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
                             return Recitation;
 
-                        return Adloquium;
+                        return OriginalHook(Adloquium);
                     }
                 }
                 return actionID;
@@ -384,12 +386,20 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Chain Stratagem
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
-                            ActionReady(ChainStratagem) && InCombat() &&
-                            !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
-                            GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption &&
-                            CanSpellWeave(actionID))
-                            return ChainStratagem;
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat))
+                        {
+                            // If CS is available and usable, or if the Impact Buff is on Player
+                            bool CSReady =
+                                ActionReady(ChainStratagem) &&
+                                !TargetHasEffectAny(Debuffs.ChainStratagem) &&
+                                GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption;
+
+                            if ((CSReady || HasEffect(Buffs.ImpactImminent)) &&
+                                InCombat() &&
+                                CanSpellWeave(actionID))
+                               return OriginalHook(ChainStratagem);
+                        }
+                        
 
                         //Bio/Biolysis
                         if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio) && InCombat())
@@ -561,7 +571,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Adloquium) &&
                         (FindEffectOnMember(Buffs.Galvanize, healTarget) is null || GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_AdloquiumOption))
                     {
-                        return Adloquium;
+                        return OriginalHook(Adloquium);
                     }
                     
                     //Cast Lustrate if you have Aetherflow and Target HP is below %
