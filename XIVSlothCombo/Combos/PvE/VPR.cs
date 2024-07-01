@@ -456,7 +456,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend usage
-                            if (IsEnabled(CustomComboPreset.VPR_ST_ReadyToReawaken) &&
+                            if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
                                 (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50))
                                 return Reawaken;
 
@@ -771,7 +771,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend usage
-                            if (IsEnabled(CustomComboPreset.VPR_AoE_ReadyToReawaken) &&
+                            if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) &&
                                 (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50))
                                 return Reawaken;
 

@@ -3481,39 +3481,35 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
         VPR_ST_SerpentsIre = 20005,
 
-        [ParentCombo(VPR_ST_SerpentsIre)]
-        [CustomComboInfo("Ready To Reawaken", "Adds Ready to Reawaken buff.", VPR.JobID)]
-        VPR_ST_ReadyToReawaken = 20006,
-
         [ParentCombo(VPR_ST_CDs)]
         [CustomComboInfo("Dreadwinder", "Adds Dreadwinder to the rotation.", VPR.JobID)]
-        VPR_ST_Dreadwinder = 20007,
+        VPR_ST_Dreadwinder = 20006,
 
         [ParentCombo(VPR_ST_Dreadwinder)]
         [CustomComboInfo("Dreadwinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
-        VPR_ST_DreadwinderCombo = 20008,
+        VPR_ST_DreadwinderCombo = 20007,
 
         #endregion
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
-        VPR_ST_SerpentsTail = 20009,
+        VPR_ST_SerpentsTail = 20008,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
-        VPR_ST_UncoiledFury = 200010,
+        VPR_ST_UncoiledFury = 20009,
 
         [ParentCombo(VPR_ST_UncoiledFury)]
         [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
-        VPR_ST_UncoiledFuryCombo = 200011,
+        VPR_ST_UncoiledFuryCombo = 200010,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
-        VPR_ST_Reawaken = 20012,
+        VPR_ST_Reawaken = 20011,
 
-        [ParentCombo(VPR_ST_Reawaken)]
+        [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Reawaken Combo", "Adds Generation and Legacy to the rotation.", VPR.JobID)]
-        VPR_ST_ReawakenCombo = 20013,
+        VPR_ST_ReawakenCombo = 20012,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Uptime Option", "Adds Writhing Snap to the rotation when you are out of melee range.", VPR.JobID)]
@@ -3555,38 +3551,33 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
         VPR_AoE_SerpentsIre = 20104,
 
-        [ParentCombo(VPR_AoE_SerpentsIre)]
-        [CustomComboInfo("Ready To Reawaken", "Adds Ready to Reawaken buff.", VPR.JobID)]
-        VPR_AoE_ReadyToReawaken = 200105,
-
-
         [ParentCombo(VPR_AoE_CDs)]
         [CustomComboInfo("Pit Of Dread", "Adds Pit Of Dread to the rotation.", VPR.JobID)]
-        VPR_AoE_PitOfDread = 20106,
+        VPR_AoE_PitOfDread = 20105,
 
         [ParentCombo(VPR_AoE_PitOfDread)]
         [CustomComboInfo("Pit Of Dread Combo", "Adds Swiftskin's Den and Hunter's Den to the rotation.", VPR.JobID)]
-        VPR_AoE_PitOfDreadCombo = 20107,
+        VPR_AoE_PitOfDreadCombo = 20106,
 
         #endregion
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
-        VPR_AoE_SerpentsTail = 20108,
+        VPR_AoE_SerpentsTail = 20107,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
-        VPR_AoE_UncoiledFury = 20109,
+        VPR_AoE_UncoiledFury = 20108,
 
         [ParentCombo(VPR_AoE_UncoiledFury)]
         [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
-        VPR_AoE_UncoiledFuryCombo = 20110,
+        VPR_AoE_UncoiledFuryCombo = 20109,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
-        VPR_AoE_Reawaken = 20111,
+        VPR_AoE_Reawaken = 20110,
 
-        [ParentCombo(VPR_AoE_Reawaken)]
+        [ParentCombo(VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Reawaken Combo", "Adds Generation and Legacy to the rotation.", VPR.JobID)]
         VPR_AoE_ReawakenCombo = 20112,
 
