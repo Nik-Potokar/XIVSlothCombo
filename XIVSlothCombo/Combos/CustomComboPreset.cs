@@ -2704,6 +2704,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Magick Barrier to Addle Feature", "Changes Magick Barrier to Addle when on cooldown.", RDM.JobID, 820)]
         RDM_MagickBarrierAddle = 13821,
 
+        [ReplaceSkill(RDM.Embolden)]
+        [CustomComboInfo("Embolden Overlap Protection", "Disables Embolden when buffed by another Red Mage's Embolden.", RDM.JobID, 820)]
+        RDM_EmboldenProtection = 13835,
+
+        [ReplaceSkill(RDM.MagickBarrier)]
+        [CustomComboInfo("Magick Barrier Overlap Protection", "Disables Magick Barrier when buffed by another Red Mage's Magick Barrier.", RDM.JobID, 820)]
+        RDM_MagickProtection = 13836,
+
         [Variant]
         [VariantParent(RDM_ST_DPS, RDM_AoE_DPS)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown. Replaces Jolts.", RDM.JobID)]
@@ -2728,204 +2736,227 @@ namespace XIVSlothCombo.Combos
 
         #region SAGE
 
-        /* SGE Feature Numbering
-        Numbering Scheme: 14[Feature][Option][Sub-Option]
-        Example: 14110 (Feature Number 1, Option 1, no suboption)
-        New features should be added to the appropriate sections.
-        */
-
         #region Single Target DPS Feature
         [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
         [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100, "", "")]
-        SGE_ST_DPS = 14100,
+        SGE_ST_DPS = 14001,
 
-        [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
-        SGE_ST_DPS_Lucid = 14110,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
+            SGE_ST_DPS_Lucid = 14002,
 
-        [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
-        SGE_ST_DPS_EDosis = 14120,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
+            SGE_ST_DPS_EDosis = 14003,
 
-        [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Movement Options", "Use selected instant cast actions while moving.", SGE.JobID, 112, "", "")]
-        SGE_ST_DPS_Movement = 14130,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Movement Options", "Use selected instant cast actions while moving.", SGE.JobID, 113, "", "")]
+            SGE_ST_DPS_Movement = 14004,
 
-        [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
-        SGE_ST_DPS_Phlegma = 14140,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
+            SGE_ST_DPS_Phlegma = 14005,
 
-        [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
-        SGE_ST_DPS_Kardia = 14150,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
+            SGE_ST_DPS_Kardia = 14006,
 
-        [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-        SGE_ST_DPS_Rhizo = 14160,
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
+            SGE_ST_DPS_Rhizo = 14007,
+
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Psych Option", "Weaves(?) Psych when available.", SGE.JobID, 112, "", "")]
+            SGE_ST_DPS_Psyche = 14008,
+
         #endregion
 
         #region AoE DPS Feature
-        [ReplaceSkill(SGE.Phlegma, SGE.Phlegma2, SGE.Phlegma3)]
-        [CustomComboInfo("AoE DPS Feature", "", SGE.JobID, 200, "", "")]
-        SGE_AoE_DPS = 14200,
+        [ReplaceSkill(SGE.Dyskrasia, SGE.Dyskrasia2)]
+        [CustomComboInfo("AoE DPS Feature", "Adds various options to Dyskrasia I & II. Requires a target.", SGE.JobID, 200, "", "")]
+        SGE_AoE_DPS = 14009,
 
-        [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Toxikon - No Phlegma Charges Option", "Use Toxikon when out of Phlegma charges.\nTakes priority over Dyskrasia.", SGE.JobID, 210, "", "")]
-        SGE_AoE_DPS_NoPhlegmaToxikon = 14210,
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Phlegma Option", "Uses Phlegma if available.", SGE.JobID, 3, "", "")]
+            SGE_AoE_DPS_Phlegma = 14010,
 
-        [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Toxikon - Out of Phlegma Range Option", "Use Toxikon when out of Phlemga's Range.\nTakes priority over Dyskrasia.", SGE.JobID, 220, "", "")]
-        SGE_AoE_DPS_OutOfRangeToxikon = 14220,
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Toxikon Option", "Use Toxikon if available.", SGE.JobID, 4, "", "")]
+            SGE_AoE_DPS_Toxikon = 14011,
 
-        [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Dyskrasia - No Phlegma Charges Option", "Use Dyskrasia when out of Phlegma charges.", SGE.JobID, 230, "", "")]
-        SGE_AoE_DPS_NoPhlegmaDyskrasia = 14230,
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Psyche Option", "Weaves Psyche if available.", SGE.JobID, 2, "", "")]
+            SGE_AoE_DPS_Psyche = 14051,
 
-        [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Dyskrasia - No-Target Option", "Use Dyskrasia when no target is selected.", SGE.JobID, 240, "", "")]
-        SGE_AoE_DPS_NoTargetDyskrasia = 14240,
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Eukrasia Option", "Uses Eukrasia for Eukrasia Dyskrasia.", SGE.JobID, 1, "", "")]
+            SGE_AoE_DPS_EDyskrasia = 14052,
 
-        [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 250, "", "")]
-        SGE_AoE_DPS_Lucid = 14250,
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 4, "", "")]
+            SGE_AoE_DPS_Lucid = 14012,
 
-        [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-        SGE_AoE_DPS_Rhizo = 14260,
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 5, "", "")]
+            SGE_AoE_DPS_Rhizo = 14013,
         #endregion
 
         #region Diagnosis Simple Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order.", SGE.JobID, 300, "", "")]
-        SGE_ST_Heal = 14300,
+        SGE_ST_Heal = 14014,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 11, "", "")]
-        SGE_ST_Heal_Esuna = 14301,
+        SGE_ST_Heal_Esuna = 14015,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Apply Kardia Option", "Applies Kardia to your target if it's not applied to anyone else.", SGE.JobID, 1, "", "")]
-        SGE_ST_Heal_Kardia = 14310,
+        SGE_ST_Heal_Kardia = 14016,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Eukrasian Diagnosis Option", "Diagnosis becomes Eukrasian Diagnosis if the shield is not applied to the target.", SGE.JobID, 2, "", "")]
-        SGE_ST_Heal_EDiagnosis = 14320,
+        SGE_ST_Heal_EDiagnosis = 14017,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Soteria Option", "Applies Soteria.", SGE.JobID, 3, "", "")]
-        SGE_ST_Heal_Soteria = 14330,
+        SGE_ST_Heal_Soteria = 14018,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Zoe Option", "Applies Zoe.", SGE.JobID, 4, "", "")]
-        SGE_ST_Heal_Zoe = 14340,
+        SGE_ST_Heal_Zoe = 14019,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 5, "", "")]
-        SGE_ST_Heal_Pepsis = 14350,
+        SGE_ST_Heal_Pepsis = 14020,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Taurochole Option", "Adds Taurochole.", SGE.JobID, 6, "", "")]
-        SGE_ST_Heal_Taurochole = 14360,
+        SGE_ST_Heal_Taurochole = 14021,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Haima Option", "Applies Haima.", SGE.JobID, 7, "", "")]
-        SGE_ST_Heal_Haima = 14370,
+        SGE_ST_Heal_Haima = 14022,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 10, "", "")]
-        SGE_ST_Heal_Rhizomata = 14380,
+        SGE_ST_Heal_Rhizomata = 14023,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Krasis Option", "Applies Krasis.", SGE.JobID, 8, "", "")]
-        SGE_ST_Heal_Krasis = 14390,
+        SGE_ST_Heal_Krasis = 14024,
 
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 9, "", "")]
-        SGE_ST_Heal_Druochole = 14400,
+        SGE_ST_Heal_Druochole = 14025,
         #endregion
 
         #region Sage Simple AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
         [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
-        SGE_AoE_Heal = 14500,
+        SGE_AoE_Heal = 14026,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 504, "", "")]
-        SGE_AoE_Heal_Physis = 14510,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 504, "", "")]
+            SGE_AoE_Heal_Physis = 14027,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 520, "", "")]
-        SGE_AoE_Heal_EPrognosis = 14520,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Philosophia Option", "Adds Philosophia.", SGE.JobID, 505, "", "")]
+            SGE_AoE_Heal_Philosophia = 14050,
 
-        [ParentCombo(SGE_AoE_Heal_EPrognosis)]
-        [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Prognosis, and normal Prognosis will be unavailable.", SGE.JobID, 520, "", "")]
-        SGE_AoE_Heal_EPrognosis_IgnoreShield = 14521,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 520, "", "")]
+            SGE_AoE_Heal_EPrognosis = 14028,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 505, "", "")]
-        SGE_AoE_Heal_Holos = 14530,
+                [ParentCombo(SGE_AoE_Heal_EPrognosis)]
+                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Prognosis, and normal Prognosis will be unavailable.", SGE.JobID, 520, "", "")]
+                SGE_AoE_Heal_EPrognosis_IgnoreShield = 14029,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 506, "", "")]
-        SGE_AoE_Heal_Panhaima = 14540,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 505, "", "")]
+            SGE_AoE_Heal_Holos = 14030,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 507, "", "")]
-        SGE_AoE_Heal_Pepsis = 14550,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 506, "", "")]
+            SGE_AoE_Heal_Panhaima = 14031,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 503, "", "")]
-        SGE_AoE_Heal_Ixochole = 14560,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 507, "", "")]
+            SGE_AoE_Heal_Pepsis = 14032,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 502, "", "")]
-        SGE_AoE_Heal_Kerachole = 14570,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 503, "", "")]
+            SGE_AoE_Heal_Ixochole = 14033,
 
-        [ParentCombo(SGE_AoE_Heal)]
-        [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
-        SGE_AoE_Heal_Rhizomata = 14580,
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 502, "", "")]
+            SGE_AoE_Heal_Kerachole = 14035,
+
+            [ParentCombo(SGE_AoE_Heal)]
+            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
+            SGE_AoE_Heal_Rhizomata = 14036,
         #endregion
 
         #region Misc Healing
         [ReplaceSkill(SGE.Taurochole, SGE.Druochole, SGE.Ixochole, SGE.Kerachole)]
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
-        SGE_Rhizo = 14600,
+        SGE_Rhizo = 14037,
 
         [ReplaceSkill(SGE.Druochole)]
         [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
-        SGE_DruoTauro = 14700,
+        SGE_DruoTauro = 14038,
 
         [ReplaceSkill(SGE.Pneuma)]
         [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown.", SGE.JobID, 701, "", "")] //Temporary to keep the order
-        SGE_ZoePneuma = 141000,
+        SGE_ZoePneuma = 14039,
         #endregion
 
         #region Utility
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("Swiftcast Raise Feature", "Changes Swiftcast to Egeiro while Swiftcast is on cooldown.", SGE.JobID, 800, "", "")]
-        SGE_Raise = 14800,
+        SGE_Raise = 14040,
 
         [ReplaceSkill(SGE.Soteria)]
         [CustomComboInfo("Soteria to Kardia Feature", "Soteria turns into Kardia when not active or Soteria is on-cooldown.", SGE.JobID, 900, "", "")]
-        SGE_Kardia = 14900,
+        SGE_Kardia = 14041,
 
         [ReplaceSkill(SGE.Eukrasia)]
         [CustomComboInfo("Eukrasia Feature", "Eukrasia turns into the selected Eukrasian-type action when active.", SGE.JobID, 1000, "", "")]
-        SGE_Eukrasia = 14910,
+        SGE_Eukrasia = 14042,
+
+        [ReplaceSkill(SGE.Kerachole)]
+        [CustomComboInfo("Spell Overlap Protection", "Prevents you from wasting actions if under the effect of someone else's actions", SGE.JobID, 1000, "", "")]
+        SGE_OverProtect = 14043,
+
+            [ParentCombo(SGE_OverProtect)]
+            [CustomComboInfo("Under Kerachole", "Don't use Kerachole when under the effect of someone's Kerachole", SGE.JobID, 1000, "", "")]
+            SGE_OverProtect_Kerachole = 14044,
+
+            [ParentCombo(SGE_OverProtect_Kerachole)]
+            [CustomComboInfo("Under Sacred Soil", "Don't use Kerachole when under the effect of someone's Sacred Soil", SGE.JobID, 1000, "", "")]
+            SGE_OverProtect_SacredSoil = 14045,
+
+            [ParentCombo(SGE_OverProtect)]
+            [CustomComboInfo("Under Panhaima", "Don't use Panhaima when under the effect of someone's Panhaima", SGE.JobID, 1000, "", "")]
+            SGE_OverProtect_Panhaima = 14046,
+
+            [ParentCombo(SGE_OverProtect)]
+            [CustomComboInfo("Under Philosophia", "Don't use Philosophia when under the effect of someone's Philosophia", SGE.JobID, 1000, "", "")]
+            SGE_OverProtect_Philosophia = 14047,
 
         [Variant]
         [VariantParent(SGE_ST_DPS_EDosis, SGE_AoE_DPS)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", SGE.JobID)]
-        SGE_DPS_Variant_SpiritDart = 14920,
+        SGE_DPS_Variant_SpiritDart = 14048,
 
         [Variant]
         [VariantParent(SGE_ST_DPS, SGE_AoE_DPS)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SGE.JobID)]
-        SGE_DPS_Variant_Rampart = 14930,
+        SGE_DPS_Variant_Rampart = 14049,
         #endregion
 
-        // Last value = 14930
+        // Last used number = 14052
 
         #endregion
 
@@ -3165,128 +3196,122 @@ namespace XIVSlothCombo.Combos
 
         #region SCHOLAR
 
-        /* SCH Feature Numbering
-        Numbering Scheme: 16[Feature][Option][Sub-Option]
-        Example: 16110 (Feature Number 1, Option 1, no suboption)
-        New features should be added to the appropriate sections.
-        */
-
         #region DPS
         [ReplaceSkill(SCH.Ruin, SCH.Broil, SCH.Broil2, SCH.Broil3, SCH.Broil4, SCH.Bio, SCH.Bio2, SCH.Biolysis)]
         [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils with options below", SCH.JobID, 1)]
-        SCH_DPS = 16100,
+        SCH_DPS = 16001,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
-        SCH_DPS_Lucid = 16110,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
+            SCH_DPS_Lucid = 16002,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Chain Stratagem Weave Option", "Adds Chain Stratagem on cooldown with overlap protection", SCH.JobID, 120)]
-        SCH_DPS_ChainStrat = 16120,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Chain Stratagem / Baneful Impact Weave Option", "Adds Chain Stratagem & Baneful Impact on cooldown with overlap protection", SCH.JobID, 120)]
+            SCH_DPS_ChainStrat = 16003,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
-        SCH_DPS_Aetherflow = 16130,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
+            SCH_DPS_Aetherflow = 16004,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
-        SCH_DPS_EnergyDrain = 16160,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
+            SCH_DPS_EnergyDrain = 16005,
 
-        [ParentCombo(SCH_DPS_EnergyDrain)]
-        [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
-        SCH_DPS_EnergyDrain_BurstSaver = 16161,
+            [ParentCombo(SCH_DPS_EnergyDrain)]
+            [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
+            SCH_DPS_EnergyDrain_BurstSaver = 16006,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
-        SCH_DPS_Ruin2Movement = 16140,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
+            SCH_DPS_Ruin2Movement = 16007,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
-        SCH_DPS_Bio = 16150,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
+            SCH_DPS_Bio = 16008,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
-        SCH_DPS_Dissipation_Opener = 16170,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
+            SCH_DPS_Dissipation_Opener = 16009,
 
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below.", SCH.JobID, 3)]
-        SCH_AoE = 16101,
+        SCH_AoE = 16010,
 
-        [ParentCombo(SCH_AoE)]
-        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-        SCH_AoE_Lucid = 16111,
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+            SCH_AoE_Lucid = 16011,
 
-        [ParentCombo(SCH_AoE)]
-        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
-        SCH_AoE_Aetherflow = 16121,
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            SCH_AoE_Aetherflow = 16012,
 
         #endregion
 
         #region Healing
         [ReplaceSkill(SCH.FeyBlessing)]
         [CustomComboInfo("Fey Blessing to Seraph's Consolation Feature", "Change Fey Blessing into Consolation when Seraph is out.", SCH.JobID, 9)]
-        SCH_Consolation = 16210,
+        SCH_Consolation = 16013,
 
         [ReplaceSkill(SCH.Lustrate)]
         [CustomComboInfo("Lustrate to Excogitation Feature", "Change Lustrate into Excogitation when Excogitation is ready.", SCH.JobID, 6)]
-        SCH_Lustrate = 16220,
+        SCH_Lustrate = 16014,
 
         [ReplaceSkill(SCH.Recitation)]
         [CustomComboInfo("Recitation Combo Feature", "Change Recitation into either Adloquium, Succor, Indomitability, or Excogitation when used.", SCH.JobID, 7)]
-        SCH_Recitation = 16230,
+        SCH_Recitation = 16015,
 
         [ReplaceSkill(SCH.WhisperingDawn)]
         [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 8)]
-        SCH_Fairy_Combo = 16240,
+        SCH_Fairy_Combo = 16016,
 
         [ParentCombo(SCH_Fairy_Combo)]
         [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID)]
-        SCH_Fairy_Combo_Consolation = 16241,
+        SCH_Fairy_Combo_Consolation = 16017,
 
         [ReplaceSkill(SCH.Succor)]
         [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 5)]
-        SCH_AoE_Heal = 16250,
+        SCH_AoE_Heal = 16018,
 
         [ParentCombo(SCH_AoE_Heal)]
         [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP isn't high enough to cast Succor.", SCH.JobID)]
-        SCH_AoE_Heal_Lucid = 16251,
+        SCH_AoE_Heal_Lucid = 16019,
 
         [ParentCombo(SCH_AoE_Heal)]
         [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
-        SCH_AoE_Heal_Aetherflow = 16252,
+        SCH_AoE_Heal_Aetherflow = 16020,
 
         [ParentCombo(SCH_AoE_Heal_Aetherflow)]
         [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
-        SCH_AoE_Heal_Aetherflow_Indomitability = 16253,
+        SCH_AoE_Heal_Aetherflow_Indomitability = 16021,
 
         [ParentCombo(SCH_AoE_Heal)]
         [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
-        SCH_AoE_Heal_Indomitability = 16254,
+        SCH_AoE_Heal_Indomitability = 16022,
 
         [ReplaceSkill(SCH.Physick)]
         [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 4)]
-        SCH_ST_Heal = 16260,
+        SCH_ST_Heal = 16023,
 
         [ParentCombo(SCH_ST_Heal)]
         [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 1)]
-        SCH_ST_Heal_Lucid = 16261,
+        SCH_ST_Heal_Lucid = 16024,
 
         [ParentCombo(SCH_ST_Heal)]
         [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
-        SCH_ST_Heal_Aetherflow = 16262,
+        SCH_ST_Heal_Aetherflow = 16025,
 
         [ParentCombo(SCH_ST_Heal)]
         [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
-        SCH_ST_Heal_Esuna = 16265,
+        SCH_ST_Heal_Esuna = 16026,
 
         [ParentCombo(SCH_ST_Heal)]
         [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
-        SCH_ST_Heal_Adloquium = 16263,
+        SCH_ST_Heal_Adloquium = 16027,
 
         [ParentCombo(SCH_ST_Heal)]
         [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
-        SCH_ST_Heal_Lustrate = 16264,
+        SCH_ST_Heal_Lustrate = 16028,
 
 
         #endregion
@@ -3294,46 +3319,46 @@ namespace XIVSlothCombo.Combos
         #region Utilities
         [ReplaceSkill(SCH.EnergyDrain, SCH.Lustrate, SCH.SacredSoil, SCH.Indomitability, SCH.Excogitation)]
         [CustomComboInfo("Aetherflow Helper Feature", "Change Aetherflow-using skills to Aetherflow, Recitation, or Dissipation as selected.", SCH.JobID, 9)]
-        SCH_Aetherflow = 16300,
+        SCH_Aetherflow = 16029,
 
         [ParentCombo(SCH_Aetherflow)]
         [CustomComboInfo("Recitation Option", "Prioritizes Recitation usage on Excogitation or Indomitability.", SCH.JobID)]
-        SCH_Aetherflow_Recite = 16310,
+        SCH_Aetherflow_Recite = 16030,
 
         [ParentCombo(SCH_Aetherflow)]
         [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID)]
-        SCH_Aetherflow_Dissipation = 16320,
+        SCH_Aetherflow_Dissipation = 16031,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
         [CustomComboInfo("Swiftcast Raise Combo Feature", "Changes Swiftcast to Resurrection while Swiftcast is on cooldown.", SCH.JobID, 10)]
-        SCH_Raise = 16400,
+        SCH_Raise = 16032,
 
         [ReplaceSkill(SCH.WhisperingDawn, SCH.FeyBlessing, SCH.FeyBlessing, SCH.Aetherpact, SCH.Dissipation)]
         [CustomComboInfo("Fairy Feature", "Change all fairy actions into Summon Eos when the Fairy is not summoned.", SCH.JobID, 11)]
-        SCH_FairyReminder = 16500,
+        SCH_FairyReminder = 16033,
 
         [ReplaceSkill(SCH.DeploymentTactics)]
         [CustomComboInfo("Deployment Tactics Feature", "Changes Deployment Tactics to Adloquium until a party member has the Galvanize buff.", SCH.JobID, 12)]
-        SCH_DeploymentTactics = 16600,
+        SCH_DeploymentTactics = 16034,
 
         [ParentCombo(SCH_DeploymentTactics)]
         [CustomComboInfo("Recitation Option", "Adds Recitation when off cooldown to force a critical Galvanize buff on a party member.", SCH.JobID)]
-        SCH_DeploymentTactics_Recitation = 16610,
+        SCH_DeploymentTactics_Recitation = 16035,
 
         [Variant]
         [VariantParent(SCH_DPS_Bio, SCH_AoE)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", SCH.JobID)]
-        SCH_DPS_Variant_SpiritDart = 16700,
+        SCH_DPS_Variant_SpiritDart = 16036,
 
         [Variant]
         [VariantParent(SCH_DPS, SCH_AoE)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SCH.JobID)]
-        SCH_DPS_Variant_Rampart = 16800,
+        SCH_DPS_Variant_Rampart = 16037,
 
         #endregion
 
-        // Last value = 16800
+        // Last value = 16037
 
         #endregion
 
