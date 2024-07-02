@@ -460,15 +460,25 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && LevelChecked(SummonBahamut))
                                     return OriginalHook(EnkindleBahamut);
 
-                                if (IsOffCooldown(Deathflare) && LevelChecked(Deathflare) && OriginalHook(Ruin) is AstralImpulse or UmbralImpulse)
+                                if (IsOffCooldown(Deathflare) && LevelChecked(Deathflare) && OriginalHook(Ruin) is AstralImpulse)
                                     return OriginalHook(AstralFlow);
-                            }
 
-                            // Demi Nuke 2: Electric Boogaloo
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle))
-                            {
-                                if (IsOffCooldown(Rekindle) && OriginalHook(Ruin) is FountainOfFire)
+                                if (IsOffCooldown(OriginalHook(EnkindlePhoenix)) && LevelChecked(SummonPhoenix))
+                                    return OriginalHook(EnkindlePhoenix);
+                                
+                                if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle))
+                                    if (IsOffCooldown(Rekindle) && OriginalHook(Ruin) is FountainOfFire)
+                                        return OriginalHook(AstralFlow);
+
+                                if (IsOffCooldown(OriginalHook(EnkindleSolarBahamut)) && LevelChecked(SummonSolarBahamut))
+                                    return OriginalHook(EnkindleSolarBahamut);
+
+                                if (IsOffCooldown(Sunflare) && LevelChecked(Sunflare) && OriginalHook(Ruin) is UmbralImpulse)
                                     return OriginalHook(AstralFlow);
+
+                                if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_LuxSolaris))
+                                    if (IsOffCooldown(LuxSolaris) && HasEffect(Buffs.RefulgentLux))
+                                        return OriginalHook(LuxSolaris);
                             }
                         }
 
@@ -516,12 +526,12 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Demi Nuke 2: Electric Boogaloo
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle) && IsPhoenixReady)
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && IsPhoenixReady)
                             {
-                                if (IsOffCooldown(OriginalHook(EnkindlePhoenix)) && LevelChecked(SummonPhoenix))
+                                if (IsOffCooldown(OriginalHook(EnkindlePhoenix)) && LevelChecked(SummonPhoenix) && OriginalHook(Ruin) is FountainOfFire)
                                     return OriginalHook(EnkindlePhoenix);
                                 
-                                if (IsOffCooldown(Rekindle) && OriginalHook(Ruin) is FountainOfFire)
+                                if (IsOffCooldown(Rekindle) && IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle) && OriginalHook(Ruin) is FountainOfFire)
                                     return OriginalHook(AstralFlow);
                             }
                             
@@ -534,7 +544,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsOffCooldown(Sunflare) && LevelChecked(Sunflare) && OriginalHook(Ruin) is UmbralImpulse)
                                     return OriginalHook(AstralFlow);
                                 
-                                if (IsOffCooldown(LuxSolaris) && HasEffect(Buffs.RefulgentLux))
+                                if (IsOffCooldown(LuxSolaris) && IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_LuxSolaris) && HasEffect(Buffs.RefulgentLux))
                                     return OriginalHook(LuxSolaris);
                             }
                         }
