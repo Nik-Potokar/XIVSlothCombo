@@ -62,7 +62,7 @@ namespace XIVSlothCombo
             SAM.JobID,
             SCH.JobID,
             SGE.JobID,
-            SMN.JobID,
+            //SMN.JobID,
             WAR.JobID,
             WHM.JobID
         };
