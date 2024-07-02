@@ -74,6 +74,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     action = PvE.SGE.Pepsis;
                     enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && FindEffect(PvE.SGE.Buffs.EukrasianPrognosis) is not null;
                     return 0;
+                case 6:
+                    action = PvE.SGE.Philosophia;
+                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Philosophia);
+                    return 0;
             }
 
             enabled = false;
