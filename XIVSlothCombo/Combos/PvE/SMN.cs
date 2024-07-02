@@ -453,7 +453,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Emergency priority Demi Nuke to prevent waste if you can't get demi attacks out to satisfy the slider check.
-                        if (OriginalHook(Ruin) is AstralImpulse or UmbralImpulse or FountainOfFire && GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed >= 12.5)
+                        if (OriginalHook(Ruin) is AstralImpulse or UmbralImpulse or FountainOfFire && 
+                            IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && GetCooldown(OriginalHook(Aethercharge)).CooldownElapsed >= 12.5)
                         {
                             if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks))
                             {
@@ -475,10 +476,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsOffCooldown(Sunflare) && LevelChecked(Sunflare) && OriginalHook(Ruin) is UmbralImpulse)
                                     return OriginalHook(AstralFlow);
-
-                                if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_LuxSolaris))
-                                    if (IsOffCooldown(LuxSolaris) && HasEffect(Buffs.RefulgentLux))
-                                        return OriginalHook(LuxSolaris);
                             }
                         }
 
