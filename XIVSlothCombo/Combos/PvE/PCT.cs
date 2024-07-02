@@ -37,7 +37,16 @@
 
         public static class Buffs
         {
-
+            Starstruck = 3681, //may be 4118
+            RainbowBright = 3679,
+            MonochromeTones = 3691,
+            SubtractivePalette = 3674, //may be 4102
+            HammerTime = 3680,
+            Aetherhues = 3675, //may be 4100
+            Aetherhues2 = 3676, // may be 4101
+            TemperaCoat = 3686,
+            MooglePortrait = 4103,
+            MadeenPortrait = 4104;   
         }
 
         public static class Debuffs

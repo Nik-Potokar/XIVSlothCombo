@@ -39,7 +39,12 @@ namespace XIVSlothCombo.Combos.PvE
             FleetingRaiju = 25778,
             Hellfrog = 7401,
             HollowNozuchi = 25776,
-
+            Dokumori = 36957, //mug upgrade
+            KunaisBane = 36958,
+            DeathfrogMedium = 36959,
+            ZeshoMeppo = 36960,
+            TenriJindo = 36961,
+        
             //Mudras
             Ninjutsu = 2260,
             Rabbit = 2272,
@@ -89,7 +94,9 @@ namespace XIVSlothCombo.Combos.PvE
                 PhantomReady = 2723,
                 Meisui = 2689,
                 Doton = 501,
-                Bunshin = 1954;
+                Bunshin = 1954,
+                Higi = 3850,
+                TenriJindoReady = 3851;
         }
 
         public static class Debuffs

@@ -41,8 +41,13 @@ namespace XIVSlothCombo.Combos.PvE
             BarrelStabilizer = 7414,
             Wildfire = 2878,
             Dismantle = 2887,
-            Flamethrower = 7418;
-
+            Flamethrower = 7418,
+            BlazingShot = 36978,
+            DoubleCheck = 36979,
+            Checkmate = 36980,
+            Excavator = 36981,
+            FullMetalField = 36982;
+                    
         internal static class Buffs
         {
             internal const ushort
@@ -50,7 +55,8 @@ namespace XIVSlothCombo.Combos.PvE
                 Tactician = 1951,
                 Wildfire = 1946,
                 Overheated = 2688,
-                Flamethrower = 1205;
+                Flamethrower = 1205,
+                ExcavatorReady = 3865;
         }
 
         internal static class Debuffs
