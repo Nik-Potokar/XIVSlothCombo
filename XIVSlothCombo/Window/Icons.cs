@@ -1,10 +1,6 @@
 ﻿using Dalamud.Interface.Internal;
+using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.DalamudServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace XIVSlothCombo.Window
 {
@@ -12,8 +8,8 @@ namespace XIVSlothCombo.Window
     {
         public static IDalamudTextureWrap? GetJobIcon(uint jobId)
         {
-            if (jobId == 0) return null;
-            return Svc.Texture.GetIcon(62100 + jobId);
+            if (jobId == 0 || jobId > 42) return null;
+            return Svc.Texture.GetFromGameIcon(new Dalamud.Interface.Textures.GameIconLookup(62100 + jobId)).GetWrapOrEmpty();
         }
     }
 }

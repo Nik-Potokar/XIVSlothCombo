@@ -49,10 +49,20 @@ namespace XIVSlothCombo.Attributes
         /// <summary> Gets the job role. </summary>
         public int Role => JobIDToRole(JobID);
 
+        public uint ClassJobCategory => JobIDToClassJobCategory(JobID);
+
         private int JobIDToRole(byte jobID)
         {
             if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
                 return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).Role;
+
+            return 0;
+        }
+
+        private uint JobIDToClassJobCategory(byte jobID)
+        {
+            if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
+                return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Row;
 
             return 0;
         }
@@ -100,9 +110,9 @@ namespace XIVSlothCombo.Attributes
                 //Job names are all lowercase by default. This capitalizes based on regional rules
                 string cultureID = Service.ClientState.ClientLanguage switch
                 {
-                    Dalamud.ClientLanguage.French => "fr-FR",
-                    Dalamud.ClientLanguage.Japanese => "ja-JP",
-                    Dalamud.ClientLanguage.German => "de-DE",
+                    Dalamud.Game.ClientLanguage.French => "fr-FR",
+                    Dalamud.Game.ClientLanguage.Japanese => "ja-JP",
+                    Dalamud.Game.ClientLanguage.German => "de-DE",
                     _ => "en-us",
                 };
                 TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;

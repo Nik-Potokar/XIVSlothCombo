@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Linq;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
@@ -208,5 +209,15 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="end"> Time (in seconds) to end the check for the weave window. </param>
         /// <returns> True or false. </returns>
         public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.6) => GetCooldown(actionID).CooldownRemaining <= start && GetCooldown(actionID).CooldownRemaining >= end;
+
+        /// <summary>
+        /// Returns the current combo timer.
+        /// </summary>
+        public unsafe static float ComboTimer => ActionManager.Instance()->Combo.Timer;
+
+        /// <summary>
+        /// Returns the last combo action.
+        /// </summary>
+        public unsafe static uint ComboAction => ActionManager.Instance()->Combo.Action;
     }
 }

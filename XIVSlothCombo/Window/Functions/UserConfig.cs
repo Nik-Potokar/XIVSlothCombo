@@ -1,14 +1,11 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
-using Dalamud.Interface.Utility;
 using Dalamud.Utility;
-using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System;
 using System.Linq;
 using System.Numerics;
-using System.Security.Permissions;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
@@ -2538,7 +2535,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region PvP VALUES
 
-            PlayerCharacter? pc = Service.ClientState.LocalPlayer;
+            IPlayerCharacter? pc = Service.ClientState.LocalPlayer;
 
             if (preset == CustomComboPreset.PvP_EmergencyHeals)
             {

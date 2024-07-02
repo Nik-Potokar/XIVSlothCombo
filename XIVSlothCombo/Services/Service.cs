@@ -1,16 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Dalamud.Data;
 using Dalamud.Game;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.ClientState.Buddy;
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge;
 using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.ClientState.Party;
-using Dalamud.Game.Command;
-using Dalamud.Game.Gui;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -68,7 +60,7 @@ namespace XIVSlothCombo.Services
 
         /// <summary> Gets the Dalamud plugin interface. </summary>
         [PluginService]
-        internal static DalamudPluginInterface Interface { get; private set; } = null!;
+        internal static IDalamudPluginInterface Interface { get; private set; } = null!;
 
         /// <summary> Gets the Dalamud job gauges. </summary>
         [PluginService]

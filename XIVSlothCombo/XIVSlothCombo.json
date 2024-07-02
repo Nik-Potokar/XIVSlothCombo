@@ -2,7 +2,7 @@
   "Author": "Team Sloth",
   "Name": "XIVSlothCombo",
   "InternalName": "XIVSlothCombo",
-  "DalamudApiLevel": 9,
+  "DalamudApiLevel": 10,
   "Punchline": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
   "Description": "Condenses combos and mutually exclusive abilities onto a single button - and then some.",
   "RepoUrl": "https://github.com/Nik-Potokar/XIVSlothCombo",

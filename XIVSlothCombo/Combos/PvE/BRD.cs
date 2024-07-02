@@ -2,11 +2,9 @@ using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System;
-using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -656,7 +654,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
-                            ushort bloodletterCharges = GetRemainingCharges(Bloodletter);
+                            uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && LevelChecked(WanderersMinuet))
                             {

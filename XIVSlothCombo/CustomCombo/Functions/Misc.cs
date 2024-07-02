@@ -2,7 +2,6 @@
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
 {

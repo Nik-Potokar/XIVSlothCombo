@@ -1,4 +1,3 @@
-using Dalamud.Game;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
@@ -22,7 +21,6 @@ using XIVSlothCombo.Window.Tabs;
 using ECommons;
 using Dalamud.Plugin.Services;
 using System.Reflection;
-using ECommons.DalamudServices;
 using Dalamud.Utility;
 using XIVSlothCombo.Attributes;
 using Dalamud.Interface.Windowing;
@@ -46,9 +44,9 @@ namespace XIVSlothCombo
         public static readonly List<uint> DisabledJobsPVE = new List<uint>()
         {
             ADV.JobID,
-            //AST.JobID,
+            AST.JobID,
             BLM.JobID,
-            BLU.JobID,
+            //BLU.JobID,
             BRD.JobID,
             DNC.JobID,
             DOL.JobID,
@@ -71,11 +69,11 @@ namespace XIVSlothCombo
 
         public static readonly List<uint> DisabledJobsPVP = new List<uint>()
         {
-            ADV.JobID,
+            //ADV.JobID,
             AST.JobID,
             BLM.JobID,
-            BLU.JobID,
-            //BRD.JobID,
+            //BLU.JobID,
+            BRD.JobID,
             DNC.JobID,
             DOL.JobID,
             DRG.JobID,
@@ -111,7 +109,7 @@ namespace XIVSlothCombo
 
         /// <summary> Initializes a new instance of the <see cref="XIVSlothCombo"/> class. </summary>
         /// <param name="pluginInterface"> Dalamud plugin interface. </param>
-        public XIVSlothCombo(DalamudPluginInterface pluginInterface)
+        public XIVSlothCombo(IDalamudPluginInterface pluginInterface)
         {
             P = this;
             pluginInterface.Create<Service>();

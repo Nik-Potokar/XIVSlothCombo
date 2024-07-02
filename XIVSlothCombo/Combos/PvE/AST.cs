@@ -412,7 +412,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Benefic2)
                 {
                     //Grab our target (Soft->Hard->Self)
-                    GameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
+                    IGameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Esuna) && ActionReady(All.Esuna) &&
                         GetTargetHPPercent(healTarget) >= Config.AST_ST_SimpleHeals_Esuna &&
@@ -421,9 +421,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && ActionReady(AspectedBenefic))
                     {
-                        Status? aspectedBeneficHoT = FindEffect(Buffs.AspectedBenefic, healTarget, LocalPlayer?.ObjectId);
-                        Status? NeutralSectShield = FindEffect(Buffs.NeutralSectShield, healTarget, LocalPlayer?.ObjectId);
-                        Status? NeutralSectBuff = FindEffect(Buffs.NeutralSect, healTarget, LocalPlayer?.ObjectId);
+                        Status? aspectedBeneficHoT = FindEffect(Buffs.AspectedBenefic, healTarget, LocalPlayer?.GameObjectId);
+                        Status? NeutralSectShield = FindEffect(Buffs.NeutralSectShield, healTarget, LocalPlayer?.GameObjectId);
+                        Status? NeutralSectBuff = FindEffect(Buffs.NeutralSect, healTarget, LocalPlayer?.GameObjectId);
                         if ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)
                             || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
                             return AspectedBenefic;
@@ -443,7 +443,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection) &&
                         ActionReady(CelestialIntersection) &&
                         CanSpellWeave(actionID) &&
-                        !(healTarget as BattleChara)!.HasShield())
+                        !(healTarget as IBattleChara)!.HasShield())
                         return CelestialIntersection;
                 }
                 return actionID;

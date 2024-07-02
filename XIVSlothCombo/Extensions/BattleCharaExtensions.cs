@@ -4,7 +4,7 @@ namespace XIVSlothCombo.Extensions
 {
     internal static class BattleCharaExtensions
     {
-        public unsafe static uint RawShieldValue(this BattleChara chara)
+        public unsafe static uint RawShieldValue(this IBattleChara chara)
         {
             FFXIVClientStructs.FFXIV.Client.Game.Character.BattleChara* baseVal = (FFXIVClientStructs.FFXIV.Client.Game.Character.BattleChara*)chara.Address;
             var value = baseVal->Character.CharacterData.ShieldValue;
@@ -13,7 +13,7 @@ namespace XIVSlothCombo.Extensions
             return rawValue;
         }
 
-        public unsafe static byte ShieldPercentage(this BattleChara chara)
+        public unsafe static byte ShieldPercentage(this IBattleChara chara)
         {
             FFXIVClientStructs.FFXIV.Client.Game.Character.BattleChara* baseVal = (FFXIVClientStructs.FFXIV.Client.Game.Character.BattleChara*)chara.Address;
             var value = baseVal->Character.CharacterData.ShieldValue;
@@ -21,6 +21,6 @@ namespace XIVSlothCombo.Extensions
             return value;
         }
 
-        public static bool HasShield(this BattleChara chara) => chara.RawShieldValue() > 0;
+        public static bool HasShield(this IBattleChara chara) => chara.RawShieldValue() > 0;
     }
 }

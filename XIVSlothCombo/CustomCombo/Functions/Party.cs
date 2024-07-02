@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Party;
 using Dalamud.Plugin.Services;
 using XIVSlothCombo.Services;
 
@@ -15,7 +14,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> Current party list. </returns>
         public static IPartyList GetPartyMembers() => Service.PartyList;
 
-        public unsafe static GameObject? GetPartySlot(int slot)
+        public unsafe static IGameObject? GetPartySlot(int slot)
         {
             try
             {
@@ -31,9 +30,9 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                     8 => GetTarget(TargetType.P8),
                     _ => GetTarget(TargetType.Self),
                 };
-                long i = PartyTargetingService.GetObjectID(o);
-                return Service.ObjectTable.Where(x => x.ObjectId == i).Any()
-                    ? Service.ObjectTable.Where(x => x.ObjectId == i).First()
+                ulong i = PartyTargetingService.GetObjectID(o);
+                return Service.ObjectTable.Where(x => x.GameObjectId == i).Any()
+                    ? Service.ObjectTable.Where(x => x.GameObjectId == i).First()
                     : null;
             }
 

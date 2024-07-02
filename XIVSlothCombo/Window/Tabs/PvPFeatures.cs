@@ -1,11 +1,10 @@
-﻿using System.Drawing;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using Dalamud.Interface;
 using Dalamud.Interface.Internal;
+using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
-using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
 using XIVSlothCombo.Core;
@@ -75,7 +74,7 @@ namespace XIVSlothCombo.Window.Tabs
                     var id = groupedPresets[OpenJob].First().Info.JobID;
                     IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, (icon.Size.Y / 2f.Scale()) + 4f)))
+                    using (var headingTab = ImRaii.Child("PvPHeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
                     {
                         if (ImGui.Button("Back"))
                         {

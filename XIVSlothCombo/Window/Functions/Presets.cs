@@ -3,14 +3,12 @@ using Dalamud.Interface.Components;
 using Dalamud.Utility;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
-using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
@@ -115,7 +113,7 @@ namespace XIVSlothCombo.Window.Functions
                 if (blueAttr.Actions.Count > 0)
                 {
                     ImGui.PushStyleColor(ImGuiCol.Text, blueAttr.NoneSet ? ImGuiColors.DPSRed : ImGuiColors.DalamudOrange);
-                    ImGui.Text($"{(blueAttr.NoneSet ? "No Required Spells Active:" : "Missing active spells:")} {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetActionName(x)))}");
+                    ImGui.Text($"{(blueAttr.NoneSet ? "No Required Spells Active:" : "Missing active spells:")} {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetBLUIndex(x) + ActionWatching.GetActionName(x)))}");
                     ImGui.PopStyleColor();
                 }
 
@@ -276,7 +274,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.BeginTooltip();
                     foreach (var icon in att.ActionIcons)
                     {
-                        var img = Svc.Texture.GetIcon(icon);
+                        var img = Svc.Texture.GetFromGameIcon(new (icon)).GetWrapOrEmpty();
                         ImGui.Image(img.ImGuiHandle, (img.Size / 2f) * ImGui.GetIO().FontGlobalScale);
                         ImGui.SameLine();
                     }
