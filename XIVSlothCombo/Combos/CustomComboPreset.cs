@@ -3513,7 +3513,11 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Uptime Option", "Adds Writhing Snap to the rotation when you are out of melee range.", VPR.JobID)]
-        VPR_ST_RangedUptime = 20097,
+        VPR_ST_RangedUptime = 20096,
+
+        [ParentCombo(VPR_ST_RangedUptime)]
+        [CustomComboInfo("Add Uncoiled Fury", "Adds Uncoiled Fury to the rotation when you are out of melee range and have Rattling Coil charges.", VPR.JobID)]
+        VPR_ST_RangedUptimeUncoiledFury = 20097,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", VPR.JobID)]
