@@ -2390,6 +2390,12 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region VIPER
 
+            if (preset == CustomComboPreset.VPR_ST_DreadwinderCombo && enabled)
+            {
+                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
+                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
+            }
+
             if (preset == CustomComboPreset.VPR_ST_ComboHeals)
             {
                 UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
