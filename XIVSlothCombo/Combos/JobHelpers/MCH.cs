@@ -30,6 +30,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
             return true;
         }
 
+        public static bool HasPrePullCooldowns()
+        {
+            if (CustomComboFunctions.GetRemainingCharges(Reassemble) < 2) return false;
+
+            return true;
+        }
+
+
         private static uint OpenerLevel => 100;
 
         public uint PrePullStep = 0;
@@ -70,12 +78,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
             HeatedSlugShot,
             HeatedCleanShot];
 
-
-           
-
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-        private static bool CanOpener => HasCooldowns() && LevelChecked;
+        private static bool CanOpener => HasCooldowns() && HasPrePullCooldowns() && LevelChecked;
 
         private OpenerState currentState = OpenerState.PrePull;
 
@@ -122,8 +127,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
 
-                if (CustomComboFunctions.WasLastAction(HeatedSplitShot) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
-                else if (PrePullStep == 1) actionID = HeatedSplitShot;
+                if (CustomComboFunctions.HasEffect(Buffs.Reassembled) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+                else if (PrePullStep == 1) actionID = Reassemble;
+
 
                 if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
                     CurrentState = OpenerState.FailedOpener;
