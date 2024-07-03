@@ -110,6 +110,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var gauge = new TmpVPRGauge();
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && !IsMoving && CanWeave(actionID);
+                bool DreadwinderReady = gauge.DreadwinderPitCombo == DreadwinderPit.Dreadwinder;
+                bool SwiftskinsCoilReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsCoil;
 
                 if (actionID is SteelFangs)
                 {
@@ -200,7 +202,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Twinblood);
                     }
 
-                    if (gauge.HuntersCoilReady)
+                    if (SwiftskinsCoilReady)
                     {
                         if (trueNorthReady && !OnTargetsFlank())
                             return All.TrueNorth;
@@ -208,7 +210,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return HuntersCoil;
                     }
 
-                    if (gauge.DreadwinderReady)
+                    if (DreadwinderReady)
                     {
                         if (trueNorthReady && !OnTargetsRear())
                             return All.TrueNorth;
@@ -261,7 +263,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
-                            if (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50)
+                            if (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50 &&
+                                !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
+                                !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                                 return Reawaken;
 
                             //Dreadwinder Usage
@@ -294,6 +298,9 @@ namespace XIVSlothCombo.Combos.PvE
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && !IsMoving && CanWeave(actionID);
                 int NoxiousRefreshRange = Config.VPR_NoxiousRefreshRange;
                 int positionalChoice = Config.VPR_Positional;
+                bool DreadwinderReady = gauge.DreadwinderPitCombo == DreadwinderPit.Dreadwinder;
+                bool HuntersCoilReady = gauge.DreadwinderPitCombo == DreadwinderPit.HuntersCoil;
+                bool SwiftskinsCoilReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsCoil;
 
                 if (actionID is SteelFangs)
                 {
@@ -405,7 +412,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Twinblood);
                             }
 
-                            if (gauge.HuntersCoilReady)
+                            if (SwiftskinsCoilReady)
                             {
                                 if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                                    trueNorthReady && !OnTargetsFlank())
@@ -414,7 +421,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HuntersCoil;
                             }
 
-                            if (gauge.DreadwinderReady)
+                            if (DreadwinderReady)
                             {
                                 if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                                     trueNorthReady && !OnTargetsRear())
@@ -435,7 +442,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Twinblood);
                             }
 
-                            if (gauge.SwiftskinsCoilReady)
+                            if (HuntersCoilReady)
                             {
                                 if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                                    trueNorthReady && !OnTargetsRear())
@@ -444,7 +451,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return SwiftskinsCoil;
                             }
 
-                            if (gauge.DreadwinderReady)
+                            if (DreadwinderReady)
                             {
                                 if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                                    trueNorthReady && !OnTargetsFlank())
@@ -516,7 +523,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Reawakend Usage
                             if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
-                                (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50))
+                                (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50) &&
+                                !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
+                                !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                                 return Reawaken;
 
                             //Dreadwinder Usage
@@ -547,6 +556,8 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = new TmpVPRGauge();
+                bool PitOfDreadReady = gauge.DreadwinderPitCombo == DreadwinderPit.PitOfDread;
+                bool SwiftskinsDenReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsDen;
 
                 if (actionID is SteelMaw)
                 {
@@ -630,10 +641,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Twinblood);
                     }
 
-                    if (gauge.HuntersDenReady)
+                    if (SwiftskinsDenReady)
                         return HuntersDen;
 
-                    if (gauge.PitOfDreadReady)
+                    if (PitOfDreadReady)
                         return SwiftskinsDen;
 
                     //1-2-3 (4-5-6) Combo
@@ -664,7 +675,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
-                            if (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50)
+                            if (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50 &&
+                                !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
+                                !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                                 return Reawaken;
 
                             //Pit of Dread Usage
@@ -694,6 +707,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var gauge = new TmpVPRGauge();
                 int NoxiousRefreshRange = Config.VPR_NoxiousRefreshRange;
+                bool PitOfDreadReady = gauge.DreadwinderPitCombo == DreadwinderPit.PitOfDread;
+                bool SwiftskinsDenReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsDen;
 
                 if (actionID is SteelMaw)
                 {
@@ -790,10 +805,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Twinblood);
                         }
 
-                        if (gauge.HuntersDenReady)
+                        if (SwiftskinsDenReady)
                             return HuntersDen;
 
-                        if (gauge.PitOfDreadReady)
+                        if (PitOfDreadReady)
                             return SwiftskinsDen;
                     }
 
@@ -837,7 +852,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Reawakend Usage
                             if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) &&
-                                (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50))
+                                (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentsOfferings >= 50) &&
+                                !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
+                                !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                                 return Reawaken;
 
                             //Pit of Dread Usage
@@ -869,6 +886,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var gauge = new TmpVPRGauge();
                 int positionalChoice = Config.VPR_Positional;
+                bool DreadwinderReady = gauge.DreadwinderPitCombo == DreadwinderPit.Dreadwinder;
+                bool HuntersCoilReady = gauge.DreadwinderPitCombo == DreadwinderPit.HuntersCoil;
+                bool SwiftskinsCoilReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsCoil;
 
                 if (actionID is Dreadwinder)
                 {
@@ -883,10 +903,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Twinblood);
                         }
 
-                        if (gauge.HuntersCoilReady)
+                        if (SwiftskinsCoilReady)
                             return HuntersCoil;
 
-                        if (gauge.DreadwinderReady)
+                        if (DreadwinderReady)
                             return SwiftskinsCoil;
                     }
 
@@ -901,10 +921,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Twinblood);
                         }
 
-                        if (gauge.SwiftskinsCoilReady)
+                        if (HuntersCoilReady)
                             return SwiftskinsCoil;
 
-                        if (gauge.DreadwinderReady)
+                        if (DreadwinderReady)
                             return HuntersCoil;
                     }
                 }
@@ -919,6 +939,8 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = new TmpVPRGauge();
+                bool PitOfDreadReady = gauge.DreadwinderPitCombo == DreadwinderPit.PitOfDread;
+                bool SwiftskinsDenReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsDen;
 
                 if (actionID is PitofDread)
                 {
@@ -930,10 +952,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.FellskinsVenom))
                             return OriginalHook(Twinblood);
                     }
-                    if (gauge.HuntersDenReady)
+                    if (SwiftskinsDenReady)
                         return HuntersDen;
 
-                    if (gauge.PitOfDreadReady)
+                    if (PitOfDreadReady)
                         return SwiftskinsDen;
                 }
                 return actionID;
