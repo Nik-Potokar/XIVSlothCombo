@@ -75,6 +75,6 @@ public enum DreadwinderPit : byte
     HuntersCoil = 2,
     SwiftskinsCoil = 3,
     PitOfDread = 4,
-    SwiftskinsDen = 5,
-    HuntersDen = 6
+    HuntersDen = 5,
+    SwiftskinsDen = 6
 }
