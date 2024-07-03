@@ -39,17 +39,12 @@ namespace XIVSlothCombo.Combos.PvE
             Impalement = 36931,       // Under Delirium
 
             // Buffing oGCDs
-            BloodWeapon = 7390,       // todo: remove this
-            Delirium = 7390,          // still the same :D
+            Delirium = 7390,
 
             // Burst Window
             LivingShadow = 16472,
             Shadowbringer = 25757,
             Disesteem = 36932,
-
-            // Gap-Closer
-            Plunge = 38512,          // todo: remove this
-            ShadowStride = 38512,    // todo: take this out of rotation
 
             // Ranged Option
             Unmend = 3624;
@@ -287,6 +282,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
         internal class DRK_oGCD : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_oGCD;
