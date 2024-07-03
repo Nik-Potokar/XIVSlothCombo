@@ -11,37 +11,63 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte JobID = 32;
 
         public const uint
+            // Single-Target 1-2-3 Combo
             HardSlash = 3617,
-            Unleash = 3621,
             SyphonStrike = 3623,
             Souleater = 3632,
-            SaltedEarth = 3639,
-            AbyssalDrain = 3641,
-            CarveAndSpit = 3643,
-            Delirium = 7390,
-            Quietus = 7391,
-            Bloodspiller = 7392,
-            FloodOfDarkness = 16466,
-            EdgeOfDarkness = 16467,
+
+            // AoE 1-2-3 Combo
+            Unleash = 3621,
             StalwartSoul = 16468,
-            FloodOfShadow = 16469,
-            EdgeOfShadow = 16470,
+
+            // Single-Target oGCDs
+            CarveAndSpit = 3643,      // With AbyssalDrain
+            EdgeOfDarkness = 16467,   // For MP
+            EdgeOfShadow = 16470,     // For MP // Upgrade of EdgeOfDarkness
+            Bloodspiller = 7392,      // For Blood
+            ScarletDelirium = 36928,  // Under Delirium
+            Comeuppance = 36929,      // Under Delirium
+            Torcleaver = 36930,       // Under Delirium
+
+            // AoE oGCDs
+            AbyssalDrain = 3641,      // With CarveAndSpit
+            FloodOfDarkness = 16466,  // For MP
+            FloodOfShadow = 16469,    // For MP // Upgrade of FloodOfDarkness
+            Quietus = 7391,           // For Blood
+            SaltedEarth = 3639,
+            SaltAndDarkness = 25755,  // Recast of Salted Earth
+            Impalement = 36931,       // Under Delirium
+
+            // Buffing oGCDs
+            BloodWeapon = 7390,       // todo: remove this
+            Delirium = 7390,          // still the same :D
+
+            // Burst Window
             LivingShadow = 16472,
-            SaltAndDarkness = 25755,
-            Oblation = 25754,
             Shadowbringer = 25757,
-            Plunge = 3640,
-            BloodWeapon = 3625,
+            Disesteem = 36932,
+
+            // Gap-Closer
+            Plunge = 38512,          // todo: remove this
+            ShadowStride = 38512,    // todo: take this out of rotation
+
+            // Ranged Option
             Unmend = 3624;
 
         public static class Buffs
         {
             public const ushort
+                // Main Buffs
                 BloodWeapon = 742,
-                Darkside = 751,
+                Delirium = 3836,
+
+                // Periodic Buffs
+                Darkside = 741,
                 BlackestNight = 1178,
-                Delirium = 1972,
-                SaltedEarth = 749;
+
+                // "DoT" Buffs
+                SaltedEarth = 749,
+                Scorn = 3837;
         }
 
         public static class Debuffs
