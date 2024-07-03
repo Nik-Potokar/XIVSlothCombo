@@ -2390,7 +2390,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region VIPER
 
-            if (preset == CustomComboPreset.VPR_ST_DreadwinderCombo && enabled)
+            if (preset == CustomComboPreset.VPR_ST_DreadwinderCombo && enabled || preset == CustomComboPreset.VPR_DreadwinderCoils && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
