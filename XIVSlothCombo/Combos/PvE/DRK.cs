@@ -74,8 +74,9 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public const string
-                DRK_KeepPlungeCharges = "DrkKeepPlungeCharges",
-                DRK_MPManagement = "DrkMPManagement",
+                DRK_ST_ManaSpenderPooling = "DRK_ST_ManaSpenderPooling",
+                DRK_ST_LivingDeadThreshold = "DRK_ST_LivingDeadThreshold",
+                DRK_AoE_LivingDeadThreshold = "DRK_AoE_LivingDeadThreshold",
                 DRK_VariantCure = "DRKVariantCure";
         }
 

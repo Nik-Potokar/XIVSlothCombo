@@ -1463,11 +1463,14 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region DARK KNIGHT
 
-            if (preset == CustomComboPreset.DRK_EoSPooling && enabled)
-                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_MPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
+            if (preset == CustomComboPreset.DRK_ST_ManaSpenderPooling && enabled)
+                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_ST_ManaSpenderPooling, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
 
-            if (preset == CustomComboPreset.DRK_Plunge && enabled)
-                UserConfig.DrawSliderInt(0, 1, DRK.Config.DRK_KeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
+            if (preset == CustomComboPreset.DRK_ST_CDs_LivingShadow && enabled)
+                UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_ST_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
+            if (preset == CustomComboPreset.DRK_AoE_CDs_LivingShadow && enabled)
+                UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_AoE_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
 
             if (preset == CustomComboPreset.DRKPvP_Burst)
                 UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
