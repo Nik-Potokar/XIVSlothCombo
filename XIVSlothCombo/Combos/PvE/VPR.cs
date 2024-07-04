@@ -1065,8 +1065,6 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-    }
-}
 
         internal class VPR_TwinTails : CustomCombo
         {
@@ -1099,12 +1097,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.FellskinsVenom))
                         return OriginalHook(Twinblood);
 
-                }
-                return actionID;
-            }
-                        if (gauge.AnguineTribute is 1)
-                            return OriginalHook(Reawaken);
-                    }
                 }
                 return actionID;
             }
