@@ -1508,7 +1508,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Opener)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener","", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener", "", 0);
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.46 Skill Speed Opener", "", 1);
             }
 
@@ -1535,11 +1535,11 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Litany)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LitanyHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_DragonSight)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_SightHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_Lance)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LanceChargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
@@ -2390,18 +2390,23 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region VIPER
 
-            if (preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled || preset == CustomComboPreset.VPR_DreadwinderCoils && enabled)
+            if ((preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled) || (preset == CustomComboPreset.VPR_DreadwinderCoils && enabled))
             {
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
             }
 
-            if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled || preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
+            if ((preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled) || (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled))
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
             if (preset == CustomComboPreset.VPR_ST_NoxiousGnash || preset == CustomComboPreset.VPR_AoE_NoxiousGnash)
             {
-                UserConfig.DrawSliderInt(0, 10, VPR.Config.VPR_NoxiousRefreshRange, "Seconds remaining before refreshing Noxious Gnash.", 150, SliderIncrements.Ones);
+                UserConfig.DrawRoundedSliderFloat(0, 10, VPR.Config.VPR_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
+            }
+
+            if (preset is CustomComboPreset.VPR_ST_Reawaken)
+            {
+                UserConfig.DrawRoundedSliderFloat(0, 10, VPR.Config.VPR_ST_Reawaken_Usage, "Stop using at Enemy HP %. Set to Zero to disable this check.", digits: 1);
             }
 
             if (preset == CustomComboPreset.VPR_ST_ComboHeals)
