@@ -3450,6 +3450,169 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region VIPER
+        [ReplaceSkill(VPR.SteelFangs)]
+        [ConflictingCombos(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        VPR_ST_SimpleMode = 20000,
+
+        #region Advanced ST Viper
+
+        [ReplaceSkill(VPR.SteelFangs)]
+        [ConflictingCombos(VPR_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", VPR.JobID)]
+        VPR_ST_AdvancedMode = 20001,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", VPR.JobID)]
+        VPR_ST_Opener = 20002,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
+        VPR_ST_NoxiousGnash = 20003,
+
+        #region Cooldowns ST
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", VPR.JobID)]
+        VPR_ST_CDs = 20004,
+
+        [ParentCombo(VPR_ST_CDs)]
+        [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
+        VPR_ST_SerpentsIre = 20005,
+
+        [ParentCombo(VPR_ST_CDs)]
+        [CustomComboInfo("Dreadwinder", "Adds Dreadwinder to the rotation.", VPR.JobID)]
+        VPR_ST_Dreadwinder = 20006,
+
+        [ParentCombo(VPR_ST_Dreadwinder)]
+        [CustomComboInfo("Dreadwinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
+        VPR_ST_DreadwinderCombo = 20007,
+
+        #endregion
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
+        VPR_ST_SerpentsTail = 20008,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
+        VPR_ST_UncoiledFury = 20009,
+
+        [ParentCombo(VPR_ST_UncoiledFury)]
+        [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
+        VPR_ST_UncoiledFuryCombo = 200010,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
+        VPR_ST_Reawaken = 20011,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Reawaken Combo", "Adds Generation and Legacy to the rotation.", VPR.JobID)]
+        VPR_ST_ReawakenCombo = 20012,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Ranged Uptime Option", "Adds Writhing Snap to the rotation when you are out of melee range.", VPR.JobID)]
+        VPR_ST_RangedUptime = 20096,
+
+        [ParentCombo(VPR_ST_RangedUptime)]
+        [CustomComboInfo("Add Uncoiled Fury", "Adds Uncoiled Fury to the rotation when you are out of melee range and have Rattling Coil charges.", VPR.JobID)]
+        VPR_ST_RangedUptimeUncoiledFury = 20097,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", VPR.JobID)]
+        VPR_ST_ComboHeals = 20098,
+
+        [ParentCombo(VPR_ST_AdvancedMode)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
+        VPR_TrueNorthDynamic = 20099,
+
+        #endregion
+
+        [ReplaceSkill(VPR.SteelMaw)]
+        [ConflictingCombos(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        VPR_AoE_SimpleMode = 20100,
+
+        #region Advanced AoE Viper
+
+        [ReplaceSkill(VPR.SteelMaw)]
+        [ConflictingCombos(VPR_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", VPR.JobID)]
+        VPR_AoE_AdvancedMode = 20101,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
+        VPR_AoE_NoxiousGnash = 20102,
+
+        #region Cooldowns AoE
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", VPR.JobID)]
+        VPR_AoE_CDs = 20103,
+
+        [ParentCombo(VPR_AoE_CDs)]
+        [CustomComboInfo("Serpents Ire", "Adds Serpents Ire to the rotation.", VPR.JobID)]
+        VPR_AoE_SerpentsIre = 20104,
+
+        [ParentCombo(VPR_AoE_CDs)]
+        [CustomComboInfo("Pit Of Dread", "Adds Pit Of Dread to the rotation.", VPR.JobID)]
+        VPR_AoE_PitOfDread = 20105,
+
+        [ParentCombo(VPR_AoE_PitOfDread)]
+        [CustomComboInfo("Pit Of Dread Combo", "Adds Swiftskin's Den and Hunter's Den to the rotation.", VPR.JobID)]
+        VPR_AoE_PitOfDreadCombo = 20106,
+
+        #endregion
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
+        VPR_AoE_SerpentsTail = 20107,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
+        VPR_AoE_UncoiledFury = 20108,
+
+        [ParentCombo(VPR_AoE_UncoiledFury)]
+        [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
+        VPR_AoE_UncoiledFuryCombo = 20109,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
+        VPR_AoE_Reawaken = 20110,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Reawaken Combo", "Adds Generation and Legacy to the rotation.", VPR.JobID)]
+        VPR_AoE_ReawakenCombo = 20112,
+
+        [ParentCombo(VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", VPR.JobID)]
+        VPR_AoE_ComboHeals = 20199,
+
+        #endregion
+
+        [ReplaceSkill(VPR.Dreadwinder)]
+        [CustomComboInfo("Dreadwinder - Coils", "Replaces Dreadwinder with the Coils.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        VPR_DreadwinderCoils = 20200,
+
+        [ReplaceSkill(VPR.PitofDread)]
+        [CustomComboInfo("Pit Of Dread - Dens", "Replaces Pits Of Dread with the Dens.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        VPR_PitOfDreadDens = 20201,
+
+        [ReplaceSkill(VPR.UncoiledFury)]
+        [CustomComboInfo("Uncoiled - Twins", "Replaces Uncoiled Fury with Uncoiled Twinfang and Uncoiled Twinblood.", VPR.JobID)]
+        VPR_UncoiledTwins = 20202,
+
+        [ReplaceSkill(VPR.Reawaken)]
+        [CustomComboInfo("Reawaken - Legacy", "Replaces Reawaken with the Generations and Legacy's.", VPR.JobID)]
+        VPR_ReawakenLegacy = 20203,
+
+        [ReplaceSkill(VPR.SerpentsTail)]
+        [CustomComboInfo("TwinTails", "Combines Serpent's Tail, Twinfang, and Twinblood to one button.", VPR.JobID)]
+        VPR_ToshiTails = 20204,
+
+        #endregion
+
         #region WARRIOR
 
         [ReplaceSkill(WAR.StormsPath)]
