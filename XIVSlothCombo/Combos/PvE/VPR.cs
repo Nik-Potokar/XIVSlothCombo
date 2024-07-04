@@ -103,7 +103,8 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserFloat
                 VPR_ST_Reawaken_Usage = new("VPR_ST_Reawaken_Usage", 2),
                 VPR_AoE_Reawaken_Usage = new("VPR_AoE_Reawaken_Usage", 2),
-                VPR_NoxiousDebuffRefresh = new("VPR_NoxiousDebuffRefresh", 20.0f);
+                VPR_ST_NoxiousDebuffRefresh = new("VPR_ST_NoxiousDebuffRefresh", 20.0f),
+                VPR_AoE_NoxiousDebuffRefresh = new("VPR_AoE_NoxiousDebuffRefresh", 20.0f);
         }
 
         internal class VPR_ST_SimpleMode : CustomCombo
@@ -308,7 +309,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 var gauge = new TmpVPRGauge();
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID);
-                float NoxiousDebuffRefresh = Config.VPR_NoxiousDebuffRefresh;
+                float ST_NoxiousDebuffRefresh = Config.VPR_ST_NoxiousDebuffRefresh;
                 int positionalChoice = Config.VPR_Positional;
                 bool DreadwinderReady = gauge.DreadwinderPitCombo == DreadwinderPit.Dreadwinder;
                 bool HuntersCoilReady = gauge.DreadwinderPitCombo == DreadwinderPit.HuntersCoil;
@@ -552,12 +553,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if ((GetBuffRemainingTime(Buffs.Swiftscaled) < 20 ||
-                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) <= NoxiousDebuffRefresh) &&
+                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) <= ST_NoxiousDebuffRefresh) &&
                             LevelChecked(SwiftskinsSting) && !ActionReady(Dreadwinder))
                             return OriginalHook(DreadFangs);
 
                         if ((GetBuffRemainingTime(Buffs.HuntersInstinct) < 20 ||
-                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) > NoxiousDebuffRefresh) && LevelChecked(HuntersSting))
+                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) > ST_NoxiousDebuffRefresh) && LevelChecked(HuntersSting))
                             return OriginalHook(SteelFangs);
                     }
                     return OriginalHook(DreadFangs);
@@ -586,7 +587,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return UncoiledFury;
 
                     //Serpents Ire usage
-                    if (ActionReady(SerpentsIre) && CanWeave(actionID) && gauge.RattlingCoilStacks <=2)
+                    if (ActionReady(SerpentsIre) && CanWeave(actionID) && gauge.RattlingCoilStacks <= 2)
                         return SerpentsIre;
 
                     //Reawaken combo
@@ -700,7 +701,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetBuffRemainingTime(Buffs.HuntersInstinct) > 10 &&
                                 GetDebuffRemainingTime(Debuffs.NoxiousGnash) > 10 &&
                                 !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
-                                !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) && 
+                                !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                                 !WasLastAction(SerpentsIre))
                                 return Reawaken;
 
@@ -730,7 +731,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = new TmpVPRGauge();
-                float NoxiousDebuffRefresh = Config.VPR_NoxiousDebuffRefresh;
+                float AoE_NoxiousDebuffRefresh = Config.VPR_AoE_NoxiousDebuffRefresh;
                 bool PitOfDreadReady = gauge.DreadwinderPitCombo == DreadwinderPit.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadwinderPitCombo == DreadwinderPit.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadwinderPitCombo == DreadwinderPit.HuntersDen;
@@ -896,12 +897,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if ((GetBuffRemainingTime(Buffs.Swiftscaled) < 20 ||
-                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) <= NoxiousDebuffRefresh) &&
+                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) <= AoE_NoxiousDebuffRefresh) &&
                             LevelChecked(SwiftskinsBite) && !ActionReady(PitofDread))
                             return OriginalHook(DreadMaw);
 
                         if ((GetBuffRemainingTime(Buffs.HuntersInstinct) < 10 ||
-                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) > NoxiousDebuffRefresh) && LevelChecked(HuntersBite))
+                            GetDebuffRemainingTime(Debuffs.NoxiousGnash) > AoE_NoxiousDebuffRefresh) && LevelChecked(HuntersBite))
                             return OriginalHook(SteelMaw);
                     }
                     return OriginalHook(DreadMaw);
@@ -1072,6 +1073,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = new TmpVPRGauge();
+
                 if (actionID is SerpentsTail)
                 {
                     if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&

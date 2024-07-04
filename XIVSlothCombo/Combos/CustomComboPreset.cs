@@ -3604,13 +3604,14 @@ namespace XIVSlothCombo.Combos
         VPR_UncoiledTwins = 20202,
 
         [ReplaceSkill(VPR.Reawaken)]
-        [CustomComboInfo("Reawawken - Legacy", "Replaces Reawaken with the Generations and Legacy's.", VPR.JobID)]
+        [CustomComboInfo("Reawaken - Legacy", "Replaces Reawaken with the Generations and Legacy's.", VPR.JobID)]
         VPR_ReawakenLegacy = 20203,
 
         [ReplaceSkill(VPR.SerpentsTail)]
         [CustomComboInfo("TwinTails", "Combines Serpent's Tail, Twinfang, and Twinblood to one button.", VPR.JobID)]
         VPR_TwinTails = 20204,
 
+        
         #endregion
 
         #region WARRIOR
