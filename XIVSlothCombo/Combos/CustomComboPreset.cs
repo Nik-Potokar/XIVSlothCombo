@@ -1135,19 +1135,19 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DRK_AoE_CDs)]
         [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE combo.", DRK.JobID)]
-        DRK_AoE_Shadowbringer = 5020,
+        DRK_AoE_CDs_Shadowbringer = 5020,
 
         [ParentCombo(DRK_AoE_CDs)]
         [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AoE on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_AoE_LivingShadow = 5021,
+        DRK_AoE_CDs_LivingShadow = 5021,
 
         [ParentCombo(DRK_AoE_CDs)]
         [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE combo when you fall below 60 percent hp.", DRK.JobID)]
-        DRK_AoE_AbyssalDrain = 5022,
+        DRK_AoE_CDs_AbyssalDrain = 5022,
 
         [ParentCombo(DRK_AoE_CDs)]
         [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AoE on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_AoE_SaltedEarth = 5023,
+        DRK_AoE_CDs_SaltedEarth = 5023,
 
         #endregion
         // Last value = 5023
