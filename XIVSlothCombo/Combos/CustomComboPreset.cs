@@ -3609,7 +3609,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(VPR.SerpentsTail)]
         [CustomComboInfo("TwinTails", "Combines Serpent's Tail, Twinfang, and Twinblood to one button.", VPR.JobID)]
-        VPR_ToshiTails = 20204,
+        VPR_TwinTails = 20204,
 
         #endregion
 

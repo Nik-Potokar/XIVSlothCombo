@@ -1059,9 +1059,9 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-        internal class VPR_ToshiTails : CustomCombo
+        internal class VPR_TwinTails : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ToshiTails;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_TwinTails;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 var gauge = new TmpVPRGauge();
