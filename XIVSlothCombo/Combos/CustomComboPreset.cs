@@ -1048,10 +1048,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID)]
         DRK_ST_CDs = 5004,
 
+        // todo: move this out of the cooldowns section
         [ParentCombo(DRK_ST_CDs)]
         [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
         DRK_ST_CDs_Bloodspiller = 5005,
 
+        // todo: move this under DRK_ST_CDs_Bloodspiller
         [ParentCombo(DRK_ST_CDs)]
         [CustomComboInfo("Delayed Bloodspiller Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID)]
         DRK_ST_CDs_DelayedBloodspiller = 5006,
