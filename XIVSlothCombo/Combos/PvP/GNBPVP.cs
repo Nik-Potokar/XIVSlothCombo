@@ -69,7 +69,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                         if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && HasEffect(Buffs.NoMercy) &&
                             GetBuffRemainingTime(Buffs.NoMercy) <= 1.5f && GetBuffRemainingTime(Buffs.NoMercy) > 0 &&
-                            GetRemainingCharges(RoughDivide) == 1)
+                            GetRemainingCharges(RoughDivide) >= 1)
                             return RoughDivide;
                     }
 
