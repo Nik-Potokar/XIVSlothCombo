@@ -23,18 +23,60 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static implicit operator string(UserData o) => (o.pName);
     }
 
-    internal class UserFloat(string v) : UserData(v)
+    internal class UserFloat : UserData
     {
+        // Constructor with only the string parameter
+        public UserFloat(string v) : this(v, 0.0f) { }
+
+        // Constructor with both string and float parameters
+        public UserFloat(string v, float defaults) : base(v) // Overload constructor to preload data
+        {
+            if (!PluginConfiguration.CustomFloatValues.ContainsKey(this.pName)) // if it isn't there, set
+            {
+                PluginConfiguration.SetCustomFloatValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
+
+        // Implicit conversion to float
         public static implicit operator float(UserFloat o) => PluginConfiguration.GetCustomFloatValue(o.pName);
     }
 
-    internal class UserInt(string v) : UserData(v)
+    internal class UserInt : UserData
     {
+        // Constructor with only the string parameter
+        public UserInt(string v) : this(v, 0) { } // Chaining to the other constructor with a default value
+
+        // Constructor with both string and int parameters
+        public UserInt(string v, int defaults) : base(v) // Overload constructor to preload data
+        {
+            if (!PluginConfiguration.CustomIntValues.ContainsKey(this.pName)) // if it isn't there, set
+            {
+                PluginConfiguration.SetCustomIntValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
+
+        // Implicit conversion to int
         public static implicit operator int(UserInt o) => PluginConfiguration.GetCustomIntValue(o.pName);
     }
 
-    internal class UserBool(string v) : UserData(v)
+    internal class UserBool : UserData
     {
+        // Constructor with only the string parameter
+        public UserBool(string v) : this(v, false) { }
+
+        // Constructor with both string and bool parameters
+        public UserBool(string v, bool defaults) : base(v) // Overload constructor to preload data
+        {
+            if (!PluginConfiguration.CustomBoolValues.ContainsKey(this.pName)) // if it isn't there, set
+            {
+                PluginConfiguration.SetCustomBoolValue(this.pName, defaults);
+                Service.Configuration.Save();
+            }
+        }
+
+        // Implicit conversion to bool
         public static implicit operator bool(UserBool o) => PluginConfiguration.GetCustomBoolValue(o.pName);
     }
 
