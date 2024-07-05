@@ -4,6 +4,8 @@ using System.Numerics;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using StructsObject = FFXIVClientStructs.FFXIV.Client.Game.Object;
@@ -129,7 +131,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             //if (checkMO && HasFriendlyTarget(tm.MouseOverTarget)) healTarget = tm.MouseOverTarget;
             if (checkMOPartyUI)
             {
-                StructsObject.GameObject* t = PartyTargetingService.UITarget;
+                StructsObject.GameObject* t = Framework.Instance()->GetUIModule()->GetPronounModule()->UiMouseOverTarget;
                 if (t != null && t->GetGameObjectId().ObjectId != 0)
                 {
                     IGameObject? uiTarget =  Service.ObjectTable.Where(x => x.GameObjectId == t->GetGameObjectId().ObjectId).FirstOrDefault();

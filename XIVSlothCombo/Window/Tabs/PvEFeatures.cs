@@ -154,7 +154,7 @@ namespace XIVSlothCombo.Window.Tabs
         {
             if (!Messages.PrintBLUMessage(jobName)) return;
 
-            foreach (var (preset, info) in groupedPresets[jobName].Where(x => !PresetStorage.IsSecret(x.Preset) &&
+            foreach (var (preset, info) in groupedPresets[jobName].Where(x => !PresetStorage.IsPvP(x.Preset) &&
                                                                                 !PresetStorage.IsVariant(x.Preset) &&
                                                                                 !PresetStorage.IsBozja(x.Preset) &&
                                                                                 !PresetStorage.IsEureka(x.Preset)))
