@@ -37,6 +37,8 @@ namespace XIVSlothCombo.Combos.PvE
             BlastingZone = 16165,
             Bloodfest = 16164,
             Hypervelocity = 25759,
+            LionHeart = 36939,
+            NobleBlood = 36938,
             ReignOfBeasts = 36937,
             FatedBrand = 36936,
             LightningShot = 16143;

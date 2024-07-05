@@ -1508,7 +1508,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Opener)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener","", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener", "", 0);
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.46 Skill Speed Opener", "", 1);
             }
 
@@ -1535,11 +1535,11 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Litany)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LitanyHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_DragonSight)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_SightHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_Lance)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LanceChargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
