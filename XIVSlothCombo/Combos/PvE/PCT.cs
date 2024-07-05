@@ -16,6 +16,7 @@ namespace XIVSlothCombo.Combos.PvE
             BlizzardinCyan = 34653,
             BlizzardIIinCyan = 34659,
             ClawMotif = 34666,
+            ClawedMuse = 34672,
             CometinBlack = 34663,
             CreatureMotif = 34689,
             FireInRed = 34650,
@@ -96,6 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+
                     if (HasEffect(Buffs.RainbowBright))
                         return OriginalHook(RainbowDrip);
 
@@ -104,7 +106,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.SubtractiveSpectrum) && !HasEffect(Buffs.SubtractivePalette) && canWeave)
                             return OriginalHook(SubtractivePalette);
 
-                        if (MogoftheAges.LevelChecked() && gauge.MooglePortraitReady && IsOffCooldown(OriginalHook(MogoftheAges)))
+                        if (MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)))
                             return OriginalHook(MogoftheAges);
 
                         if (!HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && GetBuffRemainingTime(Buffs.StarryMuse) >= 15f)
@@ -125,31 +127,32 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.PalleteGauge >= 50 && !HasEffect(Buffs.SubtractivePalette) && canWeave)
                         return OriginalHook(SubtractivePalette);
 
-                    if (HasEffect(Buffs.HammerTime))
+                    if (HasEffect(Buffs.HammerTime) && !canWeave)
                         return OriginalHook(HammerStamp);
 
                     if (InCombat())
                     {
+                        if (gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(MogoftheAges) && IsOffCooldown(ScenicMuse) && canWeave)
+                            return OriginalHook(ScenicMuse);
+
+                        if (MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldown(LivingMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || !ScenicMuse.LevelChecked()) && canWeave)
+                            return OriginalHook(MogoftheAges);
+
+                        if (!HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()) && canWeave)
+                            return OriginalHook(SteelMuse);
+
+                        if (gauge.CreatureMotifDrawn && (!(gauge.MooglePortraitReady || gauge.MadeenPortraitReady) || GetCooldown(LivingMuse).CooldownRemaining > GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(LivingMuse) == GetMaxCharges(LivingMuse) || !ScenicMuse.LevelChecked()) && HasCharges(OriginalHook(LivingMuse)) && canWeave)
+                            return OriginalHook(LivingMuse);
+
                         if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && GetCooldownRemainingTime(ScenicMuse) <= GetActionCastTime(OriginalHook(LandscapeMotif)))
                             return OriginalHook(LandscapeMotif);
 
                         if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn && (HasCharges(LivingMuse) || GetCooldownChargeRemainingTime(LivingMuse) <= GetActionCastTime(OriginalHook(CreatureMotif))))
                             return OriginalHook(CreatureMotif);
 
-                        if (WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= GetActionCastTime(OriginalHook(WeaponMotif))))
+                        if (WeaponMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= GetActionCastTime(OriginalHook(WeaponMotif))))
                             return OriginalHook(WeaponMotif);
 
-                        if (gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && gauge.MooglePortraitReady && IsOffCooldown(MogoftheAges) && IsOffCooldown(ScenicMuse) && canWeave)
-                            return OriginalHook(ScenicMuse);
-
-                        if (MogoftheAges.LevelChecked() && gauge.MooglePortraitReady && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldown(LivingMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || !ScenicMuse.LevelChecked()) && canWeave)
-                            return OriginalHook(MogoftheAges);
-
-                        if (!HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()) && canWeave)
-                            return OriginalHook(SteelMuse);
-
-                        if (gauge.CreatureMotifDrawn && (!gauge.MooglePortraitReady || GetCooldown(LivingMuse).CooldownRemaining > GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(LivingMuse) == GetMaxCharges(LivingMuse) || !ScenicMuse.LevelChecked()) && HasCharges(OriginalHook(LivingMuse)) && canWeave)
-                            return OriginalHook(LivingMuse);
                     }
                     if (gauge.Paint > 0 && HasEffect(Buffs.MonochromeTones))
                         return OriginalHook(CometinBlack);
@@ -192,7 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.SubtractiveSpectrum) && !HasEffect(Buffs.SubtractivePalette) && canWeave)
                             return OriginalHook(SubtractivePalette);
 
-                        if (MogoftheAges.LevelChecked() && gauge.MooglePortraitReady && IsOffCooldown(OriginalHook(MogoftheAges)))
+                        if (MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)))
                             return OriginalHook(MogoftheAges);
 
                         if (!HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && GetBuffRemainingTime(Buffs.StarryMuse) >= 15f)
@@ -213,31 +216,31 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.PalleteGauge >= 50 && !HasEffect(Buffs.SubtractivePalette) && canWeave)
                         return OriginalHook(SubtractivePalette);
 
-                    if (HasEffect(Buffs.HammerTime))
+                    if (HasEffect(Buffs.HammerTime) && !canWeave)
                         return OriginalHook(HammerStamp);
 
                     if (InCombat())
                     {
+                        if (gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(MogoftheAges) && IsOffCooldown(ScenicMuse) && canWeave)
+                            return OriginalHook(ScenicMuse);
+
+                        if (MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldown(MogoftheAges).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || !ScenicMuse.LevelChecked()) && canWeave)
+                            return OriginalHook(MogoftheAges);
+
+                        if (!HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()) && canWeave)
+                            return OriginalHook(SteelMuse);
+
+                        if (gauge.CreatureMotifDrawn && (!(gauge.MooglePortraitReady || gauge.MadeenPortraitReady) || GetCooldown(LivingMuse).CooldownRemaining > GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(LivingMuse) == GetMaxCharges(LivingMuse) || !ScenicMuse.LevelChecked()) && HasCharges(OriginalHook(LivingMuse)) && canWeave)
+                            return OriginalHook(LivingMuse);
+
                         if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && GetCooldownRemainingTime(ScenicMuse) <= GetActionCastTime(OriginalHook(LandscapeMotif)))
                             return OriginalHook(LandscapeMotif);
 
                         if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn && (HasCharges(LivingMuse) || GetCooldownChargeRemainingTime(LivingMuse) <= GetActionCastTime(OriginalHook(CreatureMotif))))
                             return OriginalHook(CreatureMotif);
 
-                        if (WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= GetActionCastTime(OriginalHook(WeaponMotif))))
+                        if (WeaponMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= GetActionCastTime(OriginalHook(WeaponMotif))))
                             return OriginalHook(WeaponMotif);
-
-                        if (gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && gauge.MooglePortraitReady && IsOffCooldown(MogoftheAges) && IsOffCooldown(ScenicMuse) && canWeave)
-                            return OriginalHook(ScenicMuse);
-
-                        if (MogoftheAges.LevelChecked() && gauge.MooglePortraitReady && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldown(LivingMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || !ScenicMuse.LevelChecked()) && canWeave)
-                            return OriginalHook(MogoftheAges);
-
-                        if (!HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()) && canWeave)
-                            return OriginalHook(SteelMuse);
-
-                        if (gauge.CreatureMotifDrawn && (!gauge.MooglePortraitReady || GetCooldown(LivingMuse).CooldownRemaining > GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(LivingMuse) == GetMaxCharges(LivingMuse) || !ScenicMuse.LevelChecked()) && HasCharges(OriginalHook(LivingMuse)) && canWeave)
-                            return OriginalHook(LivingMuse);
                     }
 
                     if (gauge.Paint > 0 && HasEffect(Buffs.MonochromeTones))
