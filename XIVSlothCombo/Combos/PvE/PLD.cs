@@ -41,7 +41,7 @@ namespace XIVSlothCombo.Combos.PvE
             //Supplication = 36918, // Second Atonement
             //Sepulchre = 36919, // Third Atonement
             Intervene = 16461,
-            //BladeOfHonor = 36922,
+            BladeOfHonor = 36922,
             Sheltron = 3542;
 
         public static class Buffs
@@ -139,7 +139,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (HasEffect(Buffs.GoringBladeReady))
+                            if (HasEffect(Buffs.GoringBladeReady) && WasLastAbility(BladeOfHonor))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -389,7 +389,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange())
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && WasLastAbility(BladeOfHonor))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
