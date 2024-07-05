@@ -814,7 +814,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Uncoiled Fury usage
-                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury))
+                    if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFury))
                     {
                         if (LevelChecked(UncoiledFury) && gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges &&
                             !PitOfDreadReady && !HuntersDenReady && !SwiftskinsDenReady &&
