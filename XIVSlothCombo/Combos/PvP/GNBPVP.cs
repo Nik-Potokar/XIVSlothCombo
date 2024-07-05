@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.CustomComboNS;
+﻿using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
@@ -19,6 +20,7 @@ namespace XIVSlothCombo.Combos.PvP
             EyeGouge = 29110,
             RoughDivide = 29123,
             DrawAndJunction = 29124,
+            Guard = 29054,
             JunctionedCast = 29125;
 
         internal class Debuffs
@@ -36,6 +38,7 @@ namespace XIVSlothCombo.Combos.PvP
                 ReadyToBlast = 3041,
                 NoMercy = 3042,
                 PowderBarrel = 3043,
+                Guard = 3054,
                 JunctionTank = 3044,
                 JunctionDPS = 3045,
                 JunctionHealer = 3046;
@@ -70,11 +73,15 @@ namespace XIVSlothCombo.Combos.PvP
                             return RoughDivide;
                     }
 
+                    if (IsOffCooldown(DoubleDown) &&
+                        GetRemainingCharges(RoughDivide) >= 1)
+                        return RoughDivide;
+
                     // Gnashing Fang
-                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown))
+                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && InMeleeRange() && !TargetHasEffect(Buffs.Guard))
                         return DoubleDown;
 
-                    if ((IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy)) ||
+                    if ((IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && !TargetHasEffect(Buffs.Guard) && HasEffect(Buffs.NoMercy)) ||
                         WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw))
                         return OriginalHook(GnashingFang);
                 }
