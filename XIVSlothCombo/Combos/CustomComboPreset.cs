@@ -1428,19 +1428,9 @@ namespace XIVSlothCombo.Combos
         GNB_ST_BurstStrike = 7011,
         #endregion
 
-        #region Rough Divide
-        [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide to the main combo whenever it's available.", GNB.JobID)]
-        GNB_ST_RoughDivide = 7012,
-
-        [ParentCombo(GNB_ST_RoughDivide)]
-        [CustomComboInfo("Melee Rough Divide Option", "Uses Rough Divide when under No Mercy, burst cooldowns when available, not moving, and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", GNB.JobID)]
-        GNB_ST_MeleeRoughDivide = 7013,
-        #endregion
-
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Lightning Shot Uptime Option", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID)]
-        GNB_ST_RangedUptime = 7014,
+        GNB_ST_RangedUptime = 7012,
         #endregion
 
         #region Gnashing Fang
