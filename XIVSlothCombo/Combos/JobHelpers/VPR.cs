@@ -102,6 +102,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             HuntersCoil,
             TwinfangBite,
             TwinbloodBite];
+
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
         private static bool CanOpener => HasCooldowns() && LevelChecked;
@@ -182,8 +183,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
-                if (((actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2) ||
-                        (actionID == SerpentsIre && CustomComboFunctions.IsOnCooldown(SerpentsIre))) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                if (((actionID == SerpentsIre && CustomComboFunctions.IsOnCooldown(SerpentsIre)) ||
+                    (actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
@@ -241,6 +242,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
     }
     internal static class VPRHelpers
     {
-        public static bool HasRattlingCoilStack(this TmpVPRGauge gauge) => gauge.RattlingCoilStacks > 0;
+        public static bool HasRattlingCoilStack(this VPRGauge gauge) => gauge.RattlingCoilStacks > 0;
     }
 }

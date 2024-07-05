@@ -2396,8 +2396,11 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
             }
 
-            if ((preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled) || (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled))
-                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+            if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
+                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
+                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
             if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
             {
@@ -2433,8 +2436,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.VPR_ReawakenLegacy)
             {
-                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Reawaken", "Replaces Reawaken with Full Generation - Legacy combo.", 1);
-                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces SteelFangs", "Replaces SteelFangs with Full Generation - Legacy combo.", 2);
+                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Reawaken", "Replaces Reawaken with Full Generation - Legacy combo.", 0);
+                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces SteelFangs", "Replaces SteelFangs with Full Generation - Legacy combo.", 1);
             }
 
             #endregion

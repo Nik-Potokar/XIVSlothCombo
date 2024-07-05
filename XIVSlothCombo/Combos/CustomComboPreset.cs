@@ -3609,13 +3609,12 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(VPR_ReawakenLegacy)]
         [CustomComboInfo("Reawaken - Legacy", "Replaces Option with the Legacy's.", VPR.JobID)]
-        VPR_ReawakenLegacyWeaves =20204,
+        VPR_ReawakenLegacyWeaves = 20204,
 
         [ReplaceSkill(VPR.SerpentsTail)]
         [CustomComboInfo("TwinTails", "Combines Serpent's Tail, Twinfang, and Twinblood to one button.", VPR.JobID)]
         VPR_TwinTails = 20205,
 
-        
         #endregion
 
         #region WARRIOR
