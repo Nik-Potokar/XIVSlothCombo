@@ -66,7 +66,8 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Debuffs
         {
             public const ushort
-            Dismantled = 2887;
+            Dismantled = 2887,
+                Bioblaster = 1866;
         }
 
         public static class Config
@@ -99,7 +100,7 @@ namespace XIVSlothCombo.Combos.PvE
                 double heatblastRC = 1.5;
                 bool drillCD = !ActionReady(Drill) || (ActionReady(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
-                bool sawCD = !ActionReady(Chainsaw) || (ActionReady(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
+                bool sawCD = !ActionReady(OriginalHook(Chainsaw)) || (ActionReady(OriginalHook(Chainsaw)) && GetCooldownRemainingTime(OriginalHook(Chainsaw)) > heatblastRC * 6);
 
                 if (actionID is SplitShot)
                 {
@@ -122,7 +123,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.HeadGraze;
 
                     // Wildfire
-                    if (CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge) && gauge.IsOverheated)
+                    if (CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge))
                         return Wildfire;
 
                     // BarrelStabilizer use and Full metal field
@@ -225,7 +226,7 @@ namespace XIVSlothCombo.Combos.PvE
                     return true;
                 }
 
-                if (LevelChecked(Drill) &&
+                if (LevelChecked(Drill) && !WasLastWeaponskill(Drill) &&
                     ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))
                 {
                     actionId = Drill;
@@ -276,7 +277,7 @@ namespace XIVSlothCombo.Combos.PvE
                 double heatblastRC = 1.5;
                 bool drillCD = !ActionReady(Drill) || (ActionReady(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
-                bool sawCD = !ActionReady(Chainsaw) || (ActionReady(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
+                bool sawCD = !ActionReady(OriginalHook(Chainsaw)) || (ActionReady(OriginalHook(Chainsaw)) && GetCooldownRemainingTime(OriginalHook(Chainsaw)) > heatblastRC * 6);
 
                 if (actionID is SplitShot)
                 {
@@ -291,7 +292,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
 
                     // Opener for MCH
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && HasBattleTarget())
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener))
                     {
                         if (MCHOpener.DoFullOpener(ref actionID, false))
                             return actionID;
@@ -307,7 +308,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge) && gauge.IsOverheated)
+                        CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge))
                         return Wildfire;
 
                     // BarrelStabilizer use and Full metal field
@@ -321,7 +322,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(RookAutoturret);
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                            CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && LevelChecked(Hypercharge) && !gauge.IsOverheated)
+                        CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && LevelChecked(Hypercharge) && !gauge.IsOverheated)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
                         if (WasLastAction(FullMetalField) ||
@@ -429,7 +430,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
                     reassembledDrill &&
-                    LevelChecked(Drill) &&
+                    LevelChecked(Drill) && !WasLastWeaponskill(Drill) &&
                     ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))
                 {
                     actionId = Drill;
@@ -509,13 +510,13 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.ExcavatorReady))
                         return OriginalHook(Chainsaw);
 
-                    if (ActionReady(BioBlaster))
+                    if (ActionReady(BioBlaster) && !TargetHasEffect(Debuffs.Bioblaster))
                         return OriginalHook(BioBlaster);
 
                     if (ActionReady(Flamethrower) && !IsMoving)
                         return OriginalHook(Flamethrower);
 
-                    if (!gauge.IsOverheated && gauge.Battery >= Config.MCH_AoE_TurretUsage)
+                    if (!gauge.IsOverheated && gauge.Battery == 100)
                         return OriginalHook(RookAutoturret);
 
                     // Hypercharge        
@@ -613,7 +614,8 @@ namespace XIVSlothCombo.Combos.PvE
                         LevelChecked(AutoCrossbow) && gauge.IsOverheated)
                         return AutoCrossbow;
 
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Bioblaster) && ActionReady(BioBlaster))
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Bioblaster) &&
+                        ActionReady(BioBlaster) && !TargetHasEffect(Debuffs.Bioblaster))
                         return OriginalHook(BioBlaster);
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_FlameThrower) && ActionReady(Flamethrower) && !IsMoving)
