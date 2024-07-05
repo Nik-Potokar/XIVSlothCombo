@@ -249,9 +249,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SpiritsWithin);
                         }
 
-                        if (HasEffect(Buffs.GoringBladeReady))
-                            return GoringBlade;
-
                         if (HasEffect(Buffs.Requiescat))
                         {
                             if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) &&
@@ -577,9 +574,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SpiritsWithin);
                         }
                         
-                        if (HasEffect(Buffs.GoringBladeReady))
-                            return GoringBlade;
-
                         if (HasEffect(Buffs.Requiescat))
                         {
                             // Confiteor & Blades
