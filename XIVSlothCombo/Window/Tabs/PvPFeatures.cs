@@ -47,7 +47,7 @@ namespace XIVSlothCombo.Window.Tabs
                     });
                     ImGui.Spacing();
 
-                    foreach (string? jobName in groupedPresets.Keys)
+                    foreach (string? jobName in groupedPresets.Where(x => x.Value.Any(y => PresetStorage.IsPvP(y.Preset))).Select(x => x.Key))
                     {
                         string abbreviation = groupedPresets[jobName].First().Info.JobShorthand;
                         string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
@@ -118,7 +118,7 @@ namespace XIVSlothCombo.Window.Tabs
 
         private static void DrawHeadingContents(string jobName, int i)
         {
-            foreach (var (preset, info) in groupedPresets[jobName].Where(x => PresetStorage.IsSecret(x.Preset)))
+            foreach (var (preset, info) in groupedPresets[jobName].Where(x => PresetStorage.IsPvP(x.Preset)))
             {
                 InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
 

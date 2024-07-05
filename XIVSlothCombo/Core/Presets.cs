@@ -10,7 +10,7 @@ namespace XIVSlothCombo.Core
 {
     internal static class PresetStorage
     {
-        private static HashSet<CustomComboPreset>? SecretCombos;
+        private static HashSet<CustomComboPreset>? PvPCombos;
         private static HashSet<CustomComboPreset>? VariantCombos;
         private static HashSet<CustomComboPreset>? BozjaCombos;
         private static HashSet<CustomComboPreset>? EurekaCombos;
@@ -20,8 +20,8 @@ namespace XIVSlothCombo.Core
         public static void Init()
         {
             // Secret combos
-            SecretCombos = Enum.GetValues<CustomComboPreset>()
-                .Where(preset => preset.GetAttribute<SecretCustomComboAttribute>() != default)
+            PvPCombos = Enum.GetValues<CustomComboPreset>()
+                .Where(preset => preset.GetAttribute<PvPCustomComboAttribute>() != default)
                 .ToHashSet();
 
             VariantCombos = Enum.GetValues<CustomComboPreset>()
@@ -58,7 +58,7 @@ namespace XIVSlothCombo.Core
         /// <summary> Gets a value indicating whether a preset is secret. </summary>
         /// <param name="preset"> Preset to check. </param>
         /// <returns> The boolean representation. </returns>
-        public static bool IsSecret(CustomComboPreset preset) => SecretCombos.Contains(preset);
+        public static bool IsPvP(CustomComboPreset preset) => PvPCombos.Contains(preset);
 
         /// <summary> Gets a value indicating whether a preset is secret. </summary>
         /// <param name="preset"> Preset to check. </param>
