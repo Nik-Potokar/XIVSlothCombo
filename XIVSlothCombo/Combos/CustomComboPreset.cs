@@ -3731,7 +3731,7 @@ namespace XIVSlothCombo.Combos
         WAR_ST_StormsPath_PrimalWrath = 18008,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Ruination Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
         WAR_ST_StormsPath_PrimalRuination = 18009,
 
         [ParentCombo(WAR_AoE_Overpower)]
