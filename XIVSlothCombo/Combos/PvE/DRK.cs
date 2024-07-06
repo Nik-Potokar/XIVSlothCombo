@@ -238,14 +238,6 @@ namespace XIVSlothCombo.Combos.PvE
                         && IsNotEnabled(CustomComboPreset.DRK_ST_DelayedBloodspiller))
                         return Bloodspiller;
 
-                    //Delayed Delirium
-                    // todo: we can use this for mana generation on odd minutes
-                    if (IsEnabled(CustomComboPreset.DRK_ST_DelayedBloodspiller)
-                        && GetBuffStacks(Buffs.Delirium) > 0
-                        && IsOnCooldown(Delirium)
-                        && GetBuffStacks(Buffs.BloodWeapon) < 2)
-                        return Bloodspiller;
-
                     //Blood management before Delirium
                     if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
                         && (
