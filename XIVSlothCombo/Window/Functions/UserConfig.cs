@@ -2360,9 +2360,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
             {
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut", "Bursts during Bahamut phase.", 1);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Solar Bahamut/Bahamut", "Bursts during Bahamut phase.\nBahamut burst phase becomes Solar Bahamut at Lv100.", 1);
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Phoenix", "Bursts during Phoenix phase.", 2);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut or Phoenix", "Bursts during Bahamut or Phoenix phase (whichever comes first).", 3);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Any Demi Phase", "Bursts during any Demi Summon phase.", 3);
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Flexible (SpS) Option", "Bursts when Searing Light is ready, regardless of phase.", 4);
             }
 
