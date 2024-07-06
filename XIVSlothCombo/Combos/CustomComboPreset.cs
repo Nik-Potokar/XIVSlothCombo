@@ -3746,6 +3746,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 2, "", "")]
         WAR_AoE_Overpower = 18002,
 
+        [ReplaceSkill(WAR.StormsEye)]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
+        War_ST_StormsEye = 18001,
+
         [ReplaceSkill(WAR.NascentFlash)]
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76.", WAR.JobID, 5, "", "")]
         WAR_NascentFlash = 18005,
