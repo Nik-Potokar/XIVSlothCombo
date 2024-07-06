@@ -13,7 +13,7 @@ using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
-#if DEBUG
+
 namespace XIVSlothCombo.Window.Tabs
 {
 
@@ -86,4 +86,3 @@ namespace XIVSlothCombo.Window.Tabs
         }
     }
 }
-#endif
