@@ -129,6 +129,14 @@ namespace XIVSlothCombo.Combos.PvE
                     )
                     return OriginalHook(Disesteem);
 
+                // Delirium Chain
+                if (LevelChecked(Delirium)
+                    && LevelChecked(ScarletDelirium)
+                    && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
+                    && HasEffect(Buffs.Delirium)
+                    && gauge.DarksideTimeRemaining > 0)
+                    return OriginalHook(Bloodspiller);
+
                 // oGCDs
                 if (CanWeave(actionID))
                 {
@@ -220,22 +228,12 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                 }
 
-                // Delirium Chain
-                if (LevelChecked(Delirium)
-                    && LevelChecked(ScarletDelirium)
-                    && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
-                    && HasEffect(Buffs.Delirium)
-                    && gauge.DarksideTimeRemaining > 0
-                    && GetBuffStacks(Buffs.Delirium) > 2)
-                    return OriginalHook(Bloodspiller);
-
                 //Delirium Features
                 if (LevelChecked(Delirium)
                     && IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller))
                 {
                     //Regular Bloodspiller
-                    if (GetBuffStacks(Buffs.Delirium) > 0
-                        && IsNotEnabled(CustomComboPreset.DRK_ST_DelayedBloodspiller))
+                    if (GetBuffStacks(Buffs.Delirium) > 0)
                         return Bloodspiller;
 
                     //Blood management before Delirium
@@ -301,6 +299,14 @@ namespace XIVSlothCombo.Combos.PvE
                         || GetBuffRemainingTime(Buffs.Scorn) < 5)) // Emergency usage
                     return OriginalHook(Disesteem);
 
+                // Delirium Chain
+                if (LevelChecked(Delirium)
+                    && LevelChecked(Impalement)
+                    && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
+                    && HasEffect(Buffs.Delirium)
+                    && gauge.DarksideTimeRemaining > 1)
+                    return OriginalHook(Quietus);
+
                 // oGCDs
                 if (CanWeave(actionID))
                 {
@@ -362,15 +368,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return Shadowbringer;
                     }
                 }
-
-                // Delirium Chain
-                if (LevelChecked(Delirium)
-                    && LevelChecked(Impalement)
-                    && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
-                    && HasEffect(Buffs.Delirium)
-                    && gauge.DarksideTimeRemaining > 1
-                    && GetBuffStacks(Buffs.Delirium) > 2)
-                    return OriginalHook(Quietus);
 
                 // Spend Dark Arts
                 if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
