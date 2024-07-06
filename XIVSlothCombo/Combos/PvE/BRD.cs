@@ -41,7 +41,7 @@ namespace XIVSlothCombo.Combos.PvE
             Ladonsbite = 25783,
             BlastArrow = 25784,
             RadiantFinale = 25785,
-            HeartbreakShot = 36975,
+            WideVolley = 36974,
             ResonantArrow = 36976,
             RadiantEncore = 36977;
 
@@ -312,9 +312,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return RainOfDeath;
                     if (sidewinderReady)
                         return Sidewinder;
-                    if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Simple_ResonantArrow))
+                    if (HasEffect(Buffs.ResonantArrowReady))
                         return ResonantArrow;
-                    if (HasEffect(Buffs.RadiantEncoreReady) && IsEnabled(CustomComboPreset.BRD_Simple_RadiantEncore))
+                    if (HasEffect(Buffs.RadiantEncoreReady))
                         return RadiantEncore;
                 }
 
@@ -379,7 +379,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return RainOfDeath;
                         if (sidewinderReady)
                             return Sidewinder;
-                        if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Simple_ResonantArrow))
+                        if (HasEffect(Buffs.ResonantArrowReady))
                             return ResonantArrow;
 
                         // healing - please move if not appropriate priority
@@ -390,11 +390,11 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    bool shadowbiteReady = LevelChecked(Shadowbite) && HasEffect(Buffs.ShadowbiteReady);
+                    bool wideVolleyReady = LevelChecked(WideVolley) && HasEffect(Buffs.HawksEye);
                     bool blastArrowReady = LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady);
 
-                    if (shadowbiteReady)
-                        return Shadowbite;
+                    if (wideVolleyReady)
+                        return OriginalHook(WideVolley);
                     if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
                         return ApexArrow;
                     if (blastArrowReady)
@@ -466,10 +466,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return BlastArrow;
                     }
 
-                    bool shadowbiteReady = LevelChecked(Shadowbite) && HasEffectAny(Buffs.ShadowbiteReady);
+                    bool wideVolleyReady = LevelChecked(WideVolley) && HasEffect(Buffs.HawksEye);
 
-                    if (IsEnabled(CustomComboPreset.BRD_AoE_Combo) && shadowbiteReady)
-                        return Shadowbite;
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Combo) && wideVolleyReady)
+                        return WideVolley;
                 }
 
                 return actionID;
@@ -805,7 +805,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage))
                         return OriginalHook(StraightShot);
 
-                    if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Simple_ResonantArrow))
+                    if (HasEffect(Buffs.ResonantArrowReady))
                         return ResonantArrow;
 
                 }
