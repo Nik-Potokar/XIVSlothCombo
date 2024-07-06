@@ -395,7 +395,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                                 InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() ||
                                 (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
-                                return GoringBlade;
+                                return OriginalHook(FightOrFlight);
 
                             if (HasEffect(Buffs.Requiescat))
                             {
@@ -454,7 +454,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             HasEffect(Buffs.GoringBladeReady) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
-                            return GoringBlade;
+                            return OriginalHook(FightOrFlight);
 
                         //Req without FoF
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
