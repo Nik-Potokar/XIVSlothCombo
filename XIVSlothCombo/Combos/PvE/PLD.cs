@@ -141,7 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Lv90-100 Goring use
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(BladeOfHonor) && WasLastSpell(BladeOfValor) || WasLastAbility(BladeOfHonor))
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && WasLastSpell(BladeOfValor) || WasLastAbility(BladeOfHonor))
                                 return GoringBlade;
 
                             // Lv80-89 Goring use
@@ -481,8 +481,21 @@ namespace XIVSlothCombo.Combos.PvE
                         // Goring on cooldown (burst features disabled) -- Goring Blade is only available with FoF
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             HasEffect(Buffs.GoringBladeReady) &&
-                            IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
+                            IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && HasEffect(Buffs.FightOrFlight))
                             return GoringBlade;
+
+                        // Goring on cooldown (no Spirit, Confiteor, Blades)
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) && HasEffect(Buffs.GoringBladeReady) && HasEffect(Buffs.FightOrFlight))
+                        {
+                            if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit))
+                                return GoringBlade;
+                            else if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor))
+                                return GoringBlade;
+                            else if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades))
+                                return GoringBlade;
+                            else if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) && IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades))
+                                return GoringBlade;
+                        }
 
                         //Req without FoF
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
