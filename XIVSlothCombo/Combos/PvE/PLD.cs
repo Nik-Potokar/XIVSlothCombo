@@ -141,7 +141,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Lv90-100 Goring use
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !HasEffect(Buffs.BladeOfHonor) && WasLastSpell(BladeOfValor) || WasLastAbility(BladeOfHonor))
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() &&
+                                (WasLastSpell(BladeOfValor) && !HasEffect(Buffs.BladeOfHonor) || WasLastAbility(BladeOfHonor)))
                                 return GoringBlade;
 
                             // Lv80-89 Goring use
@@ -407,7 +408,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Lv90-100 Goring use
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !HasEffect(Buffs.BladeOfHonor) && WasLastSpell(BladeOfValor) || WasLastAbility(BladeOfHonor))
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && 
+                                (WasLastSpell(BladeOfValor) && !HasEffect(Buffs.BladeOfHonor) || WasLastAbility(BladeOfHonor)))
                                 return GoringBlade;
 
                             // Lv80-89 Goring use
