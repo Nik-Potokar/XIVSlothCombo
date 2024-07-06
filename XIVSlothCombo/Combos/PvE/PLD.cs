@@ -140,24 +140,20 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Lv90-100 Goring use
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() &&
+                            if  (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() &&
                                 (WasLastSpell(BladeOfValor) && !HasEffect(Buffs.BladeOfHonor) || WasLastAbility(BladeOfHonor)))
                                 return GoringBlade;
 
                             // Lv80-89 Goring use
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(BladeOfFaith) && !LevelChecked(BladeOfHonor) && WasLastSpell(Confiteor))
+                            if  (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(BladeOfFaith) && !LevelChecked(BladeOfHonor) && WasLastSpell(Confiteor))
                                 return GoringBlade;
 
                             // Lv68-79 Goring use
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(Confiteor) && WasLastSpell(HolySpirit))
+                            if  (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(Confiteor) && WasLastSpell(HolySpirit))
                                 return GoringBlade;
 
                             // Lv54-68 Goring use
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(HolySpirit) && WasLastSpell(HolySpirit))
+                            if  (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(HolySpirit) && WasLastSpell(HolySpirit))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
