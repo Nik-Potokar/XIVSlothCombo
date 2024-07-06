@@ -160,7 +160,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 //Post DD
                                 if ((regularSkS && IsOnCooldown(DoubleDown)) || (slowSkS && IsOnCooldown(SonicBreak)))
                                 {
-                                    if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock))
+                                    if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock))
                                         return BowShock;
                                     if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone))
                                         return OriginalHook(DangerZone);
@@ -171,7 +171,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone))
                                         return OriginalHook(DangerZone);
-                                    if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock))
+                                    if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock))
                                         return BowShock;
                                 }
                             }
@@ -226,7 +226,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && ActionReady(SonicBreak) && (GetCooldownRemainingTime(NoMercy) <= 42) && !HasEffect(Buffs.ReadyToRip) && IsOnCooldown(GnashingFang))
                                 return SonicBreak;
                             //sub level 54 functionality
-                            if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone) && !LevelChecked(SonicBreak))
+                            if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone) && !LevelChecked(SonicBreak) && HasEffect(Buffs.NoMercy) || GetCooldownRemainingTime(NoMercy) < 30)
                                 return OriginalHook(DangerZone);
                         }
                     }
@@ -330,14 +330,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (ActionReady(DangerZone))
                                         return OriginalHook(DangerZone);
-                                    if (ActionReady(BowShock))
+                                    if (ActionReady(BowShock) && LevelChecked(BowShock))
                                         return BowShock;
                                 }
 
                                 //Pre DD
                                 if (IsOnCooldown(SonicBreak) && !LevelChecked(DoubleDown))
                                 {
-                                    if (ActionReady(BowShock))
+                                    if (ActionReady(BowShock) && LevelChecked(BowShock))
                                         return BowShock;
                                     if (ActionReady(DangerZone))
                                         return OriginalHook(DangerZone);
@@ -457,7 +457,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.GNB_AoE_NoMercy) && ActionReady(NoMercy))
                                 return NoMercy;
-                            if (IsEnabled(CustomComboPreset.GNB_AoE_BowShock) && ActionReady(BowShock))
+                            if (IsEnabled(CustomComboPreset.GNB_AoE_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock))
                                 return BowShock;
                             if (IsEnabled(CustomComboPreset.GNB_AOE_DangerZone) && ActionReady(DangerZone))
                                 return OriginalHook(DangerZone);
