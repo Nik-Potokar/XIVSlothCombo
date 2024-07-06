@@ -297,9 +297,9 @@ namespace XIVSlothCombo.Combos.PvE
                             //Life Surge Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
                                ActionReady(LifeSurge) && AnimationLock.CanDRGWeave(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
-                            ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                            (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                            (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
+                               ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                               (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                               (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
                                 return LifeSurge;
 
                                 //Wyrmwind Thrust Feature
