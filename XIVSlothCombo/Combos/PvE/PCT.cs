@@ -1,7 +1,6 @@
-﻿using Lumina.Excel.GeneratedSheets;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -11,8 +10,6 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte JobID = 42;
 
         public const uint
-            AdventofChocobastion = 39215,
-            AeroinGreen = 39192,
             BlizzardinCyan = 34653,
             BlizzardIIinCyan = 34659,
             ClawMotif = 34666,
@@ -30,18 +27,14 @@ namespace XIVSlothCombo.Combos.PvE
             PomMotif = 34664,
             PomMuse = 34670,
             RainbowDrip = 34688,
-            ReleaseSubtractivePalette = 39214,
-            RetributionoftheMadeen1 = 34677,
-            RetributionoftheMadeen2 = 39783,
+            RetributionoftheMadeen = 34677,
             ScenicMuse = 35349,
-            Smudge1 = 34684,
-            Smudge2 = 39210,
+            Smudge = 34684,
             StarPrism = 34681,
             SteelMuse = 35348,
             SubtractivePalette = 34683,
             ThunderIIinMagenta = 34661,
-            ThunderinMagenta1 = 34655,
-            ThunderinMagenta2 = 39196,
+            ThunderinMagenta = 34655,
             WaterinBlue = 34652,
             WeaponMotif = 34690,
             WingMotif = 34665;
@@ -56,7 +49,8 @@ namespace XIVSlothCombo.Combos.PvE
                 StarryMuse = 3685,
                 Hyperphantasia = 3688,
                 Inspiration = 3689,
-                SubtractiveSpectrum = 3690;
+                SubtractiveSpectrum = 3690,
+                Starstruck = 3681;
         }
 
         public static class Debuffs
@@ -71,6 +65,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
+                CombinedMotifsMadeen = new("CombinedMotifsMadeen"),
                 CombinedMotifsWeapon = new("CombinedMotifsWeapon");
         }
 
@@ -83,8 +78,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is FireInRed)
                 {
-                    TmpPCTGauge gauge = new TmpPCTGauge();
+                    var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed));
+
+                    if (HasEffect(Buffs.Starstruck))
+                        return OriginalHook(StarPrism);
+
+                    if (HasEffect(Buffs.RainbowBright))
+                        return OriginalHook(RainbowDrip);
 
                     if (IsMoving)
                     {
@@ -97,9 +98,6 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-
-                    if (HasEffect(Buffs.RainbowBright))
-                        return OriginalHook(RainbowDrip);
 
                     if (HasEffect(Buffs.StarryMuse))
                     {
@@ -173,8 +171,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is FireIIinRed)
                 {
-                    TmpPCTGauge gauge = new TmpPCTGauge();
+                    var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed));
+
+                    if (HasEffect(Buffs.Starstruck))
+                        return OriginalHook(StarPrism);
+
+                    if (HasEffect(Buffs.RainbowBright))
+                        return OriginalHook(RainbowDrip);
 
                     if (IsMoving)
                     {
@@ -186,9 +190,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(HolyInWhite);
                         }
                     }
-
-                    if (HasEffect(Buffs.RainbowBright))
-                        return OriginalHook(RainbowDrip);
 
                     if (HasEffect(Buffs.StarryMuse))
                     {
@@ -287,11 +288,11 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                var gauge = new TmpPCTGauge();
+                var gauge = GetJobGauge<PCTGauge>();
 
                 if (actionID == CreatureMotif)
                 {
-                    if (Config.CombinedMotifsMog && gauge.MooglePortraitReady && IsOffCooldown(OriginalHook(MogoftheAges)))
+                    if ((Config.CombinedMotifsMog && gauge.MooglePortraitReady) || (Config.CombinedMotifsMadeen && gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)))
                         return OriginalHook(MogoftheAges);
 
                     if (gauge.CreatureMotifDrawn)

@@ -2191,6 +2191,7 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_SimpleMode = 20001,
 
         [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
+        [ConflictingCombos(PCT_ST_SimpleMode, PCT_AoE_SimpleMode)]
         [CustomComboInfo("Combined Aetherhues Feature", "Combines aetherhue actions onto one button for their respective target types.", PCT.JobID)]
         CombinedAetherhues = 20002,
 
