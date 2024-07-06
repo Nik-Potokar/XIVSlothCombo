@@ -259,7 +259,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
                     && (CanWeave(actionID) || CanDelayedWeave(actionID))
                     && gauge.HasDarkArts
-                    && LevelChecked(EdgeOfDarkness))
+                    && LevelChecked(EdgeOfDarkness)
+                    && CombatEngageDuration().TotalSeconds >= 25)
                     return OriginalHook(EdgeOfDarkness);
 
                 // 1-2-3 combo
