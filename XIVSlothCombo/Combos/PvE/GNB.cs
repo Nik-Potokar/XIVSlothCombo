@@ -145,7 +145,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(DangerZone);
 
                                 //Stops DZ Drift
-                                if (HasEffect(Buffs.NoMercy) && ((IsOnCooldown(SonicBreak) && slowSkS) || (IsOnCooldown(DoubleDown) && regularSkS)))
+                                if (HasEffect(Buffs.NoMercy) && slowSkS || (IsOnCooldown(DoubleDown) && regularSkS))
                                     return OriginalHook(DangerZone);
                             }
 
@@ -158,7 +158,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.NoMercy))
                             {
                                 //Post DD
-                                if ((regularSkS && IsOnCooldown(DoubleDown)) || (slowSkS && IsOnCooldown(SonicBreak)))
+                                if ((regularSkS && IsOnCooldown(DoubleDown)) || (slowSkS))
                                 {
                                     if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock))
                                         return BowShock;
@@ -314,7 +314,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(DangerZone);
 
                                 //Stops DZ Drift
-                                if (HasEffect(Buffs.NoMercy) && ((IsOnCooldown(SonicBreak) && slowSkS) || (IsOnCooldown(DoubleDown) && regularSkS)))
+                                if (HasEffect(Buffs.NoMercy) && slowSkS || (IsOnCooldown(DoubleDown) && regularSkS))
                                     return OriginalHook(DangerZone);
                             }
 
@@ -326,7 +326,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.NoMercy))
                             {
                                 //Post DD
-                                if ((regularSkS && IsOnCooldown(DoubleDown)) || (slowSkS && IsOnCooldown(SonicBreak)))
+                                if ((regularSkS && IsOnCooldown(DoubleDown)) || (slowSkS))
                                 {
                                     if (ActionReady(DangerZone))
                                         return OriginalHook(DangerZone);
@@ -358,14 +358,14 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (IsEnabled(CustomComboPreset.GNB_ST_DoubleDown) && IsOffCooldown(DoubleDown) && gauge.Ammo >= 2 && !HasEffect(Buffs.ReadyToRip) && gauge.AmmoComboStep >= 1)
                                     return DoubleDown;
-                                if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && IsOffCooldown(SonicBreak) && HasEffect(Buffs.ReadyToBreak) && IsOnCooldown(DoubleDown))
+                                if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && HasEffect(Buffs.ReadyToBreak) && IsOnCooldown(DoubleDown))
                                     return SonicBreak;
 
                             }
 
                             if (slowSkS)
                             {
-                                if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && IsOffCooldown(SonicBreak) && HasEffect(Buffs.ReadyToBreak) && !HasEffect(Buffs.ReadyToRip) && gauge.AmmoComboStep >= 1)
+                                if (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) && HasEffect(Buffs.ReadyToBreak) && !HasEffect(Buffs.ReadyToRip) && gauge.AmmoComboStep >= 1)
                                     return SonicBreak;
                                 if (IsEnabled(CustomComboPreset.GNB_ST_DoubleDown) && IsOffCooldown(DoubleDown) && gauge.Ammo >= 2 && IsOnCooldown(SonicBreak))
                                     return DoubleDown;
