@@ -139,7 +139,24 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (HasEffect(Buffs.GoringBladeReady) && WasLastAbility(BladeOfHonor))
+                            // Lv90-100 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(BladeOfHonor) && WasLastSpell(BladeOfValor) || WasLastAbility(BladeOfHonor))
+                                return GoringBlade;
+
+                            // Lv80-89 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(BladeOfFaith) && !LevelChecked(BladeOfHonor) && WasLastSpell(Confiteor))
+                                return GoringBlade;
+
+                            // Lv68-79 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(Confiteor) && WasLastSpell(HolySpirit))
+                                return GoringBlade;
+
+                            // Lv54-68 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(HolySpirit) && WasLastSpell(HolySpirit))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -152,7 +169,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
                             }
-                            
+
                             // New Spell after Confi Combo (Weave)
                             if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor))
                                 return OriginalHook(Requiescat);
@@ -193,7 +210,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
                                     return OriginalHook(Atonement);
-                                
+
                                 return (HasEffect(Buffs.DivineMight) &&
                                         GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     ? HolySpirit
@@ -388,8 +405,24 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Intervene);
                             }
 
+                            // Lv90-100 Goring use
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && WasLastAbility(BladeOfHonor))
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && WasLastSpell(BladeOfValor) || WasLastAbility(BladeOfHonor))
+                                return GoringBlade;
+
+                            // Lv80-89 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(BladeOfFaith) && !LevelChecked(BladeOfHonor) && WasLastSpell(Confiteor))
+                                return GoringBlade;
+
+                            // Lv68-79 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(Confiteor) && WasLastSpell(HolySpirit))
+                                return GoringBlade;
+
+                            // Lv54-68 Goring use
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(HolySpirit) && WasLastSpell(HolySpirit))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -409,7 +442,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
                             }
-                            
+
                             // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
                             if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
                                 return OriginalHook(Requiescat);
@@ -454,12 +487,12 @@ namespace XIVSlothCombo.Combos.PvE
                         //Req without FoF
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
                             return OriginalHook(Requiescat);
-                        
+
                         // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
                         if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)) && IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
                             return OriginalHook(Requiescat);
-                        
-                        
+
+
                         // Confiteor & Blades
                         if (((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) &&
                             Confiteor.LevelChecked() &&
@@ -492,7 +525,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
                             {
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                    (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() && 
+                                    (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() &&
                                     (Config.PLD_ST_AtonementTiming == 2 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 0)))
                                     return OriginalHook(Atonement);
 
@@ -553,7 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Requiescat inside burst (checking for FoF buff causes a late weave and can misalign over long fights with some ping)
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) &&
-                        (WasLastAbility(FightOrFlight) || JustUsed(FightOrFlight,6f)) && ActionReady(Requiescat))
+                        (WasLastAbility(FightOrFlight) || JustUsed(FightOrFlight, 6f)) && ActionReady(Requiescat))
                     {
                         if ((Config.PLD_AoE_RequiescatWeave == 0 && CanWeave(actionID) ||
                             (Config.PLD_AoE_RequiescatWeave == 1 && CanDelayedWeave(actionID, 2.0, 0.6))))
@@ -573,7 +606,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 ActionReady(OriginalHook(SpiritsWithin)))
                                 return OriginalHook(SpiritsWithin);
                         }
-                        
+
                         if (HasEffect(Buffs.Requiescat))
                         {
                             // Confiteor & Blades
@@ -592,7 +625,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolyCircle;
 
                         }
-                        
+
                         // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
                         if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
                             return OriginalHook(Requiescat);
@@ -640,7 +673,7 @@ namespace XIVSlothCombo.Combos.PvE
                         GetResourceCost(OriginalHook(Confiteor)) <= LocalPlayer.CurrentMp)) &&
                         IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF))
                         return OriginalHook(Confiteor);
-                    
+
                     // New Spell after Confi Combo (Weave) -- Maybe need an option for advanced mode - currently only available after blade combo.
                     if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
                         return OriginalHook(Requiescat);
