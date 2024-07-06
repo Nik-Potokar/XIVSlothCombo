@@ -40,12 +40,14 @@ namespace XIVSlothCombo.Combos.PvE
             Shadowbite = 16494,
             Ladonsbite = 25783,
             BlastArrow = 25784,
-            RadiantFinale = 25785;
+            RadiantFinale = 25785,
+            HeartbreakShot = 36975,
+            ResonantArrow = 36976,
+            RadiantEncore = 36977;
 
         public static class Buffs
         {
             public const ushort
-                StraightShotReady = 122,
                 RagingStrikes = 125,
                 Barrage = 128,
                 MagesBallad = 135,
@@ -55,7 +57,10 @@ namespace XIVSlothCombo.Combos.PvE
                 Troubadour = 1934,
                 BlastArrowReady = 2692,
                 RadiantFinale = 2722,
-                ShadowbiteReady = 3002;
+                ShadowbiteReady = 3002,
+                HawksEye = 3861,
+                ResonantArrowReady = 3862,
+                RadiantEncoreReady = 3863;
         }
 
         public static class Debuffs
@@ -126,7 +131,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (HasEffect(Buffs.StraightShotReady))
+                    if (HasEffect(Buffs.HawksEye))
                         return LevelChecked(RefulgentArrow)
                             ? RefulgentArrow
                             : StraightShot;
@@ -307,6 +312,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return RainOfDeath;
                     if (sidewinderReady)
                         return Sidewinder;
+                    if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Simple_ResonantArrow))
+                        return ResonantArrow;
+                    if (HasEffect(Buffs.RadiantEncoreReady) && IsEnabled(CustomComboPreset.BRD_Simple_RadiantEncore))
+                        return RadiantEncore;
                 }
 
                 return actionID;
@@ -370,6 +379,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return RainOfDeath;
                         if (sidewinderReady)
                             return Sidewinder;
+                        if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Simple_ResonantArrow))
+                            return ResonantArrow;
 
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
@@ -428,7 +439,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (empyrealReady)
                         return EmpyrealArrow;
                     if (bloodletterReady)
-                        return Bloodletter;
+                        return OriginalHook(Bloodletter);
                     if (sidewinderReady)
                         return Sidewinder;
                 }
@@ -607,7 +618,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return BattleVoice;
                         }
 
-                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.StraightShotReady) && HasEffect(Buffs.RagingStrikes))
+                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.HawksEye) && HasEffect(Buffs.RagingStrikes))
                         {
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
@@ -652,6 +663,9 @@ namespace XIVSlothCombo.Combos.PvE
                             else return Sidewinder;
                         }
 
+                        if (HasEffect(Buffs.RadiantEncoreReady))
+                            return RadiantEncore;
+
                         if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
@@ -666,18 +680,18 @@ namespace XIVSlothCombo.Combos.PvE
                                         (HasEffect(Buffs.RadiantFinale) || radiantCD > 10 ||
                                         !LevelChecked(RadiantFinale)) &&
                                         bloodletterCharges > 0) || bloodletterCharges > 2)
-                                        return Bloodletter;
+                                        return OriginalHook(Bloodletter);
                                 }
 
                                 if (songArmy && (bloodletterCharges == 3 || ((gauge.SongTimer / 1000) > 30 && bloodletterCharges > 0)))
-                                    return Bloodletter;
+                                    return OriginalHook(Bloodletter);
                                 if (songMage && bloodletterCharges > 0)
-                                    return Bloodletter;
+                                    return OriginalHook(Bloodletter);
                                 if (songNone && bloodletterCharges == 3)
-                                    return Bloodletter;
+                                    return OriginalHook(Bloodletter);
                             }
                             else if (bloodletterCharges > 0)
-                                return Bloodletter;
+                                return OriginalHook(Bloodletter);
                         }
 
                         // healing - please move if not appropriate priority
@@ -788,8 +802,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (HasEffect(Buffs.StraightShotReady))
+                    if (HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage))
                         return OriginalHook(StraightShot);
+
+                    if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Simple_ResonantArrow))
+                        return ResonantArrow;
+
                 }
 
                 return actionID;
@@ -835,10 +853,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (magesBalladReady || (gauge.Song == Song.MAGE && songTimerInSeconds > 11))
                         return MagesBallad;
-                    
+
                     if (armysPaeonReady || (gauge.Song == Song.ARMY && songTimerInSeconds > 2))
                         return ArmysPaeon;
-                    
+
                 }
 
                 return actionID;
