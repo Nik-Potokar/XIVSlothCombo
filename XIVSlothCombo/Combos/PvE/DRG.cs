@@ -326,7 +326,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Mirage Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) && AnimationLock.CanDRGWeave(MirageDive) && HasEffect(Buffs.DiveReady) &&
-                               ((GetBuffStacks(Buffs.NastrondReady) == 0 && JustUsed(Nastrond,2f)) || !LevelChecked(OriginalHook(Geirskogul))))
+                               ((GetBuffStacks(Buffs.NastrondReady) == 0 && JustUsed(Nastrond, 2f)) || !LevelChecked(OriginalHook(Geirskogul))))
                                 return MirageDive;
 
                             //Nastrond Feature
@@ -349,53 +349,29 @@ namespace XIVSlothCombo.Combos.PvE
                     //1-2-3 Combo
                     if (comboTime > 0)
                     {
-                        if (WasLastWeaponskill(FangAndClaw) || WasLastWeaponskill(WheelingThrust))
-                            return Drakesbane;
-
-                        if ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 10)) ||
-                            GetBuffRemainingTime(Buffs.PowerSurge) < 15)
+                        if (lastComboMove is TrueThrust or RaidenThrust)
                         {
-                            if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(OriginalHook(Disembowel)))
-                                return OriginalHook(Disembowel);
-
-                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                                trueNorthReady && CanDelayedWeave(actionID) &&
-                                !OnTargetsRear())
-                                return All.TrueNorth;
-
-                            if (lastComboMove is Disembowel or SpiralBlow && LevelChecked(OriginalHook(ChaosThrust)))
-                                return OriginalHook(ChaosThrust);
-
-                            if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(OriginalHook(WheelingThrust)))
-                            {
-                                // If we are not on the rear, but need to use Wheeling, pop true north if not already up
-                             /*   if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                                trueNorthReady && CanDelayedWeave(actionID) &&
-                                !OnTargetsRear())
-                                    return All.TrueNorth;*/
-
-                                return OriginalHook(WheelingThrust);
-                            }
+                            return (LevelChecked(OriginalHook(Disembowel)) && (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 10 || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                ? OriginalHook(Disembowel)
+                                : OriginalHook(VorpalThrust);
                         }
 
-                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(OriginalHook(VorpalThrust)))
-                            return OriginalHook(VorpalThrust);
+                        if (lastComboMove is Disembowel or SpiralBlow)
+                            return OriginalHook(ChaosThrust);
 
-                        if (lastComboMove is VorpalThrust or LanceBarrage && LevelChecked(OriginalHook(FullThrust)))
+                        if (lastComboMove is ChaosThrust or ChaoticSpring)
+                            return WheelingThrust;
+
+                        if (lastComboMove is VorpalThrust or LanceBarrage)
                             return OriginalHook(FullThrust);
 
-                        if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(OriginalHook(FangAndClaw)))
-                        {
-                            // If we are not on the flank, but need to use Fangs, pop true north if not already up
-                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                            trueNorthReady && CanDelayedWeave(actionID) &&
-                            !OnTargetsFlank())
-                                return All.TrueNorth;
+                        if (lastComboMove is FullThrust or HeavensThrust)
+                            return FangAndClaw;
 
-                            return OriginalHook(FangAndClaw);
-                        }
+                        if (lastComboMove is WheelingThrust or FangAndClaw)
+                            return Drakesbane;
                     }
-                    return TrueThrust;
+                    return OriginalHook(TrueThrust);
                 }
                 return actionID;
             }
