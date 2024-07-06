@@ -467,7 +467,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return FatedBrand;
                         }
 
-                        if (IsEnabled(CustomComboPreset.GNB_AOE_SonicBreak) && ActionReady(SonicBreak) && (GetCooldownRemainingTime(NoMercy) < 43))
+                        if (IsEnabled(CustomComboPreset.GNB_AOE_SonicBreak) && ActionReady(SonicBreak) && HasEffect(Buffs.ReadyToBreak) && (GetCooldownRemainingTime(NoMercy) < 42))
                             return SonicBreak;
                         if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && gauge.Ammo >= 2 && ActionReady(DoubleDown))
                             return DoubleDown;
