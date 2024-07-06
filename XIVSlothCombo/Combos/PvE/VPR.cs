@@ -198,7 +198,6 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Dreadwinder combo
-
                     if (HasEffect(Buffs.HuntersVenom))
                         return OriginalHook(Twinfang);
 
@@ -220,7 +219,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         return SwiftskinsCoil;
                     }
-
 
                     // Uncoiled Fury usage
                     if (LevelChecked(UncoiledFury) && gauge.RattlingCoilStacks > 1 &&
@@ -547,7 +545,6 @@ namespace XIVSlothCombo.Combos.PvE
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
-
                     }
                     return IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash)
                             ? OriginalHook(DreadFangs)
@@ -572,7 +569,6 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SteelMaw)
                 {
                     // Uncoiled combo
-
                     if (HasEffect(Buffs.PoisedForTwinfang))
                         return OriginalHook(Twinfang);
 
