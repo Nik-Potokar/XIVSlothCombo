@@ -1079,11 +1079,11 @@ namespace XIVSlothCombo.Combos
         #region Mana Overcap Options
 
         [ParentCombo(DRK_ST_Combo)]
-        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana or Darkside is about to expire (10sec or less)", DRK.JobID)]
+        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana, Darkside is about to expire (10sec or less), or if you have Dark Arts and use The Blackest Night.", DRK.JobID)]
         DRK_ST_ManaOvercap = 5010,
 
         [ParentCombo(DRK_ST_ManaOvercap)]
-        [CustomComboInfo("Edge of Shadow Burst Option", "Uses Edge of Shadow until chosen MP limit is reached during minute window bursts.", DRK.JobID)]
+        [CustomComboInfo("Edge of Shadow Burst Option", "Pools Edge of Shadow for even minute burst windows, and otherwise uses them until chosen MP limit is reached.", DRK.JobID)]
         DRK_ST_ManaSpenderPooling = 5011,
 
         #endregion
@@ -1091,11 +1091,11 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DRK_ST_Combo)]
         [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
-        DRK_ST_CDs_Bloodspiller = 5012,
+        DRK_ST_Bloodspiller = 5012,
 
-        [ParentCombo(DRK_ST_CDs_Bloodspiller)]
+        [ParentCombo(DRK_ST_Bloodspiller)]
         [CustomComboInfo("Delayed Bloodspiller Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID)]
-        DRK_ST_CDs_DelayedBloodspiller = 5013,
+        DRK_ST_DelayedBloodspiller = 5013,
 
         [ParentCombo(DRK_ST_Combo)]
         [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher.", DRK.JobID)]
@@ -1153,11 +1153,11 @@ namespace XIVSlothCombo.Combos
         // Last value = 5023
 
         [ParentCombo(DRK_AoE_Combo)]
-        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID)]
+        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana, Darkside is about to expire (10sec or less), or if you have Dark Arts and use The Blackest Night.", DRK.JobID)]
         DRK_AoE_ManaOvercap = 5024,
 
         [ParentCombo(DRK_AoE_Combo)]
-        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto AOE combo when at 80 blood gauge or higher.", DRK.JobID)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Quietus onto AOE combo when at 80 blood gauge or higher.", DRK.JobID)]
         DRK_AoE_BloodOvercap = 5025,
 
         #endregion

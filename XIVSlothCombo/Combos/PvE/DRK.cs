@@ -135,6 +135,21 @@ namespace XIVSlothCombo.Combos.PvE
                         && IsOffCooldown(Variant.VariantUltimatum))
                         return Variant.VariantUltimatum;
 
+                    // Spend Dark Arts when TBN is up
+                    if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
+                        && HasEffect(Buffs.BlackestNight)
+                        && gauge.HasDarkArts
+                        && LevelChecked(EdgeOfDarkness))
+                        return OriginalHook(EdgeOfDarkness);
+
+                    // Delirium Chain
+                    if (LevelChecked(Delirium)
+                        && LevelChecked(ScarletDelirium)
+                        && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
+                        && HasEffect(Buffs.Delirium)
+                        && gauge.DarksideTimeRemaining > 0)
+                        return OriginalHook(Bloodspiller);
+
                     //Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
                         && ((CombatEngageDuration().TotalSeconds < 7 && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
@@ -289,6 +304,21 @@ namespace XIVSlothCombo.Combos.PvE
                         && IsEnabled(Variant.VariantUltimatum)
                         && IsOffCooldown(Variant.VariantUltimatum))
                         return Variant.VariantUltimatum;
+
+                    // Spend Dark Arts when TBN is up
+                    if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
+                        && HasEffect(Buffs.BlackestNight)
+                        && gauge.HasDarkArts
+                        && LevelChecked(FloodOfDarkness))
+                        return OriginalHook(FloodOfDarkness);
+
+                    // Delirium Chain
+                    if (LevelChecked(Delirium)
+                        && LevelChecked(Impalement)
+                        && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
+                        && HasEffect(Buffs.Delirium)
+                        && gauge.DarksideTimeRemaining > 0)
+                        return OriginalHook(Quietus);
 
                     // Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
