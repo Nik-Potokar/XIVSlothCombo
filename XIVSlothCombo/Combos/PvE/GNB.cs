@@ -502,7 +502,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return DoubleDown;
                         if (IsEnabled(CustomComboPreset.GNB_NoMercy_Cooldowns_SonicBreakBowShock))
                         {
-                            if (IsOffCooldown(SonicBreak))
+                            if (HasEffect(Buffs.ReadyToBreak))
                                 return SonicBreak;
                             if (IsOffCooldown(BowShock))
                                 return BowShock;
