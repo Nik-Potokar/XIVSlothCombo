@@ -3712,7 +3712,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Inner Beast / Fell Cleave Option", "Adds Inner Beast / Fell Cleave to Advanced Mode. Will use when you have the set minimum gauge, or under the effect of Inner Release. Will also use Nascent Chaos.", WAR.JobID, 2, "", "")]
-        WAR_ST_StormsPath_FellCleave = 18011,
+        WAR_ST_StormsPath_FellCleave = 18012,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode.", WAR.JobID, 3, "", "")]
@@ -3720,19 +3720,27 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Onslaught Option", "Adds Onslaught to Advanced Mode if you are under Surging Tempest Buff.", WAR.JobID, 4, "", "")]
-        WAR_ST_StormsPath_Onslaught = 18012,
+        WAR_ST_StormsPath_Onslaught = 18013,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Upheaval Option", "Adds Upheaval to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
         WAR_ST_StormsPath_Upheaval = 18007,
 
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_StormsPath_PrimalWrath = 18008,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Primal Ruination Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_StormsPath_PrimalRuination = 18009,
+
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Orogeny Option", "Adds Orogeny to Advanced Mode when you are buffed with Surging Tempest.", WAR.JobID, 6, "", "")]
-        WAR_AoE_Overpower_Orogeny = 18009,
+        WAR_AoE_Overpower_Orogeny = 18010,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode.", WAR.JobID, 7, "", "")]
-        WAR_ST_StormsPath_PrimalRend = 18008,
+        WAR_ST_StormsPath_PrimalRend = 18011,
 
         [ReplaceSkill(WAR.StormsEye)]
         [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
@@ -3748,11 +3756,15 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode when gauge is below 50 and not under Inner Release.", WAR.JobID)]
-        WAR_AoE_Overpower_Infuriate = 18013,
+        WAR_AoE_Overpower_Infuriate = 18014,
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
-        WAR_AoE_Overpower_InnerRelease = 18014,
+        WAR_AoE_Overpower_InnerRelease = 18015,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_AOE_Overpower_PrimalWrath = 18017,
 
         [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 4, "", "")]
