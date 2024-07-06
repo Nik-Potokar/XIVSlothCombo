@@ -259,7 +259,8 @@ namespace XIVSlothCombo.Combos.PvE
                     && LevelChecked(ScarletDelirium)
                     && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
                     && HasEffect(Buffs.Delirium)
-                    && gauge.DarksideTimeRemaining > 0)
+                    && gauge.DarksideTimeRemaining > 0
+                    && GetBuffStacks(Buffs.Delirium) > 2)
                     return OriginalHook(Bloodspiller);
 
                 // 1-2-3 combo
@@ -382,7 +383,8 @@ namespace XIVSlothCombo.Combos.PvE
                     && LevelChecked(Impalement)
                     && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
                     && HasEffect(Buffs.Delirium)
-                    && gauge.DarksideTimeRemaining > 1)
+                    && gauge.DarksideTimeRemaining > 1
+                    && GetBuffStacks(Buffs.Delirium) > 2)
                     return OriginalHook(Quietus);
 
                 // 1-2-3 combo
