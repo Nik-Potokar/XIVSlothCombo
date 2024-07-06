@@ -119,6 +119,14 @@ namespace XIVSlothCombo.Combos.PvE
                 // Bail if not in combat
                 if (!InCombat()) return HardSlash;
 
+                // Disesteem
+                if (LevelChecked(LivingShadow)
+                    && LevelChecked(Disesteem)
+                    && IsEnabled(CustomComboPreset.DRK_ST_CDs_Disesteem)
+                    && HasEffect(Buffs.Scorn)
+                    && gauge.DarksideTimeRemaining > 0)
+                    return OriginalHook(Disesteem);
+
                 // oGCDs
                 if (CanWeave(actionID))
                 {
@@ -142,18 +150,10 @@ namespace XIVSlothCombo.Combos.PvE
                         && LevelChecked(EdgeOfDarkness))
                         return OriginalHook(EdgeOfDarkness);
 
-                    // Delirium Chain
-                    if (LevelChecked(Delirium)
-                        && LevelChecked(ScarletDelirium)
-                        && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
-                        && HasEffect(Buffs.Delirium)
-                        && gauge.DarksideTimeRemaining > 0)
-                        return OriginalHook(Bloodspiller);
-
                     //Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
                         && ((CombatEngageDuration().TotalSeconds < 7 && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
-                            || CombatEngageDuration().TotalSeconds >= 6))
+                            || CombatEngageDuration().TotalSeconds >= 20))
                     {
                         // Spend mana to limit when not near even minute burst windows
                         if (IsEnabled(CustomComboPreset.DRK_ST_ManaSpenderPooling)
@@ -163,10 +163,10 @@ namespace XIVSlothCombo.Combos.PvE
                             && CanDelayedWeave(actionID))
                             return OriginalHook(EdgeOfDarkness);
 
-                        // Keep Darkside up
+                        // Keep Darkside up, spend Dark Arts
                         if (gauge.HasDarkArts
                             || LocalPlayer.CurrentMp > 8500
-                            || (gauge.DarksideTimeRemaining < 10000 && LocalPlayer.CurrentMp >= 3000))
+                            || (gauge.DarksideTimeRemaining < 10000 && LocalPlayer.CurrentMp > (mpRemaining + 3000)))
                         {
                             // Return Edge of Darkness if available
                             if (LevelChecked(EdgeOfDarkness))
@@ -253,6 +253,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return Bloodspiller;
                 }
 
+                // Delirium Chain
+                if (LevelChecked(Delirium)
+                    && LevelChecked(ScarletDelirium)
+                    && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
+                    && HasEffect(Buffs.Delirium)
+                    && gauge.DarksideTimeRemaining > 0)
+                    return OriginalHook(Bloodspiller);
+
                 // 1-2-3 combo
                 if (!(comboTime > 0)) return HardSlash;
                 if (lastComboMove == HardSlash && LevelChecked(SyphonStrike))
@@ -289,6 +297,14 @@ namespace XIVSlothCombo.Combos.PvE
                     && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
                     return Variant.VariantCure;
 
+                // Disesteem
+                if (LevelChecked(LivingShadow)
+                    && LevelChecked(Disesteem)
+                    && IsEnabled(CustomComboPreset.DRK_AoE_CDs_Disesteem)
+                    && HasEffect(Buffs.Scorn)
+                    && gauge.DarksideTimeRemaining > 0)
+                    return OriginalHook(Disesteem);
+
                 // oGCDs
                 if (CanWeave(actionID))
                 {
@@ -311,14 +327,6 @@ namespace XIVSlothCombo.Combos.PvE
                         && gauge.HasDarkArts
                         && LevelChecked(FloodOfDarkness))
                         return OriginalHook(FloodOfDarkness);
-
-                    // Delirium Chain
-                    if (LevelChecked(Delirium)
-                        && LevelChecked(Impalement)
-                        && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
-                        && HasEffect(Buffs.Delirium)
-                        && gauge.DarksideTimeRemaining > 0)
-                        return OriginalHook(Quietus);
 
                     // Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
@@ -365,6 +373,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return Shadowbringer;
                     }
                 }
+
+                // Delirium Chain
+                if (LevelChecked(Delirium)
+                    && LevelChecked(Impalement)
+                    && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
+                    && HasEffect(Buffs.Delirium)
+                    && gauge.DarksideTimeRemaining > 1)
+                    return OriginalHook(Quietus);
 
                 // 1-2-3 combo
                 if (!(comboTime > 0)) return Unleash;
