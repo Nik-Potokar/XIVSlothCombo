@@ -160,14 +160,13 @@ namespace XIVSlothCombo.Combos.PvE
                         // Spend mana to limit when not near even minute burst windows
                         if (IsEnabled(CustomComboPreset.DRK_ST_ManaSpenderPooling)
                             && GetCooldownRemainingTime(LivingShadow) >= 45
-                            && (gauge.HasDarkArts || LocalPlayer.CurrentMp > (mpRemaining + 3000))
+                            && LocalPlayer.CurrentMp > (mpRemaining + 3000)
                             && LevelChecked(EdgeOfDarkness)
                             && CanDelayedWeave(actionID))
                             return OriginalHook(EdgeOfDarkness);
 
                         // Keep Darkside up, spend Dark Arts
-                        if (gauge.HasDarkArts
-                            || LocalPlayer.CurrentMp > 8500
+                        if (LocalPlayer.CurrentMp > 8500
                             || (gauge.DarksideTimeRemaining < 10000 && LocalPlayer.CurrentMp > (mpRemaining + 3000)))
                         {
                             // Return Edge of Darkness if available
@@ -262,6 +261,13 @@ namespace XIVSlothCombo.Combos.PvE
                     && gauge.DarksideTimeRemaining > 0
                     && GetBuffStacks(Buffs.Delirium) > 2)
                     return OriginalHook(Bloodspiller);
+
+                // Spend Dark Arts
+                if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
+                    && (CanWeave(actionID) || CanDelayedWeave(actionID))
+                    && gauge.HasDarkArts
+                    && LevelChecked(EdgeOfDarkness))
+                    return OriginalHook(EdgeOfDarkness);
 
                 // 1-2-3 combo
                 if (!(comboTime > 0)) return HardSlash;
