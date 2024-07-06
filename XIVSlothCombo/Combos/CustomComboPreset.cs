@@ -1088,7 +1088,7 @@ namespace XIVSlothCombo.Combos
         #region Mana Overcap Options
 
         [ParentCombo(DRK_ST_Combo)]
-        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana, Darkside is about to expire (10sec or less), or if you have Dark Arts and use The Blackest Night.", DRK.JobID)]
+        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana, Darkside is about to expire (10sec or less), or if you have Dark Arts.", DRK.JobID)]
         DRK_ST_ManaOvercap = 5011,
 
         [ParentCombo(DRK_ST_ManaOvercap)]
@@ -1171,7 +1171,7 @@ namespace XIVSlothCombo.Combos
         // Last value = 5025
 
         [ParentCombo(DRK_AoE_Combo)]
-        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana, Darkside is about to expire (10sec or less), or if you have Dark Arts and use The Blackest Night.", DRK.JobID)]
+        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana, Darkside is about to expire (10sec or less), or if you have Dark Arts.", DRK.JobID)]
         DRK_AoE_ManaOvercap = 5026,
 
         [ParentCombo(DRK_AoE_Combo)]

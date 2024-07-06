@@ -145,13 +145,6 @@ namespace XIVSlothCombo.Combos.PvE
                         && IsOffCooldown(Variant.VariantUltimatum))
                         return Variant.VariantUltimatum;
 
-                    // Spend Dark Arts when TBN is up
-                    if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
-                        && HasEffect(Buffs.BlackestNight)
-                        && gauge.HasDarkArts
-                        && LevelChecked(EdgeOfDarkness))
-                        return OriginalHook(EdgeOfDarkness);
-
                     //Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
                         && ((CombatEngageDuration().TotalSeconds < 7 && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
@@ -331,17 +324,10 @@ namespace XIVSlothCombo.Combos.PvE
                         && IsOffCooldown(Variant.VariantUltimatum))
                         return Variant.VariantUltimatum;
 
-                    // Spend Dark Arts when TBN is up
-                    if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
-                        && HasEffect(Buffs.BlackestNight)
-                        && gauge.HasDarkArts
-                        && LevelChecked(FloodOfDarkness))
-                        return OriginalHook(FloodOfDarkness);
-
                     // Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
                         && LevelChecked(FloodOfDarkness)
-                        && (gauge.HasDarkArts || LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000)))
+                        && (LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000)))
                         return OriginalHook(FloodOfDarkness);
 
                     if (gauge.DarksideTimeRemaining > 1)
@@ -392,6 +378,13 @@ namespace XIVSlothCombo.Combos.PvE
                     && gauge.DarksideTimeRemaining > 1
                     && GetBuffStacks(Buffs.Delirium) > 2)
                     return OriginalHook(Quietus);
+
+                // Spend Dark Arts
+                if (IsEnabled(CustomComboPreset.DRK_AoE_ManaOvercap)
+                    && (CanWeave(actionID) || CanDelayedWeave(actionID))
+                    && gauge.HasDarkArts
+                    && LevelChecked(FloodOfDarkness))
+                    return OriginalHook(FloodOfDarkness);
 
                 // 1-2-3 combo
                 if (!(comboTime > 0)) return Unleash;
