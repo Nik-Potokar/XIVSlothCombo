@@ -140,7 +140,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // New Goring Blade
-                            if (HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() || WasLastAbility(BladeOfHonor)))
+                            if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && (!BladeOfHonor.LevelChecked() ||
+                                (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
                                 return OriginalHook(FightOrFlight);
 
                             if (HasEffect(Buffs.Requiescat))
@@ -392,7 +393,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // New Goring Blade
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() || WasLastAbility(BladeOfHonor)))
+                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() ||
+                                (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
