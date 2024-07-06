@@ -1580,9 +1580,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
             }
 
-            if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
-                UserConfig.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
-
             if (preset == CustomComboPreset.GNB_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
 

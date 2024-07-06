@@ -52,7 +52,7 @@ namespace XIVSlothCombo
             DOL.JobID,
             DRG.JobID,
             DRK.JobID,
-            GNB.JobID,
+            //GNB.JobID,
             MCH.JobID,
             MNK.JobID,
             NIN.JobID,
@@ -84,7 +84,7 @@ namespace XIVSlothCombo
             //MCH.JobID,
             //MNK.JobID,
             //NIN.JobID,
-            PCT.JobID,
+            //PCT.JobID,
             //PLD.JobID,
             //RDM.JobID,
             //RPR.JobID,
@@ -92,7 +92,7 @@ namespace XIVSlothCombo
             //SCH.JobID,
             //SGE.JobID,
             //SMN.JobID,
-            VPR.JobID,
+            //VPR.JobID,
             //WAR.JobID,
             //WHM.JobID
         };
