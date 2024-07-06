@@ -73,13 +73,13 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                MCH_ST_SecondWindThreshold = new("MCH_ST_SecondWindThreshold"),
-                MCH_AoE_SecondWindThreshold = new("MCH_AoE_SecondWindThreshold"),
+                MCH_ST_SecondWindThreshold = new("MCH_ST_SecondWindThreshold",25),
+                MCH_AoE_SecondWindThreshold = new("MCH_AoE_SecondWindThreshold",25),
                 MCH_VariantCure = new("MCH_VariantCure"),
                 MCH_ST_TurretUsage = new("MCH_ST_Adv_TurretGauge"),
                 MCH_AoE_TurretUsage = new("MCH_AoE_TurretUsage"),
-                MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool"),
-                MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool"),
+                MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool",0),
+                MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool",0),
                 MCH_ST_QueenOverDrive = new("MCH_ST_QueenOverDrive");
             public static UserBoolArray
                 MCH_ST_Reassembled = new("MCH_ST_Reassembled"),
