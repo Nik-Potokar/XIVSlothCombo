@@ -187,7 +187,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (HasEffect(Buffs.ReadyToReign) && GetCooldownRemainingTime(Bloodfest) > 90)
                         {
-                            if (WasLastAbility(EyeGouge))
+                            if (WasLastWeaponskill(WickedTalon) || (WasLastAbility(EyeGouge)))
                                 return OriginalHook(ReignOfBeasts);
                         }
 
