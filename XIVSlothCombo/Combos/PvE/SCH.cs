@@ -65,7 +65,9 @@ namespace XIVSlothCombo.Combos.PvE
         {
             internal const ushort
                 Galvanize = 297,
-                Recitation = 1896;
+                SacredSoil = 299,
+                Recitation = 1896,
+                ImpactImminent = 3882;
         }
 
         internal static class Debuffs
@@ -103,25 +105,25 @@ namespace XIVSlothCombo.Combos.PvE
             #region DPS
             public static UserInt
                 SCH_ST_DPS_AltMode = new("SCH_ST_DPS_AltMode"),
-                SCH_ST_DPS_LucidOption = new("SCH_ST_DPS_LucidOption"),
-                SCH_ST_DPS_BioOption = new("SCH_ST_DPS_BioOption"),
-                SCH_ST_DPS_ChainStratagemOption = new("SCH_ST_DPS_ChainStratagemOption");
+                SCH_ST_DPS_LucidOption = new("SCH_ST_DPS_LucidOption", 6500),
+                SCH_ST_DPS_BioOption = new("SCH_ST_DPS_BioOption", 10),
+                SCH_ST_DPS_ChainStratagemOption = new("SCH_ST_DPS_ChainStratagemOption", 10);
             public static UserBool
                 SCH_ST_DPS_Adv = new("SCH_ST_DPS_Adv"),
                 SCH_ST_DPS_Bio_Adv = new("SCH_ST_DPS_Bio_Adv"),
                 SCH_ST_DPS_EnergyDrain_Adv = new("SCH_ST_DPS_EnergyDrain_Adv");
             public static UserFloat
-                SCH_ST_DPS_Bio_Threshold = new("SCH_ST_DPS_Bio_Threshold"),
-                SCH_ST_DPS_EnergyDrain = new("SCH_ST_DPS_EnergyDrain");
+                SCH_ST_DPS_Bio_Threshold = new("SCH_ST_DPS_Bio_Threshold", 3.0f),
+                SCH_ST_DPS_EnergyDrain = new("SCH_ST_DPS_EnergyDrain", 3.0f);
             public static UserBoolArray
                 SCH_ST_DPS_Adv_Actions = new("SCH_ST_DPS_Adv_Actions");
             #endregion
 
             #region Healing
             public static UserInt
-                SCH_AoE_LucidOption = new("SCH_AoE_LucidOption"),
-                SCH_AoE_Heal_LucidOption = new("SCH_AoE_Heal_LucidOption"),
-                SCH_ST_Heal_LucidOption = new("SCH_ST_Heal_LucidOption"),
+                SCH_AoE_LucidOption = new("SCH_AoE_LucidOption", 6500),
+                SCH_AoE_Heal_LucidOption = new("SCH_AoE_Heal_LucidOption", 6500),
+                SCH_ST_Heal_LucidOption = new("SCH_ST_Heal_LucidOption", 6500),
                 SCH_ST_Heal_AdloquiumOption = new("SCH_ST_Heal_AdloquiumOption"),
                 SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption"),
                 SCH_ST_Heal_EsunaOption = new("SCH_ST_Heal_EsunaOption");
@@ -290,7 +292,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SCH_DeploymentTactics_Recitation) && ActionReady(Recitation))
                             return Recitation;
 
-                        return Adloquium;
+                        return OriginalHook(Adloquium);
                     }
                 }
                 return actionID;
@@ -384,12 +386,20 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Chain Stratagem
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat) &&
-                            ActionReady(ChainStratagem) && InCombat() &&
-                            !TargetHasEffectAny(Debuffs.ChainStratagem) && //Overwrite protection
-                            GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption &&
-                            CanSpellWeave(actionID))
-                            return ChainStratagem;
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat))
+                        {
+                            // If CS is available and usable, or if the Impact Buff is on Player
+                            bool CSReady =
+                                ActionReady(ChainStratagem) &&
+                                !TargetHasEffectAny(Debuffs.ChainStratagem) &&
+                                GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption;
+
+                            if ((CSReady || HasEffect(Buffs.ImpactImminent)) &&
+                                InCombat() &&
+                                CanSpellWeave(actionID))
+                               return OriginalHook(ChainStratagem);
+                        }
+                        
 
                         //Bio/Biolysis
                         if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio) && InCombat())
@@ -561,7 +571,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Adloquium) &&
                         (FindEffectOnMember(Buffs.Galvanize, healTarget) is null || GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_AdloquiumOption))
                     {
-                        return Adloquium;
+                        return OriginalHook(Adloquium);
                     }
                     
                     //Cast Lustrate if you have Aetherflow and Target HP is below %
