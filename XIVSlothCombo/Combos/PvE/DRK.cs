@@ -101,7 +101,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 var gauge = GetJobGauge<DRKGauge>();
                 var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_ManaSpenderPooling);
-                // todo: add hpRemaining for DRK_ST_LivingDeadThreshold
+                var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_LivingDeadThreshold);
 
                 // Variant Cure - Heal: Priority to save your life
                 if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
@@ -181,11 +181,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.DarksideTimeRemaining > 1)
                     {
                         // Living Shadow
-                        // todo: this needs to check with DRK_ST_LivingDeadThreshold
                         if (IsEnabled(CustomComboPreset.DRK_ST_CDs)
                             && IsEnabled(CustomComboPreset.DRK_ST_CDs_LivingShadow)
                             && IsOffCooldown(LivingShadow)
-                            && LevelChecked(LivingShadow))
+                            && LevelChecked(LivingShadow)
+                            && GetTargetHPPercent() > hpRemaining)
                             return LivingShadow;
 
                         // Delirium
@@ -290,6 +290,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID != StalwartSoul) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
+                var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_AoE_LivingDeadThreshold);
 
                 // Variant Cure - Heal: Priority to save your life
                 if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
@@ -343,10 +344,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return Delirium;
 
                         // Living Shadow
-                        // todo: this needs to check with DRK_AoE_LivingDeadThreshold
                         if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_LivingShadow)
                             && IsOffCooldown(LivingShadow)
-                            && LevelChecked(LivingShadow))
+                            && LevelChecked(LivingShadow)
+                            && GetTargetHPPercent() > hpRemaining)
                             return LivingShadow;
 
                         // Salted Earth
