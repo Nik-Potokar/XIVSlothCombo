@@ -48,7 +48,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
                 Requiescat = 1368,
-                SwordOath = 1902,
+                AtonementReady = 1902, //First Atonement Buff
                 SupplicationReady = 3827, //Second Atonement buff
                 SepulchreReady = 3828, // Third Atonement buff
                 GoringBladeReady = 3847, //Goring Blade Buff after use of FoF
@@ -139,14 +139,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(SpiritsWithin);
                             }
 
-                            if (HasEffect(Buffs.GoringBladeReady) && WasLastAbility(BladeOfHonor))
-                                return GoringBlade;
+                            // New Goring Blade
+                            if (HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() || WasLastAbility(BladeOfHonor)))
+                                return OriginalHook(FightOrFlight);
 
                             if (HasEffect(Buffs.Requiescat))
                             {
                                 // Confiteor & Blades
-                                if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) &&
-                                    GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
+                                if ((HasEffect(Buffs.ConfiteorReady) && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp) ||
+                                    (BladeOfFaith.LevelChecked() && GetResourceCost(BladeOfFaith) <= LocalPlayer.CurrentMp && OriginalHook(Confiteor) != Confiteor))
                                     return OriginalHook(Confiteor);
 
                                 if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
@@ -191,7 +192,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade &&
                                 RageOfHalone.LevelChecked())
                             {
-                                if (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
+                                if (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
                                     return OriginalHook(Atonement);
                                 
                                 return (HasEffect(Buffs.DivineMight) &&
@@ -251,8 +252,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (HasEffect(Buffs.Requiescat))
                         {
-                            if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) &&
-                                GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
+                            // Confiteor & Blades
+                            if ((HasEffect(Buffs.ConfiteorReady) && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp) ||
+                                (BladeOfFaith.LevelChecked() && GetResourceCost(BladeOfFaith) <= LocalPlayer.CurrentMp && OriginalHook(Confiteor) != Confiteor))
                                 return OriginalHook(Confiteor);
 
                             if (HolyCircle.LevelChecked() &&
@@ -268,9 +270,6 @@ namespace XIVSlothCombo.Combos.PvE
                             GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && HolyCircle.LevelChecked())
                             return HolyCircle;
                     }
-
-                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
-                        return Prominence;
 
                     if (CanWeave(actionID))
                     {
@@ -290,6 +289,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) &&
                         GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return HolyCircle;
+
+                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                        return Prominence;
 
                     return actionID;
                 }
@@ -388,8 +390,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Intervene);
                             }
 
+                            // New Goring Blade
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && WasLastAbility(BladeOfHonor))
+                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() || WasLastAbility(BladeOfHonor)))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -421,7 +424,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolySpirit;
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)))
+                                (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)))
                                 return OriginalHook(Atonement);
                         }
 
@@ -479,7 +482,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolySpirit;
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange())
+                            (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange())
                             return OriginalHook(Atonement);
 
                         // Base combo
@@ -492,7 +495,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
                             {
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                    (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() && 
+                                    (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() && 
                                     (Config.PLD_ST_AtonementTiming == 2 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 0)))
                                     return OriginalHook(Atonement);
 
@@ -506,7 +509,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() &&
+                            (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() &&
                             (Config.PLD_ST_AtonementTiming == 1 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 1)))
                             return OriginalHook(Atonement);
 
@@ -605,9 +608,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolyCircle;
                     }
 
-                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
-                        return Prominence;
-
                     if (CanWeave(actionID))
                     {
                         // FoF (Starts burst)
@@ -649,6 +649,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) &&
                         GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return HolyCircle;
+
+                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                        return Prominence;
 
                     return actionID;
                 }
