@@ -80,16 +80,16 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public static UserInt
                 DRG_Variant_Cure = new("DRG_VariantCure"),
-                DRG_ST_LitanyHP = new("DRG_ST_LitanyHP"),
-                DRG_ST_SightHP = new("DRG_ST_SightHP"),
-                DRG_ST_LanceChargeHP = new("DRG_ST_LanceChargeHP"),
-                DRG_ST_SecondWind_Threshold = new("DRG_STSecondWindThreshold"),
-                DRG_ST_Bloodbath_Threshold = new("DRG_STBloodbathThreshold"),
-                DRG_AoE_LitanyHP = new("DRG_AoE_LitanyHP"),
-                DRG_AoE_SightHP = new("DRG_AoE_SightHP"),
-                DRG_AoE_LanceChargeHP = new("DRG_AoE_LanceChargeHP"),
-                DRG_AoE_SecondWind_Threshold = new("DRG_AoE_SecondWindThreshold"),
-                DRG_AoE_Bloodbath_Threshold = new("DRG_AoE_BloodbathThreshold");
+                DRG_ST_LitanyHP = new("DRG_ST_LitanyHP", 2),
+                DRG_ST_SightHP = new("DRG_ST_SightHP", 2),
+                DRG_ST_LanceChargeHP = new("DRG_ST_LanceChargeHP", 2),
+                DRG_ST_SecondWind_Threshold = new("DRG_STSecondWindThreshold", 25),
+                DRG_ST_Bloodbath_Threshold = new("DRG_STBloodbathThreshold", 40),
+                DRG_AoE_LitanyHP = new("DRG_AoE_LitanyHP", 5),
+                DRG_AoE_SightHP = new("DRG_AoE_SightHP", 5),
+                DRG_AoE_LanceChargeHP = new("DRG_AoE_LanceChargeHP", 5),
+                DRG_AoE_SecondWind_Threshold = new("DRG_AoE_SecondWindThreshold", 25),
+                DRG_AoE_Bloodbath_Threshold = new("DRG_AoE_BloodbathThreshold", 40);
         }
 
         internal class DRG_ST_SimpleMode : CustomCombo
