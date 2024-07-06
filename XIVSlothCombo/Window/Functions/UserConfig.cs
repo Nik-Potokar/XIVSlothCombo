@@ -1587,13 +1587,6 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
-            {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "", 0);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "", 1);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "", 2);
-            }
-
             if (preset is CustomComboPreset.MCH_Adv_TurretQueen)
             {
                 UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_TurretUsage, "Early Use", "Uses at 50 battery or above", 0);
@@ -1608,16 +1601,19 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.MCH_ST_Adv_Reassemble)
             {
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 5, 0);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 5, 1);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Chainsaw)}", "", 5, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Excavator)}", "", 5, 3);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.CleanShot)}", "", 5, 4);
             }
 
             if (preset is CustomComboPreset.MCH_AoE_Adv_Reassemble)
             {
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.SpreadShot)}/{ActionWatching.GetActionName(MCH.Scattergun)}", "", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.AutoCrossbow)}", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.SpreadShot)}/{ActionWatching.GetActionName(MCH.Scattergun)}", "", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.AutoCrossbow)}", "", 4, 1);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Chainsaw)}", "", 4, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Excavator)}", "", 4, 3);
             }
 
             if (preset == CustomComboPreset.MCH_ST_Adv_SecondWind)
@@ -1634,6 +1630,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+
+            if (preset == CustomComboPreset.MCH_ST_Adv_QueenOverdrive)
+                UserConfig.DrawSliderInt(1, 10, MCH.Config.MCH_ST_QueenOverDrive, "HP% for the target to be at or under");
 
             #endregion
             // ====================================================================================

@@ -1551,10 +1551,10 @@ namespace XIVSlothCombo.Combos
 
         #region Simple ST
 
-        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
+        [ReplaceSkill(MCH.SplitShot)]
         [ConflictingCombos(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
-        MCH_ST_SimpleMode = 8000,
+        MCH_ST_SimpleMode = 8001,
 
         #endregion
 
@@ -1566,11 +1566,12 @@ namespace XIVSlothCombo.Combos
         MCH_ST_AdvancedMode = 8100,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Level 90 Opener Option", "Uses the Balance opener depending on which rotation is selected above.", MCH.JobID)]
+        [ConflictingCombos(MCH_GaussRoundRicochet, MCH_Heatblast_GaussRound)]
+        [CustomComboInfo("Level 100 Opener Option", "Uses the Balance opener.", MCH.JobID)]
         MCH_ST_Adv_Opener = 8101,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Hot Shot / Air Anchor option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Hot Shot / Air Anchor Option", "Adds Hot Shot/Air Anchor to the rotation.", MCH.JobID)]
         MCH_ST_Adv_AirAnchor = 8102,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1578,7 +1579,8 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_Reassemble = 8103,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round and Ricochet to the rotation.\nWill prevent overcapping.", MCH.JobID)]
+        [ConflictingCombos(MCH_GaussRoundRicochet, MCH_Heatblast_GaussRound)]
+        [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate option", "Adds Gauss Round and Ricochet or Double Check and Checkmate to the rotation. Will prevent overcapping.", MCH.JobID)]
         MCH_ST_Adv_GaussRicochet = 8104,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1586,11 +1588,11 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_Hypercharge = 8105,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Heat Blast Option", "Adds Heat Blast to the rotation", MCH.JobID)]
-        MCH_ST_Adv_HeatBlast = 8106,
+        [CustomComboInfo("Heat Blast / Blazing Shot Option", "Adds Heat Blast or Blazing Shot to the rotation", MCH.JobID)]
+        MCH_ST_Adv_Heatblast = 8106,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Rook Autoturret/Automaton Queen Option", "Adds Rook Autoturret/Automaton Queen to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Rook Autoturret/Automaton Queen Option", "Adds Rook Autoturret or Automaton Queen to the rotation.", MCH.JobID)]
         MCH_Adv_TurretQueen = 8107,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1598,7 +1600,7 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_WildFire = 8108,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Drill option", "Adds Drill to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Drill Option", "Adds Drill to the rotation.", MCH.JobID)]
         MCH_ST_Adv_Drill = 8109,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
@@ -1606,12 +1608,20 @@ namespace XIVSlothCombo.Combos
         MCH_ST_Adv_Stabilizer = 8110,
 
         [ParentCombo(MCH_ST_Adv_Stabilizer)]
-        [CustomComboInfo("Wildfire Only Option", "Only use Barrel Stabilizer to prepare for Wildfire.", MCH.JobID)]
-        MCH_ST_Adv_Stabilizer_Wildfire_Only = 8111,
+        [CustomComboInfo("Full Metal Field Option", "Adds Full Metal Field to the rotation.", MCH.JobID)]
+        MCH_ST_Adv_Stabilizer_FullMetalField = 8111,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
-        [CustomComboInfo("Chain Saw option", "Adds Chain Saw to the rotation.", MCH.JobID)]
-        MCH_ST_Adv_ChainSaw = 8112,
+        [CustomComboInfo("Chain Saw Option", "Adds Chain Saw to the rotation.", MCH.JobID)]
+        MCH_ST_Adv_Chainsaw = 8112,
+
+        [ParentCombo(MCH_ST_Adv_Chainsaw)]
+        [CustomComboInfo("Excavator Option", "Adds Excavator to the rotation.", MCH.JobID)]
+        MCH_ST_Adv_Excavator = 8116,
+
+        [ParentCombo(MCH_ST_AdvancedMode)]
+        [CustomComboInfo("Rook / Queen Overdrive Option", "Adds Rook or Queen Overdrive to the rotation.", MCH.JobID)]
+        MCH_ST_Adv_QueenOverdrive = 8115,
 
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Head Graze Option", "Uses Head Graze to interrupt during the rotation, where applicable.", MCH.JobID)]
@@ -1620,7 +1630,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID)]
         MCH_ST_Adv_SecondWind = 8114,
-
 
         #endregion
 
@@ -1645,7 +1654,8 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Reassemble = 8301,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Gauss Round / Ricochet Option", "Adds Gauss Round/Ricochet to the rotation.", MCH.JobID)]
+        [ConflictingCombos(MCH_GaussRoundRicochet, MCH_Heatblast_GaussRound)]
+        [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate option", "Adds Gauss Round and Ricochet or Double Check and Checkmate to the rotation.", MCH.JobID)]
         MCH_AoE_Adv_GaussRicochet = 8302,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
@@ -1653,7 +1663,7 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Hypercharge = 8303,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Rook Autoturret/Automaton Queen Option", "Adds Rook Autoturret/Automaton Queen to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Rook Autoturret/Automaton Queen Option", "Adds Rook Autoturret or Automaton Queen to the rotation.", MCH.JobID)]
         MCH_AoE_Adv_Queen = 8304,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
@@ -1665,12 +1675,24 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Bioblaster = 8306,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
+        [CustomComboInfo("Barrel Stabilizer Option", "Adds Barrel Stabilizer to the rotation.", MCH.JobID)]
+        MCH_AoE_Adv_Stabilizer = 8307,
+
+        [ParentCombo(MCH_AoE_Adv_Stabilizer)]
+        [CustomComboInfo("Full Metal Field Option", "Adds Full Metal Field to the rotation.", MCH.JobID)]
+        MCH_AoE_Adv_Stabilizer_FullMetalField = 8308,
+
+        [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Chain Saw Option", "Adds Chain Saw to the the rotation.", MCH.JobID)]
-        MCH_AoE_Adv_Chainsaw = 8307,
+        MCH_AoE_Adv_Chainsaw = 8309,
+
+        [ParentCombo(MCH_AoE_Adv_Chainsaw)]
+        [CustomComboInfo("Excavator Option", "Adds Excavator to the rotation.", MCH.JobID)]
+        MCH_AoE_Adv_Excavator = 8310,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
         [CustomComboInfo("Second Wind Option", "Use Second Wind when below the set HP percentage.", MCH.JobID)]
-        MCH_AoE_Adv_SecondWind = 8308,
+        MCH_AoE_Adv_SecondWind = 8399,
 
         #endregion
 
@@ -1693,14 +1715,15 @@ namespace XIVSlothCombo.Combos
         MCH_Overdrive = 8002,
 
         [ReplaceSkill(MCH.GaussRound, MCH.Ricochet)]
-        [CustomComboInfo("Gauss Round/Ricochet Feature", "Replace Gauss Round and Ricochet with one or the other depending on which has more charges.", MCH.JobID)]
+        [ConflictingCombos(MCH_ST_Adv_Opener, MCH_ST_Adv_GaussRicochet, MCH_AoE_Adv_GaussRicochet, MCH_Heatblast_GaussRound)]
+        [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate Feature", "Replace Gauss Round and Ricochet or Double Check and Checkmate with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
         [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
         [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
-        MCH_HotShotDrillChainSaw = 8004,
+        MCH_HotShotDrillChainsaw = 8004,
 
-        [ReplaceSkill(MCH.HeatBlast)]
+        [ReplaceSkill(MCH.Heatblast)]
         [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
         MCH_Heatblast = 8006,
 
@@ -1713,7 +1736,8 @@ namespace XIVSlothCombo.Combos
         MCH_Heatblast_Wildfire = 8015,
 
         [ParentCombo(MCH_Heatblast)]
-        [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Heat Blast and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
+        [ConflictingCombos(MCH_ST_Adv_Opener, MCH_ST_Adv_GaussRicochet, MCH_AoE_Adv_GaussRicochet, MCH_GaussRoundRicochet)]
+        [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate Option", "Switches between Heat Blast and either Gauss Round and Ricochet or Double Check and Checkmate, depending on cooldown timers.", MCH.JobID)]
         MCH_Heatblast_GaussRound = 8016,
 
         [ReplaceSkill(MCH.AutoCrossbow)]
@@ -1725,11 +1749,11 @@ namespace XIVSlothCombo.Combos
         MCH_AutoCrossbow_AutoBarrel = 8019,
 
         [ParentCombo(MCH_AutoCrossbow)]
-        [CustomComboInfo("Gauss Round / Ricochet Option", "Switches between Auto Crossbow and either Gauss Round or Ricochet, depending on cooldown timers.", MCH.JobID)]
+        [CustomComboInfo("Gauss Round / Ricochet\n Double Check / Checkmate Option", "Switches between Auto Crossbow and either Gauss Round and Ricochet or Double Check and Checkmate, depending on cooldown timers.", MCH.JobID)]
         MCH_AutoCrossbow_GaussRound = 8020,
 
         [ReplaceSkill(MCH.Dismantle)]
-        [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect by replacing it with Fire.", MCH.JobID)]
+        [CustomComboInfo("Physical Ranged DPS: Double Dismantle Protection", "Prevents the use of Dismantle when target already has the effect.", MCH.JobID)]
         All_PRanged_Dismantle = 8042,
 
         [ReplaceSkill(MCH.Dismantle)]
