@@ -1385,9 +1385,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DNC_DanceComboReplacer)
             {
-                int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
-                bool inputChanged = false;
+                //int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
+                int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Select(x => (int)x).ToArray();
+                
 
+                bool inputChanged = false;
+                
                 inputChanged |= ImGui.InputInt("Emboite (Red) ActionID", ref actions[0], 0);
                 inputChanged |= ImGui.InputInt("Entrechat (Blue) ActionID", ref actions[1], 0);
                 inputChanged |= ImGui.InputInt("Jete (Green) ActionID", ref actions[2], 0);
@@ -1395,7 +1398,8 @@ namespace XIVSlothCombo.Window.Functions
 
                 if (inputChanged)
                 {
-                    Service.Configuration.DancerDanceCompatActionIDs = actions.Cast<uint>().ToArray();
+                    //Service.Configuration.DancerDanceCompatActionIDs = actions.Cast<uint>().ToArray();
+                    Service.Configuration.DancerDanceCompatActionIDs = actions.Select(x => (uint)x).ToArray();
                     Service.Configuration.Save();
                 }
 
@@ -2007,27 +2011,8 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SAGE
 
-            if (preset is CustomComboPreset.SGE_ST_DPS)
-            {
-                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, "Advanced Action Options", "Change how Dosis actions are handled", isConditionalChoice: true);
-
-                if (SGE.Config.SGE_ST_DPS_Adv)
-                {
-                    ImGui.Indent();
-                    UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_D2, "Apply all selected options to Dosis II", "Dosis I & III will behave normally.");
-                    UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants, "Instant Actions on Toxikon", "Adds instant GCDs and oGCDs to Toxikon.\nDefaults to Eukrasia.", isConditionalChoice: true);
-
-                    if (SGE.Config.SGE_ST_DPS_Adv_GroupInstants)
-                    {
-                        ImGui.Indent();
-                        ImGui.Spacing();//Not sure why I need this, indenting did not work without it
-                        UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants_Addl, "Add Toxikon", "Use Toxikon when Addersting is available.", 2, 0);
-                        UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants_Addl, "Add Dyskrasia", "Use Dyskrasia when in range of a selected enemy target.", 2, 1);
-                        ImGui.Unindent();
-                    }
-                    ImGui.Unindent();
-                }
-            }
+            if (preset is CustomComboPreset.SGE_ST_DPS) 
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, $"Apply all selected options to {SGE.Dosis2.ActionName()}", $"{SGE.Dosis.ActionName()} & {SGE.Dosis3.ActionName()} will behave normally.");
 
             if (preset is CustomComboPreset.SGE_ST_DPS_EDosis)
             {
@@ -2051,9 +2036,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_ST_DPS_Movement)
             {
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Toxikon", "Use Toxikon when Addersting is available.", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Dyskrasia", "Use Dyskrasia when in range of a selected enemy target.", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Eukrasia", "Use Eukrasia.", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Toxikon.ActionName(), $"Use {SGE.Toxikon.ActionName()} when Addersting is available.", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Dyskrasia.ActionName(), $"Use {SGE.Dyskrasia.ActionName()} when in range of a selected enemy target.", 4, 1);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Eukrasia.ActionName(), $"Use {SGE.Eukrasia.ActionName()}.", 4, 2);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Psyche.ActionName(), $"Use {SGE.Psyche.ActionName()}.", 4, 3);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_DPS_Lucid)
@@ -2124,39 +2110,43 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Heal_EDiagnosis)
             {
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, $"Use {SGE.EukrasianDiagnosis.ActionName()} when Target HP is at or below set percentage");
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", 2, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", $"Warning, will force the use of {SGE.EukrasianDiagnosis.ActionName()}, and normal {SGE.Diagnosis.ActionName()} will be unavailable.", 2, 0);
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Check for Scholar Galvenize", "Enable to not override an existing Scholar's shield.", 2, 1);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 0, $"{SGE.Kerachole.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 0, $"{SGE.Kerachole.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Ixochole)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 1, $"{SGE.Ixochole.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 1, $"{SGE.Ixochole.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Physis)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 2, $"{SGE.Physis.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 2, $"{SGE.Physis.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Holos)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 3, $"{SGE.Holos.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 3, $"{SGE.Holos.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Panhaima)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 4, $"{SGE.Panhaima.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 4, $"{SGE.Panhaima.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Pepsis)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 5, $"{SGE.Pepsis.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 5, $"{SGE.Pepsis.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Philosophia)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 6, $"{SGE.Philosophia.ActionName()} Priority: ");
 
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
                     "Check for Enhanced Kerachole Trait (Heal over Time)",
-                    "Enabling this will prevent Kerachole from being used when the Heal over Time trait is unavailable.");
+                    $"Enabling this will prevent {SGE.Kerachole.ActionName()} from being used when the Heal over Time trait is unavailable.");
 
             if (preset is CustomComboPreset.SGE_Eukrasia)
             {
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Dosis", "", 0);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Diagnosis", "", 1);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Prognosis", "", 2);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDosis.ActionName()}", "", 0);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDiagnosis.ActionName()}", "", 1);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianPrognosis.ActionName()}", "", 2);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDyskrasia.ActionName()}", "", 3);
             }
 
             #endregion
