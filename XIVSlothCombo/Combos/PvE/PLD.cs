@@ -171,7 +171,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // New Spell after Confi Combo (Weave)
-                            if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor))
+                            if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor) && WasLastWeaponskill(BladeOfValor))
                                 return OriginalHook(Requiescat);
 
                             // HS under DM
