@@ -727,23 +727,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BRD.JobID)]
         BRD_Variant_Cure = 3031,
 
-        [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Resonant Arrow Option", "Adds Resonant Arrow from Barrage.", BRD.JobID)]
-        BRD_Simple_ST_ResonantArrow = 3032,
-
-        [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Radiant Encore Option", "Adds Radiant Encore during Radiant Finale.", BRD.JobID)]
-        BRD_Simple_ST_RadiantEncore = 3033,
-
-        [ParentCombo(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("Resonant Arrow Option", "Adds Resonant Arrow from Barrage.", BRD.JobID)]
-        BRD_Simple_AoE_ResonantArrow = 3034,
-
-        [ParentCombo(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("Radiant Encore Option", "Adds Radiant Encore during Radiant Finale.", BRD.JobID)]
-        BRD_Simple_AoE_RadiantEncore = 3035,
-
-        // Last value = 3035
+        // Last value = 3031
 
         #endregion
 
@@ -3809,15 +3793,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Steel Cyclone / Decimate Option", "Adds Steel Cyclone / Decimate to Advanced Mode.", WAR.JobID)]
         WAR_AoE_Overpower_Decimate = 18028,
 
-        [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Raw Intuition", "Adds Raw Intuition if your health drops to set threshold.", WAR.JobID)]
-        WAR_AoE_RawIntuition = 18029,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Raw Intuition", "Adds Raw Intuition if your health drops to set threshold.", WAR.JobID)]
-        WAR_ST_RawIntuition = 18030,
-
-        // Last value = 18030
+        // Last value = 18028
 
         #endregion
 
