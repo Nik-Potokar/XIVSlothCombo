@@ -220,6 +220,15 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                 }
 
+                // Delirium Chain
+                if (LevelChecked(Delirium)
+                    && LevelChecked(ScarletDelirium)
+                    && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
+                    && HasEffect(Buffs.Delirium)
+                    && gauge.DarksideTimeRemaining > 0
+                    && GetBuffStacks(Buffs.Delirium) > 2)
+                    return OriginalHook(Bloodspiller);
+
                 //Delirium Features
                 if (LevelChecked(Delirium)
                     && IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller))
@@ -245,15 +254,6 @@ namespace XIVSlothCombo.Combos.PvE
                             ))
                         return Bloodspiller;
                 }
-
-                // Delirium Chain
-                if (LevelChecked(Delirium)
-                    && LevelChecked(ScarletDelirium)
-                    && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
-                    && HasEffect(Buffs.Delirium)
-                    && gauge.DarksideTimeRemaining > 0
-                    && GetBuffStacks(Buffs.Delirium) > 2)
-                    return OriginalHook(Bloodspiller);
 
                 // Spend Dark Arts
                 if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
