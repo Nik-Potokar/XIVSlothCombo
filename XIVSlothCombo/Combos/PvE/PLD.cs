@@ -422,7 +422,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Lv54-68 Goring use
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(HolySpirit) && WasLastSpell(HolySpirit))
+                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && !LevelChecked(HolySpirit))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
