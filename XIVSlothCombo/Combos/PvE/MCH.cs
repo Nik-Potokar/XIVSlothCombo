@@ -102,7 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
                 bool sawCD = !ActionReady(OriginalHook(Chainsaw)) || (ActionReady(OriginalHook(Chainsaw)) && GetCooldownRemainingTime(OriginalHook(Chainsaw)) > heatblastRC * 6);
 
-                if (actionID is SplitShot)
+                if (actionID is SplitShot or HeatedSplitShot)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
                     IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
@@ -279,7 +279,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
                 bool sawCD = !ActionReady(OriginalHook(Chainsaw)) || (ActionReady(OriginalHook(Chainsaw)) && GetCooldownRemainingTime(OriginalHook(Chainsaw)) > heatblastRC * 6);
 
-                if (actionID is SplitShot)
+                if (actionID is SplitShot or HeatedSplitShot)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
                     IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.MCH_VariantCure)

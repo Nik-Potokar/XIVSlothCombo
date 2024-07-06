@@ -325,8 +325,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Uncoiled combo
-                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) &&
-                        IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo))
+                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo))
                     {
                         if (HasEffect(Buffs.PoisedForTwinfang))
                             return OriginalHook(Twinfang);
@@ -403,7 +402,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Dreadwinder combo
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
-                        IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                         IsEnabled(CustomComboPreset.VPR_ST_DreadwinderCombo))
                     {
                         if (HasEffect(Buffs.HuntersVenom))
@@ -725,8 +723,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SteelMaw)
                 {
                     // Uncoiled combo
-                    if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFury) &&
-                        IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFuryCombo))
+                    if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFuryCombo))
                     {
                         if (HasEffect(Buffs.PoisedForTwinfang))
                             return OriginalHook(Twinfang);
@@ -797,8 +794,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Pit of Dread combo
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
-                        IsEnabled(CustomComboPreset.VPR_AoE_PitOfDread) &&
-                        IsEnabled(CustomComboPreset.VPR_AoE_PitOfDreadCombo))
+                                               IsEnabled(CustomComboPreset.VPR_AoE_PitOfDreadCombo))
                     {
                         if (HasEffect(Buffs.FellhuntersVenom))
                             return OriginalHook(Twinfang);
@@ -862,7 +858,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
-                            if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
+                            if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) &&
                                 (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
