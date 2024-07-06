@@ -3742,10 +3742,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode.", WAR.JobID, 7, "", "")]
         WAR_ST_StormsPath_PrimalRend = 18011,
 
-        [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
-        War_ST_StormsEye = 18001,
-
         [ReplaceSkill(WAR.Overpower)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 2, "", "")]
         WAR_AoE_Overpower = 18002,
@@ -3762,7 +3758,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
         WAR_AoE_Overpower_InnerRelease = 18015,
 
-        [ParentCombo(WAR_ST_StormsPath)]
+        [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
         WAR_AOE_Overpower_PrimalWrath = 18017,
 
