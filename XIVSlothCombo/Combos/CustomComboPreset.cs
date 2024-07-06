@@ -1055,7 +1055,7 @@ namespace XIVSlothCombo.Combos
         DRK_ST_CDs_LivingShadow = 5005,
 
         [ParentCombo(DRK_ST_CDs_LivingShadow)]
-        [CustomComboInfo("Disesteem Option", "Adds Disesteem to the AoE combo when available.", DRK.JobID)]
+        [CustomComboInfo("Disesteem Option", "Adds Disesteem to the main combo when available.", DRK.JobID)]
         DRK_ST_CDs_Disesteem = 5006,
 
         #endregion
