@@ -312,8 +312,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return RainOfDeath;
                     if (sidewinderReady)
                         return Sidewinder;
-                    if (HasEffect(Buffs.ResonantArrowReady))
-                        return ResonantArrow;
                     if (HasEffect(Buffs.RadiantEncoreReady))
                         return RadiantEncore;
                 }
@@ -379,8 +377,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return RainOfDeath;
                         if (sidewinderReady)
                             return Sidewinder;
-                        if (HasEffect(Buffs.ResonantArrowReady))
-                            return ResonantArrow;
 
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
@@ -392,6 +388,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     bool wideVolleyReady = LevelChecked(WideVolley) && HasEffect(Buffs.HawksEye);
                     bool blastArrowReady = LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady);
+                    bool resonantArrowReady = LevelChecked(ResonantArrow) && HasEffect(Buffs.ResonantArrowReady);
 
                     if (wideVolleyReady)
                         return OriginalHook(WideVolley);
@@ -399,6 +396,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return ApexArrow;
                     if (blastArrowReady)
                         return BlastArrow;
+                    if (resonantArrowReady)
+                        return ResonantArrow;
                 }
 
                 return actionID;
