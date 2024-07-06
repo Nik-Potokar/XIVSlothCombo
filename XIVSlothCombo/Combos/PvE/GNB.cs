@@ -463,7 +463,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(DangerZone);
                             if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && gauge.Ammo == 0 && ActionReady(Bloodfest))
                                 return Bloodfest;
-                            if (LevelChecked(FatedBrand) && HasEffect(Buffs.ReadyToRaze) && WasLastWeaponskill(FatedCircle))
+                            if (LevelChecked(FatedBrand) && HasEffect(Buffs.ReadyToRaze) && WasLastWeaponskill(FatedCircle) && LevelChecked(FatedBrand))
                                 return FatedBrand;
                         }
 
