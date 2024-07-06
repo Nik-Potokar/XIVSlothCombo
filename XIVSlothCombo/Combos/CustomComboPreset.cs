@@ -1048,56 +1048,54 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID)]
         DRK_ST_CDs = 5004,
 
-        // todo: move this out of the cooldowns section
-        [ParentCombo(DRK_ST_CDs)]
-        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
-        DRK_ST_CDs_Bloodspiller = 5005,
-
-        // todo: move this under DRK_ST_CDs_Bloodspiller
-        [ParentCombo(DRK_ST_CDs)]
-        [CustomComboInfo("Delayed Bloodspiller Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID)]
-        DRK_ST_CDs_DelayedBloodspiller = 5006,
-
         [ParentCombo(DRK_ST_CDs)]
         [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on cooldown.", DRK.JobID)]
-        DRK_ST_CDs_LivingShadow = 5007,
+        DRK_ST_CDs_LivingShadow = 5005,
 
         #region Shadowbringer Options
 
         [ParentCombo(DRK_ST_CDs)]
         [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on cooldown.", DRK.JobID)]
-        DRK_ST_CDs_Shadowbringer = 5008,
+        DRK_ST_CDs_Shadowbringer = 5006,
 
         [ParentCombo(DRK_ST_CDs_Shadowbringer)]
         [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID)]
-        DRK_ST_CDs_ShadowbringerBurst = 5009,
+        DRK_ST_CDs_ShadowbringerBurst = 5007,
 
         #endregion
-        // Last value = 5009
+        // Last value = 5007
 
         [ParentCombo(DRK_ST_CDs)]
         [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on main combo while Darkside is up.", DRK.JobID)]
-        DRK_ST_CDs_CarveAndSpit = 5010,
+        DRK_ST_CDs_CarveAndSpit = 5008,
 
         [ParentCombo(DRK_ST_CDs)]
         [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on main combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID)]
-        DRK_ST_CDs_SaltedEarth = 5011,
+        DRK_ST_CDs_SaltedEarth = 5009,
 
         #endregion
-        // Last value = 5011
+        // Last value = 50096
 
         #region Mana Overcap Options
 
         [ParentCombo(DRK_ST_Combo)]
         [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana or Darkside is about to expire (10sec or less)", DRK.JobID)]
-        DRK_ST_ManaOvercap = 5012,
+        DRK_ST_ManaOvercap = 5010,
 
         [ParentCombo(DRK_ST_ManaOvercap)]
         [CustomComboInfo("Edge of Shadow Burst Option", "Uses Edge of Shadow until chosen MP limit is reached during minute window bursts.", DRK.JobID)]
-        DRK_ST_ManaSpenderPooling = 5013,
+        DRK_ST_ManaSpenderPooling = 5011,
 
         #endregion
-        // Last value = 5013
+        // Last value = 5011
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
+        DRK_ST_CDs_Bloodspiller = 5012,
+
+        [ParentCombo(DRK_ST_CDs_Bloodspiller)]
+        [CustomComboInfo("Delayed Bloodspiller Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID)]
+        DRK_ST_CDs_DelayedBloodspiller = 5013,
 
         [ParentCombo(DRK_ST_Combo)]
         [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher.", DRK.JobID)]
