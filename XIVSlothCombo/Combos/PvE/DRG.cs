@@ -154,24 +154,24 @@ namespace XIVSlothCombo.Combos.PvE
                             return Geirskogul;
 
                         //(High) Jump Feature   
-                        if (ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
+                        if (ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)) && !IsMoving)
                             return OriginalHook(Jump);
 
                         //Dragonfire Dive Feature
-                        if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) && (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
+                        if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) && !IsMoving && (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
                             return DragonfireDive;
 
                         //StarDives Feature
                         if (AnimationLock.CanDRGWeave(Stardiver) &&
-                            gauge.IsLOTDActive && ActionReady(Stardiver) && GetBuffStacks(Buffs.NastrondReady) == 2)
+                            gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && GetBuffStacks(Buffs.NastrondReady) == 2)
                             return Stardiver;
 
-                        //StarDives Feature
+                        //Starcross Feature
                         if (AnimationLock.CanDRGWeave(Starcross) &&
                             HasEffect(Buffs.StarcrossReady) && WasLastAbility(Stardiver))
                             return OriginalHook(Stardiver);
 
-                        //Dives Feature
+                        //Rise of the Dragon Feature
                         if (HasEffect(Buffs.DragonsFlight) && AnimationLock.CanDRGWeave(RiseOfTheDragon) && (GetBuffStacks(Buffs.NastrondReady) == 1 || !LevelChecked(Nastrond)))
                             return OriginalHook(DragonfireDive);
 
@@ -314,27 +314,35 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //(High) Jump Feature   
                             if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
-                                ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
+                                ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)) &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) && !IsMoving)))
                                 return OriginalHook(Jump);
 
                             //Dragonfire Dive Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Dives_Dragonfire) &&
-                                ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) && (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
+                            if (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive) &&
+                                ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) && !IsMoving)) &&
+                                (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
                                 return DragonfireDive;
 
-                            //StarDives Feature
+                            //StarDiver Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) &&
                                 AnimationLock.CanDRGWeave(Stardiver) &&
-                                gauge.IsLOTDActive && ActionReady(Stardiver) && GetBuffStacks(Buffs.NastrondReady) == 2)
+                                gauge.IsLOTDActive && ActionReady(Stardiver) &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)) &&
+                                GetBuffStacks(Buffs.NastrondReady) == 2)
                                 return Stardiver;
 
-                            //StarDives Feature
+                            //Starcross Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Starcross) &&
                                 AnimationLock.CanDRGWeave(Starcross) &&
                                 HasEffect(Buffs.StarcrossReady) && WasLastAbility(Stardiver))
                                 return OriginalHook(Stardiver);
 
-                            //Dives Feature
+                            //Rise of the Dragon Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Dives_RiseOfTheDragon) &&
                                 HasEffect(Buffs.DragonsFlight) && AnimationLock.CanDRGWeave(RiseOfTheDragon) && (GetBuffStacks(Buffs.NastrondReady) == 1 || !LevelChecked(Nastrond)))
                                 return OriginalHook(DragonfireDive);
@@ -464,16 +472,16 @@ namespace XIVSlothCombo.Combos.PvE
                             return Geirskogul;
 
                         //(High) Jump Feature   
-                        if (ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
+                        if (ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)) && !IsMoving)
                             return OriginalHook(Jump);
 
-                        //Dives Feature
-                        if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) && (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
+                        //Dragonfire Dive Feature
+                        if (ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) && !IsMoving && (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
                             return DragonfireDive;
 
                         //StarDives Feature
                         if (AnimationLock.CanDRGWeave(Stardiver) &&
-                            gauge.IsLOTDActive && ActionReady(Stardiver) && GetBuffStacks(Buffs.NastrondReady) == 2)
+                            gauge.IsLOTDActive && ActionReady(Stardiver) && !IsMoving && GetBuffStacks(Buffs.NastrondReady) == 2)
                             return Stardiver;
 
                         //StarDives Feature
@@ -481,7 +489,7 @@ namespace XIVSlothCombo.Combos.PvE
                             HasEffect(Buffs.StarcrossReady) && WasLastAbility(Stardiver))
                             return OriginalHook(Stardiver);
 
-                        //Dives Feature
+                        //Rise of the Dragon Feature
                         if (HasEffect(Buffs.DragonsFlight) && AnimationLock.CanDRGWeave(RiseOfTheDragon) && (GetBuffStacks(Buffs.NastrondReady) == 1 || !LevelChecked(Nastrond)))
                             return OriginalHook(DragonfireDive);
 
@@ -592,27 +600,35 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //(High) Jump Feature   
                             if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) &&
-                                ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)))
+                                ActionReady(OriginalHook(Jump)) && AnimationLock.CanDRGWeave(OriginalHook(Jump)) &&
+                                (!IsEnabled(CustomComboPreset.DRG_AoE_HighJump_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_AoE_HighJump_Movement) && !IsMoving)))
                                 return OriginalHook(Jump);
 
-                            //Dives Feature
-                            if (IsEnabled(CustomComboPreset.DRG_AoE_Dragonfire_Dive) &&
-                               ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) && (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
+                            //Dragonfire Dive Feature
+                            if (IsEnabled(CustomComboPreset.DRG_AoE_DragonfireDive) &&
+                               ActionReady(DragonfireDive) && AnimationLock.CanDRGWeave(DragonfireDive) &&
+                               (!IsEnabled(CustomComboPreset.DRG_AoE_DragonfireDive_Movement) ||
+                               (IsEnabled(CustomComboPreset.DRG_AoE_DragonfireDive_Movement) && !IsMoving)) &&
+                               (GetBuffStacks(Buffs.NastrondReady) == 3 || !LevelChecked(Nastrond)))
                                 return DragonfireDive;
 
-                            //StarDives Feature
+                            //StarDiver Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) &&
                                 AnimationLock.CanDRGWeave(Stardiver) &&
-                                gauge.IsLOTDActive && ActionReady(Stardiver) && GetBuffStacks(Buffs.NastrondReady) == 2)
+                                gauge.IsLOTDActive && ActionReady(Stardiver) &&
+                                (!IsEnabled(CustomComboPreset.DRG_AoE_Stardiver_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver_Movement) && !IsMoving)) &&
+                                GetBuffStacks(Buffs.NastrondReady) == 2)
                                 return Stardiver;
 
-                            //StarDives Feature
+                            //Starcross Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_Starcross) &&
                                 AnimationLock.CanDRGWeave(Starcross) &&
                                 HasEffect(Buffs.StarcrossReady) && WasLastAbility(Stardiver))
                                 return OriginalHook(Stardiver);
 
-                            //Dives Feature
+                            //Rise of the Dragon Feature
                             if (IsEnabled(CustomComboPreset.DRG_AoE_RiseOfTheDragon) &&
                                 HasEffect(Buffs.DragonsFlight) && AnimationLock.CanDRGWeave(RiseOfTheDragon) && (GetBuffStacks(Buffs.NastrondReady) == 1 || !LevelChecked(Nastrond)))
                                 return OriginalHook(DragonfireDive);
