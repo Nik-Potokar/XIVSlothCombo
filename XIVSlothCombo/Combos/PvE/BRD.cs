@@ -312,8 +312,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return RainOfDeath;
                     if (sidewinderReady)
                         return Sidewinder;
-                    if (HasEffect(Buffs.RadiantEncoreReady))
-                        return RadiantEncore;
                 }
 
                 return actionID;
@@ -401,6 +399,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return BlastArrow;
                     if (resonantArrowReady)
                         return ResonantArrow;
+                    if (HasEffect(Buffs.RadiantEncoreReady))
+                        return RadiantEncore;
+
                 }
 
                 return actionID;
@@ -631,6 +632,9 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (HasEffect(Buffs.RadiantEncoreReady))
+                        return RadiantEncore;
+
                     if (canWeave)
                     {
                         bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
@@ -665,8 +669,6 @@ namespace XIVSlothCombo.Combos.PvE
                             else return Sidewinder;
                         }
 
-                        if (HasEffect(Buffs.RadiantEncoreReady))
-                            return RadiantEncore;
 
                         if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
