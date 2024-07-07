@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.DalamudServices;
 using System;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
@@ -508,10 +509,15 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InCombat() && (inOpener || openerFinished))
                     {
                         openerFinished = false;
+                        Svc.Log.Debug($"BRD inOpener: {openerFinished}");
+
                     }
 
                     if (!IsEnabled(CustomComboPreset.BRD_Simple_NoWaste))
+                    {
                         openerFinished = true;
+                        Svc.Log.Debug($"BRD inOpener: {openerFinished}");
+                    }
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && canInterrupt)
                         return All.HeadGraze;
@@ -613,7 +619,7 @@ namespace XIVSlothCombo.Combos.PvE
                         else if (openerFinished)
                         {
                             if (ragingReady && ((canWeaveBuffs && firstMinute) || (canWeaveDelayed && restOfFight)) &&
-                            (GetCooldownRemainingTime(BattleVoice) <= 5.38 || battleVoiceReady || !LevelChecked(BattleVoice)))
+                            (HasEffect(Buffs.BattleVoice) || battleVoiceReady || !LevelChecked(BattleVoice)))
                                 return RagingStrikes;
 
                         }
