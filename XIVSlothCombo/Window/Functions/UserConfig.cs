@@ -1385,9 +1385,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DNC_DanceComboReplacer)
             {
-                int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
-                bool inputChanged = false;
+                //int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
+                int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Select(x => (int)x).ToArray();
+                
 
+                bool inputChanged = false;
+                
                 inputChanged |= ImGui.InputInt("Emboite (Red) ActionID", ref actions[0], 0);
                 inputChanged |= ImGui.InputInt("Entrechat (Blue) ActionID", ref actions[1], 0);
                 inputChanged |= ImGui.InputInt("Jete (Green) ActionID", ref actions[2], 0);
@@ -1395,7 +1398,8 @@ namespace XIVSlothCombo.Window.Functions
 
                 if (inputChanged)
                 {
-                    Service.Configuration.DancerDanceCompatActionIDs = actions.Cast<uint>().ToArray();
+                    //Service.Configuration.DancerDanceCompatActionIDs = actions.Cast<uint>().ToArray();
+                    Service.Configuration.DancerDanceCompatActionIDs = actions.Select(x => (uint)x).ToArray();
                     Service.Configuration.Save();
                 }
 
@@ -1511,7 +1515,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Opener)
             {
-                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener","", 0);
+                UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.5 Skill Speed Opener", "", 0);
                 UserConfig.DrawHorizontalRadioButton(DRG.Config.DRG_Opener_Choice, "2.46 Skill Speed Opener", "", 1);
             }
 
@@ -1538,11 +1542,11 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.DRG_ST_Litany)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LitanyHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_DragonSight)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_SightHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
-            
+
 
             if (preset == CustomComboPreset.DRG_ST_Lance)
                 UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_ST_LanceChargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
@@ -1583,22 +1587,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
             }
 
-            if (preset == CustomComboPreset.GNB_ST_RoughDivide && enabled)
-                UserConfig.DrawSliderInt(0, 1, GNB.Config.GNB_RoughDivide_HeldCharges, "How many charges to keep ready? (0 = Use All)");
-
             if (preset == CustomComboPreset.GNB_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
             #region MACHINIST
-
-            if (preset is CustomComboPreset.MCH_ST_AdvancedMode)
-            {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Standard Rotation", "", 0);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "123 Tools", "", 1);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_RotationSelection, "Early Tools", "", 2);
-            }
 
             if (preset is CustomComboPreset.MCH_Adv_TurretQueen)
             {
@@ -1614,16 +1608,19 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.MCH_ST_Adv_Reassemble)
             {
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.HotShot)}/{ActionWatching.GetActionName(MCH.AirAnchor)}", "", 5, 0);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Drill)}", "", 5, 1);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Chainsaw)}", "", 5, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Excavator)}", "", 5, 3);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_ST_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.CleanShot)}", "", 5, 4);
             }
 
             if (preset is CustomComboPreset.MCH_AoE_Adv_Reassemble)
             {
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.SpreadShot)}/{ActionWatching.GetActionName(MCH.Scattergun)}", "", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.AutoCrossbow)}", "", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.ChainSaw)}", "", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.SpreadShot)}/{ActionWatching.GetActionName(MCH.Scattergun)}", "", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.AutoCrossbow)}", "", 4, 1);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Chainsaw)}", "", 4, 2);
+                UserConfig.DrawHorizontalMultiChoice(MCH.Config.MCH_AoE_Reassembled, $"Use on {ActionWatching.GetActionName(MCH.Excavator)}", "", 4, 3);
             }
 
             if (preset == CustomComboPreset.MCH_ST_Adv_SecondWind)
@@ -1640,6 +1637,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MCH_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, MCH.Config.MCH_VariantCure, "HP% to be at or under", 200);
+
+            if (preset == CustomComboPreset.MCH_ST_Adv_QueenOverdrive)
+                UserConfig.DrawSliderInt(1, 10, MCH.Config.MCH_ST_QueenOverDrive, "HP% for the target to be at or under");
 
             #endregion
             // ====================================================================================
@@ -1742,6 +1742,23 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.NIN_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, NIN.Config.NIN_VariantCure, "HP% to be at or under", 200);
+
+            #endregion
+            // ====================================================================================
+            #region PICTOMANCER
+            if (preset == CustomComboPreset.CombinedAetherhues)
+            {
+                UserConfig.DrawRadioButton(PCT.Config.CombinedAetherhueChoices, "Both Single Target & AoE", $"Replaces both {PCT.FireInRed.ActionName()} & {PCT.FireIIinRed.ActionName()}", 0);
+                UserConfig.DrawRadioButton(PCT.Config.CombinedAetherhueChoices, "Single Target Only", $"Replace only {PCT.FireInRed.ActionName()}", 1);
+                UserConfig.DrawRadioButton(PCT.Config.CombinedAetherhueChoices, "AoE Only", $"Replace only {PCT.FireIIinRed.ActionName()}", 2);
+            }
+
+            if (preset == CustomComboPreset.CombinedMotifs)
+            {
+                UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsMog, $"{PCT.MogoftheAges.ActionName()} Feature", $"Add {PCT.MogoftheAges.ActionName()} when fully drawn and off cooldown.");
+                UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsMadeen, $"{PCT.RetributionoftheMadeen.ActionName()} Feature", $"Add {PCT.RetributionoftheMadeen.ActionName()} when fully drawn and off cooldown.");
+                UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsWeapon, $"{PCT.HammerStamp.ActionName()} Feature", $"Add {PCT.HammerStamp.ActionName()} when under the effect of {PCT.Buffs.HammerTime.StatusName()}.");
+            }
 
             #endregion
             // ====================================================================================
@@ -1997,27 +2014,8 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SAGE
 
-            if (preset is CustomComboPreset.SGE_ST_DPS)
-            {
-                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, "Advanced Action Options", "Change how Dosis actions are handled", isConditionalChoice: true);
-
-                if (SGE.Config.SGE_ST_DPS_Adv)
-                {
-                    ImGui.Indent();
-                    UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_D2, "Apply all selected options to Dosis II", "Dosis I & III will behave normally.");
-                    UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants, "Instant Actions on Toxikon", "Adds instant GCDs and oGCDs to Toxikon.\nDefaults to Eukrasia.", isConditionalChoice: true);
-
-                    if (SGE.Config.SGE_ST_DPS_Adv_GroupInstants)
-                    {
-                        ImGui.Indent();
-                        ImGui.Spacing();//Not sure why I need this, indenting did not work without it
-                        UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants_Addl, "Add Toxikon", "Use Toxikon when Addersting is available.", 2, 0);
-                        UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Adv_GroupInstants_Addl, "Add Dyskrasia", "Use Dyskrasia when in range of a selected enemy target.", 2, 1);
-                        ImGui.Unindent();
-                    }
-                    ImGui.Unindent();
-                }
-            }
+            if (preset is CustomComboPreset.SGE_ST_DPS) 
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, $"Apply all selected options to {SGE.Dosis2.ActionName()}", $"{SGE.Dosis.ActionName()} & {SGE.Dosis3.ActionName()} will behave normally.");
 
             if (preset is CustomComboPreset.SGE_ST_DPS_EDosis)
             {
@@ -2041,9 +2039,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_ST_DPS_Movement)
             {
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Toxikon", "Use Toxikon when Addersting is available.", 3, 0);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Dyskrasia", "Use Dyskrasia when in range of a selected enemy target.", 3, 1);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, "Eukrasia", "Use Eukrasia.", 3, 2);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Toxikon.ActionName(), $"Use {SGE.Toxikon.ActionName()} when Addersting is available.", 4, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Dyskrasia.ActionName(), $"Use {SGE.Dyskrasia.ActionName()} when in range of a selected enemy target.", 4, 1);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Eukrasia.ActionName(), $"Use {SGE.Eukrasia.ActionName()}.", 4, 2);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Psyche.ActionName(), $"Use {SGE.Psyche.ActionName()}.", 4, 3);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_DPS_Lucid)
@@ -2114,39 +2113,43 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.SGE_ST_Heal_EDiagnosis)
             {
                 UserConfig.DrawSliderInt(0, 100, SGE.Config.SGE_ST_Heal_EDiagnosisHP, $"Use {SGE.EukrasianDiagnosis.ActionName()} when Target HP is at or below set percentage");
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", "Warning, will force the use of Eukrasia Diagnosis, and normal Diagnosis will be unavailable.", 2, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Ignore Shield Check", $"Warning, will force the use of {SGE.EukrasianDiagnosis.ActionName()}, and normal {SGE.Diagnosis.ActionName()} will be unavailable.", 2, 0);
                 UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_Heal_EDiagnosisOpts, "Check for Scholar Galvenize", "Enable to not override an existing Scholar's shield.", 2, 1);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 0, $"{SGE.Kerachole.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 0, $"{SGE.Kerachole.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Ixochole)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 1, $"{SGE.Ixochole.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 1, $"{SGE.Ixochole.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Physis)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 2, $"{SGE.Physis.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 2, $"{SGE.Physis.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Holos)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 3, $"{SGE.Holos.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 3, $"{SGE.Holos.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Panhaima)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 4, $"{SGE.Panhaima.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 4, $"{SGE.Panhaima.ActionName()} Priority: ");
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Pepsis)
-                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 6, 5, $"{SGE.Pepsis.ActionName()} Priority: ");
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 5, $"{SGE.Pepsis.ActionName()} Priority: ");
+
+            if (preset is CustomComboPreset.SGE_AoE_Heal_Philosophia)
+                UserConfig.DrawPriorityInput(SGE.Config.SGE_AoE_Heals_Priority, 7, 6, $"{SGE.Philosophia.ActionName()} Priority: ");
 
 
             if (preset is CustomComboPreset.SGE_AoE_Heal_Kerachole)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_AoE_Heal_KeracholeTrait,
                     "Check for Enhanced Kerachole Trait (Heal over Time)",
-                    "Enabling this will prevent Kerachole from being used when the Heal over Time trait is unavailable.");
+                    $"Enabling this will prevent {SGE.Kerachole.ActionName()} from being used when the Heal over Time trait is unavailable.");
 
             if (preset is CustomComboPreset.SGE_Eukrasia)
             {
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Dosis", "", 0);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Diagnosis", "", 1);
-                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, "Eukrasian Prognosis", "", 2);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDosis.ActionName()}", "", 0);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDiagnosis.ActionName()}", "", 1);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianPrognosis.ActionName()}", "", 2);
+                UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDyskrasia.ActionName()}", "", 3);
             }
 
             #endregion
@@ -2346,9 +2349,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SMN_DemiEgiMenu_oGCDPooling)
             {
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut", "Bursts during Bahamut phase.", 1);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Solar Bahamut/Bahamut", "Bursts during Bahamut phase.\nBahamut burst phase becomes Solar Bahamut at Lv100.", 1);
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Phoenix", "Bursts during Phoenix phase.", 2);
-                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Bahamut or Phoenix", "Bursts during Bahamut or Phoenix phase (whichever comes first).", 3);
+                UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Any Demi Phase", "Bursts during any Demi Summon phase.", 3);
                 UserConfig.DrawHorizontalRadioButton(SMN.Config.SMN_BurstPhase, "Flexible (SpS) Option", "Bursts when Searing Light is ready, regardless of phase.", 4);
             }
 
@@ -2388,6 +2391,60 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 90, SMNPvP.Config.SMNPvP_RadiantAegisThreshold, "Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
             #endregion
+
+            #endregion
+            // ====================================================================================
+            #region VIPER
+
+            if ((preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled) || (preset == CustomComboPreset.VPR_DreadwinderCoils && enabled))
+            {
+                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
+                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
+            }
+
+            if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
+                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
+                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
+            {
+                UserConfig.DrawRoundedSliderFloat(0, 20, VPR.Config.VPR_ST_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
+            }
+
+            if (preset == CustomComboPreset.VPR_AoE_NoxiousGnash)
+            {
+                UserConfig.DrawRoundedSliderFloat(0, 20, VPR.Config.VPR_AoE_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
+            }
+
+            if (preset is CustomComboPreset.VPR_ST_Reawaken)
+            {
+                UserConfig.DrawRoundedSliderFloat(0, 10, VPR.Config.VPR_ST_Reawaken_Usage, "Stop using at Enemy HP %. Set to Zero to disable this check.", digits: 1);
+            }
+
+            if (preset is CustomComboPreset.VPR_AoE_Reawaken)
+            {
+                UserConfig.DrawRoundedSliderFloat(0, 10, VPR.Config.VPR_AoE_Reawaken_Usage, "Stop using at Enemy HP %. Set to Zero to disable this check.", digits: 1);
+            }
+
+            if (preset == CustomComboPreset.VPR_ST_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_ST_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.VPR_AoE_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_AoE_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_AoE_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.VPR_ReawakenLegacy)
+            {
+                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Reawaken", "Replaces Reawaken with Full Generation - Legacy combo.", 0);
+                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces SteelFangs", "Replaces SteelFangs with Full Generation - Legacy combo.", 1);
+            }
 
             #endregion
             // ====================================================================================

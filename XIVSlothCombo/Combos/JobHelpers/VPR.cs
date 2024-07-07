@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
-using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -8,35 +7,17 @@ using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
-    internal class MCHOpenerLogic : PvE.MCH
+    internal class VPROpenerLogic : VPR
     {
         private static bool HasCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(CheckMate) < 3)
-                return false;
-            if (CustomComboFunctions.GetRemainingCharges(DoubleCheck) < 3)
-                return false;
-            if (!CustomComboFunctions.ActionReady(Chainsaw))
-                return false;
-            if (!CustomComboFunctions.ActionReady(Wildfire))
-                return false;
-            if (!CustomComboFunctions.ActionReady(BarrelStabilizer))
-                return false;
-            if (!CustomComboFunctions.ActionReady(Excavator))
-                return false;
-            if (!CustomComboFunctions.ActionReady(FullMetalField))
+            if (CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)
                 return false;
 
+            if (!CustomComboFunctions.ActionReady(SerpentsIre))
+                return false;
             return true;
         }
-
-        public static bool HasPrePullCooldowns()
-        {
-            if (CustomComboFunctions.GetRemainingCharges(Reassemble) < 2) return false;
-
-            return true;
-        }
-
 
         private static uint OpenerLevel => 100;
 
@@ -44,43 +25,87 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public uint OpenerStep = 0;
 
-        private static uint[] StandardOpener = [
-            AirAnchor,
-            CheckMate,
-            DoubleCheck,
-            Drill,
-            BarrelStabilizer,
-            Chainsaw,
-            Excavator,
-            AutomatonQueen,
-            Reassemble,
-            Drill,
-            CheckMate,
-            Wildfire,
-            FullMetalField,
-            DoubleCheck,
-            Hypercharge,
-            BlazingShot,
-            CheckMate,
-            BlazingShot,
-            DoubleCheck,
-            BlazingShot,
-            CheckMate,
-            BlazingShot,
-            DoubleCheck,
-            BlazingShot,
-            CheckMate,
-            Drill,
-            DoubleCheck,
-            CheckMate,
-            HeatedSplitShot,
-            DoubleCheck,
-            HeatedSlugShot,
-            HeatedCleanShot];
+        private static readonly uint[] StandardOpenerFlankFirst = [
+            SerpentsIre,
+            SwiftskinsSting,
+            Dreadwinder,
+            HuntersCoil,
+            TwinfangBite,
+            TwinbloodBite,
+            SwiftskinsCoil,
+            TwinbloodBite,
+            TwinfangBite,
+            Reawaken,
+            FirstGeneration,
+            FirstLegacy,
+            SecondGeneration,
+            SecondLegacy,
+            ThirdGeneration,
+            ThirdLegacy,
+            FourthGeneration,
+            FourthLegacy,
+            Ouroboros,
+            UncoiledFury,
+            UncoiledTwinfang,
+            UncoiledTwinblood,
+            UncoiledFury,
+            UncoiledTwinfang,
+            UncoiledTwinblood,
+            HindstingStrike,
+            DeathRattle,
+            Dreadwinder,
+            UncoiledFury,
+            UncoiledTwinfang,
+            UncoiledTwinblood,
+            HuntersCoil,
+            TwinfangBite,
+            TwinbloodBite,
+            SwiftskinsCoil,
+            TwinbloodBite,
+            TwinfangBite];
+
+        private static readonly uint[] StandardOpenerRearFirst = [
+           SerpentsIre,
+            SwiftskinsSting,
+            Dreadwinder,
+            SwiftskinsCoil,
+            TwinbloodBite,
+            TwinfangBite,
+            HuntersCoil,
+            TwinfangBite,
+            TwinbloodBite,
+            Reawaken,
+            FirstGeneration,
+            FirstLegacy,
+            SecondGeneration,
+            SecondLegacy,
+            ThirdGeneration,
+            ThirdLegacy,
+            FourthGeneration,
+            FourthLegacy,
+            Ouroboros,
+            UncoiledFury,
+            UncoiledTwinfang,
+            UncoiledTwinblood,
+            UncoiledFury,
+            UncoiledTwinfang,
+            UncoiledTwinblood,
+            HindstingStrike,
+            DeathRattle,
+            Dreadwinder,
+            UncoiledFury,
+            UncoiledTwinfang,
+            UncoiledTwinblood,
+            SwiftskinsCoil,
+            TwinbloodBite,
+            TwinfangBite,
+            HuntersCoil,
+            TwinfangBite,
+            TwinbloodBite];
 
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
-        private static bool CanOpener => HasCooldowns() && HasPrePullCooldowns() && LevelChecked;
+        private static bool CanOpener => HasCooldowns() && LevelChecked;
 
         private OpenerState currentState = OpenerState.PrePull;
 
@@ -127,9 +152,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
 
-                if (CustomComboFunctions.HasEffect(Buffs.Reassembled) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
-                else if (PrePullStep == 1) actionID = Reassemble;
-
+                if (CustomComboFunctions.WasLastAction(DreadFangs) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+                else if (PrePullStep == 1) actionID = DreadFangs;
 
                 if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
                     CurrentState = OpenerState.FailedOpener;
@@ -159,13 +183,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.InCombat() && ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
-                if (((actionID == Ricochet && CustomComboFunctions.GetRemainingCharges(CheckMate) < 3) ||
-                        (actionID == Chainsaw && CustomComboFunctions.IsOnCooldown(Chainsaw)) ||
-                        (actionID == Wildfire && CustomComboFunctions.IsOnCooldown(Wildfire)) ||
-                        (actionID == BarrelStabilizer && CustomComboFunctions.IsOnCooldown(BarrelStabilizer)) ||
-                        (actionID == BarrelStabilizer && CustomComboFunctions.IsOnCooldown(Excavator)) ||
-                        (actionID == BarrelStabilizer && CustomComboFunctions.IsOnCooldown(FullMetalField)) ||
-                        (actionID == GaussRound && CustomComboFunctions.GetRemainingCharges(DoubleCheck) < 3)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                if (((actionID == SerpentsIre && CustomComboFunctions.IsOnCooldown(SerpentsIre)) ||
+                    (actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
@@ -193,14 +212,22 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 if (simpleMode)
                 {
-                    if (DoOpener(StandardOpener, ref actionID))
+                    if (DoOpener(StandardOpenerRearFirst, ref actionID))
                         return true;
                 }
                 else
                 {
-                    if (DoOpener(StandardOpener, ref actionID))
-                        return true;
+                    if (Config.VPR_Positional == 0)
+                    {
+                        if (DoOpener(StandardOpenerRearFirst, ref actionID))
+                            return true;
+                    }
 
+                    if (Config.VPR_Positional == 1)
+                    {
+                        if (DoOpener(StandardOpenerFlankFirst, ref actionID))
+                            return true;
+                    }
                 }
             }
 
@@ -213,19 +240,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
             return false;
         }
     }
-
-    internal static class MCHExtensions
+    internal static class VPRHelpers
     {
-        private static uint lastBattery = 0;
-        internal static uint LastSummonBattery(this MCHGauge gauge)
-        {
-            if (!CustomComboFunctions.InCombat() || ActionWatching.CombatActions.Count(x => x == CustomComboFunctions.OriginalHook(MCH.RookAutoturret)) == 0)
-                lastBattery = 0;
-
-            if (ActionWatching.CombatActions.Count(x => x == CustomComboFunctions.OriginalHook(MCH.RookAutoturret)) > 0)
-                lastBattery = gauge.LastSummonBatteryPower;
-
-            return lastBattery;
-        }
+        public static bool HasRattlingCoilStack(this VPRGauge gauge) => gauge.RattlingCoilStacks > 0;
     }
 }

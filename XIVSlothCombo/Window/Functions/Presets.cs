@@ -21,7 +21,7 @@ namespace XIVSlothCombo.Window.Functions
         internal unsafe static void DrawPreset(CustomComboPreset preset, CustomComboInfoAttribute info, ref int i)
         {
             var enabled = PresetStorage.IsEnabled(preset);
-            var secret = PresetStorage.IsSecret(preset);
+            var secret = PresetStorage.IsPvP(preset);
             var conflicts = PresetStorage.GetConflicts(preset);
             var parent = PresetStorage.GetParent(preset);
             var blueAttr = preset.GetAttribute<BlueInactiveAttribute>();

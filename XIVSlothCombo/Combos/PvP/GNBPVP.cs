@@ -1,4 +1,5 @@
-﻿using XIVSlothCombo.CustomComboNS;
+﻿using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvP
 {
@@ -66,15 +67,19 @@ namespace XIVSlothCombo.Combos.PvP
 
                         if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && HasEffect(Buffs.NoMercy) &&
                             GetBuffRemainingTime(Buffs.NoMercy) <= 1.5f && GetBuffRemainingTime(Buffs.NoMercy) > 0 &&
-                            GetRemainingCharges(RoughDivide) == 1)
+                            GetRemainingCharges(RoughDivide) >= 1)
                             return RoughDivide;
                     }
 
+                    if (IsOffCooldown(DoubleDown) &&
+                        GetRemainingCharges(RoughDivide) >= 1)
+                        return RoughDivide;
+
                     // Gnashing Fang
-                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown))
+                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && HasEffect(Buffs.NoMercy) && IsOffCooldown(DoubleDown) && InMeleeRange() && !TargetHasEffect(PvPCommon.Buffs.Guard))
                         return DoubleDown;
 
-                    if ((IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && HasEffect(Buffs.NoMercy)) ||
+                    if ((IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && IsOffCooldown(GnashingFang) && !TargetHasEffect(PvPCommon.Buffs.Guard) && HasEffect(Buffs.NoMercy)) ||
                         WasLastWeaponskill(GnashingFang) || WasLastWeaponskill(JugularRip) || WasLastWeaponskill(SavageClaw))
                         return OriginalHook(GnashingFang);
                 }
