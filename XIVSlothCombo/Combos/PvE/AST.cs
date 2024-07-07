@@ -157,22 +157,11 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Play)
                 {
                     var haveCard = HasEffect(Buffs.BalanceDrawn) || HasEffect(Buffs.BoleDrawn) || HasEffect(Buffs.ArrowDrawn) || HasEffect(Buffs.SpearDrawn) || HasEffect(Buffs.EwerDrawn) || HasEffect(Buffs.SpireDrawn);
-                    var cardDrawn = Gauge.DrawnCard;
+                    var cardDrawn = Gauge.DrawnCards[0];
 
-                    if (IsEnabled(CustomComboPreset.AST_Cards_AstrodyneOnPlay) && ActionReady(Astrodyne) && !Gauge.ContainsSeal(SealType.NONE) &&
-                        (Gauge.DrawnCard != CardType.NONE || HasCharges(Draw)))
-                        return Astrodyne;
 
                     if (haveCard)
                     {
-                        if (HasEffect(Buffs.ClarifyingDraw) && IsEnabled(CustomComboPreset.AST_Cards_Redraw))
-                        {
-                            if ((cardDrawn is CardType.BALANCE or CardType.BOLE && Gauge.Seals.Contains(SealType.SUN)) ||
-                                (cardDrawn is CardType.ARROW or CardType.EWER && Gauge.Seals.Contains(SealType.MOON)) ||
-                                (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL)))
-                                return Redraw;
-                        }
-
                         return OriginalHook(Play);
                     }
 
@@ -248,29 +237,11 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
 
-                    //Astrodyne
-                    if (IsEnabled(CustomComboPreset.AST_DPS_Astrodyne) &&
-                        ActionReady(Astrodyne) &&
-                        !Gauge.ContainsSeal(SealType.NONE) &&
-                        CanSpellWeave(actionID))
-                        return Astrodyne;
-
-                    //Redraw Card
-                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay_Redraw) && HasEffect(Buffs.ClarifyingDraw) && ActionReady(Redraw))
-                    {
-                        var cardDrawn = Gauge.DrawnCard;
-                        if (((cardDrawn is CardType.BALANCE or CardType.BOLE && Gauge.Seals.Contains(SealType.SUN)) ||
-                            (cardDrawn is CardType.ARROW or CardType.EWER && Gauge.Seals.Contains(SealType.MOON)) ||
-                            (cardDrawn is CardType.SPEAR or CardType.SPIRE && Gauge.Seals.Contains(SealType.CELESTIAL))) &&
-                            CanSpellWeave(actionID) &&
-                            spellsSinceDraw >= (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) ? Config.AST_ST_DPS_Play_SpeedSetting : 1))
-                            return Redraw;
-                    }
 
                     //Play Card
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) &&
                         ActionReady(Play) &&
-                        Gauge.DrawnCard is not CardType.NONE &&
+                        Gauge.DrawnCards[0] is not CardType.NONE &&
                         CanSpellWeave(actionID) &&
                         spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting &&
                         !WasLastAction(Redraw))
@@ -279,7 +250,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Card Draw
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         ActionReady(Draw) &&
-                        Gauge.DrawnCard is CardType.NONE &&
+                        Gauge.DrawnCards[0] is CardType.NONE &&
                         CanDelayedWeave(actionID))
                         return Draw;
 
@@ -379,17 +350,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
-        //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
-        internal class AST_Cards_AstrodyneOnPlay : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Cards_AstrodyneOnPlay;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is Play && !IsEnabled(CustomComboPreset.AST_Cards_DrawOnPlay) && !Gauge.ContainsSeal(SealType.NONE)
-                    ? Astrodyne
-                    : actionID;
-        }
 
         internal class AST_Cards_RedrawStandalone : CustomCombo
         {
