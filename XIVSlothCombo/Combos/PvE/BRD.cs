@@ -368,6 +368,7 @@ namespace XIVSlothCombo.Combos.PvE
                         bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
                         bool rainOfDeathReady = LevelChecked(RainOfDeath) && GetRemainingCharges(RainOfDeath) > 0;
                         bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
+                        bool barrageReady = LevelChecked(Shadowbite) && IsOffCooldown(Barrage); // Adding Barrage to AoE, but only if we can use Shadowbite.
 
                         if (LevelChecked(PitchPerfect) && songWanderer && gauge.Repertoire == 3)
                             return OriginalHook(WanderersMinuet);
@@ -377,6 +378,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return RainOfDeath;
                         if (sidewinderReady)
                             return Sidewinder;
+                        if (barrageReady)
+                            return Barrage;
 
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
