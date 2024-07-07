@@ -22,9 +22,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (Service.ClientState.LocalPlayer is null || Service.ClientState.LocalPlayer.ClassJob.Id != 33)
                 return;
 
-            if (DrawnCard != Gauge.DrawnCard)
+            if (DrawnCard != Gauge.DrawnCards[0])
             {
-                DrawnCard = Gauge.DrawnCard;
+                DrawnCard = Gauge.DrawnCards[0];
                 if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards))
                 {
                     AST_QuickTargetCards.SelectedRandomMember = null;
@@ -60,8 +60,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             private static bool SetTarget()
             {
-                if (Gauge.DrawnCard.Equals(CardType.NONE)) return false;
-                CardType cardDrawn = Gauge.DrawnCard;
+                if (Gauge.DrawnCards[0].Equals(CardType.NONE)) return false;
+                CardType cardDrawn = Gauge.DrawnCards[0];
                 PartyTargets.Clear();
                 for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
                 {

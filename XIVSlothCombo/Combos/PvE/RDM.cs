@@ -838,7 +838,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
                 actionID is Embolden &&
                 ActionReady(Embolden) &&
-                HasEffectAny(Buffs.EmboldenOthers) ? SCH.ChainStratagem : actionID;
+                HasEffectAny(Buffs.EmboldenOthers) ? OriginalHook(11) : actionID;
         }
 
         internal class RDM_MagickProtection : CustomCombo
@@ -847,7 +847,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
                 actionID is MagickBarrier &&
                 ActionReady(MagickBarrier) &&
-                HasEffectAny(Buffs.MagickBarrier) ? SCH.SacredSoil : actionID;
+                HasEffectAny(Buffs.MagickBarrier) ? OriginalHook(11) : actionID;
         }
     }
 }
