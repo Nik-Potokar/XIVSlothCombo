@@ -73,13 +73,13 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                MCH_ST_SecondWindThreshold = new("MCH_ST_SecondWindThreshold",25),
-                MCH_AoE_SecondWindThreshold = new("MCH_AoE_SecondWindThreshold",25),
+                MCH_ST_SecondWindThreshold = new("MCH_ST_SecondWindThreshold", 25),
+                MCH_AoE_SecondWindThreshold = new("MCH_AoE_SecondWindThreshold", 25),
                 MCH_VariantCure = new("MCH_VariantCure"),
                 MCH_ST_TurretUsage = new("MCH_ST_Adv_TurretGauge"),
                 MCH_AoE_TurretUsage = new("MCH_AoE_TurretUsage"),
-                MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool",0),
-                MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool",0),
+                MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool", 0),
+                MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool", 0),
                 MCH_ST_QueenOverDrive = new("MCH_ST_QueenOverDrive");
             public static UserBoolArray
                 MCH_ST_Reassembled = new("MCH_ST_Reassembled"),
@@ -326,7 +326,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(RookAutoturret);
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                        CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && 
+                        CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
                         LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
@@ -359,7 +359,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //gauss and ricochet outside HC
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
-                        CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire))
+                        CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
+                         ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
                     {
                         if (ActionReady(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
@@ -543,7 +544,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(AutoCrossbow);
 
                     //gauss and ricochet outside HC
-                    if (CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire))
+                    if (CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
+                        ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
                     {
                         if (ActionReady(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
@@ -639,7 +641,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //AutoCrossbow, Gauss, Rico
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_GaussRicochet) && CanWeave(actionID) &&
-                        (Config.MCH_AoE_Hypercharge || (!Config.MCH_AoE_Hypercharge && gauge.IsOverheated)))
+                        (Config.MCH_AoE_Hypercharge || (!Config.MCH_AoE_Hypercharge && gauge.IsOverheated)) &&
+                        ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
                     {
                         if ((WasLastAction(SpreadShot) || WasLastAction(AutoCrossbow) || Config.MCH_AoE_Hypercharge) &&
                             ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
@@ -657,7 +660,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //gauss and ricochet outside HC
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_GaussRicochet) &&
-                        CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire))
+                        CanWeave(actionID) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
+                        ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
                     {
                         if (ActionReady(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
