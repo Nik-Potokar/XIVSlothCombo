@@ -33,7 +33,6 @@ namespace XIVSlothCombo.Combos.PvE
             HakkeMujinsatsu = 16488,
             Meisui = 16489,
             Bunshin = 16493,
-            Huraijin = 25876,
             PhantomKamaitachi = 25774,
             ForkedRaiju = 25777,
             FleetingRaiju = 25778,
@@ -339,20 +338,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!inTNWithDoubleArmorCrush)
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Huton) &&
-                            IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) &&
-                            (!Huraijin.LevelChecked() || !InCombat()) &&
-                            gauge.HutonTimer <= 15000 &&
-                            chargeCheck &&
-                            mudraState.CastHuton(ref actionID))
-                            return actionID;
-
-                        if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Huraijin) &&
-                            InCombat() &&
-                            gauge.HutonTimer <= hutonHuraijinTimer &&
-                            Huraijin.LevelChecked() && !inMudraState)
-                            return OriginalHook(Huraijin);
-
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Kassatsu_HyoshoRaynryu) &&
                             !inTrickBurstSaveWindow &&
                             (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOnCooldown(Mug))) &&
@@ -390,8 +375,8 @@ namespace XIVSlothCombo.Combos.PvE
                         lastComboMove == GustSlash &&
                         (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack) && IsOnCooldown(TrickAttack) ||
                         IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrickAttack)) &&
-                        ((gauge.HutonTimer <= hutonArmorCrushTimer) || doubleArmorCrush && timesLastEnderWasArmorCrush == 1) &&
-                        gauge.HutonTimer > 0 && ArmorCrush.LevelChecked() &&
+                        (doubleArmorCrush && timesLastEnderWasArmorCrush == 1) &&
+                        ArmorCrush.LevelChecked() &&
                         comboTime > 1f)
                     {
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) &&
@@ -548,20 +533,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_Huton) &&
-                        IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus) &&
-                        (!Huraijin.LevelChecked() || !InCombat()) &&
-                        gauge.HutonTimer <= 15000 &&
-                        chargeCheck &&
-                        mudraState.CastHuton(ref actionID))
-                        return actionID;
-
-                    if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Huraijin) &&
-                        InCombat() &&
-                        gauge.HutonTimer <= hutonHuraijinTimer &&
-                        Huraijin.LevelChecked() && !inMudraState)
-                        return OriginalHook(Huraijin);
-
                     if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_GokaMekkyaku) &&
                         mudraState.CastGokaMekkyaku(ref actionID))
                         return actionID;
@@ -640,12 +611,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
                         return Variant.VariantCure;
 
-                    if (!Huraijin.LevelChecked() && gauge.HutonTimer <= 15000 && mudraState.CastHuton(ref actionID))
-                        return actionID;
-
-                    if (InCombat() && gauge.HutonTimer == 0 && Huraijin.LevelChecked() && !inMudraState)
-                        return OriginalHook(Huraijin);
-
                     if (mudraState.CastHyoshoRanryu(ref actionID))
                         return actionID;
 
@@ -713,7 +678,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove == SpinningEdge && GustSlash.LevelChecked())
                             return OriginalHook(GustSlash);
 
-                        if (lastComboMove == GustSlash && gauge.HutonTimer <= 30000 && ArmorCrush.LevelChecked())
+                        if (lastComboMove == GustSlash && ArmorCrush.LevelChecked())
                             return OriginalHook(ArmorCrush);
 
                         if (lastComboMove == GustSlash && TargetNeedsPositionals() && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) && canWeave)
@@ -764,12 +729,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
                         return Variant.VariantCure;
-
-                    if (!Huraijin.LevelChecked() && gauge.HutonTimer <= 15000 && mudraState.CastHuton(ref actionID))
-                        return actionID;
-
-                    if (InCombat() && gauge.HutonTimer == 0 && Huraijin.LevelChecked())
-                        return OriginalHook(Huraijin);
 
                     if (HasEffect(Buffs.Kassatsu))
                     {
@@ -869,20 +828,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class NIN_HuraijinArmorCrush : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_HuraijinArmorCrush;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == Huraijin)
-                {
-                    if (lastComboMove == GustSlash && !HasEffect(Buffs.RaijuReady))
-                        return ArmorCrush;
-                }
-                return actionID;
-            }
-        }
 
         internal class NIN_HideMug : CustomCombo
         {
@@ -965,24 +910,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (tcjTimer > 3)
                             return OriginalHook(Jin);
                     }
-                }
-                return actionID;
-            }
-        }
-
-        internal class NIN_HuraijinRaiju : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_HuraijinRaiju;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == Huraijin)
-                {
-                    if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Fleeting) && ForkedRaiju.LevelChecked() && HasEffect(Buffs.RaijuReady))
-                        return FleetingRaiju;
-
-                    if (IsEnabled(CustomComboPreset.NIN_HuraijinRaiju_Forked) && ForkedRaiju.LevelChecked() && HasEffect(Buffs.RaijuReady))
-                        return ForkedRaiju;
                 }
                 return actionID;
             }
