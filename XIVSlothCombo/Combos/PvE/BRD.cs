@@ -509,15 +509,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InCombat() && (inOpener || openerFinished))
                     {
                         openerFinished = false;
-                        Svc.Log.Debug($"BRD inOpener: {openerFinished}");
-
                     }
 
                     if (!IsEnabled(CustomComboPreset.BRD_Simple_NoWaste))
-                    {
                         openerFinished = true;
-                        Svc.Log.Debug($"BRD inOpener: {openerFinished}");
-                    }
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && canInterrupt)
                         return All.HeadGraze;
