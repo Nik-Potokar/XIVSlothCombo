@@ -2144,18 +2144,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Hide to Mug/Trick Attack Feature", "Replaces Hide with Mug while in combat and Trick Attack whilst Hidden.", NIN.JobID)]
         NIN_HideMug = 10057,
 
-        [ReplaceSkill(NIN.Huraijin)]
-        [CustomComboInfo("Huraijin / Raiju Feature", "Replaces Huraijin with Forked and Fleeting Raiju when available.", NIN.JobID)]
-        NIN_HuraijinRaiju = 10059,
-
-        [ParentCombo(NIN_HuraijinRaiju)]
-        [CustomComboInfo("Huraijin / Raiju Feature Option 1", "Replaces Huraijin with Fleeting Raiju when available.", NIN.JobID)]
-        NIN_HuraijinRaiju_Fleeting = 10060,
-
-        [ParentCombo(NIN_HuraijinRaiju)]
-        [CustomComboInfo("Huraijin / Raiju Feature Option 2", "Replaces Huraijin with Forked Raiju when available.", NIN.JobID)]
-        NIN_HuraijinRaiju_Forked = 10061,
-
         [ReplaceSkill(NIN.Ten, NIN.Chi, NIN.Jin)]
         [CustomComboInfo("Simple Mudras Feature", "Simplify the mudra casting to avoid failing.", NIN.JobID)]
         NIN_Simple_Mudras = 10062,
@@ -2164,10 +2152,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(NIN_TCJMeisui)]
         [CustomComboInfo("Ten Chi Jin Feature", "Turns Ten Chi Jin (the move) into Ten, Chi, and Jin.", NIN.JobID)]
         NIN_TCJ = 10063,
-
-        [ReplaceSkill(NIN.Huraijin)]
-        [CustomComboInfo("Huraijin / Armor Crush Combo Feature", "Replace Huraijin with Armor Crush after using Gust Slash.", NIN.JobID)]
-        NIN_HuraijinArmorCrush = 10064,
 
         [ParentCombo(NIN_ST_AdvancedMode_Ninjitsus_Raiton)]
         [CustomComboInfo("Raiton Uptime Option", "Adds Raiton as an uptime feature.", NIN.JobID)]
