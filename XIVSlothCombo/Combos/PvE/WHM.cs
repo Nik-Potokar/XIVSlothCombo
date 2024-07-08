@@ -63,6 +63,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
             Regen = 158,
             Medica2 = 150,
+            Medica3 = 3880,
             PresenceOfMind = 157,
             ThinAir = 1217,
             DivineBenison = 1218,
