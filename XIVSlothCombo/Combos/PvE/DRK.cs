@@ -191,13 +191,13 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
                         {
                             // Salted Earth
-                            // todo: simplify this to make it easier to read
                             if (IsEnabled(CustomComboPreset.DRK_ST_CDs_SaltedEarth)
-                                && LevelChecked(SaltedEarth)
-                                )
+                                && (ActionReady(SaltedEarth) || ActionReady(SaltAndDarkness)))
                             {
-                                if ((IsOffCooldown(SaltedEarth) && !HasEffect(Buffs.SaltedEarth)) || //Salted Earth
-                                    (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && LevelChecked(SaltAndDarkness) && GetBuffRemainingTime(Buffs.SaltedEarth) < 9)) //Salt and Darkness
+                                if (!HasEffect(Buffs.SaltedEarth) || // Cast Salted Earth
+                                    (HasEffect(Buffs.SaltedEarth)
+                                     && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
+                                     && ActionReady(SaltAndDarkness))) //Cast Salt and Darkness
                                     return OriginalHook(SaltedEarth);
                             }
 
@@ -321,30 +321,37 @@ namespace XIVSlothCombo.Combos.PvE
                         && (LocalPlayer.CurrentMp > 8500 || (gauge.DarksideTimeRemaining < 10 && LocalPlayer.CurrentMp >= 3000)))
                         return OriginalHook(FloodOfDarkness);
 
+                    // Living Shadow
+                    if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_LivingShadow)
+                        && IsOffCooldown(LivingShadow)
+                        && LevelChecked(LivingShadow)
+                        && GetTargetHPPercent() > hpRemaining)
+                        return LivingShadow;
+
+                    // Delirium
+                    if (IsEnabled(CustomComboPreset.DRK_AoE_Delirium)
+                        && IsOffCooldown(Delirium)
+                        && LevelChecked(Delirium))
+                        return Delirium;
+
                     if (gauge.DarksideTimeRemaining > 1)
                     {
-                        // Delirium
-                        if (IsEnabled(CustomComboPreset.DRK_AoE_Delirium)
-                            && IsOffCooldown(Delirium)
-                            && LevelChecked(Delirium))
-                            return Delirium;
-
-                        // Living Shadow
-                        if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_LivingShadow)
-                            && IsOffCooldown(LivingShadow)
-                            && LevelChecked(LivingShadow)
-                            && GetTargetHPPercent() > hpRemaining)
-                            return LivingShadow;
-
                         // Salted Earth
-                        // todo: simplify this to make it easier to read
                         if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_SaltedEarth)
-                            && LevelChecked(SaltedEarth))
+                            && (ActionReady(SaltedEarth) || ActionReady(SaltAndDarkness)))
                         {
-                            if ((IsOffCooldown(SaltedEarth) && !HasEffect(Buffs.SaltedEarth)) || //Salted Earth
-                                (HasEffect(Buffs.SaltedEarth) && IsOffCooldown(SaltAndDarkness) && IsOnCooldown(SaltedEarth) && LevelChecked(SaltAndDarkness))) //Salt and Darkness
+                            if (!HasEffect(Buffs.SaltedEarth) || // Cast Salted Earth
+                                (HasEffect(Buffs.SaltedEarth)
+                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
+                                 && ActionReady(SaltAndDarkness))) //Cast Salt and Darkness
                                 return OriginalHook(SaltedEarth);
                         }
+
+                        // Shadowbringer
+                        if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_Shadowbringer)
+                            && LevelChecked(Shadowbringer)
+                            && GetRemainingCharges(Shadowbringer) > 0)
+                            return Shadowbringer;
 
                         // Abyssal Drain
                         if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_AbyssalDrain)
@@ -352,12 +359,6 @@ namespace XIVSlothCombo.Combos.PvE
                             && IsOffCooldown(AbyssalDrain)
                             && PlayerHealthPercentageHp() <= 60)
                             return AbyssalDrain;
-
-                        // Shadowbringer
-                        if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_Shadowbringer)
-                            && LevelChecked(Shadowbringer)
-                            && GetRemainingCharges(Shadowbringer) > 0)
-                            return Shadowbringer;
                     }
                 }
 
