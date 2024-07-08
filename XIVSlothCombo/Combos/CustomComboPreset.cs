@@ -464,7 +464,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(BLU.MoonFlute)]
         [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedReprobation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle)]
         [ConflictingCombos(BLU_Opener)]
-        [CustomComboInfo("BLU Moon Flute Opener (Level 80)", "Turns Moon Flute into a full opener.", BLU.JobID, 1)]
+        [CustomComboInfo("BLU Moon Flute Opener (Level 80)", "Turns Moon Flute into a full opener.\nUse the remaining 2 charges of Winged Reprobation before starting the opener again!", BLU.JobID, 1)]
         BLU_NewMoonFluteOpener = 70021,
 
             [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
@@ -505,7 +505,7 @@ namespace XIVSlothCombo.Combos
 
         [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
         [ReplaceSkill(BLU.FeatherRain)]
-        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance. \nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID, 5)]
+        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance.\nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID, 5)]
         BLU_PrimalCombo = 70008,
 
             [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
