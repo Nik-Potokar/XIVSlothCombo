@@ -18,7 +18,6 @@ namespace XIVSlothCombo.Combos.PvE
         public const uint
             // Heals
             Cure = 120,
-            Medica = 124,
             Cure2 = 135,
             Cure3 = 131,
             Regen = 137,
@@ -87,8 +86,6 @@ namespace XIVSlothCombo.Combos.PvE
                 { Aero2, Debuffs.Aero2 },
                 { Dia, Debuffs.Dia }
             };
-
-
 
         public static class Config
         {
@@ -165,7 +162,6 @@ namespace XIVSlothCombo.Combos.PvE
                     : actionID;
             }
         }
-
 
         internal class WHM_Raise : CustomCombo
         {
@@ -315,7 +311,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Medica)
+                if (actionID is Medica1)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > Config.WHM_AoEHeals_ThinAir;
