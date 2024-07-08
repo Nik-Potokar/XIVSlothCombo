@@ -286,6 +286,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Aero);
                         }
 
+                        // Glare IV
+                        if (HasEffect(Buffs.SacredSight)
+                            && GetBuffStacks(Buffs.SacredSight) > 0)
+                            return OriginalHook(PresenceOfMind);
+
                         if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                             (liliesFull || liliesNearlyFull))
                             return AfflatusRapture;
