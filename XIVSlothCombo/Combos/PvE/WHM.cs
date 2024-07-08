@@ -446,6 +446,11 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.LucidDreaming;
                     }
 
+                    // Glare IV
+                    if (HasEffect(Buffs.SacredSight)
+                        && GetBuffStacks(Buffs.SacredSight) > 0)
+                        return OriginalHook(PresenceOfMind);
+
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                         (liliesFullNoBlood || liliesNearlyFull))
                         return AfflatusRapture;
