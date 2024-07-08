@@ -2773,6 +2773,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Psych Option", "Weaves(?) Psych when available.", SGE.JobID, 112, "", "")]
             SGE_ST_DPS_Psyche = 14008,
 
+            [ParentCombo(SGE_ST_DPS)]
+            [CustomComboInfo("Addersgall Overflow Protection", "Weaves Druochole when Addersgall gauge is greater than or equal to the specified value.", SGE.JobID, 123, "", "")]
+            SGE_ST_DPS_AddersgallProtect = 14054,
+
         #endregion
 
         #region AoE DPS Feature
@@ -2803,6 +2807,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(SGE_AoE_DPS)]
             [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 5, "", "")]
             SGE_AoE_DPS_Rhizo = 14013,
+
+            [ParentCombo(SGE_AoE_DPS)]
+            [CustomComboInfo("Addersgall Overflow Protection", "Weaves Druochole when Addersgall gauge is greater than or equal to the specified value.", SGE.JobID, 6, "", "")]
+            SGE_AoE_DPS_AddersgallProtect = 14053,
         #endregion
 
         #region Diagnosis Simple Single Target Heal
@@ -2960,7 +2968,7 @@ namespace XIVSlothCombo.Combos
         SGE_DPS_Variant_Rampart = 14049,
         #endregion
 
-        // Last used number = 14052
+        // Last used number = 14054
 
         #endregion
 
