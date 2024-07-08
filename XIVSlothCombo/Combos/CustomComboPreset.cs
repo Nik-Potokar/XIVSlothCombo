@@ -1513,19 +1513,19 @@ namespace XIVSlothCombo.Combos
 
         #region Fated Circle
         [ReplaceSkill(GNB.FatedCircle)]
-        [CustomComboInfo("Fated Brand Features", "Collection of Fated Brand related features.", GNB.JobID)]
+        [CustomComboInfo("Fated Circle Features", "Collection of Fated Brand related features.", GNB.JobID)]
         GNB_FC = 7600,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Fated Brand Continuation Feature", "Adds Hypervelocity on Fated Circle.", GNB.JobID)]
+        [CustomComboInfo("Fated Circle Continuation Feature", "Adds Hypervelocity on Fated Circle.", GNB.JobID)]
         GNB_FC_Continuation = 7601,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID)]
+        [CustomComboInfo("Fated Circle to Bloodfest Feature", "Replace Fated Circle with Bloodfest if you have no powder gauge.", GNB.JobID)]
         GNB_FC_Bloodfest = 7602,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
+        [CustomComboInfo("Double Down on Fated Circle Feature", "Adds Double Down to Fated Circle when under No Mercy and ammo is above 2.", GNB.JobID)]
         GNB_FC_DoubleDown = 7603,
         #endregion
 
