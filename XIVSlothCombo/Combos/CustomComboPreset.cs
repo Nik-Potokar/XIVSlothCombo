@@ -2343,10 +2343,6 @@ namespace XIVSlothCombo.Combos
 
         #region REAPER
 
-        [ReplaceSkill(RPR.ShadowOfDeath)]
-        [CustomComboInfo("Hold Burst Combo", "Replaces ShadowOfDeath with basic rotation \nUse to hold burst window", RPR.JobID)]
-        RPR_HoldBurstCombo = 12000,
-
         #region  Advanced ST
 
         [ReplaceSkill(RPR.Slice)]
@@ -2355,71 +2351,75 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", RPR.JobID)]
-        RPR_ST_SliceCombo_Opener = 12002,
+        RPR_ST_Opener = 12002,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Shadow Of Death Option", "Adds Shadow of Death to the rotation.", RPR.JobID)]
-        RPR_ST_SliceCombo_SoD = 12003,
+        RPR_ST_SoD = 12003,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to the rotation.", RPR.JobID)]
-        RPR_ST_SliceCombo_SoulSlice = 12005,
+        RPR_ST_SoulSlice = 12004,
 
         #region Cooldowns ST
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", RPR.JobID)]
-        RPR_ST_SliceCombo_CDs = 12006,
+        RPR_ST_CDs = 12005,
 
-        [ParentCombo(RPR_ST_SliceCombo_CDs)]
+        [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the rotation.", RPR.JobID)]
-        RPR_ST_SliceCombo_ArcaneCircle = 12007,
+        RPR_ST_ArcaneCircle = 12006,
 
-        [ParentCombo(RPR_ST_SliceCombo_ArcaneCircle)]
+        [ParentCombo(RPR_ST_ArcaneCircle)]
         [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the rotation.", RPR.JobID)]
-        RPR_ST_SliceCombo_PlentifulHarvest = 12008,
+        RPR_ST_PlentifulHarvest = 12007,
 
-        [ParentCombo(RPR_ST_SliceCombo_CDs)]
+        [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Bloodstalk Option", "Adds Bloodstalk to the combo when target is afflicted with Death's Design and at 50 soul or greater.", RPR.JobID)]
-        RPR_ST_SliceCombo_Bloodstalk = 12009,
+        RPR_ST_Bloodstalk = 12008,
 
-        [ParentCombo(RPR_ST_SliceCombo_CDs)]
+        [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Gluttony Option", "Adds Gluttony to the combo when target is afflicted with Death's Design, and the skills are off cooldown and at 50 soul or greater.", RPR.JobID)]
-        RPR_ST_SliceCombo_Gluttony = 12010,
+        RPR_ST_Gluttony = 1209,
 
-        [ParentCombo(RPR_ST_SliceCombo_CDs)]
+        [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the combo.", RPR.JobID)]
-        RPR_ST_SliceCombo_Enshroud = 12011,
+        RPR_ST_Enshroud = 12010,
 
-        [ParentCombo(RPR_ST_SliceCombo_Enshroud)]
+        [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Double Enshroud Harvest moon", "Uses Harvest Moon in 2 minute burst.", RPR.JobID)]
-        RPR_ST_SliceCombo_EnshroudHarvestMoon = 12018,
+        RPR_ST_EnshroudHarvestMoon = 12011,
 
         #endregion
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the combo when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows = 12013,
+        RPR_ST_GibbetGallows = 12012,
 
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
+        [ParentCombo(RPR_ST_GibbetGallows)]
         [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the to the the combo during Enshroud.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows_VoidCross = 12014,
+        RPR_ST_Reaping = 12013,
 
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
+        [ParentCombo(RPR_ST_GibbetGallows)]
         [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the combo when there are 2 Void Shroud charges.", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows_Lemure = 12015,
+        RPR_ST_Lemure = 12014,
 
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
+        [ParentCombo(RPR_ST_GibbetGallows)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the combo when there is 1 charge of Lemure Shroud left.", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows_Communio = 12016,
+        RPR_ST_Communio = 12015,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
-        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe (or Harvest Moon, if available) when outside of melee range. Will not override Communio.", RPR.JobID)]
-        RPR_ST_SliceCombo_RangedFiller = 12096,
+        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe when outside of melee range. Will not override Communio.", RPR.JobID)]
+        RPR_ST_RangedFiller = 12016,
+
+        [ParentCombo(RPR_ST_RangedFiller)]
+        [CustomComboInfo("Add Harvest Moon", "Adds Harvest Moon if available, when outside of melee range. Will not override Communio.", RPR.JobID)]
+        RPR_ST_RangedFillerHarvestMoon = 12017,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID)]
-        RPR_ST_SliceCombo_ComboHeals = 12097,
+        RPR_ST_ComboHeals = 12097,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Dynamic True North Feature", "Adds True North to Slice before Gibbet/Gallows when you are not in the correct position for the enhanced potency bonus.", RPR.JobID)]
@@ -2533,16 +2533,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Harpe Harvest Moon Feature", "Replaces Harpe with Harvest Moon when you are in combat with Soulsow active.", RPR.JobID)]
         RPR_Soulsow_HarpeHarvestMoon = 12303,
-
-        [ReplaceSkill(RPR.Harpe, RPR.Slice)]
-        [ParentCombo(RPR_Soulsow)]
-        [CustomComboInfo("Enhanced Harpe Option", "Prevent Harvest Moon replacing Harpe when Enhanced Harpe is active.", RPR.JobID)]
-        RPR_Soulsow_HarpeHarvestMoon_EnhancedHarpe = 12304,
-
-        [ReplaceSkill(RPR.Harpe, RPR.Slice)]
-        [ParentCombo(RPR_Soulsow)]
-        [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.", RPR.JobID)]
-        RPR_Soulsow_HarpeHarvestMoon_CombatHarpe = 12305,
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud Protection Feature", "Turns Enshroud into Gibbet/Gallows to protect Soul Reaver waste.", RPR.JobID)]

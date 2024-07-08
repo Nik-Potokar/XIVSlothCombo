@@ -21,50 +21,35 @@ namespace XIVSlothCombo.Combos.JobHelpers
             return true;
         }
 
-        private static uint OpenerLevel => 90;
+        private static uint OpenerLevel => 100;
 
         public uint PrePullStep = 0;
 
         public uint OpenerStep = 0;
 
-        private static uint[] EarlyEnshroudOpener = [
+        private static uint[] StandardOpener = [
             ShadowOfDeath,
-            ArcaneCircle,
             SoulSlice,
+            ArcaneCircle,
+            Gluttony,
+            ExecutionersGibbet,
+            ExecutionersGallows,
             PlentifulHarvest,
             Enshroud,
             VoidReaping,
+            Sacrificium,
             CrossReaping,
             LemuresSlice,
             VoidReaping,
             CrossReaping,
             LemuresSlice,
             Communio,
-            Gluttony,
-            Gallows,
+            Perfectio,
+            SoulSlice,
+            UnveiledGibbet,
             Gibbet,
-            UnveiledGallows,
-            Gallows];
-
-        private static uint[] EarlyGluttonyOpener = [
             ShadowOfDeath,
-            SoulSlice,
-            ArcaneCircle,
-            Gluttony,
-            Gallows,
-            Gibbet,
-            PlentifulHarvest,
-            Enshroud,
-            VoidReaping,
-            CrossReaping,
-            LemuresSlice,
-            VoidReaping,
-            CrossReaping,
-            LemuresSlice,
-            Communio,
-            SoulSlice,
-            UnveiledGallows,
-            Gallows];
+            Slice];
 
         public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
 
@@ -183,17 +168,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.InOpener)
             {
-                if (Config.RPR_OpenerChoice == 0)
-                {
-                    if (DoOpener(EarlyEnshroudOpener, ref actionID))
-                        return true;
-                }
-
-                if (Config.RPR_OpenerChoice == 1)
-                {
-                    if (DoOpener(EarlyGluttonyOpener, ref actionID))
-                        return true;
-                }
+                if (DoOpener(StandardOpener, ref actionID))
+                    return true;
             }
 
             if (!CustomComboFunctions.InCombat())

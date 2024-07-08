@@ -1830,8 +1830,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.RPR_ST_AdvancedMode && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_Positional, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_Positional, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_Positional, "Rear First", "First positional: Gallows.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_Positional, "Flank First", "First positional: Gibbet.", 1);
             }
 
             if (preset == CustomComboPreset.RPRPvP_Burst_ImmortalPooling && enabled)
@@ -1840,7 +1840,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
                 UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.RPR_ST_SliceCombo_SoD && enabled)
+            if (preset == CustomComboPreset.RPR_ST_SoD && enabled)
             {
                 UserConfig.DrawSliderInt(0, 6, RPR.Config.RPR_SoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_SoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
@@ -1851,7 +1851,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_WoDThreshold, "Set a HP% Threshold for when WoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
             }
 
-            if (preset == CustomComboPreset.RPR_ST_SliceCombo_ComboHeals && enabled)
+            if (preset == CustomComboPreset.RPR_ST_ComboHeals && enabled)
             {
                 UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STSecondWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STBloodbathThreshold, "HP percent threshold to use Bloodbath (0 = Disabled)", 150, SliderIncrements.Ones);
@@ -1870,12 +1870,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Spinning Scythe", "Adds Soulsow to Spinning Scythe", 5, 2);
                 UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Shadow of Death", "Adds Soulsow to Shadow of Death.", 5, 3);
                 UserConfig.DrawHorizontalMultiChoice(RPR.Config.RPR_SoulsowOptions, "Blood Stalk", "Adds Soulsow to Blood Stalk.", 5, 4);
-            }
-
-            if (preset == CustomComboPreset.RPR_ST_SliceCombo_Opener && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Enshroud Opener", "Uses Early Enshroud Opener. Will Clip CD if not at 2.48-2.49.", 0);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Gluttony Opener ", "Uses Early Gluttony Opener.", 1);
             }
 
             if (preset == CustomComboPreset.RPR_Variant_Cure)
