@@ -66,7 +66,8 @@ namespace XIVSlothCombo.Combos.PvE
             PresenceOfMind = 157,
             ThinAir = 1217,
             DivineBenison = 1218,
-            Aquaveil = 2708;
+            Aquaveil = 2708,
+            SacredSight = 3879;
         }
 
         public static class Debuffs
