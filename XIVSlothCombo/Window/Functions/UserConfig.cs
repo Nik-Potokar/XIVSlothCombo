@@ -1846,7 +1846,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_SoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
             }
 
-            if (preset == CustomComboPreset.RPR_AoE_ScytheCombo_WoD && enabled)
+            if (preset == CustomComboPreset.RPR_AoE_WoD && enabled)
             {
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_WoDThreshold, "Set a HP% Threshold for when WoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
             }
@@ -1857,7 +1857,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STBloodbathThreshold, "HP percent threshold to use Bloodbath (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
-            if (preset == CustomComboPreset.RPR_AoE_ScytheCombo_ComboHeals && enabled)
+            if (preset == CustomComboPreset.RPR_AoE_ComboHeals && enabled)
             {
                 UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoESecondWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoEBloodbathThreshold, "HP percent threshold to use Bloodbath below (0 = Disabled)", 150, SliderIncrements.Ones);

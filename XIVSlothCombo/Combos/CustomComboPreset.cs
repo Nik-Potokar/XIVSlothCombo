@@ -2349,6 +2349,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Slice with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
         RPR_ST_SimpleMode = 12000,
+
         #endregion
 
         #region  Advanced ST
@@ -2389,7 +2390,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
-        RPR_ST_Gluttony = 1209,
+        RPR_ST_Gluttony = 12009,
 
         [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
@@ -2413,25 +2414,25 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
-        RPR_ST_Communio = 12014,
+        RPR_ST_Communio = 12015,
 
         [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
-        RPR_ST_Perfectio = 12014,
+        RPR_ST_Perfectio = 12016,
 
         #endregion
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the rotation.", RPR.JobID)]
-        RPR_ST_GibbetGallows = 12015,
+        RPR_ST_GibbetGallows = 12017,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe when outside of melee range. Will not override Communio.", RPR.JobID)]
-        RPR_ST_RangedFiller = 12016,
+        RPR_ST_RangedFiller = 12018,
 
         [ParentCombo(RPR_ST_RangedFiller)]
         [CustomComboInfo("Add Harvest Moon", "Adds Harvest Moon if available, when outside of melee range. Will not override Communio.", RPR.JobID)]
-        RPR_ST_RangedFillerHarvestMoon = 12017,
+        RPR_ST_RangedFillerHarvestMoon = 12019,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID)]
@@ -2445,72 +2446,89 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows.", RPR.JobID)]
         RPR_ST_TrueNorthDynamic_HoldCharge = 12099,
 
-        //last value = 12017
+        //last value = 12019
+        #endregion
+
+        #region Simple AoE
+
+        [ReplaceSkill(RPR.SpinningScythe)]
+        [ConflictingCombos(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Spinning Scythe with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
+        RPR_AoE_SimpleMode = 12100,
+
         #endregion
 
         #region Advanced AoE 
 
         [ReplaceSkill(RPR.SpinningScythe)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Spinning Scythe with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", RPR.JobID)]
-        RPR_AoE_AdvancedMode = 12100,
+        RPR_AoE_AdvancedMode = 12101,
 
         [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Whorl Of Death Option", "Adds Whorl of Death to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_WoD = 12101,
+        RPR_AoE_WoD = 12102,
 
         [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_SoulScythe = 12102,
+        RPR_AoE_SoulScythe = 12103,
 
         #region Cooldowns
 
         [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_CDs = 12103,
+        RPR_AoE_CDs = 12104,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_CDs)]
+        [ParentCombo(RPR_AoE_CDs)]
         [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_ArcaneCircle = 12104,
+        RPR_AoE_ArcaneCircle = 12105,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_ArcaneCircle)]
+        [ParentCombo(RPR_AoE_ArcaneCircle)]
         [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_PlentifulHarvest = 12105,
+        RPR_AoE_PlentifulHarvest = 12106,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_CDs)]
+        [ParentCombo(RPR_AoE_CDs)]
         [CustomComboInfo("Grim Swathe Option", "Adds Grim Swathe to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_GrimSwathe = 12106,
+        RPR_AoE_GrimSwathe = 12107,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_CDs)]
+        [ParentCombo(RPR_AoE_CDs)]
         [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Gluttony = 12107,
+        RPR_AoE_Gluttony = 12108,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_CDs)]
+        [ParentCombo(RPR_AoE_CDs)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Enshroud = 12108,
+        RPR_AoE_Enshroud = 12109,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Grim Reaping Option", "Adds Grim Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
+        RPR_AoE_Reaping = 12110,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Lemure's Scythe Option", "Adds Lemure's Scythe to the rotation.", RPR.JobID)]
+        RPR_AoE_Lemure = 12111,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
+        RPR_AoE_Sacrificium = 12112,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
+        RPR_AoE_Communio = 12113,
+
+        [ParentCombo(RPR_AoE_CDs)]
+        [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
+        RPR_AoE_Perfectio = 12114,
 
         #endregion
 
         [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Guillotine Option", "Adds Guillotine to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Guillotine = 12109,
-
-        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Grim Reaping Option", "Adds Grim Reaping to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Guillotine_GrimReaping = 12110,
-
-        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Lemure's Scythe Option", "Adds Lemure's Scythe to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Lemure = 12111,
-
-        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Communio = 12112,
+        RPR_AoE_Guillotine = 12115,
 
         [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_ComboHeals = 12113,
+        RPR_AoE_ComboHeals = 12116,
 
-        // Last value = 12113
+        // Last value = 12116
 
         #endregion
 
@@ -2533,6 +2551,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Miscellaneous
+
         [ReplaceSkill(RPR.ArcaneCircle)]
         [CustomComboInfo("Arcane Circle Harvest Feature", "Replaces Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID)]
         RPR_ArcaneCirclePlentifulHarvest = 12300,
