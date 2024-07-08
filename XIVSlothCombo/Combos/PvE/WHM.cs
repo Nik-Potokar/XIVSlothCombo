@@ -287,7 +287,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Glare IV
-                        if (HasEffect(Buffs.SacredSight)
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_GlareIV)
+                            && HasEffect(Buffs.SacredSight)
                             && GetBuffStacks(Buffs.SacredSight) > 0)
                             return OriginalHook(PresenceOfMind);
 
@@ -447,7 +448,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Glare IV
-                    if (HasEffect(Buffs.SacredSight)
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_GlareIV)
+                        && HasEffect(Buffs.SacredSight)
                         && GetBuffStacks(Buffs.SacredSight) > 0)
                         return OriginalHook(PresenceOfMind);
 
