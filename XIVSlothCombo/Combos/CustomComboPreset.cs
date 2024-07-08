@@ -2343,6 +2343,14 @@ namespace XIVSlothCombo.Combos
 
         #region REAPER
 
+        #region  Simple ST
+
+        [ReplaceSkill(RPR.Slice)]
+        [ConflictingCombos(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Slice with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
+        RPR_ST_SimpleMode = 12000,
+        #endregion
+
         #region  Advanced ST
 
         [ReplaceSkill(RPR.Slice)]
@@ -2350,7 +2358,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_AdvancedMode = 12001,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
-        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", RPR.JobID)]
+        [CustomComboInfo("Level 100 Opener Option", "Adds the Level 100 Opener to the rotation.", RPR.JobID)]
         RPR_ST_Opener = 12002,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
@@ -2376,38 +2384,46 @@ namespace XIVSlothCombo.Combos
         RPR_ST_PlentifulHarvest = 12007,
 
         [ParentCombo(RPR_ST_CDs)]
-        [CustomComboInfo("Bloodstalk Option", "Adds Bloodstalk to the combo when target is afflicted with Death's Design and at 50 soul or greater.", RPR.JobID)]
+        [CustomComboInfo("Bloodstalk Option", "Adds Bloodstalk to the rotation.", RPR.JobID)]
         RPR_ST_Bloodstalk = 12008,
 
         [ParentCombo(RPR_ST_CDs)]
-        [CustomComboInfo("Gluttony Option", "Adds Gluttony to the combo when target is afflicted with Death's Design, and the skills are off cooldown and at 50 soul or greater.", RPR.JobID)]
+        [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
         RPR_ST_Gluttony = 1209,
 
         [ParentCombo(RPR_ST_CDs)]
-        [CustomComboInfo("Enshroud Option", "Adds Enshroud to the combo.", RPR.JobID)]
+        [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
         RPR_ST_Enshroud = 12010,
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Double Enshroud Harvest moon", "Uses Harvest Moon in 2 minute burst.", RPR.JobID)]
         RPR_ST_EnshroudHarvestMoon = 12011,
 
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
+        RPR_ST_Reaping = 12012,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the rotation.", RPR.JobID)]
+        RPR_ST_Lemure = 12013,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
+        RPR_ST_Sacrificium = 12014,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
+        RPR_ST_Communio = 12014,
+
+        [ParentCombo(RPR_ST_CDs)]
+        [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
+        RPR_ST_Perfectio = 12014,
+
         #endregion
 
         [ParentCombo(RPR_ST_AdvancedMode)]
-        [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the combo when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_ST_GibbetGallows = 12012,
-
-        [ParentCombo(RPR_ST_GibbetGallows)]
-        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the to the the combo during Enshroud.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
-        RPR_ST_Reaping = 12013,
-
-        [ParentCombo(RPR_ST_GibbetGallows)]
-        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the combo when there are 2 Void Shroud charges.", RPR.JobID)]
-        RPR_ST_Lemure = 12014,
-
-        [ParentCombo(RPR_ST_GibbetGallows)]
-        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the combo when there is 1 charge of Lemure Shroud left.", RPR.JobID)]
-        RPR_ST_Communio = 12015,
+        [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the rotation.", RPR.JobID)]
+        RPR_ST_GibbetGallows = 12015,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe when outside of melee range. Will not override Communio.", RPR.JobID)]
@@ -2422,11 +2438,11 @@ namespace XIVSlothCombo.Combos
         RPR_ST_ComboHeals = 12097,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
-        [CustomComboInfo("Dynamic True North Feature", "Adds True North to Slice before Gibbet/Gallows when you are not in the correct position for the enhanced potency bonus.", RPR.JobID)]
+        [CustomComboInfo("Dynamic True North Feature", "Adds True North before Gibbet/Gallows when you are not in the correct position.", RPR.JobID)]
         RPR_ST_TrueNorthDynamic = 12098,
 
         [ParentCombo(RPR_ST_TrueNorthDynamic)]
-        [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows potency bonuses.", RPR.JobID)]
+        [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows.", RPR.JobID)]
         RPR_ST_TrueNorthDynamic_HoldCharge = 12099,
 
         //last value = 12017
