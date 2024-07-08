@@ -782,7 +782,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Aethercharge or DreadwyrmTrance or SummonBahamut or SummonPhoenix)
+                if (actionID is Aethercharge or DreadwyrmTrance or SummonBahamut or SummonPhoenix or SummonSolarBahamut)
                 {
                     if (IsOffCooldown(EnkindleBahamut) && OriginalHook(Ruin) is AstralImpulse)
                         return OriginalHook(EnkindleBahamut);
@@ -790,6 +790,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsOffCooldown(EnkindlePhoenix) && OriginalHook(Ruin) is FountainOfFire)
                         return OriginalHook(EnkindlePhoenix);
 
+                    if (IsOffCooldown(EnkindleSolarBahamut) && OriginalHook(Ruin) is UmbralImpulse)
+                        return OriginalHook(EnkindleBahamut);
+                    
                     if ((OriginalHook(AstralFlow) is Deathflare && IsOffCooldown(Deathflare)) || (OriginalHook(AstralFlow) is Rekindle && IsOffCooldown(Rekindle)))
                         return OriginalHook(AstralFlow);
                     
