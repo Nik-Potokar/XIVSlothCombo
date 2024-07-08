@@ -1822,10 +1822,16 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region REAPER
 
-            if (preset is CustomComboPreset.RPR_ST_SliceCombo)
+            if (preset == CustomComboPreset.RPRPvP_Burst_ImmortalPooling && enabled)
+                UserConfig.DrawSliderInt(0, 8, RPRPvP.Config.RPRPvP_ImmortalStackThreshold, "Set a value of Immortal Sacrifice Stacks to hold for burst.", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
+                UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
+
+            if (preset == CustomComboPreset.RPR_ST_AdvancedMode && enabled)
             {
-                UserConfig.DrawRadioButton(RPR.Config.RPR_Slice_AltMode, "Combo on Slice", "Default mode. Replaces Slice.", 0);
-                UserConfig.DrawRadioButton(RPR.Config.RPR_Slice_AltMode, "Combo on Harpe", "Have the feature replace Harpe instead of Slice.", 1);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_Positional, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_Positional, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
             }
 
             if (preset == CustomComboPreset.RPRPvP_Burst_ImmortalPooling && enabled)
@@ -1834,35 +1840,27 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.RPRPvP_Burst_ArcaneCircle && enabled)
                 UserConfig.DrawSliderInt(5, 90, RPRPvP.Config.RPRPvP_ArcaneCircleThreshold, "Set a HP percentage value. Caps at 90 to prevent waste.", 150, SliderIncrements.Ones);
 
-            if (preset == CustomComboPreset.ReaperPositionalConfigST && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalST, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
-            }
-
-            if (preset == CustomComboPreset.ReaperPositionalConfigAoE && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalAoE, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
-            }
-
-            if (preset == CustomComboPreset.RPR_EnshroudProtection_Positional && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear First", "First positional: Gallows (Rear), Void Reaping.", 0);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Flank First", "First positional: Gibbet (Flank), Cross Reaping.", 1);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear: Slice, Flank: SoD", "Rear positionals on Slice, Flank positionals on Shadow of Death.", 2);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_PositionalShroud, "Rear: SoD, Flank: Slice", "Rear positionals on Shadow of Death, Flank positionals on Slice.", 3);
-            }
-
-
             if (preset == CustomComboPreset.RPR_ST_SliceCombo_SoD && enabled)
             {
                 UserConfig.DrawSliderInt(0, 6, RPR.Config.RPR_SoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_SoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.RPR_AoE_ScytheCombo_WoD && enabled)
+            {
+                UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_WoDThreshold, "Set a HP% Threshold for when WoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.RPR_ST_SliceCombo_ComboHeals && enabled)
+            {
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STSecondWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_STBloodbathThreshold, "HP percent threshold to use Bloodbath (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.RPR_AoE_ScytheCombo_ComboHeals && enabled)
+            {
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoESecondWindThreshold, "HP percent threshold to use Second Wind below (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_AoEBloodbathThreshold, "HP percent threshold to use Bloodbath below (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.RPR_Soulsow && enabled)
@@ -1876,13 +1874,13 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.RPR_ST_SliceCombo_Opener && enabled)
             {
+                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Enshroud Opener", "Uses Early Enshroud Opener. Will Clip CD if not at 2.48-2.49.", 0);
                 UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Gluttony Opener ", "Uses Early Gluttony Opener.", 1);
-                UserConfig.DrawHorizontalRadioButton(RPR.Config.RPR_OpenerChoice, "Early Enshroud Opener", "Uses Early Enshroud Opener. Will Clip CD if not at 2.48-2.49.", 2);
             }
-
 
             if (preset == CustomComboPreset.RPR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, RPR.Config.RPR_VariantCure, "HP% to be at or under", 200);
+
 
             #endregion
             // ====================================================================================
