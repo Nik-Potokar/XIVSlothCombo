@@ -41,7 +41,7 @@ namespace XIVSlothCombo.Combos.PvE
             BasicInstinct = 23276,
             HydroPull = 23282,
             MustardBomb = 23279,
-            WingedRepropbation = 34576,
+            WingedReprobation = 34576,
             SeaShanty = 34580,
             BeingMortal = 34582,
             BreathOfMagic = 34567,
@@ -277,8 +277,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.PhantomFlurry))
                     {
-                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_WingedReprobation) && FindEffect(Buffs.WingedReprobation)?.StackCount > 1 && IsOffCooldown(WingedRepropbation))
-                            return OriginalHook(WingedRepropbation);
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_WingedReprobation) && FindEffect(Buffs.WingedReprobation)?.StackCount > 1 && IsOffCooldown(WingedReprobation))
+                            return OriginalHook(WingedReprobation);
 
                         if (IsOffCooldown(FeatherRain) && IsSpellActive(FeatherRain) &&
                             (IsNotEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) || (IsEnabled(CustomComboPreset.BLU_PrimalCombo_Pool) && (GetCooldownRemainingTime(Nightbloom) > 30 || IsOffCooldown(Nightbloom)))))
@@ -309,8 +309,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (GetRemainingCharges(Surpanakha) == 0) surpanakhaReady = false;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_WingedReprobation) && IsSpellActive(WingedRepropbation) && IsOffCooldown(WingedRepropbation))
-                            return OriginalHook(WingedRepropbation);
+                        if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_WingedReprobation) && IsSpellActive(WingedReprobation) && IsOffCooldown(WingedReprobation))
+                            return OriginalHook(WingedReprobation);
 
                         if (IsEnabled(CustomComboPreset.BLU_PrimalCombo_SeaShanty) && IsSpellActive(SeaShanty) && IsOffCooldown(SeaShanty))
                             return SeaShanty;
@@ -398,7 +398,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class BLU_NewMoonFluteOpener : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_NewMoonFluteOpener;
-           
+
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 if (actionID is MoonFlute)
@@ -448,16 +448,18 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     else
                     {
-                        if (IsSpellActive(WingedRepropbation) && (!HasEffect(Buffs.WingedReprobation) || FindEffect(Buffs.WingedReprobation).StackCount < 2) && IsOffCooldown(WingedRepropbation) && !WasLastAbility(WingedRepropbation) && !WasLastAbility(FeatherRain))
-                            return OriginalHook(WingedRepropbation);
+                        if (IsSpellActive(WingedReprobation) && IsOffCooldown(WingedReprobation) && !WasLastSpell(WingedReprobation) && !WasLastAbility(FeatherRain) && (!HasEffect(Buffs.WingedReprobation) || FindEffect(Buffs.WingedReprobation).StackCount < 2))
+                            return WingedReprobation;
 
                         if (IsSpellActive(FeatherRain) && IsOffCooldown(FeatherRain))
                             return FeatherRain;
 
                         if (IsSpellActive(SeaShanty) && IsOffCooldown(SeaShanty))
                             return SeaShanty;
-
                     }
+
+                    if (IsSpellActive(WingedReprobation) && IsOffCooldown(WingedReprobation) && !WasLastAbility(ShockStrike) && FindEffect(Buffs.WingedReprobation).StackCount < 2)
+                        return WingedReprobation;
 
                     if (IsSpellActive(ShockStrike) && IsOffCooldown(ShockStrike))
                         return ShockStrike;
@@ -478,9 +480,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsSpellActive(MatraMagic) && HasEffect(All.Buffs.Swiftcast))
                         return MatraMagic;
-
-                    if (IsSpellActive(BeingMortal) && IsOffCooldown(BeingMortal))
-                        return BeingMortal;
 
                     if (IsSpellActive(PhantomFlurry) && IsOffCooldown(PhantomFlurry))
                         return PhantomFlurry;
