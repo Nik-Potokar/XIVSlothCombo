@@ -3894,7 +3894,7 @@ namespace XIVSlothCombo.Combos
         WHM_AoEHeals_Plenary = 19203,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 8)]
+        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 9)]
         WHM_AoEHeals_Lucid = 19204,
 
         [ParentCombo(WHM_AoEHeals)]
@@ -3904,6 +3904,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WHM_AoEHeals_Medica2)]
         [CustomComboInfo("Medica III Option", "Upgrades to Medica III when level allows.", WHM.JobID)]
         WHM_AoEHeals_Medica3 = 19206,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Divine Caress", "Uses Divine Caress when Divine Grace from Temperance is active.", WHM.JobID, 8)]
+        WHM_AoEHeals_DivineCaress = 19207,
 
         #endregion
 

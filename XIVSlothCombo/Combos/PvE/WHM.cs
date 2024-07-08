@@ -318,6 +318,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var canWeave = CanSpellWeave(actionID, 0.3);
                     bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_AoEHeals_Lucid;
                     bool plenaryReady = ActionReady(PlenaryIndulgence) && (!Config.WHM_AoEHeals_PlenaryWeave || (Config.WHM_AoEHeals_PlenaryWeave && canWeave));
+                    bool divineCaressReady = ActionReady(DivineCaress) && HasEffect(Buffs.DivineGrace);
                     bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
                     var healTarget = GetHealTarget(Config.WHM_AoEHeals_MedicaMO);
 
@@ -326,6 +327,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Plenary) && plenaryReady)
                         return PlenaryIndulgence;
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_DivineCaress) && divineCaressReady)
+                        return DivineCaress;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Lucid) && canWeave && lucidReady)
                         return All.LucidDreaming;
