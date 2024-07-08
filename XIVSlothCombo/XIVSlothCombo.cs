@@ -48,7 +48,7 @@ namespace XIVSlothCombo
             BLM.JobID,
             //BLU.JobID,
             BRD.JobID,
-            DNC.JobID,
+            //DNC.JobID,
             DOL.JobID,
             DRG.JobID,
             DRK.JobID,
