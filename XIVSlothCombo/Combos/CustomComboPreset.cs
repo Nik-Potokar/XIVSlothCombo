@@ -3901,6 +3901,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Medica II Option", "Uses Medica II when current target doesn't have Medica II buff.", WHM.JobID, 1)]
         WHM_AoEHeals_Medica2 = 19205,
 
+        [ParentCombo(WHM_AoEHeals_Medica2)]
+        [CustomComboInfo("Medica III Option", "Upgrades to Medica III when level allows.", WHM.JobID)]
+        WHM_AoEHeals_Medica3 = 19206,
+
         #endregion
 
         #region Single Target Heals

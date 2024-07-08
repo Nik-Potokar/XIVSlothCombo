@@ -117,11 +117,11 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_STHeals_AquaveilWeave = new("WHM_STHeals_AquaveilWeave"),
                 WHM_AoEHeals_PlenaryWeave = new("WHM_AoEHeals_PlenaryWeave"),
                 WHM_AoEHeals_AssizeWeave = new("WHM_AoEHeals_AssizeWeave"),
-                WHM_AoEHeals_Medica2MO = new("WHM_AoEHeals_Medica2MO");
+                WHM_AoEHeals_MedicaMO = new("WHM_AoEHeals_MedicaMO");
             internal static UserFloat
                 WHM_ST_MainCombo_DoT_Threshold = new("WHM_ST_MainCombo_DoT_Threshold"),
                 WHM_STHeals_RegenTimer = new("WHM_STHeals_RegenTimer"),
-                WHM_AoEHeals_Medica2Time = new("WHM_AoEHeals_Medica2Time");
+                WHM_AoEHeals_MedicaTime = new("WHM_AoEHeals_MedicaTime");
             public static UserBoolArray
                 WHM_ST_MainCombo_Adv_Actions = new("WHM_ST_MainCombo_Adv_Actions");
         }
@@ -323,7 +323,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_AoEHeals_Lucid;
                     bool plenaryReady = ActionReady(PlenaryIndulgence) && (!Config.WHM_AoEHeals_PlenaryWeave || (Config.WHM_AoEHeals_PlenaryWeave && canWeave));
                     bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
-                    var healTarget = GetHealTarget(Config.WHM_AoEHeals_Medica2MO);
+                    var healTarget = GetHealTarget(Config.WHM_AoEHeals_MedicaMO);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Assize) && assizeReady)
                         return Assize;
@@ -343,8 +343,19 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_ThinAir) && thinAirReady)
                         return ThinAir;
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2) && (FindEffectOnMember(Buffs.Medica2, healTarget) == null || FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_Medica2Time) && ActionReady(Medica2))
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
+                        && ((FindEffectOnMember(Buffs.Medica2, healTarget) == null && FindEffectOnMember(Buffs.Medica3, healTarget) == null)
+                            || FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime
+                            || FindEffectOnMember(Buffs.Medica3, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
+                        && (ActionReady(Medica2) || ActionReady(Medica3)))
+                    {
+                        // Medica 3 upgrade
+                        if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica3)
+                            && LevelChecked(Medica3))
+                            return Medica3;
+
                         return Medica2;
+                    }
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && ActionReady(Cure3) && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP || HasEffect(Buffs.ThinAir)))
                         return Cure3;
