@@ -67,7 +67,8 @@ namespace XIVSlothCombo.Combos.PvE
             ThinAir = 1217,
             DivineBenison = 1218,
             Aquaveil = 2708,
-            SacredSight = 3879;
+            SacredSight = 3879,
+            DivineGrace = 3881;
         }
 
         public static class Debuffs
