@@ -3865,7 +3865,7 @@ namespace XIVSlothCombo.Combos
 
         #region AoE Heals Feature
 
-        [ReplaceSkill(WHM.Medica)]
+        [ReplaceSkill(WHM.Medica1)]
         [CustomComboInfo("Simple Heals (AoE)", "Replaces Medica with a one button AoE healing setup.", WHM.JobID, 4, "", "")]
         WHM_AoEHeals = 19007,
 
