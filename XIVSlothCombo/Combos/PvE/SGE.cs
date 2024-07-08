@@ -509,7 +509,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Prognosis)
                 {
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && HasEffect(Buffs.Eukrasia))
-                        return OriginalHook(EukrasianPrognosis); //ToDo Check if OriginalHook(Prognosis) is fine, bet it is
+                        return OriginalHook(Prognosis); 
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && ActionReady(Rhizomata) &&
                         !Gauge.HasAddersgall())
