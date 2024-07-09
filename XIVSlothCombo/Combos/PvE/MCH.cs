@@ -163,11 +163,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.IsOverheated && LevelChecked(OriginalHook(Heatblast)))
                         return OriginalHook(Heatblast);
 
-                    if (ReassembledTools(ref actionID, gauge))
-                        return actionID;
-
                     //gauss and ricochet outside HC
-                    if (CanWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)))
+                    if (CanWeave(actionID) && !gauge.IsOverheated &&
+                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
@@ -175,6 +173,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
                             return OriginalHook(Ricochet);
                     }
+
+                    if (ReassembledTools(ref actionID, gauge))
+                        return actionID;
 
                     //1-2-3 Combo
                     if (comboTime > 0)
@@ -243,6 +244,7 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 return false;
             }
+
             private static bool UseQueen(MCHGauge gauge)
             {
                 if (CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
@@ -335,7 +337,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Heatblast, Gauss, Rico
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) && CanWeave(actionID) && WasLastAction(OriginalHook(Heatblast)) &&
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) && 
+                        CanWeave(actionID) && WasLastAction(OriginalHook(Heatblast)) &&
                         (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet)))
@@ -349,12 +352,10 @@ namespace XIVSlothCombo.Combos.PvE
                         gauge.IsOverheated && LevelChecked(OriginalHook(Heatblast)))
                         return OriginalHook(Heatblast);
 
-                    if (ReassembledTools(ref actionID, gauge))
-                        return actionID;
-
                     //gauss and ricochet outside HC
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
-                        CanWeave(actionID) && !gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)))
+                        CanWeave(actionID) && !gauge.IsOverheated &&
+                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
@@ -362,6 +363,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
                             return OriginalHook(Ricochet);
                     }
+
+                    if (ReassembledTools(ref actionID, gauge))
+                        return actionID;
 
                     // healing
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_SecondWind) &&
