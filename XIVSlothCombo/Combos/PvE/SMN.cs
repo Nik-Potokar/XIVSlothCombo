@@ -513,7 +513,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Demi Nuke
                         if (OriginalHook(Ruin) is AstralImpulse or UmbralImpulse or FountainOfFire)
                         {
-                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && IsBahamutReady && (!LevelChecked(SummonSolarBahamut) || DemiAttackCount >= burstDelay))
+                            if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && IsBahamutReady && (LevelChecked(SummonSolarBahamut) || DemiAttackCount >= burstDelay))
                             {
                                 if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && LevelChecked(SummonBahamut))
                                     return OriginalHook(EnkindleBahamut);
