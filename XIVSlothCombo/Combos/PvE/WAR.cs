@@ -238,7 +238,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return PrimalWrath;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetCooldownRemainingTime(InnerRelease) < 57.5)
+                        if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetCooldownRemainingTime(InnerRelease) < 57.5)
                         {
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && (GetTargetDistance() <= 3 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
                                 return PrimalRend;
@@ -246,7 +246,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return PrimalRend;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
+                        if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
                             return PrimalRuination;
 
                         if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Decimate) && LevelChecked(SteelCyclone) && (gauge >= decimateGaugeSpend || HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)))
@@ -294,17 +294,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == InnerBeast || actionID == SteelCyclone)
                 {
-
                     if (LevelChecked(PrimalRend) && HasEffect(Buffs.PrimalRendReady))
                         return PrimalRend;
-
-                    // Fell Cleave or Decimate
-                    return OriginalHook(actionID);
-
-
+                    if (LevelChecked(PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && WasLastWeaponskill(PrimalRend))
+                        return PrimalRuination;
                 }
 
-                return actionID;
+                // fell cleave or decimate
+                return OriginalHook(actionID);
             }
         }
 
