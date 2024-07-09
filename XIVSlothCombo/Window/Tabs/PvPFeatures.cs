@@ -74,7 +74,7 @@ namespace XIVSlothCombo.Window.Tabs
                     var id = groupedPresets[OpenJob].First().Info.JobID;
                     IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-                    using (var headingTab = ImRaii.Child("PvPHeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
+                    using (var headingTab = ImRaii.Child("PvPHeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f * 1f.Scale()) + 4f)))
                     {
                         if (ImGui.Button("Back"))
                         {
@@ -85,7 +85,7 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.SameLine(ImGui.GetContentRegionAvail().X / 2);
                         if (icon != null)
                         {
-                            ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f.Scale()));
+                            ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f * 1f.Scale()));
                             ImGui.SameLine((ImGui.GetContentRegionAvail().X / 2) + 42f.Scale());
                         }
                         ImGuiEx.Text($"{OpenJob}");
