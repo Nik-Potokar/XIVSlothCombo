@@ -205,7 +205,9 @@ namespace XIVSlothCombo.Combos.PvE
                 if (ActionFound)
                 {
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
-                    bool inOpener = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Opener) && Glare3Count < 4;
+                    bool inOpener = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Opener)
+                                    && Glare3Count < 4
+                                    && !HasEffect(Buffs.SacredSight);
                     bool liliesFull = gauge.Lily == 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
 
@@ -223,7 +225,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(All.Swiftcast);
 
                             if (ActionReady(PresenceOfMind))
-                            return PresenceOfMind;
+                                return PresenceOfMind;
                         }
 
                         if (Glare3Count == 4)
