@@ -1667,7 +1667,7 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Queen = 8304,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Flamethrower Option", "Adds Flamethrower to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Flamethrower Option", "Adds Flamethrower to the rotation.\n Changes to Savage blade when in use to prevent cancelling.", MCH.JobID)]
         MCH_AoE_Adv_FlameThrower = 8305,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
