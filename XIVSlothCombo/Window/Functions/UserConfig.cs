@@ -1639,7 +1639,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(1, 10, MCH.Config.MCH_ST_QueenOverDrive, "HP% for the target to be at or under");
 
             if (preset == CustomComboPreset.MCH_ST_Adv_WildFire)
-                UserConfig.DrawSliderInt(0, 10, MCH.Config.MCH_ST_WildfireHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+                UserConfig.DrawSliderInt(0, 15, MCH.Config.MCH_ST_WildfireHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
 
             #endregion
             // ====================================================================================
