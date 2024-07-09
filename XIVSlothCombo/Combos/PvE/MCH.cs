@@ -700,10 +700,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_Heatblast_Wildfire) &&
                         ActionReady(Hypercharge) &&
                         ActionReady(Wildfire) &&
-                        (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)))
+                        WasLastAction(Hypercharge))
                         return Wildfire;
 
-                    if (!gauge.IsOverheated && LevelChecked(Hypercharge) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)))
+                    if (!gauge.IsOverheated && LevelChecked(Hypercharge) && 
+                        (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)))
                         return Hypercharge;
 
                     //Heatblast, Gauss, Rico
