@@ -1545,7 +1545,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [CustomComboInfo("Aurora Protection Feature", "Locks out Aurora if Aurora's effect is on the target.", GNB.JobID, 0, "", "")]
-        GNB_AuroraProtection = 7600,
+        GNB_AuroraProtection = 7700,
 
         [Variant]
         [VariantParent(GNB_ST_MainCombo, GNB_AoE_MainCombo)]
