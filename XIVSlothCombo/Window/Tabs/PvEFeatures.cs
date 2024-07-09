@@ -83,7 +83,7 @@ namespace XIVSlothCombo.Window.Tabs
                         {
                             if (icon != null)
                             {
-                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f * 1f.Scale()));
+                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 1.4f * 1f.Scale()));
                                 ImGui.SameLine();
                             }
                             ImGuiEx.Text($"{OpenJob}");
