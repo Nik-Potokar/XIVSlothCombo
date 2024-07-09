@@ -80,6 +80,7 @@ namespace XIVSlothCombo.Combos.PvE
                 MCH_AoE_TurretUsage = new("MCH_AoE_TurretUsage"),
                 MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool", 0),
                 MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool", 0),
+                MCH_ST_WildfireHP = new("MCH_ST_WildfireHP", 1),
                 MCH_ST_QueenOverDrive = new("MCH_ST_QueenOverDrive");
             public static UserBoolArray
                 MCH_ST_Reassembled = new("MCH_ST_Reassembled"),
@@ -312,7 +313,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge))
+                        CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge) &&
+                        GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
                         return Wildfire;
 
                     // BarrelStabilizer use and Full metal field

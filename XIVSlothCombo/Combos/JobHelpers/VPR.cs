@@ -212,7 +212,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 if (simpleMode)
                 {
-                    if (DoOpener(StandardOpenerRearFirst, ref actionID))
+                    if (DoOpener(StandardOpenerFlankFirst, ref actionID))
                         return true;
                 }
                 else
