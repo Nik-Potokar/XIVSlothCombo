@@ -3752,11 +3752,11 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_AOE_Overpower_PrimalRend = 18029,
+        WAR_AOE_Overpower_PrimalRend = 18018,
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_AOE_Overpower_PrimalRuination = 18030,
+        WAR_AOE_Overpower_PrimalRuination = 18019,
 
         [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 4, "", "")]
