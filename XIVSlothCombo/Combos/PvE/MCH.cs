@@ -97,7 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 MCHGauge? gauge = GetJobGauge<MCHGauge>();
-                bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy();
+                bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() && CanDelayedWeave(actionID);
                 double heatblastRC = 1.5;
                 bool drillCD = !ActionReady(Drill) || (ActionReady(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
@@ -145,7 +145,8 @@ namespace XIVSlothCombo.Combos.PvE
                             !LevelChecked(Wildfire))
                             return Hypercharge;
 
-                        if (drillCD && anchorCD && sawCD)
+                        if (drillCD && anchorCD && sawCD &&
+                            ((GetCooldownRemainingTime(Wildfire) > 15 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
 
@@ -273,7 +274,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 MCHGauge? gauge = GetJobGauge<MCHGauge>();
-                bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy();
+                bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() && CanDelayedWeave(actionID);
                 double heatblastRC = 1.5;
                 bool drillCD = !ActionReady(Drill) || (ActionReady(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
@@ -332,12 +333,13 @@ namespace XIVSlothCombo.Combos.PvE
                             !LevelChecked(Wildfire))
                             return Hypercharge;
 
-                        if (drillCD && anchorCD && sawCD)
+                        if (drillCD && anchorCD && sawCD &&
+                            ((GetCooldownRemainingTime(Wildfire) > 15 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
 
                     //Heatblast, Gauss, Rico
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) && 
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
                         CanWeave(actionID) && WasLastAction(OriginalHook(Heatblast)) &&
                         (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     {
