@@ -1719,9 +1719,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate Feature", "Replace Gauss Round and Ricochet or Double Check and Checkmate with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
-        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
-        [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
-        MCH_HotShotDrillChainsaw = 8004,
+        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot,MCH.Chainsaw)]
+        [CustomComboInfo("Big Hitter Feature", "Replace Hot Shot, Drill, Air Anchor, Chainsaw and Excavator depending on which is on cooldown.", MCH.JobID)]
+        MCH_HotShotDrillChainsawExcavator = 8004,
 
         [ReplaceSkill(MCH.Heatblast)]
         [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge \nwhen u have 50 or more heat or when u got Hypercharged buff.", MCH.JobID)]

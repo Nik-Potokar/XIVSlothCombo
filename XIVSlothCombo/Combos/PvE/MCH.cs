@@ -759,14 +759,17 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class MCH_HotShotDrillChainsaw : CustomCombo
+        internal class MCH_HotShotDrillChainsawExcavator : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HotShotDrillChainsaw;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_HotShotDrillChainsawExcavator;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID is Drill || actionID is HotShot || actionID is AirAnchor || actionID is Chainsaw)
                 {
+                    if (LevelChecked(Excavator))
+                        return CalcBestAction(actionID, Excavator, Chainsaw, AirAnchor, Drill);
+
                     if (LevelChecked(Chainsaw))
                         return CalcBestAction(actionID, Chainsaw, AirAnchor, Drill);
 
