@@ -161,7 +161,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Requiescat);
 
                             // Atonement combo before Holy Spirit
-                            if (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
+                            if (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
                                 return OriginalHook(Atonement);
 
                             // HS under DM
