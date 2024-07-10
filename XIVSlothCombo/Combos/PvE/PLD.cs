@@ -141,8 +141,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // New Goring Blade
-                            if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && (!BladeOfHonor.LevelChecked() ||
-                                (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
+                            if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && 
+                                (!BladeOfHonor.LevelChecked() || (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -398,8 +398,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // New Goring Blade
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() ||
-                                (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
+                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && 
+                                (!BladeOfHonor.LevelChecked() || (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
@@ -455,12 +455,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SpiritsWithin);
                         }
 
-                        // Goring on cooldown (burst features disabled) -- Goring Blade is only available with FoF
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                            HasEffect(Buffs.GoringBladeReady) &&
-                            IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
-                            return GoringBlade;
-
                         //Req without FoF
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
                             return OriginalHook(Requiescat);
@@ -481,6 +475,12 @@ namespace XIVSlothCombo.Combos.PvE
                             OriginalHook(Confiteor) != Confiteor &&
                             GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)))
                             return OriginalHook(Confiteor);
+
+                        // Goring on cooldown (burst features disabled) -- Goring Blade is only available with FoF
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
+                            HasEffect(Buffs.GoringBladeReady) &&
+                            IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
+                            return GoringBlade;
 
                         //Req HS
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
