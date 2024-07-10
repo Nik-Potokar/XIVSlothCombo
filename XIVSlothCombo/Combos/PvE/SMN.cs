@@ -436,7 +436,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (CanSpellWeave(actionID))
                     {
                         // Searing Light
-                        if (IsEnabled(CustomComboPreset.SMN_SearingLight) && CanDelayedWeave(actionID) && IsOffCooldown(SearingLight) && LevelChecked(SearingLight))
+                        if (IsEnabled(CustomComboPreset.SMN_SearingLight) && IsOffCooldown(SearingLight) && LevelChecked(SearingLight))
                         {
                             if (IsEnabled(CustomComboPreset.SMN_SearingLight_Burst))
                             {
