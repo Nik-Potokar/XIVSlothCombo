@@ -1513,11 +1513,11 @@ namespace XIVSlothCombo.Combos
 
         #region Fated Circle
         [ReplaceSkill(GNB.FatedCircle)]
-        [CustomComboInfo("Fated Circle Features", "Collection of Fated Brand related features.", GNB.JobID)]
+        [CustomComboInfo("Fated Circle Features", "Collection of Fated Circle related features.", GNB.JobID)]
         GNB_FC = 7600,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Fated Circle Continuation Feature", "Adds Hypervelocity on Fated Circle.", GNB.JobID)]
+        [CustomComboInfo("Fated Circle Continuation Feature", "Adds Continuation on Fated Circle.", GNB.JobID)]
         GNB_FC_Continuation = 7601,
 
         [ParentCombo(GNB_FC)]
