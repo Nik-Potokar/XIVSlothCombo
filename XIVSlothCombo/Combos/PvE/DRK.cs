@@ -194,8 +194,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.DRK_ST_CDs_SaltedEarth)
                                 && (ActionReady(SaltedEarth) || ActionReady(SaltAndDarkness)))
                             {
-                                if (!HasEffect(Buffs.SaltedEarth) || // Cast Salted Earth
-                                    (HasEffect(Buffs.SaltedEarth)
+                                if (!HasEffect(Buffs.SaltedEarth)
+                                    && ActionReady(SaltedEarth) // Cast Salted Earth
+                                    || (HasEffect(Buffs.SaltedEarth)
                                      && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
                                      && ActionReady(SaltAndDarkness))) //Cast Salt and Darkness
                                     return OriginalHook(SaltedEarth);
@@ -340,8 +341,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_SaltedEarth)
                             && (ActionReady(SaltedEarth) || ActionReady(SaltAndDarkness)))
                         {
-                            if (!HasEffect(Buffs.SaltedEarth) || // Cast Salted Earth
-                                (HasEffect(Buffs.SaltedEarth)
+                            if (!HasEffect(Buffs.SaltedEarth)
+                                && ActionReady(SaltedEarth) // Cast Salted Earth
+                                || (HasEffect(Buffs.SaltedEarth)
                                  && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
                                  && ActionReady(SaltAndDarkness))) //Cast Salt and Darkness
                                 return OriginalHook(SaltedEarth);
