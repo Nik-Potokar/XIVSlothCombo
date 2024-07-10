@@ -767,7 +767,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Drill || actionID is HotShot || actionID is AirAnchor || actionID is Chainsaw)
                 {
-                    if (LevelChecked(Excavator))
+                    if (LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady))
                         return CalcBestAction(actionID, Excavator, Chainsaw, AirAnchor, Drill);
 
                     if (LevelChecked(Chainsaw))
