@@ -157,6 +157,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor))
                                 return OriginalHook(Requiescat);
 
+                            // Atonement combo before Holy Spirit
+                            if (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
+                                return OriginalHook(Atonement);
+
                             // HS under DM
                             if (HasEffect(Buffs.DivineMight) &&
                                 GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
@@ -478,10 +482,6 @@ namespace XIVSlothCombo.Combos.PvE
                             GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                             return HolySpirit;
 
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange())
-                            return OriginalHook(Atonement);
-
                         // Base combo
                         if (comboTime > 0)
                         {
@@ -489,6 +489,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 RiotBlade.LevelChecked())
                                 return RiotBlade;
 
+                            // Insert Atonement/Holy Spirit before end of basic combo for "Late Spend" option
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
                             {
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
@@ -505,11 +506,13 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
+                        // Atonement between basic combos for "Early Spend" option
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
                             (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() &&
                             (Config.PLD_ST_AtonementTiming == 1 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 1)))
                             return OriginalHook(Atonement);
 
+                        // Holy Spirit between basic combos for "Early Spend" option
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
                             HasEffect(Buffs.DivineMight) &&
                             GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
@@ -590,7 +593,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
                                 GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                                 return HolyCircle;
-
                         }
 
                         // Blades of Honor after Confi Combo (Weave).
