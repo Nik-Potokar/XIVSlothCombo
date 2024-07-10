@@ -50,8 +50,6 @@ namespace XIVSlothCombo.Window.Tabs
                         string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
                         var id = groupedPresets[jobName].First().Info.JobID;
                         IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
-                        ImGui.AlignTextToFramePadding();
-                        ImGui.PushStyleVar(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f));
                         using (var disabled = ImRaii.Disabled(DisabledJobsPVE.Any(x => x == id)))
                         {
                             if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (64 / 2f) * ImGui.GetIO().FontGlobalScale)))
@@ -66,7 +64,6 @@ namespace XIVSlothCombo.Window.Tabs
                             }
                             ImGui.Text($"{header} {(disabled ? "(Disabled due to update)" : "")}");
                         }
-                        ImGui.PopStyleVar();
                     }
                 }
                 else

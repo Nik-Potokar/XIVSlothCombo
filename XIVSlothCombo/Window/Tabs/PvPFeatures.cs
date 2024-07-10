@@ -55,14 +55,14 @@ namespace XIVSlothCombo.Window.Tabs
                         IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
                         using (var disabled = ImRaii.Disabled(DisabledJobsPVP.Any(x => x == id)))
                         {
-                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f) * ImGui.GetIO().FontGlobalScale)))
+                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (32f) * ImGui.GetIO().FontGlobalScale)))
                             {
                                 OpenJob = jobName;
                             }
                             ImGui.SameLine(indentwidth);
                             if (icon != null)
                             {
-                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f) * ImGui.GetIO().FontGlobalScale);
+                                ImGui.Image(icon.ImGuiHandle, (new Vector2(64, 64) / 2f) * ImGui.GetIO().FontGlobalScale);
                                 ImGui.SameLine(indentwidth2);
                             }
                             ImGui.Text($"{header} {(disabled ? "(Disabled due to update)" : "")}");
@@ -74,7 +74,7 @@ namespace XIVSlothCombo.Window.Tabs
                     var id = groupedPresets[OpenJob].First().Info.JobID;
                     IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-                    using (var headingTab = ImRaii.Child("PvPHeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f * 1f.Scale()) + 4f)))
+                    using (var headingTab = ImRaii.Child("PvPHeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (64f / 2f * 1f.Scale()) + 4f)))
                     {
                         if (ImGui.Button("Back"))
                         {
@@ -85,7 +85,7 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.SameLine(ImGui.GetContentRegionAvail().X / 2);
                         if (icon != null)
                         {
-                            ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f * 1f.Scale()));
+                            ImGui.Image(icon.ImGuiHandle, (new Vector2(64, 64) / 2f * 1f.Scale()));
                             ImGui.SameLine((ImGui.GetContentRegionAvail().X / 2) + 42f.Scale());
                         }
                         ImGuiEx.Text($"{OpenJob}");
