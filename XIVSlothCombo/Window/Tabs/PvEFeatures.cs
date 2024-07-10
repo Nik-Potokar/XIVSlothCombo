@@ -51,14 +51,25 @@ namespace XIVSlothCombo.Window.Tabs
                         IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
                         using (var disabled = ImRaii.Disabled(DisabledJobsPVE.Any(x => x == id)))
                         {
-                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f) * ImGui.GetIO().FontGlobalScale)))
+                            // Make selectable and icon/filler sizes consistent
+                            var selectableAndIconSize = icon != null && icon.Size.X > 4 // 4x4 is a sign of worthless icon data
+                                ? new Vector2(0, (icon.Size.Y / 2f) * ImGui.GetIO().FontGlobalScale)
+                                : new Vector2(0, 64 / 2f * ImGui.GetIO().FontGlobalScale); // 64 is the default job icon size
+
+                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, selectableAndIconSize))
                             {
                                 OpenJob = jobName;
                             }
                             ImGui.SameLine(indentwidth);
-                            if (icon != null)
+                            if (icon != null && icon.Size.X > 4) // 4x4 is a sign of worthless icon data
                             {
-                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f) * ImGui.GetIO().FontGlobalScale);
+                                selectableAndIconSize.X = selectableAndIconSize.Y; // Remove the 0 for X here, if earlier the selectable is confused
+                                ImGui.Image(icon.ImGuiHandle, selectableAndIconSize);
+                                ImGui.SameLine(indentwidth2);
+                            }
+                            else
+                            {
+                                ImGui.Dummy(selectableAndIconSize); // Placeholder to make sure design holds up even without icons
                                 ImGui.SameLine(indentwidth2);
                             }
                             ImGui.Text($"{header} {(disabled ? "(Disabled due to update)" : "")}");
@@ -70,7 +81,12 @@ namespace XIVSlothCombo.Window.Tabs
                     var id = groupedPresets[OpenJob].First().Info.JobID;
                     IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
+                    // Make heading and icon/filler sizes consistent
+                    var headingAndIconSize = icon != null && icon.Size.X > 4 // 4x4 is a sign of worthless icon data
+                        ? new Vector2(ImGui.GetContentRegionAvail().X, (icon.Size.Y / 2f) * ImGui.GetIO().FontGlobalScale + 4f)
+                        : new Vector2(ImGui.GetContentRegionAvail().X, 64 / 2f * ImGui.GetIO().FontGlobalScale + 4f); // 64 is the default job icon size
+
+                    using (var headingTab = ImRaii.Child("HeadingTab", headingAndIconSize))
                     {
                         if (ImGui.Button("Back"))
                         {
@@ -80,9 +96,15 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.SameLine();
                         ImGuiEx.LineCentered(() =>
                         {
+                            headingAndIconSize.X = headingAndIconSize.Y; // Remove the full width for X here, if earlier the heading is confused
                             if (icon != null)
                             {
-                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f.Scale()));
+                                ImGui.Image(icon.ImGuiHandle, headingAndIconSize);
+                                ImGui.SameLine();
+                            }
+                            else
+                            {
+                                ImGui.Dummy(headingAndIconSize);
                                 ImGui.SameLine();
                             }
                             ImGuiEx.Text($"{OpenJob}");
