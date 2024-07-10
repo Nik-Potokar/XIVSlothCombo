@@ -132,10 +132,6 @@ namespace XIVSlothCombo.Combos.PvE
                         (HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator))))
                         return OriginalHook(BarrelStabilizer);
 
-                    //Queen
-                    if (UseQueen(gauge))
-                        return OriginalHook(RookAutoturret);
-
                     if (CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
                         LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
                     {
@@ -149,6 +145,10 @@ namespace XIVSlothCombo.Combos.PvE
                             ((GetCooldownRemainingTime(Wildfire) > 15 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
+
+                    //Queen
+                    if (UseQueen(gauge))
+                        return OriginalHook(RookAutoturret);
 
                     //Heatblast, Gauss, Rico
                     if (CanWeave(actionID) && WasLastAction(OriginalHook(Heatblast)) &&
@@ -319,10 +319,6 @@ namespace XIVSlothCombo.Combos.PvE
                         (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) && HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator))))
                         return OriginalHook(BarrelStabilizer);
 
-                    //Queen
-                    if (UseQueen(gauge))
-                        return OriginalHook(RookAutoturret);
-
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
                         CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
                         LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
@@ -337,6 +333,10 @@ namespace XIVSlothCombo.Combos.PvE
                             ((GetCooldownRemainingTime(Wildfire) > 15 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
+
+                    //Queen
+                    if (UseQueen(gauge))
+                        return OriginalHook(RookAutoturret);
 
                     //Heatblast, Gauss, Rico
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
