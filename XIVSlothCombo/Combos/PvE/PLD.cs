@@ -287,6 +287,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanWeave(actionID))
                     {
+                        // Fight or Flight
+                        if (ActionReady(FightOrFlight) && (IsOffCooldown(Requiescat) || !LevelChecked(Requiescat)))
+                            return FightOrFlight;
+
                         // oGCDs
                         if (GetCooldownRemainingTime(FightOrFlight) > 15)
                         {
