@@ -3942,7 +3942,7 @@ namespace XIVSlothCombo.Combos
         WHM_STHeals_Benison = 19306,
 
         [ParentCombo(WHM_STHeals)]
-        [CustomComboInfo("Aqualveil Option", "Uses Aquaveil when available.", WHM.JobID)]
+        [CustomComboInfo("Aquaveil Option", "Uses Aquaveil when available.", WHM.JobID)]
         WHM_STHeals_Aquaveil = 19307,
 
         [ParentCombo(WHM_STHeals)]
