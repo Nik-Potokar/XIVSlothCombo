@@ -28,6 +28,7 @@ namespace XIVSlothCombo.Combos.PvE
             RoyalAuthority = 3539,
             TotalEclipse = 7381,
             Requiescat = 7383,
+            Imperator = 36921,
             HolySpirit = 7384,
             Prominence = 16457,
             HolyCircle = 16458,
@@ -709,6 +710,32 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     return CircleOfScorn;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class PLD_FoF_Requiescat : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_FoFRequiescat;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is FightOrFlight)
+                {
+                    if (IsOffCooldown(FightOrFlight))
+                    {
+                        return FightOrFlight;
+                    }
+
+                    if (IsOffCooldown(Requiescat) || 
+                        (LevelChecked(BladeOfHonor) && (HasEffect(Buffs.Requiescat) || HasEffect(Buffs.BladeOfHonor))))
+                    {
+                        return OriginalHook(Requiescat);
+                    }
+
+                    return FightOrFlight;
                 }
 
                 return actionID;

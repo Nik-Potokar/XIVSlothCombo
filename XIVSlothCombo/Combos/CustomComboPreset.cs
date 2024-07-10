@@ -2322,6 +2322,7 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
 
+        [ConflictingCombos(PLD_FoFRequiescat)]
         [ReplaceSkill(PLD.Requiescat)]
         [CustomComboInfo("Requiescat Spender Option", "Replaces Requiescat with the selected option while having stacks of \"Requiescat\"", PLD.JobID)]
         PLD_Requiescat_Options = 11024,
@@ -2329,6 +2330,11 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion)]
         [CustomComboInfo("Spirits Within / Expiacion / Circle of Scorn Feature", "Replaces Spirits Within / Expiacion with Circle of Scorn when off cooldown.", PLD.JobID)]
         PLD_SpiritsWithin = 11025,
+
+        [ConflictingCombos(PLD_Requiescat_Options)]
+        [ReplaceSkill(PLD.FightOrFlight)]
+        [CustomComboInfo("FoF Into Requiescat Option", "Replaces Fight or Flight with Requiescat/Imperator/Blade of Honor during FoF. Keeps your minute-burst oGCDs on one button.", PLD.JobID)]
+        PLD_FoFRequiescat = 11026,
 
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
