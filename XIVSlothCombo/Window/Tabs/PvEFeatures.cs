@@ -6,6 +6,7 @@ using ECommons.ImGuiMethods;
 using ImGuiNET;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Emit;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
@@ -49,28 +50,31 @@ namespace XIVSlothCombo.Window.Tabs
                         string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
                         var id = groupedPresets[jobName].First().Info.JobID;
                         IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.PushStyleVar(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f));
                         using (var disabled = ImRaii.Disabled(DisabledJobsPVE.Any(x => x == id)))
                         {
-                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f) * ImGui.GetIO().FontGlobalScale)))
+                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (64 / 2f) * ImGui.GetIO().FontGlobalScale)))
                             {
                                 OpenJob = jobName;
                             }
                             ImGui.SameLine(indentwidth);
                             if (icon != null)
                             {
-                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f) * ImGui.GetIO().FontGlobalScale);
+                                ImGui.Image(icon.ImGuiHandle, (new Vector2(64, 64) / 2f) * ImGui.GetIO().FontGlobalScale);
                                 ImGui.SameLine(indentwidth2);
                             }
                             ImGui.Text($"{header} {(disabled ? "(Disabled due to update)" : "")}");
                         }
+                        ImGui.PopStyleVar();
                     }
                 }
                 else
                 {
                     var id = groupedPresets[OpenJob].First().Info.JobID;
                     IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
-
-                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f * 1f.Scale()) + 4f)))
+                    
+                    using (var headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 34f.Scale() : (64f / 2f * 1f.Scale()) + 4f)))
                     {
                         if (ImGui.Button("Back"))
                         {
@@ -82,7 +86,7 @@ namespace XIVSlothCombo.Window.Tabs
                         {
                             if (icon != null)
                             {
-                                ImGui.Image(icon.ImGuiHandle, (icon.Size / 2f * 1f.Scale()));
+                                ImGui.Image(icon.ImGuiHandle, (new Vector2(64,64) / 2f * 1f.Scale()));
                                 ImGui.SameLine();
                             }
                             ImGuiEx.Text($"{OpenJob}");
