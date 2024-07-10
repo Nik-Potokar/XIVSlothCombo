@@ -143,7 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
                             // New Goring Blade
                             if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && (!BladeOfHonor.LevelChecked() ||
                                 (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
-                                return OriginalHook(FightOrFlight);
+                                return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
                             {
@@ -400,7 +400,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                                 InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() ||
                                 (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
-                                return OriginalHook(FightOrFlight);
+                                return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
                             {
@@ -459,7 +459,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             HasEffect(Buffs.GoringBladeReady) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
-                            return OriginalHook(FightOrFlight);
+                            return GoringBlade;
 
                         //Req without FoF
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
@@ -731,7 +731,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsOffCooldown(FightOrFlight))
                     {
-                        return FightOrFlight;
+                        return OriginalHook(FightOrFlight);
                     }
 
                     if (IsOffCooldown(Requiescat) || 
@@ -740,7 +740,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(Requiescat);
                     }
 
-                    return FightOrFlight;
+                    return OriginalHook(FightOrFlight);
                 }
 
                 return actionID;
