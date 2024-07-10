@@ -186,7 +186,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(AST.Gravity, AST.Gravity2)]
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
+        [CustomComboInfo("AoE DPS Option", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
         AST_AoE_DPS = 1013,
 
         [ParentCombo(AST_ST_DPS)]
@@ -202,24 +202,12 @@ namespace XIVSlothCombo.Combos
         AST_DPS_Divination = 1016,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
+        [CustomComboInfo("Card Draw Weave Option", "Draws your cards", AST.JobID, 5, "", "")]
         AST_DPS_AutoDraw = 1011,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID, 6)]
+        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Arrow card (best used with Quick Target Cards)", AST.JobID, 6)]
         AST_DPS_AutoPlay = 1037,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID, 7)]
-        AST_DPS_AutoPlay_Redraw = 1038,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 8, "", "")]
-        AST_DPS_Astrodyne = 1009,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 9, "", "")]
-        AST_DPS_AutoCrownDraw = 1012,
 
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
@@ -228,7 +216,7 @@ namespace XIVSlothCombo.Combos
 
         #region Healing
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Simple Heals (Single Target)", "", AST.JobID, 2)]
+        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Benefic 2 with a one button healing replacement.", AST.JobID, 2)]
         AST_ST_SimpleHeals = 1023,
 
         [ParentCombo(AST_ST_SimpleHeals)]
@@ -248,11 +236,19 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals_Esuna = 1039,
 
         [ParentCombo(AST_ST_SimpleHeals)]
-        [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
+        [CustomComboInfo("Exaltation Option", "Adds Exaltation.", AST.JobID)]
         AST_ST_SimpleHeals_Exaltation = 1028,
 
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Spire Option", "Adds The Spire when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Spire = 1030,
+
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Ewer Option", "Adds The Ewer when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Ewer = 1032,
+
         [ReplaceSkill(AST.AspectedHelios)]
-        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 3, "", "")]
+        [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 3, "", "")]
         AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
@@ -270,6 +266,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(AST.Benefic2)]
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "", "")]
         AST_Benefic = 1002,
+
         #endregion
 
         #region Utility
@@ -291,25 +288,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Cards
-        [ReplaceSkill(AST.Play)]
-        [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
-        AST_Cards_DrawOnPlay = 1000,
-
-        [ParentCombo(AST_Cards_DrawOnPlay)]
-        [CustomComboInfo("Redraw Feature", "Sets Play to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
-        AST_Cards_Redraw = 1032,
-
-        [ReplaceSkill(AST.Draw)]
-        [CustomComboInfo("Redraw on Draw", "Sets Draw to Redraw if you have the Clarifying Draw buff.", AST.JobID)]
-        AST_Cards_RedrawStandalone = 1040,
-
-        [ReplaceSkill(AST.Play)]
-        //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
-        //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
-        [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
-        AST_Cards_AstrodyneOnPlay = 1015,
-
-        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        [CustomComboInfo("Quick Target Damage Cards", "When you play the Balance or Spear, this will automatically apply the buff to a party member. It will look at DPS that suit the card first, if none found or they have buffs already, will look at the other DPS instead..", AST.JobID)]
         AST_Cards_QuickTargetCards = 1029,
 
         [ParentCombo(AST_Cards_QuickTargetCards)]
