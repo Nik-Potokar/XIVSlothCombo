@@ -2355,6 +2355,7 @@ namespace XIVSlothCombo.Combos
         #region  Advanced ST
 
         [ReplaceSkill(RPR.Slice)]
+        [ConflictingCombos(RPR_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Slice with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", RPR.JobID)]
         RPR_ST_AdvancedMode = 12001,
 
@@ -2380,7 +2381,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the rotation.", RPR.JobID)]
         RPR_ST_ArcaneCircle = 12006,
 
-        [ParentCombo(RPR_ST_ArcaneCircle)]
+        [ParentCombo(RPR_ST_CDs)]
         [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the rotation.", RPR.JobID)]
         RPR_ST_PlentifulHarvest = 12007,
 
@@ -2392,13 +2393,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
         RPR_ST_Gluttony = 12009,
 
-        [ParentCombo(RPR_ST_CDs)]
+        #endregion
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
         RPR_ST_Enshroud = 12010,
-
-        [ParentCombo(RPR_ST_Enshroud)]
-        [CustomComboInfo("Double Enshroud Harvest moon", "Uses Harvest Moon in 2 minute burst.", RPR.JobID)]
-        RPR_ST_EnshroudHarvestMoon = 12011,
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
@@ -2416,11 +2415,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
         RPR_ST_Communio = 12015,
 
-        [ParentCombo(RPR_ST_CDs)]
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
         RPR_ST_Perfectio = 12016,
-
-        #endregion
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the rotation.", RPR.JobID)]
@@ -2461,6 +2458,7 @@ namespace XIVSlothCombo.Combos
         #region Advanced AoE 
 
         [ReplaceSkill(RPR.SpinningScythe)]
+        [ConflictingCombos(RPR_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Spinning Scythe with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", RPR.JobID)]
         RPR_AoE_AdvancedMode = 12101,
 
@@ -2482,7 +2480,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the rotation.", RPR.JobID)]
         RPR_AoE_ArcaneCircle = 12105,
 
-        [ParentCombo(RPR_AoE_ArcaneCircle)]
+        [ParentCombo(RPR_AoE_CDs)]
         [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the rotation.", RPR.JobID)]
         RPR_AoE_PlentifulHarvest = 12106,
 
@@ -2494,7 +2492,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
         RPR_AoE_Gluttony = 12108,
 
-        [ParentCombo(RPR_AoE_CDs)]
+        #endregion
+
+        [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
         RPR_AoE_Enshroud = 12109,
 
@@ -2514,11 +2514,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
         RPR_AoE_Communio = 12113,
 
-        [ParentCombo(RPR_AoE_CDs)]
+        [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
         RPR_AoE_Perfectio = 12114,
-
-        #endregion
 
         [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Guillotine Option", "Adds Guillotine to the rotation.", RPR.JobID)]
