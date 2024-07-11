@@ -43,6 +43,7 @@ namespace XIVSlothCombo.Combos.PvE
             Impalement = 36931,       // Under Delirium
 
             // Buffing oGCDs
+            BloodWeapon = 3625,
             Delirium = 7390,
 
             // Burst Window
@@ -184,22 +185,24 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Delirium
                         if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
-                            && IsOffCooldown(Delirium)
-                            && LevelChecked(Delirium))
-                            return Delirium;
+                            && IsOffCooldown(BloodWeapon)
+                            && LevelChecked(BloodWeapon))
+                            return OriginalHook(Delirium);
 
                         if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
                         {
                             // Salted Earth
-                            if (IsEnabled(CustomComboPreset.DRK_ST_CDs_SaltedEarth)
-                                && (ActionReady(SaltedEarth) || ActionReady(SaltAndDarkness)))
+                            if (IsEnabled(CustomComboPreset.DRK_ST_CDs_SaltedEarth))
                             {
+                                // Cast Salted Earth
                                 if (!HasEffect(Buffs.SaltedEarth)
-                                    && ActionReady(SaltedEarth) // Cast Salted Earth
-                                    || (HasEffect(Buffs.SaltedEarth)
-                                     && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
-                                     && ActionReady(SaltAndDarkness))) //Cast Salt and Darkness
-                                    return OriginalHook(SaltedEarth);
+                                    && ActionReady(SaltedEarth))
+                                    return SaltedEarth;
+                                //Cast Salt and Darkness
+                                if (HasEffect(Buffs.SaltedEarth)
+                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
+                                 && ActionReady(SaltAndDarkness))
+                                    return OriginalHook(SaltAndDarkness);
                             }
 
                             // Shadowbringer
@@ -331,22 +334,24 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Delirium
                     if (IsEnabled(CustomComboPreset.DRK_AoE_Delirium)
-                        && IsOffCooldown(Delirium)
-                        && LevelChecked(Delirium))
-                        return Delirium;
+                        && IsOffCooldown(BloodWeapon)
+                        && LevelChecked(BloodWeapon))
+                        return OriginalHook(Delirium);
 
                     if (gauge.DarksideTimeRemaining > 1)
                     {
                         // Salted Earth
-                        if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_SaltedEarth)
-                            && (ActionReady(SaltedEarth) || ActionReady(SaltAndDarkness)))
+                        if (IsEnabled(CustomComboPreset.DRK_AoE_CDs_SaltedEarth))
                         {
+                            // Cast Salted Earth
                             if (!HasEffect(Buffs.SaltedEarth)
-                                && ActionReady(SaltedEarth) // Cast Salted Earth
-                                || (HasEffect(Buffs.SaltedEarth)
-                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
-                                 && ActionReady(SaltAndDarkness))) //Cast Salt and Darkness
-                                return OriginalHook(SaltedEarth);
+                                && ActionReady(SaltedEarth))
+                                return SaltedEarth;
+                            //Cast Salt and Darkness
+                            if (HasEffect(Buffs.SaltedEarth)
+                                && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
+                                && ActionReady(SaltAndDarkness))
+                                return OriginalHook(SaltAndDarkness);
                         }
 
                         // Shadowbringer
