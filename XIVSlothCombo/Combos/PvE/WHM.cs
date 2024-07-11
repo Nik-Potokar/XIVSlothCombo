@@ -331,7 +331,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return PlenaryIndulgence;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_DivineCaress) && divineCaressReady)
-                        return DivineCaress;
+                        return OriginalHook(DivineCaress);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Lucid) && canWeave && lucidReady)
                         return All.LucidDreaming;
