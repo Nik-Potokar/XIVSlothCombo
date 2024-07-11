@@ -186,7 +186,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(AST.Gravity, AST.Gravity2)]
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("AoE DPS Feature", "Every option below (Lucid/AutoDraws/Astrodyne/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
+        [CustomComboInfo("AoE DPS Option", "Every option below (Lucid/AutoDraws/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
         AST_AoE_DPS = 1013,
 
         [ParentCombo(AST_ST_DPS)]
@@ -202,33 +202,25 @@ namespace XIVSlothCombo.Combos
         AST_DPS_Divination = 1016,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Card Draw Weave Option", "Draws your card", AST.JobID, 5, "", "")]
+        [CustomComboInfo("Card Draw Weave Option", "Draws your cards", AST.JobID, 5, "", "")]
         AST_DPS_AutoDraw = 1011,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Card Play Weave Option", "Weaves your card (best used with Quick Target Cards)", AST.JobID, 6)]
+        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Arrow card (best used with Quick Target Cards)", AST.JobID, 6)]
         AST_DPS_AutoPlay = 1037,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Redraw Option", "Weaves Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID, 7)]
-        AST_DPS_AutoPlay_Redraw = 1038,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Astrodyne Weave Option", "Adds Astrodyne when you have 3 seals", AST.JobID, 8, "", "")]
-        AST_DPS_Astrodyne = 1009,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Minor Arcana Weave Option", "Adds Minor Arcana", AST.JobID, 9, "", "")]
-        AST_DPS_AutoCrownDraw = 1012,
 
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
         AST_DPS_LazyLord = 1014,
+
+        [ParentCombo(AST_ST_DPS)]
+        [CustomComboInfo("Oracle Option", "Adds Oracle after Divination", AST.JobID)]
+        AST_DPS_Oracle = 1015,
         #endregion
 
         #region Healing
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Simple Heals (Single Target)", "", AST.JobID, 2)]
+        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Benefic II with a one button healing replacement.", AST.JobID, 2)]
         AST_ST_SimpleHeals = 1023,
 
         [ParentCombo(AST_ST_SimpleHeals)]
@@ -248,11 +240,19 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals_Esuna = 1039,
 
         [ParentCombo(AST_ST_SimpleHeals)]
-        [CustomComboInfo("Exaltation Feature", "Adds Exaltation.", AST.JobID)]
+        [CustomComboInfo("Exaltation Option", "Adds Exaltation.", AST.JobID)]
         AST_ST_SimpleHeals_Exaltation = 1028,
 
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Spire Option", "Adds The Spire when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Spire = 1030,
+
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Ewer Option", "Adds The Ewer when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Ewer = 1032,
+
         [ReplaceSkill(AST.AspectedHelios)]
-        [CustomComboInfo("Aspected Helios Feature", "Replaces Aspected Helios whenever you are under Aspected Helios regen with Helios", AST.JobID, 3, "", "")]
+        [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 3, "", "")]
         AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
@@ -270,6 +270,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(AST.Benefic2)]
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "", "")]
         AST_Benefic = 1002,
+
         #endregion
 
         #region Utility
@@ -291,25 +292,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Cards
-        [ReplaceSkill(AST.Play)]
-        [CustomComboInfo("Draw on Play", "Play turns into Draw when no card is drawn, as well as the usual Play behavior.", AST.JobID, 6, "", "")]
-        AST_Cards_DrawOnPlay = 1000,
-
-        [ParentCombo(AST_Cards_DrawOnPlay)]
-        [CustomComboInfo("Redraw Feature", "Sets Play to Redraw if you pull a card with a seal you already have and you can use Redraw.", AST.JobID)]
-        AST_Cards_Redraw = 1032,
-
-        [ReplaceSkill(AST.Draw)]
-        [CustomComboInfo("Redraw on Draw", "Sets Draw to Redraw if you have the Clarifying Draw buff.", AST.JobID)]
-        AST_Cards_RedrawStandalone = 1040,
-
-        [ReplaceSkill(AST.Play)]
-        //Works With AST_Cards_DrawOnPlay as a feature, or by itself if AST_Cards_DrawOnPlay is disabled.
-        //Do not do ConflictingCombos with AST_Cards_DrawOnPlay
-        [CustomComboInfo("Astrodyne on Play", "Play becomes Astrodyne when you have 3 seals.", AST.JobID, 18, "", "")]
-        AST_Cards_AstrodyneOnPlay = 1015,
-
-        [CustomComboInfo("Quick Target Cards", "Grabs a suitable target from the party list when you draw a card and targets them for you.", AST.JobID)]
+        [CustomComboInfo("Quick Target Damage Cards", "When you play the Balance or Spear, this will automatically apply the buff to a party member. It will look at DPS that suit the card first, if none found or they have buffs already, will look at the other DPS instead.", AST.JobID)]
         AST_Cards_QuickTargetCards = 1029,
 
         [ParentCombo(AST_Cards_QuickTargetCards)]
@@ -1022,141 +1005,194 @@ namespace XIVSlothCombo.Combos
 
         #region DARK KNIGHT
 
-        [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Buffs on Main Combo", "Collection of buffs to add to the main combo", DRK.JobID)]
-        DRK_MainComboBuffs_Group = 5098,
-
-        [ConflictingCombos(DRK_oGCD)]
-        [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID)]
-        DRK_MainComboCDs_Group = 5099,
+        #region Souleater (Single Target) Combo
 
         [ReplaceSkill(DRK.Souleater)]
         [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Dark Knight)", DRK.JobID)]
-        DRK_SouleaterCombo = 5000,
+        DRK_ST_Combo = 5001,
+
+        #region Buff Options
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Delirium on Cooldown", "Adds Delirium to main combo on cooldown and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID)]
+        DRK_ST_Delirium = 5002,
+
+        [ParentCombo(DRK_ST_Delirium)]
+        [CustomComboInfo("Torcleaver Feature", "Adds the Torcleaver chain when Delirium is activated.", DRK.JobID)]
+        DRK_ST_Delirium_Chain = 5003,
+
+        #endregion
+        // Last value = 5003
+
+        #region Cooldowns
+
+        [ParentCombo(DRK_ST_Combo)]
+        [ConflictingCombos(DRK_oGCD)]
+        [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID)]
+        DRK_ST_CDs = 5004,
+
+        #region Living Shadow Options
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on cooldown.", DRK.JobID)]
+        DRK_ST_CDs_LivingShadow = 5005,
+
+        [ParentCombo(DRK_ST_CDs_LivingShadow)]
+        [CustomComboInfo("Disesteem Option", "Adds Disesteem to the main combo when available.", DRK.JobID)]
+        DRK_ST_CDs_Disesteem = 5006,
+
+        #endregion
+        // Last value = 5006
+
+        #region Shadowbringer Options
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on cooldown.", DRK.JobID)]
+        DRK_ST_CDs_Shadowbringer = 5007,
+
+        [ParentCombo(DRK_ST_CDs_Shadowbringer)]
+        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID)]
+        DRK_ST_CDs_ShadowbringerBurst = 5008,
+
+        #endregion
+        // Last value = 5008
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on main combo while Darkside is up.", DRK.JobID)]
+        DRK_ST_CDs_CarveAndSpit = 5009,
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on main combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID)]
+        DRK_ST_CDs_SaltedEarth = 5010,
+
+        #endregion
+        // Last value = 5010
+
+        #region Mana Overcap Options
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana, Darkside is about to expire (10sec or less), or if you have Dark Arts.", DRK.JobID)]
+        DRK_ST_ManaOvercap = 5011,
+
+        [ParentCombo(DRK_ST_ManaOvercap)]
+        [CustomComboInfo("Edge of Shadow Burst Option", "Pools Edge of Shadow for even minute burst windows, and otherwise uses them until chosen MP limit is reached.", DRK.JobID)]
+        DRK_ST_ManaSpenderPooling = 5012,
+
+        #endregion
+        // Last value = 5012
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
+        DRK_ST_Bloodspiller = 5013,
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher.", DRK.JobID)]
+        DRK_ST_BloodOvercap = 5014,
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID)]
+        DRK_ST_RangedUptime = 5015,
+
+        #endregion
+        // Last value = 5015
+
+        #region Stalwart Soul (Multi Target) Combo
 
         [ReplaceSkill(DRK.StalwartSoul)]
         [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID)]
-        DRK_StalwartSoulCombo = 5001,
+        DRK_AoE_Combo = 5016,
 
-        [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
-        DRK_Bloodspiller = 5002,
+        #region Buff Options
 
-        [ReplaceSkill(DRK.StalwartSoul)]
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Dark Knight Gauge Overcap Feature", "Replace AoE combo with gauge spender if you are about to overcap.", DRK.JobID)]
-        DRK_Overcap = 5003,
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Delirium Option", "Adds Delirium to AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
+        DRK_AoE_Delirium = 5017,
 
-        [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on cooldown and you have gauge for it.", DRK.JobID)]
-        DRK_LivingShadow = 5004,
+        [ParentCombo(DRK_AoE_Delirium)]
+        [CustomComboInfo("Impalement Feature", "Adds all Impalement uses when Delirium is activated.", DRK.JobID)]
+        DRK_AoE_Delirium_Chain = 5018,
 
-        [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana or Darkside is about to expire (10sec or less)", DRK.JobID)]
-        DRK_ManaOvercap = 5005,
+        #endregion
+        // Last value = 5018
+
+        #region Cooldowns
+
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Cooldowns on AoE Combo", "Collection of cooldowns to add to the AoE combo", DRK.JobID)]
+        DRK_AoE_CDs = 5019,
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE combo.", DRK.JobID)]
+        DRK_AoE_CDs_Shadowbringer = 5020,
+
+        #region Living Shadow Options
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to the AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
+        DRK_AoE_CDs_LivingShadow = 5021,
+
+        [ParentCombo(DRK_AoE_CDs_LivingShadow)]
+        [CustomComboInfo("Disesteem Option", "Adds Disesteem to the AoE combo when available.", DRK.JobID)]
+        DRK_AoE_CDs_Disesteem = 5022,
+
+        #endregion
+        // Last value = 5022
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE combo when you fall below 60 percent hp.", DRK.JobID)]
+        DRK_AoE_CDs_AbyssalDrain = 5023,
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AoE on cooldown and when Darkside is up.", DRK.JobID)]
+        DRK_AoE_CDs_SaltedEarth = 5024,
+
+        #endregion
+        // Last value = 5024
+
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana, Darkside is about to expire (10sec or less), or if you have Dark Arts.", DRK.JobID)]
+        DRK_AoE_ManaOvercap = 5025,
+
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Quietus onto AOE combo when at 80 blood gauge or higher.", DRK.JobID)]
+        DRK_AoE_BloodOvercap = 5026,
+
+        #endregion
+        // Last value = 5026
+
+        #region oGCD Feature
 
         [ReplaceSkill(DRK.CarveAndSpit, DRK.AbyssalDrain)]
-        [ConflictingCombos(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("oGCD Feature", "Adds Living Shadow > Salted Earth > Carve And Spit > Salt And Darkness to Carve And Spit and Abysal Drain", DRK.JobID)]
-        DRK_oGCD = 5006,
+        [ConflictingCombos(DRK_ST_CDs)]
+        [CustomComboInfo("oGCD Feature", "Adds Living Shadow > Salted Earth > Salt And Darkness to Carve And Spit and Abyssal Drain", DRK.JobID)]
+        DRK_oGCD = 5027,
 
         [ParentCombo(DRK_oGCD)]
         [CustomComboInfo("Shadowbringer oGCD Feature", "Adds Shadowbringer to oGCD Feature ", DRK.JobID)]
-        DRK_Shadowbringer_oGCD = 5007,
+        DRK_Shadowbringer_oGCD = 5028,
 
-        [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Plunge Feature", "Adds Plunge onto main combo whenever its available and Darkside is up.", DRK.JobID)]
-        DRK_Plunge = 5008,
+        #endregion
+        // Last value = 5028
 
-        [ParentCombo(DRK_Bloodspiller)]
-        [CustomComboInfo("Delayed Bloodspiller Feature", "Delays Bloodspiller by 2 GCDs when Delirium is used during even windows, uses it regularly during odd windows. Useful for feeding into raid buffs at level 90.", DRK.JobID)]
-        DRK_DelayedBloodspiller = 5010,
-
-        [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID)]
-        DRK_RangedUptime = 5011,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE combo when you fall below 60 percent hp.", DRK.JobID)]
-        DRK_AoE_AbyssalDrain = 5013,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE combo.", DRK.JobID)]
-        DRK_AoE_Shadowbringer = 5014,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana or Darkside is about to expire (10sec or less)", DRK.JobID)]
-        DRK_AoE_ManaOvercap = 5015,
-
-        [ParentCombo(DRK_SouleaterCombo)]
-        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher", DRK.JobID)]
-        DRK_BloodGaugeOvercap = 5016,
-
-        [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on cooldown.", DRK.JobID)]
-        DRK_Shadowbringer = 5019,
-
-        [ParentCombo(DRK_ManaOvercap)]
-        [CustomComboInfo("Edge of Shadow Burst Option", "Uses Edge of Shadow until chosen MP limit is reached during minute window bursts.", DRK.JobID)]
-        DRK_EoSPooling = 5020,
-
-        [ParentCombo(DRK_Shadowbringer)]
-        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID)]
-        DRK_ShadowbringerBurst = 5021,
-
-        [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on main combo while Darkside is up.", DRK.JobID)]
-        DRK_CarveAndSpit = 5022,
-
-        [ParentCombo(DRK_Plunge)]
-        [CustomComboInfo("Melee Plunge Option", "Uses Plunge when under Darkside and in the target ring (1 yalm).\nWill use as many stacks as selected in the above slider.", DRK.JobID)]
-        DRK_MeleePlunge = 5023,
-
-        [ParentCombo(DRK_MainComboCDs_Group)]
-        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on main combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID)]
-        DRK_SaltedEarth = 5024,
-
-        [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Delirium on Cooldown", "Adds Delirium to main combo on cooldown and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID)]
-        DRK_Delirium = 5025,
-
-        [ParentCombo(DRK_MainComboBuffs_Group)]
-        [CustomComboInfo("Blood Weapon on Cooldown", "Adds Blood Weapon to main combo on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_BloodWeapon = 5026,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Blood Weapon Option", "Adds Blood Weapon to AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_AoE_BloodWeapon = 5027,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Delirium Option", "Adds Deliriun to AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_AoE_Delirium = 5028,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AoE on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_AoE_SaltedEarth = 5029,
-
-        [ParentCombo(DRK_StalwartSoulCombo)]
-        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to AoE on cooldown and when Darkside is up.", DRK.JobID)]
-        DRK_AoE_LivingShadow = 5030,
+        #region Variant
 
         [Variant]
-        [VariantParent(DRK_SouleaterCombo, DRK_StalwartSoulCombo)]
+        [VariantParent(DRK_ST_Combo, DRK_AoE_Combo)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", DRK.JobID)]
-        DRK_Variant_SpiritDart = 5031,
+        DRK_Variant_SpiritDart = 5029,
 
         [Variant]
-        [VariantParent(DRK_SouleaterCombo, DRK_StalwartSoulCombo)]
+        [VariantParent(DRK_ST_Combo, DRK_AoE_Combo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DRK.JobID)]
-        DRK_Variant_Cure = 5032,
+        DRK_Variant_Cure = 5030,
 
         [Variant]
-        [VariantParent(DRK_SouleaterCombo, DRK_StalwartSoulCombo)]
+        [VariantParent(DRK_ST_Combo, DRK_AoE_Combo)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", DRK.JobID)]
-        DRK_Variant_Ultimatum = 5033,
+        DRK_Variant_Ultimatum = 5031,
 
-        // Last value = 5033
+        #endregion
+        // Last value = 5031
 
         #endregion
 
@@ -3708,7 +3744,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Inner Beast / Fell Cleave Option", "Adds Inner Beast / Fell Cleave to Advanced Mode. Will use when you have the set minimum gauge, or under the effect of Inner Release. Will also use Nascent Chaos.", WAR.JobID, 2, "", "")]
-        WAR_ST_StormsPath_FellCleave = 18011,
+        WAR_ST_StormsPath_FellCleave = 18012,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode.", WAR.JobID, 3, "", "")]
@@ -3716,27 +3752,35 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Onslaught Option", "Adds Onslaught to Advanced Mode if you are under Surging Tempest Buff.", WAR.JobID, 4, "", "")]
-        WAR_ST_StormsPath_Onslaught = 18012,
+        WAR_ST_StormsPath_Onslaught = 18013,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Upheaval Option", "Adds Upheaval to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
         WAR_ST_StormsPath_Upheaval = 18007,
 
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_StormsPath_PrimalWrath = 18008,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_StormsPath_PrimalRuination = 18009,
+
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Orogeny Option", "Adds Orogeny to Advanced Mode when you are buffed with Surging Tempest.", WAR.JobID, 6, "", "")]
-        WAR_AoE_Overpower_Orogeny = 18009,
+        WAR_AoE_Overpower_Orogeny = 18010,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode.", WAR.JobID, 7, "", "")]
-        WAR_ST_StormsPath_PrimalRend = 18008,
-
-        [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
-        War_ST_StormsEye = 18001,
+        WAR_ST_StormsPath_PrimalRend = 18011,
 
         [ReplaceSkill(WAR.Overpower)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 2, "", "")]
         WAR_AoE_Overpower = 18002,
+
+        [ReplaceSkill(WAR.StormsEye)]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
+        War_ST_StormsEye = 18001,
 
         [ReplaceSkill(WAR.NascentFlash)]
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76.", WAR.JobID, 5, "", "")]
@@ -3744,19 +3788,31 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode when gauge is below 50 and not under Inner Release.", WAR.JobID)]
-        WAR_AoE_Overpower_Infuriate = 18013,
+        WAR_AoE_Overpower_Infuriate = 18014,
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
-        WAR_AoE_Overpower_InnerRelease = 18014,
+        WAR_AoE_Overpower_InnerRelease = 18015,
+
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_AOE_Overpower_PrimalWrath = 18017,
+
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_AOE_Overpower_PrimalRend = 18018,
+
+        [ParentCombo(WAR_AoE_Overpower)]
+        [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_AOE_Overpower_PrimalRuination = 18019,
 
         [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 4, "", "")]
-        WAR_InfuriateFellCleave = 18018,
+        WAR_InfuriateFellCleave = 18031,
 
         [ReplaceSkill(WAR.InnerRelease)]
         [CustomComboInfo("Primal Rend Feature", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 3, "", "")]
-        WAR_PrimalRend_InnerRelease = 18019,
+        WAR_PrimalRend_InnerRelease = 18032,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID)]
@@ -3814,19 +3870,23 @@ namespace XIVSlothCombo.Combos
         WHM_ST_MainCombo_Assize = 19009,
 
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery to the single target combo when it is ready to be used.", WHM.JobID, 14, "", "")]
+        [CustomComboInfo("Glare IV Option", "Adds Glare IV to the single target combo when under Sacred Sight", WHM.JobID, 14, "", "")]
+        WHM_ST_MainCombo_GlareIV = 19015,
+
+        [ParentCombo(WHM_ST_MainCombo)]
+        [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery to the single target combo when it is ready to be used.", WHM.JobID, 15, "", "")]
         WHM_ST_MainCombo_Misery_oGCD = 19017,
 
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Lily Overcap Protection Option", "Adds Afflatus Rapture to the single target combo when at three Lilies.", WHM.JobID, 15, "", "")]
+        [CustomComboInfo("Lily Overcap Protection Option", "Adds Afflatus Rapture to the single target combo when at three Lilies.", WHM.JobID, 16, "", "")]
         WHM_ST_MainCombo_LilyOvercap = 19016,
 
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the single target combo.", WHM.JobID, 16, "", "")]
+        [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the single target combo.", WHM.JobID, 17, "", "")]
         WHM_ST_MainCombo_PresenceOfMind = 19008,
 
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when below set MP value.", WHM.JobID, 17, "", "")]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when below set MP value.", WHM.JobID, 18, "", "")]
         WHM_ST_MainCombo_Lucid = 19006,
 
         #endregion
@@ -3842,19 +3902,23 @@ namespace XIVSlothCombo.Combos
         WHM_AoE_DPS_Assize = 19192,
 
         [ParentCombo(WHM_AoE_DPS)]
-        [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery to the AoE combo when it is ready to be used.", WHM.JobID, 22, "", "")]
+        [CustomComboInfo("Glare IV Option", "Adds Glare IV to the AoE combo when under Sacred Sight", WHM.JobID, 22, "", "")]
+        WHM_AoE_DPS_GlareIV = 19196,
+
+        [ParentCombo(WHM_AoE_DPS)]
+        [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery to the AoE combo when it is ready to be used.", WHM.JobID, 23, "", "")]
         WHM_AoE_DPS_Misery = 19194,
 
         [ParentCombo(WHM_AoE_DPS)]
-        [CustomComboInfo("Lily Overcap Protection Option", "Adds Afflatus Rapture to the AoE combo when at three Lilies.", WHM.JobID, 23, "", "")]
+        [CustomComboInfo("Lily Overcap Protection Option", "Adds Afflatus Rapture to the AoE combo when at three Lilies.", WHM.JobID, 24, "", "")]
         WHM_AoE_DPS_LilyOvercap = 19193,
 
         [ParentCombo(WHM_AoE_DPS)]
-        [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo if you are moving or it can be weaved without GCD delay.", WHM.JobID, 24, "", "")]
+        [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo if you are moving or it can be weaved without GCD delay.", WHM.JobID, 25, "", "")]
         WHM_AoE_DPS_PresenceOfMind = 19195,
 
         [ParentCombo(WHM_AoE_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 25, "", "")]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 26, "", "")]
         WHM_AoE_DPS_Lucid = 19191,
 
         #endregion
@@ -3869,7 +3933,7 @@ namespace XIVSlothCombo.Combos
 
         #region AoE Heals Feature
 
-        [ReplaceSkill(WHM.Medica)]
+        [ReplaceSkill(WHM.Medica1)]
         [CustomComboInfo("Simple Heals (AoE)", "Replaces Medica with a one button AoE healing setup.", WHM.JobID, 4, "", "")]
         WHM_AoEHeals = 19007,
 
@@ -3898,12 +3962,20 @@ namespace XIVSlothCombo.Combos
         WHM_AoEHeals_Plenary = 19203,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 8)]
+        [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 9)]
         WHM_AoEHeals_Lucid = 19204,
 
         [ParentCombo(WHM_AoEHeals)]
         [CustomComboInfo("Medica II Option", "Uses Medica II when current target doesn't have Medica II buff.", WHM.JobID, 1)]
         WHM_AoEHeals_Medica2 = 19205,
+
+        [ParentCombo(WHM_AoEHeals_Medica2)]
+        [CustomComboInfo("Medica III Option", "Upgrades to Medica III when level allows.", WHM.JobID)]
+        WHM_AoEHeals_Medica3 = 19206,
+
+        [ParentCombo(WHM_AoEHeals)]
+        [CustomComboInfo("Divine Caress", "Uses Divine Caress when Divine Grace from Temperance is active.", WHM.JobID, 8)]
+        WHM_AoEHeals_DivineCaress = 19207,
 
         #endregion
 
@@ -3938,7 +4010,7 @@ namespace XIVSlothCombo.Combos
         WHM_STHeals_Benison = 19306,
 
         [ParentCombo(WHM_STHeals)]
-        [CustomComboInfo("Aqualveil Option", "Uses Aquaveil when available.", WHM.JobID)]
+        [CustomComboInfo("Aquaveil Option", "Uses Aquaveil when available.", WHM.JobID)]
         WHM_STHeals_Aquaveil = 19307,
 
         [ParentCombo(WHM_STHeals)]
