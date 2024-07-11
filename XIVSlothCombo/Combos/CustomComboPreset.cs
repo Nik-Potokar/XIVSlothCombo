@@ -216,7 +216,7 @@ namespace XIVSlothCombo.Combos
 
         #region Healing
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Benefic 2 with a one button healing replacement.", AST.JobID, 2)]
+        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Benefic II with a one button healing replacement.", AST.JobID, 2)]
         AST_ST_SimpleHeals = 1023,
 
         [ParentCombo(AST_ST_SimpleHeals)]
@@ -288,7 +288,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Cards
-        [CustomComboInfo("Quick Target Damage Cards", "When you play the Balance or Spear, this will automatically apply the buff to a party member. It will look at DPS that suit the card first, if none found or they have buffs already, will look at the other DPS instead..", AST.JobID)]
+        [CustomComboInfo("Quick Target Damage Cards", "When you play the Balance or Spear, this will automatically apply the buff to a party member. It will look at DPS that suit the card first, if none found or they have buffs already, will look at the other DPS instead.", AST.JobID)]
         AST_Cards_QuickTargetCards = 1029,
 
         [ParentCombo(AST_Cards_QuickTargetCards)]

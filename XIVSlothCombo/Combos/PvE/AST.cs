@@ -2,6 +2,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.DalamudServices;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
@@ -291,13 +292,13 @@ namespace XIVSlothCombo.Combos.PvE
                     var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
                     var canOppose = (Config.AST_AoE_SimpleHeals_Opposition && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Opposition;
 
+
                     //Level check to exit if we can't use
                     if (!LevelChecked(AspectedHelios))
                         return Helios;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
                         ActionReady(MinorArcana) &&
-                        InCombat() &&
                         Gauge.DrawnCrownCard is CardType.LADY
                         && canLady)
                         return OriginalHook(MinorArcana);
