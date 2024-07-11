@@ -751,7 +751,7 @@ namespace XIVSlothCombo.Combos.PvE
                             HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime) &&
                             HasEffect(Buffs.RadiantFinale) && radiantFinaleDuration < 4 &&
                             poisonRecast(40) && windRecast(40));
-                        bool dotOpener = (IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener) && !openerFinished) || !IsEnabled(CustomComboPreset.BRD_Simple_DoTOpener);
+                        
 
                         if (!LevelChecked(Stormbite))
                         {
@@ -778,9 +778,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
                             {
-                                if (LevelChecked(Windbite) && !windbite && dotOpener)
+                                if (LevelChecked(Windbite) && !windbite)
                                     return Windbite;
-                                if (LevelChecked(VenomousBite) && !venomous && dotOpener)
+                                if (LevelChecked(VenomousBite) && !venomous)
                                     return VenomousBite;
                             }
                         }
@@ -795,9 +795,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
                             {
-                                if (LevelChecked(Stormbite) && !stormbite && dotOpener)
+                                if (LevelChecked(Stormbite) && !stormbite)
                                     return Stormbite;
-                                if (LevelChecked(CausticBite) && !caustic && dotOpener)
+                                if (LevelChecked(CausticBite) && !caustic)
                                     return CausticBite;
                             }
                         }
