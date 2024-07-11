@@ -184,7 +184,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == SerpentsIre && CustomComboFunctions.IsOnCooldown(SerpentsIre)) ||
-                    (actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                    (actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2) ||
+                    ((actionID is FirstGeneration or SecondGeneration or ThirdGeneration or FourthGeneration) && !CustomComboFunctions.HasEffect(Buffs.Reawakened)) ||
+                    ((actionID is FirstLegacy or SecondLegacy or ThirdLegacy or FourthLegacy) && !CustomComboFunctions.HasEffect(Buffs.Reawakened))) &&
+                    ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
@@ -212,7 +215,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 if (simpleMode)
                 {
-                    if (DoOpener(StandardOpenerFlankFirst, ref actionID))
+                    if (DoOpener(StandardOpenerRearFirst, ref actionID))
                         return true;
                 }
                 else
