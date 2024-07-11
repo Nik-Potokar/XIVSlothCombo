@@ -2255,7 +2255,7 @@ namespace XIVSlothCombo.Combos
 
         #region PALADIN
 
-        //// Last value = 11032
+        //// Last value = 11034
 
         [ConflictingCombos(PLD_ST_AdvancedMode)]
         [ReplaceSkill(PLD.FastBlade)]
@@ -2320,6 +2320,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Blades of Faith/Truth/Valor Option", "Adds Blades of Faith/Truth/Valor to Advanced Mode", PLD.JobID)]
         PLD_ST_AdvancedMode_Blades = 11014,
 
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode after Valor", PLD.JobID)]
+        PLD_ST_AdvancedMode_BladeOfHonor = 11033,
+
         [ConflictingCombos(PLD_AoE_SimpleMode)]
         [ReplaceSkill(PLD.TotalEclipse)]
         [CustomComboInfo("Advanced Mode - AoE", $"Replaces Total Eclipse with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", PLD.JobID)]
@@ -2354,10 +2358,15 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Blades = 11022,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode after Valor", PLD.JobID)]
+        PLD_AoE_AdvancedMode_BladeOfHonor = 11034,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Sheltron / Holy Sheltron Option", "Adds Sheltron / Holy Sheltron to Advanced Mode", PLD.JobID)]
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
 
+        [ConflictingCombos(PLD_FoFRequiescat)]
         [ReplaceSkill(PLD.Requiescat)]
         [CustomComboInfo("Requiescat Spender Option", "Replaces Requiescat with the selected option while having stacks of \"Requiescat\"", PLD.JobID)]
         PLD_Requiescat_Options = 11024,
@@ -2365,6 +2374,11 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion)]
         [CustomComboInfo("Spirits Within / Expiacion / Circle of Scorn Feature", "Replaces Spirits Within / Expiacion with Circle of Scorn when off cooldown.", PLD.JobID)]
         PLD_SpiritsWithin = 11025,
+
+        [ConflictingCombos(PLD_Requiescat_Options)]
+        [ReplaceSkill(PLD.FightOrFlight)]
+        [CustomComboInfo("FoF Into Requiescat Option", "Replaces Fight or Flight with Requiescat/Imperator/Blade of Honor during FoF. Keeps your minute-burst oGCDs on one button.", PLD.JobID)]
+        PLD_FoFRequiescat = 11026,
 
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
@@ -2381,7 +2395,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
 
-        //// Last value = 11032
+        //// Last value = 11034
 
         #endregion
 
