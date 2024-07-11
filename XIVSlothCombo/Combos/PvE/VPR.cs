@@ -122,6 +122,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool DreadwinderReady = gauge.DreadCombo == DreadCombo.Dreadwinder;
                 bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
                 bool SwiftskinsCoilReady = gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
+                float GCD = GetCooldown(DreadFangs).CooldownTotal;
 
                 if (actionID is SteelFangs)
                 {
@@ -273,7 +274,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Reawakend Usage
                             if ((HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) &&
-                                GetCooldownRemainingTime(SerpentsIre) >= 30 &&
+                                GetCooldownRemainingTime(SerpentsIre) > GCD * 10 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
                                 TargetHasEffect(Debuffs.NoxiousGnash) &&
@@ -315,6 +316,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool DreadwinderReady = gauge.DreadCombo == DreadCombo.Dreadwinder;
                 bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
                 bool SwiftskinsCoilReady = gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
+                float GCD = GetCooldown(DreadFangs).CooldownTotal;
 
                 if (actionID is SteelFangs)
                 {
@@ -527,7 +529,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Reawakend Usage
                             if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
                                 (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) &&
-                                GetCooldownRemainingTime(SerpentsIre) >= 30 &&
+                                GetCooldownRemainingTime(SerpentsIre) > GCD * 10 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
                                 TargetHasEffect(Debuffs.NoxiousGnash) &&
@@ -539,7 +541,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Dreadwinder Usage
                             if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                                 IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
-                                ((LevelChecked(Dreadwinder) && GetCooldownRemainingTime(Dreadwinder) <= GetCooldownRemainingTime(OriginalHook(DreadFangs)) + 0.25) || ActionReady(Dreadwinder)))
+                                LevelChecked(Dreadwinder) && ((GetCooldownRemainingTime(Dreadwinder) <= GetCooldownRemainingTime(OriginalHook(DreadFangs)) + 0.25) || ActionReady(Dreadwinder)))
                                 return Dreadwinder;
                         }
 
@@ -569,6 +571,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool PitOfDreadReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
+                float GCD = GetCooldown(DreadMaw).CooldownTotal;
 
                 if (actionID is SteelMaw)
                 {
@@ -684,7 +687,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Reawakend Usage
                             if ((HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) &&
-                                GetCooldownRemainingTime(SerpentsIre) >= 30 &&
+                                GetCooldownRemainingTime(SerpentsIre) > GCD * 10 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
                                 TargetHasEffect(Debuffs.NoxiousGnash) &&
@@ -721,6 +724,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool PitOfDreadReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
+                float GCD = GetCooldown(DreadMaw).CooldownTotal;
 
                 if (actionID is SteelMaw)
                 {
@@ -862,7 +866,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Reawakend Usage
                             if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) &&
                                 (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) &&
-                                GetCooldownRemainingTime(SerpentsIre) >= 30 &&
+                                GetCooldownRemainingTime(SerpentsIre) > GCD * 10 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
                                 TargetHasEffect(Debuffs.NoxiousGnash) &&

@@ -102,6 +102,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool drillCD = !ActionReady(Drill) || (ActionReady(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
                 bool sawCD = !ActionReady(Chainsaw) || (ActionReady(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
+                float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
 
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
@@ -142,7 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Hypercharge;
 
                         if (drillCD && anchorCD && sawCD &&
-                            ((GetCooldownRemainingTime(Wildfire) > 15 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
+                            ((GetCooldownRemainingTime(Wildfire) > GCD * 5 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
 
@@ -279,6 +280,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool drillCD = !ActionReady(Drill) || (ActionReady(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !ActionReady(OriginalHook(AirAnchor)) || (ActionReady(OriginalHook(AirAnchor)) && GetCooldownRemainingTime(OriginalHook(AirAnchor)) > heatblastRC * 6);
                 bool sawCD = !ActionReady(Chainsaw) || (ActionReady(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
+                float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
 
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
@@ -330,7 +332,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Hypercharge;
 
                         if (drillCD && anchorCD && sawCD &&
-                            ((GetCooldownRemainingTime(Wildfire) > 15 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
+                            ((GetCooldownRemainingTime(Wildfire) > GCD * 5 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
 
@@ -485,7 +487,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
+            { 
                 if (actionID is SpreadShot)
                 {
                     MCHGauge? gauge = GetJobGauge<MCHGauge>();
@@ -673,7 +675,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.SecondWind;
                     }
                 }
-
                 return actionID;
             }
         }
