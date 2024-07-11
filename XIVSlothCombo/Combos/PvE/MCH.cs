@@ -117,7 +117,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
 
                     // Opener for MCH
-                    if (MCHOpener.DoFullOpener(ref actionID, true))
+                    if (MCHOpener.DoFullOpener(ref actionID))
                         return actionID;
 
                     // Interrupt
@@ -297,7 +297,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Opener for MCH
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener))
                     {
-                        if (MCHOpener.DoFullOpener(ref actionID, false))
+                        if (MCHOpener.DoFullOpener(ref actionID))
                             return actionID;
                     }
 

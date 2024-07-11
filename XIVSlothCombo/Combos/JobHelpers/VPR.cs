@@ -16,6 +16,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (!CustomComboFunctions.ActionReady(SerpentsIre))
                 return false;
+
             return true;
         }
 
@@ -62,7 +63,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool DoPrePullSteps(ref uint actionID)
         {
-            if (!LevelChecked) return false;
+            if (!LevelChecked) 
+                return false;
 
             if (CanOpener && PrePullStep == 0)
             {
@@ -90,7 +92,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool DoOpener(ref uint actionID)
         {
-            if (!LevelChecked) return false;
+            if (!LevelChecked)
+                return false;
 
             if (currentState == OpenerState.InOpener)
             {
@@ -227,7 +230,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public bool DoFullOpener(ref uint actionID)
         {
-            if (!LevelChecked) return false;
+            if (!LevelChecked) 
+                return false;
 
             if (CurrentState == OpenerState.PrePull)
                 if (DoPrePullSteps(ref actionID))
