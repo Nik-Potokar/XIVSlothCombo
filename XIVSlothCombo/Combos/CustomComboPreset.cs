@@ -2325,8 +2325,8 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode_Blades = 11014,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Blades of Honor Option", "Adds Blades of Honor to Advanced Mode after Valor", PLD.JobID)]
-        PLD_ST_AdvancedMode_BladesOfHonor = 11033,
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode after Valor", PLD.JobID)]
+        PLD_ST_AdvancedMode_BladeOfHonor = 11033,
 
         [ConflictingCombos(PLD_AoE_SimpleMode)]
         [ReplaceSkill(PLD.TotalEclipse)]
@@ -2362,8 +2362,8 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Blades = 11022,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Blades of Honor Option", "Adds Blades of Honor to Advanced Mode after Valor", PLD.JobID)]
-        PLD_AoE_AdvancedMode_BladesOfHonor = 11034,
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode after Valor", PLD.JobID)]
+        PLD_AoE_AdvancedMode_BladeOfHonor = 11034,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Sheltron / Holy Sheltron Option", "Adds Sheltron / Holy Sheltron to Advanced Mode", PLD.JobID)]

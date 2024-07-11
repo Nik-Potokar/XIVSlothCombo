@@ -433,9 +433,10 @@ namespace XIVSlothCombo.Combos.PvE
                                     return HolySpirit;
                             }
                             
-                            // Blades of Honor after Confi Combo (Weave).
-                            if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_BladesOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
-                                return OriginalHook(Requiescat);
+                            // Blade of Honor after Confi Combo (Weave).
+                            if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_BladeOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
+                                // To accomodate native action change settings, do not use "OriginalHook" here
+                                return BladeOfHonor;
 
                             // HS under DM
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
@@ -472,9 +473,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
                             return OriginalHook(Requiescat);
 
-                        // Blades of Honor after Confi Combo (Weave).
-                        if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_BladesOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)) && IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
-                            return OriginalHook(Requiescat);
+                        // Blade of Honor after Confi Combo (Weave).
+                        if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_BladeOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)) && IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
+                            // To accomodate native action change settings, do not use "OriginalHook" here
+                            return BladeOfHonor;
                         
                         
                         // Confiteor & Blades
@@ -493,6 +495,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             HasEffect(Buffs.GoringBladeReady) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
+                            // To accomodate native action change settings, do not use "OriginalHook" here
                             return GoringBlade;
 
                         //Req HS
@@ -614,9 +617,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolyCircle;
                         }
 
-                        // Blades of Honor after Confi Combo (Weave).
+                        // Blade of Honor after Confi Combo (Weave).
                         if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_BladesOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
-                            return OriginalHook(Requiescat);
+                            // To accomodate native action change settings, do not use "OriginalHook" here
+                            return BladeOfHonor;
 
                         // HC under DM/Req
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) &&
@@ -659,9 +663,10 @@ namespace XIVSlothCombo.Combos.PvE
                         IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF))
                         return OriginalHook(Confiteor);
 
-                    // Blades of Honor after Confi Combo (Weave).
-                    if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_BladesOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
-                        return OriginalHook(Requiescat);
+                    // Blade of Honor after Confi Combo (Weave).
+                    if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_BladeOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
+                        // To accomodate native action change settings, do not use "OriginalHook" here
+                        return BladeOfHonor;
 
                     // HS under DM (outside of burst)
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) &&
