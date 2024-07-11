@@ -1378,7 +1378,7 @@ namespace XIVSlothCombo.Combos
 
         #region ST
         [ReplaceSkill(GNB.KeenEdge)]
-        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. ****ONLY 2.5 IS SUPPORTED****", GNB.JobID)]
+        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. ****Does NOT work well with 2.46-2.49 SkS****", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
 
         #region Reign Combo
