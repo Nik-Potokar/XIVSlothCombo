@@ -481,6 +481,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsSpellActive(MatraMagic) && HasEffect(All.Buffs.Swiftcast))
                         return MatraMagic;
 
+                    if (IsSpellActive(BeingMortal) && IsOffCooldown(BeingMortal) && IsEnabled(CustomComboPreset.BLU_NewMoonFluteOpener_DoTOpener))
+                        return BeingMortal;
+
                     if (IsSpellActive(PhantomFlurry) && IsOffCooldown(PhantomFlurry))
                         return PhantomFlurry;
 
