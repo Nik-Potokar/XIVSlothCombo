@@ -178,10 +178,9 @@ namespace XIVSlothCombo.Combos.PvE
                                             return FightOrFlight;
                                     }
 
-                            // HS under DM
-                            if (HasEffect(Buffs.DivineMight) &&
-                                GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                                return HolySpirit;
+                                    // Levels 26-67
+                                    else if (lastComboActionID is RiotBlade)
+                                        return FightOrFlight;
                         }
 
                                 // Levels 68+
@@ -411,8 +410,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // New Goring Blade
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && 
-                                (!BladeOfHonor.LevelChecked() || (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
+                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() ||
+                                (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
+                                // To accomodate native action change settings, do not use "OriginalHook" here
                                 return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
