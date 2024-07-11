@@ -127,7 +127,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SteelFangs)
                 {
                     // Opener for VPR
-                    if (VPROpener.DoFullOpener(ref actionID, true))
+                    if (VPROpener.DoFullOpener(ref actionID))
                         return actionID;
 
                     // Uncoiled combo
@@ -177,8 +177,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Legacy weaves
                             if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
-                                WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
+                                (WasLastWeaponskill(OriginalHook(SteelFangs)) || WasLastWeaponskill(OriginalHook(DreadFangs)) ||
+                                WasLastWeaponskill(OriginalHook(HuntersCoil)) || WasLastWeaponskill(OriginalHook(SwiftskinsCoil))))
                                 return OriginalHook(SerpentsTail);
 
                             if (gauge.AnguineTribute is 5)
@@ -268,8 +268,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is HindstingStrike or HindsbaneFang or FlankstingStrike or FlanksbaneFang)
                         {
                             if (CanWeave(actionID) && LevelChecked(SerpentsTail) &&
-                                (WasLastAction(HindstingStrike) || WasLastAction(HindsbaneFang) ||
-                                WasLastAction(FlankstingStrike) || WasLastAction(FlanksbaneFang)))
+                                (WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang) ||
+                                WasLastWeaponskill(FlankstingStrike) || WasLastWeaponskill(FlanksbaneFang)))
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
@@ -323,7 +323,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Opener for VPR
                     if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
                     {
-                        if (VPROpener.DoFullOpener(ref actionID, false))
+                        if (VPROpener.DoFullOpener(ref actionID))
                             return actionID;
                     }
 
@@ -382,8 +382,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Legacy weaves
                             if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
-                                WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
+                                (WasLastWeaponskill(OriginalHook(SteelFangs)) || WasLastWeaponskill(OriginalHook(DreadFangs)) ||
+                                WasLastWeaponskill(OriginalHook(HuntersCoil)) || WasLastWeaponskill(OriginalHook(SwiftskinsCoil))))
                                 return OriginalHook(SerpentsTail);
 
                             if (gauge.AnguineTribute is 5)
@@ -522,8 +522,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) &&
                                 CanWeave(actionID) && LevelChecked(SerpentsTail) &&
-                                (WasLastAction(HindstingStrike) || WasLastAction(HindsbaneFang) ||
-                                WasLastAction(FlankstingStrike) || WasLastAction(FlanksbaneFang)))
+                                (WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang) ||
+                                WasLastWeaponskill(FlankstingStrike) || WasLastWeaponskill(FlanksbaneFang)))
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
@@ -617,8 +617,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Legacy weaves
                             if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                (WasLastAction(OriginalHook(SteelMaw)) || WasLastAction(OriginalHook(DreadMaw)) ||
-                                WasLastAction(OriginalHook(HuntersDen)) || WasLastAction(OriginalHook(SwiftskinsDen))))
+                                (WasLastWeaponskill(OriginalHook(SteelMaw)) || WasLastWeaponskill(OriginalHook(DreadMaw)) ||
+                                WasLastWeaponskill(OriginalHook(HuntersDen)) || WasLastWeaponskill(OriginalHook(SwiftskinsDen))))
                                 return OriginalHook(SerpentsTail);
 
                             if (gauge.AnguineTribute is 5)
@@ -682,7 +682,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is BloodiedMaw or JaggedMaw)
                         {
                             if (CanWeave(actionID) && LevelChecked(SerpentsTail) &&
-                                (WasLastAction(BloodiedMaw) || WasLastAction(JaggedMaw)))
+                                (WasLastWeaponskill(BloodiedMaw) || WasLastWeaponskill(JaggedMaw)))
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
@@ -777,8 +777,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Legacy weaves
                             if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                (WasLastAction(OriginalHook(SteelMaw)) || WasLastAction(OriginalHook(DreadMaw)) ||
-                                WasLastAction(OriginalHook(HuntersDen)) || WasLastAction(OriginalHook(SwiftskinsDen))))
+                                (WasLastWeaponskill(OriginalHook(SteelMaw)) || WasLastWeaponskill(OriginalHook(DreadMaw)) ||
+                                WasLastWeaponskill(OriginalHook(HuntersDen)) || WasLastWeaponskill(OriginalHook(SwiftskinsDen))))
                                 return OriginalHook(SerpentsTail);
 
                             if (gauge.AnguineTribute is 5)
@@ -860,7 +860,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.VPR_AoE_SerpentsTail) &&
                                 CanWeave(actionID) && LevelChecked(SerpentsTail) &&
-                                (WasLastAction(BloodiedMaw) || WasLastAction(JaggedMaw)))
+                                (WasLastWeaponskill(BloodiedMaw) || WasLastWeaponskill(JaggedMaw)))
                                 return OriginalHook(SerpentsTail);
 
                             //Reawakend Usage
@@ -1025,8 +1025,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.VPR_ReawakenLegacyWeaves))
                         {
                             if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
-                                WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
+                                (WasLastWeaponskill(OriginalHook(SteelFangs)) || WasLastWeaponskill(OriginalHook(DreadFangs)) ||
+                                WasLastWeaponskill(OriginalHook(HuntersCoil)) || WasLastWeaponskill(OriginalHook(SwiftskinsCoil))))
                                 return OriginalHook(SerpentsTail);
                         }
 
@@ -1060,8 +1060,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SerpentsTail)
                 {
                     if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                        (WasLastAction(OriginalHook(SteelMaw)) || WasLastAction(OriginalHook(DreadMaw)) ||
-                        WasLastAction(OriginalHook(HuntersDen)) || WasLastAction(OriginalHook(SwiftskinsDen))))
+                        (WasLastWeaponskill(OriginalHook(SteelMaw)) || WasLastWeaponskill(OriginalHook(DreadMaw)) ||
+                        WasLastWeaponskill(OriginalHook(HuntersDen)) || WasLastWeaponskill(OriginalHook(SwiftskinsDen))))
                         return OriginalHook(SerpentsTail);
 
                     if (HasEffect(Buffs.PoisedForTwinfang))

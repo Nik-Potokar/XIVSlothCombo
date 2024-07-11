@@ -3563,7 +3563,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_AdvancedMode = 30001,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", VPR.JobID)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
         VPR_ST_Opener = 30002,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
