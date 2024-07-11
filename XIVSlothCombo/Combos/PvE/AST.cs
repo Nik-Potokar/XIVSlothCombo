@@ -26,6 +26,7 @@ namespace XIVSlothCombo.Combos.PvE
             FallMalefic = 25871,
             Gravity = 3615,
             Gravity2 = 25872,
+            Oracle = 37029,
 
             //Cards
             AstralDraw = 37017,
@@ -101,7 +102,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SpireBuff = 3892,
                 Lightspeed = 841,
                 SelfSynastry = 845,
-                TargetSynastry = 846;
+                TargetSynastry = 846,
+                Divining = 3893;
         }
 
         internal static class Debuffs
@@ -240,6 +242,11 @@ namespace XIVSlothCombo.Combos.PvE
                         CanDelayedWeave(actionID) &&
                         ActionWatching.NumberOfGcdsUsed >= 3)
                         return Divination;
+
+                    if (IsEnabled(CustomComboPreset.AST_DPS_Oracle) &&
+                        HasEffect(Buffs.Divining) &&
+                        CanSpellWeave(actionID))
+                        return Oracle; 
 
                     //Minor Arcana / Lord of Crowns
                     if (ActionReady(OriginalHook(MinorArcana)) &&
