@@ -62,7 +62,7 @@ namespace XIVSlothCombo
             //PCT.JobID,
             //PLD.JobID,
             //RDM.JobID,
-            RPR.JobID,
+            //RPR.JobID,
             SAM.JobID,
             //SCH.JobID,
             //SGE.JobID,
