@@ -24,6 +24,9 @@ using System.Reflection;
 using Dalamud.Utility;
 using XIVSlothCombo.Attributes;
 using Dalamud.Interface.Windowing;
+using Dalamud.Game.Addon.Lifecycle;
+using ECommons.DalamudServices;
+using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 
 namespace XIVSlothCombo
 {
@@ -43,13 +46,13 @@ namespace XIVSlothCombo
 
         public static readonly List<uint> DisabledJobsPVE = new List<uint>()
         {
-            ADV.JobID,
-            AST.JobID,
+            //ADV.JobID,
+            //AST.JobID,
             BLM.JobID,
             //BLU.JobID,
             BRD.JobID,
             DNC.JobID,
-            DOL.JobID,
+            //DOL.JobID,
             DRG.JobID,
             DRK.JobID,
             //GNB.JobID,
@@ -153,8 +156,14 @@ namespace XIVSlothCombo
 
 #if DEBUG
             PvEFeatures.HasToOpenJob = false;
+            PvEFeatures.OpenJob = "Astrologian";
             ConfigWindow.IsOpen = true;
 #endif
+        }
+
+        private void AddonReceiveEvent(AddonEvent type, AddonArgs args)
+        {
+            Svc.Log.Debug($"Receive event triggered on {args.AddonName}");
         }
 
         private static void HandleConflictedCombos()
