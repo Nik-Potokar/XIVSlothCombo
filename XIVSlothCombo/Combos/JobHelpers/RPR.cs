@@ -27,7 +27,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public uint OpenerStep = 0;
 
-        private static uint[] StandardOpener = [
+        private static uint[] StandardOpenerFlankFirst = [
             ShadowOfDeath,
             SoulSlice,
             ArcaneCircle,
@@ -48,6 +48,30 @@ namespace XIVSlothCombo.Combos.JobHelpers
             SoulSlice,
             UnveiledGibbet,
             Gibbet,
+            ShadowOfDeath,
+            Slice];
+
+        private static uint[] StandardOpenerRearFirst = [
+           ShadowOfDeath,
+            SoulSlice,
+            ArcaneCircle,
+            Gluttony,
+            ExecutionersGallows,
+            ExecutionersGibbet,
+            PlentifulHarvest,
+            Enshroud,
+            VoidReaping,
+            Sacrificium,
+            CrossReaping,
+            LemuresSlice,
+            VoidReaping,
+            CrossReaping,
+            LemuresSlice,
+            Communio,
+            Perfectio,
+            SoulSlice,
+            UnveiledGallows,
+            Gallows,
             ShadowOfDeath,
             Slice];
 
@@ -126,10 +150,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(OpenerActions[OpenerStep]))
                     OpenerStep++;
 
-                if (OpenerStep == 3 && CustomComboFunctions.HasCharges(SoulSlice))
-                    actionID = SoulSlice;
-
-                else if (OpenerStep == OpenerActions.Length)
+                if (OpenerStep == OpenerActions.Length)
                     CurrentState = OpenerState.OpenerFinished;
 
                 else actionID = OpenerActions[OpenerStep];
@@ -157,7 +178,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             OpenerStep = 0;
         }
 
-        public bool DoFullOpener(ref uint actionID)
+        public bool DoFullOpener(ref uint actionID, bool simpleMode)
         {
             if (!LevelChecked)
                 return false;
@@ -168,8 +189,25 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.InOpener)
             {
-                if (DoOpener(StandardOpener, ref actionID))
-                    return true;
+                if (simpleMode)
+                {
+                    if (DoOpener(StandardOpenerFlankFirst, ref actionID))
+                        return true;
+                }
+
+                else
+
+                if (Config.RPR_Positional == 0)
+                {
+                    if (DoOpener(StandardOpenerRearFirst, ref actionID))
+                        return true;
+                }
+
+                if (Config.RPR_Positional == 1)
+                {
+                    if (DoOpener(StandardOpenerFlankFirst, ref actionID))
+                        return true;
+                }
             }
 
             if (!CustomComboFunctions.InCombat())

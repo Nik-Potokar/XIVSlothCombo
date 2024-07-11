@@ -2401,35 +2401,35 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
-        RPR_ST_Reaping = 12012,
+        RPR_ST_Reaping = 12011,
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the rotation.", RPR.JobID)]
-        RPR_ST_Lemure = 12013,
+        RPR_ST_Lemure = 12012,
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
-        RPR_ST_Sacrificium = 12014,
+        RPR_ST_Sacrificium = 12013,
 
         [ParentCombo(RPR_ST_Enshroud)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
-        RPR_ST_Communio = 12015,
+        RPR_ST_Communio = 12014,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
-        RPR_ST_Perfectio = 12016,
+        RPR_ST_Perfectio = 12015,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the rotation.", RPR.JobID)]
-        RPR_ST_GibbetGallows = 12017,
+        RPR_ST_GibbetGallows = 12016,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe when outside of melee range. Will not override Communio.", RPR.JobID)]
-        RPR_ST_RangedFiller = 12018,
+        RPR_ST_RangedFiller = 12017,
 
         [ParentCombo(RPR_ST_RangedFiller)]
         [CustomComboInfo("Add Harvest Moon", "Adds Harvest Moon if available, when outside of melee range. Will not override Communio.", RPR.JobID)]
-        RPR_ST_RangedFillerHarvestMoon = 12019,
+        RPR_ST_RangedFillerHarvestMoon = 12018,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID)]
@@ -2569,44 +2569,44 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud Protection Feature", "Turns Enshroud into Gibbet/Gallows to protect Soul Reaver waste.", RPR.JobID)]
-        RPR_EnshroudProtection = 12306,
+        RPR_EnshroudProtection = 12304,
 
         [ReplaceSkill(RPR.Gibbet, RPR.Gallows, RPR.Guillotine)]
         [CustomComboInfo("Communio on Gibbet/Gallows and Guillotine Feature", "Adds Communio to Gibbet/Gallows and Guillotine.", RPR.JobID)]
-        RPR_CommunioOnGGG = 12307,
+        RPR_CommunioOnGGG = 12305,
 
         [ParentCombo(RPR_CommunioOnGGG)]
         [CustomComboInfo("Lemure's Slice/Scythe Option", "Adds Lemure's Slice to Gibbet/Gallows and Lemure's Scythe to Guillotine.", RPR.JobID)]
-        RPR_LemureOnGGG = 12308,
+        RPR_LemureOnGGG = 12306,
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID)]
-        RPR_EnshroudCommunio = 12309,
+        RPR_EnshroudCommunio = 12307,
 
         [ParentCombo(RPR_EnshroudProtection)]
         [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
-        RPR_TrueNorthEnshroud = 12310,
+        RPR_TrueNorthEnshroud = 12308,
 
         [ReplaceSkill(RPR.Harpe)]
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Soulsow Reminder during Combat", "Adds Soulsow to Harpe during combat when no target is selected.", RPR.JobID)]
-        RPR_Soulsow_Combat = 12311,
+        RPR_Soulsow_Combat = 12309,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
         [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
-        RPR_TrueNorthGluttony = 12312,
+        RPR_TrueNorthGluttony = 12310,
 
         [Variant]
         [VariantParent(RPR_ST_AdvancedMode, RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", RPR.JobID)]
-        RPR_Variant_Cure = 12313,
+        RPR_Variant_Cure = 12311,
 
         [Variant]
         [VariantParent(RPR_ST_AdvancedMode, RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RPR.JobID)]
-        RPR_Variant_Rampart = 12314,
+        RPR_Variant_Rampart = 12312,
 
-        // Last value = 12314
+        // Last value = 12312
 
         #endregion
 
