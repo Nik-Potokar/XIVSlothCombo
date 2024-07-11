@@ -43,8 +43,8 @@ namespace XIVSlothCombo.Combos.PvE
             Resolution = 25858,
             Moulinet = 7513,
             EnchantedMoulinet = 7530,
-            EnchantedMoulinetDeux = 6969,
-            EnchantedMoulinetTrois = 6969,
+            EnchantedMoulinetDeux = 37002,
+            EnchantedMoulinetTrois = 37003,
             Corpsacorps = 7506,
             Displacement = 7515,
             Reprise = 16529,
@@ -65,6 +65,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Acceleration = 1238,
                 Embolden = 1239,
                 EmboldenOthers = 1297,
+                Manafication = 1971,
                 MagickBarrier = 2707;
         }
 
@@ -73,7 +74,7 @@ namespace XIVSlothCombo.Combos.PvE
             // public const short placeholder = 0;
         }
 
-        protected static RDMGauge Gauge => CustomComboFunctions.GetJobGauge<RDMGauge>();
+        public static RDMGauge Gauge => CustomComboFunctions.GetJobGauge<RDMGauge>();
 
         public static class Config
         {
@@ -375,7 +376,7 @@ namespace XIVSlothCombo.Combos.PvE
                     && LocalPlayer.IsCasting == false)
                 {
                     bool ActionFound =
-                        (!Config.RDM_ST_MeleeCombo_Adv && actionID is Jolt or Jolt2 or Jolt3) ||
+                        (!Config.RDM_ST_MeleeCombo_Adv && (actionID is Jolt or Jolt2 or Jolt3)) ||
                         (Config.RDM_ST_MeleeCombo_Adv &&
                             ((Config.RDM_ST_MeleeCombo_OnAction[0] && actionID is Jolt or Jolt2 or Jolt3) ||
                              (Config.RDM_ST_MeleeCombo_OnAction[1] && actionID is Riposte or EnchantedRiposte)));
@@ -500,9 +501,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Redoublement);
                         }
 
-                        if (((Math.Min(Gauge.WhiteMana, Gauge.BlackMana) >= 50 && LevelChecked(Redoublement))
-                            || (Math.Min(Gauge.WhiteMana, Gauge.BlackMana) >= 35 && !LevelChecked(Redoublement))
-                            || (Math.Min(Gauge.WhiteMana, Gauge.BlackMana) >= 20 && !LevelChecked(Zwerchhau)))
+                        //7.0 Manification Magic Mana
+                        int Mana = Math.Min(Gauge.WhiteMana, Gauge.BlackMana);
+                        if (LevelChecked(Manafication))
+                        {
+                            int ManaBuff = (int)GetBuffStacks(Buffs.Manafication);
+                            if (ManaBuff > 0) Mana = 50; //ITS FREE REAL ESTATE
+                        }
+
+                        if (((Mana >= 50 && LevelChecked(Redoublement))
+                            || (Mana >= 35 && !LevelChecked(Redoublement))
+                            || (Mana >= 20 && !LevelChecked(Zwerchhau)))
                             && !HasEffect(Buffs.Dualcast))
                         {
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser)
@@ -652,6 +661,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (ActionFound)
                     {
+                        //Finish the combo
+                        if (LevelChecked(Moulinet) 
+                            && lastComboMove is EnchantedMoulinet or EnchantedMoulinetDeux
+                            && comboTime > 0f)
+                           return OriginalHook(Moulinet);
+
                         //RDM_AOE_MANAFICATIONEMBOLDEN
                         if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_ManaEmbolden))
                         {
@@ -713,12 +728,19 @@ namespace XIVSlothCombo.Combos.PvE
                             //END_RDM_AOE_MANAFICATIONEMBOLDEN
                         }
 
+                        //7.0 Manification Magic Mana
+                        //The Math.Min after level check is GaugeStack * 16.67 >= 50 to validate Molinet
+                        //Really needs some higher level autism to figure out if there is a better way
+                        int ManaBuff = (int)GetBuffStacks(Buffs.Manafication);
+                        if (ManaBuff > 3) ManaBuff = 3; //Only need 3 to use the combo (low level 60 get 3)
+                        int ManaStacks = Math.Max(Gauge.ManaStacks, ManaBuff);
+
                         if (LevelChecked(Moulinet)
                             && LocalPlayer.IsCasting == false
                             && !HasEffect(Buffs.Dualcast)
                             && !HasEffect(All.Buffs.Swiftcast)
                             && !HasEffect(Buffs.Acceleration)
-                            && ((Math.Min(Gauge.BlackMana, Gauge.WhiteMana) + (Gauge.ManaStacks * 20) >= 50) ||
+                            && ((Math.Min(Gauge.BlackMana, Gauge.WhiteMana) + (ManaStacks * 16.67) >= 50) ||
                                 (!LevelChecked(Verflare) && Math.Min(Gauge.BlackMana, Gauge.WhiteMana) >= 20)))
                         {
                             if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_CorpsGapCloser)
@@ -726,7 +748,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 && GetTargetDistance() > Config.RDM_AoE_MoulinetRange)
                                 return Corpsacorps;
 
-                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && Gauge.ManaStacks == 0) || Gauge.ManaStacks >= 1)
+                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && ManaStacks == 0) || ManaStacks >= 1)
                                 return OriginalHook(Moulinet);
                         }
                     }

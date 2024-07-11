@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ImGuiNET;
@@ -66,17 +67,21 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
 
-                var pctGauge = new TmpPCTGauge();
-                ImGui.InputInt("DebugNum", ref debugNum);
-                ImGui.Text($"{pctGauge.GetOffset(debugNum)}");
-                ImGui.Text($"Pallete: {pctGauge.PalleteGauge}");
-                ImGui.Text($"Paint: {pctGauge.Paint}");
-                ImGui.Text($"Creature: {pctGauge.CreatureMotifDrawn}");
-                ImGui.Text($"Weapon: {pctGauge.WeaponMotifDrawn}");
-                ImGui.Text($"Landscape: {pctGauge.LandscapeMotifDrawn}");
-                ImGui.Text($"Moogle Potrait: {pctGauge.MooglePortraitReady}");
+                var gauge = CustomComboFunctions.GetJobGauge<ASTGauge>();
+                ImGui.Text($"{gauge.DrawnCards[0]}");
+                ImGui.Text($"{gauge.DrawnCards[1]}");
+                ImGui.Text($"{gauge.DrawnCards[2]}");
+                ImGui.Text($"{gauge.ActiveDraw}");
+                ImGui.Text($"{gauge.DrawnCrownCard}");
 
-                ImGui.Text($"{CustomComboFunctions.GetCooldown(CustomComboFunctions.OriginalHook(PCT.FireInRed)).CooldownRemaining}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(1).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(2).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(3).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(4).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(5).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(6).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(7).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(8).Name}");
             }
 
             else
