@@ -236,7 +236,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public bool DoFullOpener(ref uint actionID)
         {
-            if (!LevelChecked) 
+            if (!LevelChecked)
                 return false;
 
             if (CurrentState == OpenerState.PrePull)
