@@ -290,7 +290,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_GlareIV)
                             && HasEffect(Buffs.SacredSight)
                             && GetBuffStacks(Buffs.SacredSight) > 0)
-                            return OriginalHook(PresenceOfMind);
+                            return OriginalHook(Glare4);
 
                         if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                             (liliesFull || liliesNearlyFull))
@@ -466,7 +466,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_GlareIV)
                         && HasEffect(Buffs.SacredSight)
                         && GetBuffStacks(Buffs.SacredSight) > 0)
-                        return OriginalHook(PresenceOfMind);
+                        return OriginalHook(Glare4);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                         (liliesFullNoBlood || liliesNearlyFull))
