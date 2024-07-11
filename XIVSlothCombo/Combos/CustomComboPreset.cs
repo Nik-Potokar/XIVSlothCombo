@@ -684,10 +684,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Raging Jaws Option", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID)]
         BRD_Simple_RagingJaws = 3025,
 
-        [ParentCombo(BRD_Simple_DoT)]
-        [CustomComboInfo("Opener Only Option", "Until the first auto-refresh you can DoT new targets automatically.", BRD.JobID)]
-        BRD_Simple_DoTOpener = 3026,
-
         [ParentCombo(BRD_AoE_Simple_Songs)]
         [CustomComboInfo("Exclude Wanderer's Minuet Option", "Dont use Wanderer's Minuet.", BRD.JobID)]
         BRD_AoE_Simple_SongsExcludeWM = 3027,
