@@ -2396,7 +2396,7 @@ namespace XIVSlothCombo.Combos
         RPR_ST_AdvancedMode = 12001,
 
         [ParentCombo(RPR_ST_AdvancedMode)]
-        [CustomComboInfo("Level 100 Opener Option", "Adds the Level 100 Opener to the rotation.", RPR.JobID)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Gibbet first ( FLANK )", RPR.JobID)]
         RPR_ST_Opener = 12002,
 
         [ParentCombo(RPR_ST_AdvancedMode)]

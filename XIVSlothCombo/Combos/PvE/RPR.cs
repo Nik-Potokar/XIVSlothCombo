@@ -128,7 +128,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    if (RPROpener.DoFullOpener(ref actionID, true))
+                    if (RPROpener.DoFullOpener(ref actionID))
                         return actionID;
 
                     if (!InMeleeRange() && LevelChecked(Harpe) && HasBattleTarget())
@@ -281,7 +281,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_Opener))
                     {
-                        if (RPROpener.DoFullOpener(ref actionID, false))
+                        if (RPROpener.DoFullOpener(ref actionID))
                             return actionID;
                     }
 
