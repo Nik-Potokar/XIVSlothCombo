@@ -618,7 +618,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Blade of Honor after Confi Combo (Weave).
-                        if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_BladesOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
+                        if ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_BladeOfHonor) && CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor)))
                             // To accomodate native action change settings, do not use "OriginalHook" here
                             return BladeOfHonor;
 
