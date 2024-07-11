@@ -206,8 +206,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(HeatedSlugShot) && OpenerStep == 31) OpenerStep++;
                 else if (OpenerStep == 31) actionID = HeatedSlugShot;
 
-                if (CustomComboFunctions.WasLastAction(HeatedCleanShot) && OpenerStep == 37) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 37) actionID = HeatedCleanShot;
+                if (CustomComboFunctions.WasLastAction(HeatedCleanShot) && OpenerStep == 32) CurrentState = OpenerState.OpenerFinished;
+                else if (OpenerStep == 32) actionID = HeatedCleanShot;
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;

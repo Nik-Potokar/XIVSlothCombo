@@ -487,11 +487,11 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            { 
+            {
+                MCHGauge? gauge = GetJobGauge<MCHGauge>();
+
                 if (actionID is SpreadShot)
                 {
-                    MCHGauge? gauge = GetJobGauge<MCHGauge>();
-
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
                      IsEnabled(Variant.VariantCure) &&
                      PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
@@ -507,14 +507,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
 
                     // BarrelStabilizer use and Full metal field
-                    if (!gauge.IsOverheated && ((CanWeave(actionID) && ActionReady(BarrelStabilizer)) || HasEffect(Buffs.FullMetalMachinist)))
+                    if (!gauge.IsOverheated && ((CanWeave(actionID) && ActionReady(BarrelStabilizer)) ||
+                        HasEffect(Buffs.FullMetalMachinist)))
                         return OriginalHook(BarrelStabilizer);
-
-                    if ((LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw))
-                        return Chainsaw;
-
-                    if (HasEffect(Buffs.ExcavatorReady))
-                        return OriginalHook(Chainsaw);
 
                     if (ActionReady(BioBlaster) && !TargetHasEffect(Debuffs.Bioblaster))
                         return OriginalHook(BioBlaster);
@@ -532,29 +527,36 @@ namespace XIVSlothCombo.Combos.PvE
                         return Hypercharge;
 
                     //AutoCrossbow, Gauss, Rico
-                    if ((WasLastAction(SpreadShot) || WasLastAction(AutoCrossbow) || Config.MCH_AoE_Hypercharge) && CanWeave(actionID) &&
+                    if (CanWeave(actionID) && WasLastAction(OriginalHook(AutoCrossbow)) &&
                         (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     {
-                        if (LevelChecked(OriginalHook(GaussRound)) && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet)))
+                        if (ActionReady(OriginalHook(GaussRound)) && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet)))
                             return OriginalHook(GaussRound);
 
-                        if (LevelChecked(OriginalHook(Ricochet)) && GetRemainingCharges(OriginalHook(Ricochet)) > GetRemainingCharges(OriginalHook(GaussRound)))
+                        if (ActionReady(OriginalHook(Ricochet)) && GetRemainingCharges(OriginalHook(Ricochet)) > GetRemainingCharges(OriginalHook(GaussRound)))
                             return OriginalHook(Ricochet);
                     }
 
                     if (gauge.IsOverheated && AutoCrossbow.LevelChecked())
                         return OriginalHook(AutoCrossbow);
 
-                    //gauss and ricochet outside HC
-                    if (CanWeave(actionID) && !gauge.IsOverheated &&
-                         !HasEffect(Buffs.Wildfire) && !WasLastWeaponskill(OriginalHook(AutoCrossbow)))
-                    {
-                        if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
-                            return OriginalHook(GaussRound);
+                    if (!HasEffect(Buffs.Wildfire) &&
+                        !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
+                        (Scattergun.LevelChecked() ||
+                        (gauge.IsOverheated && AutoCrossbow.LevelChecked()) ||
+                        (GetCooldownRemainingTime(Chainsaw) < 1 && Chainsaw.LevelChecked()) ||
+                        (GetCooldownRemainingTime(OriginalHook(Chainsaw)) < 1 && Excavator.LevelChecked())))
+                        return Reassemble;
 
-                        if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
-                            return OriginalHook(Ricochet);
-                    }
+                    if (LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady))
+                        return OriginalHook(Chainsaw);
+
+                    if ((LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) < 1) ||
+                        ActionReady(Chainsaw))
+                        return Chainsaw;
+
+                    if (LevelChecked(AutoCrossbow) && gauge.IsOverheated)
+                        return AutoCrossbow;
                 }
                 return actionID;
             }
@@ -573,7 +575,6 @@ namespace XIVSlothCombo.Combos.PvE
                     bool reassembledCrossbow = (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && Config.MCH_AoE_Reassembled[1] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !Config.MCH_AoE_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble));
                     bool reassembledChainsaw = (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && Config.MCH_AoE_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !Config.MCH_AoE_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_AoE_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble));
                     bool reassembledExcavator = (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && Config.MCH_AoE_Reassembled[3] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !Config.MCH_AoE_Reassembled[3] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_AoE_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble));
-
 
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
                      IsEnabled(Variant.VariantCure) &&
@@ -595,37 +596,12 @@ namespace XIVSlothCombo.Combos.PvE
                         (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Stabilizer_FullMetalField) && HasEffect(Buffs.FullMetalMachinist))))
                         return OriginalHook(BarrelStabilizer);
 
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !HasEffect(Buffs.Wildfire) &&
-                        !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
-                        GetRemainingCharges(Reassemble) > Config.MCH_AoE_ReassemblePool &&
-                        ((Config.MCH_AoE_Reassembled[0] && Scattergun.LevelChecked()) ||
-                        (gauge.IsOverheated && Config.MCH_AoE_Reassembled[1] && AutoCrossbow.LevelChecked()) ||
-                        (GetCooldownRemainingTime(OriginalHook(Chainsaw)) < 1 && Config.MCH_AoE_Reassembled[2] && Chainsaw.LevelChecked())))
-                        return Reassemble;
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Chainsaw) &&
-                        reassembledChainsaw &&
-                        ((LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) < 1) ||
-                        ActionReady(Chainsaw)))
-                        return Chainsaw;
-
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Excavator) &&
-                        reassembledExcavator &&
-                       LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady))
-                        return OriginalHook(Chainsaw);
-
-                    if (reassembledScattergun)
-                        return OriginalHook(Scattergun);
-
-                    if (reassembledCrossbow &&
-                        LevelChecked(AutoCrossbow) && gauge.IsOverheated)
-                        return AutoCrossbow;
-
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Bioblaster) &&
                         ActionReady(BioBlaster) && !TargetHasEffect(Debuffs.Bioblaster))
                         return OriginalHook(BioBlaster);
 
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_FlameThrower) && ActionReady(Flamethrower) && !IsMoving)
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_FlameThrower) &&
+                        ActionReady(Flamethrower) && !IsMoving)
                         return OriginalHook(Flamethrower);
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Queen) && !gauge.IsOverheated)
@@ -642,9 +618,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Hypercharge;
 
                     //AutoCrossbow, Gauss, Rico
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_GaussRicochet) && CanWeave(actionID) &&
-                        (Config.MCH_AoE_Hypercharge || (!Config.MCH_AoE_Hypercharge && gauge.IsOverheated)) &&
-                        (WasLastAction(SpreadShot) || WasLastAction(AutoCrossbow) || Config.MCH_AoE_Hypercharge) &&
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_GaussRicochet) && !Config.MCH_AoE_Hypercharge &&
+                        CanWeave(actionID) && WasLastAction(OriginalHook(AutoCrossbow)) &&
                         (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet)))
@@ -658,9 +633,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(AutoCrossbow);
 
                     //gauss and ricochet outside HC
-                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_GaussRicochet) &&
-                        CanWeave(actionID) && !gauge.IsOverheated &&
-                        !HasEffect(Buffs.Wildfire) && !WasLastWeaponskill(OriginalHook(AutoCrossbow)))
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_GaussRicochet) && Config.MCH_AoE_Hypercharge &&
+                        CanWeave(actionID) && !gauge.IsOverheated)
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
@@ -668,6 +642,33 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
                             return OriginalHook(Ricochet);
                     }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !HasEffect(Buffs.Wildfire) &&
+                        !HasEffect(Buffs.Reassembled) && HasCharges(Reassemble) &&
+                        GetRemainingCharges(Reassemble) > Config.MCH_AoE_ReassemblePool &&
+                        ((Config.MCH_AoE_Reassembled[0] && Scattergun.LevelChecked()) ||
+                        (gauge.IsOverheated && Config.MCH_AoE_Reassembled[1] && AutoCrossbow.LevelChecked()) ||
+                        (GetCooldownRemainingTime(Chainsaw) < 1 && Config.MCH_AoE_Reassembled[2] && Chainsaw.LevelChecked()) ||
+                        (GetCooldownRemainingTime(OriginalHook(Chainsaw)) < 1 && Config.MCH_AoE_Reassembled[3] && Excavator.LevelChecked())))
+                        return Reassemble;
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Excavator) &&
+                        reassembledExcavator &&
+                        LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady))
+                        return OriginalHook(Chainsaw);
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Chainsaw) &&
+                        reassembledChainsaw &&
+                        ((LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) < 1) ||
+                        ActionReady(Chainsaw)))
+                        return Chainsaw;
+
+                    if (reassembledScattergun)
+                        return OriginalHook(Scattergun);
+
+                    if (reassembledCrossbow &&
+                        LevelChecked(AutoCrossbow) && gauge.IsOverheated)
+                        return AutoCrossbow;
 
                     if (IsEnabled(CustomComboPreset.MCH_AoE_Adv_SecondWind))
                     {
