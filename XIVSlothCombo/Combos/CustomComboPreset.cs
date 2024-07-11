@@ -1595,7 +1595,7 @@ namespace XIVSlothCombo.Combos
 
         #region Simple ST
 
-        [ReplaceSkill(MCH.SplitShot)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
         MCH_ST_SimpleMode = 8001,
@@ -1711,7 +1711,7 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Queen = 8304,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Flamethrower Option", "Adds Flamethrower to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Flamethrower Option", "Adds Flamethrower to the rotation.\n Changes to Savage blade when in use to prevent cancelling.", MCH.JobID)]
         MCH_AoE_Adv_FlameThrower = 8305,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
@@ -1763,20 +1763,20 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate Feature", "Replace Gauss Round and Ricochet or Double Check and Checkmate with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
-        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
-        [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
-        MCH_HotShotDrillChainsaw = 8004,
+        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot,MCH.Chainsaw)]
+        [CustomComboInfo("Big Hitter Feature", "Replace Hot Shot, Drill, Air Anchor, Chainsaw and Excavator depending on which is on cooldown.", MCH.JobID)]
+        MCH_HotShotDrillChainsawExcavator = 8004,
 
         [ReplaceSkill(MCH.Heatblast)]
-        [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
+        [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge \nwhen u have 50 or more heat or when u got Hypercharged buff.", MCH.JobID)]
         MCH_Heatblast = 8006,
 
         [ParentCombo(MCH_Heatblast)]
-        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when below 50 Heat Gauge.", MCH.JobID)]
+        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when off cooldown.", MCH.JobID)]
         MCH_Heatblast_AutoBarrel = 8052,
 
         [ParentCombo(MCH_Heatblast)]
-        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the feature when at or above 50 heat.", MCH.JobID)]
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the feature when off cooldown and overheated.", MCH.JobID)]
         MCH_Heatblast_Wildfire = 8015,
 
         [ParentCombo(MCH_Heatblast)]
@@ -3635,7 +3635,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_AdvancedMode = 30001,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", VPR.JobID)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
         VPR_ST_Opener = 30002,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
@@ -3656,7 +3656,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dreadwinder", "Adds Dreadwinder to the rotation.", VPR.JobID)]
         VPR_ST_Dreadwinder = 30006,
 
-        [ParentCombo(VPR_ST_Dreadwinder)]
+        [ParentCombo(VPR_ST_CDs)]
         [CustomComboInfo("Dreadwinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
         VPR_ST_DreadwinderCombo = 30007,
 
@@ -3670,7 +3670,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
         VPR_ST_UncoiledFury = 30009,
 
-        [ParentCombo(VPR_ST_UncoiledFury)]
+        [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
         VPR_ST_UncoiledFuryCombo = 30010,
 
@@ -3730,7 +3730,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Pit Of Dread", "Adds Pit Of Dread to the rotation.", VPR.JobID)]
         VPR_AoE_PitOfDread = 30105,
 
-        [ParentCombo(VPR_AoE_PitOfDread)]
+        [ParentCombo(VPR_AoE_CDs)]
         [CustomComboInfo("Pit Of Dread Combo", "Adds Swiftskin's Den and Hunter's Den to the rotation.", VPR.JobID)]
         VPR_AoE_PitOfDreadCombo = 30106,
 
@@ -3744,7 +3744,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
         VPR_AoE_UncoiledFury = 30108,
 
-        [ParentCombo(VPR_AoE_UncoiledFury)]
+        [ParentCombo(VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
         VPR_AoE_UncoiledFuryCombo = 30109,
 
