@@ -243,7 +243,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanSpellWeave(actionID))
                     {
-                        bool lucidReady = ActionReady(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_STHeals_Lucid;
+                        bool lucidReady = ActionReady(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_STDPS_Lucid;
                         bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
                         bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
                         bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
@@ -290,7 +290,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_GlareIV)
                             && HasEffect(Buffs.SacredSight)
                             && GetBuffStacks(Buffs.SacredSight) > 0)
-                            return OriginalHook(PresenceOfMind);
+                            return OriginalHook(Glare4);
 
                         if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                             (liliesFull || liliesNearlyFull))
@@ -331,7 +331,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return PlenaryIndulgence;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_DivineCaress) && divineCaressReady)
-                        return DivineCaress;
+                        return OriginalHook(DivineCaress);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Lucid) && canWeave && lucidReady)
                         return All.LucidDreaming;
@@ -466,7 +466,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_GlareIV)
                         && HasEffect(Buffs.SacredSight)
                         && GetBuffStacks(Buffs.SacredSight) > 0)
-                        return OriginalHook(PresenceOfMind);
+                        return OriginalHook(Glare4);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_LilyOvercap) && LevelChecked(AfflatusRapture) &&
                         (liliesFullNoBlood || liliesNearlyFull))

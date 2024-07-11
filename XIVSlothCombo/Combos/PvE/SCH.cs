@@ -39,6 +39,7 @@ namespace XIVSlothCombo.Combos.PvE
             EnergyDrain = 167,
             ArtOfWar = 16539,
             ArtOfWarII = 25866,
+            BanefulImpaction =  37012,
 
             // Faerie
             SummonSeraph = 16545,
@@ -326,10 +327,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (ActionFound)
                 {
-                    //Ruin 2 Movement 
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
-                        LevelChecked(Ruin2) &&
-                        IsMoving) return OriginalHook(Ruin2); //Who knows in the future
 
                     var incombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                     if (!incombat)
@@ -380,7 +377,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(EnergyDrain) && InCombat() &&
                                 Gauge.HasAetherflow() &&
                                 GetCooldownRemainingTime(Aetherflow) <= edTime &&
-                                (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || GetCooldownRemainingTime(ChainStratagem) > 10) &&
+                                (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || (LevelChecked(ChainStratagem) && GetCooldownRemainingTime(ChainStratagem) > 10)) &&
                                 CanSpellWeave(actionID))
                                 return EnergyDrain;
                         }
@@ -389,15 +386,19 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SCH_DPS_ChainStrat))
                         {
                             // If CS is available and usable, or if the Impact Buff is on Player
-                            bool CSReady =
-                                ActionReady(ChainStratagem) &&
+                            if (ActionReady(ChainStratagem) &&
                                 !TargetHasEffectAny(Debuffs.ChainStratagem) &&
-                                GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption;
-
-                            if ((CSReady || HasEffect(Buffs.ImpactImminent)) &&
+                                GetTargetHPPercent() > Config.SCH_ST_DPS_ChainStratagemOption &&
                                 InCombat() &&
                                 CanSpellWeave(actionID))
-                               return OriginalHook(ChainStratagem);
+                                return ChainStratagem;
+
+                            if (LevelChecked(BanefulImpaction) &&
+                                HasEffect(Buffs.ImpactImminent) &&
+                                InCombat() &&
+                                CanSpellWeave(actionID))
+                                return BanefulImpaction; 
+                            // Don't use OriginalHook(ChainStratagem), because player can disable ingame action replacement
                         }
                         
 
@@ -419,6 +420,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)
                                 return dot; //Use appropriate DoT Action
                         }
+
+                        //Ruin 2 Movement 
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Ruin2Movement) &&
+                            LevelChecked(Ruin2) &&
+                            IsMoving) return OriginalHook(Ruin2);
                     }
                 }
                 return actionID;
