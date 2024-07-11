@@ -1376,12 +1376,9 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
-        [CustomComboInfo("Skill Speed Support Feature", "Allows for features to support various skill speed rotations.", GNB.JobID, 0)]
-        GNB_ST_SkSSupport = 7000,
-
         #region ST
         [ReplaceSkill(GNB.KeenEdge)]
-        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap.", GNB.JobID)]
+        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. ****ONLY 2.5 IS SUPPORTED****", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
 
         #region Reign Combo
