@@ -33,6 +33,8 @@ namespace XIVSlothCombo.Combos.PvE
             InnerChaos = 16465,
             Orogeny = 25752,
             PrimalRend = 25753,
+            PrimalWrath = 36924,
+            PrimalRuination = 36925,
             Onslaught = 7386;
 
         public static class Buffs
@@ -42,6 +44,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SurgingTempest = 2677,
                 NascentChaos = 1897,
                 PrimalRendReady = 2624,
+                Wrathful = 3901,
+                PrimalRuinationReady = 3834,
                 Berserk = 86;
         }
 
@@ -110,6 +114,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Berserk);
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Upheaval) && IsOffCooldown(Upheaval) && LevelChecked(Upheaval))
                                 return Upheaval;
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalWrath) && HasEffect(Buffs.Wrathful) && LevelChecked(PrimalWrath))
+                                return PrimalWrath;
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught) && LevelChecked(Onslaught) && GetRemainingCharges(Onslaught) > onslaughtChargesRemaining)
                             {
                                 if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_Onslaught_MeleeSpender) ||
@@ -118,13 +124,16 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend))
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetCooldownRemainingTime(InnerRelease) < 57.5)
                         {
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
                                 return PrimalRend;
                             if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
                                 return PrimalRend;
                         }
+
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
+                            return PrimalRuination;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
                         {
@@ -225,15 +234,20 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Berserk);
                             if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Orogeny) && IsOffCooldown(Orogeny) && LevelChecked(Orogeny) && HasEffect(Buffs.SurgingTempest))
                                 return Orogeny;
+                            if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalWrath) && HasEffect(Buffs.Wrathful) && LevelChecked(PrimalWrath))
+                                return PrimalWrath;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend))
+                        if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetCooldownRemainingTime(InnerRelease) < 57.5)
                         {
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && (GetTargetDistance() <= 3 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
                                 return PrimalRend;
                             if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
                                 return PrimalRend;
                         }
+
+                        if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
+                            return PrimalRuination;
 
                         if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Decimate) && LevelChecked(SteelCyclone) && (gauge >= decimateGaugeSpend || HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)))
                             return OriginalHook(SteelCyclone);
@@ -280,17 +294,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == InnerBeast || actionID == SteelCyclone)
                 {
-
                     if (LevelChecked(PrimalRend) && HasEffect(Buffs.PrimalRendReady))
                         return PrimalRend;
-
-                    // Fell Cleave or Decimate
-                    return OriginalHook(actionID);
-
-
+                    if (LevelChecked(PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && WasLastWeaponskill(PrimalRend))
+                        return PrimalRuination;
                 }
 
-                return actionID;
+                // fell cleave or decimate
+                return OriginalHook(actionID);
             }
         }
 
