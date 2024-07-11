@@ -48,7 +48,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const ushort
                 Requiescat = 1368,
-                SwordOath = 1902,
+                AtonementReady = 1902, //First Atonement Buff
                 SupplicationReady = 3827, //Second Atonement buff
                 SepulchreReady = 3828, // Third Atonement buff
                 GoringBladeReady = 3847, //Goring Blade Buff after use of FoF
@@ -93,112 +93,133 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is FastBlade)
                 {
+                    bool inAtonementPhase = HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady);
+                    bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 10) ||
+                                                (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 10) ||
+                                                (HasEffect(Buffs.SepulchreReady) && GetBuffRemainingTime(Buffs.SepulchreReady) < 10);
 
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
+                    // Criterion Stuff
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
                         PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
                     {
-                        if (!InMeleeRange() && HolySpirit.LevelChecked() &&
-                            GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && (!IsMoving || HasEffect(Buffs.DivineMight)))
-                            return HolySpirit;
-
-                        if (!InMeleeRange() && ShieldLob.LevelChecked())
-                            return ShieldLob;
-
+                        // Criterion Stuff
                         if (CanWeave(actionID))
                         {
                             Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
 
-                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) &&
-                                IsEnabled(Variant.VariantSpiritDart) &&
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart) &&
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
-                            if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) &&
-                                IsEnabled(Variant.VariantUltimatum) &&
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) &&
                                 IsOffCooldown(Variant.VariantUltimatum))
                                 return Variant.VariantUltimatum;
                         }
 
-                        // Requiescat inside burst (checking for FoF buff causes a late weave and can misalign over long fights with some ping)
-                        if (CanWeave(actionID) && (WasLastAbility(FightOrFlight) || JustUsed(FightOrFlight, 6f)) && ActionReady(Requiescat))
-                            return OriginalHook(Requiescat);
+                        if (InMeleeRange())
+                        {
+                            // Requiescat Usage: After Fight or Flight
+                            if (ActionReady(Requiescat) && CanWeave(actionID) && JustUsed(FightOrFlight, 8f))
+                                return OriginalHook(Requiescat);
 
-                        // Actions under FoF burst
+                            // Goring Blade Usage: No Requiescat / After Requiescat
+                            if (HasEffect(Buffs.GoringBladeReady) && (!LevelChecked(Requiescat) || (IsOnCooldown(Requiescat) &&
+                                !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
+                                return GoringBlade;
+                        }
+
+                        // Burst Phase
                         if (HasEffect(Buffs.FightOrFlight))
                         {
                             if (CanWeave(actionID))
                             {
-                                if (ActionReady(CircleOfScorn))
-                                    return CircleOfScorn;
+                                // Melee oGCDs
+                                if (InMeleeRange())
+                                {
+                                    if (ActionReady(CircleOfScorn))
+                                        return CircleOfScorn;
 
-                                if (ActionReady(OriginalHook(SpiritsWithin)))
-                                    return OriginalHook(SpiritsWithin);
+                                    if (ActionReady(SpiritsWithin))
+                                        return OriginalHook(SpiritsWithin);
+                                }
+
+                                // Blade of Honor
+                                if (OriginalHook(Requiescat) == BladeOfHonor)
+                                    return OriginalHook(Requiescat);
                             }
-
-                            if (HasEffect(Buffs.GoringBladeReady) && WasLastAbility(BladeOfHonor))
-                                return GoringBlade;
 
                             if (HasEffect(Buffs.Requiescat))
                             {
                                 // Confiteor & Blades
-                                if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) &&
-                                    GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
+                                if (GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp && (HasEffect(Buffs.ConfiteorReady) || OriginalHook(Confiteor) != Confiteor))
                                     return OriginalHook(Confiteor);
 
+                                // Pre-Blades
                                 if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
                             }
-                            
-                            // New Spell after Confi Combo (Weave)
-                            if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor))
-                                return OriginalHook(Requiescat);
-
-                            // HS under DM
-                            if (HasEffect(Buffs.DivineMight) &&
-                                GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                                return HolySpirit;
                         }
 
-                        if (CanWeave(actionID))
+                        if (CanWeave(actionID) && InMeleeRange())
                         {
-                            // FoF (Starts burst)
-                            if (ActionReady(FightOrFlight) &&
-                                ActionWatching.CombatActions.Where(x => x == OriginalHook(RoyalAuthority)).Any()) // Check RA has been used for opener exception
-                                return FightOrFlight;
+                            // Fight or Flight
+                            if (ActionReady(FightOrFlight))
+                            {
+                                if (!LevelChecked(Requiescat))
+                                {
+                                    if (!LevelChecked(RageOfHalone))
+                                    {
+                                        // Levels 1-25
+                                        if (lastComboActionID is FastBlade)
+                                            return FightOrFlight;
+                                    }
 
-                            // Usage outside of burst
-                            if (!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15)
+                                    // Levels 26-67
+                                    else if (lastComboActionID is RiotBlade)
+                                        return FightOrFlight;
+                                }
+
+                                // Levels 68+
+                                else if (IsOffCooldown(Requiescat) && lastComboActionID is RoyalAuthority)
+                                    return FightOrFlight;
+                            }
+
+                            // Melee oGCDs
+                            if (GetCooldownRemainingTime(FightOrFlight) > 15)
                             {
                                 if (ActionReady(CircleOfScorn))
                                     return CircleOfScorn;
 
-                                if (ActionReady(OriginalHook(SpiritsWithin)))
+                                if (ActionReady(SpiritsWithin))
                                     return OriginalHook(SpiritsWithin);
                             }
                         }
 
-                        // Base combo
+                        // Atonement Usage: During Burst / Before Expiring / Before Refreshing
+                        if (inAtonementPhase && InMeleeRange() && (HasEffect(Buffs.FightOrFlight) || isAtonementExpiring || lastComboActionID is RiotBlade))
+                            return OriginalHook(Atonement);
+
+
+                        // Holy Spirit Usage: During Burst / Outside Melee / Before Expiring / Before Refreshing
+                        if (HasEffect(Buffs.DivineMight) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && (HasEffect(Buffs.FightOrFlight) ||
+                            !InMeleeRange() || GetBuffRemainingTime(Buffs.DivineMight) < 10 || lastComboActionID is RiotBlade))
+                            return HolySpirit;
+
+                        // Shield Lob Outside Melee
+                        if (LevelChecked(ShieldLob) && !InMeleeRange())
+                            return ShieldLob;
+
+                        // Basic Combo
                         if (comboTime > 0)
                         {
-                            if (lastComboActionID is FastBlade &&
-                                RiotBlade.LevelChecked())
+                            if (lastComboActionID is FastBlade && LevelChecked(RiotBlade))
                                 return RiotBlade;
 
-                            if (lastComboActionID is RiotBlade &&
-                                RageOfHalone.LevelChecked())
-                            {
-                                if (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
-                                    return OriginalHook(Atonement);
-                                
-                                return (HasEffect(Buffs.DivineMight) &&
-                                        GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                                    ? HolySpirit
-                                    : OriginalHook(RageOfHalone);
-                            }
+                            if (lastComboActionID is RiotBlade && LevelChecked(RageOfHalone))
+                                return OriginalHook(RageOfHalone);
                         }
                     }
                 }
@@ -215,11 +236,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is TotalEclipse)
                 {
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
+                    // Criterion Stuff
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
                         PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
+                    // Criterion Stuff
                     if (CanWeave(actionID))
                     {
                         Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
@@ -233,63 +255,60 @@ namespace XIVSlothCombo.Combos.PvE
                             return Variant.VariantUltimatum;
                     }
 
-                    // Requiescat inside burst (checking for FoF buff causes a late weave and can misalign over long fights with some ping)
-                    if (CanWeave(actionID) && (WasLastAbility(FightOrFlight) || JustUsed(FightOrFlight, 6f)) && ActionReady(Requiescat))
+                    // Requiescat
+                    if (ActionReady(Requiescat) && CanWeave(actionID) && JustUsed(FightOrFlight, 8f) && HasBattleTarget() && InMeleeRange())
                         return OriginalHook(Requiescat);
 
-                    // Actions under FoF burst
+                    // Burst Phase
                     if (HasEffect(Buffs.FightOrFlight))
                     {
+                        // oGCDs
                         if (CanWeave(actionID))
                         {
                             if (ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
-                            if (ActionReady(OriginalHook(SpiritsWithin)))
-                                return OriginalHook(SpiritsWithin);
+                            if (HasBattleTarget())
+                            {
+                                if (ActionReady(SpiritsWithin) && InMeleeRange())
+                                    return OriginalHook(SpiritsWithin);
+
+                                // Blade of Honor
+                                if (OriginalHook(Requiescat) == BladeOfHonor)
+                                    return OriginalHook(Requiescat);
+                            }
                         }
 
-                        if (HasEffect(Buffs.Requiescat))
-                        {
-                            if ((HasEffect(Buffs.ConfiteorReady) || BladeOfFaith.LevelChecked()) &&
-                                GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
-                                return OriginalHook(Confiteor);
-
-                            if (HolyCircle.LevelChecked() &&
-                                GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
-                                return HolyCircle;
-
-                            if (HolySpirit.LevelChecked() &&
-                                GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                                return HolySpirit;
-                        }
-
-                        if (HasEffect(Buffs.DivineMight) &&
-                            GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && HolyCircle.LevelChecked())
-                            return HolyCircle;
+                        // Confiteor & Blades
+                        if (HasEffect(Buffs.Requiescat) && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp &&
+                            HasBattleTarget() && (HasEffect(Buffs.ConfiteorReady) || OriginalHook(Confiteor) != Confiteor))
+                            return OriginalHook(Confiteor);
                     }
-
-                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
-                        return Prominence;
 
                     if (CanWeave(actionID))
                     {
-                        if (ActionReady(FightOrFlight))
+                        // Fight or Flight
+                        if (ActionReady(FightOrFlight) && (IsOffCooldown(Requiescat) || !LevelChecked(Requiescat)))
                             return FightOrFlight;
 
-                        if (!WasLastAction(FightOrFlight) && IsOnCooldown(FightOrFlight))
+                        // oGCDs
+                        if (GetCooldownRemainingTime(FightOrFlight) > 15)
                         {
                             if (ActionReady(CircleOfScorn))
                                 return CircleOfScorn;
 
-                            if (ActionReady(OriginalHook(SpiritsWithin)))
+                            if (ActionReady(SpiritsWithin) && InMeleeRange() && HasBattleTarget())
                                 return OriginalHook(SpiritsWithin);
                         }
                     }
 
-                    if ((HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)) &&
-                        GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
+                    // Holy Circle
+                    if (LevelChecked(HolyCircle) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)))
                         return HolyCircle;
+
+                    // Basic Combo
+                    if (comboTime > 0 && lastComboActionID is TotalEclipse && LevelChecked(Prominence))
+                        return Prominence;
 
                     return actionID;
                 }
@@ -388,9 +407,11 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Intervene);
                             }
 
+                            // New Goring Blade
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
-                                HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && WasLastAbility(BladeOfHonor))
-                                return GoringBlade;
+                                InMeleeRange() && HasEffect(Buffs.GoringBladeReady) && (!BladeOfHonor.LevelChecked() ||
+                                (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
+                                return OriginalHook(FightOrFlight);
 
                             if (HasEffect(Buffs.Requiescat))
                             {
@@ -421,7 +442,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HolySpirit;
 
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)))
+                                (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)))
                                 return OriginalHook(Atonement);
                         }
 
@@ -449,7 +470,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) &&
                             HasEffect(Buffs.GoringBladeReady) &&
                             IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF))
-                            return GoringBlade;
+                            return OriginalHook(FightOrFlight);
 
                         //Req without FoF
                         if (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && CanWeave(actionID)) && ActionReady(Requiescat))
@@ -479,7 +500,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolySpirit;
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange())
+                            (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange())
                             return OriginalHook(Atonement);
 
                         // Base combo
@@ -492,7 +513,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (lastComboActionID is RiotBlade && RageOfHalone.LevelChecked())
                             {
                                 if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                                    (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() && 
+                                    (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() && 
                                     (Config.PLD_ST_AtonementTiming == 2 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 0)))
                                     return OriginalHook(Atonement);
 
@@ -506,7 +527,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Atonement) &&
-                            (HasEffect(Buffs.SwordOath) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() &&
+                            (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady)) && InMeleeRange() &&
                             (Config.PLD_ST_AtonementTiming == 1 || (Config.PLD_ST_AtonementTiming == 3 && ActionWatching.CombatActions.Count(x => x == FightOrFlight) % 2 == 1)))
                             return OriginalHook(Atonement);
 
@@ -605,9 +626,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolyCircle;
                     }
 
-                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
-                        return Prominence;
-
                     if (CanWeave(actionID))
                     {
                         // FoF (Starts burst)
@@ -649,6 +667,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && HasEffect(Buffs.DivineMight) &&
                         GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp && LevelChecked(HolyCircle))
                         return HolyCircle;
+
+                    if (comboTime > 0 && lastComboActionID is TotalEclipse && Prominence.LevelChecked())
+                        return Prominence;
 
                     return actionID;
                 }
