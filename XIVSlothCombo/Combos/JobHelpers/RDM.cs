@@ -14,6 +14,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         static bool ActionReady(uint id) => CustomComboFunctions.ActionReady(id);
         static bool CanSpellWeave(uint id) => CustomComboFunctions.CanSpellWeave(id);
         static bool HasCharges(uint id) => CustomComboFunctions.HasCharges(id);
+        static bool TraitLevelChecked(uint id) => CustomComboFunctions.TraitLevelChecked(id);
 
         internal class ManaBalancer : PvE.RDM
         {
@@ -154,6 +155,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 bool fleche = SingleTarget ? Config.RDM_ST_oGCD_Fleche : Config.RDM_AoE_oGCD_Fleche;
                 bool contra = SingleTarget ? Config.RDM_ST_oGCD_ContraSixte : Config.RDM_AoE_oGCD_ContraSixte;
                 bool engagement = SingleTarget ? Config.RDM_ST_oGCD_Engagement : Config.RDM_AoE_oGCD_Engagement;
+                bool vice = SingleTarget ? Config.RDM_ST_oGCD_ViceOfThorns : Config.RDM_AoE_oGCD_ViceOfThorns;
+                bool prefulg = SingleTarget ? Config.RDM_ST_oGCD_Prefulgence : Config.RDM_AoE_oGCD_Prefulgence;
                 int engagementPool = (SingleTarget && Config.RDM_ST_oGCD_Engagement_Pooling) || (!SingleTarget && Config.RDM_AoE_oGCD_Engagement_Pooling) ? 1 : 0;
 
                 bool corpacorps = SingleTarget ? Config.RDM_ST_oGCD_CorpACorps : Config.RDM_AoE_oGCD_CorpACorps;
@@ -175,11 +178,22 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     && LevelChecked(Corpsacorps)
                     && distance <= corpacorpsRange)
                     placeOGCD = Corpsacorps;
+                
                 if (contra
                     && ActionReady(ContreSixte))
                     placeOGCD = ContreSixte;
                 if (fleche && ActionReady(Fleche))
                     placeOGCD = Fleche;
+
+                if (vice &&
+                    TraitLevelChecked(Traits.EnhancedEmbolden) &&
+                    HasEffect(Buffs.ThornedFlourish))
+                    placeOGCD = ViceOfThorns;
+
+                if (prefulg &&
+                    TraitLevelChecked(Traits.EnhancedManaficationIII) &&
+                    HasEffect(Buffs.PrefulugenceReady))
+                    placeOGCD = Prefulgence;
 
                 if (CanSpellWeave(actionID) && placeOGCD != 0)
                 {
@@ -221,7 +235,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             internal static bool SafetoUse(in uint lastComboMove)
             {
                 return
-                    !CustomComboFunctions.HasEffect(Buffs.Dualcast)
+                    !HasEffect(Buffs.Dualcast)
                     && lastComboMove != EnchantedRiposte
                     && lastComboMove != EnchantedZwerchhau
                     && lastComboMove != EnchantedRedoublement

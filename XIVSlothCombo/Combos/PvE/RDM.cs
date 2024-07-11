@@ -48,12 +48,15 @@ namespace XIVSlothCombo.Combos.PvE
             Corpsacorps = 7506,
             Displacement = 7515,
             Reprise = 16529,
-            MagickBarrier = 25857,
+            ViceOfThorns = 37005,
+            GrandImpact = 37006,
+            Prefulgence = 37007,
 
             //Buffs
             Acceleration = 7518,
             Manafication = 7521,
-            Embolden = 7520;
+            Embolden = 7520,
+            MagickBarrier = 25857;
 
         public static class Buffs
         {
@@ -66,7 +69,11 @@ namespace XIVSlothCombo.Combos.PvE
                 Embolden = 1239,
                 EmboldenOthers = 1297,
                 Manafication = 1971,
-                MagickBarrier = 2707;
+                MagickBarrier = 2707,
+                MagickedSwordPlay = 3875,
+                ThornedFlourish = 3876,
+                GrandImpactReady = 3877,
+                PrefulugenceReady = 3878;
         }
 
         public static class Debuffs
@@ -75,6 +82,14 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
         public static RDMGauge Gauge => CustomComboFunctions.GetJobGauge<RDMGauge>();
+
+        public static class Traits
+        {
+            public const uint
+                EnhancedEmbolden = 620,
+                EnhancedManaficationIII = 622,
+                EnhancedAccelerationII = 624;                
+        }
 
         public static class Config
         {
@@ -92,6 +107,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RDM_ST_oGCD_CorpACorps = new("RDM_ST_oGCD_CorpACorps"),
                 RDM_ST_oGCD_CorpACorps_Melee = new("RDM_ST_oGCD_CorpACorps_Melee"),
                 RDM_ST_oGCD_CorpACorps_Pooling = new("RDM_ST_oGCD_CorpACorps_Pooling"),
+                RDM_ST_oGCD_ViceOfThorns = new("RDM_ST_oGCD_ViceOfThorns"),
+                RDM_ST_oGCD_Prefulgence = new("RDM_ST_oGCD_Prefulgence"),
                 RDM_ST_MeleeCombo_Adv = new("RDM_ST_MeleeCombo_Adv"),
                 RDM_ST_MeleeFinisher_Adv = new("RDM_ST_MeleeFinisher_Adv"),
                 RDM_ST_MeleeEnforced = new("RDM_ST_MeleeEnforced"),
@@ -104,6 +121,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RDM_AoE_oGCD_CorpACorps = new("RDM_AoE_oGCD_CorpACorps"),
                 RDM_AoE_oGCD_CorpACorps_Melee = new("RDM_AoE_oGCD_CorpACorps_Melee"),
                 RDM_AoE_oGCD_CorpACorps_Pooling = new("RDM_AoE_oGCD_CorpACorps_Pooling"),
+                RDM_AoE_oGCD_ViceOfThorns = new("RDM_AoE_oGCD_ViceOfThorns"),
+                RDM_AoE_oGCD_Prefulgence = new("RDM_AoE_oGCD_Prefulgence"),
                 RDM_AoE_MeleeCombo_Adv = new("RDM_AoE_MeleeCombo_Adv"),
                 RDM_AoE_MeleeFinisher_Adv = new("RDM_AoE_MeleeFinisher_Adv");
             public static UserBoolArray
@@ -505,7 +524,7 @@ namespace XIVSlothCombo.Combos.PvE
                         int Mana = Math.Min(Gauge.WhiteMana, Gauge.BlackMana);
                         if (LevelChecked(Manafication))
                         {
-                            int ManaBuff = (int)GetBuffStacks(Buffs.Manafication);
+                            int ManaBuff = GetBuffStacks(Buffs.MagickedSwordPlay);
                             if (ManaBuff > 0) Mana = 50; //ITS FREE REAL ESTATE
                         }
 
@@ -568,29 +587,36 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 //END_RDM_ST_ACCELERATION
 
-                //RDM_VERFIREVERSTONE
-                if (IsEnabled(CustomComboPreset.RDM_ST_FireStone)
-                    && actionID is Jolt or Jolt2 or Jolt3
-                    && !HasEffect(Buffs.Acceleration)
-                    && !HasEffect(Buffs.Dualcast))
-                {
-                    //Run the Mana Balance Computer
-                    manaState.CheckBalance();
-                    if (manaState.useFire) return Verfire;
-                    if (manaState.useStone) return Verstone;
-                }
-                //END_RDM_VERFIREVERSTONE
 
-                //RDM_VERTHUNDERVERAERO
-                if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero)
-                    && actionID is Jolt or Jolt2 or Jolt3)
+                if (actionID is Jolt or Jolt2 or Jolt3)
                 {
-                    //Run the Mana Balance Computer
-                    manaState.CheckBalance();
-                    if (manaState.useThunder) return OriginalHook(Verthunder);
-                    if (manaState.useAero) return OriginalHook(Veraero);
+                    if (TraitLevelChecked(Traits.EnhancedAccelerationII)
+                        && HasEffect(Buffs.GrandImpactReady))
+                       return GrandImpact;
+
+                    //RDM_VERFIREVERSTONE
+                    if (IsEnabled(CustomComboPreset.RDM_ST_FireStone)
+                        && !HasEffect(Buffs.Acceleration)
+                        && !HasEffect(Buffs.Dualcast))
+                    {
+                        //Run the Mana Balance Computer
+                        manaState.CheckBalance();
+                        if (manaState.useFire) return Verfire;
+                        if (manaState.useStone) return Verstone;
+                    }
+                    //END_RDM_VERFIREVERSTONE
+
+                    //RDM_VERTHUNDERVERAERO
+                    if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero))
+                    {
+                        //Run the Mana Balance Computer
+                        manaState.CheckBalance();
+                        if (manaState.useThunder) return OriginalHook(Verthunder);
+                        if (manaState.useAero) return OriginalHook(Veraero);
+                    }
+                    //END_RDM_VERTHUNDERVERAERO
+                
                 }
-                //END_RDM_VERTHUNDERVERAERO
 
                 //NO_CONDITIONS_MET
                 return actionID;
@@ -729,26 +755,26 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //7.0 Manification Magic Mana
-                        //The Math.Min after level check is GaugeStack * 16.67 >= 50 to validate Molinet
-                        //Really needs some higher level autism to figure out if there is a better way
-                        int ManaBuff = (int)GetBuffStacks(Buffs.Manafication);
-                        if (ManaBuff > 3) ManaBuff = 3; //Only need 3 to use the combo (low level 60 get 3)
-                        int ManaStacks = Math.Max(Gauge.ManaStacks, ManaBuff);
-
+                        int Mana = Math.Min(Gauge.WhiteMana, Gauge.BlackMana);
+                        if (LevelChecked(Manafication))
+                        {
+                            int ManaBuff = GetBuffStacks(Buffs.MagickedSwordPlay);
+                            if (ManaBuff > 0) Mana = 50; //ITS FREE REAL ESTATE
+                        }
+                        
                         if (LevelChecked(Moulinet)
                             && LocalPlayer.IsCasting == false
                             && !HasEffect(Buffs.Dualcast)
                             && !HasEffect(All.Buffs.Swiftcast)
                             && !HasEffect(Buffs.Acceleration)
-                            && ((Math.Min(Gauge.BlackMana, Gauge.WhiteMana) + (ManaStacks * 16.67) >= 50) ||
-                                (!LevelChecked(Verflare) && Math.Min(Gauge.BlackMana, Gauge.WhiteMana) >= 20)))
+                            && Mana >= 50)
                         {
                             if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_CorpsGapCloser)
                                 && ActionReady(Corpsacorps)
                                 && GetTargetDistance() > Config.RDM_AoE_MoulinetRange)
                                 return Corpsacorps;
 
-                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && ManaStacks == 0) || ManaStacks >= 1)
+                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && Gauge.ManaStacks == 0) || Gauge.ManaStacks >= 1)
                                 return OriginalHook(Moulinet);
                         }
                     }
@@ -786,6 +812,11 @@ namespace XIVSlothCombo.Combos.PvE
                 //RDM_VERTHUNDERIIVERAEROII
                 if (actionID is Scatter or Impact)
                 {
+
+                    if (TraitLevelChecked(Traits.EnhancedAccelerationII)
+                        && HasEffect(Buffs.GrandImpactReady))
+                       return GrandImpact;
+
                     manaState.CheckBalance();
                     if (manaState.useThunder2) return OriginalHook(Verthunder2);
                     if (manaState.useAero2) return OriginalHook(Veraero2);
