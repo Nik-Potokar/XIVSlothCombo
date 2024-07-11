@@ -142,9 +142,9 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
-                        ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
-                        ((GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3) || (GetCooldownRemainingTime(ArcaneCircle) <= GCD))) || // Double Enshroud windows
-                        (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6))) // Other times
+                       ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
+                       (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3 || GetCooldownRemainingTime(ArcaneCircle) <= GCD)) || // Double Enshroud windows
+                     (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6))) // Other times
                         return ShadowOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
@@ -175,12 +175,12 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                         if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
-                            (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
-                            HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
-                            (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 4) || // Prep for double Enshroud + Natural Odd Minute Shrouds
-                            WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
-                            (!HasEffect(Buffs.ArcaneCircle) && WasLastAction(ShadowOfDeath)) || //Natural Odd Minute Shroud
-                            (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
+                             (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
+                             HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
+                             (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 4) || // Prep for double Enshroud + Natural Odd Minute Shrouds
+                             WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
+                             (!HasEffect(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 20) || //Natural Odd Minute Shrouds
+                             (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
                             return Enshroud;
 
                         if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
@@ -298,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SoD) && LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && enemyHP > Config.RPR_SoDThreshold &&
-                        ((LevelChecked(PlentifulHarvest) && (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3 || GetCooldownRemainingTime(ArcaneCircle) <= GCD)) || // Double Enshroud windows
+                        ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3 || GetCooldownRemainingTime(ArcaneCircle) <= GCD)) || // Double Enshroud windows
                       (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange))) // Other times
                         return ShadowOfDeath;
 
@@ -343,7 +343,7 @@ namespace XIVSlothCombo.Combos.PvE
                             HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
                             (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 4) || // Prep for double Enshroud + Natural Odd Minute Shrouds
                             WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
-                            (!HasEffect(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 10) || //Natural Odd Minute Shrouds
+                            (!HasEffect(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 20) || //Natural Odd Minute Shrouds
                             (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
                             return Enshroud;
 
