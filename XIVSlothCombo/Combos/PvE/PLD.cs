@@ -152,14 +152,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Requiescat);
                             }
 
-<<<<<<< HEAD
-                            // New Goring Blade
-                            if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && 
-                                (!BladeOfHonor.LevelChecked() || (IsOnCooldown(Requiescat) && !HasEffect(Buffs.Requiescat) && OriginalHook(Requiescat) != BladeOfHonor)))
-                                return GoringBlade;
-
-=======
->>>>>>> main
                             if (HasEffect(Buffs.Requiescat))
                             {
                                 // Confiteor & Blades
@@ -170,22 +162,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                                     return HolySpirit;
                             }
-<<<<<<< HEAD
-                            
-                            // New Spell after Confi Combo (Weave)
-                            if (CanWeave(actionID) && HasEffect(Buffs.BladeOfHonor))
-                                return OriginalHook(Requiescat);
-
-                            // Atonement combo before Holy Spirit
-                            if (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SepulchreReady) || HasEffect(Buffs.SupplicationReady))
-                                return OriginalHook(Atonement);
-
-                            // HS under DM
-                            if (HasEffect(Buffs.DivineMight) &&
-                                GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
-                                return HolySpirit;
-=======
->>>>>>> main
                         }
 
                         if (CanWeave(actionID) && InMeleeRange())
@@ -202,10 +178,11 @@ namespace XIVSlothCombo.Combos.PvE
                                             return FightOrFlight;
                                     }
 
-                                    // Levels 26-67
-                                    else if (lastComboActionID is RiotBlade)
-                                        return FightOrFlight;
-                                }
+                            // HS under DM
+                            if (HasEffect(Buffs.DivineMight) &&
+                                GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                return HolySpirit;
+                        }
 
                                 // Levels 68+
                                 else if (IsOffCooldown(Requiescat) && lastComboActionID is RoyalAuthority)
