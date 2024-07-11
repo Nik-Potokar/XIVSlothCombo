@@ -43,6 +43,7 @@ namespace XIVSlothCombo.Combos.PvE
             Impalement = 36931,       // Under Delirium
 
             // Buffing oGCDs
+            BloodWeapon = 3625,
             Delirium = 7390,
 
             // Burst Window
@@ -184,9 +185,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Delirium
                         if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
-                            && IsOffCooldown(Delirium)
-                            && LevelChecked(Delirium))
-                            return Delirium;
+                            && IsOffCooldown(BloodWeapon)
+                            && LevelChecked(BloodWeapon))
+                            return OriginalHook(Delirium);
 
                         if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
                         {
@@ -333,9 +334,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Delirium
                     if (IsEnabled(CustomComboPreset.DRK_AoE_Delirium)
-                        && IsOffCooldown(Delirium)
-                        && LevelChecked(Delirium))
-                        return Delirium;
+                        && IsOffCooldown(BloodWeapon)
+                        && LevelChecked(BloodWeapon))
+                        return OriginalHook(Delirium);
 
                     if (gauge.DarksideTimeRemaining > 1)
                     {
