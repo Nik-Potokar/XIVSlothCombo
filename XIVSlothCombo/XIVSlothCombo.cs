@@ -155,8 +155,6 @@ namespace XIVSlothCombo
             HandleConflictedCombos();
 
 #if DEBUG
-            PvEFeatures.HasToOpenJob = false;
-            PvEFeatures.OpenJob = "Astrologian";
             ConfigWindow.IsOpen = true;
 #endif
         }
