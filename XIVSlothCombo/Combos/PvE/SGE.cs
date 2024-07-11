@@ -112,12 +112,14 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_ST_DPS_Movement = new("SGE_ST_DPS_Movement");
             public static UserInt
                 SGE_ST_DPS_EDosisHPPer = new("SGE_ST_DPS_EDosisHPPer", 10),
-                SGE_ST_DPS_Lucid = new("SGE_ST_DPS_Lucid",6500),
+                SGE_ST_DPS_Lucid = new("SGE_ST_DPS_Lucid", 6500),
                 SGE_ST_DPS_Rhizo = new("SGE_ST_DPS_Rhizo"),
-                SGE_AoE_DPS_Lucid = new("SGE_AoE_Phlegma_Lucid",6500),
-                SGE_AoE_DPS_Rhizo = new("SGE_AoE_DPS_Rhizo");
+                SGE_ST_DPS_AddersgallProtect = new("SGE_ST_DPS_AddersgallProtect", 3),
+                SGE_AoE_DPS_Lucid = new("SGE_AoE_Phlegma_Lucid", 6500),
+                SGE_AoE_DPS_Rhizo = new("SGE_AoE_DPS_Rhizo"),
+                SGE_AoE_DPS_AddersgallProtect = new("SGE_AoE_DPS_AddersgallProtect", 3);
             public static UserFloat
-                SGE_ST_DPS_EDosisThreshold = new("SGE_ST_Dosis_EDosisThreshold",3.0f);
+                SGE_ST_DPS_EDosisThreshold = new("SGE_ST_Dosis_EDosisThreshold", 3.0f);
             #endregion
 
             #region Healing
@@ -240,6 +242,11 @@ namespace XIVSlothCombo.Combos.PvE
                             ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_AoE_DPS_Rhizo)
                             return Rhizomata;
 
+                        // Addersgall Protection
+                        if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_AddersgallProtect) && CanSpellWeave(Dosis) &&
+                            ActionReady(Druochole) && Gauge.Addersgall >= Config.SGE_AoE_DPS_AddersgallProtect)
+                            return Druochole;
+
                         //Eukrasia for DoT
                         if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia))
                         {
@@ -335,6 +342,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Rhizo) && CanSpellWeave(actionID) &&
                         ActionReady(Rhizomata) && Gauge.Addersgall <= Config.SGE_ST_DPS_Rhizo)
                         return Rhizomata;
+
+                    // Addersgall Protection
+                    if (IsEnabled(CustomComboPreset.SGE_ST_DPS_AddersgallProtect) && CanSpellWeave(Dosis) &&
+                        ActionReady(Druochole) && Gauge.Addersgall >= Config.SGE_ST_DPS_AddersgallProtect)
+                        return Druochole;
 
                     if (HasBattleTarget() && (!HasEffect(Buffs.Eukrasia)))
                     // Buff check Above. Without it, Toxikon and any future option will interfere in the Eukrasia->Eukrasia Dosis combo
