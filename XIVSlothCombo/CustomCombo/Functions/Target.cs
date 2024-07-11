@@ -378,7 +378,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             }
         }
 
-        internal unsafe static bool OutOfRange(uint actionID, IGameObject target) => ActionWatching.OutOfRange(actionID, (StructsObject.GameObject*)Service.ClientState.LocalPlayer.Address, (StructsObject.GameObject*)target.Address);
+        internal unsafe static bool OutOfRange(uint actionID, IGameObject target) => ActionWatching.OutOfRange(actionID, Service.ClientState.LocalPlayer!, target);
 
     }
 }
