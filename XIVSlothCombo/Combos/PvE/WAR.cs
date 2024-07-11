@@ -123,8 +123,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Onslaught;
                             }
                         }
-
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetCooldownRemainingTime(InnerRelease) < 57.5)
+                        
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && !JustUsed(InnerRelease, GetCooldown(actionID).CooldownTotal))
                         {
                             if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
                                 return PrimalRend;
