@@ -1244,8 +1244,24 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
 
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_Spire)
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Spire, "Set percentage value");
+
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_Ewer)
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Ewer, "Set percentage value");
+
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_ST_SimpleHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
+
+
+            if (preset is CustomComboPreset.AST_AoE_SimpleHeals_LazyLady)
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_SimpleHeals_WeaveLady, "Only Weave", "Will only weave this action.");
+
+            if (preset is CustomComboPreset.AST_AoE_SimpleHeals_Horoscope)
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_SimpleHeals_Horoscope, "Only Weave", "Will only weave this action.");
+
+            if (preset is CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition)
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_SimpleHeals_Opposition, "Only Weave", "Will only weave this action.");
 
             if (preset is CustomComboPreset.AST_Cards_QuickTargetCards)
             {
@@ -1467,11 +1483,14 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region DARK KNIGHT
 
-            if (preset == CustomComboPreset.DRK_EoSPooling && enabled)
-                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_MPManagement, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
+            if (preset == CustomComboPreset.DRK_ST_ManaSpenderPooling && enabled)
+                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_ST_ManaSpenderPooling, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
 
-            if (preset == CustomComboPreset.DRK_Plunge && enabled)
-                UserConfig.DrawSliderInt(0, 1, DRK.Config.DRK_KeepPlungeCharges, "How many charges to keep ready? (0 = Use All)", 75, SliderIncrements.Ones);
+            if (preset == CustomComboPreset.DRK_ST_CDs_LivingShadow && enabled)
+                UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_ST_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
+            if (preset == CustomComboPreset.DRK_AoE_CDs_LivingShadow && enabled)
+                UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_AoE_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
 
             if (preset == CustomComboPreset.DRKPvP_Burst)
                 UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
@@ -2577,8 +2596,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WHM_AoEHeals_Medica2)
             {
-                UserConfig.DrawRoundedSliderFloat(0f, 6f, WHM.Config.WHM_AoEHeals_Medica2Time, "Time Remaining on Buff to Renew");
-                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_Medica2MO, "Party UI Mousover Checking", "Check your mouseover target for the Medica II buff.\nTo be used in conjunction with Redirect/Reaction/etc.");
+                UserConfig.DrawRoundedSliderFloat(0f, 6f, WHM.Config.WHM_AoEHeals_MedicaTime, "Time Remaining on Buff to Renew");
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_MedicaMO, "Party UI Mousover Checking", "Check your mouseover target for the Medica II/III buff.\nTo be used in conjunction with Redirect/Reaction/etc.");
             }
 
             #endregion

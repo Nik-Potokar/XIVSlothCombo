@@ -25,6 +25,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 DRG.JobID, DRG.ClassID,
                 MNK.JobID, MNK.ClassID,
                 NIN.JobID, NIN.ClassID,
+                VPR.JobID,
                 RPR.JobID,
                 SAM.JobID
             ];
@@ -34,6 +35,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
                 BLM.JobID, BLM.ClassID,
                 BRD.JobID, BRD.ClassID,
                 SMN.JobID, SMN.ClassID,
+                PCT.JobID,
                 MCH.JobID,
                 RDM.JobID,
                 DNC.JobID,
