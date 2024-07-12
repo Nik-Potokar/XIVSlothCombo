@@ -91,7 +91,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && LevelChecked(Tomahawk) && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
-                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && gauge <= infuriateGauge && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) && gauge <= infuriateGauge && CanWeave(actionID))
                         return Infuriate;
 
                     //Sub Storm's Eye level check
@@ -216,7 +216,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && gauge <= infuriateGauge && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) && gauge <= infuriateGauge && CanWeave(actionID))
                         return Infuriate;
 
                     //Sub Mythril Tempest level check
@@ -292,7 +292,7 @@ namespace XIVSlothCombo.Combos.PvE
         }
 
 
-        internal class WAR_ST_StormsPath_PrimalRend : CustomCombo
+        internal class WAR_ST_StormsPath_PrimalCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_ST_StormsPath_PrimalRend;
 
@@ -333,9 +333,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class WAR_PrimalRend_InnerRelease : CustomCombo
+        internal class WAR_PrimalCombo_InnerRelease : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_PrimalRend_InnerRelease;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_PrimalCombo_InnerRelease;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
@@ -343,6 +343,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (LevelChecked(PrimalRend) && HasEffect(Buffs.PrimalRendReady))
                         return PrimalRend;
+                    if (LevelChecked(PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && WasLastWeaponskill(PrimalRend))
+                        return PrimalRuination;
                 }
 
                 return actionID;
