@@ -280,7 +280,6 @@ namespace XIVSlothCombo.Combos.PvE
                 bool drillCD = !LevelChecked(Drill) || (LevelChecked(Drill) && GetCooldownRemainingTime(Drill) > heatblastRC * 6);
                 bool anchorCD = !LevelChecked(AirAnchor) || (LevelChecked(AirAnchor) && GetCooldownRemainingTime(AirAnchor) > heatblastRC * 6);
                 bool sawCD = !LevelChecked(Chainsaw) || (LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
-                bool ExcavatorCD = !LevelChecked(Excavator) || (LevelChecked(Excavator) && GetBuffRemainingTime(Buffs.ExcavatorReady) > heatblastRC * 6);
                 float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
 
                 if (actionID is SplitShot or HeatedSplitShot)
@@ -339,7 +338,7 @@ namespace XIVSlothCombo.Combos.PvE
                             !LevelChecked(Wildfire))
                             return Hypercharge;
 
-                        else if (drillCD && anchorCD && sawCD && ExcavatorCD &&
+                        else if (drillCD && anchorCD && sawCD &&
                             ((GetCooldownRemainingTime(Wildfire) > GCD * 8 && LevelChecked(Wildfire)) || !LevelChecked(Wildfire)))
                             return Hypercharge;
                     }
