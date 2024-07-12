@@ -3779,7 +3779,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(VPR.Dreadwinder)]
-        [CustomComboInfo("Dreadwinder - Coils", "Replaces Dreadwinder with the Coils.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        [CustomComboInfo("Dreadwinder - Coils", "Replaces Dreadwinder with Hunter's/Swiftskin's Coils.", VPR.JobID)]
         VPR_DreadwinderCoils = 30200,
 
         [ReplaceSkill(VPR.PitofDread)]
@@ -3801,6 +3801,14 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(VPR.SerpentsTail)]
         [CustomComboInfo("Combined Combo Ability Feature", "Combines Serpent's Tail, Twinfang, and Twinblood to one button.", VPR.JobID)]
         VPR_TwinTails = 30205,
+
+        [ParentCombo(VPR_DreadwinderCoils)]
+        [CustomComboInfo("Include Twin Combo Actions", "Also add Twinfang and Twinblood to the button.", VPR.JobID)]
+        VPR_DreadwinderCoils_oGCDs = 30206,
+
+        [ParentCombo(VPR_PitOfDreadDens)]
+        [CustomComboInfo("Include Twin Combo Actions", "Also add Twinfang and Twinblood to the button.", VPR.JobID)]
+        VPR_PitOfDreadDens_oGCDs = 30207,
 
         #endregion
 
