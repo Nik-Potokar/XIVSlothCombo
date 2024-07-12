@@ -58,6 +58,7 @@ namespace XIVSlothCombo.Combos.PvE
             AspectedBenefic = 3595,
             Helios = 3600,
             AspectedHelios = 3601,
+            HeliosConjuction = 37030,
             Ascend = 3603,
             EssentialDignity = 3614,
             CelestialOpposition = 16553,
@@ -77,6 +78,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const ushort
                 AspectedBenefic = 835,
                 AspectedHelios = 836,
+                HeliosConjunction = 3894,
                 Horoscope = 1890,
                 HoroscopeHelios = 1891,
                 NeutralSect = 1892,
@@ -299,7 +301,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
                     var canOppose = (Config.AST_AoE_SimpleHeals_Opposition && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Opposition;
 
-
                     //Level check to exit if we can't use
                     if (!LevelChecked(AspectedHelios))
                         return Helios;
@@ -321,17 +322,22 @@ namespace XIVSlothCombo.Combos.PvE
                             canHoroscope)
                             return Horoscope;
 
-                        if ((ActionReady(AspectedHelios) && !HasEffect(Buffs.AspectedHelios))
+                        if ((ActionReady(AspectedHelios)
+                                 && !HasEffect(Buffs.AspectedHelios)
+                                 && !HasEffect(Buffs.HeliosConjunction))
                              || HasEffect(Buffs.Horoscope)
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
-                            return AspectedHelios;
+                            return OriginalHook(AspectedHelios);
 
                         if (HasEffect(Buffs.HoroscopeHelios) &&
                             canHoroscope)
                             return OriginalHook(Horoscope);
                     }
 
-                    if (HasEffect(Buffs.AspectedHelios) && FindEffect(Buffs.AspectedHelios).RemainingTime > 2)
+                    if ((HasEffect(Buffs.AspectedHelios)
+                         || HasEffect(Buffs.HeliosConjunction))
+                        && (FindEffect(Buffs.AspectedHelios).RemainingTime > 2
+                            || FindEffect(Buffs.HeliosConjunction).RemainingTime > 2))
                         return Helios;
                 }
 
