@@ -132,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return PrimalRend;
                             if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
                                 return PrimalRend;
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && (!HasEffect(Buffs.InnerReleaseStacks) && !HasEffect(Buffs.BurgeoningFury) && !HasEffect(Buffs.Wrathful)))
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !HasEffect(Buffs.InnerReleaseStacks) && !HasEffect(Buffs.BurgeoningFury) && !HasEffect(Buffs.Wrathful))
                                 return PrimalRend;
                             if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late))
                                 return PrimalRend;
