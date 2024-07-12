@@ -1,6 +1,7 @@
 ﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using static XIVSlothCombo.Combos.PvE.GNB;
 
 namespace XIVSlothCombo.Combos
 {
@@ -1375,12 +1376,9 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
-        [CustomComboInfo("Skill Speed Support Feature", "Allows for features to support various skill speed rotations.", GNB.JobID, 0)]
-        GNB_ST_SkSSupport = 7000,
-
         #region ST
         [ReplaceSkill(GNB.KeenEdge)]
-        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap.", GNB.JobID)]
+        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. ***DOES NOT WORK WELL WITH 2.46-2.49***", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
 
         #region Reign Combo
@@ -1510,6 +1508,24 @@ namespace XIVSlothCombo.Combos
         GNB_BS_DoubleDown = 7403,
         #endregion
 
+        #region Fated Circle
+        [ReplaceSkill(GNB.FatedCircle)]
+        [CustomComboInfo("Fated Circle Features", "Collection of Fated Circle related features.", GNB.JobID)]
+        GNB_FC = 7600,
+
+        [ParentCombo(GNB_FC)]
+        [CustomComboInfo("Fated Circle Continuation Feature", "Adds Continuation on Fated Circle.", GNB.JobID)]
+        GNB_FC_Continuation = 7601,
+
+        [ParentCombo(GNB_FC)]
+        [CustomComboInfo("Fated Circle to Bloodfest Feature", "Replace Fated Circle with Bloodfest if you have no powder gauge.", GNB.JobID)]
+        GNB_FC_Bloodfest = 7602,
+
+        [ParentCombo(GNB_FC)]
+        [CustomComboInfo("Double Down on Fated Circle Feature", "Adds Double Down to Fated Circle when under No Mercy and ammo is above 2.", GNB.JobID)]
+        GNB_FC_DoubleDown = 7603,
+        #endregion
+
         #region No Mercy
         [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
         [ReplaceSkill(GNB.NoMercy)]
@@ -1526,7 +1542,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [CustomComboInfo("Aurora Protection Feature", "Locks out Aurora if Aurora's effect is on the target.", GNB.JobID, 0, "", "")]
-        GNB_AuroraProtection = 7600,
+        GNB_AuroraProtection = 7700,
 
         [Variant]
         [VariantParent(GNB_ST_MainCombo, GNB_AoE_MainCombo)]
@@ -1543,7 +1559,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
         GNB_Variant_Ultimatum = 7035,
 
-        // Last value = 7600
+        // Last value = 7700
 
         #endregion
 
