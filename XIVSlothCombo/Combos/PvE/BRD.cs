@@ -344,7 +344,7 @@ namespace XIVSlothCombo.Combos.PvE
                         int songTimerInSeconds = gauge.SongTimer / 1000;
                         bool songNone = gauge.Song == Song.NONE;
 
-                        if (songTimerInSeconds < 3 || songNone)
+                        if (songTimerInSeconds < 12 || songNone)
                         {
                             if (LevelChecked(WanderersMinuet) && IsOffCooldown(WanderersMinuet) &&
                                 !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)) &&
@@ -566,8 +566,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (songMage)
                                 {
 
-                                    // Move to Army's Paeon if < 12 seconds left on song
-                                    if (songTimerInSeconds < 12 && paeonReady)
+                                    // Move to Army's Paeon if < 3 seconds left on song
+                                    if (songTimerInSeconds < 3 && paeonReady)
                                     {
                                         // Special case for Empyreal Arrow: it must be cast before you change to it to avoid drift!
                                         if (empyrealReady)
@@ -579,8 +579,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (songArmy && canWeaveDelayed)
                             {
-                                // Move to Wanderer's Minuet if < 3 seconds left on song or WM off CD and have 4 repertoires of AP
-                                if (songTimerInSeconds < 3 || (minuetReady && gauge.Repertoire == 4))
+                                // Move to Wanderer's Minuet if < 12 seconds left on song or WM off CD and have 4 repertoires of AP
+                                if (songTimerInSeconds < 12 || (minuetReady && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
                         }
@@ -751,7 +751,7 @@ namespace XIVSlothCombo.Combos.PvE
                             HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime) &&
                             HasEffect(Buffs.RadiantFinale) && radiantFinaleDuration < 4 &&
                             poisonRecast(40) && windRecast(40));
-                        
+
 
                         if (!LevelChecked(Stormbite))
                         {
@@ -869,10 +869,10 @@ namespace XIVSlothCombo.Combos.PvE
                     bool magesBalladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
                     bool armysPaeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);
 
-                    if (wanderersMinuetReady || (gauge.Song == Song.WANDERER && songTimerInSeconds > 2))
+                    if (wanderersMinuetReady || (gauge.Song == Song.WANDERER && songTimerInSeconds > 11))
                         return WanderersMinuet;
 
-                    if (magesBalladReady || (gauge.Song == Song.MAGE && songTimerInSeconds > 11))
+                    if (magesBalladReady || (gauge.Song == Song.MAGE && songTimerInSeconds > 2))
                         return MagesBallad;
 
                     if (armysPaeonReady || (gauge.Song == Song.ARMY && songTimerInSeconds > 2))
