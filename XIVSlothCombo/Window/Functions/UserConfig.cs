@@ -1547,12 +1547,6 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region GUNBREAKER
 
-            if (preset == CustomComboPreset.GNB_ST_SkSSupport && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "< 2.45", "Options are friendly for skill speeds of 2.45 and lower.", 1);
-                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
-            }
-
             if (preset == CustomComboPreset.GNB_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
 

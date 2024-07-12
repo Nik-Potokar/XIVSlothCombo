@@ -72,7 +72,7 @@ namespace XIVSlothCombo.Combos.PvP
                     }
 
                     if (IsOffCooldown(DoubleDown) &&
-                        GetRemainingCharges(RoughDivide) >= 1)
+                        GetRemainingCharges(RoughDivide) == 2)
                         return RoughDivide;
 
                     // Gnashing Fang
