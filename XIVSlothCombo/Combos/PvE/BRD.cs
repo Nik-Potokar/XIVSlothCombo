@@ -473,7 +473,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool wideVolleyReady = LevelChecked(WideVolley) && HasEffect(Buffs.HawksEye);
 
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Combo) && wideVolleyReady)
-                        return WideVolley;
+                        return OriginalHook(WideVolley);
                 }
 
                 return actionID;

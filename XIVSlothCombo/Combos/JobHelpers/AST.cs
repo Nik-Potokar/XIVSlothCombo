@@ -23,18 +23,26 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (Service.ClientState.LocalPlayer is null || Service.ClientState.LocalPlayer.ClassJob.Id != 33)
                 return;
 
+            if (Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BetweenAreas] || Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.Unconscious])
+            {
+                AST_QuickTargetCards.SelectedRandomMember = null;
+                return;
+            }
+
             if (DrawnCard != Gauge.DrawnCards[0])
             {
                 DrawnCard = Gauge.DrawnCards[0];
-                if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards))
-                {
-                    AST_QuickTargetCards.SelectedRandomMember = null;
-                    AST_QuickTargetCards.Invoke();
-                }
-                if (DrawnCard == CardType.NONE)
-                    AST_QuickTargetCards.SelectedRandomMember = null;
-
             }
+
+            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) && (AST_QuickTargetCards.SelectedRandomMember is null || AST_QuickTargetCards.SelectedRandomMember.IsDead))
+            {
+                if (CustomComboFunctions.ActionReady(Play1))
+                    AST_QuickTargetCards.Invoke();
+            }
+
+            if (DrawnCard == CardType.NONE)
+                AST_QuickTargetCards.SelectedRandomMember = null;
+
         }
 
         internal class AST_QuickTargetCards : CustomComboFunctions
@@ -46,12 +54,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             public static void Invoke()
             {
-                if (GetPartySlot(2) is not null && DrawnCard is not CardType.NONE)
+                if (DrawnCard is not CardType.NONE)
                 {
-                    if (SelectedRandomMember is null || SelectedRandomMember.IsDead)
+                    if (GetPartySlot(2) is not null)
                     {
                         SetTarget();
                         Svc.Log.Debug($"Set card to {SelectedRandomMember.Name}");
+                    }
+                    else
+                    {
+                        SelectedRandomMember = LocalPlayer;
                     }
                 }
                 else
