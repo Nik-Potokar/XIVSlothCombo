@@ -1282,6 +1282,11 @@ namespace XIVSlothCombo.Window.Functions
 
             }
 
+            if (preset is CustomComboPreset.AST_DPS_AutoDraw)
+            {
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_OverwriteCards, "Overwrite Non-DPS Cards", "Will draw even if you have healing cards remaining.");
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
@@ -1546,12 +1551,6 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region GUNBREAKER
-
-            if (preset == CustomComboPreset.GNB_ST_SkSSupport && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "< 2.45", "Options are friendly for skill speeds of 2.45 and lower.", 1);
-                UserConfig.DrawHorizontalRadioButton(GNB.Config.GNB_SkS, "2.5", "Options are friendly for 2.5 skill speed.", 2);
-            }
 
             if (preset == CustomComboPreset.GNB_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
