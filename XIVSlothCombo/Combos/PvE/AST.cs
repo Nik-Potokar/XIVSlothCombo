@@ -336,8 +336,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((HasEffect(Buffs.AspectedHelios)
                          || HasEffect(Buffs.HeliosConjunction))
-                        && (FindEffect(Buffs.AspectedHelios).RemainingTime > 2
-                            || FindEffect(Buffs.HeliosConjunction).RemainingTime > 2))
+                        && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
+                            || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
                         return Helios;
                 }
 
