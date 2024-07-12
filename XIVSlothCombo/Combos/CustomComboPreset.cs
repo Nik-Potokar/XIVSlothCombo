@@ -3871,41 +3871,45 @@ namespace XIVSlothCombo.Combos
         WAR_InfuriateFellCleave = 18031,
 
         [ReplaceSkill(WAR.InnerRelease)]
-        [CustomComboInfo("Primal Rend Feature", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 3, "", "")]
-        WAR_PrimalRend_InnerRelease = 18032,
+        [CustomComboInfo("Primal Combo Feature", "Turns Inner Release into the Primal combo on use.", WAR.JobID, 3, "", "")]
+        WAR_PrimalCombo_InnerRelease = 18032,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID)]
         WAR_InfuriateFellCleave_IRFirst = 18022,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) and when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID)]
+        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) & when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID)]
         WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
+        [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
+        [CustomComboInfo("Primal Rend Late Option", "Uses Primal Rend after you consume 3 stacks of Inner Release & after Primal Wrath.", WAR.JobID)]
+        WAR_ST_StormsPath_PrimalRend_Late = 18024,
+
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
-        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm) and when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID)]
-        WAR_ST_StormsPath_Onslaught_MeleeSpender = 18024,
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest & in the target ring (1 yalm) & when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID)]
+        WAR_ST_StormsPath_Onslaught_MeleeSpender = 18025,
 
         [Variant]
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", WAR.JobID)]
-        WAR_Variant_SpiritDart = 18025,
+        WAR_Variant_SpiritDart = 18026,
 
         [Variant]
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", WAR.JobID)]
-        WAR_Variant_Cure = 18026,
+        WAR_Variant_Cure = 18027,
 
         [Variant]
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
-        WAR_Variant_Ultimatum = 18027,
+        WAR_Variant_Ultimatum = 18028,
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Steel Cyclone / Decimate Option", "Adds Steel Cyclone / Decimate to Advanced Mode.", WAR.JobID)]
-        WAR_AoE_Overpower_Decimate = 18028,
+        WAR_AoE_Overpower_Decimate = 18029,
 
-        // Last value = 18028
+        // Last value = 18029
 
         #endregion
 
