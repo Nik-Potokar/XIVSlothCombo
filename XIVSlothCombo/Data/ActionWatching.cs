@@ -1,6 +1,8 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Hooking;
 using ECommons.DalamudServices;
+using ECommons.GameFunctions;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
@@ -102,15 +105,16 @@ namespace XIVSlothCombo.Data
 
         private unsafe static void CheckForChangedTarget(uint actionId, ref ulong targetObjectId)
         {
-            if (actionId is AST.Balance or AST.Bole or AST.Ewer or AST.Arrow or AST.Spire or AST.Spear &&
+            if (actionId is AST.Balance or AST.Spear &&
                 Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
-                !OutOfRange(actionId, (GameObject*)Service.ClientState.LocalPlayer.Address, (GameObject*)Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.Address))
+                !OutOfRange(actionId, Service.ClientState.LocalPlayer!, Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember))
             {
                 int targetOptions = AST.Config.AST_QuickTarget_Override;
 
                 switch (targetOptions)
                 {
                     case 0:
+                        Svc.Log.Debug($"Switched to {Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.Name}");
                         targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                     case 1:
@@ -129,9 +133,9 @@ namespace XIVSlothCombo.Data
             }
         }
 
-        public static unsafe bool OutOfRange(uint actionId, GameObject* source, GameObject* target)
+        public static unsafe bool OutOfRange(uint actionId, IGameObject source, IGameObject target)
         {
-            return ActionManager.GetActionInRangeOrLoS(actionId, source, target) is 566;
+            return ActionManager.GetActionInRangeOrLoS(actionId, source.Struct(), target.Struct()) is 566;
         }
 
         public static uint WhichOfTheseActionsWasLast(params uint[] actions)
