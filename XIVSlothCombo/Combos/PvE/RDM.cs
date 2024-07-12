@@ -825,6 +825,25 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
+        internal class RDM_MeleeCombo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_MeleeCombo;
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is RDM.Riposte)
+                {
+                    if ((lastComboMove is Riposte or EnchantedRiposte)
+                        && LevelChecked(Zwerchhau))
+                        return OriginalHook(Zwerchhau);
+
+                    if (lastComboMove is Zwerchhau
+                        && LevelChecked(Redoublement))
+                        return OriginalHook(Redoublement);
+                }
+                return actionID;
+            }
+        }
+
         internal class RDM_CorpsDisplacement : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_CorpsDisplacement;
