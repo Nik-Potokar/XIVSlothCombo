@@ -110,6 +110,7 @@ namespace XIVSlothCombo.Combos.PvE
             Fester = 181,
             EnergySiphon = 16510,
             Painflare = 3578,
+            Necrotize = 36990,
             SearingFlash = 36991,
 
             // Revive
@@ -192,7 +193,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID == Fester)
+                if (actionID is Fester or Necrotize)
                 {
                     var gauge = GetJobGauge<SMNGauge>();
                     if (HasEffect(Buffs.FurtherRuin) && IsOnCooldown(EnergyDrain) && !gauge.HasAetherflowStacks && IsEnabled(CustomComboPreset.SMN_EDFester_Ruin4))
