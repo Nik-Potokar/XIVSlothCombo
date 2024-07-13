@@ -336,7 +336,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
                         CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
-                        LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer) && 
+                        LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer) &&
                         GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
@@ -454,9 +454,9 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
                     reassembledDrill &&
-                    ActionReady(Drill) && !WasLastWeaponskill(Drill) &&
+                    LevelChecked(Drill) && !WasLastWeaponskill(Drill) &&
                     ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)) &&
-                    ((LevelChecked(FullMetalField) && !WasLastAction(FullMetalField)) || !LevelChecked(FullMetalField)))
+                    ((LevelChecked(FullMetalField) && HasCharges(Drill) && !WasLastAction(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
