@@ -2611,11 +2611,11 @@ namespace XIVSlothCombo.Combos
         RPR_GluttonyBloodSwathe = 12200,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
-        [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds Gibbet and Gallows on Blood Stalk.\nAdds Guillotine on Grim Swathe.", RPR.JobID)]
+        [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds (Executioner's) Gibbet and Gallows on Blood Stalk.\nAdds (Executioner's) Guillotine on Grim Swathe.", RPR.JobID)]
         RPR_GluttonyBloodSwathe_BloodSwatheCombo = 12201,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
-        [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, and Lemure's Slice) on Blood Stalk and Grim Swathe.", RPR.JobID)]
+        [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, Lemure's Slice, Sacrificium and Perfectio) on Blood Stalk and Grim Swathe.", RPR.JobID)]
         RPR_GluttonyBloodSwathe_Enshroud = 12202,
 
         // Last value = 12202
