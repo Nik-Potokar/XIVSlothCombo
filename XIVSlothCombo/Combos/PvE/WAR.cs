@@ -84,6 +84,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var onslaughtChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
                     var fellCleaveGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_FellCleaveGauge);
                     var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateSTGauge);
+                    float GCD = GetCooldown(HeavySwing).CooldownTotal;
 
                     if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
                         return Variant.VariantCure;
@@ -130,8 +131,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if ((IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
                                 || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
-                                || (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)&& GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0 && !HasEffect(Buffs.Wrathful) && HasEffect(Buffs.PrimalRendReady))
-                                || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)))
+                                || (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !HasEffect(Buffs.Wrathful) && (GetCooldownRemainingTime(InnerRelease) <= GCD * 20)
+                                || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late))))
                                 return PrimalRend;
                         }
 
