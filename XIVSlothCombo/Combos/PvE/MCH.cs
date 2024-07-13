@@ -131,34 +131,44 @@ namespace XIVSlothCombo.Combos.PvE
                     if (interruptReady)
                         return All.HeadGraze;
 
-                    if (gauge.IsRobotActive && GetTargetHPPercent() <= 2 &&
-                        CanWeave(actionID) && ActionReady(OriginalHook(RookOverdrive)))
-                        return OriginalHook(RookOverdrive);
-
                     // Wildfire
-                    if (CanWeave(actionID) && ActionReady(Wildfire) && WasLastAction(Hypercharge) &&
-                        GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
+                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge))
                         return Wildfire;
 
                     //Queen
                     if (UseQueen(gauge))
                         return OriginalHook(RookAutoturret);
 
-                    // BarrelStabilizer use and Full metal field
-                    if (!gauge.IsOverheated && ((CanWeave(actionID) && ActionReady(BarrelStabilizer)) ||
-                        (HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator))))
-                        return OriginalHook(BarrelStabilizer);
+                    // Barrel Stabilizer
+                    if (!gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
+                        return BarrelStabilizer;
+
+                    //gauss and ricochet outside HC
+                    if (CanWeave(actionID) && !gauge.IsOverheated &&
+                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
+                    {
+                        if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
+                            return OriginalHook(GaussRound);
+
+                        if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
+                            return OriginalHook(Ricochet);
+                    }
+
 
                     if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
                         return actionID;
+
+                    //Full metal field
+                    if (HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) &&
+                        IsOnCooldown(Chainsaw) && IsOnCooldown(AirAnchor))
+                        return OriginalHook(BarrelStabilizer);
 
                     if (CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
                         LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
-                        if ((ActionReady(Wildfire) &&
-                            ((LevelChecked(FullMetalField) && WasLastAction(FullMetalField)) ||
-                            (!LevelChecked(FullMetalField)))) ||
+                        if ((LevelChecked(FullMetalField) && WasLastWeaponskill(FullMetalField) && ActionReady(Wildfire)) ||
+                            (!LevelChecked(FullMetalField) && ActionReady(Wildfire)) ||
                             !LevelChecked(Wildfire))
                             return Hypercharge;
 
@@ -181,17 +191,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.IsOverheated && LevelChecked(OriginalHook(Heatblast)))
                         return OriginalHook(Heatblast);
 
-                    //gauss and ricochet outside HC
-                    if (CanWeave(actionID) && !gauge.IsOverheated &&
-                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
-                    {
-                        if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
-                            return OriginalHook(GaussRound);
-
-                        if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
-                            return OriginalHook(Ricochet);
-                    }
-
                     //1-2-3 Combo
                     if (comboTime > 0)
                     {
@@ -209,7 +208,6 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 return actionID;
             }
-
             // TOOLS!! Chainsaw Drill Air Anchor Excavator
             private static bool ReassembledTools(ref uint actionID, MCHGauge gauge)
             {
@@ -229,7 +227,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (LevelChecked(OriginalHook(Chainsaw)) &&
                    !battery &&
-                   HasEffect(Buffs.ExcavatorReady))
+                   HasEffect(Buffs.ExcavatorReady) && IsOnCooldown(AirAnchor))
                 {
                     actionID = OriginalHook(Chainsaw);
                     return true;
@@ -251,8 +249,10 @@ namespace XIVSlothCombo.Combos.PvE
                     return true;
                 }
 
-                if (LevelChecked(Drill) && !WasLastWeaponskill(Drill) &&
-                    ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))
+                if (LevelChecked(Drill) &&
+                    ((!TraitLevelChecked(Traits.EnhancedDrill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill))) ||
+                    (TraitLevelChecked(Traits.EnhancedDrill) && !WasLastWeaponskill(Drill) && ((GetCooldownChargeRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))) &&
+                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
@@ -263,7 +263,8 @@ namespace XIVSlothCombo.Combos.PvE
             private static bool UseQueen(MCHGauge gauge)
             {
                 if (CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
-                    LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50)
+                    LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50 &&
+                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
                     int queensUsed = ActionWatching.CombatActions.Count(x => x == OriginalHook(RookAutoturret));
 
@@ -272,13 +273,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (queensUsed >= 2 && gauge.Battery >= 90)
                         return true;
-
-                    /* if (queensUsed >= 2 && queensUsed % 2 == 1 && gauge.Battery >= 80)
-                         return true;*/
                 }
+
                 return false;
             }
         }
+
         internal class MCH_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_AdvancedMode;
@@ -336,6 +336,18 @@ namespace XIVSlothCombo.Combos.PvE
                         !gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
                         return BarrelStabilizer;
 
+                    //gauss and ricochet outside HC
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
+                        CanWeave(actionID) && !gauge.IsOverheated &&
+                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
+                    {
+                        if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
+                            return OriginalHook(GaussRound);
+
+                        if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
+                            return OriginalHook(Ricochet);
+                    }
+
                     if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
                         return actionID;
 
@@ -375,18 +387,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Heatblast) &&
                         gauge.IsOverheated && LevelChecked(OriginalHook(Heatblast)))
                         return OriginalHook(Heatblast);
-
-                    //gauss and ricochet outside HC
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
-                        CanWeave(actionID) && !gauge.IsOverheated &&
-                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
-                    {
-                        if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
-                            return OriginalHook(GaussRound);
-
-                        if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
-                            return OriginalHook(Ricochet);
-                    }
 
                     // healing
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_SecondWind) &&
@@ -465,10 +465,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
                     reassembledDrill &&
-                    LevelChecked(Drill) && 
+                    LevelChecked(Drill) &&
                     ((!TraitLevelChecked(Traits.EnhancedDrill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill))) ||
                     (TraitLevelChecked(Traits.EnhancedDrill) && !WasLastWeaponskill(Drill) && ((GetCooldownChargeRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))) &&
-                    (LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField) || !LevelChecked(FullMetalField)))
+                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
