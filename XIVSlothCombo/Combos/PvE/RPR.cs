@@ -312,6 +312,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
                            LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                           (GetDebuffRemainingTime(Debuffs.DeathsDesign) > EnGCD * 4 ) &&
                            (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
                            HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
                            (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2) || // Prep for double Enshroud + Natural Odd Minute Shrouds
