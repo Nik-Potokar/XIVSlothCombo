@@ -1282,6 +1282,11 @@ namespace XIVSlothCombo.Window.Functions
 
             }
 
+            if (preset is CustomComboPreset.AST_DPS_AutoDraw)
+            {
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_OverwriteCards, "Overwrite Non-DPS Cards", "Will draw even if you have healing cards remaining.");
+            }
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
