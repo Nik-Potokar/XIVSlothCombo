@@ -1,7 +1,9 @@
 using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using FFXIVClientStructs.FFXIV.Client.UI;
 using XIVSlothCombo.Combos.PvE.Content;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -108,7 +110,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // subLv30
+                        // sub-Lv30
                         if (!LevelChecked(BurstStrike) && quarterWeave)
                             return NoMercy;
                     }
@@ -140,7 +142,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     !LevelChecked(GnashingFang))) // Pre GF
                                     return OriginalHook(DangerZone);
 
-                                //Stops Zone Drift
+                                // stops Zone drift
                                 if (HasEffect(Buffs.NoMercy))
                                     return OriginalHook(DangerZone);
                             }
@@ -175,11 +177,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    // GF combo usage
                     if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && LevelChecked(Continuation) &&
                         (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)))
                         return OriginalHook(Continuation);
 
-                    // Reign combo Lv100
+                    // Reign combo
                     if (IsEnabled(CustomComboPreset.GNB_ST_Reign) && (LevelChecked(ReignOfBeasts) && (HasEffect(Buffs.NoMercy))))
                     {
                         if (HasEffect(Buffs.ReadyToReign) && GetBuffRemainingTime(Buffs.ReadyToReign) <= 30)
@@ -349,11 +352,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(DangerZone))
                             {
                                 // Zone outside of NM
-                                if (!HasEffect(Buffs.NoMercy) && ((IsOnCooldown(GnashingFang) && GetCooldownRemainingTime(NoMercy) > 17) || //Post Gnashing Fang
-                                    !LevelChecked(GnashingFang))) //Pre Gnashing Fang
+                                if (!HasEffect(Buffs.NoMercy) && ((IsOnCooldown(GnashingFang) && GetCooldownRemainingTime(NoMercy) > 17) || // Post GF
+                                    !LevelChecked(GnashingFang))) // Pre GF
                                     return OriginalHook(DangerZone);
 
-                                // Stops Zone Drift
+                                // stops Zone drift
                                 if (HasEffect(Buffs.NoMercy))
                                     return OriginalHook(DangerZone);
                             }
