@@ -34,10 +34,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 DrawnCard = Gauge.DrawnCards[0];
             }
 
-            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) && AST_QuickTargetCards.SelectedRandomMember == null)
+            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) && (AST_QuickTargetCards.SelectedRandomMember is null || AST_QuickTargetCards.SelectedRandomMember.IsDead))
             {
                 if (CustomComboFunctions.ActionReady(Play1))
-                AST_QuickTargetCards.Invoke();
+                    AST_QuickTargetCards.Invoke();
             }
 
             if (DrawnCard == CardType.NONE)
@@ -58,11 +58,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 {
                     if (GetPartySlot(2) is not null)
                     {
-                        if (SelectedRandomMember is null || SelectedRandomMember.IsDead)
-                        {
-                            SetTarget();
-                            Svc.Log.Debug($"Set card to {SelectedRandomMember.Name}");
-                        }
+                        SetTarget();
+                        Svc.Log.Debug($"Set card to {SelectedRandomMember.Name}");
                     }
                     else
                     {

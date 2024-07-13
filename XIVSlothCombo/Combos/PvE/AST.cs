@@ -58,6 +58,7 @@ namespace XIVSlothCombo.Combos.PvE
             AspectedBenefic = 3595,
             Helios = 3600,
             AspectedHelios = 3601,
+            HeliosConjuction = 37030,
             Ascend = 3603,
             EssentialDignity = 3614,
             CelestialOpposition = 16553,
@@ -77,6 +78,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal const ushort
                 AspectedBenefic = 835,
                 AspectedHelios = 836,
+                HeliosConjunction = 3894,
                 Horoscope = 1890,
                 HoroscopeHelios = 1891,
                 NeutralSect = 1892,
@@ -148,6 +150,7 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_AoE_SimpleHeals_WeaveLady = new("AST_AoE_SimpleHeals_WeaveLady"),
                 AST_AoE_SimpleHeals_Opposition = new("AST_AoE_SimpleHeals_Opposition"),
                 AST_AoE_SimpleHeals_Horoscope = new("AST_AoE_SimpleHeals_Horoscope"),
+                AST_ST_DPS_OverwriteCards = new("AST_ST_DPS_OverwriteCards"),
                 AST_ST_DPS_CombustUptime_Adv = new("AST_ST_DPS_CombustUptime_Adv");
             public static UserFloat
                 AST_ST_DPS_CombustUptime_Threshold = new("AST_ST_DPS_CombustUptime_Threshold");
@@ -230,7 +233,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Card Draw
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         ActionReady(OriginalHook(AstralDraw)) &&
-                        Gauge.DrawnCards.All(x => x is CardType.NONE) &&
+                        (Gauge.DrawnCards.All(x => x is CardType.NONE) || (DrawnCard == CardType.NONE && Config.AST_ST_DPS_OverwriteCards)) &&
                         CanDelayedWeave(actionID))
                         return OriginalHook(AstralDraw);
 
@@ -299,7 +302,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
                     var canOppose = (Config.AST_AoE_SimpleHeals_Opposition && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Opposition;
 
-
                     //Level check to exit if we can't use
                     if (!LevelChecked(AspectedHelios))
                         return Helios;
@@ -321,17 +323,22 @@ namespace XIVSlothCombo.Combos.PvE
                             canHoroscope)
                             return Horoscope;
 
-                        if ((ActionReady(AspectedHelios) && !HasEffect(Buffs.AspectedHelios))
+                        if ((ActionReady(AspectedHelios)
+                                 && !HasEffect(Buffs.AspectedHelios)
+                                 && !HasEffect(Buffs.HeliosConjunction))
                              || HasEffect(Buffs.Horoscope)
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
-                            return AspectedHelios;
+                            return OriginalHook(AspectedHelios);
 
                         if (HasEffect(Buffs.HoroscopeHelios) &&
                             canHoroscope)
                             return OriginalHook(Horoscope);
                     }
 
-                    if (HasEffect(Buffs.AspectedHelios) && FindEffect(Buffs.AspectedHelios).RemainingTime > 2)
+                    if ((HasEffect(Buffs.AspectedHelios)
+                         || HasEffect(Buffs.HeliosConjunction))
+                        && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
+                            || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
                         return Helios;
                 }
 
@@ -354,16 +361,6 @@ namespace XIVSlothCombo.Combos.PvE
                         GetTargetHPPercent(healTarget) >= Config.AST_ST_SimpleHeals_Esuna &&
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
-
-                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && ActionReady(AspectedBenefic))
-                    {
-                        Status? aspectedBeneficHoT = FindEffect(Buffs.AspectedBenefic, healTarget, LocalPlayer?.GameObjectId);
-                        Status? NeutralSectShield = FindEffect(Buffs.NeutralSectShield, healTarget, LocalPlayer?.GameObjectId);
-                        Status? NeutralSectBuff = FindEffect(Buffs.NeutralSect, healTarget, LocalPlayer?.GameObjectId);
-                        if ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)
-                            || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
-                            return AspectedBenefic;
-                    }
 
                     if ((IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Spire) &&
                         Gauge.DrawnCards[2] == CardType.SPIRE &&
@@ -392,6 +389,16 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID) &&
                         !(healTarget as IBattleChara)!.HasShield())
                         return CelestialIntersection;
+
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_AspectedBenefic) && ActionReady(AspectedBenefic))
+                    {
+                        Status? aspectedBeneficHoT = FindEffect(Buffs.AspectedBenefic, healTarget, LocalPlayer?.GameObjectId);
+                        Status? NeutralSectShield = FindEffect(Buffs.NeutralSectShield, healTarget, LocalPlayer?.GameObjectId);
+                        Status? NeutralSectBuff = FindEffect(Buffs.NeutralSect, healTarget, LocalPlayer?.GameObjectId);
+                        if ((aspectedBeneficHoT is null) || (aspectedBeneficHoT.RemainingTime <= 3)
+                            || ((NeutralSectShield is null) && (NeutralSectBuff is not null)))
+                            return AspectedBenefic;
+                    }
                 }
                 return actionID;
             }
