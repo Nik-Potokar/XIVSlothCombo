@@ -155,7 +155,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
-                        if (HasEffect(Buffs.PerfectioParata))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
@@ -228,7 +228,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
-                        LevelChecked(SoulSlice) && gauge.Soul <= 50 && !HasEffect(Buffs.PerfectioParata) &&
+                        LevelChecked(SoulSlice) && gauge.Soul <= 50 && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                         ((GetCooldownRemainingTime(SoulSlice) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(SoulSlice)))
                         return SoulSlice;
 
@@ -315,7 +315,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
                         if (IsEnabled(CustomComboPreset.RPR_ST_Perfectio) &&
-                            HasEffect(Buffs.PerfectioParata))
+                            HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
@@ -403,7 +403,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SoulSlice) &&
                         !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
-                        LevelChecked(SoulSlice) && gauge.Soul <= 50 && !HasEffect(Buffs.PerfectioParata) &&
+                        LevelChecked(SoulSlice) && gauge.Soul <= 50 && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                         ((GetCooldownRemainingTime(SoulSlice) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(SoulSlice)))
                         return SoulSlice;
 
@@ -458,7 +458,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
-                        if (HasEffect(Buffs.PerfectioParata))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.ImmortalSacrifice) && LevelChecked(PlentifulHarvest) &&
@@ -488,7 +488,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return GrimSwathe;
                         }
 
-                        if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
+                        if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                             ActionReady(SoulScythe) && gauge.Soul <= 50)
                             return SoulScythe;
 
@@ -552,7 +552,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
                         if (IsEnabled(CustomComboPreset.RPR_AoE_Perfectio) &&
-                            HasEffect(Buffs.PerfectioParata))
+                            HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (IsEnabled(CustomComboPreset.RPR_AoE_CDs))
@@ -591,7 +591,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.RPR_AoE_SoulScythe) &&
-                            !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
+                            !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                             ActionReady(SoulScythe) && gauge.Soul <= 50)
                             return SoulScythe;
 
@@ -651,7 +651,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud))
                     {
-                        if (HasEffect(Buffs.PerfectioParata) && WasLastAction(Communio))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.Enshrouded))
@@ -686,7 +686,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud))
                     {
-                        if (HasEffect(Buffs.PerfectioParata) && WasLastAction(Communio))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.Enshrouded))
