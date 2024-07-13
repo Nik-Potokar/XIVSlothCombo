@@ -81,6 +81,7 @@ namespace XIVSlothCombo.Combos.PvE
                 MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool", 0),
                 MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool", 0),
                 MCH_ST_WildfireHP = new("MCH_ST_WildfireHP", 1),
+                MCH_ST_HyperchargeHP = new("MCH_ST_HyperchargeHP", 1),
                 MCH_ST_QueenOverDrive = new("MCH_ST_QueenOverDrive");
             public static UserBoolArray
                 MCH_ST_Reassembled = new("MCH_ST_Reassembled"),
@@ -316,8 +317,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        CanWeave(actionID) && ActionReady(Wildfire) && JustUsed(Hypercharge, 2f) //&&
-                        /*GetTargetHPPercent() >= Config.MCH_ST_WildfireHP*/)
+                        ActionReady(Wildfire) && WasLastAction(Hypercharge) &&
+                        GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
                         return Wildfire;
 
                     //Queen
@@ -327,7 +328,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // BarrelStabilizer use and Full metal field
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
                         !gauge.IsOverheated && ((CanWeave(actionID) && ActionReady(BarrelStabilizer)) ||
-                        (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) && HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) && GetCooldownRemainingTime(Wildfire) <= GCD)))
+                        (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) && HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator))))
                         return OriginalHook(BarrelStabilizer);
 
                     if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
@@ -335,10 +336,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
                         CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
-                        LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
+                        LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer) && 
+                        GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
-                        if ((LevelChecked(FullMetalField) && WasLastAction(FullMetalField)) ||
+                        if ((LevelChecked(FullMetalField) && WasLastWeaponskill(FullMetalField) && GetCooldownRemainingTime(Wildfire) < GCD) ||
                             (!LevelChecked(FullMetalField) && GetCooldownRemainingTime(Wildfire) < GCD) ||
                             !LevelChecked(Wildfire))
                             return Hypercharge;
@@ -425,7 +427,7 @@ namespace XIVSlothCombo.Combos.PvE
                     reassembledExcavator &&
                     LevelChecked(OriginalHook(Chainsaw)) &&
                     !battery &&
-                    HasEffect(Buffs.ExcavatorReady))
+                    HasEffect(Buffs.ExcavatorReady) && WasLastWeaponskill(Chainsaw))
                 {
                     actionID = OriginalHook(Chainsaw);
                     return true;
@@ -454,7 +456,7 @@ namespace XIVSlothCombo.Combos.PvE
                     reassembledDrill &&
                     ActionReady(Drill) && !WasLastWeaponskill(Drill) &&
                     ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)) &&
-                    ((LevelChecked(FullMetalField) && WasLastWeaponskill(OriginalHook(AirAnchor)) && !WasLastAction(FullMetalField)) || !LevelChecked(FullMetalField)))
+                    ((LevelChecked(FullMetalField) && !WasLastAction(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
@@ -475,9 +477,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (queensUsed >= 2 && gauge.Battery >= 90)
                         return true;
-
-                    /* if (queensUsed >= 2 && queensUsed % 2 == 1 && gauge.Battery >= 80)
-                         return true;*/
                 }
 
                 if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 0 &&

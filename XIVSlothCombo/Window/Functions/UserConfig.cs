@@ -1609,6 +1609,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.MCH_ST_Adv_WildFire)
                 UserConfig.DrawSliderInt(0, 15, MCH.Config.MCH_ST_WildfireHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
 
+            if (preset == CustomComboPreset.MCH_ST_Adv_Hypercharge)
+                UserConfig.DrawSliderInt(0, 15, MCH.Config.MCH_ST_HyperchargeHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
             #endregion
             // ====================================================================================
             #region MONK
