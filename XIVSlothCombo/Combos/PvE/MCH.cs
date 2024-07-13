@@ -316,8 +316,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        CanWeave(actionID) && ActionReady(Wildfire) && JustUsed(Hypercharge, 2f) &&
-                        GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
+                        CanWeave(actionID) && ActionReady(Wildfire) && JustUsed(Hypercharge, 2f) //&&
+                        /*GetTargetHPPercent() >= Config.MCH_ST_WildfireHP*/)
                         return Wildfire;
 
                     //Queen
