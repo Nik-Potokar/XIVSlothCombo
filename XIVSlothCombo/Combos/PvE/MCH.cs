@@ -437,7 +437,7 @@ namespace XIVSlothCombo.Combos.PvE
                     reassembledExcavator &&
                     LevelChecked(OriginalHook(Chainsaw)) &&
                     !battery &&
-                    HasEffect(Buffs.ExcavatorReady) && WasLastWeaponskill(Chainsaw))
+                    HasEffect(Buffs.ExcavatorReady) && IsOnCooldown(AirAnchor))
                 {
                     actionID = OriginalHook(Chainsaw);
                     return true;
