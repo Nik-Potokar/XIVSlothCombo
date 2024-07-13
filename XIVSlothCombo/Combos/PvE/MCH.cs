@@ -253,7 +253,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LevelChecked(Drill) &&
                     ((!TraitLevelChecked(Traits.EnhancedDrill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill))) ||
                     (TraitLevelChecked(Traits.EnhancedDrill) && !WasLastWeaponskill(Drill) && ((GetCooldownChargeRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))) &&
-                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
+                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField) && !WasLastWeaponskill(OriginalHook(Chainsaw))) || !LevelChecked(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
@@ -471,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
                     LevelChecked(Drill) &&
                     ((!TraitLevelChecked(Traits.EnhancedDrill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill))) ||
                     (TraitLevelChecked(Traits.EnhancedDrill) && !WasLastWeaponskill(Drill) && ((GetCooldownChargeRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))) &&
-                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
+                    ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField) && !WasLastWeaponskill(OriginalHook(Chainsaw))) || !LevelChecked(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
