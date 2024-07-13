@@ -155,6 +155,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
+                        if (HasEffect(Buffs.PerfectioParata))
+                            return OriginalHook(Communio);
+
                         if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) > EnGCD * 4) &&
                            (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
@@ -164,9 +167,6 @@ namespace XIVSlothCombo.Combos.PvE
                            (GetCooldownRemainingTime(ArcaneCircle) > GCD * 10) || //Natural Odd Minute Shrouds
                            (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
                             return Enshroud;
-
-                        if (HasEffect(Buffs.PerfectioParata) && WasLastAction(Communio))
-                            return OriginalHook(Communio);
 
                         if ((HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) &&
                            !HasEffect(Buffs.Enshrouded) && LevelChecked(Gibbet))
@@ -314,6 +314,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
+                        if (IsEnabled(CustomComboPreset.RPR_ST_Perfectio) &&
+                            HasEffect(Buffs.PerfectioParata))
+                            return OriginalHook(Communio);
+
                         if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
                            LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
                            (GetDebuffRemainingTime(Debuffs.DeathsDesign) > EnGCD * 4) &&
@@ -324,10 +328,6 @@ namespace XIVSlothCombo.Combos.PvE
                            (GetCooldownRemainingTime(ArcaneCircle) > GCD * 10) || //Natural Odd Minute Shrouds
                            (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
                             return Enshroud;
-
-                        if (IsEnabled(CustomComboPreset.RPR_ST_Perfectio) &&
-                            HasEffect(Buffs.PerfectioParata) && WasLastAction(Communio))
-                            return OriginalHook(Communio);
 
                         if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) &&
                            (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) &&
@@ -458,8 +458,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
-                        if (HasEffect(Buffs.PerfectioParata) && WasLastSpell(Communio) &&
-                            !HasEffect(Buffs.ImmortalSacrifice))
+                        if (HasEffect(Buffs.PerfectioParata))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.ImmortalSacrifice) && LevelChecked(PlentifulHarvest) &&
@@ -553,8 +552,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
                         if (IsEnabled(CustomComboPreset.RPR_AoE_Perfectio) &&
-                            HasEffect(Buffs.PerfectioParata) && WasLastSpell(Communio) &&
-                            !HasEffect(Buffs.ImmortalSacrifice))
+                            HasEffect(Buffs.PerfectioParata))
                             return OriginalHook(Communio);
 
                         if (IsEnabled(CustomComboPreset.RPR_AoE_CDs))
