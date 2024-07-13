@@ -401,8 +401,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (songArmy && canWeaveDelayed)
                             {
-                                // Move to Wanderer's Minuet if < 10 seconds left on song or WM off CD and have 4 repertoires of AP
-                                if (songTimerInSeconds <= 9 || (minuetReady && gauge.Repertoire == 4))
+                                // Move to Wanderer's Minuet if <= 12 seconds left on song or WM off CD and have 4 repertoires of AP
+                                if (songTimerInSeconds <= 12 || (minuetReady && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
                         }
@@ -734,8 +734,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (songArmy && canWeaveDelayed)
                             {
-                                // Move to Wanderer's Minuet if <= 9 seconds left on song or WM off CD and have 4 repertoires of AP
-                                if (songTimerInSeconds <= 9 || (minuetReady && gauge.Repertoire == 4))
+                                // Move to Wanderer's Minuet if <= 12 seconds left on song or WM off CD and have 4 repertoires of AP
+                                if (songTimerInSeconds <= 12 || (minuetReady && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
                         }
