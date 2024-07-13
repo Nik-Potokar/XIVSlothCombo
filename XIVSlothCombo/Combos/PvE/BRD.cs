@@ -353,36 +353,12 @@ namespace XIVSlothCombo.Combos.PvE
                         canWeave)
                         return Variant.VariantRampart;
 
-                    //if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
-                    //{
-                    //    int songTimerInSeconds = gauge.SongTimer / 1000;
-                    //    bool songNone = gauge.Song == Song.NONE;
-
-                    //    if (songTimerInSeconds < 12 || songNone)
-                    //    {
-                    //        if (LevelChecked(WanderersMinuet) && IsOffCooldown(WanderersMinuet) &&
-                    //            !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)) &&
-                    //            !IsEnabled(CustomComboPreset.BRD_AoE_Simple_SongsExcludeWM))
-                    //            return WanderersMinuet;
-
-                    //        if (LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad) &&
-                    //            !(JustUsed(WanderersMinuet) || JustUsed(ArmysPaeon)))
-                    //            return MagesBallad;
-
-                    //        if (LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon) &&
-                    //            !(JustUsed(MagesBallad) || JustUsed(WanderersMinuet)))
-                    //            return ArmysPaeon;
-                    //    }
-                    //}
-
-                    //if (IsEnabled(CustomComboPreset.BRD_Simple_Song) && isEnemyHealthHigh)
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
                     {
 
                         // Limit optimisation to when you are high enough level to benefit from it.
                         if (LevelChecked(WanderersMinuet))
                         {
-                            // 43s of Wanderer's Minute, ~36s of Mage's Ballad, and ~43s of Army's Paeon    
                             bool minuetReady = IsOffCooldown(WanderersMinuet);
                             bool balladReady = IsOffCooldown(MagesBallad);
                             bool paeonReady = IsOffCooldown(ArmysPaeon);
@@ -758,7 +734,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (songArmy && canWeaveDelayed)
                             {
-                                // Move to Wanderer's Minuet if < 12 seconds left on song or WM off CD and have 4 repertoires of AP
+                                // Move to Wanderer's Minuet if <= 9 seconds left on song or WM off CD and have 4 repertoires of AP
                                 if (songTimerInSeconds <= 9 || (minuetReady && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
