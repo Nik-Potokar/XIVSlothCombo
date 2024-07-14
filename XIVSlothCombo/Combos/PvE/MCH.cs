@@ -143,7 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (UseQueen(gauge))
                         return OriginalHook(RookAutoturret);
 
-                    // BarrelStabilizer use and Full metal field
+                    // BarrelStabilizer
                     if (!gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
                         return BarrelStabilizer;
 
@@ -341,7 +341,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (UseQueen(gauge))
                         return OriginalHook(RookAutoturret);
 
-                    // BarrelStabilizer use and Full metal field
+                    // BarrelStabilizer
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
                         !gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
                         return BarrelStabilizer;
