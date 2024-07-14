@@ -126,7 +126,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (MCHOpener.DoFullOpener(ref actionID))
                         return actionID;
 
-
                     // Interrupt
                     if (interruptReady)
                         return All.HeadGraze;
@@ -136,7 +135,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return BarrelStabilizer;
 
                     // Wildfire
-                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge))
+                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID))
                         return Wildfire;
 
                     //Queen
@@ -331,7 +330,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        ActionReady(Wildfire) && WasLastAction(Hypercharge) &&
+                        ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID) &&
                         GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
                         return Wildfire;
 
