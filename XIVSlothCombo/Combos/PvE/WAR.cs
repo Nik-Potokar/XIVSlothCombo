@@ -63,6 +63,7 @@ namespace XIVSlothCombo.Combos.PvE
                 WAR_InfuriateRange = "WarInfuriateRange",
                 WAR_SurgingRefreshRange = "WarSurgingRefreshRange",
                 WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges",
+                WAR_KeepInfuriateCharges = "WarKeepInfuriateCharges",
                 WAR_VariantCure = "WAR_VariantCure",
                 WAR_FellCleaveGauge = "WAR_FellCleaveGauge",
                 WAR_DecimateGauge = "WAR_DecimateGauge",
@@ -82,6 +83,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
                     var surgingThreshold = PluginConfiguration.GetCustomIntValue(Config.WAR_SurgingRefreshRange);
                     var onslaughtChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
+                    var infuriateChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepInfuriateCharges);
                     var fellCleaveGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_FellCleaveGauge);
                     var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateSTGauge);
                     float GCD = GetCooldown(HeavySwing).CooldownTotal;
@@ -92,7 +94,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && LevelChecked(Tomahawk) && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
-                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) && gauge <= infuriateGauge && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && LevelChecked(Infuriate) && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) 
+                        && gauge <= infuriateGauge && CanWeave(actionID) && GetRemainingCharges(Infuriate) > infuriateChargesRemaining)
                         return Infuriate;
 
                     //Sub Storm's Eye level check
