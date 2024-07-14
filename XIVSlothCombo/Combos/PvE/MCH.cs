@@ -82,7 +82,6 @@ namespace XIVSlothCombo.Combos.PvE
                 MCH_ST_SecondWindThreshold = new("MCH_ST_SecondWindThreshold", 25),
                 MCH_AoE_SecondWindThreshold = new("MCH_AoE_SecondWindThreshold", 25),
                 MCH_VariantCure = new("MCH_VariantCure"),
-                MCH_ST_TurretUsage = new("MCH_ST_Adv_TurretGauge"),
                 MCH_AoE_TurretUsage = new("MCH_AoE_TurretUsage"),
                 MCH_ST_ReassemblePool = new("MCH_ST_ReassemblePool", 0),
                 MCH_AoE_ReassemblePool = new("MCH_AoE_ReassemblePool", 0),
@@ -361,7 +360,7 @@ namespace XIVSlothCombo.Combos.PvE
                         GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
-                        if ((LevelChecked(FullMetalField) && JustUsed(FullMetalField) && ActionReady(Wildfire)) ||
+                        if ((LevelChecked(FullMetalField) && !HasEffect(Buffs.FullMetalMachinist) && ActionReady(Wildfire)) ||
                             (!LevelChecked(FullMetalField) && ActionReady(Wildfire)) ||
                             !LevelChecked(Wildfire))
                             return Hypercharge;
@@ -477,7 +476,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool UseQueen(MCHGauge gauge)
             {
-                if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 1 &&
+                if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
                     CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
                     LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50 &&
                     ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
@@ -487,13 +486,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (queensUsed < 2)
                         return true;
 
-                    if (queensUsed >= 2 && gauge.Battery >= 90)
+                    if (queensUsed >= 2 && queensUsed % 2 == 0 && gauge.Battery == 100)
+                        return true;
+
+                    if (queensUsed >= 2 && queensUsed % 2 == 1 && gauge.Battery >= 50)
                         return true;
                 }
-
-                if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && Config.MCH_ST_TurretUsage == 0 &&
-                    CanWeave(OriginalHook(SplitShot)) && LevelChecked(OriginalHook(RookAutoturret)) && gauge.Battery >= 50)
-                    return true;
 
                 return false;
             }

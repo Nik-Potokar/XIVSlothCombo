@@ -1559,12 +1559,6 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MACHINIST
 
-            if (preset is CustomComboPreset.MCH_Adv_TurretQueen)
-            {
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_TurretUsage, "Early Use", "Uses at 50 battery or above", 0);
-                UserConfig.DrawHorizontalRadioButton(MCH.Config.MCH_ST_TurretUsage, "Dynamic Use", "Used at different values depending on current state, as per the Balance guidance.", 1);
-            }
-
             if (preset == CustomComboPreset.MCH_ST_Adv_Reassemble)
                 UserConfig.DrawSliderInt(0, 1, MCH.Config.MCH_ST_ReassemblePool, "Number of Charges to Save for Manual Use");
 
