@@ -282,7 +282,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetCooldownRemainingTime(SerpentsIre) > GCD * 30 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
-                                GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 12 &&
+                                GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
                                 !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                                 !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                                 !WasLastAction(SerpentsIre) && GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage)
@@ -517,7 +517,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetCooldownRemainingTime(SerpentsIre) > GCD * 30 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
-                                GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 12 &&
+                                GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
                                 !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                                 !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                                 !WasLastAction(SerpentsIre) && GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage)
@@ -680,7 +680,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetCooldownRemainingTime(SerpentsIre) > GCD * 10 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
-                                TargetHasEffect(Debuffs.NoxiousGnash) &&
+                                GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
                                 !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
                                 !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                                 !WasLastAction(SerpentsIre))
@@ -859,7 +859,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetCooldownRemainingTime(SerpentsIre) > GCD * 10 &&
                                 HasEffect(Buffs.Swiftscaled) &&
                                 HasEffect(Buffs.HuntersInstinct) &&
-                                TargetHasEffect(Debuffs.NoxiousGnash) &&
+                                GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
                                 !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
                                 !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                                 !WasLastAction(SerpentsIre) && GetTargetHPPercent() >= Config.VPR_AoE_Reawaken_Usage)
