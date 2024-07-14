@@ -562,6 +562,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
                 float GCD = GetCooldown(DreadMaw).CooldownTotal;
+                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
 
                 if (actionID is SteelMaw)
                 {
@@ -715,6 +716,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
                 float GCD = GetCooldown(DreadMaw).CooldownTotal;
+                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
 
                 if (actionID is SteelMaw)
                 {
