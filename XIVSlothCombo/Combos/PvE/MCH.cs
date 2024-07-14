@@ -131,10 +131,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (interruptReady)
                         return All.HeadGraze;
 
-                    //Full Metal Field
-                    if (HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) && LevelChecked(FullMetalField))
-                        return FullMetalField;
-
                     // Wildfire
                     if (ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID))
                         return Wildfire;
@@ -142,6 +138,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //Queen
                     if (UseQueen(gauge))
                         return OriginalHook(RookAutoturret);
+
+                    //Full Metal Field
+                    if (HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) && LevelChecked(FullMetalField))
+                        return FullMetalField;
 
                     // BarrelStabilizer
                     if (!gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
@@ -325,12 +325,6 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID) && ActionReady(OriginalHook(RookOverdrive)))
                         return OriginalHook(RookOverdrive);
 
-                    //Full Metal Field
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) &&
-                        HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) &&
-                        LevelChecked(FullMetalField))
-                        return FullMetalField;
-
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
                         ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID) &&
@@ -340,6 +334,12 @@ namespace XIVSlothCombo.Combos.PvE
                     //Queen
                     if (UseQueen(gauge))
                         return OriginalHook(RookAutoturret);
+
+                    //Full Metal Field
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) &&
+                        HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) &&
+                        LevelChecked(FullMetalField))
+                        return FullMetalField;
 
                     // BarrelStabilizer
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
