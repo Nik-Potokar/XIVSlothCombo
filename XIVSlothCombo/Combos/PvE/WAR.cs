@@ -129,15 +129,6 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Onslaught;
                             }
                         }
-                        
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && !JustUsed(InnerRelease, GetCooldown(actionID).CooldownTotal))
-                        {
-                            if ((IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
-                                || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
-                                || (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !HasEffect(Buffs.Wrathful) && (GetCooldownRemainingTime(InnerRelease) <= GCD * 20)
-                                || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late))))
-                                return PrimalRend;
-                        }
 
                         if ((IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) 
                             && GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0
