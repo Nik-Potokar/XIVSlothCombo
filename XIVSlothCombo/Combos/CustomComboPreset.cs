@@ -3847,7 +3847,7 @@ namespace XIVSlothCombo.Combos
         WAR_AoE_Overpower_Orogeny = 18010,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode.", WAR.JobID, 7, "", "")]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode. Only uses when in the Target's target ring (1 yalm) & when not moving. Otherwise, will use when buff is less than or equal to 10 seconds.", WAR.JobID, 7, "", "")]
         WAR_ST_StormsPath_PrimalRend = 18011,
 
         [ReplaceSkill(WAR.Overpower)]
@@ -3893,10 +3893,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID)]
         WAR_InfuriateFellCleave_IRFirst = 18022,
-
-        [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) & when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID)]
-        WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
         [CustomComboInfo("Primal Rend Late Option", "Uses Primal Rend after you consume 3 stacks of Inner Release & after Primal Wrath.", WAR.JobID)]
