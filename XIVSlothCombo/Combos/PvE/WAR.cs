@@ -94,7 +94,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && LevelChecked(Tomahawk) && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
-                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && LevelChecked(Infuriate) && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) 
+                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && LevelChecked(Infuriate) && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks)
                         && gauge <= infuriateGauge && CanWeave(actionID) && GetRemainingCharges(Infuriate) > infuriateChargesRemaining)
                         return Infuriate;
 
@@ -130,10 +130,15 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if ((IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) 
+                        if ((IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)
                             && GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0
                             && !HasEffect(Buffs.Wrathful) && HasEffect(Buffs.PrimalRendReady))
                             || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)))
+                            return PrimalRend;
+
+                        if ((IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetBuffRemainingTime(Buffs.InnerReleaseBuff) < GCD * 5)
+                            && (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
+                            || (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange)))
                             return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
