@@ -205,7 +205,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // 2min
                             if ((IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
-                                !HasEffect(Buffs.ReadyToBlast) && gauge.Ammo == 2 && (GetBuffRemainingTime(Buffs.NoMercy) > 17.5) &&
+                                !HasEffect(Buffs.ReadyToBlast) && gauge.Ammo == 2 && (GetBuffRemainingTime(Buffs.NoMercy) > GCD * 7) &&
                                 WasLastWeaponskill(BurstStrike) && GetCooldownRemainingTime(Bloodfest) < 30 || IsOffCooldown(Bloodfest))
                                 // 1min 3 carts
                                 || (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
@@ -215,7 +215,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 // 1min 2 carts
                                 || (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
                                 GetCooldownRemainingTime(Bloodfest) > 30 && gauge.Ammo == 0 &&
-                                !HasEffect(Buffs.ReadyToRip) && (GetBuffRemainingTime(Buffs.NoMercy) < 12.5) &&
+                                !HasEffect(Buffs.ReadyToRip) && (GetBuffRemainingTime(Buffs.NoMercy) < GCD * 5) &&
                                 WasLastWeaponskill(GnashingFang) || WasLastAbility(SavageClaw)))
                                 return SonicBreak;
                         }
@@ -230,11 +230,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 // 1min 2 carts
                                 || (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
                                 GetCooldownRemainingTime(Bloodfest) > 30 && gauge.Ammo == 0 &&
-                                !HasEffect(Buffs.ReadyToRip) && (GetBuffRemainingTime(Buffs.NoMercy) < 12.5) &&
+                                !HasEffect(Buffs.ReadyToRip) && (GetBuffRemainingTime(Buffs.NoMercy) < GCD * 5) &&
                                 WasLastWeaponskill(GnashingFang) || WasLastAbility(SavageClaw))
                                 // 1min 3 carts
                                 || (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
-                                GetCooldownRemainingTime(Bloodfest) > 30 && gauge.Ammo == 3 && (GetCooldownRemainingTime(NoMercy) > GCD) &&
+                                GetCooldownRemainingTime(Bloodfest) > 30 && gauge.Ammo == 3 && (GetBuffRemainingTime(Buffs.NoMercy) > GCD * 7) &&
                                 (WasLastWeaponskill(KeenEdge) || WasLastWeaponskill(BrutalShell) || WasLastWeaponskill(SolidBarrel))))
                                 return SonicBreak;
                         }
