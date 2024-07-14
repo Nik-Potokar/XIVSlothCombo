@@ -149,7 +149,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //gauss and ricochet outside HC
                     if (CanWeave(actionID) && !gauge.IsOverheated &&
-                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
+                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)) &&
+                        !ActionWatching.HasDoubleWeaved())
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
@@ -324,6 +325,11 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID) && ActionReady(OriginalHook(RookOverdrive)))
                         return OriginalHook(RookOverdrive);
 
+                    // BarrelStabilizer
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
+                        !gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
+                        return BarrelStabilizer;
+
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
                         ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID) &&
@@ -340,15 +346,11 @@ namespace XIVSlothCombo.Combos.PvE
                         LevelChecked(FullMetalField))
                         return FullMetalField;
 
-                    // BarrelStabilizer
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
-                        !gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
-                        return BarrelStabilizer;
-
                     //gauss and ricochet outside HC
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
                         CanWeave(actionID) && !gauge.IsOverheated &&
-                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)))
+                        (WasLastWeaponskill(OriginalHook(AirAnchor)) || WasLastWeaponskill(OriginalHook(Chainsaw)) || WasLastWeaponskill(Drill)) &&
+                        !ActionWatching.HasDoubleWeaved())
                     {
                         if (ActionReady(OriginalHook(GaussRound)) && !WasLastAction(OriginalHook(GaussRound)))
                             return OriginalHook(GaussRound);
