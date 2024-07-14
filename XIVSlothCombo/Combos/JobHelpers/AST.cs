@@ -2,6 +2,7 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -34,7 +35,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 DrawnCard = Gauge.DrawnCards[0];
             }
 
-            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) && (AST_QuickTargetCards.SelectedRandomMember is null || AST_QuickTargetCards.SelectedRandomMember.IsDead))
+            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) && 
+                (AST_QuickTargetCards.SelectedRandomMember is null || BetterTargetAvailable()))
             {
                 if (CustomComboFunctions.ActionReady(Play1))
                     AST_QuickTargetCards.Invoke();
@@ -42,6 +44,40 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (DrawnCard == CardType.NONE)
                 AST_QuickTargetCards.SelectedRandomMember = null;
+
+        }
+
+        private static bool BetterTargetAvailable()
+        {
+            if (AST_QuickTargetCards.SelectedRandomMember is null ||
+                AST_QuickTargetCards.SelectedRandomMember.IsDead ||
+                CustomComboFunctions.OutOfRange(Balance, AST_QuickTargetCards.SelectedRandomMember))
+                return true;
+
+            Svc.Log.Debug($"Picking better?");
+            var targets = new List<IBattleChara>();
+            for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
+            {
+                if (CustomComboFunctions.GetPartySlot(i) is not IBattleChara member) continue;
+                if (member is null) continue; //Skip nulls/disconnected people
+                if (member.IsDead) continue;
+                if (CustomComboFunctions.OutOfRange(Balance, member)) continue;
+
+                if (CustomComboFunctions.FindEffectOnMember(Buffs.BalanceBuff, member) is not null) continue;
+                if (CustomComboFunctions.FindEffectOnMember(Buffs.SpearBuff, member) is not null) continue;
+
+                if (Config.AST_QuickTarget_SkipDamageDown && CustomComboFunctions.TargetHasDamageDown(member)) continue;
+                if (Config.AST_QuickTarget_SkipRezWeakness && CustomComboFunctions.TargetHasRezWeakness(member)) continue;
+
+                targets.Add(member);
+            }
+
+            if (targets.Count == 0) return false;
+            if ((DrawnCard is CardType.BALANCE && targets.Any(x => CustomComboFunctions.JobIDs.Melee.Any(y => y == x.ClassJob.Id))) ||
+                (DrawnCard is CardType.SPEAR && targets.Any(x => CustomComboFunctions.JobIDs.Ranged.Any(y => y == x.ClassJob.Id))))
+                return true;
+
+            return false;
 
         }
 
