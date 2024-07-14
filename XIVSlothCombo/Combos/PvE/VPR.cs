@@ -293,8 +293,9 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (trueNorthReady)
                                     return All.TrueNorth;
+
+                                return Dreadwinder;
                             }
-                            return Dreadwinder;
                         }
 
                         return (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 && LevelChecked(DreadFangs) &&
@@ -531,8 +532,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                                     trueNorthReady)
                                     return All.TrueNorth;
+
+                                return Dreadwinder;
                             }
-                            return Dreadwinder;
                         }
 
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
