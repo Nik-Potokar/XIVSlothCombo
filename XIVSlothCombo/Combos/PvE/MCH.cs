@@ -131,8 +131,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (interruptReady)
                         return All.HeadGraze;
 
+                    // BarrelStabilizer
+                    if (!gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
+                        return BarrelStabilizer;
+
                     // Wildfire
-                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID))
+                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge))
                         return Wildfire;
 
                     //Queen
@@ -142,10 +146,6 @@ namespace XIVSlothCombo.Combos.PvE
                     //Full Metal Field
                     if (HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) && LevelChecked(FullMetalField))
                         return FullMetalField;
-
-                    // BarrelStabilizer
-                    if (!gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
-                        return BarrelStabilizer;
 
                     //gauss and ricochet outside HC
                     if (CanWeave(actionID) && !gauge.IsOverheated &&
@@ -177,8 +177,7 @@ namespace XIVSlothCombo.Combos.PvE
                         LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
-                        if ((LevelChecked(FullMetalField) && (GetCooldownRemainingTime(BarrelStabilizer) <= GCD * 45) &&
-                            !HasEffect(Buffs.FullMetalMachinist) && ActionReady(Wildfire)) ||
+                        if ((LevelChecked(FullMetalField) && !HasEffect(Buffs.FullMetalMachinist) && ActionReady(Wildfire)) ||
                             (!LevelChecked(FullMetalField) && ActionReady(Wildfire)) ||
                             !LevelChecked(Wildfire))
                             return Hypercharge;
@@ -215,7 +214,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 90;
 
                 // TOOLS!! Chainsaw Drill Air Anchor Excavator
-                if (!gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)) &&
+                if (!gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)) && !ActionWatching.HasDoubleWeaved() &&
                     !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(actionID) || !InCombat()) &&
                     ((LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery) ||
                     (LevelChecked(Chainsaw) && ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)) && !battery) ||
@@ -263,7 +262,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool UseQueen(MCHGauge gauge)
             {
-                if (CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
+                if (CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) && !ActionWatching.HasDoubleWeaved() &&
                     LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50 &&
                     ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
@@ -332,7 +331,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID) &&
+                        ActionReady(Wildfire) && WasLastAction(Hypercharge) &&
                         GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
                         return Wildfire;
 
@@ -380,8 +379,7 @@ namespace XIVSlothCombo.Combos.PvE
                         GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
-                        if ((LevelChecked(FullMetalField) && (GetCooldownRemainingTime(BarrelStabilizer) <= GCD * 45) &&
-                            !HasEffect(Buffs.FullMetalMachinist) && ActionReady(Wildfire)) ||
+                        if ((LevelChecked(FullMetalField) && !HasEffect(Buffs.FullMetalMachinist) && ActionReady(Wildfire)) ||
                             (!LevelChecked(FullMetalField) && ActionReady(Wildfire)) ||
                             !LevelChecked(Wildfire))
                             return Hypercharge;
@@ -428,7 +426,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 // TOOLS!! Chainsaw Drill Air Anchor Excavator
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) &&
-                    !gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)) &&
+                    !gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)) && !ActionWatching.HasDoubleWeaved() &&
                     !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(actionID) || !InCombat()) &&
                     GetRemainingCharges(Reassemble) > Config.MCH_ST_ReassemblePool &&
                     ((Config.MCH_ST_Reassembled[0] && LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery) ||
@@ -485,7 +483,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool UseQueen(MCHGauge gauge)
             {
-                if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
+                if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) && !ActionWatching.HasDoubleWeaved() &&
                     CanWeave(OriginalHook(SplitShot)) && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
                     LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50 &&
                     ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
