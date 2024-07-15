@@ -387,27 +387,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return HuntersCoil;
                         }
                     }
-
-                    if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
-                        LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
-                        return (IsEnabled(CustomComboPreset.VPR_ST_RangedUptimeUncoiledFury) && gauge.HasRattlingCoilStack())
-                            ? UncoiledFury
-                            : WrithingSnap;
-
-                    //Overcap protection
-                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) &&
-                        (HasCharges(Dreadwinder) || GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && !HasEffect(Buffs.Reawakened) &&
-                        ((gauge.RattlingCoilStacks is 3 && TraitLevelChecked(Traits.EnhancedVipersRattle)) ||
-                        (gauge.RattlingCoilStacks is 2 && !TraitLevelChecked(Traits.EnhancedVipersRattle))))
-                        return UncoiledFury;
-
-                    //Serpents Ire usage
-                    if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
-                        IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
-                        CanWeave(actionID) && gauge.RattlingCoilStacks <= 2 && !HasEffect(Buffs.Reawakened) &&
-                        ((LevelChecked(SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD + 0.25) || ActionReady(SerpentsIre)))
-                        return SerpentsIre;
-
                     //Reawakend Usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
                         (gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)) &&
@@ -417,12 +396,33 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                         GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage &&
                         GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
-                        (JustUsed(SerpentsIre, 2f) || //start even minute                                                  
-                        JustUsed(Ouroboros, 2f) || //2nd part                                                  
+                        (WasLastAction(SerpentsIre) || //start even minute                                                  
+                        WasLastAction(Ouroboros) || //2nd part                                                  
                         (GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) || //odd minute                                                 
                         Buffs.ReadyToReawaken < GCD || //recover                                                 
-                        (gauge.SerpentOffering >=100 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13))) // recovery
+                        (gauge.SerpentOffering >= 100 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13))) // recovery
                         return Reawaken;
+
+                    if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
+                        LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
+                        return (IsEnabled(CustomComboPreset.VPR_ST_RangedUptimeUncoiledFury) && gauge.HasRattlingCoilStack())
+                            ? UncoiledFury
+                            : WrithingSnap;
+
+                    //Overcap protection
+                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) &&
+                        (HasCharges(Dreadwinder) || GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) && !HasEffect(Buffs.Reawakened) &&
+                        ((gauge.RattlingCoilStacks is 3 && TraitLevelChecked(Traits.EnhancedVipersRattle)) ||
+                        (gauge.RattlingCoilStacks is 2 && !TraitLevelChecked(Traits.EnhancedVipersRattle))))
+                        return UncoiledFury;
+
+                    //Serpents Ire usage
+                    if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
+                        IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
+                        CanWeave(actionID) && gauge.RattlingCoilStacks <= 2 && !HasEffect(Buffs.Reawakened) && ActionReady(SerpentsIre))
+                        return SerpentsIre;
+
+
 
                     //Dreadwinder Usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
@@ -558,7 +558,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
                             GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh && LevelChecked(DreadFangs) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
-                            (!ActionReady(Dreadwinder) || (GetCooldownRemainingTime(SerpentsIre) <= GCD * 3))) ||
+                            (!ActionReady(Dreadwinder) || (GetCooldownRemainingTime(SerpentsIre) <= GCD))) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
@@ -1026,63 +1026,63 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class VPR_ReawakenLegacy : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ReawakenLegacy;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+        /*    internal class VPR_ReawakenLegacy : CustomCombo
             {
-                VPRGauge? gauge = GetJobGauge<VPRGauge>();
-                int buttonChoice = Config.VPR_ReawakenLegacyButton;
+                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ReawakenLegacy;
 
-                if ((buttonChoice is 0 && actionID is Reawaken && HasEffect(Buffs.Reawakened)) ||
-                    (buttonChoice is 1 && actionID is SteelFangs && HasEffect(Buffs.Reawakened)))
+                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 {
-                    if (!TraitLevelChecked(Traits.EnhancedSerpentsLineage))
+                    VPRGauge? gauge = GetJobGauge<VPRGauge>();
+                    int buttonChoice = Config.VPR_ReawakenLegacyButton;
+
+                    if ((buttonChoice is 0 && actionID is Reawaken && HasEffect(Buffs.Reawakened)) ||
+                        (buttonChoice is 1 && actionID is SteelFangs && HasEffect(Buffs.Reawakened)))
                     {
-                        if (gauge.AnguineTribute is 4)
-                            return OriginalHook(SteelFangs);
-
-                        if (gauge.AnguineTribute is 3)
-                            return OriginalHook(DreadFangs);
-
-                        if (gauge.AnguineTribute is 2)
-                            return OriginalHook(HuntersCoil);
-
-                        if (gauge.AnguineTribute is 1)
-                            return OriginalHook(SwiftskinsCoil);
-                    }
-
-                    if (TraitLevelChecked(Traits.EnhancedSerpentsLineage))
-                    {
-                        //Legacy weaves
-                        if (IsEnabled(CustomComboPreset.VPR_ReawakenLegacyWeaves))
+                        if (!TraitLevelChecked(Traits.EnhancedSerpentsLineage))
                         {
-                            if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
-                                WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
-                                return OriginalHook(SerpentsTail);
+                            if (gauge.AnguineTribute is 4)
+                                return OriginalHook(SteelFangs);
+
+                            if (gauge.AnguineTribute is 3)
+                                return OriginalHook(DreadFangs);
+
+                            if (gauge.AnguineTribute is 2)
+                                return OriginalHook(HuntersCoil);
+
+                            if (gauge.AnguineTribute is 1)
+                                return OriginalHook(SwiftskinsCoil);
                         }
 
-                        if (gauge.AnguineTribute is 5)
-                            return OriginalHook(SteelFangs);
+                        if (TraitLevelChecked(Traits.EnhancedSerpentsLineage))
+                        {
+                            //Legacy weaves
+                            if (IsEnabled(CustomComboPreset.VPR_ReawakenLegacyWeaves))
+                            {
+                                if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
+                                    (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
+                                    WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
+                                    return OriginalHook(SerpentsTail);
+                            }
 
-                        if (gauge.AnguineTribute is 4)
-                            return OriginalHook(DreadFangs);
+                            if (gauge.AnguineTribute is 5)
+                                return OriginalHook(SteelFangs);
 
-                        if (gauge.AnguineTribute is 3)
-                            return OriginalHook(HuntersCoil);
+                            if (gauge.AnguineTribute is 4)
+                                return OriginalHook(DreadFangs);
 
-                        if (gauge.AnguineTribute is 2)
-                            return OriginalHook(SwiftskinsCoil);
+                            if (gauge.AnguineTribute is 3)
+                                return OriginalHook(HuntersCoil);
 
-                        if (gauge.AnguineTribute is 1)
-                            return OriginalHook(Reawaken);
+                            if (gauge.AnguineTribute is 2)
+                                return OriginalHook(SwiftskinsCoil);
+
+                            if (gauge.AnguineTribute is 1)
+                                return OriginalHook(Reawaken);
+                        }
                     }
+                    return actionID;
                 }
-                return actionID;
-            }
-        }
+            }*/
 
         internal class VPR_TwinTails : CustomCombo
         {
