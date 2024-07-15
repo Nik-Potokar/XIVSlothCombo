@@ -368,7 +368,6 @@ namespace XIVSlothCombo.Combos.PvE
                 bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
                 bool SwiftskinsCoilReady = gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
                 float GCD = GetCooldown(OriginalHook(DreadFangs)).CooldownTotal;
-                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
 
                 if (actionID is SteelFangs)
                 {
@@ -393,7 +392,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Dreadwinder Combo
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_ST_DreadwinderCombo) &&
-                        !HasEffect(Buffs.Reawakened))
+                        !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken))
                     {
                         if (HasEffect(Buffs.HuntersVenom) && CanWeave(actionID))
                             return OriginalHook(Twinfang);
@@ -440,7 +439,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Serpents Ire usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
-                        CanWeave(actionID) && gauge.RattlingCoilStacks <= 2 && !HasEffect(Buffs.Reawakened) && ActionReady(SerpentsIre))
+                        CanWeave(actionID) && gauge.RattlingCoilStacks <= 2 && ActionReady(SerpentsIre))
                         return SerpentsIre;
 
                     //Dreadwinder Usage
@@ -576,7 +575,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
                             (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh ||
-                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && LevelChecked(DreadFangs) &&
+                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) && LevelChecked(DreadFangs) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                             (!ActionReady(Dreadwinder))) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
