@@ -135,11 +135,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return BarrelStabilizer;
 
                     // Wildfire
-                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID))
+                    if (ActionReady(Wildfire) && WasLastAction(Hypercharge) && !ActionWatching.HasDoubleWeaved())
                         return Wildfire;
 
                     //Queen
-                    if (UseQueen(gauge))
+                    if (UseQueen(gauge) && !ActionWatching.HasDoubleWeaved())
                         return OriginalHook(RookAutoturret);
 
                     //Full Metal Field
@@ -157,7 +157,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Ricochet);
                     }
 
-                    if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
+                    if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated && !ActionWatching.HasDoubleWeaved())
                         return actionID;
 
                     //gauss and ricochet outside HC
@@ -171,9 +171,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (ActionReady(OriginalHook(Ricochet)) && !WasLastAction(OriginalHook(Ricochet)))
                             return OriginalHook(Ricochet);
                     }
-                   
+
                     if (CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
-                        LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer))
+                        LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer) && !ActionWatching.HasDoubleWeaved())
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
                         if ((LevelChecked(FullMetalField) && !HasEffect(Buffs.FullMetalMachinist) && ActionReady(Wildfire)) ||
@@ -330,12 +330,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        ActionReady(Wildfire) && WasLastAction(Hypercharge) && CanWeave(actionID) &&
+                        ActionReady(Wildfire) && WasLastAction(Hypercharge) && !ActionWatching.HasDoubleWeaved() &&
                         GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
                         return Wildfire;
 
                     //Queen
-                    if (UseQueen(gauge))
+                    if (UseQueen(gauge) && !ActionWatching.HasDoubleWeaved())
                         return OriginalHook(RookAutoturret);
 
                     //Full Metal Field
@@ -356,7 +356,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Ricochet);
                     }
 
-                    if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
+                    if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated && !ActionWatching.HasDoubleWeaved())
                         return actionID;
 
                     //gauss and ricochet outside HC
@@ -374,7 +374,7 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                        CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
+                        CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !ActionWatching.HasDoubleWeaved() &&
                         LevelChecked(Hypercharge) && !gauge.IsOverheated && !WasLastAction(BarrelStabilizer) &&
                         GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
