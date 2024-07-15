@@ -576,7 +576,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
                             (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh ||
-                            GetCooldownRemainingTime(SerpentsIre) <= GCD) && LevelChecked(DreadFangs) &&
+                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && LevelChecked(DreadFangs) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                             (!ActionReady(Dreadwinder))) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
@@ -594,7 +594,6 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
                 float GCD = GetCooldown(OriginalHook(DreadFangs)).CooldownTotal;
-                int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
 
                 if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
                     HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
@@ -604,7 +603,7 @@ namespace XIVSlothCombo.Combos.PvE
                     GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage)
                 {
                     //even minutes
-                    if (SerpentsIreUsed >= 2 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
+                    if (GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
                         (WasLastAction(SerpentsIre) ||
                         WasLastWeaponskill(Ouroboros) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
@@ -612,19 +611,19 @@ namespace XIVSlothCombo.Combos.PvE
                         (gauge.SerpentOffering >= 50 && GetCooldownRemainingTime(SerpentsIre) <= GCD)))
                         return true;
 
+                    //odd minutes 6min +
+                    if (GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
+                        ((gauge.SerpentOffering >= 95) ||
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
+                        GetCooldownRemainingTime(SerpentsIre) <= GCD * 31 &&
+                        GetCooldownRemainingTime(SerpentsIre) >= GCD * 19)
+                        return true;
+
                     // odd minutes
                     if (GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
                         gauge.SerpentOffering >= 50 &&
                         GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 &&
                         GetCooldownRemainingTime(SerpentsIre) >= GCD * 20)
-                        return true;
-
-                    //odd minutes 6min +
-                    if (SerpentsIreUsed >= 3 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
-                        ((gauge.SerpentOffering >= 95) ||
-                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
-                        GetCooldownRemainingTime(SerpentsIre) <= GCD * 31 &&
-                        GetCooldownRemainingTime(SerpentsIre) >= GCD * 19)
                         return true;
                 }
 
