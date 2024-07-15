@@ -1,8 +1,11 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System;
+using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -163,17 +166,7 @@ namespace XIVSlothCombo.Combos.PvE
                             : WrithingSnap;
 
                     //Reawakend Usage
-                    if ((gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)) &&
-                        HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        !HasEffect(Buffs.Reawakened) &&
-                        !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
-                        !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
-                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
-                        (WasLastAction(SerpentsIre) || //start even minute                                                  
-                        WasLastAction(Ouroboros) || //2nd part                                                  
-                        (GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) || //odd minute                                                 
-                        Buffs.ReadyToReawaken < GCD || //recover                                                 
-                        (gauge.SerpentOffering >= 90 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13))) // recovery
+                    if (UseReawaken(gauge))
                         return Reawaken;
 
                     //Overcap protection
@@ -318,6 +311,39 @@ namespace XIVSlothCombo.Combos.PvE
                             : OriginalHook(SteelFangs);
                 }
                 return actionID;
+
+            }
+            private static bool UseReawaken(VPRGauge gauge)
+            {
+                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
+                float GCD = GetCooldown(OriginalHook(DreadFangs)).CooldownTotal;
+
+                if ((gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)) &&
+                        HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
+                        !HasEffect(Buffs.Reawakened) &&
+                        !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
+                        !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
+                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7)
+                {
+                    int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
+
+                    if (SerpentsIreUsed >= 2 && (WasLastAction(SerpentsIre) || WasLastAction(Ouroboros))) //even minutes
+                        return true;
+
+                    if (GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) // odd minutes
+                        return true;
+
+                    if (SerpentsIreUsed >= 3 && ((GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) || WasLastAction(Ouroboros))) //odd minuts 6min +
+                        return true;
+
+                    if (Buffs.ReadyToReawaken < GCD) // failsafe
+                        return true;
+
+                    if (gauge.SerpentOffering >= 90 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13) //recovery
+                        return true;
+                }
+
+                return false;
             }
         }
 
@@ -395,19 +421,7 @@ namespace XIVSlothCombo.Combos.PvE
                             : WrithingSnap;
 
                     //Reawakend Usage
-                    if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
-                        (gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)) &&
-                        HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        !HasEffect(Buffs.Reawakened) &&
-                        !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
-                        !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
-                        GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage &&
-                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
-                        (WasLastAction(SerpentsIre) || //start even minute                                                  
-                        WasLastAction(Ouroboros) || //2nd part                                                  
-                        (GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) || //odd minute                                                 
-                        Buffs.ReadyToReawaken < GCD || //recover                                                 
-                        (gauge.SerpentOffering >= 100 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13))) // recovery
+                    if (UseReawaken(gauge))
                         return Reawaken;
 
                     //Overcap protection
@@ -567,6 +581,40 @@ namespace XIVSlothCombo.Combos.PvE
                             : OriginalHook(SteelFangs);
                 }
                 return actionID;
+            }
+            private static bool UseReawaken(VPRGauge gauge)
+            {
+                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
+                float GCD = GetCooldown(OriginalHook(DreadFangs)).CooldownTotal;
+
+                if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
+                    (gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)) &&
+                        HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
+                        !HasEffect(Buffs.Reawakened) &&
+                        !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
+                        !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
+                        GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage &&
+                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7)
+                {
+                    int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
+
+                    if (SerpentsIreUsed >= 2 && (WasLastAction(SerpentsIre) || WasLastAction(Ouroboros))) //even minutes
+                        return true;
+
+                    if (GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) // odd minutes
+                        return true;
+
+                    if (SerpentsIreUsed >= 3 && ((GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) || WasLastAction(Ouroboros))) //odd minuts 6min +
+                        return true;
+
+                    if (Buffs.ReadyToReawaken < GCD) // failsafe
+                        return true;
+
+                    if (gauge.SerpentOffering >= 90 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13) //recovery
+                        return true;
+                }
+
+                return false;
             }
         }
 
