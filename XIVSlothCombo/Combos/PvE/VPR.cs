@@ -417,18 +417,19 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                         GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage &&
                         GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 7 &&
-                        (WasLastAction(SerpentsIre) || //start even minute                                                  
-                        WasLastAction(Ouroboros) || //2nd part                                                  
+                        (JustUsed(SerpentsIre, 2f) || //start even minute                                                  
+                        JustUsed(Ouroboros, 2f) || //2nd part                                                  
                         (GetCooldownRemainingTime(SerpentsIre) <= GCD * 30 && GetCooldownRemainingTime(SerpentsIre) >= GCD * 20) || //odd minute                                                 
                         Buffs.ReadyToReawaken < GCD || //recover                                                 
-                        (gauge.SerpentOffering >= 90 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13))) // recovery
+                        (gauge.SerpentOffering >=100 && GetCooldownRemainingTime(SerpentsIre) <= GCD * 13))) // recovery
                         return Reawaken;
 
                     //Dreadwinder Usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                         ActionReady(Dreadwinder) && !HasEffect(Buffs.Reawakened) &&
-                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh)
+                        GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh &&
+                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 3))
                     {
                         if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                             trueNorthReady)
@@ -557,7 +558,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
                             GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh && LevelChecked(DreadFangs) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
-                            (!ActionReady(Dreadwinder) || (GetCooldownRemainingTime(SerpentsIre) <= GCD * 2))) ||
+                            (!ActionReady(Dreadwinder) || (GetCooldownRemainingTime(SerpentsIre) <= GCD * 3))) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
