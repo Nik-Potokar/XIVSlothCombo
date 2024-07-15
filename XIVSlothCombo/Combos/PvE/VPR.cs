@@ -1025,63 +1025,63 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        /*    internal class VPR_ReawakenLegacy : CustomCombo
+        internal class VPR_ReawakenLegacy : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ReawakenLegacy;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ReawakenLegacy;
+                VPRGauge? gauge = GetJobGauge<VPRGauge>();
+                int buttonChoice = Config.VPR_ReawakenLegacyButton;
 
-                protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                if ((buttonChoice is 0 && actionID is Reawaken && HasEffect(Buffs.Reawakened)) ||
+                    (buttonChoice is 1 && actionID is SteelFangs && HasEffect(Buffs.Reawakened)))
                 {
-                    VPRGauge? gauge = GetJobGauge<VPRGauge>();
-                    int buttonChoice = Config.VPR_ReawakenLegacyButton;
-
-                    if ((buttonChoice is 0 && actionID is Reawaken && HasEffect(Buffs.Reawakened)) ||
-                        (buttonChoice is 1 && actionID is SteelFangs && HasEffect(Buffs.Reawakened)))
+                    if (!TraitLevelChecked(Traits.EnhancedSerpentsLineage))
                     {
-                        if (!TraitLevelChecked(Traits.EnhancedSerpentsLineage))
-                        {
-                            if (gauge.AnguineTribute is 4)
-                                return OriginalHook(SteelFangs);
+                        if (gauge.AnguineTribute is 4)
+                            return OriginalHook(SteelFangs);
 
-                            if (gauge.AnguineTribute is 3)
-                                return OriginalHook(DreadFangs);
+                        if (gauge.AnguineTribute is 3)
+                            return OriginalHook(DreadFangs);
 
-                            if (gauge.AnguineTribute is 2)
-                                return OriginalHook(HuntersCoil);
+                        if (gauge.AnguineTribute is 2)
+                            return OriginalHook(HuntersCoil);
 
-                            if (gauge.AnguineTribute is 1)
-                                return OriginalHook(SwiftskinsCoil);
-                        }
-
-                        if (TraitLevelChecked(Traits.EnhancedSerpentsLineage))
-                        {
-                            //Legacy weaves
-                            if (IsEnabled(CustomComboPreset.VPR_ReawakenLegacyWeaves))
-                            {
-                                if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
-                                    (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
-                                    WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
-                                    return OriginalHook(SerpentsTail);
-                            }
-
-                            if (gauge.AnguineTribute is 5)
-                                return OriginalHook(SteelFangs);
-
-                            if (gauge.AnguineTribute is 4)
-                                return OriginalHook(DreadFangs);
-
-                            if (gauge.AnguineTribute is 3)
-                                return OriginalHook(HuntersCoil);
-
-                            if (gauge.AnguineTribute is 2)
-                                return OriginalHook(SwiftskinsCoil);
-
-                            if (gauge.AnguineTribute is 1)
-                                return OriginalHook(Reawaken);
-                        }
+                        if (gauge.AnguineTribute is 1)
+                            return OriginalHook(SwiftskinsCoil);
                     }
-                    return actionID;
+
+                    if (TraitLevelChecked(Traits.EnhancedSerpentsLineage))
+                    {
+                        //Legacy weaves
+                        if (IsEnabled(CustomComboPreset.VPR_ReawakenLegacyWeaves))
+                        {
+                            if (TraitLevelChecked(Traits.SerpentsLegacy) && CanWeave(actionID) &&
+                                (WasLastAction(OriginalHook(SteelFangs)) || WasLastAction(OriginalHook(DreadFangs)) ||
+                                WasLastAction(OriginalHook(HuntersCoil)) || WasLastAction(OriginalHook(SwiftskinsCoil))))
+                                return OriginalHook(SerpentsTail);
+                        }
+
+                        if (gauge.AnguineTribute is 5)
+                            return OriginalHook(SteelFangs);
+
+                        if (gauge.AnguineTribute is 4)
+                            return OriginalHook(DreadFangs);
+
+                        if (gauge.AnguineTribute is 3)
+                            return OriginalHook(HuntersCoil);
+
+                        if (gauge.AnguineTribute is 2)
+                            return OriginalHook(SwiftskinsCoil);
+
+                        if (gauge.AnguineTribute is 1)
+                            return OriginalHook(Reawaken);
+                    }
                 }
-            }*/
+                return actionID;
+            }
+        }
 
         internal class VPR_TwinTails : CustomCombo
         {
