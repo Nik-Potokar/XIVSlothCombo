@@ -256,62 +256,63 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // healing 
+                    // healing
                     if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind))
                         return All.SecondWind;
 
                     if (PlayerHealthPercentageHp() <= 40 && ActionReady(All.Bloodbath))
+                        return All.Bloodbath;
 
-                        //1-2-3 (4-5-6) Combo
-                        if (comboTime > 0 && !HasEffect(Buffs.Reawakened))
+                    //1-2-3 (4-5-6) Combo
+                    if (comboTime > 0 && !HasEffect(Buffs.Reawakened))
+                    {
+                        if (lastComboMove is DreadFangs or SteelFangs)
                         {
-                            if (lastComboMove is DreadFangs or SteelFangs)
-                            {
-                                if ((HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)) && LevelChecked(SwiftskinsSting))
-                                    return OriginalHook(SteelFangs);
+                            if ((HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)) && LevelChecked(SwiftskinsSting))
+                                return OriginalHook(SteelFangs);
 
-                                if ((HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom)) && LevelChecked(HuntersSting))
-                                    return OriginalHook(DreadFangs);
-                            }
-
-                            if (lastComboMove is HuntersSting or SwiftskinsSting)
-                            {
-                                if ((HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.HindstungVenom)) && LevelChecked(FlanksbaneFang))
-                                {
-                                    if (trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.HindstungVenom))
-                                        return All.TrueNorth;
-
-                                    if (trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
-                                        return All.TrueNorth;
-
-                                    return OriginalHook(SteelFangs);
-                                }
-
-                                if ((HasEffect(Buffs.FlanksbaneVenom) || HasEffect(Buffs.HindsbaneVenom)) && LevelChecked(HindstingStrike))
-                                {
-                                    if (trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.HindsbaneVenom))
-                                        return All.TrueNorth;
-
-                                    if (trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlanksbaneVenom))
-                                        return All.TrueNorth;
-
-                                    return OriginalHook(DreadFangs);
-                                }
-                            }
-
-                            if (lastComboMove is HindstingStrike or HindsbaneFang or FlankstingStrike or FlanksbaneFang)
-                            {
-                                if (CanWeave(actionID) && LevelChecked(SerpentsTail) && HasCharges(DeathRattle) &&
-                                    (WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang) ||
-                                    WasLastWeaponskill(FlankstingStrike) || WasLastWeaponskill(FlanksbaneFang)))
-                                    return OriginalHook(SerpentsTail);
-
-                            }
-                            return (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 && LevelChecked(DreadFangs) &&
-                                (!ActionReady(Dreadwinder) || (GetCooldownRemainingTime(SerpentsIre) <= GCD * 2)))
-                                ? OriginalHook(DreadFangs)
-                                : OriginalHook(SteelFangs);
+                            if ((HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom)) && LevelChecked(HuntersSting))
+                                return OriginalHook(DreadFangs);
                         }
+
+                        if (lastComboMove is HuntersSting or SwiftskinsSting)
+                        {
+                            if ((HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.HindstungVenom)) && LevelChecked(FlanksbaneFang))
+                            {
+                                if (trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.HindstungVenom))
+                                    return All.TrueNorth;
+
+                                if (trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
+                                    return All.TrueNorth;
+
+                                return OriginalHook(SteelFangs);
+                            }
+
+                            if ((HasEffect(Buffs.FlanksbaneVenom) || HasEffect(Buffs.HindsbaneVenom)) && LevelChecked(HindstingStrike))
+                            {
+                                if (trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.HindsbaneVenom))
+                                    return All.TrueNorth;
+
+                                if (trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlanksbaneVenom))
+                                    return All.TrueNorth;
+
+                                return OriginalHook(DreadFangs);
+                            }
+                        }
+
+                        if (lastComboMove is HindstingStrike or HindsbaneFang or FlankstingStrike or FlanksbaneFang)
+                        {
+                            if (CanWeave(actionID) && LevelChecked(SerpentsTail) && HasCharges(DeathRattle) &&
+                                (WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang) ||
+                                WasLastWeaponskill(FlankstingStrike) || WasLastWeaponskill(FlanksbaneFang)))
+                                return OriginalHook(SerpentsTail);
+
+                        }
+                        return (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 && LevelChecked(DreadFangs) &&
+                            (!ActionReady(Dreadwinder) || (GetCooldownRemainingTime(SerpentsIre) <= GCD * 2)))
+                            ? OriginalHook(DreadFangs)
+                            : OriginalHook(SteelFangs);
+                    }
                     return LevelChecked(DreadFangs)
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
