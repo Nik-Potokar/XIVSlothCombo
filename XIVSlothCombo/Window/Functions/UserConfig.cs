@@ -2416,11 +2416,11 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region WARRIOR
 
+            if (preset == CustomComboPreset.WAR_ST_StormsPath_StormsEye && enabled)
+                UserConfig.DrawSliderInt(0, 30, WAR.Config.WAR_SurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
+
             if (preset == CustomComboPreset.WAR_InfuriateFellCleave && enabled)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateRange, "Set how much rage to be at or under to use this feature.");
-
-            if (preset == CustomComboPreset.WAR_ST_StormsPath && enabled)
-                UserConfig.DrawSliderInt(0, 30, WAR.Config.WAR_SurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
 
             if (preset == CustomComboPreset.WAR_ST_StormsPath_Onslaught && enabled)
                 UserConfig.DrawSliderInt(0, 2, WAR.Config.WAR_KeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");

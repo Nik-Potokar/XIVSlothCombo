@@ -161,9 +161,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return Maim;
                         }
 
-                        if (lastComboMove == Maim && LevelChecked(StormsPath))
+                        if (lastComboMove == Maim && LevelChecked(StormsPath) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_StormsEye))
                         {
-                            if ((GetBuffRemainingTime(Buffs.SurgingTempest) <= surgingThreshold) && LevelChecked(StormsEye))
+                            if (GetBuffRemainingTime(Buffs.SurgingTempest) <= surgingThreshold && LevelChecked(StormsEye))
                                 return StormsEye;
                             return StormsPath;
                         }
