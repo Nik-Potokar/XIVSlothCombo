@@ -881,6 +881,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 3, "", "")]
         DNC_ST_Simple_SaberDance = 4063,
 
+        [ParentCombo(DNC_ST_Simple_SaberDance)]
+        [CustomComboInfo("Simple Dance of the Dawn Option", "Includes Dance of the Dawn in the rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID, 3, "", "")]
+        DNC_ST_Simple_DawnDance = 4064,
+
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 3, "", "")]
         DNC_ST_Simple_Flourish = 4056,
@@ -956,6 +960,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 6, "", "")]
         DNC_AoE_Simple_SaberDance = 4082,
+
+        [ParentCombo(DNC_AoE_Simple_SaberDance)]
+        [CustomComboInfo("Simple AoE Dance of the Dawn Option", "Includes Dance of the Dawn in the AoE rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID, 3, "", "")]
+        DNC_AoE_Simple_DawnDance = 4083,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6, "", "")]

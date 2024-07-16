@@ -376,9 +376,18 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // ST Saber Dance
-                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) && LevelChecked(SaberDance) &&
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) &&
+                        LevelChecked(SaberDance) &&
                         (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
                     {
+                        // ST Dance of the Dawn
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_DawnDance) &&
+                            HasEffect(Buffs.DanceOfTheDawnReady) &&
+                            LevelChecked(DanceOfTheDawn) &&
+                            (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) || // above esprit threshold use
+                             (GetBuffRemainingTime(Buffs.DanceOfTheDawnReady) < 5 && gauge.Esprit >= 50))) // emergency use
+                            return OriginalHook(DanceOfTheDawn);
+
                         if (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
                             (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
                             return SaberDance;
@@ -429,7 +438,13 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // ST Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
+                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) &&
+                        LevelChecked(DanceOfTheDawn) &&
+                        HasEffect(Buffs.DanceOfTheDawnReady) &&
+                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
+                        return OriginalHook(DanceOfTheDawn);
+                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) &&
+                        LevelChecked(SaberDance) &&
                         gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
                         return SaberDance;
 
@@ -613,9 +628,19 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // AoE Saber Dance
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) && LevelChecked(SaberDance) &&
-                        (GetCooldownRemainingTime(TechnicalStep) > 5 || IsOffCooldown(TechnicalStep)))
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) &&
+                        LevelChecked(SaberDance) &&
+                        (GetCooldownRemainingTime(TechnicalStep) > 5 ||
+                         IsOffCooldown(TechnicalStep)))
                     {
+                        // AoE Dance of the Dawn
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_DawnDance) &&
+                            HasEffect(Buffs.DanceOfTheDawnReady) &&
+                            LevelChecked(DanceOfTheDawn) &&
+                            (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) || // above esprit threshold use
+                             (GetBuffRemainingTime(Buffs.DanceOfTheDawnReady) < 5 && gauge.Esprit >= 50))) // emergency use
+                            return OriginalHook(DanceOfTheDawn);
+
                         if (gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSaberThreshold) ||
                             (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
                             return SaberDance;
@@ -666,7 +691,13 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // AoE Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) &&
+                        LevelChecked(DanceOfTheDawn) &&
+                        HasEffect(Buffs.DanceOfTheDawnReady) &&
+                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
+                        return OriginalHook(DanceOfTheDawn);
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) &&
+                        LevelChecked(SaberDance) &&
                         gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
                         return SaberDance;
 
