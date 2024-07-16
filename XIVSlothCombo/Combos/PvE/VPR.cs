@@ -185,7 +185,9 @@ namespace XIVSlothCombo.Combos.PvE
                     //Dreadwinder Usage
                     if (ActionReady(Dreadwinder) && !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                         GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 &&
-                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 4))
+                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) &&
+                        (GetBuffRemainingTime(Buffs.FlankstungVenom) >= 20 || GetBuffRemainingTime(Buffs.FlanksbaneVenom) >= 20 ||
+                        GetBuffRemainingTime(Buffs.HindstungVenom) >= 20 || GetBuffRemainingTime(Buffs.HindsbaneVenom) >= 20))
                     {
                         if (trueNorthReady)
                             return All.TrueNorth;
@@ -199,8 +201,9 @@ namespace XIVSlothCombo.Combos.PvE
                         !DreadwinderReady && !HuntersCoilReady && !SwiftskinsCoilReady && !HasEffect(Buffs.Reawakened) &&
                         !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) &&
                         !WasLastWeaponskill(FlankstingStrike) && !WasLastWeaponskill(FlanksbaneFang) &&
-                        !WasLastWeaponskill(HindstingStrike) && !WasLastWeaponskill(HindsbaneFang) &&
-                        !WasLastAbility(SerpentsIre))
+                        !WasLastWeaponskill(HindstingStrike) && !WasLastWeaponskill(HindsbaneFang) && !WasLastAbility(SerpentsIre) &&
+                        (GetBuffRemainingTime(Buffs.FlankstungVenom) >= 20 || GetBuffRemainingTime(Buffs.FlanksbaneVenom) >= 20 ||
+                        GetBuffRemainingTime(Buffs.HindstungVenom) >= 20 || GetBuffRemainingTime(Buffs.HindsbaneVenom) >= 20))
                         return UncoiledFury;
 
                     //Reawaken combo
@@ -326,10 +329,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     //even minutes
                     if ((SerpentsIreUsed <= 3 || SerpentsIreUsed >= 5) && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
-                        ((gauge.SerpentOffering >= 50 && WasLastAbility(SerpentsIre)) ||
+                        (WasLastAbility(SerpentsIre) ||
                         WasLastWeaponskill(Ouroboros) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
-                        gauge.SerpentOffering >= 95))
+                        (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre))))
                         return true;
 
                     // odd minutes
@@ -339,9 +342,17 @@ namespace XIVSlothCombo.Combos.PvE
                         GetCooldownRemainingTime(SerpentsIre) >= GCD * 20)
                         return true;
 
+                    // 6 minutes
+                    if (SerpentsIreUsed == 4 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
+                        (WasLastAbility(SerpentsIre) ||
+                        WasLastWeaponskill(Ouroboros) ||
+                        HasEffect(Buffs.ReadyToReawaken) ||
+                        (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre))))
+                        return true;
+
                     // 7min 2RA
                     if (SerpentsIreUsed == 4 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
-                        ((gauge.SerpentOffering >= 95) ||
+                        (gauge.SerpentOffering >= 95 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) <= GCD * 36 &&
                         GetCooldownRemainingTime(SerpentsIre) >= GCD * 18)
@@ -453,7 +464,9 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                         ActionReady(Dreadwinder) && !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                         GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh &&
-                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 4))
+                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) &&
+                        (GetBuffRemainingTime(Buffs.FlankstungVenom) >= 20 || GetBuffRemainingTime(Buffs.FlanksbaneVenom) >= 20 ||
+                        GetBuffRemainingTime(Buffs.HindstungVenom) >= 20 || GetBuffRemainingTime(Buffs.HindsbaneVenom) >= 20))
                     {
                         if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                             trueNorthReady)
@@ -469,8 +482,9 @@ namespace XIVSlothCombo.Combos.PvE
                         !DreadwinderReady && !HuntersCoilReady && !SwiftskinsCoilReady && !HasEffect(Buffs.Reawakened) &&
                         !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) &&
                         !WasLastWeaponskill(FlankstingStrike) && !WasLastWeaponskill(FlanksbaneFang) &&
-                        !WasLastWeaponskill(HindstingStrike) && !WasLastWeaponskill(HindsbaneFang) &&
-                        !WasLastAbility(SerpentsIre))
+                        !WasLastWeaponskill(HindstingStrike) && !WasLastWeaponskill(HindsbaneFang) && !WasLastAbility(SerpentsIre) &&
+                        (GetBuffRemainingTime(Buffs.FlankstungVenom) >= 20 || GetBuffRemainingTime(Buffs.FlanksbaneVenom) >= 20 ||
+                        GetBuffRemainingTime(Buffs.HindstungVenom) >= 20 || GetBuffRemainingTime(Buffs.HindsbaneVenom) >= 20))
                         return UncoiledFury;
 
                     //Reawaken combo
@@ -581,7 +595,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
                             (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh ||
-                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) && LevelChecked(DreadFangs) &&
+                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 3) && LevelChecked(DreadFangs) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                             (!ActionReady(Dreadwinder))) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
@@ -610,10 +624,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     //even minutes
                     if ((SerpentsIreUsed <= 3 || SerpentsIreUsed >= 5) && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
-                        ((gauge.SerpentOffering >= 50 && WasLastAbility(SerpentsIre)) ||
+                        (WasLastAbility(SerpentsIre) ||
                         WasLastWeaponskill(Ouroboros) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
-                        gauge.SerpentOffering >= 95))
+                        (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre))))
                         return true;
 
                     // odd minutes
@@ -623,9 +637,17 @@ namespace XIVSlothCombo.Combos.PvE
                         GetCooldownRemainingTime(SerpentsIre) >= GCD * 20)
                         return true;
 
+                    // 6 minutes
+                    if (SerpentsIreUsed == 4 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
+                        (WasLastAbility(SerpentsIre) ||
+                        WasLastWeaponskill(Ouroboros) ||
+                        HasEffect(Buffs.ReadyToReawaken) ||
+                        (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre))))
+                        return true;
+
                     // 7min 2RA
                     if (SerpentsIreUsed == 4 && GetDebuffRemainingTime(Debuffs.NoxiousGnash) >= AwGCD * 14 &&
-                        ((gauge.SerpentOffering >= 95) ||
+                        (gauge.SerpentOffering >= 95 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) <= GCD * 36 &&
                         GetCooldownRemainingTime(SerpentsIre) >= GCD * 18)
