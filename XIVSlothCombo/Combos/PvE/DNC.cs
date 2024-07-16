@@ -78,9 +78,9 @@ namespace XIVSlothCombo.Combos.PvE
                 // Other
                 Peloton = 1199,
                 ShieldSamba = 1826,
-                LastDance = 3867,
-                FinishingMove = 3868,
-                DanceOfTheDawn = 3869;
+                LastDanceReady = 3867,
+                FinishingMoveReady = 3868,
+                DanceOfTheDawnReady = 3869;
         }
 
         public static class Config
