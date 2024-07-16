@@ -963,7 +963,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_AoE_Simple_SaberDance)]
         [CustomComboInfo("Simple AoE Dance of the Dawn Option", "Includes Dance of the Dawn in the AoE rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID, 3, "", "")]
-        DNC_AoE_Simple_DawnDance = 4083,
+        DNC_AoE_Simple_DawnDance = 4085,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6, "", "")]
