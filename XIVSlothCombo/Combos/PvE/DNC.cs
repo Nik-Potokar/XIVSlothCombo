@@ -364,7 +364,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (((!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent)) &&
                             ((IsOffCooldown(TechnicalStep) && !InCombat()) || GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                            (IsOffCooldown(Flourish) || (GetCooldownRemainingTime(Flourish) > 5))) ||
+                            (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) > 5)) ||
                             IsOffCooldown(StandardStep))
                             return StandardStep;
                     }
@@ -393,10 +393,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+                    if (HasEffect(Buffs.LastDanceReady))
+                        return LastDance;
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
 
                     // ST combos and burst attacks
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime is < 2 and > 0)
@@ -646,10 +648,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+                    if (HasEffect(Buffs.LastDanceReady))
+                        return LastDance;
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
 
                     // AoE combos and burst attacks
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime is < 2 and > 0)
@@ -757,10 +761,12 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOnCooldown(StandardStep))
                         return Flourish;
 
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
+                    if (HasEffect(Buffs.LastDanceReady))
+                        return LastDance;
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
 
                     // Tech Step
                     if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
