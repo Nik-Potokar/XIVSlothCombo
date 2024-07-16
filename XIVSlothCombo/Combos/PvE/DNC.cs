@@ -769,7 +769,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Tillana;
                     if (HasEffect(Buffs.LastDanceReady))
                         return LastDance;
-                    if (HasEffect(Buffs.FinishingMoveReady))
+                    if (HasEffect(Buffs.FinishingMoveReady) &&
+                        IsOffCooldown(StandardStep))
                         return FinishingMove;
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
