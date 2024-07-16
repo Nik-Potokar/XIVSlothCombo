@@ -193,7 +193,7 @@ namespace XIVSlothCombo.Combos.PvE
                         : StandardFinish2;
 
                 // Technical Step
-                if ((actionID is TechnicalStep) && gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
+                if (actionID is TechnicalStep && gauge.IsDancing && HasEffect(Buffs.TechnicalStep))
                     return gauge.CompletedSteps < 4
                         ? gauge.NextStep
                         : TechnicalFinish4;
@@ -221,104 +221,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DNC_ST_MultiButton : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_ST_MultiButton;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Cascade)
-                {
-                    #region Types
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
-                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    #endregion
-
-                    // ST Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
-                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
-                        return SaberDance;
-
-                    if (CanWeave(actionID))
-                    {
-                        // ST Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            LevelChecked(FanDance1) && gauge.Feathers is 4)
-                            return FanDance1;
-
-                        // ST Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
-                        {
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
-                                return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance))
-                                return FanDance4;
-                        }
-                    }
-
-                    // ST base combos
-                    if (LevelChecked(Fountainfall) && flow)
-                        return Fountainfall;
-                    if (LevelChecked(ReverseCascade) && symmetry)
-                        return ReverseCascade;
-                    if (LevelChecked(Fountain) && lastComboMove is Cascade)
-                        return Fountain;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_AoE_MultiButton : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_MultiButton;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is Windmill)
-                {
-                    #region Types
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
-                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
-                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
-                    #endregion
-
-                    // AoE Esprit overcap protection
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
-                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
-                        return SaberDance;
-
-                    if (CanWeave(actionID))
-                    {
-                        // AoE Fan Dance overcap protection
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            LevelChecked(FanDance2) && gauge.Feathers is 4)
-                            return FanDance2;
-
-                        // AoE Fan Dance 3/4 on combo
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
-                        {
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
-                                return FanDance3;
-                            if (HasEffect(Buffs.FourFoldFanDance))
-                                return FanDance4;
-                        }
-                    }
-
-                    // AoE base combos
-                    if (LevelChecked(Bloodshower) && flow)
-                        return Bloodshower;
-                    if (LevelChecked(RisingWindmill) && symmetry)
-                        return RisingWindmill;
-                    if (LevelChecked(Bladeshower) && lastComboMove is Windmill)
-                        return Bladeshower;
-                }
-
-                return actionID;
-            }
-        }
-
         internal class DNC_Starfall_Devilment : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_Starfall_Devilment;
@@ -327,65 +229,6 @@ namespace XIVSlothCombo.Combos.PvE
                 actionID is Devilment && HasEffect(Buffs.FlourishingStarfall)
                     ? StarfallDance
                     : actionID;
-        }
-
-        internal class DNC_CombinedDances : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_CombinedDances;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                // One-button mode for both dances (SS/TS). SS takes priority.
-                if (actionID is StandardStep)
-                {
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
-
-                    // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !gauge.IsDancing)
-                    {
-                        if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
-                            (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
-                            return Devilment;
-                    }
-
-                    // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
-                        InCombat() && !gauge.IsDancing &&
-                        ActionReady(Flourish) &&
-                        IsOnCooldown(StandardStep))
-                        return Flourish;
-
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
-                    if (HasEffect(Buffs.FlourishingFinish))
-                        return Tillana;
-
-                    // Tech Step
-                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
-                        !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
-                        return TechnicalStep;
-
-                    // Dance steps
-                    if (gauge.IsDancing)
-                    {
-                        if (HasEffect(Buffs.StandardStep))
-                        {
-                            return gauge.CompletedSteps < 2
-                                ? gauge.NextStep
-                                : StandardFinish2;
-                        }
-
-                        if (HasEffect(Buffs.TechnicalStep))
-                        {
-                            return gauge.CompletedSteps < 4
-                                ? gauge.NextStep
-                                : TechnicalFinish4;
-                        }
-                    }
-                }
-
-                return actionID;
-            }
         }
 
         internal class DNC_ST_SimpleMode : CustomCombo
@@ -434,9 +277,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Flourish
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
-                        CanDelayedWeave(actionID, 1.25, 0.5) && ActionReady(Flourish) &&
-                        !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
-                        !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
+                        CanDelayedWeave(actionID, 1.25, 0.5) &&
+                        ActionReady(Flourish) &&
+                        !HasEffect(Buffs.ThreeFoldFanDance) &&
+                        !HasEffect(Buffs.FourFoldFanDance) &&
+                        !HasEffect(Buffs.FlourishingSymmetry) &&
+                        !HasEffect(Buffs.FlourishingFlow))
                         return Flourish;
 
                     // ST Interrupt
@@ -445,9 +291,13 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
-                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
                         return Variant.VariantCure;
 
+                    // Variant Rampart
                     if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
@@ -557,6 +407,55 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Fountain) && lastComboMove is Cascade && comboTime > 0)
                         return Fountain;
                     #endregion
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class DNC_ST_MultiButton : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_ST_MultiButton;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Cascade)
+                {
+                    #region Types
+                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
+                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
+                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
+                    #endregion
+
+                    // ST Esprit overcap protection
+                    if (IsEnabled(CustomComboPreset.DNC_ST_EspritOvercap) && LevelChecked(SaberDance) &&
+                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_ST))
+                        return SaberDance;
+
+                    if (CanWeave(actionID))
+                    {
+                        // ST Fan Dance overcap protection
+                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
+                            LevelChecked(FanDance1) && gauge.Feathers is 4)
+                            return FanDance1;
+
+                        // ST Fan Dance 3/4 on combo
+                        if (IsEnabled(CustomComboPreset.DNC_ST_FanDance34))
+                        {
+                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                                return FanDance3;
+                            if (HasEffect(Buffs.FourFoldFanDance))
+                                return FanDance4;
+                        }
+                    }
+
+                    // ST base combos
+                    if (LevelChecked(Fountainfall) && flow)
+                        return Fountainfall;
+                    if (LevelChecked(ReverseCascade) && symmetry)
+                        return ReverseCascade;
+                    if (LevelChecked(Fountain) && lastComboMove is Cascade)
+                        return Fountain;
                 }
 
                 return actionID;
@@ -745,6 +644,114 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill && comboTime > 0)
                         return Bladeshower;
                     #endregion
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class DNC_AoE_MultiButton : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_AoE_MultiButton;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Windmill)
+                {
+                    #region Types
+                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
+                    bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
+                    bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
+                    #endregion
+
+                    // AoE Esprit overcap protection
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_EspritOvercap) && LevelChecked(SaberDance) &&
+                        gauge.Esprit >= PluginConfiguration.GetCustomIntValue(Config.DNCEspritThreshold_AoE))
+                        return SaberDance;
+
+                    if (CanWeave(actionID))
+                    {
+                        // AoE Fan Dance overcap protection
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
+                            LevelChecked(FanDance2) && gauge.Feathers is 4)
+                            return FanDance2;
+
+                        // AoE Fan Dance 3/4 on combo
+                        if (IsEnabled(CustomComboPreset.DNC_AoE_FanDance34))
+                        {
+                            if (HasEffect(Buffs.ThreeFoldFanDance))
+                                return FanDance3;
+                            if (HasEffect(Buffs.FourFoldFanDance))
+                                return FanDance4;
+                        }
+                    }
+
+                    // AoE base combos
+                    if (LevelChecked(Bloodshower) && flow)
+                        return Bloodshower;
+                    if (LevelChecked(RisingWindmill) && symmetry)
+                        return RisingWindmill;
+                    if (LevelChecked(Bladeshower) && lastComboMove is Windmill)
+                        return Bladeshower;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class DNC_CombinedDances : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_CombinedDances;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                // One-button mode for both dances (SS/TS). SS takes priority.
+                if (actionID is StandardStep)
+                {
+                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
+
+                    // Devilment
+                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !gauge.IsDancing)
+                    {
+                        if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
+                            (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
+                            return Devilment;
+                    }
+
+                    // Flourish
+                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
+                        InCombat() && !gauge.IsDancing &&
+                        ActionReady(Flourish) &&
+                        IsOnCooldown(StandardStep))
+                        return Flourish;
+
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
+                    if (HasEffect(Buffs.FlourishingFinish))
+                        return Tillana;
+
+                    // Tech Step
+                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
+                        !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
+                        return TechnicalStep;
+
+                    // Dance steps
+                    if (gauge.IsDancing)
+                    {
+                        if (HasEffect(Buffs.StandardStep))
+                        {
+                            return gauge.CompletedSteps < 2
+                                ? gauge.NextStep
+                                : StandardFinish2;
+                        }
+
+                        if (HasEffect(Buffs.TechnicalStep))
+                        {
+                            return gauge.CompletedSteps < 4
+                                ? gauge.NextStep
+                                : TechnicalFinish4;
+                        }
+                    }
                 }
 
                 return actionID;
