@@ -282,7 +282,8 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.ThreeFoldFanDance) &&
                         !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) &&
-                        !HasEffect(Buffs.FlourishingFlow))
+                        !HasEffect(Buffs.FlourishingFlow) &&
+                        !HasEffect(Buffs.FinishingMoveReady))
                         return Flourish;
 
                     // ST Interrupt
