@@ -105,7 +105,6 @@ namespace XIVSlothCombo.Data
 
         private unsafe static void CheckForChangedTarget(uint actionId, ref ulong targetObjectId)
         {
-            Svc.Log.Debug($"{actionId.ActionName()}");
             if (actionId is AST.Balance or AST.Spear &&
                 Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
                 !OutOfRange(actionId, Service.ClientState.LocalPlayer!, Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember))

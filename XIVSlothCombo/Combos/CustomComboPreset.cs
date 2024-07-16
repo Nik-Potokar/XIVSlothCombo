@@ -1,6 +1,7 @@
 ﻿using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
+using static XIVSlothCombo.Combos.PvE.GNB;
 
 namespace XIVSlothCombo.Combos
 {
@@ -444,129 +445,129 @@ namespace XIVSlothCombo.Combos
 
         #region BLUE MAGE
 
-        [BlueInactive(BLU.SongOfTorment, BLU.Bristle)]
-        [ReplaceSkill(BLU.SongOfTorment)]
-        [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so Song of Torment is buffed.", BLU.JobID)]
-        BLU_BuffedSoT = 70000,
+        [ReplaceSkill(BLU.MoonFlute)]
+        [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedReprobation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle)]
+        [ConflictingCombos(BLU_Opener)]
+        [CustomComboInfo("BLU Moon Flute Opener (Level 80)", "Turns Moon Flute into a full opener.\nUse the remaining 2 charges of Winged Reprobation before starting the opener again!\nCan be done with 2.50 spell speed", BLU.JobID, 1)]
+        BLU_NewMoonFluteOpener = 70021,
+
+        [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
+        [ParentCombo(BLU_NewMoonFluteOpener)]
+        [CustomComboInfo("DoT Opener", "Changes the opener to apply either Mortal Flame or Breath of Magic instead of using Winged Reprobation.\nRequires 2.20 or faster spell speed", BLU.JobID)]
+        BLU_NewMoonFluteOpener_DoTOpener = 70022,
 
         [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.RoseOfDestruction, BLU.FeatherRain, BLU.Bristle, BLU.GlassDance, BLU.Surpanakha, BLU.MatraMagic, BLU.ShockStrike, BLU.PhantomFlurry)]
         [ReplaceSkill(BLU.MoonFlute)]
         [ConflictingCombos(BLU_NewMoonFluteOpener)]
-        [CustomComboInfo("Moon Flute Opener", "Puts the Full Moon Flute Opener on Moon Flute or Whistle.", BLU.JobID)]
+        [CustomComboInfo("BLU Moon Flute Opener (Level 70)", "Turns Moon Flute into a full opener. Here for historical value; level 80 opener is more potent.", BLU.JobID, 2)]
         BLU_Opener = 70001,
 
         [BlueInactive(BLU.MoonFlute, BLU.Tingle, BLU.ShockStrike, BLU.Whistle, BLU.FinalSting)]
         [ReplaceSkill(BLU.FinalSting)]
-        [CustomComboInfo("Final Sting Combo Feature", "Turns Final Sting into the buff combo of: Moon Flute, Tingle, Whistle, Final Sting. Will use any primals off cooldown before casting Final Sting.", BLU.JobID)]
+        [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute > Tingle > Whistle > Final Sting.", BLU.JobID, 3)]
         BLU_FinalSting = 70002,
 
         [BlueInactive(BLU.RoseOfDestruction, BLU.FeatherRain, BLU.GlassDance, BLU.JKick)]
         [ParentCombo(BLU_FinalSting)]
-        [CustomComboInfo("Off-cooldown Primal Additions", "Adds any Primals that are off cooldown to the Final Sting Combo Feature.", BLU.JobID)]
+        [CustomComboInfo("Off-cooldown Primal Additions", "Adds Rose of Destruction, Feather Rain, Glass Dance, and J Kick to the combo.", BLU.JobID)]
         BLU_Primals = 70003,
-
-        [BlueInactive(BLU.RamsVoice, BLU.Ultravibration)]
-        [ReplaceSkill(BLU.Ultravibration)]
-        [CustomComboInfo("Ram's Voice into Ultravibration", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available.", BLU.JobID)]
-        BLU_Ultravibrate = 70005,
-
-        [BlueInactive(BLU.Offguard, BLU.BadBreath, BLU.Devour)]
-        [ReplaceSkill(BLU.Devour, BLU.Offguard, BLU.BadBreath)]
-        [CustomComboInfo("Tank Debuff Feature", "Puts Devour, Off-Guard, Lucid Dreaming, and Bad Breath into one button when under Tank Mimicry.", BLU.JobID)]
-        BLU_DebuffCombo = 70006,
-
-        [BlueInactive(BLU.MagicHammer)]
-        [ReplaceSkill(BLU.MagicHammer)]
-        [CustomComboInfo("Addle/Magic Hammer Debuff Feature", "Turns Magic Hammer into Addle when off CD.", BLU.JobID)]
-        BLU_Addle = 70007,
-
-        [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
-        [ReplaceSkill(BLU.FeatherRain)]
-        [CustomComboInfo("Primal Feature", "Turns Feather Rain into any Primals that are off CD. \nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID)]
-        BLU_PrimalCombo = 70008,
-
-        [BlueInactive(BLU.BlackKnightsTour, BLU.WhiteKnightsTour)]
-        [ReplaceSkill(BLU.BlackKnightsTour, BLU.WhiteKnightsTour)]
-        [CustomComboInfo("Knight's Tour Feature", "Turns Black Knight's Tour or White Knight's Tour into its counterpart when the enemy is under the effect of the spell's debuff.", BLU.JobID)]
-        BLU_KnightCombo = 70009,
-
-        [BlueInactive(BLU.PeripheralSynthesis, BLU.MustardBomb)]
-        [ReplaceSkill(BLU.PeripheralSynthesis)]
-        [CustomComboInfo("Peripheral Synthesis into Mustard Bomb", "Turns Peripheral Synthesis into Mustard Bomb when target is under the effect of Lightheaded.", BLU.JobID)]
-        BLU_LightHeadedCombo = 70010,
 
         [BlueInactive(BLU.BasicInstinct)]
         [ParentCombo(BLU_FinalSting)]
         [CustomComboInfo("Solo Mode", "Uses Basic Instinct if you're in an instance and on your own.", BLU.JobID)]
         BLU_SoloMode = 70011,
 
+        [BlueInactive(BLU.RamsVoice, BLU.Ultravibration)]
+        [ReplaceSkill(BLU.Ultravibration)]
+        [CustomComboInfo("Vibe Combo", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available.", BLU.JobID, 4)]
+        BLU_Ultravibrate = 70005,
+
         [BlueInactive(BLU.HydroPull)]
         [ParentCombo(BLU_Ultravibrate)]
         [CustomComboInfo("Hydro Pull Setup", "Uses Hydro Pull before using Ram's Voice.", BLU.JobID)]
         BLU_HydroPull = 70012,
 
-        [BlueInactive(BLU.JKick)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("J Kick Option", "Adds J Kick to the Primal Feature.", BLU.JobID)]
-        BLU_PrimalCombo_JKick = 70013,
-
-        [BlueInactive(BLU.SeaShanty)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Sea Shanty Option", "Adds Sea Shanty to the Primal Feature.", BLU.JobID)]
-        BLU_PrimalCombo_SeaShanty = 70024,
-
-        [BlueInactive(BLU.WingedRepropbation)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Winged Reprobration Option", "Adds Winged Reprobation to the Primal Feature.", BLU.JobID)]
-        BLU_PrimalCombo_WingedReprobation = 70025,
-
-        [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
-        [CustomComboInfo("Perpetual Ray into Sharpened Knife Feature", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID)]
-        BLU_PerpetualRayStunCombo = 70014,
+        [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
+        [ReplaceSkill(BLU.FeatherRain)]
+        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance.\nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID, 5)]
+        BLU_PrimalCombo = 70008,
 
         [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
         [ParentCombo(BLU_PrimalCombo)]
         [CustomComboInfo("Moon Flute Burst Pooling Option", "Holds spells if Moon Flute burst is about to occur and spells are off cooldown.", BLU.JobID)]
         BLU_PrimalCombo_Pool = 70015,
 
-        [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
-        [CustomComboInfo("Sonic Boom Melee Feature", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID)]
-        BLU_MeleeCombo = 70016,
+        [BlueInactive(BLU.JKick)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("J Kick Option", "Adds J Kick to the combo.", BLU.JobID)]
+        BLU_PrimalCombo_JKick = 70013,
+
+        [BlueInactive(BLU.SeaShanty)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Sea Shanty Option", "Adds Sea Shanty to the combo.", BLU.JobID)]
+        BLU_PrimalCombo_SeaShanty = 70024,
+
+        [BlueInactive(BLU.WingedReprobation)]
+        [ParentCombo(BLU_PrimalCombo)]
+        [CustomComboInfo("Winged Reprobration Option", "Adds Winged Reprobation to the combo.", BLU.JobID)]
+        BLU_PrimalCombo_WingedReprobation = 70025,
 
         [BlueInactive(BLU.MatraMagic)]
         [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the Primal Feature.", BLU.JobID)]
+        [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the combo.", BLU.JobID)]
         BLU_PrimalCombo_Matra = 70017,
 
         [BlueInactive(BLU.Surpanakha)]
         [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the Primal Feature.", BLU.JobID)]
+        [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the combo.", BLU.JobID)]
         BLU_PrimalCombo_Suparnakha = 70018,
 
         [BlueInactive(BLU.PhantomFlurry)]
         [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the Primal Feature.", BLU.JobID)]
+        [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the combo.", BLU.JobID)]
         BLU_PrimalCombo_PhantomFlurry = 70019,
 
         [BlueInactive(BLU.Nightbloom, BLU.Bristle)]
         [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the Primal Feature.", BLU.JobID)]
+        [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the combo.", BLU.JobID)]
         BLU_PrimalCombo_Nightbloom = 70020,
 
-        [ReplaceSkill(BLU.MoonFlute)]
-        [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedRepropbation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle)]
-        [ConflictingCombos(BLU_Opener)]
-        [CustomComboInfo("New BLU Moon Flute Opener (Level 80 Edition)", "Turns Moon Flute into a full opener (level 80 update)", BLU.JobID)]
-        BLU_NewMoonFluteOpener = 70021,
+        [BlueInactive(BLU.SongOfTorment, BLU.Bristle)]
+        [ReplaceSkill(BLU.SongOfTorment)]
+        [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so Song of Torment is buffed.", BLU.JobID, 6)]
+        BLU_BuffedSoT = 70000,
 
-        [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
-        [ParentCombo(BLU_NewMoonFluteOpener)]
-        [CustomComboInfo("DoT Opener", "Changes the opener to apply either Mortal Flame or Breath of Magic instead of using Winged Reprobation", BLU.JobID)]
-        BLU_NewMoonFluteOpener_DoTOpener = 70022,
+        [BlueInactive(BLU.PeripheralSynthesis, BLU.MustardBomb)]
+        [ReplaceSkill(BLU.PeripheralSynthesis)]
+        [CustomComboInfo("Peripheral Synthesis into Mustard Bomb", "Turns Peripheral Synthesis into Mustard Bomb when target is under the effect of Lightheaded.", BLU.JobID, 7)]
+        BLU_LightHeadedCombo = 70010,
+
+        [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
+        [CustomComboInfo("Perpetual Ray into Sharpened Knife", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID, 8)]
+        BLU_PerpetualRayStunCombo = 70014,
+
+        [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
+        [CustomComboInfo("Sonic Boom Melee", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID, 9)]
+        BLU_MeleeCombo = 70016,
+
+        [BlueInactive(BLU.MagicHammer)]
+        [ReplaceSkill(BLU.MagicHammer)]
+        [CustomComboInfo("Addle & Magic Hammer Debuff", "Turns Magic Hammer into Addle when off cooldown.", BLU.JobID, 10)]
+        BLU_Addle = 70007,
+
+        [BlueInactive(BLU.BlackKnightsTour, BLU.WhiteKnightsTour)]
+        [ReplaceSkill(BLU.BlackKnightsTour, BLU.WhiteKnightsTour)]
+        [CustomComboInfo("Knight's Tour", "Turns Black Knight's Tour or White Knight's Tour into its counterpart when the enemy is under the effect of the spell's debuff.", BLU.JobID, 11)]
+        BLU_KnightCombo = 70009,
+
+        [BlueInactive(BLU.Offguard, BLU.BadBreath, BLU.Devour)]
+        [ReplaceSkill(BLU.Devour, BLU.Offguard, BLU.BadBreath)]
+        [CustomComboInfo("Tank Debuff", "Puts Devour, Off-Guard, Lucid Dreaming, and Bad Breath into one button when under Tank Mimicry.", BLU.JobID, 12)]
+        BLU_DebuffCombo = 70006,
 
         [ReplaceSkill(BLU.DeepClean)]
         [BlueInactive(BLU.PeatPelt, BLU.DeepClean)]
-        [CustomComboInfo("Peat Clean", "Changes Deep Clean to Peat Pelt if current target is not inflicted with Begrimed.", BLU.JobID)]
+        [CustomComboInfo("Peat Clean", "Changes Deep Clean to Peat Pelt if current target is not inflicted with Begrimed.", BLU.JobID, 13)]
         BLU_PeatClean = 70023,
 
         // Last value = 70023
@@ -683,10 +684,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_ST_SimpleMode)]
         [CustomComboInfo("Simple Raging Jaws Option", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID)]
         BRD_Simple_RagingJaws = 3025,
-
-        [ParentCombo(BRD_Simple_DoT)]
-        [CustomComboInfo("Opener Only Option", "Until the first auto-refresh you can DoT new targets automatically.", BRD.JobID)]
-        BRD_Simple_DoTOpener = 3026,
 
         [ParentCombo(BRD_AoE_Simple_Songs)]
         [CustomComboInfo("Exclude Wanderer's Minuet Option", "Dont use Wanderer's Minuet.", BRD.JobID)]
@@ -1014,7 +1011,7 @@ namespace XIVSlothCombo.Combos
         #region Buff Options
 
         [ParentCombo(DRK_ST_Combo)]
-        [CustomComboInfo("Delirium on Cooldown", "Adds Delirium to main combo on cooldown and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID)]
+        [CustomComboInfo("Delirium on Cooldown", "Adds Delirium (or Blood Weapon at lower levels) to main combo on cooldown and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID)]
         DRK_ST_Delirium = 5002,
 
         [ParentCombo(DRK_ST_Delirium)]
@@ -1105,7 +1102,7 @@ namespace XIVSlothCombo.Combos
         #region Buff Options
 
         [ParentCombo(DRK_AoE_Combo)]
-        [CustomComboInfo("Delirium Option", "Adds Delirium to AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
+        [CustomComboInfo("Delirium Option", "Adds Delirium (or Blood Weapon at lower levels) to AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
         DRK_AoE_Delirium = 5017,
 
         [ParentCombo(DRK_AoE_Delirium)]
@@ -1207,11 +1204,11 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(DRG.TrueThrust)]
         [ConflictingCombos(DRG_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", DRG.JobID, 1, "", "")]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces True Thrust with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", DRG.JobID)]
         DRG_ST_AdvancedMode = 6100,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Level 88+ Opener", "Adds the Balance opener to the rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID, 1, "", "")]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", DRG.JobID)]
         DRG_ST_Opener = 6101,
 
         #region Buffs ST
@@ -1228,195 +1225,204 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lance Charge Option", "Adds Lance Charge to the rotation.", DRG.JobID)]
         DRG_ST_Lance = 6104,
 
-        [ParentCombo(DRG_ST_Buffs)]
-        [CustomComboInfo("Dragon Sight Option", "Adds Dragon Sight to the rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID)]
-        DRG_ST_DragonSight = 6105,
-
         #endregion
 
         #region Cooldowns ST
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", DRG.JobID, 3, "", "")]
-        DRG_ST_CDs = 6106,
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", DRG.JobID)]
+        DRG_ST_CDs = 6105,
 
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Life Surge Option", "Adds Life Surge, while under Dragon Sight and Lance Charge buffs, to the rotation.", DRG.JobID, -8, "", "")]
-        DRG_ST_LifeSurge = 6107,
+        [CustomComboInfo("Life Surge Option", "Adds Life Surge, on the proper GCD, to the rotation.", DRG.JobID)]
+        DRG_ST_LifeSurge = 6106,
 
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Dragonfire Dive Option", "Adds Dragonfire Dive to the rotation.", DRG.JobID, -7, "", "")]
-        DRG_ST_Dives_Dragonfire = 6108,
+        [CustomComboInfo("Dragonfire Dive Option", "Adds Dragonfire Dive to the rotation.", DRG.JobID)]
+        DRG_ST_DragonfireDive = 6107,
+
+        [ParentCombo(DRG_ST_DragonfireDive)]
+        [CustomComboInfo("Dragonfire Dive movement option", "Adds Dragonfire Dive to the rotation when not moving.", DRG.JobID)]
+        DRG_ST_DragonfireDive_Movement = 6108,
 
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Spineshatter Dive Option", "Adds Spineshatter Dive to the rotation.", DRG.JobID, -7, "", "")]
-        DRG_ST_Dives_Spineshatter = 6109,
+        [CustomComboInfo("Rise of the Dragon Option", "Adds Rise of the Dragon to the rotation.", DRG.JobID)]
+        DRG_ST_Dives_RiseOfTheDragon = 6109,
 
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Stardiver Option", "Adds Stardiver to the rotation.", DRG.JobID, -7, "", "")]
+        [CustomComboInfo("Stardiver Option", "Adds Stardiver to the rotation.", DRG.JobID)]
         DRG_ST_Stardiver = 6110,
 
+        [ParentCombo(DRG_ST_Stardiver)]
+        [CustomComboInfo("Stardiver movement option", "Adds Stardiver to the rotation when not moving.", DRG.JobID)]
+        DRG_ST_Stardiver_Movement = 6111,
+
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("High Jump Option", "Adds High Jump/Jump to the rotation.", DRG.JobID, -6, "", "")]
-        DRG_ST_HighJump = 6111,
+        [CustomComboInfo("Starcross Option", "Adds Starcross to the rotation.", DRG.JobID)]
+        DRG_ST_Starcross = 6112,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("High Jump Option", "Adds (High) Jump to the rotation.", DRG.JobID)]
+        DRG_ST_HighJump = 6113,
+
+        [ParentCombo(DRG_ST_HighJump)]
+        [CustomComboInfo("(High) Jump movement option", "Adds (High) Jump to the rotation when not moving.", DRG.JobID)]
+        DRG_ST_HighJump_Movement = 6114,
 
         [ParentCombo(DRG_ST_HighJump)]
         [CustomComboInfo("Mirage Dive Option", "Adds Mirage Dive to the rotation.", DRG.JobID)]
-        DRG_ST_Mirage = 6112,
+        DRG_ST_Mirage = 6115,
 
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Geirskogul and Nastrond Option", "Adds Geirskogul and Nastrond to the rotation.", DRG.JobID, -5, "", "")]
-        DRG_ST_GeirskogulNastrond = 6113,
+        [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to the rotation.", DRG.JobID)]
+        DRG_ST_Geirskogul = 6116,
 
         [ParentCombo(DRG_ST_CDs)]
-        [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to the rotation.", DRG.JobID, -4, "", "")]
-        DRG_ST_Wyrmwind = 6114,
+        [CustomComboInfo("Nastrond Option", "Adds Nastrond to the rotation.", DRG.JobID)]
+        DRG_ST_Nastrond = 6117,
+
+        [ParentCombo(DRG_ST_CDs)]
+        [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to the rotation.", DRG.JobID)]
+        DRG_ST_Wyrmwind = 6118,
 
         #endregion
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Optimized Rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID, 4, "", "")]
-        DRG_ST_Optimized_Rotation = 6115,
+        [CustomComboInfo("Ranged Uptime Option", "Adds Piercing Talon to the rotation when you are out of melee range.", DRG.JobID)]
+        DRG_ST_RangedUptime = 6197,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Ranged Uptime Option", "Adds Piercing Talon to the rotation when you are out of melee range.", DRG.JobID, 5, "", "")]
-        DRG_ST_RangedUptime = 6116,
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", DRG.JobID)]
+        DRG_ST_ComboHeals = 6198,
 
         [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", DRG.JobID, 6, "", "")]
-        DRG_ST_ComboHeals = 6117,
-
-        [ParentCombo(DRG_ST_AdvancedMode)]
-        [CustomComboInfo("Dynamic True North Option", "Adds True North before Chaos Thrust/Chaotic Spring, Fang And Claw and Wheeling Thrust when you are not in the correct position for the enhanced potency bonus.", DRG.JobID, 7, "", "")]
-        DRG_TrueNorthDynamic = 6118,
+        [CustomComboInfo("Dynamic True North Option", "Adds True North before Chaos Thrust/Chaotic Spring, Fang And Claw and Wheeling Thrust when you are not in the correct position for the enhanced potency bonus.", DRG.JobID)]
+        DRG_TrueNorthDynamic = 6199,
 
         #endregion
 
         [ReplaceSkill(DRG.DoomSpike)]
         [ConflictingCombos(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID, 3, "", "")]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", DRG.JobID)]
         DRG_AOE_SimpleMode = 6200,
 
         #region Advanced AoE Dragoon
 
         [ReplaceSkill(DRG.DoomSpike)]
         [ConflictingCombos(DRG_AOE_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", DRG.JobID, 4, "", "")]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Doom Spike with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", DRG.JobID)]
         DRG_AOE_AdvancedMode = 6201,
 
         #region Buffs AoE
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Buffs AoE Option", "Adds Lance Charge and Battle Litany to the rotation.", DRG.JobID, -2, "", "")]
+        [CustomComboInfo("Buffs AoE Option", "Adds Lance Charge and Battle Litany to the rotation.", DRG.JobID)]
         DRG_AoE_Buffs = 6202,
 
         [ParentCombo(DRG_AoE_Buffs)]
-        [CustomComboInfo("Battle Litany AoE Option", "Adds Battle Litany to the rotation.", DRG.JobID, 36, "", "")]
+        [CustomComboInfo("Battle Litany AoE Option", "Adds Battle Litany to the rotation.", DRG.JobID)]
         DRG_AoE_Litany = 6203,
 
         [ParentCombo(DRG_AoE_Buffs)]
-        [CustomComboInfo("Lance Charge AoE Option", "Adds Lance Charge to the rotation.", DRG.JobID, 36, "", "")]
+        [CustomComboInfo("Lance Charge AoE Option", "Adds Lance Charge to the rotation.", DRG.JobID)]
         DRG_AoE_Lance = 6204,
-
-        [ParentCombo(DRG_AoE_Buffs)]
-        [CustomComboInfo("Dragon Sight AoE Option", "Adds Dragon Sight to the rotation.\nOPTIONAL: USE REACTION OR MOACTION FOR OPTIMAL TARGETING.", DRG.JobID)]
-        DRG_AoE_DragonSight = 6205,
 
         #endregion
 
         #region CDs AoE
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", DRG.JobID, -1, "", "")]
-        DRG_AoE_CDs = 6206,
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", DRG.JobID)]
+        DRG_AoE_CDs = 6205,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Life Surge Option", "Adds Life Surge, while under proper buffs, onto proper GCDs, to the rotation.", DRG.JobID)]
-        DRG_AoE_LifeSurge = 6207,
-
-        [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Spineshatter Dive Option", "Adds Spineshatter Dive to the rotation.", DRG.JobID)]
-        DRG_AoE_Spineshatter_Dive = 6208,
+        [CustomComboInfo("Life Surge Option", "Adds Life Surge, onto proper GCDs, to the rotation.", DRG.JobID)]
+        DRG_AoE_LifeSurge = 6206,
 
         [ParentCombo(DRG_AoE_CDs)]
         [CustomComboInfo("Dragonfire Dive Option", "Adds Dragonfire Dive to the rotation.", DRG.JobID)]
-        DRG_AoE_Dragonfire_Dive = 6209,
+        DRG_AoE_DragonfireDive = 6207,
+
+        [ParentCombo(DRG_AoE_DragonfireDive)]
+        [CustomComboInfo("Dragonfire Dive movement option", "Adds Dragonfire Dive to the rotation when not moving.", DRG.JobID)]
+        DRG_AoE_DragonfireDive_Movement = 6208,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Stardiver Option", "Adds Stardiver to the rotation when under at least 1 buff", DRG.JobID, -7, "", "")]
+        [CustomComboInfo("Rise of the Dragon Option", "Adds Rise of the Dragonj to the rotation.", DRG.JobID)]
+        DRG_AoE_RiseOfTheDragon = 6209,
+
+        [ParentCombo(DRG_AoE_CDs)]
+        [CustomComboInfo("Stardiver Option", "Adds Stardiver to the rotation.", DRG.JobID)]
         DRG_AoE_Stardiver = 6210,
 
+        [ParentCombo(DRG_AoE_Stardiver)]
+        [CustomComboInfo("Stardiver movement option", "Adds Stardiver to the rotation when not moving.", DRG.JobID)]
+        DRG_AoE_Stardiver_Movement = 6211,
+
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("High Jump Option", "Adds High Jump to the rotation.", DRG.JobID)]
-        DRG_AoE_HighJump = 6211,
+        [CustomComboInfo("Starcross Option", "Adds Starcross to the rotation.", DRG.JobID)]
+        DRG_AoE_Starcross = 6212,
+
+        [ParentCombo(DRG_AoE_CDs)]
+        [CustomComboInfo("High Jump Option", "Adds (High) Jump to the rotation.", DRG.JobID)]
+        DRG_AoE_HighJump = 6213,
+
+        [ParentCombo(DRG_AoE_HighJump)]
+        [CustomComboInfo("(High) Jump movement option", "Adds (High) Jump to the rotation when not moving.", DRG.JobID)]
+        DRG_AoE_HighJump_Movement = 6214,
 
         [ParentCombo(DRG_AoE_HighJump)]
         [CustomComboInfo("Mirage Dive Option", "Adds Mirage Dive to the rotation.", DRG.JobID)]
-        DRG_AoE_Mirage = 6212,
+        DRG_AoE_Mirage = 6215,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Geirskogul and Nastrond Option", "Adds Geirskogul and Nastrond to the rotation.", DRG.JobID)]
-        DRG_AoE_GeirskogulNastrond = 6213,
+        [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to the rotation.", DRG.JobID)]
+        DRG_AoE_Geirskogul = 6216,
+
+        [ParentCombo(DRG_AoE_CDs)]
+        [CustomComboInfo("Nastrond Option", "Adds Nastrond to the rotation.", DRG.JobID)]
+        DRG_AoE_Nastrond = 6217,
 
         [ParentCombo(DRG_AoE_CDs)]
         [CustomComboInfo("Wyrmwind Option", "Adds Wyrmwind Thrust to the rotation.", DRG.JobID)]
-        DRG_AoE_Wyrmwind = 6214,
+        DRG_AoE_Wyrmwind = 6218,
 
         #endregion
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Optimized Rotation Option", "Uses optimzed use of Geirskogul and (High) Jump/Mirage Dive", DRG.JobID)]
-        DRG_AoE_Optimized_Rotation = 6215,
+        [CustomComboInfo("Ranged Uptime Option", "Adds Piercing Talon to the rotation when you are out of melee range.", DRG.JobID)]
+        DRG_AoE_RangedUptime = 6298,
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Ranged Uptime Option", "Adds Piercing Talon to the rotation when you are out of melee range.", DRG.JobID, 98, "", "")]
-        DRG_AoE_RangedUptime = 6216,
-
-        [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", DRG.JobID, 99, "", "")]
-        DRG_AoE_ComboHeals = 6217,
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", DRG.JobID)]
+        DRG_AoE_ComboHeals = 6299,
 
         #endregion
-
-        [ReplaceSkill(DRG.Jump, DRG.HighJump)]
-        [CustomComboInfo("Jump to Mirage Dive", "Replace (High) Jump with Mirage Dive when Dive Ready.", DRG.JobID, 5)]
-        DRG_Jump = 6300,
-
-        [ReplaceSkill(DRG.Stardiver)]
-        [CustomComboInfo("Stardiver Feature", "Turns Stardiver into Nastrond during Life of the Dragon, and Geirskogul outside of Life of the Dragon.", DRG.JobID, 6, "", "")]
-        DRG_StardiverFeature = 6301,
 
         [ReplaceSkill(DRG.LanceCharge)]
-        [CustomComboInfo("Lance Charge to Battle Litany Feature", "Turns Lance Charge into Battle Litany when the former is on cooldown.", DRG.JobID, 7, "", "")]
-        DRG_BurstCDFeature = 6302,
-
-        [ParentCombo(DRG_BurstCDFeature)]
-        [CustomComboInfo("Dragon Sight Option", "Adds Dragon Sight to Lance Charge, will take precedence over Battle Litany.", DRG.JobID, 8, "", "")]
-        DRG_BurstCDFeature_DragonSight = 6303,
+        [CustomComboInfo("Lance Charge to Battle Litany Feature", "Turns Lance Charge into Battle Litany when the former is on cooldown.", DRG.JobID)]
+        DRG_BurstCDFeature = 6301,
 
         [Variant]
         [VariantParent(DRG_ST_AdvancedMode, DRG_AOE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DRG.JobID)]
-        DRG_Variant_Cure = 6304,
+        DRG_Variant_Cure = 6302,
 
         [Variant]
         [VariantParent(DRG_ST_AdvancedMode, DRG_AOE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DRG.JobID)]
-        DRG_Variant_Rampart = 6305,
+        DRG_Variant_Rampart = 6303,
 
 
-        // Last value = 6117 - 6215 - 6305
+        // Last value = 6117 - 6216 - 6303
 
         #endregion
 
         #region GUNBREAKER
 
-        [CustomComboInfo("Skill Speed Support Feature", "Allows for features to support various skill speed rotations.", GNB.JobID, 0)]
-        GNB_ST_SkSSupport = 7000,
-
         #region ST
         [ReplaceSkill(GNB.KeenEdge)]
-        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap.", GNB.JobID)]
+        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. ***DOES NOT WORK WELL WITH 2.46-2.49***", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
 
         #region Reign Combo
@@ -1546,6 +1552,24 @@ namespace XIVSlothCombo.Combos
         GNB_BS_DoubleDown = 7403,
         #endregion
 
+        #region Fated Circle
+        [ReplaceSkill(GNB.FatedCircle)]
+        [CustomComboInfo("Fated Circle Features", "Collection of Fated Circle related features.", GNB.JobID)]
+        GNB_FC = 7600,
+
+        [ParentCombo(GNB_FC)]
+        [CustomComboInfo("Fated Circle Continuation Feature", "Adds Continuation on Fated Circle.", GNB.JobID)]
+        GNB_FC_Continuation = 7601,
+
+        [ParentCombo(GNB_FC)]
+        [CustomComboInfo("Fated Circle to Bloodfest Feature", "Replace Fated Circle with Bloodfest if you have no powder gauge.", GNB.JobID)]
+        GNB_FC_Bloodfest = 7602,
+
+        [ParentCombo(GNB_FC)]
+        [CustomComboInfo("Double Down on Fated Circle Feature", "Adds Double Down to Fated Circle when under No Mercy and ammo is above 2.", GNB.JobID)]
+        GNB_FC_DoubleDown = 7603,
+        #endregion
+
         #region No Mercy
         [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
         [ReplaceSkill(GNB.NoMercy)]
@@ -1562,7 +1586,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [CustomComboInfo("Aurora Protection Feature", "Locks out Aurora if Aurora's effect is on the target.", GNB.JobID, 0, "", "")]
-        GNB_AuroraProtection = 7600,
+        GNB_AuroraProtection = 7700,
 
         [Variant]
         [VariantParent(GNB_ST_MainCombo, GNB_AoE_MainCombo)]
@@ -1579,7 +1603,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
         GNB_Variant_Ultimatum = 7035,
 
-        // Last value = 7600
+        // Last value = 7700
 
         #endregion
 
@@ -1587,7 +1611,7 @@ namespace XIVSlothCombo.Combos
 
         #region Simple ST
 
-        [ReplaceSkill(MCH.SplitShot)]
+        [ReplaceSkill(MCH.SplitShot, MCH.HeatedSplitShot)]
         [ConflictingCombos(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Split Shot with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MCH.JobID)]
         MCH_ST_SimpleMode = 8001,
@@ -1703,7 +1727,7 @@ namespace XIVSlothCombo.Combos
         MCH_AoE_Adv_Queen = 8304,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
-        [CustomComboInfo("Flamethrower Option", "Adds Flamethrower to the rotation.", MCH.JobID)]
+        [CustomComboInfo("Flamethrower Option", "Adds Flamethrower to the rotation.\n Changes to Savage blade when in use to prevent cancelling.", MCH.JobID)]
         MCH_AoE_Adv_FlameThrower = 8305,
 
         [ParentCombo(MCH_AoE_AdvancedMode)]
@@ -1755,20 +1779,20 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Gauss Round / Ricochet \nDouble Check / Checkmate Feature", "Replace Gauss Round and Ricochet or Double Check and Checkmate with one or the other depending on which has more charges.", MCH.JobID)]
         MCH_GaussRoundRicochet = 8003,
 
-        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot)]
-        [CustomComboInfo("Drill/Air Anchor (Hot Shot) Feature", "Replace Drill and Air Anchor (Hot Shot) with one or the other (or Chain Saw) depending on which is on cooldown.", MCH.JobID)]
-        MCH_HotShotDrillChainsaw = 8004,
+        [ReplaceSkill(MCH.Drill, MCH.AirAnchor, MCH.HotShot,MCH.Chainsaw)]
+        [CustomComboInfo("Big Hitter Feature", "Replace Hot Shot, Drill, Air Anchor, Chainsaw and Excavator depending on which is on cooldown.", MCH.JobID)]
+        MCH_HotShotDrillChainsawExcavator = 8004,
 
         [ReplaceSkill(MCH.Heatblast)]
-        [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge when at or above 50 heat.", MCH.JobID)]
+        [CustomComboInfo("Single Button Heat Blast Feature", "Turns Heat Blast into Hypercharge \nwhen u have 50 or more heat or when u got Hypercharged buff.", MCH.JobID)]
         MCH_Heatblast = 8006,
 
         [ParentCombo(MCH_Heatblast)]
-        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when below 50 Heat Gauge.", MCH.JobID)]
+        [CustomComboInfo("Barrel Option", "Adds Barrel Stabilizer to the feature when off cooldown.", MCH.JobID)]
         MCH_Heatblast_AutoBarrel = 8052,
 
         [ParentCombo(MCH_Heatblast)]
-        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the feature when at or above 50 heat.", MCH.JobID)]
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire to the feature when off cooldown and overheated.", MCH.JobID)]
         MCH_Heatblast_Wildfire = 8015,
 
         [ParentCombo(MCH_Heatblast)]
@@ -2247,7 +2271,7 @@ namespace XIVSlothCombo.Combos
 
         #region PALADIN
 
-        //// Last value = 11032
+        //// Last value = 11034
 
         [ConflictingCombos(PLD_ST_AdvancedMode)]
         [ReplaceSkill(PLD.FastBlade)]
@@ -2312,6 +2336,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Blades of Faith/Truth/Valor Option", "Adds Blades of Faith/Truth/Valor to Advanced Mode", PLD.JobID)]
         PLD_ST_AdvancedMode_Blades = 11014,
 
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode after Valor", PLD.JobID)]
+        PLD_ST_AdvancedMode_BladeOfHonor = 11033,
+
         [ConflictingCombos(PLD_AoE_SimpleMode)]
         [ReplaceSkill(PLD.TotalEclipse)]
         [CustomComboInfo("Advanced Mode - AoE", $"Replaces Total Eclipse with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", PLD.JobID)]
@@ -2346,10 +2374,15 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Blades = 11022,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode after Valor", PLD.JobID)]
+        PLD_AoE_AdvancedMode_BladeOfHonor = 11034,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Sheltron / Holy Sheltron Option", "Adds Sheltron / Holy Sheltron to Advanced Mode", PLD.JobID)]
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
 
+        [ConflictingCombos(PLD_FoFRequiescat)]
         [ReplaceSkill(PLD.Requiescat)]
         [CustomComboInfo("Requiescat Spender Option", "Replaces Requiescat with the selected option while having stacks of \"Requiescat\"", PLD.JobID)]
         PLD_Requiescat_Options = 11024,
@@ -2357,6 +2390,11 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion)]
         [CustomComboInfo("Spirits Within / Expiacion / Circle of Scorn Feature", "Replaces Spirits Within / Expiacion with Circle of Scorn when off cooldown.", PLD.JobID)]
         PLD_SpiritsWithin = 11025,
+
+        [ConflictingCombos(PLD_Requiescat_Options)]
+        [ReplaceSkill(PLD.FightOrFlight)]
+        [CustomComboInfo("FoF Into Requiescat Option", "Replaces Fight or Flight with Requiescat/Imperator/Blade of Honor during FoF. Keeps your minute-burst oGCDs on one button.", PLD.JobID)]
+        PLD_FoFRequiescat = 11026,
 
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
@@ -2373,236 +2411,278 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
 
-        //// Last value = 11032
+        //// Last value = 11034
 
         #endregion
 
         #region REAPER
 
-        #region Single Target (Slice) Combo Section
-        [ReplaceSkill(RPR.Slice, RPR.Harpe)]
-        [CustomComboInfo("Slice Combo Feature", "Replace Slice with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Advanced Reaper)", RPR.JobID)]
-        RPR_ST_SliceCombo = 12001,
+        #region  Simple ST
 
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
-        ReaperPositionalConfigST = 12000,
+        [ReplaceSkill(RPR.Slice)]
+        [ConflictingCombos(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Slice with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
+        RPR_ST_SimpleMode = 12000,
 
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to Slice Combo when Soul Gauge is 50 or less and when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_ST_SliceCombo_SoulSlice = 12002,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Shadow Of Death Option", "Adds Shadow of Death to Slice Combo if Death's Design is not present on current target, or is about to expire.", RPR.JobID)]
-        RPR_ST_SliceCombo_SoD = 12003,
-
-        [ParentCombo(RPR_ST_SliceCombo_SoD)]
-        [CustomComboInfo("Double SoD Enshroud Option", "Uses Shadow of Death twice during the first of the two Enshroud Bursts during the 2-minute windows (Double Enshroud Burst).", RPR.JobID)]
-        RPR_ST_SliceCombo_SoD_Double = 12004,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Stun Option", "Adds Leg Sweep to main combo when target is performing an interruptible cast.", RPR.JobID)]
-        RPR_ST_SliceCombo_Stun = 12005,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo at 65%% and 40%% HP, respectively.", RPR.JobID)]
-        RPR_ST_SliceCombo_ComboHeals = 12006,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe (or Harvest Moon, if available) when outside of melee range. Will not override Communio.", RPR.JobID)]
-        RPR_ST_SliceCombo_RangedFiller = 12007,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Enshroud Option", "Adds Enshroud to the combo when at 50 Shroud or greater and when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_ST_SliceCombo_Enshroud = 12008,
-
-        [ParentCombo(RPR_ST_SliceCombo_Enshroud)]
-        [CustomComboInfo("Enshroud Burst (Double Enshroud) Option", "Uses Enshroud at 50 Shroud during Arcane Circle (mimics the 2-minute Double Enshroud window) and will use Enshroud for odd minute bursts.\nBelow level 88, will use Enshroud at 50 gauge.", RPR.JobID)]
-        RPR_ST_SliceCombo_EnshroudPooling = 12009,
-
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
-        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the combo when there are 2 Void Shroud charges.", RPR.JobID, 1, "", "")]
-        RPR_ST_SliceCombo_GibbetGallows_Lemure = 12010,
-
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
-        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the combo when there is 1 charge of Lemure Shroud left.", RPR.JobID, 1, "", "")]
-        RPR_ST_SliceCombo_GibbetGallows_Communio = 12011,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the combo when available and when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_ST_SliceCombo_ArcaneCircle = 12012,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the combo when available.", RPR.JobID)]
-        RPR_ST_SliceCombo_PlentifulHarvest = 12013,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the combo when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows = 12014,
-
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
-        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the to the the combo during Enshroud.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows_VoidCross = 12065,
-
-        [ReplaceSkill(RPR.ShadowOfDeath)]
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows)]
-        [CustomComboInfo("Gibbet and Gallows on SoD Option", "Adds Gibbet and Gallows to Shadow of Death as well if chosen in positional preferences.", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows_OnSoD = 12015,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Gluttony and Blood Stalk Option", "Adds Gluttony and Blood Stalk to the combo when target is afflicted with Death's Design, and the skills are off cooldown and < 50 soul.", RPR.JobID)]
-        RPR_ST_SliceCombo_GluttonyBloodStalk = 12016,
-
-        [ParentCombo(RPR_ST_SliceCombo_GibbetGallows_Communio)]
-        [CustomComboInfo("Communio Movement Option", "Uses Shadow of Death instead of Communio when moving.", RPR.JobID)]
-        RPR_ST_SliceCombo_GibbetGallows_Communio_Movement = 12017,
-
-        [ParentCombo(RPR_ST_SliceCombo)]
-        [CustomComboInfo("Level 90 Opener Option", "Adds the Level 90 Opener to the main combo. Choose which Opener to use below.", RPR.JobID, -1, "", "")]
-        RPR_ST_SliceCombo_Opener = 12018,
         #endregion
 
-        #region AoE (Scythe) Combo Section
+        #region  Advanced ST
+
+        [ReplaceSkill(RPR.Slice)]
+        [ConflictingCombos(RPR_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Slice with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", RPR.JobID)]
+        RPR_ST_AdvancedMode = 12001,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Gibbet first ( FLANK )", RPR.JobID)]
+        RPR_ST_Opener = 12002,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Shadow Of Death Option", "Adds Shadow of Death to the rotation.", RPR.JobID)]
+        RPR_ST_SoD = 12003,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Soul Slice Option", "Adds Soul Slice to the rotation.", RPR.JobID)]
+        RPR_ST_SoulSlice = 12004,
+
+        #region Cooldowns ST
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", RPR.JobID)]
+        RPR_ST_CDs = 12005,
+
+        [ParentCombo(RPR_ST_CDs)]
+        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the rotation.", RPR.JobID)]
+        RPR_ST_ArcaneCircle = 12006,
+
+        [ParentCombo(RPR_ST_CDs)]
+        [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the rotation.", RPR.JobID)]
+        RPR_ST_PlentifulHarvest = 12007,
+
+        [ParentCombo(RPR_ST_CDs)]
+        [CustomComboInfo("Bloodstalk Option", "Adds Bloodstalk to the rotation.", RPR.JobID)]
+        RPR_ST_Bloodstalk = 12008,
+
+        [ParentCombo(RPR_ST_CDs)]
+        [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
+        RPR_ST_Gluttony = 12009,
+
+        #endregion
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
+        RPR_ST_Enshroud = 12010,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
+        RPR_ST_Reaping = 12011,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the rotation.", RPR.JobID)]
+        RPR_ST_Lemure = 12012,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
+        RPR_ST_Sacrificium = 12013,
+
+        [ParentCombo(RPR_ST_Enshroud)]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
+        RPR_ST_Communio = 12014,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
+        RPR_ST_Perfectio = 12015,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Gibbet and Gallows Option", "Adds Gibbet and Gallows to the rotation.", RPR.JobID)]
+        RPR_ST_GibbetGallows = 12016,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Ranged Filler Option", "Replaces the combo chain with Harpe when outside of melee range. Will not override Communio.", RPR.JobID)]
+        RPR_ST_RangedFiller = 12017,
+
+        [ParentCombo(RPR_ST_RangedFiller)]
+        [CustomComboInfo("Add Harvest Moon", "Adds Harvest Moon if available, when outside of melee range. Will not override Communio.", RPR.JobID)]
+        RPR_ST_RangedFillerHarvestMoon = 12018,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID)]
+        RPR_ST_ComboHeals = 12097,
+
+        [ParentCombo(RPR_ST_AdvancedMode)]
+        [CustomComboInfo("Dynamic True North Feature", "Adds True North before Gibbet/Gallows when you are not in the correct position.", RPR.JobID)]
+        RPR_ST_TrueNorthDynamic = 12098,
+
+        [ParentCombo(RPR_ST_TrueNorthDynamic)]
+        [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows.", RPR.JobID)]
+        RPR_ST_TrueNorthDynamic_HoldCharge = 12099,
+
+        //last value = 12019
+        #endregion
+
+        #region Simple AoE
+
         [ReplaceSkill(RPR.SpinningScythe)]
-        [CustomComboInfo("Scythe Combo Feature", "Replace Spinning Scythe with its combo chain.\nIf all sub options are toggled will turn into a full one button rotation (Simple AoE)", RPR.JobID)]
-        RPR_AoE_ScytheCombo = 12020,
+        [ConflictingCombos(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Spinning Scythe with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
+        RPR_AoE_SimpleMode = 12100,
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
-        ReaperPositionalConfigAoE = 12030,
+        #endregion
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to AoE combo when Soul Gauge is 50 or less and current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_SoulScythe = 12021,
+        #region Advanced AoE 
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Whorl Of Death Option", "Adds Whorl of Death to AoE combo if Death's Design is not present on current target, or is about to expire.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_WoD = 12022,
+        [ReplaceSkill(RPR.SpinningScythe)]
+        [ConflictingCombos(RPR_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Spinning Scythe with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", RPR.JobID)]
+        RPR_AoE_AdvancedMode = 12101,
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Guillotine Option", "Adds Guillotine to AoE combo when under Soul Reaver and when current target is afflicted with Death's Design.\nWill use Grim Reaping during Enshroud.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Guillotine = 12023,
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Whorl Of Death Option", "Adds Whorl of Death to the rotation.", RPR.JobID)]
+        RPR_AoE_WoD = 12102,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Grim Reaping Option", "Adds Grim Reaping to the to the AoE combo during Enshroud.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Guillotine_GrimReaping = 12066,
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Soul Scythe Option", "Adds Soul Scythe to the rotation.", RPR.JobID)]
+        RPR_AoE_SoulScythe = 12103,
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to AoE combo when off cooldown.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_ArcaneCircle = 12024,
+        #region Cooldowns
 
-        [ParentCombo(RPR_AoE_ScytheCombo_ArcaneCircle)]
-        [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to AoE combo when off cooldown and ready.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_PlentifulHarvest = 12025,
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", RPR.JobID)]
+        RPR_AoE_CDs = 12104,
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Enshroud Option", "Adds Enshroud to the AoE combo when at 50 Shroud and greater and when current target is afflicted with Death's Design.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_Enshroud = 12026,
+        [ParentCombo(RPR_AoE_CDs)]
+        [CustomComboInfo("Arcane Circle Option", "Adds Arcane Circle to the rotation.", RPR.JobID)]
+        RPR_AoE_ArcaneCircle = 12105,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Lemure's Scythe Option", "Adds Lemure's Scythe to the AoE combo when there are 2 Void Shrouds.", RPR.JobID, 1, "", "")]
-        RPR_AoE_ScytheCombo_Lemure = 12027,
+        [ParentCombo(RPR_AoE_CDs)]
+        [CustomComboInfo("Plentiful Harvest Option", "Adds Plentiful Harvest to the rotation.", RPR.JobID)]
+        RPR_AoE_PlentifulHarvest = 12106,
 
-        [ParentCombo(RPR_AoE_ScytheCombo_Guillotine)]
-        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the AoE combo when there is 1 Lemure Shroud left.", RPR.JobID, 2, "", "")]
-        RPR_AoE_ScytheCombo_Communio = 12028,
+        [ParentCombo(RPR_AoE_CDs)]
+        [CustomComboInfo("Grim Swathe Option", "Adds Grim Swathe to the rotation.", RPR.JobID)]
+        RPR_AoE_GrimSwathe = 12107,
 
-        [ParentCombo(RPR_AoE_ScytheCombo)]
-        [CustomComboInfo("Gluttony and Grim Swathe Option", "Adds Gluttony and Grim Swathe to the AoE combo when current target is afflicted with Death's Design and Soul Gauge < 50.", RPR.JobID)]
-        RPR_AoE_ScytheCombo_GluttonyGrimSwathe = 12029,
+        [ParentCombo(RPR_AoE_CDs)]
+        [CustomComboInfo("Gluttony Option", "Adds Gluttony to the rotation.", RPR.JobID)]
+        RPR_AoE_Gluttony = 12108,
+
+        #endregion
+
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
+        RPR_AoE_Enshroud = 12109,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Grim Reaping Option", "Adds Grim Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
+        RPR_AoE_Reaping = 12110,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Lemure's Scythe Option", "Adds Lemure's Scythe to the rotation.", RPR.JobID)]
+        RPR_AoE_Lemure = 12111,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
+        RPR_AoE_Sacrificium = 12112,
+
+        [ParentCombo(RPR_AoE_Enshroud)]
+        [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
+        RPR_AoE_Communio = 12113,
+
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Perfectio Option", "Adds Perfectio to the rotation.", RPR.JobID)]
+        RPR_AoE_Perfectio = 12114,
+
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Guillotine Option", "Adds Guillotine to the rotation.", RPR.JobID)]
+        RPR_AoE_Guillotine = 12115,
+
+        [ParentCombo(RPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", RPR.JobID)]
+        RPR_AoE_ComboHeals = 12116,
+
+        // Last value = 12116
+
         #endregion
 
         #region Blood Stalk/Grim Swathe Combo Section
+
         [ReplaceSkill(RPR.BloodStalk, RPR.GrimSwathe)]
         [CustomComboInfo("Gluttony on Blood Stalk/Grim Swathe Feature", "Blood Stalk and Grim Swathe will turn into Gluttony when it is available.", RPR.JobID)]
-        RPR_GluttonyBloodSwathe = 12041,
+        RPR_GluttonyBloodSwathe = 12200,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
         [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds Gibbet and Gallows on Blood Stalk.\nAdds Guillotine on Grim Swathe.", RPR.JobID)]
-        RPR_GluttonyBloodSwathe_BloodSwatheCombo = 12040,
+        RPR_GluttonyBloodSwathe_BloodSwatheCombo = 12201,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
         [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, and Lemure's Slice) on Blood Stalk and Grim Swathe.", RPR.JobID)]
-        RPR_GluttonyBloodSwathe_Enshroud = 12042,
+        RPR_GluttonyBloodSwathe_Enshroud = 12202,
+
+        // Last value = 12202
+
         #endregion
 
         #region Miscellaneous
+
         [ReplaceSkill(RPR.ArcaneCircle)]
         [CustomComboInfo("Arcane Circle Harvest Feature", "Replaces Arcane Circle with Plentiful Harvest when you have stacks of Immortal Sacrifice.", RPR.JobID)]
-        RPR_ArcaneCirclePlentifulHarvest = 12051,
+        RPR_ArcaneCirclePlentifulHarvest = 12300,
 
         [ReplaceSkill(RPR.HellsEgress, RPR.HellsIngress)]
         [CustomComboInfo("Regress Feature", "Changes both Hell's Ingress and Hell's Egress turn into Regress when Threshold is active.", RPR.JobID)]
-        RPR_Regress = 12052,
+        RPR_Regress = 12301,
 
         [ReplaceSkill(RPR.Slice, RPR.SpinningScythe, RPR.ShadowOfDeath, RPR.Harpe, RPR.BloodStalk)]
         [CustomComboInfo("Soulsow Reminder Feature", "Adds Soulsow to the skills selected below when out of combat. \nWill also add Soulsow to Harpe when in combat and no target is selected.", RPR.JobID)]
-        RPR_Soulsow = 12053,
+        RPR_Soulsow = 12302,
 
         [ReplaceSkill(RPR.Harpe)]
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Harpe Harvest Moon Feature", "Replaces Harpe with Harvest Moon when you are in combat with Soulsow active.", RPR.JobID)]
-        RPR_Soulsow_HarpeHarvestMoon = 12054,
-
-        [ReplaceSkill(RPR.Harpe, RPR.Slice)]
-        [ParentCombo(RPR_Soulsow)]
-        [CustomComboInfo("Enhanced Harpe Option", "Prevent Harvest Moon replacing Harpe when Enhanced Harpe is active.", RPR.JobID)]
-        RPR_Soulsow_HarpeHarvestMoon_EnhancedHarpe = 12055,
-
-        [ReplaceSkill(RPR.Harpe, RPR.Slice)]
-        [ParentCombo(RPR_Soulsow)]
-        [CustomComboInfo("Combat Harpe Option", "Prevent Harvest Moon replacing Harpe when you are not in combat.", RPR.JobID)]
-        RPR_Soulsow_HarpeHarvestMoon_CombatHarpe = 12056,
+        RPR_Soulsow_HarpeHarvestMoon = 12303,
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud Protection Feature", "Turns Enshroud into Gibbet/Gallows to protect Soul Reaver waste.", RPR.JobID)]
-        RPR_EnshroudProtection = 12057,
-
-        [ParentCombo(RPR_EnshroudProtection)]
-        [CustomComboInfo("Positional Preference", "Choose positional order for all positional related features.\nSupports turning Slice/Shadow of Death into all positionals or Slice and Shadow of Death being two separate positionals.", RPR.JobID)]
-        RPR_EnshroudProtection_Positional = 12059,
+        RPR_EnshroudProtection = 12304,
 
         [ReplaceSkill(RPR.Gibbet, RPR.Gallows, RPR.Guillotine)]
         [CustomComboInfo("Communio on Gibbet/Gallows and Guillotine Feature", "Adds Communio to Gibbet/Gallows and Guillotine.", RPR.JobID)]
-        RPR_CommunioOnGGG = 12058,
+        RPR_CommunioOnGGG = 12305,
 
         [ParentCombo(RPR_CommunioOnGGG)]
         [CustomComboInfo("Lemure's Slice/Scythe Option", "Adds Lemure's Slice to Gibbet/Gallows and Lemure's Scythe to Guillotine.", RPR.JobID)]
-        RPR_LemureOnGGG = 12060,
+        RPR_LemureOnGGG = 12306,
 
         [ReplaceSkill(RPR.Enshroud)]
         [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID)]
-        RPR_EnshroudCommunio = 12069,
+        RPR_EnshroudCommunio = 12307,
 
-        [ReplaceSkill(RPR.Slice, RPR.ShadowOfDeath, RPR.Enshroud)]
-        [CustomComboInfo("True North Feature", "Adds True North to Slice, Shadow of Death, Enshroud, and Blood Stalk when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
-        RPR_TrueNorth = 12061,
+        [ParentCombo(RPR_EnshroudProtection)]
+        [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
+        RPR_TrueNorthEnshroud = 12308,
 
         [ReplaceSkill(RPR.Harpe)]
         [ParentCombo(RPR_Soulsow)]
         [CustomComboInfo("Soulsow Reminder during Combat", "Adds Soulsow to Harpe during combat when no target is selected.", RPR.JobID)]
-        RPR_Soulsow_Combat = 12062,
+        RPR_Soulsow_Combat = 12309,
 
-        [ReplaceSkill(RPR.Gibbet, RPR.Gallows)]
-        [CustomComboInfo("Dynamic True North Feature", "Adds True North to Slice before Gibbet/Gallows when you are not in the correct position for the enhanced potency bonus.", RPR.JobID)]
-        RPR_TrueNorthDynamic = 12063,
-
-        [ParentCombo(RPR_TrueNorthDynamic)]
-        [CustomComboInfo("Hold True North for Gluttony Option", "Will hold the last charge of True North for use with Gluttony, even when out of position for Gibbet/Gallows potency bonuses.", RPR.JobID)]
-        RPR_TrueNorthDynamic_HoldCharge = 12064,
+        [ParentCombo(RPR_GluttonyBloodSwathe)]
+        [CustomComboInfo("True North Feature", "Adds True North when under Gluttony and if Gibbet/Gallows options are selected to replace those skills.", RPR.JobID, 0)]
+        RPR_TrueNorthGluttony = 12310,
 
         [Variant]
-        [VariantParent(RPR_ST_SliceCombo, RPR_AoE_ScytheCombo)]
+        [VariantParent(RPR_ST_AdvancedMode, RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", RPR.JobID)]
-        RPR_Variant_Cure = 12067,
+        RPR_Variant_Cure = 12311,
 
         [Variant]
-        [VariantParent(RPR_ST_SliceCombo, RPR_AoE_ScytheCombo)]
+        [VariantParent(RPR_ST_AdvancedMode, RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", RPR.JobID)]
-        RPR_Variant_Rampart = 12068,
-        #endregion
+        RPR_Variant_Rampart = 12312,
 
-        // Last value = 12069
+        // Last value = 12312
+
+        #endregion
 
         #endregion
 
@@ -2700,7 +2780,7 @@ namespace XIVSlothCombo.Combos
         RDM_AoE_oGCD = 13241,
 
         [ParentCombo(RDM_AoE_DPS)]
-        [CustomComboInfo("Moulinet Melee Combo Option", "Use Moulinet when over 60/60 mana", RDM.JobID, 420)]
+        [CustomComboInfo("Moulinet Melee Combo Option", "Use Moulinet when over 50/50 mana", RDM.JobID, 420)]
         RDM_AoE_MeleeCombo = 13420,
 
         [ParentCombo(RDM_AoE_MeleeCombo)]
@@ -2781,33 +2861,37 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100, "", "")]
         SGE_ST_DPS = 14001,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
-            SGE_ST_DPS_Lucid = 14002,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
+        SGE_ST_DPS_Lucid = 14002,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
-            SGE_ST_DPS_EDosis = 14003,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Eukrasian Dosis Option", "Automatic DoT Uptime.", SGE.JobID, 110, "", "")]
+        SGE_ST_DPS_EDosis = 14003,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Movement Options", "Use selected instant cast actions while moving.", SGE.JobID, 113, "", "")]
-            SGE_ST_DPS_Movement = 14004,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Movement Options", "Use selected instant cast actions while moving.", SGE.JobID, 113, "", "")]
+        SGE_ST_DPS_Movement = 14004,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
-            SGE_ST_DPS_Phlegma = 14005,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Phlegma Option", "Use Phlegma if available and within range.", SGE.JobID, 111, "", "")]
+        SGE_ST_DPS_Phlegma = 14005,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
-            SGE_ST_DPS_Kardia = 14006,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Kardia Reminder Option", "Adds Kardia when not under the effect.", SGE.JobID, 122, "", "")]
+        SGE_ST_DPS_Kardia = 14006,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
-            SGE_ST_DPS_Rhizo = 14007,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 121, "", "")]
+        SGE_ST_DPS_Rhizo = 14007,
 
-            [ParentCombo(SGE_ST_DPS)]
-            [CustomComboInfo("Psych Option", "Weaves(?) Psych when available.", SGE.JobID, 112, "", "")]
-            SGE_ST_DPS_Psyche = 14008,
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Psych Option", "Weaves(?) Psych when available.", SGE.JobID, 112, "", "")]
+        SGE_ST_DPS_Psyche = 14008,
+
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Addersgall Overflow Protection", "Weaves Druochole when Addersgall gauge is greater than or equal to the specified value.", SGE.JobID, 123, "", "")]
+        SGE_ST_DPS_AddersgallProtect = 14054,
 
         #endregion
 
@@ -2816,29 +2900,33 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("AoE DPS Feature", "Adds various options to Dyskrasia I & II. Requires a target.", SGE.JobID, 200, "", "")]
         SGE_AoE_DPS = 14009,
 
-            [ParentCombo(SGE_AoE_DPS)]
-            [CustomComboInfo("Phlegma Option", "Uses Phlegma if available.", SGE.JobID, 3, "", "")]
-            SGE_AoE_DPS_Phlegma = 14010,
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Phlegma Option", "Uses Phlegma if available.", SGE.JobID, 3, "", "")]
+        SGE_AoE_DPS_Phlegma = 14010,
 
-            [ParentCombo(SGE_AoE_DPS)]
-            [CustomComboInfo("Toxikon Option", "Use Toxikon if available.", SGE.JobID, 4, "", "")]
-            SGE_AoE_DPS_Toxikon = 14011,
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Toxikon Option", "Use Toxikon if available.", SGE.JobID, 4, "", "")]
+        SGE_AoE_DPS_Toxikon = 14011,
 
-            [ParentCombo(SGE_AoE_DPS)]
-            [CustomComboInfo("Psyche Option", "Weaves Psyche if available.", SGE.JobID, 2, "", "")]
-            SGE_AoE_DPS_Psyche = 14051,
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Psyche Option", "Weaves Psyche if available.", SGE.JobID, 2, "", "")]
+        SGE_AoE_DPS_Psyche = 14051,
 
-            [ParentCombo(SGE_AoE_DPS)]
-            [CustomComboInfo("Eukrasia Option", "Uses Eukrasia for Eukrasia Dyskrasia.", SGE.JobID, 1, "", "")]
-            SGE_AoE_DPS_EDyskrasia = 14052,
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Eukrasia Option", "Uses Eukrasia for Eukrasia Dyskrasia.", SGE.JobID, 1, "", "")]
+        SGE_AoE_DPS_EDyskrasia = 14052,
 
-            [ParentCombo(SGE_AoE_DPS)]
-            [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 4, "", "")]
-            SGE_AoE_DPS_Lucid = 14012,
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 4, "", "")]
+        SGE_AoE_DPS_Lucid = 14012,
 
-            [ParentCombo(SGE_AoE_DPS)]
-            [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 5, "", "")]
-            SGE_AoE_DPS_Rhizo = 14013,
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Rhizomata Option", "Weaves Rhizomata when Addersgall gauge falls below the specified value.", SGE.JobID, 5, "", "")]
+        SGE_AoE_DPS_Rhizo = 14013,
+
+        [ParentCombo(SGE_AoE_DPS)]
+        [CustomComboInfo("Addersgall Overflow Protection", "Weaves Druochole when Addersgall gauge is greater than or equal to the specified value.", SGE.JobID, 6, "", "")]
+        SGE_AoE_DPS_AddersgallProtect = 14053,
         #endregion
 
         #region Diagnosis Simple Single Target Heal
@@ -2896,45 +2984,45 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14026,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 504, "", "")]
-            SGE_AoE_Heal_Physis = 14027,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Physis Option", "Adds Physis.", SGE.JobID, 504, "", "")]
+        SGE_AoE_Heal_Physis = 14027,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Philosophia Option", "Adds Philosophia.", SGE.JobID, 505, "", "")]
-            SGE_AoE_Heal_Philosophia = 14050,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Philosophia Option", "Adds Philosophia.", SGE.JobID, 505, "", "")]
+        SGE_AoE_Heal_Philosophia = 14050,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 520, "", "")]
-            SGE_AoE_Heal_EPrognosis = 14028,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Eukrasian Prognosis Option", "Prognosis becomes Eukrasian Prognosis if the shield is not applied.", SGE.JobID, 520, "", "")]
+        SGE_AoE_Heal_EPrognosis = 14028,
 
-                [ParentCombo(SGE_AoE_Heal_EPrognosis)]
-                [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Prognosis, and normal Prognosis will be unavailable.", SGE.JobID, 520, "", "")]
-                SGE_AoE_Heal_EPrognosis_IgnoreShield = 14029,
+        [ParentCombo(SGE_AoE_Heal_EPrognosis)]
+        [CustomComboInfo("Ignore Shield Check", "Warning, will force the use of Eukrasia Prognosis, and normal Prognosis will be unavailable.", SGE.JobID, 520, "", "")]
+        SGE_AoE_Heal_EPrognosis_IgnoreShield = 14029,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 505, "", "")]
-            SGE_AoE_Heal_Holos = 14030,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Holos Option", "Adds Holos.", SGE.JobID, 505, "", "")]
+        SGE_AoE_Heal_Holos = 14030,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 506, "", "")]
-            SGE_AoE_Heal_Panhaima = 14031,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Panhaima Option", "Adds Panhaima.", SGE.JobID, 506, "", "")]
+        SGE_AoE_Heal_Panhaima = 14031,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 507, "", "")]
-            SGE_AoE_Heal_Pepsis = 14032,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Pepsis Option", "Triggers Pepsis if a shield is present.", SGE.JobID, 507, "", "")]
+        SGE_AoE_Heal_Pepsis = 14032,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 503, "", "")]
-            SGE_AoE_Heal_Ixochole = 14033,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Ixochole Option", "Adds Ixochole.", SGE.JobID, 503, "", "")]
+        SGE_AoE_Heal_Ixochole = 14033,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 502, "", "")]
-            SGE_AoE_Heal_Kerachole = 14035,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Kerachole Option", "Adds Kerachole.", SGE.JobID, 502, "", "")]
+        SGE_AoE_Heal_Kerachole = 14035,
 
-            [ParentCombo(SGE_AoE_Heal)]
-            [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
-            SGE_AoE_Heal_Rhizomata = 14036,
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
+        SGE_AoE_Heal_Rhizomata = 14036,
         #endregion
 
         #region Misc Healing
@@ -2969,21 +3057,21 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Spell Overlap Protection", "Prevents you from wasting actions if under the effect of someone else's actions", SGE.JobID, 1000, "", "")]
         SGE_OverProtect = 14043,
 
-            [ParentCombo(SGE_OverProtect)]
-            [CustomComboInfo("Under Kerachole", "Don't use Kerachole when under the effect of someone's Kerachole", SGE.JobID, 1000, "", "")]
-            SGE_OverProtect_Kerachole = 14044,
+        [ParentCombo(SGE_OverProtect)]
+        [CustomComboInfo("Under Kerachole", "Don't use Kerachole when under the effect of someone's Kerachole", SGE.JobID, 1000, "", "")]
+        SGE_OverProtect_Kerachole = 14044,
 
-            [ParentCombo(SGE_OverProtect_Kerachole)]
-            [CustomComboInfo("Under Sacred Soil", "Don't use Kerachole when under the effect of someone's Sacred Soil", SGE.JobID, 1000, "", "")]
-            SGE_OverProtect_SacredSoil = 14045,
+        [ParentCombo(SGE_OverProtect_Kerachole)]
+        [CustomComboInfo("Under Sacred Soil", "Don't use Kerachole when under the effect of someone's Sacred Soil", SGE.JobID, 1000, "", "")]
+        SGE_OverProtect_SacredSoil = 14045,
 
-            [ParentCombo(SGE_OverProtect)]
-            [CustomComboInfo("Under Panhaima", "Don't use Panhaima when under the effect of someone's Panhaima", SGE.JobID, 1000, "", "")]
-            SGE_OverProtect_Panhaima = 14046,
+        [ParentCombo(SGE_OverProtect)]
+        [CustomComboInfo("Under Panhaima", "Don't use Panhaima when under the effect of someone's Panhaima", SGE.JobID, 1000, "", "")]
+        SGE_OverProtect_Panhaima = 14046,
 
-            [ParentCombo(SGE_OverProtect)]
-            [CustomComboInfo("Under Philosophia", "Don't use Philosophia when under the effect of someone's Philosophia", SGE.JobID, 1000, "", "")]
-            SGE_OverProtect_Philosophia = 14047,
+        [ParentCombo(SGE_OverProtect)]
+        [CustomComboInfo("Under Philosophia", "Don't use Philosophia when under the effect of someone's Philosophia", SGE.JobID, 1000, "", "")]
+        SGE_OverProtect_Philosophia = 14047,
 
         [Variant]
         [VariantParent(SGE_ST_DPS_EDosis, SGE_AoE_DPS)]
@@ -2996,7 +3084,7 @@ namespace XIVSlothCombo.Combos
         SGE_DPS_Variant_Rampart = 14049,
         #endregion
 
-        // Last used number = 14052
+        // Last used number = 14054
 
         #endregion
 
@@ -3241,50 +3329,50 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils with options below", SCH.JobID, 1)]
         SCH_DPS = 16001,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
-            SCH_DPS_Lucid = 16002,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
+        SCH_DPS_Lucid = 16002,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Chain Stratagem / Baneful Impact Weave Option", "Adds Chain Stratagem & Baneful Impact on cooldown with overlap protection", SCH.JobID, 120)]
-            SCH_DPS_ChainStrat = 16003,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Chain Stratagem / Baneful Impact Weave Option", "Adds Chain Stratagem & Baneful Impact on cooldown with overlap protection", SCH.JobID, 120)]
+        SCH_DPS_ChainStrat = 16003,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
-            SCH_DPS_Aetherflow = 16004,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
+        SCH_DPS_Aetherflow = 16004,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
-            SCH_DPS_EnergyDrain = 16005,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
+        SCH_DPS_EnergyDrain = 16005,
 
-            [ParentCombo(SCH_DPS_EnergyDrain)]
-            [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
-            SCH_DPS_EnergyDrain_BurstSaver = 16006,
+        [ParentCombo(SCH_DPS_EnergyDrain)]
+        [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
+        SCH_DPS_EnergyDrain_BurstSaver = 16006,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
-            SCH_DPS_Ruin2Movement = 16007,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
+        SCH_DPS_Ruin2Movement = 16007,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
-            SCH_DPS_Bio = 16008,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
+        SCH_DPS_Bio = 16008,
 
-            [ParentCombo(SCH_DPS)]
-            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
-            SCH_DPS_Dissipation_Opener = 16009,
+        [ParentCombo(SCH_DPS)]
+        [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
+        SCH_DPS_Dissipation_Opener = 16009,
 
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below.", SCH.JobID, 3)]
         SCH_AoE = 16010,
 
-            [ParentCombo(SCH_AoE)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-            SCH_AoE_Lucid = 16011,
+        [ParentCombo(SCH_AoE)]
+        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
+        SCH_AoE_Lucid = 16011,
 
-            [ParentCombo(SCH_AoE)]
-            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
-            SCH_AoE_Aetherflow = 16012,
+        [ParentCombo(SCH_AoE)]
+        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+        SCH_AoE_Aetherflow = 16012,
 
         #endregion
 
@@ -3452,7 +3540,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_SearingLight)]
         [CustomComboInfo("Searing Light Burst Option", "Casts Searing Light only during Demi phases.\nReflects Demi choice selected under 'Pooled oGCDs Option'.\nNot recommended for SpS Builds.", SMN.JobID, 0, "")]
         SMN_SearingLight_Burst = 17018,
-        
+
         [ParentCombo(SMN_SearingLight)]
         [CustomComboInfo("Searing Flash Combo Option", "Adds Searing Flash to the single target and AoE combos.", SMN.JobID, 1, "", "")]
         SMN_SearingFlash = 17019,
@@ -3483,7 +3571,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SMN_Advanced_Combo_DemiSummons_Attacks)]
         [CustomComboInfo("Lux Solaris Combo Option", "Adds Lux Solaris to the single target and AoE combos.", SMN.JobID, 14, "", "")]
         SMN_Advanced_Combo_DemiSummons_LuxSolaris = 17029,
-        
+
         [ReplaceSkill(SMN.Ruin4)]
         [CustomComboInfo("Ruin III Mobility Feature", "Puts Ruin III on Ruin IV when you don't have Further Ruin.", SMN.JobID, 9, "", "")]
         SMN_RuinMobility = 17030,
@@ -3563,7 +3651,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_AdvancedMode = 30001,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", VPR.JobID)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
         VPR_ST_Opener = 30002,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
@@ -3584,7 +3672,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dreadwinder", "Adds Dreadwinder to the rotation.", VPR.JobID)]
         VPR_ST_Dreadwinder = 30006,
 
-        [ParentCombo(VPR_ST_Dreadwinder)]
+        [ParentCombo(VPR_ST_CDs)]
         [CustomComboInfo("Dreadwinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
         VPR_ST_DreadwinderCombo = 30007,
 
@@ -3598,7 +3686,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
         VPR_ST_UncoiledFury = 30009,
 
-        [ParentCombo(VPR_ST_UncoiledFury)]
+        [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
         VPR_ST_UncoiledFuryCombo = 30010,
 
@@ -3658,7 +3746,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Pit Of Dread", "Adds Pit Of Dread to the rotation.", VPR.JobID)]
         VPR_AoE_PitOfDread = 30105,
 
-        [ParentCombo(VPR_AoE_PitOfDread)]
+        [ParentCombo(VPR_AoE_CDs)]
         [CustomComboInfo("Pit Of Dread Combo", "Adds Swiftskin's Den and Hunter's Den to the rotation.", VPR.JobID)]
         VPR_AoE_PitOfDreadCombo = 30106,
 
@@ -3672,7 +3760,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
         VPR_AoE_UncoiledFury = 30108,
 
-        [ParentCombo(VPR_AoE_UncoiledFury)]
+        [ParentCombo(VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury Combo", "Adds Uncoiled Twinfang and Uncoiled Twinblood to the rotation.", VPR.JobID)]
         VPR_AoE_UncoiledFuryCombo = 30109,
 
@@ -3799,41 +3887,45 @@ namespace XIVSlothCombo.Combos
         WAR_InfuriateFellCleave = 18031,
 
         [ReplaceSkill(WAR.InnerRelease)]
-        [CustomComboInfo("Primal Rend Feature", "Turns Inner Release into Primal Rend on use.", WAR.JobID, 3, "", "")]
-        WAR_PrimalRend_InnerRelease = 18032,
+        [CustomComboInfo("Primal Combo Feature", "Turns Inner Release into the Primal combo on use.", WAR.JobID, 3, "", "")]
+        WAR_PrimalCombo_InnerRelease = 18032,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID)]
         WAR_InfuriateFellCleave_IRFirst = 18022,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) and when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID)]
+        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) & when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID)]
         WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
+        [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
+        [CustomComboInfo("Primal Rend Late Option", "Uses Primal Rend after you consume 3 stacks of Inner Release & after Primal Wrath.", WAR.JobID)]
+        WAR_ST_StormsPath_PrimalRend_Late = 18024,
+
         [ParentCombo(WAR_ST_StormsPath_Onslaught)]
-        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest and in the target ring (1 yalm) and when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID)]
-        WAR_ST_StormsPath_Onslaught_MeleeSpender = 18024,
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest & in the target ring (1 yalm) & when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID)]
+        WAR_ST_StormsPath_Onslaught_MeleeSpender = 18025,
 
         [Variant]
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", WAR.JobID)]
-        WAR_Variant_SpiritDart = 18025,
+        WAR_Variant_SpiritDart = 18026,
 
         [Variant]
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", WAR.JobID)]
-        WAR_Variant_Cure = 18026,
+        WAR_Variant_Cure = 18027,
 
         [Variant]
         [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
-        WAR_Variant_Ultimatum = 18027,
+        WAR_Variant_Ultimatum = 18028,
 
         [ParentCombo(WAR_AoE_Overpower)]
         [CustomComboInfo("Steel Cyclone / Decimate Option", "Adds Steel Cyclone / Decimate to Advanced Mode.", WAR.JobID)]
-        WAR_AoE_Overpower_Decimate = 18028,
+        WAR_AoE_Overpower_Decimate = 18029,
 
-        // Last value = 18028
+        // Last value = 18029
 
         #endregion
 
@@ -4608,4 +4700,3 @@ namespace XIVSlothCombo.Combos
         #endregion
     }
 }
-
