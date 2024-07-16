@@ -762,7 +762,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(DNC_DanceStepCombo, DNC_DanceComboReplacer, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
         [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS)." +
         "\nStandard > Technical." +
-        "\nThis combos out into Tillana, Starfall Dance, and Last Dance.", DNC.JobID)]
+        "\nThis combos out into Tillana, Starfall Dance, Last Dance, and Finishing Move.", DNC.JobID)]
         DNC_CombinedDances = 4022,
 
         [ParentCombo(DNC_CombinedDances)]
