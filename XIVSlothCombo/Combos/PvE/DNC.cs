@@ -47,7 +47,10 @@ namespace XIVSlothCombo.Combos.PvE
             ShieldSamba = 16012,
             Flourish = 16013,
             Improvisation = 16014,
-            CuringWaltz = 16015;
+            CuringWaltz = 16015,
+            LastDance = 36983,
+            FinishingMove = 36984,
+            DanceOfTheDawn = 36985;
 
         public static class Buffs
         {
@@ -74,7 +77,10 @@ namespace XIVSlothCombo.Combos.PvE
                 FourFoldFanDance = 2699,
                 // Other
                 Peloton = 1199,
-                ShieldSamba = 1826;
+                ShieldSamba = 1826,
+                LastDance = 3867,
+                FinishingMove = 3868,
+                DanceOfTheDawn = 3869;
         }
 
         public static class Config
