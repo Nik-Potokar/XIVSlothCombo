@@ -756,26 +756,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID)]
         DNC_Dance_Menu = 4020,
 
-        #region Combined Dance Feature
-        [ReplaceSkill(DNC.StandardStep)]
         [ParentCombo(DNC_Dance_Menu)]
-        [ConflictingCombos(DNC_DanceStepCombo, DNC_DanceComboReplacer, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Combined Dance Feature", "Standard And Technical Dance on one button (SS)." +
-        "\nStandard > Technical." +
-        "\nThis combos out into Tillana, Starfall Dance, Last Dance, and Finishing Move.", DNC.JobID)]
-        DNC_CombinedDances = 4022,
-
-        [ParentCombo(DNC_CombinedDances)]
-        [CustomComboInfo("Devilment Plus Option", "Adds Devilment right after Technical finish.", DNC.JobID)]
-        DNC_CombinedDances_Devilment = 4023,
-
-        [ParentCombo(DNC_CombinedDances)]
-        [CustomComboInfo("Flourish Plus Option", "Adds Flourish to the Combined Dance Feature.", DNC.JobID)]
-        DNC_CombinedDances_Flourish = 4024,
-        #endregion
-
-        [ParentCombo(DNC_Dance_Menu)]
-        [ConflictingCombos(DNC_DanceStepCombo, DNC_CombinedDances, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_DanceStepCombo, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
         [CustomComboInfo("Custom Dance Step Feature",
         "Change custom actions into dance steps while dancing." +
         "\nThis helps ensure you can still dance with combos on, without using auto dance." +
@@ -833,14 +815,14 @@ namespace XIVSlothCombo.Combos
         DNC_Starfall_Devilment = 4038,
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
-        [ConflictingCombos(DNC_CombinedDances, DNC_DanceComboReplacer)]
+        [ConflictingCombos(DNC_DanceComboReplacer)]
         [CustomComboInfo("Dance Step Combo Feature", "Change Standard Step and Technical Step into each dance step, while dancing." +
         "\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID)]
         DNC_DanceStepCombo = 4039,
 
         #region Simple Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
-        [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_CombinedDances, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
+        [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
         [CustomComboInfo("Simple Dancer (Single Target) Feature", "Single button, single target. Includes songs, flourishes and overprotections." +
         "\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID)]
         DNC_ST_SimpleMode = 4050,
@@ -920,7 +902,7 @@ namespace XIVSlothCombo.Combos
 
         #region Simple Dancer (AoE)
         [ReplaceSkill(DNC.Windmill)]
-        [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_CombinedDances, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
+        [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
         [CustomComboInfo("Simple Dancer (AoE) Feature", "Single button, AoE. Includes songs, flourishes and overprotections." +
         "\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID)]
         DNC_AoE_SimpleMode = 4070,

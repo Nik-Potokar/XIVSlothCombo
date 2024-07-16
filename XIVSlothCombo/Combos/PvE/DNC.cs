@@ -359,6 +359,10 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region GCD
+                    if (HasEffect(Buffs.FinishingMoveReady) &&
+                        IsOffCooldown(StandardStep))
+                        return FinishingMove;
+
                     // ST Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -397,8 +401,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return Tillana;
                     if (HasEffect(Buffs.LastDanceReady))
                         return LastDance;
-                    if (HasEffect(Buffs.FinishingMoveReady))
-                        return FinishingMove;
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
 
@@ -615,6 +617,10 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region GCD
+                    if (HasEffect(Buffs.FinishingMoveReady) &&
+                        IsOffCooldown(StandardStep))
+                        return FinishingMove;
+
                     // AoE Standard Step (outside of burst)
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalFinish))
                     {
@@ -654,8 +660,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return Tillana;
                     if (HasEffect(Buffs.LastDanceReady))
                         return LastDance;
-                    if (HasEffect(Buffs.FinishingMoveReady))
-                        return FinishingMove;
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
 
@@ -733,70 +737,6 @@ namespace XIVSlothCombo.Combos.PvE
                         return RisingWindmill;
                     if (LevelChecked(Bladeshower) && lastComboMove is Windmill)
                         return Bladeshower;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class DNC_CombinedDances : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_CombinedDances;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                // One-button mode for both dances (SS/TS). SS takes priority.
-                if (actionID is StandardStep)
-                {
-                    DNCGauge? gauge = GetJobGauge<DNCGauge>();
-
-                    // Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Devilment) && IsOnCooldown(StandardStep) && IsOffCooldown(Devilment) && !gauge.IsDancing)
-                    {
-                        if ((LevelChecked(Devilment) && !LevelChecked(TechnicalStep)) ||    // Lv. 62 - 69
-                            (LevelChecked(TechnicalStep) && IsOnCooldown(TechnicalStep)))   // Lv. 70+ during Tech
-                            return Devilment;
-                    }
-
-                    // Flourish
-                    if (IsEnabled(CustomComboPreset.DNC_CombinedDances_Flourish) &&
-                        InCombat() && !gauge.IsDancing &&
-                        ActionReady(Flourish) &&
-                        IsOnCooldown(StandardStep))
-                        return Flourish;
-
-                    if (HasEffect(Buffs.FlourishingFinish))
-                        return Tillana;
-                    if (HasEffect(Buffs.LastDanceReady))
-                        return LastDance;
-                    if (HasEffect(Buffs.FinishingMoveReady) &&
-                        IsOffCooldown(StandardStep))
-                        return FinishingMove;
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
-
-                    // Tech Step
-                    if (IsOnCooldown(StandardStep) && IsOffCooldown(TechnicalStep) &&
-                        !gauge.IsDancing && !HasEffect(Buffs.StandardStep))
-                        return TechnicalStep;
-
-                    // Dance steps
-                    if (gauge.IsDancing)
-                    {
-                        if (HasEffect(Buffs.StandardStep))
-                        {
-                            return gauge.CompletedSteps < 2
-                                ? gauge.NextStep
-                                : StandardFinish2;
-                        }
-
-                        if (HasEffect(Buffs.TechnicalStep))
-                        {
-                            return gauge.CompletedSteps < 4
-                                ? gauge.NextStep
-                                : TechnicalFinish4;
-                        }
-                    }
                 }
 
                 return actionID;
