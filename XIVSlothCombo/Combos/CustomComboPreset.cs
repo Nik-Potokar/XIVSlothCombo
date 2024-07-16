@@ -720,7 +720,7 @@ namespace XIVSlothCombo.Combos
         DNC_ST_MultiButton = 4000,
 
         [ParentCombo(DNC_ST_MultiButton)]
-        [CustomComboInfo("ST Esprit Overcap Option", "Adds Saber Dance above the set Esprit threshold.", DNC.JobID)]
+        [CustomComboInfo("Esprit Overcap Option", "Adds Saber Dance above the set Esprit threshold.", DNC.JobID)]
         DNC_ST_EspritOvercap = 4001,
 
         [ParentCombo(DNC_ST_MultiButton)]
@@ -739,7 +739,7 @@ namespace XIVSlothCombo.Combos
         DNC_AoE_MultiButton = 4010,
 
         [ParentCombo(DNC_AoE_MultiButton)]
-        [CustomComboInfo("AoE Esprit Overcap Option", "Adds Saber Dance above the set Esprit threshold.", DNC.JobID)]
+        [CustomComboInfo("Esprit Overcap Option", "Adds Saber Dance above the set Esprit threshold.", DNC.JobID)]
         DNC_AoE_EspritOvercap = 4011,
 
         [ParentCombo(DNC_AoE_MultiButton)]
