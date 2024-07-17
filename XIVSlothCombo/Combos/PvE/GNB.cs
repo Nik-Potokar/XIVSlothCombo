@@ -143,8 +143,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     !LevelChecked(GnashingFang))) // Pre GF
                                     return OriginalHook(DangerZone);
 
-                                // stops Zone drift
-                                if (HasEffect(Buffs.NoMercy))
+                                // Lv100 use
+                                if (HasEffect(Buffs.NoMercy) && LevelChecked(DoubleDown) && WasLastWeaponskill(DoubleDown))
                                     return OriginalHook(DangerZone);
                             }
 
@@ -192,6 +192,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 !HasEffect(Buffs.ReadyToRip) && GetBuffRemainingTime(Buffs.NoMercy) < GCD * 5 &&
                                 (WasLastWeaponskill(GnashingFang) || WasLastAbility(SavageClaw)))
                                 return SonicBreak;
+
+                            // 2.45?
+                            if (GetCooldownRemainingTime(Bloodfest) > GCD * 14 && GetCooldownRemainingTime(DoubleDown) > GCD * 14 && !HasEffect(Buffs.ReadyToReign) && gauge.Ammo == 2 &&
+                                !HasEffect(Buffs.ReadyToRip) && GetBuffRemainingTime(Buffs.NoMercy) < GCD)
+                                return SonicBreak;
                         }
                     }
 
@@ -234,7 +239,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             // 2min
                             if ((IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
-                                !HasEffect(Buffs.ReadyToBlast) && gauge.Ammo == 2 && (GetBuffRemainingTime(Buffs.NoMercy) > GCD * 7) &&
+                                !HasEffect(Buffs.ReadyToBlast) && gauge.Ammo >= 2 && (GetBuffRemainingTime(Buffs.NoMercy) > GCD * 7) &&
                                 WasLastWeaponskill(BurstStrike) && (GetCooldownRemainingTime(Bloodfest) < 30 || IsOffCooldown(Bloodfest)))
                                 // 1min 3 carts
                                 || (IsEnabled(CustomComboPreset.GNB_ST_SonicBreak) &&
