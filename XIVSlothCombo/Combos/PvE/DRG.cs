@@ -1,3 +1,4 @@
+using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.JobHelpers;
@@ -96,6 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
             internal static DRGOpenerLogic DRGOpener = new();
+            float GCD = GetCooldown(TrueThrust).CooldownTotal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -200,7 +202,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 10 || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 || (GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 9 && GetCooldownRemainingTime(LanceCharge) < GCD * 4)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -248,6 +250,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
             internal static DRGOpenerLogic DRGOpener = new();
+            float GCD = GetCooldown(TrueThrust).CooldownTotal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -393,7 +396,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 10 || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 || (GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 9 && GetCooldownRemainingTime(LanceCharge) < GCD * 4)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
