@@ -2654,7 +2654,7 @@ namespace XIVSlothCombo.Combos
         RPR_LemureOnGGG = 12306,
 
         [ReplaceSkill(RPR.Enshroud)]
-        [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID)]
+        [CustomComboInfo("Enshroud to Communio to Perfectio Feature", "Turns Enshroud to Communio and Perfectio when available to use.", RPR.JobID)]
         RPR_EnshroudCommunio = 12307,
 
         [ParentCombo(RPR_EnshroudProtection)]

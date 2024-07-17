@@ -844,9 +844,15 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_EnshroudCommunio;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Enshroud && HasEffect(Buffs.Enshrouded) && LevelChecked(Communio)
-                    ? Communio
-                    : actionID;
+                if (actionID is Enshroud)
+                {
+                    if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
+                        return OriginalHook(Communio);
+
+                    if (HasEffect(Buffs.Enshrouded) && LevelChecked(Communio))
+                        return Communio;
+                }
+                return actionID;
             }
         }
     }
