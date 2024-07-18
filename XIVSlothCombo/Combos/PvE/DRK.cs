@@ -233,7 +233,7 @@ namespace XIVSlothCombo.Combos.PvE
                     return OriginalHook(Bloodspiller);
 
                 //Delirium Features
-                /*if (LevelChecked(Delirium)
+                if (LevelChecked(Delirium)
                     && IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller))
                 {
                     //Regular Bloodspiller
@@ -247,7 +247,7 @@ namespace XIVSlothCombo.Combos.PvE
                             || (gauge.Blood >= 50 && GetCooldownRemainingTime(Delirium) > 37)
                             ))
                         return Bloodspiller;
-                }*/
+                }
 
                 // Spend Dark Arts
                 if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
@@ -397,6 +397,43 @@ namespace XIVSlothCombo.Combos.PvE
 
                 return Unleash;
 
+            }
+        }
+
+        internal class DRK_oGCD : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_oGCD;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                var gauge = GetJobGauge<DRKGauge>();
+
+                if (actionID == CarveAndSpit || actionID == AbyssalDrain)
+                {
+                    if (IsOffCooldown(LivingShadow)
+                        && LevelChecked(LivingShadow))
+                        return LivingShadow;
+
+                    if (IsOffCooldown(SaltedEarth)
+                        && LevelChecked(SaltedEarth))
+                        return SaltedEarth;
+
+                    if (IsOffCooldown(CarveAndSpit)
+                        && LevelChecked(AbyssalDrain))
+                        return actionID;
+
+                    if (IsOffCooldown(SaltAndDarkness)
+                        && HasEffect(Buffs.SaltedEarth)
+                        && LevelChecked(SaltAndDarkness))
+                        return SaltAndDarkness;
+
+                    if (IsEnabled(CustomComboPreset.DRK_Shadowbringer_oGCD)
+                        && GetCooldownRemainingTime(Shadowbringer) < 60
+                        && LevelChecked(Shadowbringer)
+                        && gauge.DarksideTimeRemaining > 0)
+                        return Shadowbringer;
+                }
+                return actionID;
             }
         }
     }
