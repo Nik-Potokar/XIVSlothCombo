@@ -3795,7 +3795,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Uncoiled - Twins", "Replaces Uncoiled Fury with Uncoiled Twinfang and Uncoiled Twinblood.", VPR.JobID)]
         VPR_UncoiledTwins = 30202,
 
-        [ReplaceSkill(VPR.Reawaken)]
+        [ReplaceSkill(VPR.Reawaken, VPR.DreadFangs)]
         [CustomComboInfo("Reawaken - Generation", "Replaces Option with the Generations.", VPR.JobID)]
         VPR_ReawakenLegacy = 30203,
 
