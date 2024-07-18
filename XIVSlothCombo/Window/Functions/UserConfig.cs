@@ -2495,9 +2495,6 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.WHM_AoEHeals_ThinAir)
                 UserConfig.DrawSliderInt(0, 1, WHM.Config.WHM_AoEHeals_ThinAir, "How many charges to keep ready? (0 = Use all)");
 
-            if (preset == CustomComboPreset.WHM_AoEHeals_Cure3)
-                UserConfig.DrawSliderInt(0, 10000, WHM.Config.WHM_AoEHeals_Cure3MP, "Use when MP is above", sliderIncrement: 100);
-
             if (preset == CustomComboPreset.WHM_STHeals)
                 UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_STHeals_UIMouseOver, "Party UI Mousover Checking", "Check party member's HP & Debuffs by using mouseover on the party list.\nTo be used in conjunction with Redirect/Reaction/etc.");
 

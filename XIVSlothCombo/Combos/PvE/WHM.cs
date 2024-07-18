@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
+using Lumina.Excel.GeneratedSheets;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
@@ -122,7 +123,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserBoolArray
                 WHM_ST_MainCombo_Adv_Actions = new("WHM_ST_MainCombo_Adv_Actions");
         }
-        
+
         internal class WHM_SolaceMisery : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_SolaceMisery;
@@ -173,12 +174,21 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     bool thinAirReady = !HasEffect(Buffs.ThinAir) && LevelChecked(ThinAir) && HasCharges(ThinAir);
 
-                    if (HasEffect(All.Buffs.Swiftcast))
-                        return IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && thinAirReady
-                            ? ThinAir
-                            : Raise;
-                }
+                    if (IsOffCooldown(All.Swiftcast))
+                    {
+                        return All.Swiftcast;
+                    }
 
+                    if (IsOnCooldown(All.Swiftcast) && thinAirReady)
+                    {
+                        return ThinAir;
+                    }
+
+                    if (IsOnCooldown(All.Swiftcast) && !thinAirReady)
+                    {
+                        return Raise;
+                    }
+                }
                 return actionID;
             }
         }
@@ -234,7 +244,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(PresenceOfMind);
 
                             if (ActionReady(Assize))
-                            return Assize;
+                                return Assize;
                         }
 
                         if (Glare3Count > 0)
@@ -292,12 +302,13 @@ namespace XIVSlothCombo.Combos.PvE
                             && GetBuffStacks(Buffs.SacredSight) > 0)
                             return OriginalHook(Glare4);
 
-                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
-                            (liliesFull || liliesNearlyFull))
-                            return AfflatusRapture;
                         if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Misery_oGCD) && LevelChecked(AfflatusMisery) &&
                             gauge.BloodLily >= 3)
                             return AfflatusMisery;
+
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_LilyOvercap) && LevelChecked(AfflatusRapture) &&
+                            (liliesFull || liliesNearlyFull))
+                            return AfflatusRapture;
 
                         return OriginalHook(Stone1);
                     }
@@ -347,19 +358,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
                         && ((FindEffectOnMember(Buffs.Medica2, healTarget) == null && FindEffectOnMember(Buffs.Medica3, healTarget) == null)
-                            || FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime
-                            || FindEffectOnMember(Buffs.Medica3, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
-                        && (ActionReady(Medica2) || ActionReady(Medica3)))
+                        || (FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime && FindEffectOnMember(Buffs.Medica3, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
+                        && (ActionReady(Medica2) || ActionReady(Medica3))))
                     {
-                        // Medica 3 upgrade
-                        if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica3)
-                            && LevelChecked(Medica3))
+                        if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica3) && LevelChecked(Medica3))
                             return Medica3;
 
                         return Medica2;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && ActionReady(Cure3) && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP || HasEffect(Buffs.ThinAir)))
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && ActionReady(Cure3))
                         return Cure3;
 
                 }
@@ -407,11 +415,14 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_STHeals_Aquaveil) && aquaReady && FindEffectOnMember(Buffs.Aquaveil, healTarget) is null)
                         return Aquaveil;
 
-                    if (IsEnabled(CustomComboPreset.WHM_STHeals_Regen) && regenReady)
-                        return Regen;
+                    if (IsEnabled(CustomComboPreset.WHM_STHeals_Misery) && gauge.BloodLily == 3)
+                        return AfflatusMisery;
 
                     if (IsEnabled(CustomComboPreset.WHM_STHeals_Solace) && gauge.Lily > 0 && ActionReady(AfflatusSolace))
                         return AfflatusSolace;
+
+                    if (IsEnabled(CustomComboPreset.WHM_STHeals_Regen) && regenReady)
+                        return Regen;
 
                     if (IsEnabled(CustomComboPreset.WHM_STHeals_ThinAir) && thinAirReady)
                         return ThinAir;
