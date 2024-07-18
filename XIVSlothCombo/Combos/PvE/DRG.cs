@@ -204,7 +204,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 || (GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 9 && GetCooldownRemainingTime(LanceCharge) < GCD * 4)))
+                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 || GetCooldownRemainingTime(LanceCharge) < GCD * 4))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -321,6 +321,22 @@ namespace XIVSlothCombo.Combos.PvE
                                 (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
                                 return LifeSurge;
 
+                            //Dragonfire Dive Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive) &&
+                                AnimationLock.CanDRGWeave(DragonfireDive) &&
+                                ActionReady(DragonfireDive) &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) && !IsMoving)))
+                                return DragonfireDive;
+
+                            //StarDiver Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) &&
+                                AnimationLock.CanDRGWeave(Stardiver) &&
+                                ActionReady(Stardiver) && gauge.IsLOTDActive &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)))
+                                return Stardiver;
+
                             //Wyrmwind Thrust Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
                                 AnimationLock.CanDRGWeave(WyrmwindThrust) &&
@@ -340,22 +356,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 (!IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) ||
                                 (IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) && !IsMoving)))
                                 return OriginalHook(Jump);
-
-                            //Dragonfire Dive Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive) &&
-                                AnimationLock.CanDRGWeave(DragonfireDive) &&
-                                ActionReady(DragonfireDive) &&
-                                (!IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) ||
-                                (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) && !IsMoving)))
-                                return DragonfireDive;
-
-                            //StarDiver Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) &&
-                                AnimationLock.CanDRGWeave(Stardiver) &&
-                                ActionReady(Stardiver) && gauge.IsLOTDActive &&
-                                (!IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) ||
-                                (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)))
-                                return Stardiver;
 
                             //Starcross Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Starcross) &&
@@ -400,7 +400,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 || (GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 9 && GetCooldownRemainingTime(LanceCharge) < GCD * 4)))
+                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
