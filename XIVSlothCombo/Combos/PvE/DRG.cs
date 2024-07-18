@@ -143,11 +143,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return BattleLitany;
 
                         //Life Surge Feature
-                        if (AnimationLock.CanDRGWeave(LifeSurge) &&
-                           ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
-                           ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                           (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                           (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
+                        if (((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
+                            AnimationLock.CanDRGWeave(LifeSurge) &&
+                            (HasEffect(Buffs.LanceCharge) &&
+                            ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
+                            ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                            (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                            (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
                             return LifeSurge;
 
                         //Wyrmwind Thrust Feature
@@ -310,11 +312,13 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Life Surge Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
+                                ((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
                                 AnimationLock.CanDRGWeave(LifeSurge) &&
+                                (HasEffect(Buffs.LanceCharge) &&
                                 ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
                                 ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
                                 (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                                (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
+                                (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
                                 return LifeSurge;
 
                             //Wyrmwind Thrust Feature
