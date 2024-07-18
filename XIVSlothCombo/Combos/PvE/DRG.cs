@@ -337,6 +337,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)))
                                 return Stardiver;
 
+                            //(High) Jump Feature   
+                            if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
+                                AnimationLock.CanDRGWeave(OriginalHook(Jump)) &&
+                                ActionReady(OriginalHook(Jump)) &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) && !IsMoving)))
+                                return OriginalHook(Jump);
+
                             //Wyrmwind Thrust Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
                                 AnimationLock.CanDRGWeave(WyrmwindThrust) &&
@@ -348,14 +356,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 AnimationLock.CanDRGWeave(Geirskogul) &&
                                 ActionReady(Geirskogul))
                                 return Geirskogul;
-
-                            //(High) Jump Feature   
-                            if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
-                                AnimationLock.CanDRGWeave(OriginalHook(Jump)) &&
-                                ActionReady(OriginalHook(Jump)) &&
-                                (!IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) ||
-                                (IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) && !IsMoving)))
-                                return OriginalHook(Jump);
 
                             //Starcross Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Starcross) &&
@@ -369,18 +369,19 @@ namespace XIVSlothCombo.Combos.PvE
                                 HasEffect(Buffs.DragonsFlight))
                                 return OriginalHook(DragonfireDive);
 
-                            //Mirage Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) &&
-                                AnimationLock.CanDRGWeave(MirageDive) &&
-                                HasEffect(Buffs.DiveReady))
-                                return OriginalHook(HighJump);
-
                             //Nastrond Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Nastrond) &&
                                 AnimationLock.CanDRGWeave(Nastrond) &&
                                 HasEffect(Buffs.NastrondReady) &&
                                 gauge.IsLOTDActive)
                                 return OriginalHook(Geirskogul);
+
+                            //Mirage Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) &&
+                                AnimationLock.CanDRGWeave(MirageDive) &&
+                                HasEffect(Buffs.DiveReady))
+                                return OriginalHook(HighJump);
+
                         }
                     }
 
