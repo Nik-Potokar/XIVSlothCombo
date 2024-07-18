@@ -1666,7 +1666,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Barrel Stabilizer Option", "Adds Barrel Stabilizer to the rotation.", MCH.JobID)]
         MCH_ST_Adv_Stabilizer = 8110,
 
-        [ParentCombo(MCH_ST_Adv_Stabilizer)]
+        [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Full Metal Field Option", "Adds Full Metal Field to the rotation.", MCH.JobID)]
         MCH_ST_Adv_Stabilizer_FullMetalField = 8111,
 
@@ -1674,7 +1674,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Chain Saw Option", "Adds Chain Saw to the rotation.", MCH.JobID)]
         MCH_ST_Adv_Chainsaw = 8112,
 
-        [ParentCombo(MCH_ST_Adv_Chainsaw)]
+        [ParentCombo(MCH_ST_AdvancedMode)]
         [CustomComboInfo("Excavator Option", "Adds Excavator to the rotation.", MCH.JobID)]
         MCH_ST_Adv_Excavator = 8116,
 

@@ -67,7 +67,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();
 
-                var gauge = CustomComboFunctions.GetJobGauge<ASTGauge>();
+              /*  var gauge = CustomComboFunctions.GetJobGauge<ASTGauge>();
                 ImGui.Text($"{gauge.DrawnCards[0]}");
                 ImGui.Text($"{gauge.DrawnCards[1]}");
                 ImGui.Text($"{gauge.DrawnCards[2]}");
@@ -81,7 +81,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Text($"{CustomComboFunctions.GetPartySlot(5).Name}");
                 ImGui.Text($"{CustomComboFunctions.GetPartySlot(6).Name}");
                 ImGui.Text($"{CustomComboFunctions.GetPartySlot(7).Name}");
-                ImGui.Text($"{CustomComboFunctions.GetPartySlot(8).Name}");
+                ImGui.Text($"{CustomComboFunctions.GetPartySlot(8).Name}");*/
             }
 
             else
