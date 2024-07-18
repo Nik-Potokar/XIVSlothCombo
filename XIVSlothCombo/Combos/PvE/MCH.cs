@@ -221,7 +221,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool ReassembledTools(ref uint actionID, MCHGauge gauge)
             {
-                float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
                 bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 90;
 
                 // TOOLS!! Chainsaw Drill Air Anchor Excavator
@@ -229,9 +228,9 @@ namespace XIVSlothCombo.Combos.PvE
                     !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(actionID) || !InCombat()) &&
                     GetRemainingCharges(Reassemble) > Config.MCH_ST_ReassemblePool &&
                     ((LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery) ||
-                    (LevelChecked(Chainsaw) && !LevelChecked(Excavator) && ((GetCooldownRemainingTime(Chainsaw) <= GCD + 0.25) || ActionReady(Chainsaw)) && !battery) ||
-                    (LevelChecked(AirAnchor) && (!LevelChecked(Excavator) || GetCooldownRemainingTime(Chainsaw) > GCD * 3) && ((GetCooldownRemainingTime(AirAnchor) <= GCD + 0.25) || ActionReady(AirAnchor)) && !battery) ||
-                    (LevelChecked(Drill) && !LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(Drill) <= GCD + 0.25) || ActionReady(Drill)))))
+                    (LevelChecked(Chainsaw) && !LevelChecked(Excavator) && ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)) && !battery) ||
+                    (LevelChecked(AirAnchor) && (!LevelChecked(Excavator) || GetCooldownRemainingTime(Chainsaw) > GetCooldownRemainingTime(OriginalHook(SplitShot)) * 3) && ((GetCooldownRemainingTime(AirAnchor) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(AirAnchor)) && !battery) ||
+                    (LevelChecked(Drill) && !LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))))
                 {
                     actionID = Reassemble;
                     return true;
@@ -247,7 +246,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (LevelChecked(Chainsaw) &&
                     !battery &&
-                    ((GetCooldownRemainingTime(Chainsaw) <= GCD + 0.25) || ActionReady(Chainsaw)))
+                    ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)))
                 {
                     actionID = Chainsaw;
                     return true;
@@ -255,14 +254,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (LevelChecked(OriginalHook(AirAnchor)) &&
                      !battery &&
-                     ((GetCooldownRemainingTime(OriginalHook(AirAnchor)) <= GCD + 0.25) || ActionReady(OriginalHook(AirAnchor))))
+                     ((GetCooldownRemainingTime(OriginalHook(AirAnchor)) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(OriginalHook(AirAnchor))))
                 {
                     actionID = OriginalHook(AirAnchor);
                     return true;
                 }
 
                 if (LevelChecked(Drill) &&
-                    !WasLastWeaponskill(Drill) && ((GetCooldownRemainingTime(Drill) <= GCD + 0.25) || ActionReady(Drill)) &&
+                    !WasLastWeaponskill(Drill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)) &&
                     (!LevelChecked(FullMetalField) || (LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField))))
                 {
                     actionID = Drill;
@@ -435,7 +434,6 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool ReassembledTools(ref uint actionID, MCHGauge gauge)
             {
-                float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
                 bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 90;
                 bool reassembledExcavator = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[0] && (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
                 bool reassembledChainsaw = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[1] && (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
@@ -448,9 +446,9 @@ namespace XIVSlothCombo.Combos.PvE
                     !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(actionID) || !InCombat()) &&
                     GetRemainingCharges(Reassemble) > Config.MCH_ST_ReassemblePool &&
                     ((Config.MCH_ST_Reassembled[0] && LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery) ||
-                    (Config.MCH_ST_Reassembled[1] && LevelChecked(Chainsaw) && !LevelChecked(Excavator) && ((GetCooldownRemainingTime(Chainsaw) <= GCD + 0.25) || ActionReady(Chainsaw)) && !battery) ||
-                    (Config.MCH_ST_Reassembled[2] && LevelChecked(AirAnchor) && (!LevelChecked(Excavator) || GetCooldownRemainingTime(Chainsaw) > GCD * 3) && ((GetCooldownRemainingTime(AirAnchor) <= GCD + 0.25) || ActionReady(AirAnchor)) && !battery) ||
-                    (Config.MCH_ST_Reassembled[3] && LevelChecked(Drill) && !LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(Drill) <= GCD + 0.25) || ActionReady(Drill)))))
+                    (Config.MCH_ST_Reassembled[1] && LevelChecked(Chainsaw) && !LevelChecked(Excavator) && ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)) && !battery) ||
+                    (Config.MCH_ST_Reassembled[2] && LevelChecked(AirAnchor) && (!LevelChecked(Excavator) || GetCooldownRemainingTime(Chainsaw) > GetCooldownRemainingTime(OriginalHook(SplitShot)) * 3) && ((GetCooldownRemainingTime(AirAnchor) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(AirAnchor)) && !battery) ||
+                    (Config.MCH_ST_Reassembled[3] && LevelChecked(Drill) && !LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))))
                 {
                     actionID = Reassemble;
                     return true;
@@ -470,7 +468,7 @@ namespace XIVSlothCombo.Combos.PvE
                     reassembledChainsaw &&
                     LevelChecked(Chainsaw) &&
                     !battery &&
-                    ((GetCooldownRemainingTime(Chainsaw) <= GCD + 0.25) || ActionReady(Chainsaw)))
+                    ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)))
                 {
                     actionID = Chainsaw;
                     return true;
@@ -480,7 +478,7 @@ namespace XIVSlothCombo.Combos.PvE
                      reassembledAnchor &&
                      LevelChecked(OriginalHook(AirAnchor)) &&
                      !battery &&
-                     ((GetCooldownRemainingTime(OriginalHook(AirAnchor)) <= GCD + 0.25) || ActionReady(OriginalHook(AirAnchor))))
+                     ((GetCooldownRemainingTime(OriginalHook(AirAnchor)) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(OriginalHook(AirAnchor))))
                 {
                     actionID = OriginalHook(AirAnchor);
                     return true;
@@ -489,7 +487,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
                     reassembledDrill &&
                     LevelChecked(Drill) &&
-                    !WasLastWeaponskill(Drill) && ((GetCooldownRemainingTime(Drill) <= GCD + 0.25) || ActionReady(Drill)) &&
+                    !WasLastWeaponskill(Drill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)) &&
                     (!LevelChecked(FullMetalField) || (LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField))))
                 {
                     actionID = Drill;
@@ -788,7 +786,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ActionReady(BarrelStabilizer) && !gauge.IsOverheated)
                         return BarrelStabilizer;
 
-                    if (!gauge.IsOverheated && LevelChecked(Hypercharge) && 
+                    if (!gauge.IsOverheated && LevelChecked(Hypercharge) &&
                         (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)))
                         return Hypercharge;
 
@@ -796,11 +794,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_AutoCrossbow_GaussRound) && CanWeave(actionID) && WasLastWeaponskill(OriginalHook(AutoCrossbow)) &&
                         (ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     {
-                        if (ActionReady(OriginalHook(GaussRound)) && 
+                        if (ActionReady(OriginalHook(GaussRound)) &&
                             GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet)))
                             return OriginalHook(GaussRound);
 
-                        if (ActionReady(OriginalHook(Ricochet)) && 
+                        if (ActionReady(OriginalHook(Ricochet)) &&
                             GetRemainingCharges(OriginalHook(Ricochet)) > GetRemainingCharges(OriginalHook(GaussRound)))
                             return OriginalHook(Ricochet);
                     }
