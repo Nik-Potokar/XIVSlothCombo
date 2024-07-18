@@ -1004,137 +1004,194 @@ namespace XIVSlothCombo.Combos
 
         #region DARK KNIGHT
 
-        #region Single Target
+        #region Souleater (Single Target) Combo
 
         [ReplaceSkill(DRK.Souleater)]
-        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain", DRK.JobID)]
+        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Dark Knight)", DRK.JobID)]
         DRK_ST_Combo = 5001,
 
-            [ParentCombo(DRK_ST_Combo)]
-            [CustomComboInfo("Delirium/Blood Weapon", "Adds Delirium/Blood Weapon to main combo on cooldown and when Darkside is active", DRK.JobID)]
-            DRK_ST_Delirium = 5002,
+        #region Buff Options
 
-                [ParentCombo(DRK_ST_Delirium)]
-                [CustomComboInfo("Torcleaver", "Adds the Torcleaver chain when Delirium is activated", DRK.JobID)]
-                DRK_ST_Delirium_Chain = 5003,
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Delirium on Cooldown", "Adds Delirium (or Blood Weapon at lower levels) to main combo on cooldown and when Darkside is up. Will also spend 50 blood gauge if Delirium is nearly ready to protect from overcap.", DRK.JobID)]
+        DRK_ST_Delirium = 5002,
 
-            [ParentCombo(DRK_ST_Combo)]
-            [CustomComboInfo("oGCDs", "Collection of abilities to add to the main combo. All of these require Darkside to be active", DRK.JobID)]
-            DRK_ST_CDs = 5004,
-
-                [ParentCombo(DRK_ST_CDs)]
-                [CustomComboInfo("Carve and Spit", "", DRK.JobID)]
-                DRK_ST_CDs_CarveAndSpit = 5005,
-                //mp protection?
-
-                [ParentCombo(DRK_ST_CDs)]
-                [CustomComboInfo("Salted Earth", "Will also use Salt and Darkness", DRK.JobID)]
-                DRK_ST_CDs_SaltedEarth = 5006,
-
-                [ParentCombo(DRK_ST_CDs)]
-                [CustomComboInfo("Living Shadow", "", DRK.JobID)]
-                DRK_ST_CDs_LivingShadow = 5007,
-
-                    [ParentCombo(DRK_ST_CDs_LivingShadow)]
-                    [CustomComboInfo("Disesteem", "", DRK.JobID)]
-                    DRK_ST_CDs_Disesteem = 5008,
-
-                [ParentCombo(DRK_ST_CDs)]
-                [CustomComboInfo("Shadowbringer", "Uses on cooldown", DRK.JobID)]
-                DRK_ST_CDs_Shadowbringer = 5009,
-
-                    [ParentCombo(DRK_ST_CDs_Shadowbringer)]
-                    [CustomComboInfo("Shadowbringer Burst", "Pools Shadowbringer to use during burst windows", DRK.JobID)]
-                    DRK_ST_CDs_ShadowbringerBurst = 5010,
-
-            [ParentCombo(DRK_ST_Combo)]
-            [CustomComboInfo("Blood Gauge Overcap Protection", "Adds Bloodspiller when at or above chosen amount", DRK.JobID)]
-            DRK_ST_BloodOvercap = 5011,
-
-            [ParentCombo(DRK_ST_Combo)]
-            [CustomComboInfo("Edge of Shadow Overcap Protection", "Uses Edge of Shadow if you are above chosen amount of MP, Darkside has chosen amount of time remaining, or if you have Dark Arts", DRK.JobID)]
-            DRK_ST_ManaOvercap = 5012,
-
-                [ParentCombo(DRK_ST_ManaOvercap)]
-                [CustomComboInfo("Edge of Shadow Burst", "Pools Edge of Shadow for burst windows. Otherwise, uses it until chosen MP limit is reached", DRK.JobID)]
-                DRK_ST_ManaSpenderPooling = 5013,
-
-            [ParentCombo(DRK_ST_Combo)]
-            [CustomComboInfo("Unmend Uptime", "Use Unmend when out of melee range", DRK.JobID)]
-            DRK_ST_RangedUptime = 5014,
+        [ParentCombo(DRK_ST_Delirium)]
+        [CustomComboInfo("Torcleaver Feature", "Adds the Torcleaver chain when Delirium is activated.", DRK.JobID)]
+        DRK_ST_Delirium_Chain = 5003,
 
         #endregion
+        // Last value = 5003
 
-        #region AoE
+        #region Cooldowns
+
+        [ParentCombo(DRK_ST_Combo)]
+        [ConflictingCombos(DRK_oGCD)]
+        [CustomComboInfo("Cooldowns on Main Combo", "Collection of cooldowns to add to the main combo", DRK.JobID)]
+        DRK_ST_CDs = 5004,
+
+        #region Living Shadow Options
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Living Shadow Feature", "Living Shadow will now be on main combo if its not on cooldown.", DRK.JobID)]
+        DRK_ST_CDs_LivingShadow = 5005,
+
+        [ParentCombo(DRK_ST_CDs_LivingShadow)]
+        [CustomComboInfo("Disesteem Option", "Adds Disesteem to the main combo when available.", DRK.JobID)]
+        DRK_ST_CDs_Disesteem = 5006,
+
+        #endregion
+        // Last value = 5006
+
+        #region Shadowbringer Options
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Shadowbringer Feature", "Adds Shadowbringer on main combo while Darkside is up. Will use all stacks on cooldown.", DRK.JobID)]
+        DRK_ST_CDs_Shadowbringer = 5007,
+
+        [ParentCombo(DRK_ST_CDs_Shadowbringer)]
+        [CustomComboInfo("Shadowbringer Burst Option", "Pools Shadowbringer to use during even minute window bursts.", DRK.JobID)]
+        DRK_ST_CDs_ShadowbringerBurst = 5008,
+
+        #endregion
+        // Last value = 5008
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Carve and Spit Feature", "Adds Carve and Spit on main combo while Darkside is up.", DRK.JobID)]
+        DRK_ST_CDs_CarveAndSpit = 5009,
+
+        [ParentCombo(DRK_ST_CDs)]
+        [CustomComboInfo("Salted Earth Feature", "Adds Salted Earth on main combo while Darkside is up, will use Salt and Darkness if unlocked.", DRK.JobID)]
+        DRK_ST_CDs_SaltedEarth = 5010,
+
+        #endregion
+        // Last value = 5010
+
+        #region Mana Overcap Options
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Edge of Shadow Overcap Feature", "Uses Edge of Shadow if you are above 8,500 mana, Darkside is about to expire (10sec or less), or if you have Dark Arts.", DRK.JobID)]
+        DRK_ST_ManaOvercap = 5011,
+
+        [ParentCombo(DRK_ST_ManaOvercap)]
+        [CustomComboInfo("Edge of Shadow Burst Option", "Pools Edge of Shadow for even minute burst windows, and otherwise uses them until chosen MP limit is reached.", DRK.JobID)]
+        DRK_ST_ManaSpenderPooling = 5012,
+
+        #endregion
+        // Last value = 5012
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Bloodspiller Feature", "Adds Bloodspiller when Delirium is active.", DRK.JobID)]
+        DRK_ST_Bloodspiller = 5013,
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Bloodspiller onto main combo when at 80 blood gauge or higher.", DRK.JobID)]
+        DRK_ST_BloodOvercap = 5014,
+
+        [ParentCombo(DRK_ST_Combo)]
+        [CustomComboInfo("Unmend Uptime Feature", "Replace Souleater Combo Feature with Unmend when you are out of range.", DRK.JobID)]
+        DRK_ST_RangedUptime = 5015,
+
+        #endregion
+        // Last value = 5015
+
+        #region Stalwart Soul (Multi Target) Combo
 
         [ReplaceSkill(DRK.StalwartSoul)]
-        [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain", DRK.JobID)]
-        DRK_AoE_Combo = 5100,
+        [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID)]
+        DRK_AoE_Combo = 5016,
 
-            [ParentCombo(DRK_AoE_Combo)]
-            [CustomComboInfo("Delirium/Blood Weapon", "Adds Delirium/Blood Weapon to AoE combo on cooldown and when Darkside is active", DRK.JobID)]
-            DRK_AoE_Delirium = 5101,
+        #region Buff Options
 
-                [ParentCombo(DRK_AoE_Delirium)]
-                [CustomComboInfo("Impalement", "Adds all Impalement uses when Delirium is activated", DRK.JobID)]
-                DRK_AoE_Delirium_Chain = 5102,
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Delirium Option", "Adds Delirium (or Blood Weapon at lower levels) to AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
+        DRK_AoE_Delirium = 5017,
 
-            [ParentCombo(DRK_AoE_Combo)]
-            [CustomComboInfo("oGCDs", "Collection of abilities to add to the AoE combo. All of these require Darkside to be active", DRK.JobID)]
-            DRK_AoE_CDs = 5103,
-
-                [ParentCombo(DRK_AoE_CDs)]
-                [CustomComboInfo("Abyssal Drain", "Use Abyssal Drain when you fall below the chosen HP%", DRK.JobID)]
-                DRK_AoE_CDs_AbyssalDrain = 5104,
-
-                [ParentCombo(DRK_AoE_CDs)]
-                [CustomComboInfo("Salted Earth", "Will also use Salt and Darkness", DRK.JobID)]
-                DRK_AoE_CDs_SaltedEarth = 5105,
-
-                [ParentCombo(DRK_AoE_CDs)]
-                [CustomComboInfo("Living Shadow", "", DRK.JobID)]
-                DRK_AoE_CDs_LivingShadow = 5106,
-
-                    [ParentCombo(DRK_AoE_CDs_LivingShadow)]
-                    [CustomComboInfo("Disesteem", "", DRK.JobID)]
-                    DRK_AoE_CDs_Disesteem = 5107,
-
-                [ParentCombo(DRK_AoE_CDs)]
-                [CustomComboInfo("Shadowbringer", "", DRK.JobID)]
-                DRK_AoE_CDs_Shadowbringer = 5108,
-
-            [ParentCombo(DRK_AoE_Combo)]
-            [CustomComboInfo("Blood Gauge Overcap Protection", "Adds Quietus when at or above chosen amount", DRK.JobID)]
-            DRK_AoE_BloodOvercap = 5109,
-
-            [ParentCombo(DRK_AoE_Combo)]
-            [CustomComboInfo("Flood of Shadow Overcap Protection", "Uses Flood of Shadow if you are above chosen amount of MP, Darkside has chosen amount of time remaining, or if you have Dark Arts", DRK.JobID)]
-            DRK_AoE_ManaOvercap = 5110,
-
-            [ParentCombo(DRK_AoE_Combo)]
-            [CustomComboInfo("Flood of Shadow Uptime", "Use Flood of Shadow when out of melee range", DRK.JobID)]
-            DRK_AoE_FloodUptime = 5111,
+        [ParentCombo(DRK_AoE_Delirium)]
+        [CustomComboInfo("Impalement Feature", "Adds all Impalement uses when Delirium is activated.", DRK.JobID)]
+        DRK_AoE_Delirium_Chain = 5018,
 
         #endregion
+        // Last value = 5018
+
+        #region Cooldowns
+
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Cooldowns on AoE Combo", "Collection of cooldowns to add to the AoE combo", DRK.JobID)]
+        DRK_AoE_CDs = 5019,
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("AoE Shadowbringer Feature", "Adds Shadowbringer to the AoE combo.", DRK.JobID)]
+        DRK_AoE_CDs_Shadowbringer = 5020,
+
+        #region Living Shadow Options
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("Living Shadow Option", "Adds Living Shadow to the AoE combo on cooldown and when Darkside is up.", DRK.JobID)]
+        DRK_AoE_CDs_LivingShadow = 5021,
+
+        [ParentCombo(DRK_AoE_CDs_LivingShadow)]
+        [CustomComboInfo("Disesteem Option", "Adds Disesteem to the AoE combo when available.", DRK.JobID)]
+        DRK_AoE_CDs_Disesteem = 5022,
+
+        #endregion
+        // Last value = 5022
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("Abyssal Drain Feature", "Adds abyssal drain to the AoE combo when you fall below 60 percent hp.", DRK.JobID)]
+        DRK_AoE_CDs_AbyssalDrain = 5023,
+
+        [ParentCombo(DRK_AoE_CDs)]
+        [CustomComboInfo("Salted Earth Option", "Adds Salted Earth and Salt and Darkness to AoE on cooldown and when Darkside is up.", DRK.JobID)]
+        DRK_AoE_CDs_SaltedEarth = 5024,
+
+        #endregion
+        // Last value = 5024
+
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Flood of Shadow Overcap Feature", "Uses Flood of Shadow if you are above 8.5k mana, Darkside is about to expire (10sec or less), or if you have Dark Arts.", DRK.JobID)]
+        DRK_AoE_ManaOvercap = 5025,
+
+        [ParentCombo(DRK_AoE_Combo)]
+        [CustomComboInfo("Blood Gauge Overcap Feature", "Adds Quietus onto AOE combo when at 80 blood gauge or higher.", DRK.JobID)]
+        DRK_AoE_BloodOvercap = 5026,
+
+        #endregion
+        // Last value = 5026
+
+        #region oGCD Feature
+
+        [ReplaceSkill(DRK.CarveAndSpit, DRK.AbyssalDrain)]
+        [ConflictingCombos(DRK_ST_CDs)]
+        [CustomComboInfo("oGCD Feature", "Adds Living Shadow > Salted Earth > Salt And Darkness to Carve And Spit and Abyssal Drain", DRK.JobID)]
+        DRK_oGCD = 5027,
+
+        [ParentCombo(DRK_oGCD)]
+        [CustomComboInfo("Shadowbringer oGCD Feature", "Adds Shadowbringer to oGCD Feature ", DRK.JobID)]
+        DRK_Shadowbringer_oGCD = 5028,
+
+        #endregion
+        // Last value = 5028
 
         #region Variant
 
         [Variant]
         [VariantParent(DRK_ST_Combo, DRK_AoE_Combo)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", DRK.JobID)]
-        DRK_Variant_SpiritDart = 5200,
+        DRK_Variant_SpiritDart = 5029,
 
         [Variant]
         [VariantParent(DRK_ST_Combo, DRK_AoE_Combo)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DRK.JobID)]
-        DRK_Variant_Cure = 5201,
+        DRK_Variant_Cure = 5030,
 
         [Variant]
         [VariantParent(DRK_ST_Combo, DRK_AoE_Combo)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", DRK.JobID)]
-        DRK_Variant_Ultimatum = 5202,
+        DRK_Variant_Ultimatum = 5031,
 
         #endregion
+        // Last value = 5031
 
         #endregion
 
