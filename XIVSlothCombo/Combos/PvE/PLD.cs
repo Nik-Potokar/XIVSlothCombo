@@ -469,7 +469,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Sheltron Overcap Protection
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) && InCombat() &&
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) && InCombat() && CanWeave(actionID) &&
                             LevelChecked(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
                             Gauge.OathGauge >= Config.PLD_ST_SheltronOption)
                             return OriginalHook(Sheltron);
@@ -602,7 +602,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Sheltron Overcap Protection
-                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) && InCombat() &&
+                        if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) && InCombat() && CanWeave(actionID) &&
                             LevelChecked(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
                             Gauge.OathGauge >= Config.PLD_AoE_SheltronOption)
                             return OriginalHook(Sheltron);
