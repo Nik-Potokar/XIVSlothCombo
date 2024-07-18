@@ -173,6 +173,14 @@ namespace XIVSlothCombo.Combos.PvE
                 => actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast) ? Ascend : actionID;
         }
 
+        internal class AST_Lightspeed_Protection : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Lightspeed_Protection;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                => actionID is Lightspeed && HasEffect(Buffs.Lightspeed) ? OriginalHook(11) : actionID;
+            }
+
         internal class AST_ST_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_DPS;
@@ -249,7 +257,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_DPS_Oracle) &&
                         HasEffect(Buffs.Divining) &&
                         CanSpellWeave(actionID))
-                        return Oracle; 
+                        return Oracle;
 
                     //Minor Arcana / Lord of Crowns
                     if (ActionReady(OriginalHook(MinorArcana)) &&
@@ -337,8 +345,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if ((HasEffect(Buffs.AspectedHelios)
                          || HasEffect(Buffs.HeliosConjunction))
-                        && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
-                            || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
+                         && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
+                         || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
                         return Helios;
                 }
 
