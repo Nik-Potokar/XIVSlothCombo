@@ -328,14 +328,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Interrupt) && interruptReady)
                         return All.HeadGraze;
 
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_QueenOverdrive) && gauge.IsRobotActive && GetTargetHPPercent() <= Config.MCH_ST_QueenOverDrive &&
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_QueenOverdrive) &&
+                        gauge.IsRobotActive && GetTargetHPPercent() <= Config.MCH_ST_QueenOverDrive &&
                         CanWeave(actionID) && ActionReady(OriginalHook(RookOverdrive)))
                         return OriginalHook(RookOverdrive);
-
-                    // BarrelStabilizer
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
-                        !gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
-                        return BarrelStabilizer;
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
                       CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
@@ -344,8 +340,9 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
                         if ((IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) &&
-                            LevelChecked(FullMetalField) && WasLastAction(FullMetalField) && GetCooldownRemainingTime(Wildfire) < GCD) ||
-                            ((IsNotEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) || !LevelChecked(FullMetalField)) && GetCooldownRemainingTime(Wildfire) < GCD) ||
+                            LevelChecked(FullMetalField) && WasLastWeaponskill(FullMetalField) && ActionReady(Wildfire)) ||
+                            ((IsNotEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) ||
+                            !LevelChecked(FullMetalField)) && ActionReady(Wildfire)) ||
                             !LevelChecked(Wildfire))
                             return Hypercharge;
 
@@ -354,17 +351,23 @@ namespace XIVSlothCombo.Combos.PvE
                             return Hypercharge;
                     }
 
+                    // BarrelStabilizer
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer) &&
+                        !gauge.IsOverheated && CanWeave(actionID) && ActionReady(BarrelStabilizer))
+                        return BarrelStabilizer;
+
                     // Wildfire
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_WildFire) &&
-                        WasLastAction(Hypercharge) && CanWeave(actionID) && ActionReady(Wildfire) &&
+                        WasLastAbility(Hypercharge) && CanWeave(actionID) && ActionReady(Wildfire) &&
                         GetTargetHPPercent() >= Config.MCH_ST_WildfireHP)
                         return Wildfire;
 
                     //Full Metal Field
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) &&
-                        HasEffect(Buffs.FullMetalMachinist) && WasLastWeaponskill(Excavator) && GetCooldownRemainingTime(Wildfire) <= GCD &&
+                        HasEffect(Buffs.FullMetalMachinist) && 
+                        (GetCooldownRemainingTime(Wildfire) <= GCD || ActionReady(Wildfire)) &&
                         LevelChecked(FullMetalField))
-                        return FullMetalField;
+                        return OriginalHook(BarrelStabilizer);
 
                     //Heatblast, Gauss, Rico
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_GaussRicochet) &&
@@ -379,7 +382,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Queen
-                    if (UseQueen(gauge))
+                    if (UseQueen(gauge) && GetCooldownRemainingTime(Wildfire) > GCD)
                         return OriginalHook(RookAutoturret);
 
                     //gauss and ricochet outside HC
@@ -480,7 +483,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Drill) &&
                     reassembledDrill &&
                     LevelChecked(Drill) &&
-                    !WasLastWeaponskill(Drill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))
+                    !WasLastWeaponskill(Drill) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill))&&
+                    (!LevelChecked(FullMetalField) || LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)))
                 {
                     actionID = Drill;
                     return true;
@@ -880,9 +884,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Dismantle)
-                    if (TargetHasEffectAny(Debuffs.Dismantled) && IsOffCooldown(Dismantle))
-                        return OriginalHook(11);
+                if (actionID is Dismantle && TargetHasEffectAny(Debuffs.Dismantled) && IsOffCooldown(Dismantle))
+                    return OriginalHook(11);
 
                 return actionID;
             }
