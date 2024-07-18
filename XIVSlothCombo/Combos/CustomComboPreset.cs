@@ -2814,10 +2814,6 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Sections 8 to 9 - Miscellaneous
-        [ReplaceSkill(RDM.Riposte)]
-        [CustomComboInfo("Melee Combo", "Adds the full melee combo to Riposte.", RDM.JobID, 805)]
-        RDM_MeleeCombo = 13805,
-
         [ReplaceSkill(RDM.Displacement)]
         [CustomComboInfo("Displacement <> Corps-a-corps Feature", "Replace Displacement with Corps-a-corps when out of range.", RDM.JobID, 810)]
         RDM_CorpsDisplacement = 13810,
