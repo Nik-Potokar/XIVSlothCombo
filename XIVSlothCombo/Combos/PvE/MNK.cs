@@ -175,14 +175,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return RiddleOfWind;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.WindsRumination) && level >= Levels.WindsReply && !IsOnCooldown(WindsReply))
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.WindsRumination) && level >= Levels.WindsReply)
                         {
-                            return OriginalHook(RiddleOfWind);
+                            return WindsReply;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.FiresRumination) && level >= Levels.FiresReply && !IsOnCooldown(FiresReply))
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.FiresRumination) && level >= Levels.FiresReply)
                         {
-                            return OriginalHook(RiddleOfFire);
+                            return FiresReply;
                         }
 
                         if (Gauge.Chakra == 5
@@ -282,22 +282,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Brotherhood;
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply)
-                                && HasEffect(Buffs.WindsRumination)
-                                && level >= Levels.WindsReply
-                                && !IsOnCooldown(WindsReply))
-                            {
-                                return WindsReply;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply)
-                                && HasEffect(Buffs.FiresRumination)
-                                && level >= Levels.FiresReply
-                                && !IsOnCooldown(FiresReply))
-                            {
-                                return FiresReply;
-                            }
-
                             if (IsEnabled(CustomComboPreset.MNK_STUseROW)
                                 && level >= Levels.RiddleOfWind
                                 && !IsOnCooldown(RiddleOfWind))
@@ -323,6 +307,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (inCombat)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply)
+                            && HasEffect(Buffs.WindsRumination)
+                            && level >= Levels.WindsReply)
+                        {
+                            return WindsReply;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply)
+                            && HasEffect(Buffs.FiresRumination)
+                            && level >= Levels.FiresReply)
+                        {
+                            return FiresReply;
+                        }
+
                         if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
                             // Masterful Blitz
