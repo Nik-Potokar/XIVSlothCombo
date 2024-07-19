@@ -299,8 +299,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Devilment
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
-                        CanWeave(actionID) && ActionReady(Devilment) &&
-                        (HasEffect(Buffs.TechnicalFinish) || WasLastAction(TechnicalFinish4) || !LevelChecked(TechnicalStep)))
+                        CanWeave(actionID) &&
+                        ActionReady(Devilment) &&
+                        (HasEffect(Buffs.TechnicalFinish) ||
+                         WasLastAction(TechnicalFinish4) ||
+                         !LevelChecked(TechnicalStep)))
                         return Devilment;
 
                     // ST Interrupt
@@ -370,7 +373,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // ST Improvisation
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Improvisation) &&
-                            ActionReady(Improvisation))
+                            ActionReady(Improvisation) &&
+                            !HasEffect(Buffs.TechnicalStep))
                             return Improvisation;
                     }
                     #endregion
