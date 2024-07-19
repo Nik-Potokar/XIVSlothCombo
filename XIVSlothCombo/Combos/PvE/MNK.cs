@@ -1,5 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System;
+using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
@@ -238,22 +240,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class MNK_PerfectBalance : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == PerfectBalance)
-                {
-                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= Levels.MasterfulBlitz)
-                        return OriginalHook(MasterfulBlitz);
-                }
-
-                return actionID;
-            }
-        }
-
         internal class MNK_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicCombo;
@@ -266,8 +252,6 @@ namespace XIVSlothCombo.Combos.PvE
                     var canWeave = CanWeave(actionID, 0.5);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-                    var solarNadi = Gauge.Nadi == Nadi.SOLAR;
 
                     // Buffs
                     if (!inCombat)
@@ -280,29 +264,119 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (inCombat)
                     {
+                        // Masterful Blitz
+                        if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        {
+                            return OriginalHook(MasterfulBlitz);
+                        }
+
+                        // Perfect Balance
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
+                        {
+                            if ((GetRemainingCharges(PerfectBalance) == 2) ||
+                                (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
+                            {
+                                return PerfectBalance;
+                            }
+                        }
+
+                        if (level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
+                        {
+                            return Brotherhood;
+                        }
+
+                        if (level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
+                        {
+                            return RiddleOfWind;
+                        }
+
+                        if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
+                        {
+                            return RiddleOfFire;
+                        }
+
                         if (Gauge.Chakra == 5 && level >= Levels.TheForbiddenChakra)
                         {
                             return TheForbiddenChakra;
                         }
 
-                        if (HasEffect(Buffs.OpoOpoForm))
+                        // Perfect Balance
+                        if (HasEffect(Buffs.PerfectBalance))
                         {
-                            return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
+                            return DeterminePBAbility(actionID);
                         }
 
-                        if (HasEffect(Buffs.RaptorForm))
-                        {
-                            return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
-                        }
-
-                        if (HasEffect(Buffs.CoerlForm))
-                        {
-                            // Can we warn about the positional here?
-                            return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
-                        }
+                        return DetermineCoreAbility(actionID);
                     }
                 }
                 return actionID;
+            }
+
+            private uint DeterminePBAbility(uint baseActionID)
+            {
+                /*
+                 * Celestial Revolution - ST - Lunar - 2/1 Chakra Mix
+                 * Rising Phoenix - AOE/ST - Solar - 3 Unique Chakra
+                 * Phantom Rush - AOE/ST - Both - Both Nadis
+                 */
+
+                var lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+                var solarNadi = Gauge.Nadi == Nadi.SOLAR;
+
+                bool opoopoChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.OPOOPO);
+                bool coeurlChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.COEURL);
+                bool raptorChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.RAPTOR);
+                bool canSolar = Gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
+                
+                if (opoopoChakra)
+                {
+                    if (coeurlChakra)
+                    {
+                        return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                    }
+                    if (raptorChakra)
+                    {
+                        return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                    }
+                }
+
+                if (canSolar && (lunarNadi || !solarNadi))
+                {
+                    if (!raptorChakra)
+                    {
+                        return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                    }
+                    if (!coeurlChakra)
+                    {
+                        return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                    }
+                }
+
+                return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
+            }
+
+            private uint DetermineCoreAbility(uint baseActionID)
+            {
+                if (HasEffect(Buffs.OpoOpoForm))
+                {
+                    return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
+                }
+
+                if (HasEffect(Buffs.RaptorForm))
+                {
+                    return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                }
+
+                if (HasEffect(Buffs.CoerlForm))
+                {
+                    // Can we warn about the positional here?
+                    return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                }
+
+                return baseActionID;
             }
         }
     }
