@@ -525,14 +525,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // AoE Standard (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)) &&
+                    if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) ||
+                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_StandardFill)) &&
                         HasEffect(Buffs.StandardStep))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
                             : StandardFinish2;
 
                     // AoE Technical (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) || IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)) &&
+                    if ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) ||
+                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_TechFill)) &&
                         HasEffect(Buffs.TechnicalStep))
                         return gauge.CompletedSteps < 4
                             ? gauge.NextStep
@@ -540,18 +542,25 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region Weaves
-                    // AoE Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
-                        CanWeave(actionID) && ActionReady(Devilment) &&
-                        (HasEffect(Buffs.TechnicalFinish) || WasLastAction(TechnicalFinish4) || !LevelChecked(TechnicalStep)))
-                        return Devilment;
-
                     // AoE Flourish
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
-                        CanDelayedWeave(actionID, 1.25, 0.5) && ActionReady(Flourish)
-                        && !HasEffect(Buffs.ThreeFoldFanDance) && !HasEffect(Buffs.FourFoldFanDance) &&
-                        !HasEffect(Buffs.FlourishingSymmetry) && !HasEffect(Buffs.FlourishingFlow))
+                        CanDelayedWeave(actionID, 1.25, 0.5) &&
+                        ActionReady(Flourish) &&
+                        !HasEffect(Buffs.ThreeFoldFanDance) &&
+                        !HasEffect(Buffs.FourFoldFanDance) &&
+                        !HasEffect(Buffs.FlourishingSymmetry) &&
+                        !HasEffect(Buffs.FlourishingFlow) &&
+                        !HasEffect(Buffs.FinishingMoveReady))
                         return Flourish;
+
+                    // AoE Devilment
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
+                        CanWeave(actionID) &&
+                        ActionReady(Devilment) &&
+                        (HasEffect(Buffs.TechnicalFinish) ||
+                         WasLastAction(TechnicalFinish4) ||
+                         !LevelChecked(TechnicalStep)))
+                        return Devilment;
 
                     // AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Interrupt) &&
@@ -570,24 +579,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanWeave(actionID))
                     {
-                        /*
-                        // AoE Feathers & Fans
-                        if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers) && LevelChecked(FanDance1))
-                        {
-                            int minFeathers = IsEnabled(CustomComboPreset.DNC_AoE_Simple_FeatherPooling) && LevelChecked(TechnicalStep)
-                                ? (GetCooldownRemainingTime(TechnicalStep) < 2.5f ? 4 : 3)
-                                : 0;
-
-                            if (HasEffect(Buffs.ThreeFoldFanDance))
-                                return FanDance3;
-
-                            if ((gauge.Feathers > minFeathers ||
-                                (HasEffect(Buffs.TechnicalFinish) && gauge.Feathers > 0)) &&
-                                LevelChecked(FanDance2))
-                                return FanDance2;
-                        }
-                        */
-
                         // AoE Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers) && LevelChecked(FanDance1))
                         {
@@ -636,7 +627,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // AoE Improvisation
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Improvisation) &&
-                            ActionReady(Improvisation))
+                            ActionReady(Improvisation) &&
+                            !HasEffect(Buffs.TechnicalStep))
                             return Improvisation;
                     }
                     #endregion
