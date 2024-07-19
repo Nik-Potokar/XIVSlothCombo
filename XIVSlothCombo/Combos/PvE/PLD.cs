@@ -73,14 +73,16 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                PLD_ST_FoF_Option = new("PLD_ST_FoF_Option"),
-                PLD_AoE_FoF_Option = new("PLD_AoE_FoF_Option"),
-                PLD_Intervene_HoldCharges = new("PLDKeepInterveneCharges"),
+                PLD_ST_FoF_Option = new("PLD_ST_FoF_Option", 50),
+                PLD_AoE_FoF_Option = new("PLD_AoE_FoF_Option", 50),
+                PLD_Intervene_HoldCharges = new("PLDKeepInterveneCharges", 1),
                 PLD_VariantCure = new("PLD_VariantCure"),
                 PLD_RequiescatOption = new("PLD_RequiescatOption"),
                 PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
-                PLD_ST_SheltronOption = new("PLD_ST_SheltronOption"),
-                PLD_AoE_SheltronOption = new("PLD_AoE_SheltronOption"),
+                PLD_ST_SheltronOption = new("PLD_ST_SheltronOption", 50),
+                PLD_AoE_SheltronOption = new("PLD_AoE_SheltronOption", 50),
+                PLD_ST_SheltronHP = new("PLD_ST_SheltronHP", 70),
+                PLD_AoE_SheltronHP = new("PLD_AoE_SheltronHP", 70),
                 //PLD_ST_RequiescatWeave = new("PLD_ST_RequiescatWeave"),
                 //PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave"),
                 //PLD_ST_AtonementTiming = new("PLD_ST_EquilibriumTiming"),
@@ -471,7 +473,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Sheltron Overcap Protection
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) && InCombat() && CanWeave(actionID) &&
                             LevelChecked(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                            Gauge.OathGauge >= Config.PLD_ST_SheltronOption)
+                            Gauge.OathGauge >= Config.PLD_ST_SheltronOption && PlayerHealthPercentageHp() <= Config.PLD_ST_SheltronHP)
                             return OriginalHook(Sheltron);
 
                         // Holy Spirit Prioritization
@@ -604,7 +606,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Sheltron Overcap Protection
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) && InCombat() && CanWeave(actionID) &&
                             LevelChecked(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                            Gauge.OathGauge >= Config.PLD_AoE_SheltronOption)
+                            Gauge.OathGauge >= Config.PLD_AoE_SheltronOption && PlayerHealthPercentageHp() <= Config.PLD_AoE_SheltronHP)
                             return OriginalHook(Sheltron);
                     }
 
@@ -687,15 +689,10 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FightOrFlight)
                 {
                     if (IsOffCooldown(FightOrFlight))
-                    {
                         return OriginalHook(FightOrFlight);
-                    }
 
-                    if (IsOffCooldown(Requiescat) || 
-                        (LevelChecked(BladeOfHonor) && (HasEffect(Buffs.Requiescat) || HasEffect(Buffs.BladeOfHonor))))
-                    {
+                    if (IsOffCooldown(Requiescat) || (LevelChecked(BladeOfHonor) && (HasEffect(Buffs.Requiescat) || HasEffect(Buffs.BladeOfHonor))))
                         return OriginalHook(Requiescat);
-                    }
 
                     return OriginalHook(FightOrFlight);
                 }

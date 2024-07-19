@@ -1769,13 +1769,19 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_FoF_Option, "Target HP%", 200);
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Sheltron)
-                UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_SheltronOption, "Oath Gauge", sliderIncrement: 5);
+                UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_SheltronHP, "Player HP%", 200);
+
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Sheltron)
+                UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_SheltronOption, "Oath Gauge", 200, 5);
 
             if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron)
-                UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_SheltronOption, "Oath Gauge", sliderIncrement: 5);
+                UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_SheltronHP, "Player HP%", 200);
 
-            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Intervene && enabled)
-                UserConfig.DrawSliderInt(0, 1, PLD.Config.PLD_Intervene_HoldCharges, "Charges");
+            if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron)
+                UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_SheltronOption, "Oath Gauge", 200, 5);
+
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Intervene)
+                UserConfig.DrawSliderInt(0, 1, PLD.Config.PLD_Intervene_HoldCharges, "Charges", 200);
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Intervene)
             {
