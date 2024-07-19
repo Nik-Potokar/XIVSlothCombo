@@ -16,9 +16,9 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte JobID = 20;
 
         public const uint
-            Bootshine = 36945,
-            TrueStrike = 36946,
-            SnapPunch = 36947,
+            Bootshine = 53,
+            TrueStrike = 54,
+            SnapPunch = 56,
             Meditation = 36942,
             SteelPeak = 3547,
             TwinSnakes = 61,
@@ -72,6 +72,7 @@ namespace XIVSlothCombo.Combos.PvE
                 TrueStrike = 4,
                 SnapPunch = 6,
                 Meditation = 15,
+                SteelPeak = 15,
                 TwinSnakes = 18,
                 ArmOfTheDestroyer = 26,
                 Rockbreaker = 30,
@@ -130,11 +131,6 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             return FormShift;
                         }
-
-                        if (!InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
-                        {
-                            return Thunderclap;
-                        }
                     }
 
                     if (IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
@@ -147,12 +143,12 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(Variant.VariantRampart))
                             return Variant.VariantRampart;
 
-                        if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
                         {
                             return RiddleOfFire;
                         }
 
-                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                         {
                             // Use Perfect Balance if:
                             // 1. It's after Bootshine/Dragon Kick.
@@ -170,20 +166,20 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
                         {
                             return Brotherhood;
                         }
 
-                        if (level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
                         {
                             return RiddleOfWind;
                         }
 
-                        if (level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
-                            level < Levels.TwinSnakes) && canWeaveChakra)
+                        if (Gauge.Chakra == 5
+                            && level >= Levels.HowlingFist)
                         {
-                            return level >= Levels.Enlightenment ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
+                            return OriginalHook(EnlightenedMeditation);
                         }
 
                         if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
@@ -253,6 +249,8 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID == Bootshine || actionID == LeapingOpo)
                 {
+                    var canWeave = CanWeave(actionID, 0.5);
+                    var canWeaveChakra = CanWeave(actionID);
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
 
                     if (IsEnabled(CustomComboPreset.MNK_STUseMeditation)
@@ -260,10 +258,10 @@ namespace XIVSlothCombo.Combos.PvE
                         && Gauge.Chakra < 5
                         && LevelChecked(Meditation))
                     {
-                        return Meditation;
+                        return OriginalHook(Meditation);
                     }
 
-                    if (inCombat)
+                    if (inCombat && canWeave)
                     {
                         if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                         {
@@ -293,35 +291,35 @@ namespace XIVSlothCombo.Combos.PvE
                             && Gauge.Chakra == 5
                             && level >= Levels.TheForbiddenChakra)
                         {
-                            return TheForbiddenChakra;
+                            return OriginalHook(Meditation);
+                        }
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
+                    {
+                        // Masterful Blitz
+                        if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        {
+                            return OriginalHook(MasterfulBlitz);
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
+                        // Perfect Balance
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
                         {
-                            // Masterful Blitz
-                            if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                            if ((GetRemainingCharges(PerfectBalance) == 2) ||
+                                (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             {
-                                return OriginalHook(MasterfulBlitz);
+                                return PerfectBalance;
                             }
+                        }
 
-                            // Perfect Balance
-                            if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
-                            {
-                                if ((GetRemainingCharges(PerfectBalance) == 2) ||
-                                    (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
-                                {
-                                    return PerfectBalance;
-                                }
-                            }
-
-                            // Perfect Balance
-                            if (HasEffect(Buffs.PerfectBalance))
-                            {
-                                return DeterminePBAbility(actionID);
-                            }
+                        // Perfect Balance
+                        if (HasEffect(Buffs.PerfectBalance))
+                        {
+                            return DeterminePBAbility(actionID);
                         }
                     }
 
@@ -435,7 +433,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (Gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
-                            return Meditation;
+                            return OriginalHook(Meditation);
                         }
                     }
 
@@ -456,9 +454,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return RiddleOfFire;
                         }
 
-                        if (Gauge.Chakra == 5 && level >= Levels.TheForbiddenChakra)
+                        if (Gauge.Chakra == 5 && level >= Levels.SteelPeak)
                         {
-                            return TheForbiddenChakra;
+                            return OriginalHook(TheForbiddenChakra);
                         }
 
                         // Masterful Blitz
@@ -533,18 +531,18 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (HasEffect(Buffs.OpoOpoForm))
                 {
-                    return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
+                    return Gauge.OpoOpoFury == 0 ? DragonKick : OriginalHook(Bootshine);
                 }
 
                 if (HasEffect(Buffs.RaptorForm))
                 {
-                    return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                    return Gauge.RaptorFury == 0 ? TwinSnakes : OriginalHook(TrueStrike);
                 }
 
                 if (HasEffect(Buffs.CoerlForm))
                 {
                     // Can we warn about the positional here?
-                    return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                    return Gauge.CoeurlFury == 0 ? Demolish : OriginalHook(SnapPunch);
                 }
 
                 return baseActionID;
