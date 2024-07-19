@@ -44,7 +44,7 @@ namespace XIVSlothCombo.Combos.PvE
             SixSidedStar = 16476,
             ShadowOfTheDestroyer = 25767,
             WindsReply = 36949,
-            LeapingOpo = 36945,
+            LeapingOpo = 36942,
             RisingRaptor = 36946,
             PouncingCoeurl = 36947,
             TrueNorth = 7546,
@@ -177,16 +177,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.WindsRumination) && level >= Levels.WindsReply && !IsOnCooldown(WindsReply))
                         {
-                            return WindsReply;
+                            return OriginalHook(RiddleOfWind);
                         }
 
                         if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.FiresRumination) && level >= Levels.FiresReply && !IsOnCooldown(FiresReply))
                         {
-                            return FiresReply;
+                            return OriginalHook(RiddleOfFire);
                         }
 
                         if (Gauge.Chakra == 5
-                            && level >= Levels.HowlingFist)
+                            && level >= Levels.HowlingFist
+                            && HasBattleTarget())
                         {
                             return OriginalHook(EnlightenedMeditation);
                         }
@@ -320,35 +321,38 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
+                    if (inCombat)
                     {
-                        // Masterful Blitz
-                        if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
-                            return OriginalHook(MasterfulBlitz);
-                        }
-
-                        // Perfect Balance
-                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
-                        {
-                            if ((GetRemainingCharges(PerfectBalance) == 2) ||
-                                (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
-                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
-                                (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
+                            // Masterful Blitz
+                            if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                             {
-                                return PerfectBalance;
+                                return OriginalHook(MasterfulBlitz);
+                            }
+
+                            // Perfect Balance
+                            if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
+                            {
+                                if ((GetRemainingCharges(PerfectBalance) == 2) ||
+                                    (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                                    (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
+                                {
+                                    return PerfectBalance;
+                                }
+                            }
+
+                            // Perfect Balance
+                            if (HasEffect(Buffs.PerfectBalance))
+                            {
+                                return DeterminePBAbility(actionID);
                             }
                         }
 
-                        // Perfect Balance
-                        if (HasEffect(Buffs.PerfectBalance))
-                        {
-                            return DeterminePBAbility(actionID);
-                        }
+                        return DetermineCoreAbility(actionID);
                     }
-
-                    return DetermineCoreAbility(actionID);
                 }
 
                 return actionID;
@@ -395,12 +399,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (HasEffect(Buffs.OpoOpoForm))
                 {
-                    return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
+                    return Gauge.OpoOpoFury == 0 ? DragonKick : OriginalHook(Bootshine);
                 }
 
                 if (HasEffect(Buffs.RaptorForm))
                 {
-                    return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                    return Gauge.RaptorFury == 0 ? TwinSnakes : OriginalHook(TrueStrike);
                 }
 
                 if (HasEffect(Buffs.CoerlForm))
@@ -432,7 +436,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     else
                     {
-                        return SnapPunch;
+                        return OriginalHook(SnapPunch);
                     }
                 }
 
