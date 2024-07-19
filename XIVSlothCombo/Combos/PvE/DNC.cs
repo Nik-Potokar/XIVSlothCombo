@@ -688,7 +688,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && // Checking that SS is ready and wanted
                         ActionReady(StandardStep) &&
                         IsOffCooldown(StandardStep) &&
-                        GetTargetHPPercent() > targetHpThresholdStandard &&
+                        (!HasTarget() ||
+                         GetTargetHPPercent() > targetHpThresholdStandard) &&
                         !HasEffect(Buffs.FinishingMoveReady) && // Checking that there are not conflicting options
                         !HasEffect(Buffs.TechnicalFinish) &&
                         (IsOffCooldown(TechnicalStep) || // Checking burst is ready
