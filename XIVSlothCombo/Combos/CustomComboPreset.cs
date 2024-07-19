@@ -1834,13 +1834,59 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
-        [ReplaceSkill(MNK.Bootshine)]
-        [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID)]
+        [ReplaceSkill([MNK.Bootshine])]
+        [CustomComboInfo("Basic ST Rotation", "Basic Monk Combo on one button", MNK.JobID)]
+        [ConflictingCombos(MNK_CustomCombo)]
         MNK_BasicCombo = 9002,
 
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [CustomComboInfo("Basic AOE Rotation", "Basic Monk AOE Combo on one button", MNK.JobID)]
+        [ReplaceSkill([MNK.ArmOfTheDestroyer])]
+        [CustomComboInfo("AOE Rotation", "Basic Monk AOE Combo on one button", MNK.JobID)]
         MNK_BasicAOECombo = 9003,
+
+        [ParentCombo(MNK_BasicAOECombo)]
+        [CustomComboInfo("Use Cooldowns Option", "Use large cooldowns during AOE rotation", MNK.JobID)]
+        MNK_BasicAOECombo_UseCooldowns = 9004,
+
+        [ReplaceSkill([MNK.Bootshine])]
+        [CustomComboInfo("Custom ST Rotation", "Advanced Monk Combo on one button", MNK.JobID)]
+        [ConflictingCombos(MNK_BasicCombo)]
+        MNK_CustomCombo = 9005,
+
+        [ParentCombo(MNK_CustomCombo)]
+        [CustomComboInfo("Use Lunar/Solar Opener", "Uses Lunar/Solar opener", MNK.JobID)]
+        MNK_STUseLSOpener = 9006,
+
+        [ParentCombo(MNK_CustomCombo)]
+        [CustomComboInfo("Use Meditation", "Uses Meditation when out of combat/range", MNK.JobID)]
+        MNK_STUseMeditation = 9007,
+
+        [ParentCombo(MNK_CustomCombo)]
+        [CustomComboInfo("Buffs", "Use Buffs on cooldown", MNK.JobID)]
+        MNK_STUseBuffs = 9008,
+
+        [ParentCombo(MNK_STUseBuffs)]
+        [CustomComboInfo("Use Brotherhood", "Use Brotherhood", MNK.JobID)]
+        MNK_STUseBrotherhood = 9009,
+
+        [ParentCombo(MNK_STUseBuffs)]
+        [CustomComboInfo("Use Riddle of Wind", "Use Riddle of Wind", MNK.JobID)]
+        MNK_STUseROW = 9010,
+
+        [ParentCombo(MNK_STUseBuffs)]
+        [CustomComboInfo("Use Riddle of Fire", "Use Riddle of Fire", MNK.JobID)]
+        MNK_STUseROF = 9011,
+
+        [ParentCombo(MNK_CustomCombo)]
+        [CustomComboInfo("Use The Forbidden Chakra", "Use The Forbidden Chakra", MNK.JobID)]
+        MNK_STUseTheForbiddenChakra = 9012,
+
+        [ParentCombo(MNK_CustomCombo)]
+        [CustomComboInfo("Use Perfect Balance", "Use Perfect Balance and Masterful Blitz", MNK.JobID)]
+        MNK_STUsePerfectBalance = 9013,
+
+        [ParentCombo(MNK_CustomCombo)]
+        [CustomComboInfo("Use True North", "Use True North dynamically when not in positional", MNK.JobID)]
+        MNK_STUseTrueNorth = 9014,
 
         // Last value = 9031
 
