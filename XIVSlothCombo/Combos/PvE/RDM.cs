@@ -1,15 +1,15 @@
 using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.JobGauge.Types;
-using System;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using static XIVSlothCombo.Combos.JobHelpers.RDM;
+using static XIVSlothCombo.Combos.JobHelpers.RDMHelper;
 
 namespace XIVSlothCombo.Combos.PvE
 {
     internal class RDM
     {
+        //7.0 Note
+        //Gauge information is available via RDMMana
         public const byte JobID = 35;
 
         public const uint
@@ -48,12 +48,15 @@ namespace XIVSlothCombo.Combos.PvE
             Corpsacorps = 7506,
             Displacement = 7515,
             Reprise = 16529,
-            MagickBarrier = 25857,
+            ViceOfThorns = 37005,
+            GrandImpact = 37006,
+            Prefulgence = 37007,
 
             //Buffs
             Acceleration = 7518,
             Manafication = 7521,
-            Embolden = 7520;
+            Embolden = 7520,
+            MagickBarrier = 25857;
 
         public static class Buffs
         {
@@ -66,7 +69,11 @@ namespace XIVSlothCombo.Combos.PvE
                 Embolden = 1239,
                 EmboldenOthers = 1297,
                 Manafication = 1971,
-                MagickBarrier = 2707;
+                MagickBarrier = 2707,
+                MagickedSwordPlay = 3875,
+                ThornedFlourish = 3876,
+                GrandImpactReady = 3877,
+                PrefulugenceReady = 3878;
         }
 
         public static class Debuffs
@@ -74,7 +81,16 @@ namespace XIVSlothCombo.Combos.PvE
             // public const short placeholder = 0;
         }
 
-        public static RDMGauge Gauge => CustomComboFunctions.GetJobGauge<RDMGauge>();
+        
+
+        public static class Traits
+        {
+            public const uint
+                EnhancedEmbolden = 620,
+                EnhancedManaficationII = 622,
+                EnhancedManaficationIII = 622,
+                EnhancedAccelerationII = 624;                
+        }
 
         public static class Config
         {
@@ -92,6 +108,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RDM_ST_oGCD_CorpACorps = new("RDM_ST_oGCD_CorpACorps"),
                 RDM_ST_oGCD_CorpACorps_Melee = new("RDM_ST_oGCD_CorpACorps_Melee"),
                 RDM_ST_oGCD_CorpACorps_Pooling = new("RDM_ST_oGCD_CorpACorps_Pooling"),
+                RDM_ST_oGCD_ViceOfThorns = new("RDM_ST_oGCD_ViceOfThorns"),
+                RDM_ST_oGCD_Prefulgence = new("RDM_ST_oGCD_Prefulgence"),
                 RDM_ST_MeleeCombo_Adv = new("RDM_ST_MeleeCombo_Adv"),
                 RDM_ST_MeleeFinisher_Adv = new("RDM_ST_MeleeFinisher_Adv"),
                 RDM_ST_MeleeEnforced = new("RDM_ST_MeleeEnforced"),
@@ -104,6 +122,8 @@ namespace XIVSlothCombo.Combos.PvE
                 RDM_AoE_oGCD_CorpACorps = new("RDM_AoE_oGCD_CorpACorps"),
                 RDM_AoE_oGCD_CorpACorps_Melee = new("RDM_AoE_oGCD_CorpACorps_Melee"),
                 RDM_AoE_oGCD_CorpACorps_Pooling = new("RDM_AoE_oGCD_CorpACorps_Pooling"),
+                RDM_AoE_oGCD_ViceOfThorns = new("RDM_AoE_oGCD_ViceOfThorns"),
+                RDM_AoE_oGCD_Prefulgence = new("RDM_AoE_oGCD_Prefulgence"),
                 RDM_AoE_MeleeCombo_Adv = new("RDM_AoE_MeleeCombo_Adv"),
                 RDM_AoE_MeleeFinisher_Adv = new("RDM_AoE_MeleeFinisher_Adv");
             public static UserBoolArray
@@ -129,7 +149,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_ST_DPS;
 
-            protected internal ManaBalancer manaState = new();
+            internal RDMMana mana = new();
             internal static bool inOpener = false;
             internal static bool readyOpener = false;
             internal static bool openerStarted = false;
@@ -138,8 +158,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 //MAIN_COMBO_VARIABLES
-                int blackmana = Gauge.BlackMana;
-                int whitemana = Gauge.WhiteMana;
+
+                int blackmana = RDMMana.Black;//Gauge.BlackMana;
+                int whitemana = RDMMana.White;//Gauge.WhiteMana;
                 //END_MAIN_COMBO_VARIABLES
 
                 if (actionID is Jolt or Jolt2 or Jolt3)
@@ -276,7 +297,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (step == 11)
                             {
-                                if (lastComboMove == Redoublement || Gauge.ManaStacks == 3) step++;
+                                if (lastComboMove == Redoublement || RDMMana.ManaStacks == 3) step++;
                                 else return EnchantedRedoublement;
                             }
 
@@ -395,14 +416,14 @@ namespace XIVSlothCombo.Combos.PvE
                             //Situation 1: Manafication first
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                                 && level >= 90
-                                && Gauge.ManaStacks == 0
+                                && RDMMana.ManaStacks == 0
                                 && lastComboMove is not Verflare
                                 && lastComboMove is not Verholy
                                 && lastComboMove is not Scorch
-                                && Math.Max(blackmana, whitemana) <= 50
-                                && (Math.Max(blackmana, whitemana) >= 42
+                                && RDMMana.Max <= 50
+                                && (RDMMana.Max >= 42
                                     || (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana) && blackmana == whitemana && blackmana >= 38 && HasCharges(Acceleration)))
-                                && Math.Min(blackmana, whitemana) >= 31
+                                && RDMMana.Min >= 31
                                 && IsOffCooldown(Manafication)
                                 && (IsOffCooldown(Embolden) || GetCooldownRemainingTime(Embolden) <= 3))
                             {
@@ -418,8 +439,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                                 && level >= 90
                                 && lastComboMove is Zwerchhau or EnchantedZwerchhau
-                                && Math.Max(blackmana, whitemana) >= 57
-                                && Math.Min(blackmana, whitemana) >= 46
+                                && RDMMana.Max >= 57
+                                && RDMMana.Min >= 46
                                 && GetCooldownRemainingTime(Manafication) >= 100
                                 && IsOffCooldown(Embolden))
                             {
@@ -430,8 +451,8 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                                 && level >= 90
                                 && lastComboMove is Zwerchhau or EnchantedZwerchhau
-                                && Math.Max(blackmana, whitemana) <= 57
-                                && Math.Min(blackmana, whitemana) <= 46
+                                && RDMMana.Max <= 57
+                                && RDMMana.Min <= 46
                                 && (GetCooldownRemainingTime(Manafication) <= 7 || IsOffCooldown(Manafication))
                                 && IsOffCooldown(Embolden))
                             {
@@ -439,11 +460,11 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo)
                                 && level >= 90
-                                && (Gauge.ManaStacks == 0 || Gauge.ManaStacks == 3)
+                                && (RDMMana.ManaStacks == 0 || RDMMana.ManaStacks == 3)
                                 && lastComboMove is not Verflare
                                 && lastComboMove is not Verholy
                                 && lastComboMove is not Scorch
-                                && Math.Max(blackmana, whitemana) <= 50
+                                && RDMMana.Max <= 50
                                 && (HasEffect(Buffs.Embolden) || WasLastAction(Embolden))
                                 && IsOffCooldown(Manafication))
                             {
@@ -453,8 +474,8 @@ namespace XIVSlothCombo.Combos.PvE
                             //Situation 3: Just use them together
                             if ((IsNotEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo) || level < 90)
                                 && ActionReady(Embolden)
-                                && Gauge.ManaStacks == 0
-                                && Math.Max(blackmana, whitemana) <= 50
+                                && RDMMana.ManaStacks == 0
+                                && RDMMana.Max <= 50
                                 && (IsOffCooldown(Manafication) || !LevelChecked(Manafication)))
                             {
                                 if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_UnbalanceMana)
@@ -467,11 +488,11 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                             if ((IsNotEnabled(CustomComboPreset.RDM_ST_MeleeCombo_ManaEmbolden_DoubleCombo) || level < 90)
                                 && ActionReady(Manafication)
-                                && (Gauge.ManaStacks == 0 || Gauge.ManaStacks == 3)
+                                && (RDMMana.ManaStacks == 0 || RDMMana.ManaStacks == 3)
                                 && lastComboMove is not Verflare
                                 && lastComboMove is not Verholy
                                 && lastComboMove is not Scorch
-                                && Math.Max(blackmana, whitemana) <= 50
+                                && RDMMana.Max <= 50
                                 && (HasEffect(Buffs.Embolden) || WasLastAction(Embolden)))
                             {
                                 return Manafication;
@@ -480,7 +501,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Situation 4: Level 58 or 59
                             if (!LevelChecked(Manafication) &&
                                 ActionReady(Embolden) &&
-                                Math.Min(blackmana, whitemana) >= 50)
+                                RDMMana.Min >= 50)
                             {
                                 return Embolden;
                             }
@@ -501,17 +522,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Redoublement);
                         }
 
-                        //7.0 Manification Magic Mana
-                        int Mana = Math.Min(Gauge.WhiteMana, Gauge.BlackMana);
-                        if (LevelChecked(Manafication))
-                        {
-                            int ManaBuff = (int)GetBuffStacks(Buffs.Manafication);
-                            if (ManaBuff > 0) Mana = 50; //ITS FREE REAL ESTATE
-                        }
-
-                        if (((Mana >= 50 && LevelChecked(Redoublement))
-                            || (Mana >= 35 && !LevelChecked(Redoublement))
-                            || (Mana >= 20 && !LevelChecked(Zwerchhau)))
+                        if (((RDMMana.Min >= 50 && LevelChecked(Redoublement))
+                            || (RDMMana.Min >= 35 && !LevelChecked(Redoublement))
+                            || (RDMMana.Min >= 20 && !LevelChecked(Zwerchhau)))
                             && !HasEffect(Buffs.Dualcast))
                         {
                             if (IsEnabled(CustomComboPreset.RDM_ST_MeleeCombo_CorpsGapCloser)
@@ -528,9 +541,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (HasEffect(Buffs.Acceleration) || WasLastAction(Buffs.Acceleration))
                                 {
                                     //Run the Mana Balance Computer
-                                    manaState.CheckBalance();
-                                    if (manaState.useAero && LevelChecked(OriginalHook(Veraero))) return OriginalHook(Veraero);
-                                    if (manaState.useThunder && LevelChecked(OriginalHook(Verthunder))) return OriginalHook(Verthunder);
+                                    mana.CheckBalance();
+                                    if (mana.useAero && LevelChecked(OriginalHook(Veraero))) return OriginalHook(Veraero);
+                                    if (mana.useThunder && LevelChecked(OriginalHook(Verthunder))) return OriginalHook(Verthunder);
                                 }
 
                                 if (HasCharges(Acceleration)) return Acceleration;
@@ -548,7 +561,7 @@ namespace XIVSlothCombo.Combos.PvE
                     && actionID is Jolt or Jolt2 or Jolt3
                     && HasCondition(ConditionFlag.InCombat)
                     && LocalPlayer.IsCasting == false
-                    && Gauge.ManaStacks == 0
+                    && RDMMana.ManaStacks == 0
                     && lastComboMove is not Verflare
                     && lastComboMove is not Verholy
                     && lastComboMove is not Scorch
@@ -568,29 +581,36 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 //END_RDM_ST_ACCELERATION
 
-                //RDM_VERFIREVERSTONE
-                if (IsEnabled(CustomComboPreset.RDM_ST_FireStone)
-                    && actionID is Jolt or Jolt2 or Jolt3
-                    && !HasEffect(Buffs.Acceleration)
-                    && !HasEffect(Buffs.Dualcast))
-                {
-                    //Run the Mana Balance Computer
-                    manaState.CheckBalance();
-                    if (manaState.useFire) return Verfire;
-                    if (manaState.useStone) return Verstone;
-                }
-                //END_RDM_VERFIREVERSTONE
 
-                //RDM_VERTHUNDERVERAERO
-                if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero)
-                    && actionID is Jolt or Jolt2 or Jolt3)
+                if (actionID is Jolt or Jolt2 or Jolt3)
                 {
-                    //Run the Mana Balance Computer
-                    manaState.CheckBalance();
-                    if (manaState.useThunder) return OriginalHook(Verthunder);
-                    if (manaState.useAero) return OriginalHook(Veraero);
+                    if (TraitLevelChecked(Traits.EnhancedAccelerationII)
+                        && HasEffect(Buffs.GrandImpactReady))
+                       return GrandImpact;
+
+                    //RDM_VERFIREVERSTONE
+                    if (IsEnabled(CustomComboPreset.RDM_ST_FireStone)
+                        && !HasEffect(Buffs.Acceleration)
+                        && !HasEffect(Buffs.Dualcast))
+                    {
+                        //Run the Mana Balance Computer
+                        mana.CheckBalance();
+                        if (mana.useFire) return Verfire;
+                        if (mana.useStone) return Verstone;
+                    }
+                    //END_RDM_VERFIREVERSTONE
+
+                    //RDM_VERTHUNDERVERAERO
+                    if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero))
+                    {
+                        //Run the Mana Balance Computer
+                        mana.CheckBalance();
+                        if (mana.useThunder) return OriginalHook(Verthunder);
+                        if (mana.useAero) return OriginalHook(Veraero);
+                    }
+                    //END_RDM_VERTHUNDERVERAERO
+                
                 }
-                //END_RDM_VERTHUNDERVERAERO
 
                 //NO_CONDITIONS_MET
                 return actionID;
@@ -599,14 +619,11 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class RDM_AoE_DPS : CustomCombo
         {
-            protected internal ManaBalancer manaState = new();
+            protected internal RDMMana manaState = new();
             protected internal MeleeFinisher meleeFinisher = new();
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_AoE_DPS;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                int black = Gauge.BlackMana;
-                int white = Gauge.WhiteMana;
-
                 //VARIANTS
                 if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) &&
                     IsEnabled(Variant.VariantCure) &&
@@ -674,44 +691,44 @@ namespace XIVSlothCombo.Combos.PvE
                                 && !HasEffect(Buffs.Dualcast)
                                 && !HasEffect(All.Buffs.Swiftcast)
                                 && !HasEffect(Buffs.Acceleration)
-                                && ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && Gauge.ManaStacks == 0) || Gauge.ManaStacks > 0))
+                                && ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && RDMMana.ManaStacks == 0) || RDMMana.ManaStacks > 0))
                             {
                                 if (ActionReady(Manafication))
                                 {
                                     //Situation 1: Embolden First (Double)
-                                    if (Gauge.ManaStacks == 2
-                                        && Math.Min(black, white) >= 22
+                                    if (RDMMana.ManaStacks == 2
+                                        && RDMMana.Min >= 22
                                         && IsOffCooldown(Embolden))
                                     {
                                         return Embolden;
                                     }
-                                    if (((Gauge.ManaStacks == 3 && Math.Min(black, white) >= 2) || (Gauge.ManaStacks == 0 && Math.Min(black, white) >= 10))
+                                    if (((RDMMana.ManaStacks == 3 && RDMMana.Min >= 2) || (RDMMana.ManaStacks == 0 && RDMMana.Min >= 10))
                                         && lastComboMove is not Verflare
                                         && lastComboMove is not Verholy
                                         && lastComboMove is not Scorch
-                                        && Math.Max(black, white) <= 50
+                                        && RDMMana.Max <= 50
                                         && (HasEffect(Buffs.Embolden) || WasLastAction(Embolden)))
                                     {
                                         return Manafication;
                                     }
 
                                     //Situation 2: Embolden First (Single)
-                                    if (Gauge.ManaStacks == 0
+                                    if (RDMMana.ManaStacks == 0
                                         && lastComboMove is not Verflare
                                         && lastComboMove is not Verholy
                                         && lastComboMove is not Scorch
-                                        && Math.Max(black, white) <= 50
-                                        && Math.Min(black, white) >= 10
+                                        && RDMMana.Max <= 50
+                                        && RDMMana.Min >= 10
                                         && IsOffCooldown(Embolden))
                                     {
                                         return Embolden;
                                     }
-                                    if (Gauge.ManaStacks == 0
+                                    if (RDMMana.ManaStacks == 0
                                         && lastComboMove is not Verflare
                                         && lastComboMove is not Verholy
                                         && lastComboMove is not Scorch
-                                        && Math.Max(black, white) <= 50
-                                        && Math.Min(black, white) >= 10
+                                        && RDMMana.Max <= 50
+                                        && RDMMana.Min >= 10
                                         && (HasEffect(Buffs.Embolden) || WasLastAction(Embolden)))
                                     {
                                         return Manafication;
@@ -720,7 +737,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 //Below Manafication Level
                                 if (ActionReady(Embolden) && !LevelChecked(Manafication)
-                                    && Math.Min(black, white) >= 20)
+                                    && RDMMana.Min >= 20)
                                 {
                                     return Embolden;
                                 }
@@ -729,26 +746,26 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //7.0 Manification Magic Mana
-                        //The Math.Min after level check is GaugeStack * 16.67 >= 50 to validate Molinet
-                        //Really needs some higher level autism to figure out if there is a better way
-                        int ManaBuff = (int)GetBuffStacks(Buffs.Manafication);
-                        if (ManaBuff > 3) ManaBuff = 3; //Only need 3 to use the combo (low level 60 get 3)
-                        int ManaStacks = Math.Max(Gauge.ManaStacks, ManaBuff);
-
+                        //int Mana = Math.Min(Gauge.WhiteMana, Gauge.BlackMana);
+                        //if (LevelChecked(Manafication))
+                        //{
+                        //    int ManaBuff = GetBuffStacks(Buffs.MagickedSwordPlay);
+                        //    if (ManaBuff > 0) Mana = 50; //ITS FREE REAL ESTATE
+                        //}
+                        
                         if (LevelChecked(Moulinet)
                             && LocalPlayer.IsCasting == false
                             && !HasEffect(Buffs.Dualcast)
                             && !HasEffect(All.Buffs.Swiftcast)
                             && !HasEffect(Buffs.Acceleration)
-                            && ((Math.Min(Gauge.BlackMana, Gauge.WhiteMana) + (ManaStacks * 16.67) >= 50) ||
-                                (!LevelChecked(Verflare) && Math.Min(Gauge.BlackMana, Gauge.WhiteMana) >= 20)))
+                            && RDMMana.Min >= 50)
                         {
                             if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_CorpsGapCloser)
                                 && ActionReady(Corpsacorps)
                                 && GetTargetDistance() > Config.RDM_AoE_MoulinetRange)
                                 return Corpsacorps;
 
-                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && ManaStacks == 0) || ManaStacks >= 1)
+                            if ((GetTargetDistance() <= Config.RDM_AoE_MoulinetRange && RDMMana.ManaStacks == 0) || RDMMana.ManaStacks >= 1)
                                 return OriginalHook(Moulinet);
                         }
                     }
@@ -759,7 +776,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.RDM_AoE_Accel)
                     && actionID is Scatter or Impact
                     && LocalPlayer.IsCasting == false
-                    && Gauge.ManaStacks == 0
+                    && RDMMana.ManaStacks == 0
                     && lastComboMove is not Verflare
                     && lastComboMove is not Verholy
                     && lastComboMove is not Scorch
@@ -786,6 +803,11 @@ namespace XIVSlothCombo.Combos.PvE
                 //RDM_VERTHUNDERIIVERAEROII
                 if (actionID is Scatter or Impact)
                 {
+
+                    if (TraitLevelChecked(Traits.EnhancedAccelerationII)
+                        && HasEffect(Buffs.GrandImpactReady))
+                       return GrandImpact;
+
                     manaState.CheckBalance();
                     if (manaState.useThunder2) return OriginalHook(Verthunder2);
                     if (manaState.useAero2) return OriginalHook(Veraero2);
