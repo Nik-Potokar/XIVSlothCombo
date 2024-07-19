@@ -19,7 +19,7 @@ namespace XIVSlothCombo.Combos.PvE
             Bootshine = 53,
             TrueStrike = 54,
             SnapPunch = 56,
-            Meditation = 36942,
+            Meditation = 36940,
             SteelPeak = 3547,
             TwinSnakes = 61,
             ArmOfTheDestroyer = 25767,
@@ -63,6 +63,8 @@ namespace XIVSlothCombo.Combos.PvE
                 FormlessFist = 2513,
                 DisciplinedFist = 3001,
                 TrueNorth = 1250,
+                WindsRumination = 3842,
+                FiresRumination = 3843,
                 Brotherhood = 1185;
         }
 
@@ -89,7 +91,9 @@ namespace XIVSlothCombo.Combos.PvE
                 Brotherhood = 70,
                 RiddleOfWind = 72,
                 TheForbiddenChakra = 54,
-                ShadowOfTheDestroyer = 82;
+                ShadowOfTheDestroyer = 82,
+                WindsReply = 96,
+                FiresReply = 100;
         }
 
         public static MNKGauge Gauge => CustomComboFunctions.GetJobGauge<MNKGauge>();
@@ -124,12 +128,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
-                            return Meditation;
-                        }
-
-                        if (level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
-                        {
-                            return FormShift;
+                            return OriginalHook(Meditation); ;
                         }
                     }
 
@@ -174,6 +173,16 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
                         {
                             return RiddleOfWind;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.WindsRumination) && level >= Levels.WindsReply && !IsOnCooldown(WindsReply))
+                        {
+                            return WindsReply;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.FiresRumination) && level >= Levels.FiresReply && !IsOnCooldown(FiresReply))
+                        {
+                            return FiresReply;
                         }
 
                         if (Gauge.Chakra == 5
@@ -270,6 +279,22 @@ namespace XIVSlothCombo.Combos.PvE
                                 && !IsOnCooldown(Brotherhood))
                             {
                                 return Brotherhood;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply)
+                                && HasEffect(Buffs.WindsRumination)
+                                && level >= Levels.WindsReply
+                                && !IsOnCooldown(WindsReply))
+                            {
+                                return WindsReply;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply)
+                                && HasEffect(Buffs.FiresRumination)
+                                && level >= Levels.FiresReply
+                                && !IsOnCooldown(FiresReply))
+                            {
+                                return FiresReply;
                             }
 
                             if (IsEnabled(CustomComboPreset.MNK_STUseROW)

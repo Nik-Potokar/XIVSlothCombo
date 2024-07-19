@@ -1888,6 +1888,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Use True North", "Use True North dynamically when not in positional", MNK.JobID)]
         MNK_STUseTrueNorth = 9014,
 
+        [ParentCombo(MNK_STUseROW)]
+        [CustomComboInfo("Use Wind's Reply", "Use Wind's Reply", MNK.JobID)]
+        MNK_STUseWindsReply = 9015,
+
+        [ParentCombo(MNK_STUseROF)]
+        [CustomComboInfo("Use Fire's Reply", "Use Fire's Reply", MNK.JobID)]
+        MNK_STUseFiresReply = 9016,
+
         // Last value = 9031
 
         #endregion
