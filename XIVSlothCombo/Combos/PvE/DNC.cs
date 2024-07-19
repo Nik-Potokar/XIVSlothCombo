@@ -384,7 +384,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Technical Step
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) &&
                         ActionReady(TechnicalStep) &&
-                        HasEffect(Buffs.StandardStep) &&
+                        !HasEffect(Buffs.StandardStep) &&
                         IsOnCooldown(StandardStep) &&
                         (!HasTarget() ||
                          GetTargetHPPercent() > targetHpThresholdTechnical))
