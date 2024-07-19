@@ -358,7 +358,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
                         && (!HasEffect(Buffs.Medica2) && !HasEffect(Buffs.Medica3)
-                        && (ActionReady(Medica2) || ActionReady(Medica3))))
+                        && (LevelChecked(Medica2) || LevelChecked(Medica3))))
                     {
                         return OriginalHook(Medica3);
                     }

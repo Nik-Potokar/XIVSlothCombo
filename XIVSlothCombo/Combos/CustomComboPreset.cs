@@ -4048,7 +4048,7 @@ namespace XIVSlothCombo.Combos
             WHM_AoEHeals_Lucid = 19204,
 
             [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Medica II/III Option", "Uses Medica II/III when current target doesn't have Medica II/III buff.", WHM.JobID, 1)]
+            [CustomComboInfo("Medica II/III Option", "Uses Medica II/III when player doesn't have Medica II/III buff.", WHM.JobID, 1)]
             WHM_AoEHeals_Medica2 = 19205,
 
             [ParentCombo(WHM_AoEHeals)]
