@@ -2271,7 +2271,7 @@ namespace XIVSlothCombo.Combos
 
         #region PALADIN
 
-        //// Last value = 11034
+        // Simple Modes 11000~11001
 
         [ConflictingCombos(PLD_ST_AdvancedMode)]
         [ReplaceSkill(PLD.FastBlade)]
@@ -2283,138 +2283,146 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Mode - AoE", $"Replaces Total Eclipse with an all-in-one button rotation.\nThis is ideal option for newcomers to the job.", PLD.JobID)]
         PLD_AoE_SimpleMode = 11001,
 
+        // ST Advanced Mode 11010~11023
+
         [ConflictingCombos(PLD_ST_SimpleMode)]
         [ReplaceSkill(PLD.FastBlade)]
         [CustomComboInfo("Advanced Mode - Single Target", $"Replaces Fast Blade with a customizable all-in-one button rotation.\nFeatures can be toggled on or off to suit your playstyle.", PLD.JobID)]
-        PLD_ST_AdvancedMode = 11002,
+        PLD_ST_AdvancedMode = 11010,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses after Royal Authority during opener.\n- Afterward, on cooldown alongside Requiescat.\n- Uses at lower levels when appropriate.\n- Target HP must be at or above:", PLD.JobID)]
-        PLD_ST_AdvancedMode_FoF = 11003,
+        PLD_ST_AdvancedMode_FoF = 11011,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Spirits Within Option", "Adds Spirits Within to Advanced Mode.\n- Prefers to use during Fight or Flight.", PLD.JobID)]
-        PLD_ST_AdvancedMode_SpiritsWithin = 11006,
+        PLD_ST_AdvancedMode_SpiritsWithin = 11012,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Circle of Scorn Option", "Adds Circle of Scorn to Advanced Mode.\n- Uses only when in range of the target.\n- Prefers to use during Fight or Flight.", PLD.JobID)]
-        PLD_ST_AdvancedMode_CircleOfScorn = 11005,
+        PLD_ST_AdvancedMode_CircleOfScorn = 11013,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Sheltron Option", "Adds Sheltron to Advanced Mode.\n- Uses only while in combat.\n- Will not interrupt burst phase.\n- Required HP & gauge thresholds:", PLD.JobID)]
-        PLD_ST_AdvancedMode_Sheltron = 11007,
+        PLD_ST_AdvancedMode_Sheltron = 11014,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Shield Lob Option", "Adds Shield Lob to Advanced Mode.\n- Uses only while out of melee range.\n- Yields to Holy Spirit when under Divine Might.\n- Yields to Confiteor and Blades when available.", PLD.JobID)]
-        PLD_ST_AdvancedMode_ShieldLob = 11004,
+        PLD_ST_AdvancedMode_ShieldLob = 11015,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Intervene Option", "Adds Intervene to Advanced Mode.\n- Prefers to use during Fight or Flight.\n- Will not use while moving.\n- Amount of charges to keep:", PLD.JobID)]
-        PLD_ST_AdvancedMode_Intervene = 11011,
+        PLD_ST_AdvancedMode_Intervene = 11016,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Goring Blade Option", "Adds Goring Blade to Advanced Mode.\n- Prefers to use after Confiteor and Blades.", PLD.JobID)]
-        PLD_ST_AdvancedMode_GoringBlade = 11008,
+        PLD_ST_AdvancedMode_GoringBlade = 11017,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Requiescat Option", "Adds Requiescat to Advanced Mode.\n- Uses after Fight or Flight.", PLD.JobID)]
-        PLD_ST_AdvancedMode_Requiescat = 11010,
+        PLD_ST_AdvancedMode_Requiescat = 11018,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Holy Spirit Option", "Adds Holy Spirit to Advanced Mode.\n- Uses only when under Divine Might.\n- Prefers to use while out of melee range.\n- Prefers to use during Fight or Flight.\n- Yields to Sepulchre when appropriate.\n- Will be prioritized if buff is expiring.", PLD.JobID)]
-        PLD_ST_AdvancedMode_HolySpirit = 11009,
+        PLD_ST_AdvancedMode_HolySpirit = 11019,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Atonement Option", "Adds the Atonement combo to Advanced Mode.\n- Uses Atonement as soon as possible.\n- Prefers to use Supplication after Riot Blade.\n- Prefers to use Sepulchre during Fight or Flight.\n- Will be prioritized if buff is expiring.", PLD.JobID)]
-        PLD_ST_AdvancedMode_Atonement = 11012,
+        PLD_ST_AdvancedMode_Atonement = 11020,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode.\n- Uses after Requiescat.", PLD.JobID)]
-        PLD_ST_AdvancedMode_Confiteor = 11013,
+        PLD_ST_AdvancedMode_Confiteor = 11021,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Blade of Faith/Truth/Valor Option", "Adds Blade of Faith/Truth/Valor to Advanced Mode.\n- Uses after Confiteor.", PLD.JobID)]
-        PLD_ST_AdvancedMode_Blades = 11014,
+        PLD_ST_AdvancedMode_Blades = 11022,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
         [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode.\n- Uses after Blade of Valor.", PLD.JobID)]
-        PLD_ST_AdvancedMode_BladeOfHonor = 11033,
+        PLD_ST_AdvancedMode_BladeOfHonor = 11023,
+
+        // AoE Advanced Mode 11050~11059
 
         [ConflictingCombos(PLD_AoE_SimpleMode)]
         [ReplaceSkill(PLD.TotalEclipse)]
         [CustomComboInfo("Advanced Mode - AoE", $"Replaces Total Eclipse with a customizable all-in-one button rotation.\nFeatures can be toggled on or off to suit your playstyle.", PLD.JobID)]
-        PLD_AoE_AdvancedMode = 11015,
+        PLD_AoE_AdvancedMode = 11050,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses on cooldown alongside Requiescat, if learned.\n- Target HP must be at or above:", PLD.JobID)]
-        PLD_AoE_AdvancedMode_FoF = 11016,
+        PLD_AoE_AdvancedMode_FoF = 11051,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Spirits Within Option", "Adds Spirits Within to Advanced Mode.\n- Prefers to use during Fight or Flight.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_SpiritsWithin = 11017,
+        PLD_AoE_AdvancedMode_SpiritsWithin = 11052,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Circle of Scorn Option", "Adds Circle of Scorn to Advanced Mode.\n- Uses only when in range of the target.\n- Prefers to use during Fight or Flight.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_CircleOfScorn = 11018,
+        PLD_AoE_AdvancedMode_CircleOfScorn = 11053,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Sheltron Option", "Adds Sheltron to Advanced Mode.\n- Uses only while in combat.\n- Will not interrupt burst phase.\n- Required HP & gauge thresholds:", PLD.JobID)]
-        PLD_AoE_AdvancedMode_Sheltron = 11023,
+        PLD_AoE_AdvancedMode_Sheltron = 11054,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Requiescat Option", "Adds Requiescat to Advanced Mode.\n- Uses after Fight or Flight.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_Requiescat = 11019,
+        PLD_AoE_AdvancedMode_Requiescat = 11055,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Holy Circle Option", "Adds Holy Circle to Advanced Mode.\n- Uses only when under Divine Might or Requiescat.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_HolyCircle = 11020,
+        PLD_AoE_AdvancedMode_HolyCircle = 11056,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode.\n- Uses after Requiescat.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_Confiteor = 11021,
+        PLD_AoE_AdvancedMode_Confiteor = 11057,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Blade of Faith/Truth/Valor Option", "Adds Blade of Faith/Truth/Valor to Advanced Mode.\n- Uses after Confiteor.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_Blades = 11022,
+        PLD_AoE_AdvancedMode_Blades = 11058,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode.\n- Uses after Blade of Valor.", PLD.JobID)]
-        PLD_AoE_AdvancedMode_BladeOfHonor = 11034,
+        PLD_AoE_AdvancedMode_BladeOfHonor = 11059,
+
+        // Extra Features 11100~11103
 
         [ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion)]
         [CustomComboInfo("Spirits Within / Circle of Scorn Feature", "Replaces Spirits Within with Circle of Scorn when off cooldown.", PLD.JobID)]
-        PLD_SpiritsWithin = 11025,
+        PLD_SpiritsWithin = 11100,
 
         [ReplaceSkill(PLD.ShieldLob)]
         [CustomComboInfo("Shield Lob / Holy Spirit Feature", "Replaces Shield Lob with Holy Spirit while not moving or when under Divine Might, provided there is sufficient MP to cast it.", PLD.JobID)]
-        PLD_ShieldLob_Feature = 11027,
+        PLD_ShieldLob_Feature = 11101,
 
         [ConflictingCombos(PLD_FoFRequiescat)]
         [ReplaceSkill(PLD.Requiescat)]
         [CustomComboInfo("Requiescat Spender Feature", "Replaces Requiescat with Requiescat-related actions while under the effect of Requiescat, as well as Blade of Honor when appropriate.", PLD.JobID)]
-        PLD_Requiescat_Options = 11024,
+        PLD_Requiescat_Options = 11102,
 
         [ConflictingCombos(PLD_Requiescat_Options)]
         [ReplaceSkill(PLD.FightOrFlight)]
         [CustomComboInfo("Fight or Flight / Requiescat Feature", "Replaces Fight or Flight with Requiescat and Blade of Honor while under the effect of Fight or Flight. Recommended to disable the in-game Fight or Flight action change setting to avoid issues.", PLD.JobID)]
-        PLD_FoFRequiescat = 11026,
+        PLD_FoFRequiescat = 11103,
+
+        // Variant Features 11150~11152
 
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Spirit Dart Feature", "Uses Variant Spirit Dart whenever the debuff is not present on the target or about to expire.", PLD.JobID)]
-        PLD_Variant_SpiritDart = 11030,
+        PLD_Variant_SpiritDart = 11150,
 
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Feature", "Uses Variant Cure when the player's HP falls below the set threshold.", PLD.JobID)]
-        PLD_Variant_Cure = 11031,
+        PLD_Variant_Cure = 11151,
 
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Ultimatum Feature", "Uses Variant Ultimatum on cooldown as long as the target is within range.", PLD.JobID)]
-        PLD_Variant_Ultimatum = 11032,
+        PLD_Variant_Ultimatum = 11152,
 
-        //// Last value = 11034
+        //// Last value = 11152
 
         #endregion
 
