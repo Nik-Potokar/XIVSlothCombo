@@ -245,6 +245,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     var targetHpThresholdFeather = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleFeatherBurstPercent);
                     var targetHpThresholdStandard = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSBurstPercent);
+                    var targetHpThresholdTechnical = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent);
                     #endregion
 
                     #region Pre-pull
@@ -381,9 +382,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region GCD
                     // ST Technical Step
-                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) && ActionReady(TechnicalStep) &&
-                        (!HasTarget() || GetTargetHPPercent() > PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSBurstPercent)) &&
-                        !HasEffect(Buffs.StandardStep))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_TS) &&
+                        ActionReady(TechnicalStep) &&
+                        HasEffect(Buffs.StandardStep) &&
+                        IsOnCooldown(StandardStep) &&
+                        (!HasTarget() ||
+                         GetTargetHPPercent() > targetHpThresholdTechnical))
                         return TechnicalStep;
 
                     if (HasEffect(Buffs.FlourishingFinish))
