@@ -646,9 +646,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Technical Step
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) &&
                         ActionReady(TechnicalStep) &&
+                        !HasEffect(Buffs.StandardStep) &&
+                        IsOnCooldown(StandardStep) &&
                         (!HasTarget() ||
-                         GetTargetHPPercent() > targetHpThresholdTechnical) &&
-                        !HasEffect(Buffs.StandardStep))
+                         GetTargetHPPercent() > targetHpThresholdTechnical))
                         return TechnicalStep;
 
                     if (HasEffect(Buffs.FlourishingFinish))
