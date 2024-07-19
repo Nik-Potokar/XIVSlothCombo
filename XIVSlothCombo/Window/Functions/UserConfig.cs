@@ -2541,12 +2541,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_PlenaryWeave, "Only Weave", "");
             }
 
-            if (preset == CustomComboPreset.WHM_AoEHeals_Medica2)
-            {
-                UserConfig.DrawRoundedSliderFloat(0f, 6f, WHM.Config.WHM_AoEHeals_MedicaTime, "Time Remaining on Buff to Renew");
-                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEHeals_MedicaMO, "Party UI Mousover Checking", "Check your mouseover target for the Medica II/III buff.\nTo be used in conjunction with Redirect/Reaction/etc.");
-            }
-
             #endregion
             // ====================================================================================
             #region DOH

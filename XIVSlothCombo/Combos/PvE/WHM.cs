@@ -357,17 +357,13 @@ namespace XIVSlothCombo.Combos.PvE
                         return ThinAir;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
-                        && ((FindEffectOnMember(Buffs.Medica2, healTarget) == null && FindEffectOnMember(Buffs.Medica3, healTarget) == null)
-                        || (FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime && FindEffectOnMember(Buffs.Medica3, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
+                        && (!HasEffect(Buffs.Medica2) && !HasEffect(Buffs.Medica3)
                         && (ActionReady(Medica2) || ActionReady(Medica3))))
                     {
-                        if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica3) && LevelChecked(Medica3))
-                            return Medica3;
-
-                        return Medica2;
+                        return OriginalHook(Medica3);
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && ActionReady(Cure3))
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && LevelChecked(Cure3))
                         return Cure3;
 
                 }
