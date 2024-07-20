@@ -415,6 +415,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (!OnTargetsRear()
                             && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                            && TargetNeedsPositionals()
                             && !HasEffect(Buffs.TrueNorth)
                             && LevelChecked(Levels.TrueNorth)
                             && HasCharges(TrueNorth))
@@ -429,6 +430,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!OnTargetsFlank()
                             && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                            && TargetNeedsPositionals()
                             && !HasEffect(Buffs.TrueNorth)
                             && LevelChecked(Levels.TrueNorth)
                             && HasCharges(TrueNorth))
