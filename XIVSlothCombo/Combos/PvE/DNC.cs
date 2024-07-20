@@ -289,7 +289,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #region Weaves
                     // ST Flourish
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
-                        CanDelayedWeave(actionID, 1.25, 0.5) &&
+                        CanWeave(actionID) &&
                         ActionReady(Flourish) &&
                         !HasEffect(Buffs.ThreeFoldFanDance) &&
                         !HasEffect(Buffs.FourFoldFanDance) &&
