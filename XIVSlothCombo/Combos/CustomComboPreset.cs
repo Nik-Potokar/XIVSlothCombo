@@ -832,7 +832,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1, "", "")]
         DNC_ST_Simple_SS = 4052,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
+        [ParentCombo(DNC_ST_Simple_SS)]
         [ConflictingCombos(DNC_ST_Simple_StandardFill)]
         [CustomComboInfo("Standard Dance Opener Option", "Starts Standard Step (and steps) before combat.", DNC.JobID)]
         DNC_ST_Simple_SS_Prepull = 4090,
