@@ -902,12 +902,12 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 12)]
-        DNC_ST_Simple_LD = 4092,
+        DNC_ST_Simple_LD = 4093,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
+        [ParentCombo(DNC_ST_Simple_LD)]
         [CustomComboInfo("Last Dance Safety Options", "Forces Last Dance to only be used under Technical Finish." +
                                                       "\nBut, will use Last Dance if it's about to expire, or if Tech is coming up and Last Dance is not likely to stay up.", DNC.JobID)]
-        DNC_ST_Simple_LD_Safety = 4093,
+        DNC_ST_Simple_LD_Safety = 4094,
 
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 13)]
@@ -972,7 +972,7 @@ namespace XIVSlothCombo.Combos
         "\nWill not use while under Technical Finish", DNC.JobID, 8)]
         DNC_AoE_Simple_Improvisation = 4080,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
+        [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 9)]
         DNC_AoE_Simple_Tillana = 4101,
 
@@ -984,11 +984,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple AoE Dance of the Dawn Option", "Includes Dance of the Dawn in the AoE rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
         DNC_AoE_Simple_DawnDance = 4085,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
+        [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 11)]
         DNC_AoE_Simple_LD = 4102,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
+        [ParentCombo(DNC_AoE_Simple_LD)]
         [CustomComboInfo("Last Dance Safety Options", "Forces Last Dance to only be used under Technical Finish." +
                                                       "\nBut, will use Last Dance if it's about to expire, or if Tech is coming up and Last Dance is not likely to stay up.", DNC.JobID)]
         DNC_AoE_Simple_LD_Safety = 4103,
