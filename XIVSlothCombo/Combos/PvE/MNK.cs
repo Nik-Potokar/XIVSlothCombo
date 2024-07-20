@@ -175,16 +175,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return RiddleOfWind;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.WindsRumination) && level >= Levels.WindsReply)
-                        {
-                            return WindsReply;
-                        }
-
-                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.FiresRumination) && level >= Levels.FiresReply)
-                        {
-                            return FiresReply;
-                        }
-
                         if (Gauge.Chakra == 5
                             && level >= Levels.HowlingFist
                             && HasBattleTarget())
@@ -198,54 +188,67 @@ namespace XIVSlothCombo.Combos.PvE
                             return All.Bloodbath;
                     }
 
-                    // Masterful Blitz
-                    if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    if (inCombat)
                     {
-                        return OriginalHook(MasterfulBlitz);
-                    }
-
-                    // Perfect Balance
-                    if (HasEffect(Buffs.PerfectBalance))
-                    {
-                        if (nadiNONE || !lunarNadi)
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.WindsRumination) && level >= Levels.WindsReply)
                         {
-                            if (pbStacks?.StackCount > 0)
+                            return WindsReply;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.MNK_BasicAOECombo_UseCooldowns) && HasEffect(Buffs.FiresRumination) && level >= Levels.FiresReply)
+                        {
+                            return FiresReply;
+                        }
+
+                        // Masterful Blitz
+                        if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        {
+                            return OriginalHook(MasterfulBlitz);
+                        }
+
+                        // Perfect Balance
+                        if (HasEffect(Buffs.PerfectBalance))
+                        {
+                            if (nadiNONE || !lunarNadi)
                             {
-                                return level >= Levels.ShadowOfTheDestroyer ? ShadowOfTheDestroyer : Rockbreaker;
+                                if (pbStacks?.StackCount > 0)
+                                {
+                                    return level >= Levels.ShadowOfTheDestroyer ? ShadowOfTheDestroyer : Rockbreaker;
+                                }
+                            }
+                            if (lunarNadi)
+                            {
+                                switch (pbStacks?.StackCount)
+                                {
+                                    case 3:
+                                        return OriginalHook(ArmOfTheDestroyer);
+                                    case 2:
+                                        return FourPointFury;
+                                    case 1:
+                                        return Rockbreaker;
+                                }
                             }
                         }
-                        if (lunarNadi)
+
+                        // Monk Rotation
+                        if (HasEffect(Buffs.OpoOpoForm))
                         {
-                            switch (pbStacks?.StackCount)
-                            {
-                                case 3:
-                                    return OriginalHook(ArmOfTheDestroyer);
-                                case 2:
-                                    return FourPointFury;
-                                case 1:
-                                    return Rockbreaker;
-                            }
+                            return OriginalHook(ArmOfTheDestroyer);
                         }
-                    }
 
-                    // Monk Rotation
-                    if (HasEffect(Buffs.OpoOpoForm))
-                    {
-                        return OriginalHook(ArmOfTheDestroyer);
-                    }
+                        if (HasEffect(Buffs.RaptorForm))
+                        {
+                            if (FourPointFury.LevelChecked())
+                                return FourPointFury;
 
-                    if (HasEffect(Buffs.RaptorForm))
-                    {
-                        if (FourPointFury.LevelChecked())
-                            return FourPointFury;
+                            if (TwinSnakes.LevelChecked())
+                                return TwinSnakes;
+                        }
 
-                        if (TwinSnakes.LevelChecked())
-                            return TwinSnakes;
-                    }
-
-                    if (HasEffect(Buffs.CoerlForm) && level >= Levels.Rockbreaker)
-                    {
-                        return Rockbreaker;
+                        if (HasEffect(Buffs.CoerlForm) && level >= Levels.Rockbreaker)
+                        {
+                            return Rockbreaker;
+                        }
                     }
                 }
                 return actionID;
