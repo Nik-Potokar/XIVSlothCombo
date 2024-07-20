@@ -21,13 +21,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         internal class RDMMana : PvE.RDM
         {
-            internal bool useFire;
-            internal bool useStone;
-            internal bool useThunder;
-            internal bool useAero;
-            internal bool useThunder2;
-            internal bool useAero2;
-
             private static RDMGauge Gauge => CustomComboFunctions.GetJobGauge<RDMGauge>();
             internal static int ManaStacks => Gauge.ManaStacks;
             internal static int Black => AdjustMana(Gauge.BlackMana);
@@ -51,7 +44,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else return mana;
             }
 
-            internal void CheckBalance()
+            public static (bool useFire, bool useStone, bool useThunder, bool useAero, bool useThunder2, bool useAero2) CheckBalance()
             {
                 //SYSTEM_MANA_BALANCING_MACHINE
                 //Machine to decide which ver spell should be used.
@@ -69,15 +62,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 //3.Strive to achieve correct mana for double melee combo burst [DONE]
                 int blackmana = Black;
                 int whitemana = White;
-                //int blackmana = Gauge.BlackMana;
-                //int whitemana = Gauge.WhiteMana;
                 //Reset outputs
-                useFire = false;
-                useStone = false;
-                useThunder = false;
-                useAero = false;
-                useThunder2 = false;
-                useAero2 = false;
+                bool useFire = false;
+                bool useStone = false;
+                bool useThunder = false;
+                bool useAero = false;
+                bool useThunder2 = false;
+                bool useAero2 = false;
 
                 //ST
                 if (LevelChecked(Verthunder)
@@ -113,6 +104,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else useAero2 = true;
                 }
                 //END_SYSTEM_MANA_BALANCING_MACHINE
+
+                return (useFire, useStone, useThunder, useAero, useThunder2, useAero2);
             }
         }
 

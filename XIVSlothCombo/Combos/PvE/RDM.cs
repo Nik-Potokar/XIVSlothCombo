@@ -149,7 +149,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_ST_DPS;
 
-            internal RDMMana mana = new();
             internal static bool inOpener = false;
             internal static bool readyOpener = false;
             internal static bool openerStarted = false;
@@ -541,9 +540,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (HasEffect(Buffs.Acceleration) || WasLastAction(Buffs.Acceleration))
                                 {
                                     //Run the Mana Balance Computer
-                                    mana.CheckBalance();
-                                    if (mana.useAero && LevelChecked(OriginalHook(Veraero))) return OriginalHook(Veraero);
-                                    if (mana.useThunder && LevelChecked(OriginalHook(Verthunder))) return OriginalHook(Verthunder);
+                                    var actions = RDMMana.CheckBalance();
+                                    
+                                    if (actions.useAero && LevelChecked(OriginalHook(Veraero))) return OriginalHook(Veraero);
+                                    if (actions.useThunder && LevelChecked(OriginalHook(Verthunder))) return OriginalHook(Verthunder);
                                 }
 
                                 if (HasCharges(Acceleration)) return Acceleration;
@@ -594,9 +594,9 @@ namespace XIVSlothCombo.Combos.PvE
                         && !HasEffect(Buffs.Dualcast))
                     {
                         //Run the Mana Balance Computer
-                        mana.CheckBalance();
-                        if (mana.useFire) return Verfire;
-                        if (mana.useStone) return Verstone;
+                        var actions = RDMMana.CheckBalance();
+                        if (actions.useFire) return Verfire;
+                        if (actions.useStone) return Verstone;
                     }
                     //END_RDM_VERFIREVERSTONE
 
@@ -604,9 +604,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RDM_ST_ThunderAero))
                     {
                         //Run the Mana Balance Computer
-                        mana.CheckBalance();
-                        if (mana.useThunder) return OriginalHook(Verthunder);
-                        if (mana.useAero) return OriginalHook(Veraero);
+                        var actions = RDMMana.CheckBalance();
+                        if (actions.useThunder) return OriginalHook(Verthunder);
+                        if (actions.useAero) return OriginalHook(Veraero);
                     }
                     //END_RDM_VERTHUNDERVERAERO
                 
@@ -619,8 +619,6 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class RDM_AoE_DPS : CustomCombo
         {
-            protected internal RDMMana manaState = new();
-            protected internal MeleeFinisher meleeFinisher = new();
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_AoE_DPS;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -808,9 +806,9 @@ namespace XIVSlothCombo.Combos.PvE
                         && HasEffect(Buffs.GrandImpactReady))
                        return GrandImpact;
 
-                    manaState.CheckBalance();
-                    if (manaState.useThunder2) return OriginalHook(Verthunder2);
-                    if (manaState.useAero2) return OriginalHook(Veraero2);
+                    var actions = RDMMana.CheckBalance();
+                    if (actions.useThunder2) return OriginalHook(Verthunder2);
+                    if (actions.useAero2) return OriginalHook(Veraero2);
                 }
                 //END_RDM_VERTHUNDERIIVERAEROII
 
