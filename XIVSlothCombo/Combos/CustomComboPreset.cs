@@ -828,13 +828,18 @@ namespace XIVSlothCombo.Combos
         DNC_ST_SimpleMode = 4050,
 
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 5, "", "")]
-        DNC_ST_Simple_Interrupt = 4051,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_StandardFill)]
         [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1, "", "")]
         DNC_ST_Simple_SS = 4052,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [ConflictingCombos(DNC_ST_Simple_StandardFill)]
+        [CustomComboInfo("Standard Dance Opener Option", "Starts Standard Step (and steps) before combat.", DNC.JobID)]
+        DNC_ST_Simple_SS_Prepull = 4090,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Interrupt Option", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 5, "", "")]
+        DNC_ST_Simple_Interrupt = 4051,
 
         [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_SS)]

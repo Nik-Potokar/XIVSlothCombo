@@ -253,7 +253,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!InCombat())
                     {
                         // ST Standard Step (Pre-pull)
-                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) &&
+                        if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS_Prepull) &&
                             ActionReady(StandardStep) &&
                             !HasEffect(Buffs.FinishingMoveReady) &&
                             !HasEffect(Buffs.TechnicalFinish) &&
@@ -261,6 +261,15 @@ namespace XIVSlothCombo.Combos.PvE
                             IsOffCooldown(StandardStep) &&
                             !HasTarget())
                             return StandardStep;
+
+                        // ST Standard Steps (Pre-pull)
+                        if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) ||
+                             IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill) ||
+                             IsEnabled(CustomComboPreset.DNC_ST_Simple_SS_Prepull)) &&
+                            HasEffect(Buffs.StandardStep) &&
+                            gauge.CompletedSteps < 2 &&
+                            !HasTarget())
+                            return gauge.NextStep;
 
                         // ST Peloton
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Peloton) &&
@@ -272,7 +281,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region Dance Fills
                     // ST Standard (Dance) Steps & Fill
-                    if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) || IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)) &&
+                    if ((IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) ||
+                         IsEnabled(CustomComboPreset.DNC_ST_Simple_StandardFill)) &&
                         HasEffect(Buffs.StandardStep))
                         return gauge.CompletedSteps < 2
                             ? gauge.NextStep
