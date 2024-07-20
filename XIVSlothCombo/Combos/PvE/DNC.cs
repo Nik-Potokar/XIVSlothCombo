@@ -680,7 +680,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return StarfallDance;
 
                     if (HasEffect(Buffs.FinishingMoveReady) &&
-                        IsOffCooldown(StandardStep))
+                        IsOffCooldown(StandardStep) &&
+                        !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
 
                     if (HasEffect(Buffs.LastDanceReady))
