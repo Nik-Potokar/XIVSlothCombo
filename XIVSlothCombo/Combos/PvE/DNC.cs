@@ -395,8 +395,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // Emergency Last Dance usage
-                    if (HasEffect(Buffs.LastDanceReady) &&
-                        GetBuffRemainingTime(Buffs.LastDanceReady) < 5)
+                    if ((HasEffect(Buffs.LastDanceReady) && // Last second usage
+                         GetBuffRemainingTime(Buffs.LastDanceReady) < 5) ||
+                        (GetCooldownRemainingTime(TechnicalStep) is < 5 and > 2 && // Pre-Tech usage
+                         GetBuffRemainingTime(Buffs.LastDanceReady) < 9))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingFinish))
@@ -664,8 +666,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // Emergency Last Dance usage
-                    if (HasEffect(Buffs.LastDanceReady) &&
-                        GetBuffRemainingTime(Buffs.LastDanceReady) < 5)
+                    if ((HasEffect(Buffs.LastDanceReady) && // Last second usage
+                         GetBuffRemainingTime(Buffs.LastDanceReady) < 5) ||
+                        (GetCooldownRemainingTime(TechnicalStep) is < 5 and > 2 && // Pre-Tech usage
+                         GetBuffRemainingTime(Buffs.LastDanceReady) < 9))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingFinish))
