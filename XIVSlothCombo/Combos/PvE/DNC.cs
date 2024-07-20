@@ -413,9 +413,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
-
                     if (HasEffect(Buffs.FinishingMoveReady) &&
                         IsOffCooldown(StandardStep) &&
                         !HasEffect(Buffs.LastDanceReady))
@@ -423,6 +420,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.LastDanceReady))
                         return LastDance;
+
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
 
                     // ST Standard Step
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && // Checking that SS is ready and wanted
@@ -676,9 +676,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    if (HasEffect(Buffs.FlourishingStarfall))
-                        return StarfallDance;
-
                     if (HasEffect(Buffs.FinishingMoveReady) &&
                         IsOffCooldown(StandardStep) &&
                         !HasEffect(Buffs.LastDanceReady))
@@ -686,6 +683,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.LastDanceReady))
                         return LastDance;
+
+                    if (HasEffect(Buffs.FlourishingStarfall))
+                        return StarfallDance;
 
                     // AoE Standard Step
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && // Checking that SS is ready and wanted
