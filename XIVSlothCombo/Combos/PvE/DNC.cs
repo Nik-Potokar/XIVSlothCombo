@@ -414,6 +414,11 @@ namespace XIVSlothCombo.Combos.PvE
                           GetBuffRemainingTime(Buffs.LastDanceReady) < GetCooldownRemainingTime(TechnicalStep) + 4)))
                         return LastDance;
 
+                    // Emergency Starfall usage
+                    if (HasEffect(Buffs.FlourishingStarfall) &&
+                        GetBuffRemainingTime(Buffs.FlourishingStarfall) < 4)
+                        return StarfallDance;
+
                     if (HasEffect(Buffs.FlourishingFinish) &&
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_Tillana))
                         return Tillana;
@@ -694,6 +699,11 @@ namespace XIVSlothCombo.Combos.PvE
                           GetCooldownRemainingTime(TechnicalStep) < 20 &&
                           GetBuffRemainingTime(Buffs.LastDanceReady) < GetCooldownRemainingTime(TechnicalStep) + 4)))
                         return LastDance;
+
+                    // Emergency Starfall usage
+                    if (HasEffect(Buffs.FlourishingStarfall) &&
+                        GetBuffRemainingTime(Buffs.FlourishingStarfall) < 4)
+                        return StarfallDance;
 
                     if (HasEffect(Buffs.FlourishingFinish) &&
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_Tillana))
