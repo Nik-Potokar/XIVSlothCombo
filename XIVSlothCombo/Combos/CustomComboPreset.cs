@@ -3851,7 +3851,7 @@ namespace XIVSlothCombo.Combos
         WAR_AoE_Overpower_Orogeny = 18010,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode. Only uses when in the Target's target ring (1 yalm) & when not moving. Otherwise, will use when buff is less than or equal to 10 seconds.", WAR.JobID, 7, "", "")]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode. Only uses when in the Target's target ring (1 yalm) & when not moving. Otherwise, will use when buff time is equal to 1 GCD.", WAR.JobID, 7, "", "")]
         WAR_ST_StormsPath_PrimalRend = 18011,
 
         [ReplaceSkill(WAR.Overpower)]
