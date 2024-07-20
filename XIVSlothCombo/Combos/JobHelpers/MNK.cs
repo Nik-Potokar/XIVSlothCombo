@@ -113,6 +113,9 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
+                Svc.Log.Debug($"Opener Step: {OpenerStep}");
+                Svc.Log.Debug($"Last Action: {ActionWatching.LastAction}");
+
                 if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 1) OpenerStep++;
                 else if (OpenerStep == 1) actionID = PerfectBalance;
 
@@ -136,8 +139,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(RiddleOfFire) && OpenerStep == 7) OpenerStep++;
                 else if (OpenerStep == 7) actionID = RiddleOfFire;
 
-                if (CustomComboFunctions.WasLastAction(ElixirField) && OpenerStep == 8) OpenerStep++;
-                else if (OpenerStep == 8) actionID = ElixirField;
+                if (CustomComboFunctions.WasLastAction(ElixirBurst) && OpenerStep == 8) OpenerStep++;
+                else if (OpenerStep == 8) actionID = ElixirBurst;
 
                 if (CustomComboFunctions.WasLastAction(RiddleOfWind) && OpenerStep == 9) OpenerStep++;
                 else if (OpenerStep == 9) actionID = RiddleOfWind;
@@ -166,8 +169,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 17) OpenerStep++;
                 else if (OpenerStep == 17) actionID = DragonKick;
 
-                if (CustomComboFunctions.WasLastAction(ElixirField) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = ElixirField;
+                if (CustomComboFunctions.WasLastAction(ElixirBurst) && OpenerStep == 18) OpenerStep++;
+                else if (OpenerStep == 18) actionID = ElixirBurst;
 
                 if (CustomComboFunctions.WasLastAction(LeapingOpo) && OpenerStep == 19) OpenerStep++;
                 else if (OpenerStep == 19) actionID = LeapingOpo;
@@ -178,17 +181,17 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(Demolish) && OpenerStep == 21) OpenerStep++;
                 else if (OpenerStep == 21) actionID = Demolish;
 
-                if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 22) OpenerStep++;
+                if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 22) CurrentState = OpenerState.OpenerFinished;
                 else if (OpenerStep == 22) actionID = DragonKick;
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
-                if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) < 1) ||
-                       (actionID == RiddleOfFire && CustomComboFunctions.IsOnCooldown(RiddleOfFire)) ||
-                       (actionID == RiddleOfWind && CustomComboFunctions.IsOnCooldown(RiddleOfWind)) ||
-                       (actionID == Brotherhood && CustomComboFunctions.IsOnCooldown(Brotherhood))
-                       && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3))
+                if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
+                       (OpenerStep is 7 && CustomComboFunctions.HasEffect(Buffs.RiddleOfFire)) ||
+                       (OpenerStep is 9 && CustomComboFunctions.HasEffect(Buffs.RiddleOfWind)) ||
+                       (OpenerStep is 6 && CustomComboFunctions.HasEffect(Buffs.Brotherhood))
+                       && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     Svc.Log.Debug($"Failed at {actionID}");
                     CurrentState = OpenerState.FailedOpener;

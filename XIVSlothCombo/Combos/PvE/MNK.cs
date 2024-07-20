@@ -50,11 +50,8 @@ namespace XIVSlothCombo.Combos.PvE
             RisingRaptor = 36946,
             PouncingCoeurl = 36947,
             TrueNorth = 7546,
+            ElixirBurst = 36948,
             FiresReply = 36950;
-
-        // MB Abilities for Opener
-        public const uint
-            ElixirField = 36948;
 
         public static class Buffs
         {
@@ -65,6 +62,7 @@ namespace XIVSlothCombo.Combos.PvE
                 CoerlForm = 109,
                 PerfectBalance = 110,
                 RiddleOfFire = 1181,
+                RiddleOfWind = 2687,
                 LeadenFist = 1861,
                 FormlessFist = 2513,
                 DisciplinedFist = 3001,
@@ -315,7 +313,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
                             && Gauge.Chakra == 5
-                            && level >= Levels.TheForbiddenChakra)
+                            && level >= Levels.SteelPeak)
                         {
                             return OriginalHook(Meditation);
                         }
@@ -386,11 +384,48 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (coeurlChakra)
                     {
-                        return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                        if (Gauge.RaptorFury == 0)
+                        {
+                            if (LevelChecked(Levels.TwinSnakes))
+                                return TwinSnakes;
+                        }
+                        else
+                        {
+                            if (LevelChecked(Levels.TrueStrike))
+                                return OriginalHook(TrueStrike);
+                        }
                     }
                     if (raptorChakra)
                     {
-                        return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                        if (!OnTargetsRear()
+                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                            && TargetNeedsPositionals()
+                            && !HasEffect(Buffs.TrueNorth)
+                            && LevelChecked(Levels.TrueNorth)
+                            && HasCharges(TrueNorth))
+                        {
+                            return TrueNorth;
+                        }
+                        else
+                        {
+                            if (LevelChecked(Levels.Demolish))
+                                return Demolish;
+                        }
+                    }
+
+                    if (!OnTargetsFlank()
+                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                            && TargetNeedsPositionals()
+                            && !HasEffect(Buffs.TrueNorth)
+                            && LevelChecked(Levels.TrueNorth)
+                            && HasCharges(TrueNorth))
+                    {
+                        return TrueNorth;
+                    }
+                    else
+                    {
+                        if (LevelChecked(Levels.SnapPunch))
+                            return OriginalHook(SnapPunch);
                     }
                 }
 
@@ -398,15 +433,58 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (!raptorChakra)
                     {
-                        return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
+                        if (Gauge.RaptorFury == 0)
+                        {
+                            if (LevelChecked(Levels.TwinSnakes))
+                                return TwinSnakes;
+                        }
+                        else
+                        {
+                            if (LevelChecked(Levels.TrueStrike))
+                                return OriginalHook(TrueStrike);
+                        }
                     }
                     if (!coeurlChakra)
                     {
-                        return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                        if (!OnTargetsRear()
+                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                            && TargetNeedsPositionals()
+                            && !HasEffect(Buffs.TrueNorth)
+                            && LevelChecked(Levels.TrueNorth)
+                            && HasCharges(TrueNorth))
+                        {
+                            return TrueNorth;
+                        }
+                        else
+                        {
+                            if (LevelChecked(Levels.Demolish))
+                                return Demolish;
+                        }
+                    }
+
+                    if (!OnTargetsFlank()
+                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                            && TargetNeedsPositionals()
+                            && !HasEffect(Buffs.TrueNorth)
+                            && LevelChecked(Levels.TrueNorth)
+                            && HasCharges(TrueNorth))
+                    {
+                        return TrueNorth;
+                    }
+                    else
+                    {
+                        if (LevelChecked(Levels.SnapPunch))
+                            return OriginalHook(SnapPunch);
                     }
                 }
 
-                return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
+                if (Gauge.OpoOpoFury == 0)
+                {
+                    if (LevelChecked(Levels.DragonKick))
+                        return DragonKick;
+                }
+
+                return OriginalHook(Bootshine);
             }
 
             private uint DetermineCoreAbility(uint baseActionID)
@@ -420,7 +498,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     else
                     {
-                        OriginalHook(Bootshine);
+                        return OriginalHook(Bootshine);
                     }
                 }
 
