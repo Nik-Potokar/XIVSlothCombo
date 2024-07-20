@@ -894,23 +894,24 @@ namespace XIVSlothCombo.Combos
         DNC_ST_Simple_Tillana = 4092,
 
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 7)]
+        [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 11)]
         DNC_ST_Simple_SaberDance = 4063,
 
         [ParentCombo(DNC_ST_Simple_SaberDance)]
         [CustomComboInfo("Simple Dance of the Dawn Option", "Includes Dance of the Dawn in the rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
         DNC_ST_Simple_DawnDance = 4064,
 
-        /*
-        [ParentCombo(DNC_ST_Simple_Feathers)]
-        [CustomComboInfo("Simple Feather Pooling Option", "Expends a feather in the next available weave window when capped." +
-        "\nWeaves feathers where possible during Technical Finish." +
-        "\nWeaves feathers outside of burst when target is below set HP percentage.", DNC.JobID, 4, "", "")]
-        DNC_ST_Simple_FeatherPooling = 4058,
-        */
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 12)]
+        DNC_ST_Simple_LD = 4092,
 
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
+        [CustomComboInfo("Last Dance Safety Options", "Forces Last Dance to only be used under Technical Finish." +
+                                                      "\nBut, will use Last Dance if it's about to expire, or if Tech is coming up and Last Dance is not likely to stay up.", DNC.JobID)]
+        DNC_ST_Simple_LD_Safety = 4093,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 30)]
         DNC_ST_Simple_PanicHeals = 4059,
         #endregion
 

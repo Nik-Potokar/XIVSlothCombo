@@ -405,10 +405,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // Emergency Last Dance usage
-                    if ((HasEffect(Buffs.LastDanceReady) && // Last second usage
-                         GetBuffRemainingTime(Buffs.LastDanceReady) < 5) ||
-                        (GetCooldownRemainingTime(TechnicalStep) is < 5 and > 2 && // Pre-Tech usage
-                         GetBuffRemainingTime(Buffs.LastDanceReady) < 9))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_LD_Safety) &&
+                        ((HasEffect(Buffs.LastDanceReady) && // Last second usage
+                          GetBuffRemainingTime(Buffs.LastDanceReady) < 5) ||
+                         (GetCooldownRemainingTime(TechnicalStep) is < 5 and > 2 && // Pre-Tech usage
+                          GetBuffRemainingTime(Buffs.LastDanceReady) < 9)))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingFinish) &&
@@ -440,8 +441,11 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
 
-                    if (HasEffect(Buffs.LastDanceReady) &&
-                        HasEffect(Buffs.TechnicalFinish))
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_LD) &&
+                        HasEffect(Buffs.LastDanceReady) &&
+                        ((HasEffect(Buffs.TechnicalFinish) &&
+                          IsEnabled(CustomComboPreset.DNC_ST_Simple_LD_Safety)) ||
+                         !IsEnabled(CustomComboPreset.DNC_ST_Simple_LD_Safety)))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingStarfall))
