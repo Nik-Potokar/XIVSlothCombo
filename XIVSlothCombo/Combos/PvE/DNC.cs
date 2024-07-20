@@ -310,6 +310,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
                         CanWeave(actionID) &&
                         ActionReady(Flourish) &&
+                        !WasLastAction(Devilment) &&
                         !HasEffect(Buffs.ThreeFoldFanDance) &&
                         !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) &&
@@ -587,8 +588,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // AoE Flourish
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
-                        CanDelayedWeave(actionID, 1.25, 0.5) &&
+                        CanWeave(actionID) &&
                         ActionReady(Flourish) &&
+                        !WasLastAction(Devilment) &&
                         !HasEffect(Buffs.ThreeFoldFanDance) &&
                         !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) &&
