@@ -246,9 +246,11 @@ namespace XIVSlothCombo.Combos.PvE
                         bool lucidReady = ActionReady(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_STDPS_Lucid;
                         bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
                         bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
+                        bool benisonReady = LevelChecked(DivineBenison) && ActionReady(DivineBenison) && GetRemainingCharges(DivineBenison) >= 2;
                         bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
                         bool assizeEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize);
                         bool lucidEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid);
+                        bool benisonEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Benison);
 
                         if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
                             IsEnabled(Variant.VariantRampart) &&
@@ -260,6 +262,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return PresenceOfMind;
                         if (assizeEnabled && assizeReady)
                             return Assize;
+                        if (benisonEnabled && benisonReady)
+                            return DivineBenison;
                         if (lucidEnabled && lucidReady)
                             return All.LucidDreaming;
                     }
@@ -437,9 +441,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
+                    bool benisonReady = LevelChecked(DivineBenison) && ActionReady(DivineBenison) && GetRemainingCharges(DivineBenison) >= 2;
+                    bool benisonEnabled = IsEnabled(CustomComboPreset.WHM_AOE_Benison);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
-                        return Assize;
+                        return Assize;                            
 
                     if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
@@ -457,6 +463,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                             return PresenceOfMind;
+                        if (benisonEnabled && benisonReady)
+                            return DivineBenison;
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) &&
                             LocalPlayer.CurrentMp <= Config.WHM_AoEDPS_Lucid)
                             return All.LucidDreaming;

@@ -3968,6 +3968,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WHM_ST_MainCombo)]
         [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when below set MP value.", WHM.JobID, 18, "", "")]
         WHM_ST_MainCombo_Lucid = 19006,
+        
+        [ParentCombo(WHM_ST_MainCombo)]
+        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the single target combo to prevent overcap at 2 charges. Must use reaction to assign target.", WHM.JobID, 18, "", "")]
+        WHM_ST_MainCombo_Benison = 19021,
 
         #endregion
 
@@ -4000,6 +4004,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WHM_AoE_DPS)]
         [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 26, "", "")]
         WHM_AoE_DPS_Lucid = 19191,
+
+        [ParentCombo(WHM_AoE_DPS)]
+        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the holy spam to prevent overcap at 2 charges. Must use reaction to assign target.", WHM.JobID, 18, "", "")]
+        WHM_AOE_Benison = 19022,
 
         #endregion
 
