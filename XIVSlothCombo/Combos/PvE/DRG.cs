@@ -204,7 +204,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 || GetCooldownRemainingTime(LanceCharge) < GCD * 4))
+                                (ChaosDoTDebuff is null ||
+                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 ||
+                                GetCooldownRemainingTime(LanceCharge) < GCD * 4)) ||
+                                (!LevelChecked(ChaosThrust) &&
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -217,6 +222,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return OriginalHook(ChaosThrust);
                         }
+
                         if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(WheelingThrust))
                         {
                             if (trueNorthReady && CanDelayedWeave(actionID) &&
@@ -401,7 +407,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < GCD * 5 || GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7))
+                                (ChaosDoTDebuff is null ||
+                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 ||
+                                GetCooldownRemainingTime(LanceCharge) < GCD * 4)) ||
+                                (!LevelChecked(ChaosThrust) &&
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
