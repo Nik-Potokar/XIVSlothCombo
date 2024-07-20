@@ -1287,6 +1287,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_OverwriteCards, "Overwrite Non-DPS Cards", "Will draw even if you have healing cards remaining.");
             }
 
+            if (preset == CustomComboPreset.AST_ST_SimpleHeals_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, AST.Config.AST_ST_SimpleHeals_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.AST_AoE_SimpleHeals_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, AST.Config.AST_AoE_SimpleHeals_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
             #endregion
             // ====================================================================================
             #region BLACK MAGE
@@ -2118,6 +2124,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(SGE.Config.SGE_Eukrasia_Mode, $"{SGE.EukrasianDyskrasia.ActionName()}", "", 3);
             }
 
+            if (preset == CustomComboPreset.SGE_ST_Heal_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_Heal_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
+            if (preset == CustomComboPreset.SGE_AoE_Heal_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_AoE_Heal_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+
             #endregion
             // ====================================================================================
             #region SAMURAI
@@ -2298,6 +2310,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Indomitability", "", 2);
                 UserConfig.DrawRadioButton(SCH.Config.SCH_Recitation_Mode, "Excogitation", "", 3);
             }
+
+            if (preset == CustomComboPreset.SCH_AoE_Heal_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, SCH.Config.SCH_AoE_Heal_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             #endregion
             // ====================================================================================

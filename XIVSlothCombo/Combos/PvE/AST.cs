@@ -132,6 +132,8 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public static UserInt
                 AST_LucidDreaming = new("ASTLucidDreamingFeature", 8000),
+                AST_ST_SimpleHeals_Lucid = new("ASTLucidDreamingFeatureSTHeals", 8000),
+                AST_AoE_SimpleHeals_Lucid = new("ASTLucidDreamingFeatureAoEHeals", 8000),
                 AST_EssentialDignity = new("ASTCustomEssentialDignity", 50),
                 AST_Spire = new("AST_Spire", 80),
                 AST_Ewer = new("AST_Ewer", 80),
@@ -156,31 +158,6 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_ST_DPS_CombustUptime_Threshold = new("AST_ST_DPS_CombustUptime_Threshold");
         }
 
-
-        internal class AST_Benefic : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Benefic;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is Benefic2 && !ActionReady(Benefic2) ? Benefic : actionID;
-        }
-
-        internal class AST_Raise_Alternative : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Raise_Alternative;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast) ? Ascend : actionID;
-        }
-
-        internal class AST_Lightspeed_Protection : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Lightspeed_Protection;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is Lightspeed && HasEffect(Buffs.Lightspeed) ? OriginalHook(11) : actionID;
-            }
-
         internal class AST_ST_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_DPS;
@@ -195,6 +172,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     spellsSinceDraw = 1;
                 }
+
+                //Emergency Lucid
+                if (IsEnabled(CustomComboPreset.AST_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+                    return All.LucidDreaming;
 
                 bool AlternateMode = GetIntOptionAsBool(Config.AST_DPS_AltMode); //(0 or 1 radio values)
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
@@ -298,63 +279,6 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class AST_AoE_SimpleHeals_AspectedHelios : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_AoE_SimpleHeals_AspectedHelios;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is AspectedHelios)
-                {
-                    var canLady = (Config.AST_AoE_SimpleHeals_WeaveLady && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_WeaveLady;
-                    var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
-                    var canOppose = (Config.AST_AoE_SimpleHeals_Opposition && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Opposition;
-
-                    //Level check to exit if we can't use
-                    if (!LevelChecked(AspectedHelios))
-                        return Helios;
-
-                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
-                        ActionReady(MinorArcana) &&
-                        Gauge.DrawnCrownCard is CardType.LADY
-                        && canLady)
-                        return OriginalHook(MinorArcana);
-
-                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition) &&
-                        ActionReady(CelestialOpposition) &&
-                        canOppose)
-                        return CelestialOpposition;
-
-                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Horoscope))
-                    {
-                        if (ActionReady(Horoscope) &&
-                            canHoroscope)
-                            return Horoscope;
-
-                        if ((ActionReady(AspectedHelios)
-                                 && !HasEffect(Buffs.AspectedHelios)
-                                 && !HasEffect(Buffs.HeliosConjunction))
-                             || HasEffect(Buffs.Horoscope)
-                             || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
-                            return OriginalHook(AspectedHelios);
-
-                        if (HasEffect(Buffs.HoroscopeHelios) &&
-                            canHoroscope)
-                            return OriginalHook(Horoscope);
-                    }
-
-                    if ((HasEffect(Buffs.AspectedHelios)
-                         || HasEffect(Buffs.HeliosConjunction))
-                         && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
-                         || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
-                        return Helios;
-                }
-
-                return actionID;
-            }
-        }
-
-
         internal class AST_ST_SimpleHeals : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_SimpleHeals;
@@ -364,6 +288,11 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     //Grab our target (Soft->Hard->Self)
                     IGameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
+                    bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.AST_ST_SimpleHeals_Lucid;
+
+                    //Emergency Lucid
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+                        return All.LucidDreaming;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Esuna) && ActionReady(All.Esuna) &&
                         GetTargetHPPercent(healTarget) >= Config.AST_ST_SimpleHeals_Esuna &&
@@ -380,6 +309,9 @@ namespace XIVSlothCombo.Combos.PvE
                         GetTargetHPPercent(healTarget) <= Config.AST_Ewer &&
                         CanSpellWeave(actionID)))
                         return OriginalHook(Play3);
+
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Lucid) && CanSpellWeave(actionID) && lucidReady)
+                        return All.LucidDreaming;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         ActionReady(EssentialDignity) &&
@@ -411,5 +343,93 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
+        internal class AST_AoE_SimpleHeals_AspectedHelios : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_AoE_SimpleHeals_AspectedHelios;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is AspectedHelios)
+                {
+                    var canLady = (Config.AST_AoE_SimpleHeals_WeaveLady && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_WeaveLady;
+                    var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
+                    var canOppose = (Config.AST_AoE_SimpleHeals_Opposition && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Opposition;
+                    bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.AST_AoE_SimpleHeals_Lucid;
+
+                    //Emergency Lucid
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+                        return All.LucidDreaming;
+
+                    //Level check to exit if we can't use
+                    if (!LevelChecked(AspectedHelios))
+                        return Helios;
+
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
+                        ActionReady(MinorArcana) &&
+                        Gauge.DrawnCrownCard is CardType.LADY
+                        && canLady)
+                        return OriginalHook(MinorArcana);
+
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_CelestialOpposition) &&
+                        ActionReady(CelestialOpposition) &&
+                        canOppose)
+                        return CelestialOpposition;
+
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Lucid) && CanSpellWeave(actionID) && lucidReady)
+                        return All.LucidDreaming;
+
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Horoscope))
+                    {
+                        if (ActionReady(Horoscope) &&
+                            canHoroscope)
+                            return Horoscope;
+
+                        if ((ActionReady(AspectedHelios)
+                                 && !HasEffect(Buffs.AspectedHelios)
+                                 && !HasEffect(Buffs.HeliosConjunction))
+                             || HasEffect(Buffs.Horoscope)
+                             || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
+                            return OriginalHook(AspectedHelios);
+
+                        if (HasEffect(Buffs.HoroscopeHelios) &&
+                            canHoroscope)
+                            return OriginalHook(Horoscope);
+                    }
+
+                    if ((HasEffect(Buffs.AspectedHelios)
+                         || HasEffect(Buffs.HeliosConjunction))
+                         && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
+                         || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
+                        return Helios;
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class AST_Benefic : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Benefic;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                => actionID is Benefic2 && !ActionReady(Benefic2) ? Benefic : actionID;
+        }
+
+        internal class AST_Raise_Alternative : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Raise_Alternative;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                => actionID is All.Swiftcast && IsOnCooldown(All.Swiftcast) ? Ascend : actionID;
+        }
+
+        internal class AST_Lightspeed_Protection : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Lightspeed_Protection;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+                => actionID is Lightspeed && HasEffect(Buffs.Lightspeed) ? OriginalHook(11) : actionID;
+            }
     }
 }

@@ -187,7 +187,7 @@ namespace XIVSlothCombo.Combos
 
             [ReplaceSkill(AST.Gravity, AST.Gravity2)]
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("AoE DPS Option", "Every option below (Lucid/AutoDraws/etc) will also be added to Gravity", AST.JobID)]
+            [CustomComboInfo("AoE DPS Option", "Every option below will also be added to Gravity", AST.JobID)]
             AST_AoE_DPS = 1002,
 
             [ParentCombo(AST_ST_DPS)]
@@ -195,7 +195,7 @@ namespace XIVSlothCombo.Combos
             AST_DPS_LightSpeed = 1003,
 
             [ParentCombo(AST_ST_DPS)]
-            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value", AST.JobID)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below the slider value.", AST.JobID)]
             AST_DPS_Lucid = 1004,
 
             [ParentCombo(AST_ST_DPS)]
@@ -245,12 +245,16 @@ namespace XIVSlothCombo.Combos
             AST_ST_SimpleHeals_Exaltation = 1025,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("The Spire Option", "Adds The Spire when the card has been drawn", AST.JobID)]
+            [CustomComboInfo("The Spire Option", "Uses The Spire when drawn and the target is below the specified hp% value", AST.JobID)]
             AST_ST_SimpleHeals_Spire = 1026,
 
             [ParentCombo(AST_ST_SimpleHeals)]
-            [CustomComboInfo("The Ewer Option", "Adds The Ewer when the card has been drawn", AST.JobID)]
+            [CustomComboInfo("The Ewer Option", "Uses The Ewer when drawn and the target is below the specified hp% value", AST.JobID)]
             AST_ST_SimpleHeals_Ewer = 1027,
+
+            [ParentCombo(AST_ST_SimpleHeals)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", AST.JobID)]
+            AST_ST_SimpleHeals_Lucid = 1028,
 
         [ReplaceSkill(AST.AspectedHelios)]
         [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 4)]
@@ -267,6 +271,10 @@ namespace XIVSlothCombo.Combos
             [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
             [CustomComboInfo("Horoscope Option", "Adds Horoscope.", AST.JobID)]
             AST_AoE_SimpleHeals_Horoscope = 1043,
+
+            [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", AST.JobID)]
+            AST_AoE_SimpleHeals_Lucid = 1044,
 
         [ReplaceSkill(AST.Benefic2)]
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 2)]
@@ -2755,7 +2763,7 @@ namespace XIVSlothCombo.Combos
         RDM_ST_MeleeFinisher = 13510,
 
         [ParentCombo(RDM_ST_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", RDM.JobID, 610)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", RDM.JobID, 610)]
         RDM_ST_Lucid = 13610,
         #endregion
 
@@ -2802,7 +2810,7 @@ namespace XIVSlothCombo.Combos
         RDM_AoE_MeleeFinisher = 13424,
 
         [ParentCombo(RDM_AoE_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", RDM.JobID, 610)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", RDM.JobID, 610)]
         RDM_AoE_Lucid = 13425,
         #endregion
 
@@ -2858,13 +2866,13 @@ namespace XIVSlothCombo.Combos
 
         #region SAGE
 
-        #region Single Target DPS Feature
+        #region Single Target DPS
         [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
         [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100, "", "")]
         SGE_ST_DPS = 14001,
 
         [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", SGE.JobID, 120, "", "")]
         SGE_ST_DPS_Lucid = 14002,
 
         [ParentCombo(SGE_ST_DPS)]
@@ -2897,7 +2905,7 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region AoE DPS Feature
+        #region AoE DPS
         [ReplaceSkill(SGE.Dyskrasia, SGE.Dyskrasia2)]
         [CustomComboInfo("AoE DPS Feature", "Adds various options to Dyskrasia I & II. Requires a target.", SGE.JobID, 200, "", "")]
         SGE_AoE_DPS = 14009,
@@ -2919,7 +2927,7 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_DPS_EDyskrasia = 14052,
 
         [ParentCombo(SGE_AoE_DPS)]
-        [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP falls below the specified value.", SGE.JobID, 4, "", "")]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", SGE.JobID, 4, "", "")]
         SGE_AoE_DPS_Lucid = 14012,
 
         [ParentCombo(SGE_AoE_DPS)]
@@ -2931,7 +2939,7 @@ namespace XIVSlothCombo.Combos
         SGE_AoE_DPS_AddersgallProtect = 14053,
         #endregion
 
-        #region Diagnosis Simple Single Target Heal
+        #region Single Target Heal
         [ReplaceSkill(SGE.Diagnosis)]
         [CustomComboInfo("Single Target Heal Feature", "Supports soft-targeting.\nOptions below are in priority order.", SGE.JobID, 300, "", "")]
         SGE_ST_Heal = 14014,
@@ -2979,9 +2987,14 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SGE_ST_Heal)]
         [CustomComboInfo("Druochole Option", "Applies Druochole.", SGE.JobID, 9, "", "")]
         SGE_ST_Heal_Druochole = 14025,
+
+        [ParentCombo(SGE_ST_Heal)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", AST.JobID)]
+        SGE_ST_Heal_Lucid = 14055,
+
         #endregion
 
-        #region Sage Simple AoE Heal
+        #region AoE Heal
         [ReplaceSkill(SGE.Prognosis)]
         [CustomComboInfo("AoE Heal Feature", "Customize your AoE healing to your liking.", SGE.JobID, 500, "", "")]
         SGE_AoE_Heal = 14026,
@@ -3025,6 +3038,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SGE_AoE_Heal)]
         [CustomComboInfo("Rhizomata Option", "Adds Rhizomata when Addersgall is 0.", SGE.JobID, 501, "", "")]
         SGE_AoE_Heal_Rhizomata = 14036,
+
+        [ParentCombo(SGE_AoE_Heal)]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", AST.JobID)]
+        SGE_AoE_Heal_Lucid = 14056,
+
         #endregion
 
         #region Misc Healing
@@ -3331,50 +3349,49 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Single Target DPS Feature", "Replaces Ruin I / Broils with options below", SCH.JobID, 1)]
         SCH_DPS = 16001,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 110)]
-        SCH_DPS_Lucid = 16002,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below the slider value.", SCH.JobID, 110)]
+            SCH_DPS_Lucid = 16002,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Chain Stratagem / Baneful Impact Weave Option", "Adds Chain Stratagem & Baneful Impact on cooldown with overlap protection", SCH.JobID, 120)]
-        SCH_DPS_ChainStrat = 16003,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Chain Stratagem / Baneful Impact Weave Option", "Adds Chain Stratagem & Baneful Impact on cooldown with overlap protection", SCH.JobID, 120)]
+            SCH_DPS_ChainStrat = 16003,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
-        SCH_DPS_Aetherflow = 16004,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 130)]
+            SCH_DPS_Aetherflow = 16004,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
-        SCH_DPS_EnergyDrain = 16005,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Energy Drain Weave Option", "Use Energy Drain to consume remaining Aetherflow stacks when Aetherflow is about to come off cooldown.", SCH.JobID, 131)]
+            SCH_DPS_EnergyDrain = 16005,
 
-        [ParentCombo(SCH_DPS_EnergyDrain)]
-        [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
-        SCH_DPS_EnergyDrain_BurstSaver = 16006,
+                [ParentCombo(SCH_DPS_EnergyDrain)]
+                [CustomComboInfo("Energy Drain Burst Option", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining.", SCH.JobID, 133)]
+                SCH_DPS_EnergyDrain_BurstSaver = 16006,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
-        SCH_DPS_Ruin2Movement = 16007,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Ruin II Moving Option", "Use Ruin II when you have to move.", SCH.JobID, 150)]
+            SCH_DPS_Ruin2Movement = 16007,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
-        SCH_DPS_Bio = 16008,
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Bio / Biolysis Option", "Automatic DoT uptime.", SCH.JobID, 140)]
+            SCH_DPS_Bio = 16008,
 
-        [ParentCombo(SCH_DPS)]
-        [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
-        SCH_DPS_Dissipation_Opener = 16009,
-
+            [ParentCombo(SCH_DPS)]
+            [CustomComboInfo("Dissipation Opener Option", "Use Dissipation at the start of the battle.", SCH.JobID, 170)]
+            SCH_DPS_Dissipation_Opener = 16009,
 
         [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Art of War with options below.", SCH.JobID, 3)]
         SCH_AoE = 16010,
 
-        [ParentCombo(SCH_AoE)]
-        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID)]
-        SCH_AoE_Lucid = 16011,
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below the slider value.", SCH.JobID)]
+            SCH_AoE_Lucid = 16011,
 
-        [ParentCombo(SCH_AoE)]
-        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
-        SCH_AoE_Aetherflow = 16012,
+            [ParentCombo(SCH_AoE)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            SCH_AoE_Aetherflow = 16012,
 
         #endregion
 
@@ -3395,53 +3412,53 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Fairy Healing Combo Feature", "Change Whispering Dawn into Fey Illumination, Fey Blessing, then Whispering Dawn when used.", SCH.JobID, 8)]
         SCH_Fairy_Combo = 16016,
 
-        [ParentCombo(SCH_Fairy_Combo)]
-        [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID)]
-        SCH_Fairy_Combo_Consolation = 16017,
+            [ParentCombo(SCH_Fairy_Combo)]
+            [CustomComboInfo("Consolation During Seraph Option", "Adds Consolation during Seraph.", SCH.JobID)]
+            SCH_Fairy_Combo_Consolation = 16017,
 
         [ReplaceSkill(SCH.Succor)]
         [CustomComboInfo("AoE Heal Feature", "Replaces Succor with options below:", SCH.JobID, 5)]
         SCH_AoE_Heal = 16018,
 
-        [ParentCombo(SCH_AoE_Heal)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP isn't high enough to cast Succor.", SCH.JobID)]
-        SCH_AoE_Heal_Lucid = 16019,
+            [ParentCombo(SCH_AoE_Heal)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", SCH.JobID)]
+            SCH_AoE_Heal_Lucid = 16019,
 
-        [ParentCombo(SCH_AoE_Heal)]
-        [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
-        SCH_AoE_Heal_Aetherflow = 16020,
+            [ParentCombo(SCH_AoE_Heal)]
+            [CustomComboInfo("Aetherflow Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID)]
+            SCH_AoE_Heal_Aetherflow = 16020,
 
-        [ParentCombo(SCH_AoE_Heal_Aetherflow)]
-        [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
-        SCH_AoE_Heal_Aetherflow_Indomitability = 16021,
+                [ParentCombo(SCH_AoE_Heal_Aetherflow)]
+                [CustomComboInfo("Indomitability Ready Only Option", "Only uses Aetherflow is Indomitability is ready to use.", SCH.JobID)]
+                SCH_AoE_Heal_Aetherflow_Indomitability = 16021,
 
-        [ParentCombo(SCH_AoE_Heal)]
-        [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
-        SCH_AoE_Heal_Indomitability = 16022,
+            [ParentCombo(SCH_AoE_Heal)]
+            [CustomComboInfo("Indomitability Option", "Use Indomitability before using Succor.", SCH.JobID)]
+            SCH_AoE_Heal_Indomitability = 16022,
 
         [ReplaceSkill(SCH.Physick)]
         [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 4)]
         SCH_ST_Heal = 16023,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 1)]
-        SCH_ST_Heal_Lucid = 16024,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below the slider value.", SCH.JobID, 1)]
+            SCH_ST_Heal_Lucid = 16024,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
-        SCH_ST_Heal_Aetherflow = 16025,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
+            SCH_ST_Heal_Aetherflow = 16025,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
-        SCH_ST_Heal_Esuna = 16026,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
+            SCH_ST_Heal_Esuna = 16026,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
-        SCH_ST_Heal_Adloquium = 16027,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
+            SCH_ST_Heal_Adloquium = 16027,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
-        SCH_ST_Heal_Lustrate = 16028,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
+            SCH_ST_Heal_Lustrate = 16028,
 
 
         #endregion
@@ -3458,6 +3475,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SCH_Aetherflow)]
         [CustomComboInfo("Dissipation Option", "If Aetherflow is on cooldown, show Dissipation instead.", SCH.JobID)]
         SCH_Aetherflow_Dissipation = 16031,
+
+        [ReplaceSkill(SCH.Dissipation)]
+        [CustomComboInfo("Aetherflow Spend on Dissipation", "If user has Aetherflow stacks and dissipation is up, show Energy Drain instead.", SCH.JobID)]
+        SCH_Aetherflow_Dissipation_Drain = 16038,
 
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
@@ -3579,7 +3600,7 @@ namespace XIVSlothCombo.Combos
         SMN_RuinMobility = 17030,
 
         [ParentCombo(SMN_Advanced_Combo)]
-        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when MP falls below the set value.", SMN.JobID, 2, "", "")]
+        [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", SMN.JobID, 2, "", "")]
         SMN_Lucid = 17031,
 
         [CustomComboInfo("Egi Abilities on Summons Feature", "Adds Egi Abilities (Astral Flow) to Egi summons when ready.\nEgi abilities will appear on their respective Egi summon ability, as well as Titan.", SMN.JobID, 12, "", "")]
@@ -3933,7 +3954,7 @@ namespace XIVSlothCombo.Combos
 
         #region WHITE MAGE
 
-        #region Single Target DPS Feature
+        #region Single Target DPS
 
         [ReplaceSkill(WHM.Stone1, WHM.Stone2, WHM.Stone3, WHM.Stone4, WHM.Glare1, WHM.Glare3)]
         [CustomComboInfo("Single Target DPS Feature", "Collection of cooldowns and spell features on Glare/Stone.", WHM.JobID, 1, "", "")]
@@ -3957,7 +3978,11 @@ namespace XIVSlothCombo.Combos
 
             [ParentCombo(WHM_ST_MainCombo)]
             [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery to the single target combo when it is ready to be used.", WHM.JobID, 15, "", "")]
-            WHM_ST_MainCombo_Misery_oGCD = 19017,
+            WHM_ST_MainCombo_Misery = 19017,
+
+                [ParentCombo(WHM_ST_MainCombo_Misery)]
+                [CustomComboInfo("Save Misery", "Saves Afflatus Misery until user has 3 lilies. Used for manual Misery, but won't overcap.", WHM.JobID)]
+                WHM_ST_MainCombo_Misery_Save = 19019,
 
             [ParentCombo(WHM_ST_MainCombo)]
             [CustomComboInfo("Lily Overcap Protection Option", "Adds Afflatus Rapture to the single target combo when at three Lilies.", WHM.JobID, 16, "", "")]
@@ -3968,12 +3993,12 @@ namespace XIVSlothCombo.Combos
             WHM_ST_MainCombo_PresenceOfMind = 19008,
 
             [ParentCombo(WHM_ST_MainCombo)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when below set MP value.", WHM.JobID, 18, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", WHM.JobID, 18, "", "")]
             WHM_ST_MainCombo_Lucid = 19006,
 
         #endregion
 
-        #region AoE DPS Feature
+        #region AoE DPS
 
         [ReplaceSkill(WHM.Holy, WHM.Holy3)]
         [CustomComboInfo("AoE DPS Feature", "Collection of cooldowns and spell features on Holy/Holy III.", WHM.JobID, 2, "", "")]
@@ -3991,6 +4016,10 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Afflatus Misery Option", "Adds Afflatus Misery to the AoE combo when it is ready to be used.", WHM.JobID, 23, "", "")]
             WHM_AoE_DPS_Misery = 19194,
 
+                [ParentCombo(WHM_AoE_DPS_Misery)]
+                [CustomComboInfo("Save Misery", "Saves Afflatus Misery until user has 3 lilies. Used for manual Misery, but won't overcap.", WHM.JobID)]
+                WHM_AoE_DPS_Misery_Save = 19097,
+
             [ParentCombo(WHM_AoE_DPS)]
             [CustomComboInfo("Lily Overcap Protection Option", "Adds Afflatus Rapture to the AoE combo when at three Lilies.", WHM.JobID, 24, "", "")]
             WHM_AoE_DPS_LilyOvercap = 19193,
@@ -4000,60 +4029,8 @@ namespace XIVSlothCombo.Combos
             WHM_AoE_DPS_PresenceOfMind = 19195,
 
             [ParentCombo(WHM_AoE_DPS)]
-            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the AoE combo when below the set MP value if you are moving or it can be weaved without GCD delay.", WHM.JobID, 26, "", "")]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", WHM.JobID, 26, "", "")]
             WHM_AoE_DPS_Lucid = 19191,
-
-        #endregion
-
-        [ReplaceSkill(WHM.AfflatusSolace)]
-        [CustomComboInfo("Solace into Misery Feature", "Replaces Afflatus Solace with Afflatus Misery when it is ready to be used.", WHM.JobID, 30, "", "")]
-        WHM_SolaceMisery = 19000,
-
-        [ReplaceSkill(WHM.AfflatusRapture)]
-        [CustomComboInfo("Rapture into Misery Feature", "Replaces Afflatus Rapture with Afflatus Misery when it is ready to be used.", WHM.JobID, 40, "", "")]
-        WHM_RaptureMisery = 19001,
-
-        #region AoE Heals Feature
-
-        [ReplaceSkill(WHM.Medica1)]
-        [CustomComboInfo("Simple Heals (AoE)", "Replaces Medica with a one button AoE healing setup.", WHM.JobID, 4, "", "")]
-        WHM_AoEHeals = 19007,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 2, "", "")]
-            WHM_AoEHeals_Rapture = 19011,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 3, "", "")]
-            WHM_AoEHeals_Misery = 19010,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 4, "", "")]
-            WHM_AoEHeals_ThinAir = 19200,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID, 5)]
-            WHM_AoEHeals_Cure3 = 19201,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID, 6)]
-            WHM_AoEHeals_Assize = 19202,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID, 7)]
-            WHM_AoEHeals_Plenary = 19203,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID, 9)]
-            WHM_AoEHeals_Lucid = 19204,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Medica II/III Option", "Uses Medica II/III when player doesn't have Medica II/III buff.", WHM.JobID, 1)]
-            WHM_AoEHeals_Medica2 = 19205,
-
-            [ParentCombo(WHM_AoEHeals)]
-            [CustomComboInfo("Divine Caress", "Uses Divine Caress when Divine Grace from Temperance is active.", WHM.JobID, 8)]
-            WHM_AoEHeals_DivineCaress = 19207,
 
         #endregion
 
@@ -4096,7 +4073,7 @@ namespace XIVSlothCombo.Combos
             WHM_STHeals_Aquaveil = 19307,
 
             [ParentCombo(WHM_STHeals)]
-            [CustomComboInfo("Lucid Dreaming Option", "Uses Lucid Dreaming when available.", WHM.JobID)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", WHM.JobID)]
             WHM_STHeals_Lucid = 19308,
 
             [ParentCombo(WHM_STHeals)]
@@ -4104,6 +4081,60 @@ namespace XIVSlothCombo.Combos
             WHM_STHeals_Esuna = 19309,
 
         #endregion
+
+        #region AoE Heals
+
+        [ReplaceSkill(WHM.Medica1)]
+        [CustomComboInfo("Simple Heals (AoE)", "Replaces Medica with a one button AoE healing setup.", WHM.JobID, 4, "", "")]
+        WHM_AoEHeals = 19007,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Afflatus Rapture Option", "Uses Afflatus Rapture when available.", WHM.JobID, 2, "", "")]
+            WHM_AoEHeals_Rapture = 19011,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Afflatus Misery Option", "Uses Afflatus Misery when available.", WHM.JobID, 3, "", "")]
+            WHM_AoEHeals_Misery = 19010,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Thin Air Option", "Uses Thin Air when available.", WHM.JobID, 4, "", "")]
+            WHM_AoEHeals_ThinAir = 19200,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Cure III Option", "Replaces Medica with Cure III when available.", WHM.JobID, 5)]
+            WHM_AoEHeals_Cure3 = 19201,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Assize Option", "Uses Assize when available.", WHM.JobID, 6)]
+            WHM_AoEHeals_Assize = 19202,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Plenary Indulgence Option", "Uses Plenary Indulgence when available.", WHM.JobID, 7)]
+            WHM_AoEHeals_Plenary = 19203,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming when MP drops below the slider value.", WHM.JobID, 9)]
+            WHM_AoEHeals_Lucid = 19204,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Medica II/III Option", "Uses Medica II/III when player doesn't have Medica II/III buff.", WHM.JobID, 1)]
+            WHM_AoEHeals_Medica2 = 19205,
+
+            [ParentCombo(WHM_AoEHeals)]
+            [CustomComboInfo("Divine Caress", "Uses Divine Caress when Divine Grace from Temperance is active.", WHM.JobID, 8)]
+            WHM_AoEHeals_DivineCaress = 19207,
+
+        #endregion
+
+        #region Utility
+
+        [ReplaceSkill(WHM.AfflatusSolace)]
+        [CustomComboInfo("Solace into Misery Feature", "Replaces Afflatus Solace with Afflatus Misery when it is ready to be used.", WHM.JobID, 30, "", "")]
+        WHM_SolaceMisery = 19000,
+
+        [ReplaceSkill(WHM.AfflatusRapture)]
+        [CustomComboInfo("Rapture into Misery Feature", "Replaces Afflatus Rapture with Afflatus Misery when it is ready to be used.", WHM.JobID, 40, "", "")]
+        WHM_RaptureMisery = 19001,
 
         [ReplaceSkill(WHM.Cure2)]
         [CustomComboInfo("Cure II Sync Feature", "Changes Cure II to Cure when synced below Lv.30.", WHM.JobID, 70, "", "")]
@@ -4127,6 +4158,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(WHM_ST_MainCombo, WHM_AoE_DPS)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", WHM.JobID)]
         WHM_DPS_Variant_Rampart = 19026,
+
+        #endregion
 
         // Last value = 19027
 
