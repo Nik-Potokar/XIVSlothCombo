@@ -309,7 +309,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
-                        CanInterruptEnemy() && ActionReady(All.HeadGraze) &&
+                        CanInterruptEnemy() &&
+                        ActionReady(All.HeadGraze) &&
                         !HasEffect(Buffs.TechnicalFinish))
                         return All.HeadGraze;
 
@@ -416,7 +417,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return StarfallDance;
 
                     if (HasEffect(Buffs.FinishingMoveReady) &&
-                        IsOffCooldown(StandardStep))
+                        IsOffCooldown(StandardStep) &&
+                        !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
 
                     if (HasEffect(Buffs.LastDanceReady))
