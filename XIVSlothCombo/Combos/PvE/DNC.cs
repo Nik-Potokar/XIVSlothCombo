@@ -433,7 +433,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    if (HasEffect(Buffs.FinishingMoveReady) &&
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_FM) &&
+                        HasEffect(Buffs.FinishingMoveReady) &&
                         IsOffCooldown(StandardStep) &&
                         !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
@@ -450,7 +451,9 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(StandardStep) &&
                         IsOffCooldown(StandardStep) &&
                         GetTargetHPPercent() > targetHpThresholdStandard &&
-                        !HasEffect(Buffs.FinishingMoveReady) && // Checking that there are not conflicting options
+                        ((IsEnabled(CustomComboPreset.DNC_ST_Simple_FM) && // Checking that there are not conflicting options
+                          !HasEffect(Buffs.FinishingMoveReady)) ||
+                         !IsEnabled(CustomComboPreset.DNC_ST_Simple_FM)) &&
                         !HasEffect(Buffs.TechnicalFinish) &&
                         (IsOffCooldown(TechnicalStep) || // Checking burst is ready
                          GetCooldownRemainingTime(TechnicalStep) > 5) &&
