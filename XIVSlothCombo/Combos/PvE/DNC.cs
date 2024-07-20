@@ -684,13 +684,15 @@ namespace XIVSlothCombo.Combos.PvE
                         return TechnicalStep;
 
                     // Emergency Last Dance usage
-                    if ((HasEffect(Buffs.LastDanceReady) && // Last second usage
-                         GetBuffRemainingTime(Buffs.LastDanceReady) < 5) ||
-                        (GetCooldownRemainingTime(TechnicalStep) is < 5 and > 2 && // Pre-Tech usage
-                         GetBuffRemainingTime(Buffs.LastDanceReady) < 9))
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD_Safety) &&
+                        ((HasEffect(Buffs.LastDanceReady) && // Last second usage
+                          GetBuffRemainingTime(Buffs.LastDanceReady) < 5) ||
+                         (GetCooldownRemainingTime(TechnicalStep) is < 5 and > 2 && // Pre-Tech usage
+                          GetBuffRemainingTime(Buffs.LastDanceReady) < 9)))
                         return LastDance;
 
-                    if (HasEffect(Buffs.FlourishingFinish))
+                    if (HasEffect(Buffs.FlourishingFinish) &&
+                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_Tillana))
                         return Tillana;
 
                     // AoE Saber Dance
@@ -712,13 +714,17 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
-                    if (HasEffect(Buffs.FinishingMoveReady) &&
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM) &&
+                        HasEffect(Buffs.FinishingMoveReady) &&
                         IsOffCooldown(StandardStep) &&
                         !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
 
-                    if (HasEffect(Buffs.LastDanceReady) &&
-                        HasEffect(Buffs.TechnicalFinish))
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD) &&
+                        HasEffect(Buffs.LastDanceReady) &&
+                        ((HasEffect(Buffs.TechnicalFinish) &&
+                          IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD_Safety)) ||
+                         !IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD_Safety)))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingStarfall))
@@ -730,7 +736,9 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(StandardStep) &&
                         (!HasTarget() ||
                          GetTargetHPPercent() > targetHpThresholdStandard) &&
-                        !HasEffect(Buffs.FinishingMoveReady) && // Checking that there are not conflicting options
+                        ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM) && // Checking that there are not conflicting options
+                          !HasEffect(Buffs.FinishingMoveReady)) ||
+                         !IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM)) &&
                         !HasEffect(Buffs.TechnicalFinish) &&
                         (IsOffCooldown(TechnicalStep) || // Checking burst is ready
                          GetCooldownRemainingTime(TechnicalStep) > 5) &&
