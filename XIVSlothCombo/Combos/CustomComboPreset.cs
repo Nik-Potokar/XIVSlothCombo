@@ -823,13 +823,16 @@ namespace XIVSlothCombo.Combos
         #region Simple Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
         [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
-        [CustomComboInfo("Simple Dancer (Single Target) Feature", "Single button, single target. Includes songs, flourishes and overprotections." +
-        "\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID)]
+        [CustomComboInfo("Simple Dancer (Single Target) Feature", "Single button, single target. Includes songs, flourishes and overprotections.", DNC.JobID)]
         DNC_ST_SimpleMode = 4050,
 
         [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Interrupt Option", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 0)]
+        DNC_ST_Simple_Interrupt = 4051,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_StandardFill)]
-        [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1, "", "")]
+        [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1)]
         DNC_ST_Simple_SS = 4052,
 
         [ParentCombo(DNC_ST_Simple_SS)]
@@ -843,50 +846,60 @@ namespace XIVSlothCombo.Combos
         DNC_ST_Simple_FM = 4091,
 
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 5, "", "")]
-        DNC_ST_Simple_Interrupt = 4051,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_SS)]
         [CustomComboInfo("Simple Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
-        "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 1, "", "")]
+            "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 2)]
         DNC_ST_Simple_StandardFill = 4061,
 
         [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Peloton Opener Option", "Uses Peloton when you are out of combat, do not already have the Peloton buff and are performing Standard Step with greater than 5s remaining of your dance." +
+            "\nWill not override Dance Step Combo Feature.", DNC.JobID, 3)]
+        DNC_ST_Simple_Peloton = 4062,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_TechFill)]
-        [CustomComboInfo("Simple Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 2, "", "")]
+        [CustomComboInfo("Simple Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 4)]
         DNC_ST_Simple_TS = 4053,
 
         [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_TS)]
         [CustomComboInfo("Simple Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the rotation." +
-        "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 2, "", "")]
+                                                    "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 5)]
         DNC_ST_Simple_TechFill = 4054,
 
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Tech Devilment Option", "Includes Devilment in the rotation." +
-        "\nWill activate only during Technical Finish if you're Lv70 or above." +
-        "\nWill be used on cooldown below Lv70.", DNC.JobID, 2, "", "")]
-        DNC_ST_Simple_Devilment = 4055,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 3, "", "")]
-        DNC_ST_Simple_SaberDance = 4063,
-
-        [ParentCombo(DNC_ST_Simple_SaberDance)]
-        [CustomComboInfo("Simple Dance of the Dawn Option", "Includes Dance of the Dawn in the rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID, 3, "", "")]
-        DNC_ST_Simple_DawnDance = 4064,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 3, "", "")]
+        [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 6)]
         DNC_ST_Simple_Flourish = 4056,
 
         [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Devilment Option", "Includes Devilment in the rotation." +
+                                                    "\nWill activate only during Technical Finish if you're Lv70 or above." +
+                                                    "\nWill be used on cooldown below Lv70.", DNC.JobID, 7)]
+        DNC_ST_Simple_Devilment = 4055,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped." +
-        "\nWeaves feathers where possible during Technical Finish." +
-        "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
-        "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 4, "", "")]
+                                                   "\nWeaves feathers where possible during Technical Finish." +
+                                                   "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
+                                                   "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 8)]
         DNC_ST_Simple_Feathers = 4057,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Improvisation Option", "Includes Improvisation in the rotation when available." +
+            "\nWill not us while under Technical Finish", DNC.JobID, 9)]
+        DNC_ST_Simple_Improvisation = 4060,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 10)]
+        DNC_ST_Simple_Tillana = 4092,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 7)]
+        DNC_ST_Simple_SaberDance = 4063,
+
+        [ParentCombo(DNC_ST_Simple_SaberDance)]
+        [CustomComboInfo("Simple Dance of the Dawn Option", "Includes Dance of the Dawn in the rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
+        DNC_ST_Simple_DawnDance = 4064,
 
         /*
         [ParentCombo(DNC_ST_Simple_Feathers)]
@@ -899,15 +912,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 5, "", "")]
         DNC_ST_Simple_PanicHeals = 4059,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Improvisation Option", "Includes Improvisation in the rotation when available.", DNC.JobID, 5, "", "")]
-        DNC_ST_Simple_Improvisation = 4060,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Peloton Opener Option", "Uses Peloton when you are out of combat, do not already have the Peloton buff and are performing Standard Step with greater than 5s remaining of your dance." +
-        "\nWill not override Dance Step Combo Feature.", DNC.JobID, 5, "", "")]
-        DNC_ST_Simple_Peloton = 4062,
         #endregion
 
         #region Simple Dancer (AoE)

@@ -389,7 +389,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // ST Improvisation
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Improvisation) &&
                             ActionReady(Improvisation) &&
-                            !HasEffect(Buffs.TechnicalStep))
+                            !HasEffect(Buffs.TechnicalFinish))
                             return Improvisation;
                     }
                     #endregion
@@ -411,7 +411,8 @@ namespace XIVSlothCombo.Combos.PvE
                          GetBuffRemainingTime(Buffs.LastDanceReady) < 9))
                         return LastDance;
 
-                    if (HasEffect(Buffs.FlourishingFinish))
+                    if (HasEffect(Buffs.FlourishingFinish) &&
+                        IsEnabled(CustomComboPreset.DNC_ST_Simple_Tillana))
                         return Tillana;
 
                     // ST Saber Dance
