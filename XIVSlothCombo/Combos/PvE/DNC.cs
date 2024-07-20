@@ -391,6 +391,11 @@ namespace XIVSlothCombo.Combos.PvE
                          GetTargetHPPercent() > targetHpThresholdTechnical))
                         return TechnicalStep;
 
+                    // Emergency Last Dance usage
+                    if (HasEffect(Buffs.LastDanceReady) &&
+                        GetBuffRemainingTime(Buffs.LastDanceReady) < 5)
+                        return LastDance;
+
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
 
@@ -418,7 +423,8 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
 
-                    if (HasEffect(Buffs.LastDanceReady))
+                    if (HasEffect(Buffs.LastDanceReady) &&
+                        HasEffect(Buffs.TechnicalFinish))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingStarfall))
@@ -654,6 +660,11 @@ namespace XIVSlothCombo.Combos.PvE
                          GetTargetHPPercent() > targetHpThresholdTechnical))
                         return TechnicalStep;
 
+                    // Emergency Last Dance usage
+                    if (HasEffect(Buffs.LastDanceReady) &&
+                        GetBuffRemainingTime(Buffs.LastDanceReady) < 5)
+                        return LastDance;
+
                     if (HasEffect(Buffs.FlourishingFinish))
                         return Tillana;
 
@@ -681,7 +692,8 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.LastDanceReady))
                         return FinishingMove;
 
-                    if (HasEffect(Buffs.LastDanceReady))
+                    if (HasEffect(Buffs.LastDanceReady) &&
+                        HasEffect(Buffs.TechnicalFinish))
                         return LastDance;
 
                     if (HasEffect(Buffs.FlourishingStarfall))
