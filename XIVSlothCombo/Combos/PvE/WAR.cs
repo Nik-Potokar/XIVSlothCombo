@@ -145,7 +145,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && !LevelChecked(InnerChaos)))
                                 return OriginalHook(InnerBeast);
 
-                            if (HasEffect(Buffs.NascentChaos) && !LevelChecked(InnerChaos))
+                            if (HasEffect(Buffs.NascentChaos) && gauge >= 50 && !LevelChecked(InnerChaos))
                                 return OriginalHook(Decimate);
                         }
 
