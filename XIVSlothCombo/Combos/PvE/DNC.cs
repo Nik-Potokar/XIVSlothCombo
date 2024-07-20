@@ -343,11 +343,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanWeave(actionID))
                     {
-                        if (HasEffect(Buffs.FourFoldFanDance))
-                            return FanDance4;
-
                         if (HasEffect(Buffs.ThreeFoldFanDance))
                             return FanDance3;
+
+                        if (HasEffect(Buffs.FourFoldFanDance))
+                            return FanDance4;
 
                         // ST Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Feathers) &&
