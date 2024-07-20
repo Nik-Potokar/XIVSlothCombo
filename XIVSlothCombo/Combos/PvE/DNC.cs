@@ -297,6 +297,15 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region Weaves
+                    // ST Devilment
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
+                        CanWeave(actionID) &&
+                        ActionReady(Devilment) &&
+                        (HasEffect(Buffs.TechnicalFinish) ||
+                         WasLastAction(TechnicalFinish4) ||
+                         !LevelChecked(TechnicalStep)))
+                        return Devilment;
+
                     // ST Flourish
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
                         CanWeave(actionID) &&
@@ -310,15 +319,6 @@ namespace XIVSlothCombo.Combos.PvE
                           HasEffect(Buffs.TechnicalFinish)) ||
                          CombatEngageDuration().TotalSeconds > 20))
                         return Flourish;
-
-                    // ST Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
-                        CanWeave(actionID) &&
-                        ActionReady(Devilment) &&
-                        (HasEffect(Buffs.TechnicalFinish) ||
-                         WasLastAction(TechnicalFinish4) ||
-                         !LevelChecked(TechnicalStep)))
-                        return Devilment;
 
                     // ST Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
@@ -576,6 +576,15 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     #region Weaves
+                    // AoE Devilment
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
+                        CanWeave(actionID) &&
+                        ActionReady(Devilment) &&
+                        (HasEffect(Buffs.TechnicalFinish) ||
+                         WasLastAction(TechnicalFinish4) ||
+                         !LevelChecked(TechnicalStep)))
+                        return Devilment;
+
                     // AoE Flourish
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
                         CanDelayedWeave(actionID, 1.25, 0.5) &&
@@ -586,15 +595,6 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.FlourishingFlow) &&
                         !HasEffect(Buffs.FinishingMoveReady))
                         return Flourish;
-
-                    // AoE Devilment
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
-                        CanWeave(actionID) &&
-                        ActionReady(Devilment) &&
-                        (HasEffect(Buffs.TechnicalFinish) ||
-                         WasLastAction(TechnicalFinish4) ||
-                         !LevelChecked(TechnicalStep)))
-                        return Devilment;
 
                     // AoE Interrupt
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Interrupt) &&

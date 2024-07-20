@@ -867,14 +867,14 @@ namespace XIVSlothCombo.Combos
         DNC_ST_Simple_TechFill = 4054,
 
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 6)]
-        DNC_ST_Simple_Flourish = 4056,
-
-        [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Devilment Option", "Includes Devilment in the rotation." +
                                                     "\nWill activate only during Technical Finish if you're Lv70 or above." +
-                                                    "\nWill be used on cooldown below Lv70.", DNC.JobID, 7)]
+                                                    "\nWill be used on cooldown below Lv70.", DNC.JobID, 6)]
         DNC_ST_Simple_Devilment = 4055,
+
+        [ParentCombo(DNC_ST_SimpleMode)]
+        [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 7)]
+        DNC_ST_Simple_Flourish = 4056,
 
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped." +
@@ -952,14 +952,14 @@ namespace XIVSlothCombo.Combos
         DNC_AoE_Simple_TechFill = 4074,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 5)]
-        DNC_AoE_Simple_Flourish = 4076,
+        [CustomComboInfo("Simple AoE Tech Devilment Option", "Includes Devilment in the AoE rotation." +
+            "\nWill activate only during Technical Finish if you're Lv70 or above." +
+            "\nWill be used on cooldown below Lv70.", DNC.JobID, 5)]
+        DNC_AoE_Simple_Devilment = 4075,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Tech Devilment Option", "Includes Devilment in the AoE rotation." +
-        "\nWill activate only during Technical Finish if you're Lv70 or above." +
-        "\nWill be used on cooldown below Lv70.", DNC.JobID, 6)]
-        DNC_AoE_Simple_Devilment = 4075,
+        [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6)]
+        DNC_AoE_Simple_Flourish = 4076,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE Feathers Option", "Expends a feather in the next available weave window when capped." +
