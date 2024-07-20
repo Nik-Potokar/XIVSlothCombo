@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System;
 using System.Linq;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
@@ -10,7 +11,7 @@ using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class MNK
+    internal class MNK
     {
         public const byte ClassID = 2;
         public const byte JobID = 20;
@@ -22,7 +23,7 @@ namespace XIVSlothCombo.Combos.PvE
             Meditation = 36940,
             SteelPeak = 3547,
             TwinSnakes = 61,
-            ArmOfTheDestroyer = 25767,
+            ArmOfTheDestroyer = 62,
             Demolish = 66,
             Mantra = 65,
             DragonKick = 74,
@@ -44,11 +45,16 @@ namespace XIVSlothCombo.Combos.PvE
             SixSidedStar = 16476,
             ShadowOfTheDestroyer = 25767,
             WindsReply = 36949,
-            LeapingOpo = 36942,
+            ForbiddenMeditation = 36942,
+            LeapingOpo = 36945,
             RisingRaptor = 36946,
             PouncingCoeurl = 36947,
             TrueNorth = 7546,
             FiresReply = 36950;
+
+        // MB Abilities for Opener
+        public const uint
+            ElixirField = 36948;
 
         public static class Buffs
         {
@@ -258,6 +264,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class MNK_ST_CustomMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_CustomCombo;
+            internal static MNKOpenerLogic MNKOpener = new();
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 if (actionID == Bootshine || actionID == LeapingOpo)
@@ -265,6 +272,12 @@ namespace XIVSlothCombo.Combos.PvE
                     var canWeave = CanWeave(actionID, 0.5);
                     var canWeaveChakra = CanWeave(actionID);
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+
+                    if (IsEnabled(CustomComboPreset.MNK_STUseLLOpener))
+                    {
+                        if (MNKOpener.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
 
                     if (IsEnabled(CustomComboPreset.MNK_STUseMeditation)
                         && (!inCombat || !InMeleeRange())
@@ -400,12 +413,29 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (HasEffect(Buffs.OpoOpoForm))
                 {
-                    return Gauge.OpoOpoFury == 0 ? DragonKick : OriginalHook(Bootshine);
+                    if (Gauge.OpoOpoFury == 0)
+                    {
+                        if (LevelChecked(Levels.DragonKick))
+                            return DragonKick;
+                    }
+                    else
+                    {
+                        OriginalHook(Bootshine);
+                    }
                 }
 
                 if (HasEffect(Buffs.RaptorForm))
                 {
-                    return Gauge.RaptorFury == 0 ? TwinSnakes : OriginalHook(TrueStrike);
+                    if (Gauge.RaptorFury == 0)
+                    {
+                        if (LevelChecked(Levels.TwinSnakes))
+                            return TwinSnakes;
+                    }
+                    else
+                    {
+                        if (LevelChecked(Levels.TrueStrike))
+                            return OriginalHook(TrueStrike);
+                    }
                 }
 
                 if (HasEffect(Buffs.CoerlForm))
@@ -424,7 +454,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         else
                         {
-                            return Demolish;
+                            if (LevelChecked(Levels.Demolish))
+                                return Demolish;
                         }
                     }
 
@@ -439,7 +470,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     else
                     {
-                        return OriginalHook(SnapPunch);
+                        if (LevelChecked(Levels.SnapPunch))
+                            return OriginalHook(SnapPunch);
                     }
                 }
 

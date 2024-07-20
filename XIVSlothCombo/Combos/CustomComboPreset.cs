@@ -1853,8 +1853,8 @@ namespace XIVSlothCombo.Combos
         MNK_CustomCombo = 9005,
 
         [ParentCombo(MNK_CustomCombo)]
-        [CustomComboInfo("Use Lunar/Solar Opener", "Uses Lunar/Solar opener", MNK.JobID)]
-        MNK_STUseLSOpener = 9006,
+        [CustomComboInfo("Use Double Lunar Opener", "Uses Double Lunar opener", MNK.JobID)]
+        MNK_STUseLLOpener = 9006,
 
         [ParentCombo(MNK_CustomCombo)]
         [CustomComboInfo("Use Meditation", "Uses Meditation when out of combat/range", MNK.JobID)]
