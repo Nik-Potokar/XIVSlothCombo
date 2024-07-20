@@ -295,7 +295,10 @@ namespace XIVSlothCombo.Combos.PvE
                         !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) &&
                         !HasEffect(Buffs.FlourishingFlow) &&
-                        !HasEffect(Buffs.FinishingMoveReady))
+                        !HasEffect(Buffs.FinishingMoveReady) &&
+                        ((CombatEngageDuration().TotalSeconds < 20 &&
+                          HasEffect(Buffs.TechnicalFinish)) ||
+                         CombatEngageDuration().TotalSeconds > 20))
                         return Flourish;
 
                     // ST Devilment
