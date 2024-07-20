@@ -419,10 +419,6 @@ namespace XIVSlothCombo.Combos.PvE
                         GetBuffRemainingTime(Buffs.FlourishingStarfall) < 4)
                         return StarfallDance;
 
-                    if (HasEffect(Buffs.FlourishingFinish) &&
-                        IsEnabled(CustomComboPreset.DNC_ST_Simple_Tillana))
-                        return Tillana;
-
                     // ST Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) &&
                         LevelChecked(SaberDance) &&
@@ -441,6 +437,10 @@ namespace XIVSlothCombo.Combos.PvE
                             (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
                             return SaberDance;
                     }
+
+                    if (HasEffect(Buffs.FlourishingFinish) &&
+                        IsEnabled(CustomComboPreset.DNC_ST_Simple_Tillana))
+                        return Tillana;
 
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_FM) &&
                         HasEffect(Buffs.FinishingMoveReady) &&
@@ -705,10 +705,6 @@ namespace XIVSlothCombo.Combos.PvE
                         GetBuffRemainingTime(Buffs.FlourishingStarfall) < 4)
                         return StarfallDance;
 
-                    if (HasEffect(Buffs.FlourishingFinish) &&
-                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_Tillana))
-                        return Tillana;
-
                     // AoE Saber Dance
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) &&
                         LevelChecked(SaberDance) &&
@@ -727,6 +723,10 @@ namespace XIVSlothCombo.Combos.PvE
                             (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50))
                             return SaberDance;
                     }
+
+                    if (HasEffect(Buffs.FlourishingFinish) &&
+                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_Tillana))
+                        return Tillana;
 
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM) &&
                         HasEffect(Buffs.FinishingMoveReady) &&
