@@ -221,6 +221,10 @@ namespace XIVSlothCombo
             Service.Configuration.ResetFeatures("v3.0.18.1_PLDRework", Enumerable.Range(11000, 100).ToArray());
             Service.Configuration.ResetFeatures("v3.1.0.1_BLMRework", Enumerable.Range(2000, 100).ToArray());
             Service.Configuration.ResetFeatures("v3.1.1.0_DRGRework", Enumerable.Range(6000, 800).ToArray());
+            Service.Configuration.ResetFeatures("v3.2.0.3_ASTCleanup", Enumerable.Range(1000, 999).ToArray());
+            Service.Configuration.ResetFeatures("v3.2.0.3_SGECleanup", Enumerable.Range(14000, 999).ToArray());
+            Service.Configuration.ResetFeatures("v3.2.0.3_SCHCleanup", Enumerable.Range(16000, 999).ToArray());
+            Service.Configuration.ResetFeatures("v3.2.0.3_WHMCleanup", Enumerable.Range(19000, 999).ToArray());
         }
 
         private void DrawUI() => ConfigWindow.Draw();

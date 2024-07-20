@@ -1200,7 +1200,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_DPS)
             {
                 UserConfig.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Malefic", "", 0);
-                UserConfig.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Combust", "Alternative DPS Mode. Leaves Malefic alone for pure DPS, becomes Malefic when features are on cooldown", 1);
+                UserConfig.DrawRadioButton(AST.Config.AST_DPS_AltMode, "On Combust", "", 1);
             }
 
             if (preset is CustomComboPreset.AST_DPS_Lucid)
