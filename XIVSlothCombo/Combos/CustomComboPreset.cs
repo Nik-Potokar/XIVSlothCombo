@@ -3969,6 +3969,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lucid Dreaming Option", "Adds Lucid Dreaming to the single target combo when below set MP value.", WHM.JobID, 18, "", "")]
         WHM_ST_MainCombo_Lucid = 19006,
 
+        [ParentCombo(WHM_ST_MainCombo)]
+        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the single target combo to prevent overcap at 2 charges. Must use reaction to assign target.", WHM.JobID, 18, "", "")]
+        WHM_ST_MainCombo_Benison = 19021,
+       
         #endregion
 
         #region AoE DPS Feature
@@ -4010,6 +4014,10 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(WHM.AfflatusRapture)]
         [CustomComboInfo("Rapture into Misery Feature", "Replaces Afflatus Rapture with Afflatus Misery when it is ready to be used.", WHM.JobID, 40, "", "")]
         WHM_RaptureMisery = 19001,
+        
+        [ParentCombo(WHM_AoE_DPS)]
+        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the holy spam to prevent overcap at 2 charges. Must use reaction to assign target.", WHM.JobID, 18, "", "")]
+        WHM_AOE_Benison = 19022,
 
         #region AoE Heals Feature
 
