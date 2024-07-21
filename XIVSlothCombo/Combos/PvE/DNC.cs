@@ -80,7 +80,8 @@ namespace XIVSlothCombo.Combos.PvE
                 ShieldSamba = 1826,
                 LastDanceReady = 3867,
                 FinishingMoveReady = 3868,
-                DanceOfTheDawnReady = 3869;
+                DanceOfTheDawnReady = 3869,
+                Devilment = 1825;
         }
 
         public static class Config
@@ -308,9 +309,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // ST Flourish
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish) &&
-                        CanWeave(actionID) &&
+                        CanDelayedWeave(actionID, 1.25, 0.5) &&
                         ActionReady(Flourish) &&
-                        !WasLastAction(Devilment) &&
+                        IsOnCooldown(Devilment) &&
+                        (GetCooldownRemainingTime(Devilment) > 50 ||
+                         GetBuffRemainingTime(Buffs.Devilment) < 19) &&
                         !HasEffect(Buffs.ThreeFoldFanDance) &&
                         !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) &&
