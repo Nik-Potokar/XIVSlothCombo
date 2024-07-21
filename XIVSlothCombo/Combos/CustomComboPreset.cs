@@ -840,10 +840,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Standard Dance Opener Option", "Starts Standard Step (and steps) before combat.", DNC.JobID)]
         DNC_ST_Simple_SS_Prepull = 4090,
 
-        [ParentCombo(DNC_ST_Simple_SS)]
-        [CustomComboInfo("Finishing Move Option", "Will alternate between Standard Step and Finishing Move in the rotation.", DNC.JobID)]
-        DNC_ST_Simple_FM = 4091,
-
         [ParentCombo(DNC_ST_SimpleMode)]
         [ConflictingCombos(DNC_ST_Simple_SS)]
         [CustomComboInfo("Simple Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
@@ -903,11 +899,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 12)]
         DNC_ST_Simple_LD = 4093,
-
-        [ParentCombo(DNC_ST_Simple_LD)]
-        [CustomComboInfo("Last Dance Safety Options", "Forces Last Dance to only be used under Technical Finish." +
-                                                      "\nBut, will use Last Dance if it's about to expire, or if Tech is coming up and Last Dance is not likely to stay up.", DNC.JobID)]
-        DNC_ST_Simple_LD_Safety = 4094,
 
         [ParentCombo(DNC_ST_SimpleMode)]
         [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 13)]
