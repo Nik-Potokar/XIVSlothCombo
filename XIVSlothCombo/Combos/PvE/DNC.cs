@@ -472,6 +472,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
+                    // ST Tillana
                     if (HasEffect(Buffs.FlourishingFinish) &&
                         IsEnabled(CustomComboPreset.DNC_ST_Simple_Tillana))
                         return Tillana;
@@ -763,6 +764,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return SaberDance;
                     }
 
+                    // AoE Tillana
                     if (HasEffect(Buffs.FlourishingFinish) &&
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_Tillana))
                         return Tillana;
