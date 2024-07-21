@@ -3970,7 +3970,7 @@ namespace XIVSlothCombo.Combos
         WHM_ST_MainCombo_Lucid = 19006,
         
         [ParentCombo(WHM_ST_MainCombo)]
-        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the single target combo to prevent overcap at 2 charges. Must use reaction to assign target.", WHM.JobID, 18, "", "")]
+        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the single target combo to prevent overcap at 2 charges. \nTo be used in conjunction with Redirect/Reaction/etc.", WHM.JobID, 18, "", "")]
         WHM_ST_MainCombo_Benison = 19021,
 
         #endregion
@@ -4006,7 +4006,7 @@ namespace XIVSlothCombo.Combos
         WHM_AoE_DPS_Lucid = 19191,
 
         [ParentCombo(WHM_AoE_DPS)]
-        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the holy spam to prevent overcap at 2 charges. Must use reaction to assign target.", WHM.JobID, 18, "", "")]
+        [CustomComboInfo("Divine Benison Option", "Adds Divine Benison to the holy spam to prevent overcap at 2 charges. \nTo be used in conjunction with Redirect/Reaction/etc.", WHM.JobID, 18, "", "")]
         WHM_AOE_Benison = 19022,
 
         #endregion

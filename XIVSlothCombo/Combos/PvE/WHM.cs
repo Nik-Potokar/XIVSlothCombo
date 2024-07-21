@@ -246,7 +246,7 @@ namespace XIVSlothCombo.Combos.PvE
                         bool lucidReady = ActionReady(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_STDPS_Lucid;
                         bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
                         bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
-                        bool benisonReady = LevelChecked(DivineBenison) && ActionReady(DivineBenison) && GetRemainingCharges(DivineBenison) >= 2;
+                        bool benisonReady = GetRemainingCharges(DivineBenison) >= 2;
                         bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
                         bool assizeEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize);
                         bool lucidEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid);
@@ -441,7 +441,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
-                    bool benisonReady = LevelChecked(DivineBenison) && ActionReady(DivineBenison) && GetRemainingCharges(DivineBenison) >= 2;
+                    bool benisonReady = GetRemainingCharges(DivineBenison) >= 2;
                     bool benisonEnabled = IsEnabled(CustomComboPreset.WHM_AOE_Benison);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
