@@ -312,7 +312,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
-                            && Gauge.Chakra == 5
+                            && Gauge.Chakra >= 5
                             && level >= Levels.SteelPeak)
                         {
                             return OriginalHook(Meditation);
