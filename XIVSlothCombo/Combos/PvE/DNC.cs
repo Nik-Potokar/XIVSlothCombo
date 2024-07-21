@@ -430,6 +430,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (needToTech)
                         return TechnicalStep;
 
+                    // ST Last Dance
                     if (IsEnabled(CustomComboPreset.DNC_ST_Simple_LD) && // Enabled
                         HasEffect(Buffs.LastDanceReady) && // Ready
                         (HasEffect(Buffs.TechnicalFinish) || // Has Tech
@@ -439,6 +440,7 @@ namespace XIVSlothCombo.Combos.PvE
                          GetBuffRemainingTime(Buffs.LastDanceReady) < 4)) // Or last second
                         return LastDance;
 
+                    // ST Standard Step (Finishing Move)
                     if (needToStandardOrFinish && needToFinish)
                         return OriginalHook(FinishingMove);
 
@@ -559,12 +561,37 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Windmill)
                 {
-                    #region Types
+                    #region Variables
                     DNCGauge? gauge = GetJobGauge<DNCGauge>();
+
                     bool flow = HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow);
                     bool symmetry = HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry);
                     var targetHpThresholdStandard = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleSSAoEBurstPercent);
                     var targetHpThresholdTechnical = PluginConfiguration.GetCustomIntValue(Config.DNCSimpleTSAoEBurstPercent);
+
+                    var needToTech =
+                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) && // Enabled
+                        ActionReady(TechnicalStep) && // Up
+                        !HasEffect(Buffs.StandardStep) && // After Standard
+                        IsOnCooldown(StandardStep) &&
+                        GetTargetHPPercent() > targetHpThresholdTechnical; // HP% check
+
+                    var needToStandardOrFinish =
+                        IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && // Enabled
+                        ActionReady(StandardStep) && // Up
+                        GetTargetHPPercent() > targetHpThresholdStandard && // HP% check
+                        (IsOffCooldown(TechnicalStep) || // Checking burst is ready for standard
+                         GetCooldownRemainingTime(TechnicalStep) > 5); // Don't mangle
+
+                    var needToFinish =
+                        HasEffect(Buffs.FinishingMoveReady) &&
+                        !HasEffect(Buffs.LastDanceReady);
+
+                    var needToStandard =
+                        !HasEffect(Buffs.FinishingMoveReady) &&
+                        (IsOffCooldown(Flourish) ||
+                         GetCooldownRemainingTime(Flourish) > 5) &&
+                        !HasEffect(Buffs.TechnicalFinish);
                     #endregion
 
                     #region Dance Fills
@@ -589,7 +616,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Devilment
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
                         CanWeave(actionID) &&
-                        ActionReady(Devilment) &&
+                        GetCooldownRemainingTime(Devilment) < 0.05 &&
                         (HasEffect(Buffs.TechnicalFinish) ||
                          WasLastAction(TechnicalFinish4) ||
                          !LevelChecked(TechnicalStep)))
@@ -599,7 +626,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Flourish) &&
                         CanWeave(actionID) &&
                         ActionReady(Flourish) &&
+                        !WasLastWeaponskill(TechnicalFinish4) &&
                         IsOnCooldown(Devilment) &&
+                        (GetCooldownRemainingTime(Devilment) > 50 ||
+                         (HasEffect(Buffs.Devilment) &&
+                          GetBuffRemainingTime(Buffs.Devilment) < 19)) &&
                         !HasEffect(Buffs.ThreeFoldFanDance) &&
                         !HasEffect(Buffs.FourFoldFanDance) &&
                         !HasEffect(Buffs.FlourishingSymmetry) &&
@@ -624,7 +655,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID) && !WasLastWeaponskill(TechnicalFinish4))
                     {
                         // AoE Feathers & Fans
                         if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Feathers) &&
@@ -687,22 +718,26 @@ namespace XIVSlothCombo.Combos.PvE
 
                     #region GCD
                     // AoE Technical Step
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_TS) &&
-                        ActionReady(TechnicalStep) &&
-                        !HasEffect(Buffs.StandardStep) &&
-                        IsOnCooldown(StandardStep) &&
-                        (!HasTarget() ||
-                         GetTargetHPPercent() > targetHpThresholdTechnical))
+                    if (needToTech)
                         return TechnicalStep;
 
-                    // Emergency Last Dance usage
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD_Safety) &&
-                        ((HasEffect(Buffs.LastDanceReady) && // Last second usage
-                          GetBuffRemainingTime(Buffs.LastDanceReady) < 4) ||
-                         (IsOnCooldown(TechnicalStep) && // Pre-Tech usage
-                          GetCooldownRemainingTime(TechnicalStep) < 20 &&
-                          GetBuffRemainingTime(Buffs.LastDanceReady) < GetCooldownRemainingTime(TechnicalStep) + 4)))
+                    // AoE Last Dance
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD) && // Enabled
+                        HasEffect(Buffs.LastDanceReady) && // Ready
+                        (HasEffect(Buffs.TechnicalFinish) || // Has Tech
+                         !(IsOnCooldown(TechnicalStep) && // Or can't hold it for tech
+                           GetCooldownRemainingTime(TechnicalStep) < 20 &&
+                           GetBuffRemainingTime(Buffs.LastDanceReady) > GetCooldownRemainingTime(TechnicalStep) + 4) ||
+                         GetBuffRemainingTime(Buffs.LastDanceReady) < 4)) // Or last second
                         return LastDance;
+
+                    // AoE Standard Step (Finishing Move)
+                    if (needToStandardOrFinish && needToFinish)
+                        return OriginalHook(FinishingMove);
+
+                    // AoE Standard Step
+                    if (needToStandardOrFinish && needToStandard)
+                        return StandardStep;
 
                     // Emergency Starfall usage
                     if (HasEffect(Buffs.FlourishingStarfall) &&
@@ -732,37 +767,8 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.DNC_AoE_Simple_Tillana))
                         return Tillana;
 
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM) &&
-                        HasEffect(Buffs.FinishingMoveReady) &&
-                        IsOffCooldown(StandardStep) &&
-                        !HasEffect(Buffs.LastDanceReady))
-                        return FinishingMove;
-
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD) &&
-                        HasEffect(Buffs.LastDanceReady) &&
-                        ((HasEffect(Buffs.TechnicalFinish) &&
-                          IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD_Safety)) ||
-                         !IsEnabled(CustomComboPreset.DNC_AoE_Simple_LD_Safety)))
-                        return LastDance;
-
                     if (HasEffect(Buffs.FlourishingStarfall))
                         return StarfallDance;
-
-                    // AoE Standard Step
-                    if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && // Checking that SS is ready and wanted
-                        ActionReady(StandardStep) &&
-                        IsOffCooldown(StandardStep) &&
-                        (!HasTarget() ||
-                         GetTargetHPPercent() > targetHpThresholdStandard) &&
-                        ((IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM) && // Checking that there are not conflicting options
-                          !HasEffect(Buffs.FinishingMoveReady)) ||
-                         !IsEnabled(CustomComboPreset.DNC_AoE_Simple_FM)) &&
-                        !HasEffect(Buffs.TechnicalFinish) &&
-                        (IsOffCooldown(TechnicalStep) || // Checking burst is ready
-                         GetCooldownRemainingTime(TechnicalStep) > 5) &&
-                        (IsOffCooldown(Flourish) ||
-                         GetCooldownRemainingTime(Flourish) > 5))
-                        return StandardStep;
 
                     // AoE combos and burst attacks
                     if (LevelChecked(Bladeshower) &&

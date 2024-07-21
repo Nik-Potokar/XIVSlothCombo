@@ -921,10 +921,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple AoE Standard Dance Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 1)]
         DNC_AoE_Simple_SS = 4072,
 
-        [ParentCombo(DNC_AoE_Simple_SS)]
-        [CustomComboInfo("Finishing Move Option", "Will alternate between Standard Step and Finishing Move in the rotation.", DNC.JobID)]
-        DNC_AoE_Simple_FM = 4100,
-
         [ParentCombo(DNC_AoE_SimpleMode)]
         [ConflictingCombos(DNC_AoE_Simple_SS)]
         [CustomComboInfo("Simple AoE Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the AoE rotation." +
@@ -978,11 +974,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 11)]
         DNC_AoE_Simple_LD = 4102,
-
-        [ParentCombo(DNC_AoE_Simple_LD)]
-        [CustomComboInfo("Last Dance Safety Options", "Forces Last Dance to only be used under Technical Finish." +
-                                                      "\nBut, will use Last Dance if it's about to expire, or if Tech is coming up and Last Dance is not likely to stay up.", DNC.JobID)]
-        DNC_AoE_Simple_LD_Safety = 4103,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 12)]
