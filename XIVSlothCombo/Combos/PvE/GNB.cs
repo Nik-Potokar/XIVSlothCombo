@@ -349,6 +349,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID == GnashingFang)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
+                    float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
 
                     if (IsOffCooldown(NoMercy) && IsOffCooldown(GnashingFang) && IsEnabled(CustomComboPreset.GNB_GF_NoMercy))
                         return NoMercy;
@@ -454,11 +455,25 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is BurstStrike)
                 {
                     var gauge = GetJobGauge<GNBGauge>();
+                    float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
 
                     if (IsEnabled(CustomComboPreset.GNB_BS_Continuation) && HasEffect(Buffs.ReadyToBlast) && LevelChecked(Hypervelocity))
                         return Hypervelocity;
                     if (IsEnabled(CustomComboPreset.GNB_BS_Bloodfest) && gauge.Ammo is 0 && LevelChecked(Bloodfest) && !HasEffect(Buffs.ReadyToBlast))
                         return Bloodfest;
+                    if (IsEnabled(CustomComboPreset.GNB_BS_Reign) && (LevelChecked(ReignOfBeasts)))
+                    {
+                        if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && IsOnCooldown(GnashingFang) && IsOnCooldown(DoubleDown) && gauge.AmmoComboStep == 0 && GetCooldownRemainingTime(Bloodfest) > GCD * 12)
+                        {
+                            if (WasLastWeaponskill(WickedTalon) || (WasLastAbility(EyeGouge)))
+                                return OriginalHook(ReignOfBeasts);
+                        }
+
+                        if (WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood))
+                        {
+                            return OriginalHook(ReignOfBeasts);
+                        }
+                    }
                     if (IsEnabled(CustomComboPreset.GNB_BS_DoubleDown) && HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) < 2 && gauge.Ammo >= 2 && LevelChecked(DoubleDown))
                         return DoubleDown;
                 }
