@@ -685,9 +685,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Raging Jaws Option", "Enable the snapshotting of DoTs, within the remaining time of Raging Strikes below:", BRD.JobID)]
         BRD_Simple_RagingJaws = 3025,
 
-        [ParentCombo(BRD_AoE_Simple_Songs)]
-        [CustomComboInfo("Exclude Wanderer's Minuet Option", "Dont use Wanderer's Minuet.", BRD.JobID)]
-        BRD_AoE_Simple_SongsExcludeWM = 3027,
+        //[ParentCombo(BRD_AoE_Simple_Songs)]
+        //[CustomComboInfo("Exclude Wanderer's Minuet Option", "Dont use Wanderer's Minuet.", BRD.JobID)]
+        //BRD_AoE_Simple_SongsExcludeWM = 3027,
 
         [ParentCombo(BRD_ST_SimpleMode)]
         [CustomComboInfo("Second Wind Option", "Uses Second Wind when below set HP percentage.", BRD.JobID)]
@@ -707,7 +707,14 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BRD.JobID)]
         BRD_Variant_Cure = 3031,
 
-        // Last value = 3031
+        [ParentCombo(BRD_AoE_Simple_Songs)]
+        [CustomComboInfo("Simple AoE Buffs Option", "Adds buffs onto the Simple AoE Bard feature.", BRD.JobID)]
+        BRD_AoE_Simple_Buffs = 3032,
+
+        [ParentCombo(BRD_AoE_SimpleMode)]
+        [CustomComboInfo("Simple AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
+        BRD_AoE_Simple_NoWaste = 3033,
+        // Last value = 3033
 
         #endregion
 
