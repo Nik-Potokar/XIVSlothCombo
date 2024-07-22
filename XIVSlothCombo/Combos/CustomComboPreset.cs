@@ -827,6 +827,12 @@ namespace XIVSlothCombo.Combos
         "\nWorks with Simple Dancer and Simple Dancer AoE.", DNC.JobID)]
         DNC_DanceStepCombo = 4039,
 
+        // StandardStep(or Finishing Move) --> Last Dance
+        [ReplaceSkill(DNC.StandardStep, DNC.FinishingMove)]
+        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [CustomComboInfo("Standard Step to Last Dance Feature", "Change Standard Step or Finishing Move to Last Dance when available.", DNC.JobID)]
+        DNC_StandardStepLastDance = 4086,
+
         #region Simple Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
         [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
@@ -1001,7 +1007,7 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        // Last value = 4084
+        // Last value = 4086
 
         #endregion
 
