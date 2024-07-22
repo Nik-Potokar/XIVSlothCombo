@@ -1755,6 +1755,31 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Spacing();
             }
 
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Confiteor)
+            {
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_ST_ConfiteorMPReserve, "Minimum MP gauge required.", sliderIncrement: 100);
+            }
+
+            if (preset is CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor)
+            {
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_AoE_ConfiteorMPReserve, "Minimum MP gauge required.", sliderIncrement: 100);
+            }
+
+            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Blades)
+            {
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_ST_BladesMPReserve, "Minimum MP gauge required.", sliderIncrement: 100);
+            }
+
+            if (preset is CustomComboPreset.PLD_AoE_AdvancedMode_Blades)
+            {
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_AoE_BladesMPReserve, "Minimum MP gauge required.", sliderIncrement: 100);
+            }
+
+            if (preset is CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle)
+            {
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_AoE_HolyCircleMPReserve, "Minimum MP gauge required.", sliderIncrement: 100);
+            }
+
             if (preset == CustomComboPreset.PLD_SpiritsWithin)
             {
                 UserConfig.DrawRadioButton(PLD.Config.PLD_SpiritsWithinOption, "Prioritize Circle of Scorn", "", 1);
@@ -1784,7 +1809,8 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit)
             {
-                UserConfig.DrawSliderInt(2000, 10000, PLD.Config.PLD_ReserveMana, "Minimum MP gauge required.", sliderIncrement: 500);
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_ST_HolySpiritMPReserve, "Minimum MP gauge required.", sliderIncrement: 100);
+                ImGui.Spacing();
                 UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Early Spend", "When under the effect of Divine Might, use Holy Spirit before restarting the basic combo.", 1);
                 UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Late Spend", "When under the effect of Divine Might, uses Holy Spirit before the end of the basic combo.", 2);
                 UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Alternate Spend", "When under the effect of Divine Might, switches between early and late depending on how often Flight or Fight is used.", 3);
