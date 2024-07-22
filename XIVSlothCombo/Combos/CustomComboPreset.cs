@@ -458,128 +458,131 @@ namespace XIVSlothCombo.Combos
         [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedReprobation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle)]
         [ConflictingCombos(BLU_Opener)]
         [CustomComboInfo("BLU Moon Flute Opener (Level 80)", "Turns Moon Flute into a full opener.\nUse the remaining 2 charges of Winged Reprobation before starting the opener again!\nCan be done with 2.50 spell speed", BLU.JobID, 1)]
-        BLU_NewMoonFluteOpener = 70021,
+        BLU_NewMoonFluteOpener = 70001,
 
-        [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
-        [ParentCombo(BLU_NewMoonFluteOpener)]
-        [CustomComboInfo("DoT Opener", "Changes the opener to apply either Mortal Flame or Breath of Magic instead of using Winged Reprobation.\nRequires 2.20 or faster spell speed", BLU.JobID)]
-        BLU_NewMoonFluteOpener_DoTOpener = 70022,
+            [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
+            [ParentCombo(BLU_NewMoonFluteOpener)]
+            [CustomComboInfo("DoT Opener", "Changes the opener to apply either Mortal Flame or Breath of Magic instead of using Winged Reprobation.\nRequires 2.20 or faster spell speed", BLU.JobID)]
+            BLU_NewMoonFluteOpener_DoTOpener = 70002,
 
         [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.RoseOfDestruction, BLU.FeatherRain, BLU.Bristle, BLU.GlassDance, BLU.Surpanakha, BLU.MatraMagic, BLU.ShockStrike, BLU.PhantomFlurry)]
         [ReplaceSkill(BLU.MoonFlute)]
         [ConflictingCombos(BLU_NewMoonFluteOpener)]
         [CustomComboInfo("BLU Moon Flute Opener (Level 70)", "Turns Moon Flute into a full opener. Here for historical value; level 80 opener is more potent.", BLU.JobID, 2)]
-        BLU_Opener = 70001,
+        BLU_Opener = 70010,
+
+        [BlueInactive(BLU.SonicBoom, BLU.GoblinPunch, BLU.ChocoMeteor)]
+        [ReplaceSkill(BLU.SonicBoom, BLU.GoblinPunch, BLU.ChocoMeteor)]
+        [CustomComboInfo("Lucid Dreaming", "Adds Lucid Dreaming when MP drops below the slider value", BLU.JobID, 3)]
+        BLU_Lucid = 70020,
 
         [BlueInactive(BLU.MoonFlute, BLU.Tingle, BLU.ShockStrike, BLU.Whistle, BLU.FinalSting)]
         [ReplaceSkill(BLU.FinalSting)]
-        [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute > Tingle > Whistle > Final Sting.", BLU.JobID, 3)]
-        BLU_FinalSting = 70002,
+        [CustomComboInfo("Final Sting Combo", "Turns Final Sting into the buff combo of: Moon Flute > Tingle > Whistle > Final Sting.", BLU.JobID, 4)]
+        BLU_FinalSting = 70030,
 
-        [BlueInactive(BLU.RoseOfDestruction, BLU.FeatherRain, BLU.GlassDance, BLU.JKick)]
-        [ParentCombo(BLU_FinalSting)]
-        [CustomComboInfo("Off-cooldown Primal Additions", "Adds Rose of Destruction, Feather Rain, Glass Dance, and J Kick to the combo.", BLU.JobID)]
-        BLU_Primals = 70003,
+            [BlueInactive(BLU.RoseOfDestruction, BLU.FeatherRain, BLU.GlassDance, BLU.JKick)]
+            [ParentCombo(BLU_FinalSting)]
+            [CustomComboInfo("Off-cooldown Primal Additions", "Adds Rose of Destruction, Feather Rain, Glass Dance, and J Kick to the combo.", BLU.JobID)]
+            BLU_Primals = 70031,
 
-        [BlueInactive(BLU.BasicInstinct)]
-        [ParentCombo(BLU_FinalSting)]
-        [CustomComboInfo("Solo Mode", "Uses Basic Instinct if you're in an instance and on your own.", BLU.JobID)]
-        BLU_SoloMode = 70011,
+            [BlueInactive(BLU.BasicInstinct)]
+            [ParentCombo(BLU_FinalSting)]
+            [CustomComboInfo("Solo Mode", "Uses Basic Instinct if you're in an instance and on your own.", BLU.JobID)]
+            BLU_SoloMode = 70032,
 
         [BlueInactive(BLU.RamsVoice, BLU.Ultravibration)]
         [ReplaceSkill(BLU.Ultravibration)]
-        [CustomComboInfo("Vibe Combo", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available.", BLU.JobID, 4)]
-        BLU_Ultravibrate = 70005,
+        [CustomComboInfo("Vibe Combo", "Turns Ultravibration into Ram's Voice if Deep Freeze isn't on the target. Will swiftcast Ultravibration if available.", BLU.JobID, 5)]
+        BLU_Ultravibrate = 70040,
 
-        [BlueInactive(BLU.HydroPull)]
-        [ParentCombo(BLU_Ultravibrate)]
-        [CustomComboInfo("Hydro Pull Setup", "Uses Hydro Pull before using Ram's Voice.", BLU.JobID)]
-        BLU_HydroPull = 70012,
+            [BlueInactive(BLU.HydroPull)]
+            [ParentCombo(BLU_Ultravibrate)]
+            [CustomComboInfo("Hydro Pull Setup", "Uses Hydro Pull before using Ram's Voice.", BLU.JobID)]
+            BLU_HydroPull = 70041,
 
         [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
         [ReplaceSkill(BLU.FeatherRain)]
-        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance.\nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID, 5)]
-        BLU_PrimalCombo = 70008,
+        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance.\nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID, 6)]
+        BLU_PrimalCombo = 70050,
 
-        [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Moon Flute Burst Pooling Option", "Holds spells if Moon Flute burst is about to occur and spells are off cooldown.", BLU.JobID)]
-        BLU_PrimalCombo_Pool = 70015,
+            [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Moon Flute Burst Pooling Option", "Holds spells if Moon Flute burst is about to occur and spells are off cooldown.", BLU.JobID)]
+            BLU_PrimalCombo_Pool = 70051,
 
-        [BlueInactive(BLU.JKick)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("J Kick Option", "Adds J Kick to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_JKick = 70013,
+            [BlueInactive(BLU.JKick)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("J Kick Option", "Adds J Kick to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_JKick = 70052,
 
-        [BlueInactive(BLU.SeaShanty)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Sea Shanty Option", "Adds Sea Shanty to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_SeaShanty = 70024,
+            [BlueInactive(BLU.SeaShanty)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Sea Shanty Option", "Adds Sea Shanty to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_SeaShanty = 70053,
 
-        [BlueInactive(BLU.WingedReprobation)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Winged Reprobration Option", "Adds Winged Reprobation to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_WingedReprobation = 70025,
+            [BlueInactive(BLU.WingedReprobation)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Winged Reprobration Option", "Adds Winged Reprobation to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_WingedReprobation = 70054,
 
-        [BlueInactive(BLU.MatraMagic)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_Matra = 70017,
+            [BlueInactive(BLU.MatraMagic)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Matra Magic Option", "Adds Matra Magic to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_Matra = 70055,
 
-        [BlueInactive(BLU.Surpanakha)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_Suparnakha = 70018,
+            [BlueInactive(BLU.Surpanakha)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Surpanakha Option", "Adds Surpanakha to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_Suparnakha = 70056,
 
-        [BlueInactive(BLU.PhantomFlurry)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_PhantomFlurry = 70019,
+            [BlueInactive(BLU.PhantomFlurry)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Phantom Flurry Option", "Adds Phantom Flurry to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_PhantomFlurry = 70057,
 
-        [BlueInactive(BLU.Nightbloom, BLU.Bristle)]
-        [ParentCombo(BLU_PrimalCombo)]
-        [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the combo.", BLU.JobID)]
-        BLU_PrimalCombo_Nightbloom = 70020,
+            [BlueInactive(BLU.Nightbloom, BLU.Bristle)]
+            [ParentCombo(BLU_PrimalCombo)]
+            [CustomComboInfo("Nightbloom Option", "Adds Nightbloom to the combo.", BLU.JobID)]
+            BLU_PrimalCombo_Nightbloom = 70058,
 
         [BlueInactive(BLU.SongOfTorment, BLU.Bristle)]
         [ReplaceSkill(BLU.SongOfTorment)]
-        [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so Song of Torment is buffed.", BLU.JobID, 6)]
-        BLU_BuffedSoT = 70000,
+        [CustomComboInfo("Buffed Song of Torment", "Turns Song of Torment into Bristle so Song of Torment is buffed.", BLU.JobID, 7)]
+        BLU_BuffedSoT = 70070,
 
         [BlueInactive(BLU.PeripheralSynthesis, BLU.MustardBomb)]
         [ReplaceSkill(BLU.PeripheralSynthesis)]
-        [CustomComboInfo("Peripheral Synthesis into Mustard Bomb", "Turns Peripheral Synthesis into Mustard Bomb when target is under the effect of Lightheaded.", BLU.JobID, 7)]
-        BLU_LightHeadedCombo = 70010,
+        [CustomComboInfo("Peripheral Synthesis into Mustard Bomb", "Turns Peripheral Synthesis into Mustard Bomb when target is under the effect of Lightheaded.", BLU.JobID, 8)]
+        BLU_LightHeadedCombo = 70071,
 
         [BlueInactive(BLU.PerpetualRay, BLU.SharpenedKnife)]
-        [CustomComboInfo("Perpetual Ray into Sharpened Knife", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID, 8)]
-        BLU_PerpetualRayStunCombo = 70014,
+        [CustomComboInfo("Perpetual Ray into Sharpened Knife", "Turns Perpetual Ray into Sharpened Knife when target is stunned and in melee range.", BLU.JobID, 9)]
+        BLU_PerpetualRayStunCombo = 70072,
 
         [BlueInactive(BLU.SonicBoom, BLU.SharpenedKnife)]
-        [CustomComboInfo("Sonic Boom Melee", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID, 9)]
-        BLU_MeleeCombo = 70016,
+        [CustomComboInfo("Sonic Boom Melee", "Turns Sonic Boom into Sharpened Knife when in melee range.", BLU.JobID, 10)]
+        BLU_MeleeCombo = 70073,
 
         [BlueInactive(BLU.MagicHammer)]
         [ReplaceSkill(BLU.MagicHammer)]
-        [CustomComboInfo("Addle & Magic Hammer Debuff", "Turns Magic Hammer into Addle when off cooldown.", BLU.JobID, 10)]
-        BLU_Addle = 70007,
+        [CustomComboInfo("Addle & Magic Hammer Debuff", "Turns Magic Hammer into Addle when off cooldown.", BLU.JobID, 11)]
+        BLU_Addle = 70074,
 
         [BlueInactive(BLU.BlackKnightsTour, BLU.WhiteKnightsTour)]
         [ReplaceSkill(BLU.BlackKnightsTour, BLU.WhiteKnightsTour)]
-        [CustomComboInfo("Knight's Tour", "Turns Black Knight's Tour or White Knight's Tour into its counterpart when the enemy is under the effect of the spell's debuff.", BLU.JobID, 11)]
-        BLU_KnightCombo = 70009,
+        [CustomComboInfo("Knight's Tour", "Turns Black Knight's Tour or White Knight's Tour into its counterpart when the enemy is under the effect of the spell's debuff.", BLU.JobID, 12)]
+        BLU_KnightCombo = 70075,
 
         [BlueInactive(BLU.Offguard, BLU.BadBreath, BLU.Devour)]
         [ReplaceSkill(BLU.Devour, BLU.Offguard, BLU.BadBreath)]
-        [CustomComboInfo("Tank Debuff", "Puts Devour, Off-Guard, Lucid Dreaming, and Bad Breath into one button when under Tank Mimicry.", BLU.JobID, 12)]
-        BLU_DebuffCombo = 70006,
+        [CustomComboInfo("Tank Debuff", "Puts Devour, Off-Guard, Lucid Dreaming, and Bad Breath into one button when under Tank Mimicry.", BLU.JobID, 13)]
+        BLU_DebuffCombo = 70076,
 
         [ReplaceSkill(BLU.DeepClean)]
         [BlueInactive(BLU.PeatPelt, BLU.DeepClean)]
-        [CustomComboInfo("Peat Clean", "Changes Deep Clean to Peat Pelt if current target is not inflicted with Begrimed.", BLU.JobID, 13)]
-        BLU_PeatClean = 70023,
-
-        // Last value = 70023
+        [CustomComboInfo("Peat Clean", "Changes Deep Clean to Peat Pelt if current target is not inflicted with Begrimed.", BLU.JobID, 14)]
+        BLU_PeatClean = 70077,
 
         #endregion
 

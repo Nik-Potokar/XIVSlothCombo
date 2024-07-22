@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -47,7 +48,9 @@ namespace XIVSlothCombo.Combos.PvE
             BreathOfMagic = 34567,
             MortalFlame = 34579,
             PeatPelt = 34569,
-            DeepClean = 34570;
+            DeepClean = 34570,
+            GoblinPunch = 34563,
+            ChocoMeteor = 23284;
 
         public static class Buffs
         {
@@ -79,6 +82,12 @@ namespace XIVSlothCombo.Combos.PvE
                 MortalFlame = 3643,
                 BreathOfMagic = 3712,
                 Begrimed = 3636;
+        }
+
+        public static class Config
+        {
+            public static UserInt
+                BLU_Lucid = new("BLU_Lucid", 7500);
         }
 
         internal class BLU_BuffedSoT : CustomCombo
@@ -159,6 +168,24 @@ namespace XIVSlothCombo.Combos.PvE
                         return PhantomFlurry;
                 }
 
+                return actionID;
+            }
+        }
+
+        internal class BLU_Lucid : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_Lucid;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is SonicBoom || actionID is GoblinPunch || actionID is ChocoMeteor)
+                {
+                    if (IsEnabled(CustomComboPreset.BLU_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+                        return All.LucidDreaming;
+
+                    if (IsEnabled(CustomComboPreset.BLU_Lucid) && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.BLU_Lucid)
+                        return All.LucidDreaming;
+                }
                 return actionID;
             }
         }

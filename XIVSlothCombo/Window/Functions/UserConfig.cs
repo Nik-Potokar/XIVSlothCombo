@@ -1387,6 +1387,9 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BLUE MAGE
 
+            if (preset is CustomComboPreset.BLU_Lucid)
+                UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+
             #endregion
             // ====================================================================================
             #region BARD
