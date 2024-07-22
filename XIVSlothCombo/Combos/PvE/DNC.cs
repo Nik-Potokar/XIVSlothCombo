@@ -237,11 +237,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_StandardStepLastDance;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                actionID is StandardStep && HasEffect(Buffs.LastDanceReady)
+                (actionID is StandardStep || actionID is FinishingMove) && HasEffect(Buffs.LastDanceReady)
                     ? LastDance
-                    : actionID is FinishingMove && HasEffect(Buffs.LastDanceReady)
-                        ? LastDance
-                        : actionID;
+                    : actionID;
         }
 
         internal class DNC_ST_SimpleMode : CustomCombo
