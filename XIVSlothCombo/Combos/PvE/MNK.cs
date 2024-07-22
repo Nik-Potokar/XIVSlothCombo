@@ -47,8 +47,6 @@ namespace XIVSlothCombo.Combos.PvE
             WindsReply = 36949,
             ForbiddenMeditation = 36942,
             LeapingOpo = 36945,
-            RisingRaptor = 36946,
-            PouncingCoeurl = 36947,
             TrueNorth = 7546,
             ElixirBurst = 36948,
             FiresReply = 36950;
@@ -265,7 +263,7 @@ namespace XIVSlothCombo.Combos.PvE
             internal static MNKOpenerLogic MNKOpener = new();
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID == Bootshine || actionID == LeapingOpo)
+                if (actionID == 53 || actionID == 36945)
                 {
                     var canWeave = CanWeave(actionID, 0.5);
                     var canWeaveChakra = CanWeave(actionID);
@@ -378,112 +376,61 @@ namespace XIVSlothCombo.Combos.PvE
                 bool opoopoChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.OPOOPO);
                 bool coeurlChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.COEURL);
                 bool raptorChakra = Array.Exists(Gauge.BeastChakra, e => e == BeastChakra.RAPTOR);
-                bool canSolar = Gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
 
-                if (opoopoChakra)
-                {
-                    if (coeurlChakra)
-                    {
-                        if (Gauge.RaptorFury == 0)
-                        {
-                            if (LevelChecked(Levels.TwinSnakes))
-                                return TwinSnakes;
-                        }
-                        else
-                        {
-                            if (LevelChecked(Levels.TrueStrike))
-                                return OriginalHook(TrueStrike);
-                        }
-                    }
-                    if (raptorChakra)
-                    {
-                        if (!OnTargetsRear()
-                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
-                            && TargetNeedsPositionals()
-                            && !HasEffect(Buffs.TrueNorth)
-                            && LevelChecked(Levels.TrueNorth)
-                            && HasCharges(TrueNorth))
-                        {
-                            return TrueNorth;
-                        }
-                        else
-                        {
-                            if (LevelChecked(Levels.Demolish))
-                                return Demolish;
-                        }
-                    }
+                //if (Gauge.OpoOpoFury != 0 && LevelChecked(Levels.FormShift) && !HasEffect(Buffs.FormlessFist))
+                //{
+                //    return OriginalHook(FormShift);
+                //}
 
-                    if (!OnTargetsFlank()
-                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
-                            && TargetNeedsPositionals()
-                            && !HasEffect(Buffs.TrueNorth)
-                            && LevelChecked(Levels.TrueNorth)
-                            && HasCharges(TrueNorth))
-                    {
-                        return TrueNorth;
-                    }
-                    else
-                    {
-                        if (LevelChecked(Levels.SnapPunch))
-                            return OriginalHook(SnapPunch);
-                    }
-                }
+                //// Doesn't have Raptor
+                //if (!raptorChakra)
+                //{
+                //    if (Gauge.RaptorFury == 0)
+                //    {
+                //        if (LevelChecked(Levels.TwinSnakes))
+                //            return TwinSnakes;
+                //    }
+                //    else
+                //    {
+                //        if (LevelChecked(Levels.TrueStrike))
+                //            return OriginalHook(TrueStrike);
+                //    }
+                //}
 
-                if (canSolar && (lunarNadi || !solarNadi))
-                {
-                    if (!raptorChakra)
-                    {
-                        if (Gauge.RaptorFury == 0)
-                        {
-                            if (LevelChecked(Levels.TwinSnakes))
-                                return TwinSnakes;
-                        }
-                        else
-                        {
-                            if (LevelChecked(Levels.TrueStrike))
-                                return OriginalHook(TrueStrike);
-                        }
-                    }
-                    if (!coeurlChakra)
-                    {
-                        if (!OnTargetsRear()
-                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
-                            && TargetNeedsPositionals()
-                            && !HasEffect(Buffs.TrueNorth)
-                            && LevelChecked(Levels.TrueNorth)
-                            && HasCharges(TrueNorth))
-                        {
-                            return TrueNorth;
-                        }
-                        else
-                        {
-                            if (LevelChecked(Levels.Demolish))
-                                return Demolish;
-                        }
-                    }
+                //// Has Raptor, but not Coeurl
+                //if (!coeurlChakra)
+                //{
+                //    if (!OnTargetsRear()
+                //        && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                //        && TargetNeedsPositionals()
+                //        && !HasEffect(Buffs.TrueNorth)
+                //        && LevelChecked(Levels.TrueNorth)
+                //        && HasCharges(TrueNorth))
+                //    {
+                //        return TrueNorth;
+                //    }
+                //    else
+                //    {
+                //        if (LevelChecked(Levels.Demolish))
+                //            return Demolish;
+                //    }
+                //}
+                //if (!OnTargetsFlank()
+                //        && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
+                //        && TargetNeedsPositionals()
+                //        && !HasEffect(Buffs.TrueNorth)
+                //        && LevelChecked(Levels.TrueNorth)
+                //        && HasCharges(TrueNorth))
+                //{
+                //    return TrueNorth;
+                //}
+                //else
+                //{
+                //    if (LevelChecked(Levels.SnapPunch))
+                //        return OriginalHook(SnapPunch);
+                //}
 
-                    if (!OnTargetsFlank()
-                            && IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
-                            && TargetNeedsPositionals()
-                            && !HasEffect(Buffs.TrueNorth)
-                            && LevelChecked(Levels.TrueNorth)
-                            && HasCharges(TrueNorth))
-                    {
-                        return TrueNorth;
-                    }
-                    else
-                    {
-                        if (LevelChecked(Levels.SnapPunch))
-                            return OriginalHook(SnapPunch);
-                    }
-                }
-
-                if (Gauge.OpoOpoFury == 0)
-                {
-                    if (LevelChecked(Levels.DragonKick))
-                        return DragonKick;
-                }
-
+                // Has Raptor and Coeurl at this point, get an opo-opo
                 return OriginalHook(Bootshine);
             }
 
