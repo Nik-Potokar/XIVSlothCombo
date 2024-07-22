@@ -277,8 +277,17 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PCT_ST_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
                         return All.LucidDreaming;
 
-                    if (IsEnabled(CustomComboPreset.PCT_ST_Subtractive_OP) && gauge.PalleteGauge == 100 && CanSpellWeave(actionID) && ActionReady(SubtractivePalette))
-                        return SubtractivePalette;
+                    if (IsEnabled(CustomComboPreset.PCT_ST_Subtractive_OP) && gauge.PalleteGauge == 100 && ActionReady(SubtractivePalette))
+                    {
+                        if (HasEffect(Buffs.MonochromeTones))
+                        {
+                            return OriginalHook(CometinBlack);
+                        }
+                        if (CanSpellWeave(actionID))
+                        {
+                            return SubtractivePalette;
+                        }
+                    }
 
                     if (IsEnabled(CustomComboPreset.PCT_ST_Comet_OP) && gauge.Paint == 5 && (LevelChecked(HolyInWhite) || LevelChecked(CometinBlack)))
                     {
@@ -314,7 +323,13 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     if (IsEnabled(CustomComboPreset.PCT_AoE_Subtractive_OP) && gauge.PalleteGauge == 100 && CanSpellWeave(actionID) && ActionReady(SubtractivePalette))
+                    {
+                        if (HasEffect(Buffs.MonochromeTones))
+                        {
+                            return OriginalHook(CometinBlack);
+                        }
                         return SubtractivePalette;
+                    }
 
                     if (IsEnabled(CustomComboPreset.PCT_AoE_Comet_OP) && gauge.Paint == 5 && (LevelChecked(HolyInWhite) || LevelChecked(CometinBlack)))
                     {
