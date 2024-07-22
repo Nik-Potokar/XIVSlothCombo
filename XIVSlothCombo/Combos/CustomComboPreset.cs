@@ -3784,11 +3784,11 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(VPR.Dreadwinder)]
-        [CustomComboInfo("Dreadwinder - Coils", "Replaces Dreadwinder with the Coils.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        [CustomComboInfo("Dreadwinder - Coils", "Replaces Dreadwinder with Hunter's/Swiftskin's Coils.", VPR.JobID)]
         VPR_DreadwinderCoils = 30200,
 
         [ReplaceSkill(VPR.PitofDread)]
-        [CustomComboInfo("Pit Of Dread - Dens", "Replaces Pits Of Dread with the Dens.\n Also adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        [CustomComboInfo("Pit Of Dread - Dens", "Replaces Pit Of Dread with Hunter's/Swiftskin's Dens.", VPR.JobID)]
         VPR_PitOfDreadDens = 30201,
 
         [ReplaceSkill(VPR.UncoiledFury)]
@@ -3806,6 +3806,14 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(VPR.SerpentsTail)]
         [CustomComboInfo("Combined Combo Ability Feature", "Combines Serpent's Tail, Twinfang, and Twinblood to one button.", VPR.JobID)]
         VPR_TwinTails = 30205,
+
+        [ParentCombo(VPR_DreadwinderCoils)]
+        [CustomComboInfo("Include Twin Combo Actions", "Adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        VPR_DreadwinderCoils_oGCDs = 30206,
+
+        [ParentCombo(VPR_PitOfDreadDens)]
+        [CustomComboInfo("Include Twin Combo Actions", "Adds Twinfang and Twinblood to the button.", VPR.JobID)]
+        VPR_PitOfDreadDens_oGCDs = 30207,
 
         #endregion
 
