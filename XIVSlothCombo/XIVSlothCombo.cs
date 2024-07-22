@@ -36,11 +36,12 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow ConfigWindow;
+        private readonly TargetHelper TargetHelper;
         internal readonly AboutUs AboutUs;
         internal static XIVSlothCombo P = null!;
         internal WindowSystem ws;
         private readonly HttpClient httpClient = new();
-        
+
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
 
@@ -50,10 +51,10 @@ namespace XIVSlothCombo
             //AST.JobID,
             BLM.JobID,
             //BLU.JobID,
-            BRD.JobID,
+            //BRD.JobID,
             //DNC.JobID,
             //DOL.JobID,
-            DRG.JobID,
+            //DRG.JobID,
             //DRK.JobID,
             //GNB.JobID,
             //MCH.JobID,
@@ -62,7 +63,7 @@ namespace XIVSlothCombo
             //PCT.JobID,
             //PLD.JobID,
             //RDM.JobID,
-            RPR.JobID,
+            //RPR.JobID,
             SAM.JobID,
             //SCH.JobID,
             //SGE.JobID,
@@ -133,9 +134,11 @@ namespace XIVSlothCombo
             Combos.JobHelpers.AST.Init();
 
             ConfigWindow = new ConfigWindow();
+            TargetHelper = new();
             AboutUs = new();
             ws = new();
             ws.AddWindow(ConfigWindow);
+            ws.AddWindow(TargetHelper);
 
             Service.Interface.UiBuilder.Draw += ws.Draw;
             Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
@@ -186,13 +189,15 @@ namespace XIVSlothCombo
             }
         }
 
-        private static void OnFrameworkUpdate(IFramework framework)
+        private void OnFrameworkUpdate(IFramework framework)
         {
             if (Service.ClientState.LocalPlayer is not null)
-            JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+                JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
 
             BlueMageService.PopulateBLUSpells();
+            TargetHelper.Draw();
         }
+
         private static void KillRedundantIDs()
         {
             List<int> redundantIDs = Service.Configuration.EnabledActions.Where(x => int.TryParse(x.ToString(), out _)).OrderBy(x => x).Cast<int>().ToList();
