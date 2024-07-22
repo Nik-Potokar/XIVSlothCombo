@@ -2396,6 +2396,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("FoF Into Requiescat Option", "Replaces Fight or Flight with Requiescat/Imperator/Blade of Honor during FoF. Keeps your minute-burst oGCDs on one button.", PLD.JobID)]
         PLD_FoFRequiescat = 11026,
 
+        [CustomComboInfo("MP Option", "Only use MP-consuming skills when above set threshold.", PLD.JobID)]
+        PLD_MP_Reserve = 11035,
+
         [Variant]
         [VariantParent(PLD_ST_SimpleMode, PLD_ST_AdvancedMode, PLD_AoE_SimpleMode, PLD_AoE_AdvancedMode)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", PLD.JobID)]
@@ -2411,7 +2414,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
 
-        //// Last value = 11034
+        //// Last value = 11035
 
         #endregion
 
