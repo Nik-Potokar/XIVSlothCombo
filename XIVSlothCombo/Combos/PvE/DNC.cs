@@ -234,11 +234,24 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class DNC_StandardStep_LastDance : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_StandardStepLastDance;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_StandardStep_LastDance;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
-                (actionID is StandardStep || actionID is FinishingMove) && HasEffect(Buffs.LastDanceReady)
+                actionID is StandardStep or FinishingMove &&
+                HasEffect(Buffs.LastDanceReady)
                     ? LastDance
+                    : actionID;
+        }
+
+        internal class DNC_TechnicalStep_Devilment : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_TechnicalStep_Devilment;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) =>
+                actionID is TechnicalStep &&
+                WasLastWeaponskill(TechnicalFinish4) &&
+                HasEffect(Buffs.TechnicalFinish)
+                    ? Devilment
                     : actionID;
         }
 
@@ -269,7 +282,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                 var needToStandardOrFinish =
                     IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && // Enabled
-                    GetCooldownRemainingTime(StandardStep) < 0.05 && // Up or about to be (some anti-drift)
                     GetTargetHPPercent() > targetHpThresholdStandard && // HP% check
                     (IsOffCooldown(TechnicalStep) || // Checking burst is ready for standard
                      GetCooldownRemainingTime(TechnicalStep) > 5) && // Don't mangle
@@ -277,9 +289,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                 var needToFinish =
                     HasEffect(Buffs.FinishingMoveReady) &&
-                    !HasEffect(Buffs.LastDanceReady);
+                    !HasEffect(Buffs.LastDanceReady) &&
+                    ((GetCooldownRemainingTime(StandardStep) < 0.3 && // About to be up - some more aggressive anti-drift
+                      HasEffect(Buffs.TechnicalFinish)) ||
+                     (!HasEffect(Buffs.TechnicalFinish) && // Anti-Drift outside of Tech
+                      GetCooldownRemainingTime(StandardStep) < 0.05));
 
                 var needToStandard =
+                    GetCooldownRemainingTime(StandardStep) < 0.05 && // Up or about to be (some anti-drift)
                     !HasEffect(Buffs.FinishingMoveReady) &&
                     (IsOffCooldown(Flourish) ||
                      GetCooldownRemainingTime(Flourish) > 5) &&
