@@ -1,4 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.Logging;
+using System;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
@@ -42,6 +44,8 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Buffs
         {
             public const ushort
+                Aetherhues = 3675,
+                AetherhuesII = 3676,
                 SubtractivePalette = 3674,
                 RainbowBright = 3679,
                 HammerTime = 3680,
@@ -61,7 +65,9 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                CombinedAetherhueChoices = new("CombinedAetherhueChoices");
+                CombinedAetherhueChoices = new("CombinedAetherhueChoices"),
+                PCT_ST_Lucid = new("PCT_ST_Lucid", 7500),
+                PCT_AoE_Lucid = new("PCT_AoE_Lucid", 7500);
 
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
@@ -258,22 +264,70 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class CombinedAetherhues : CustomCombo
+        internal class PCT_ST_Adv : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CombinedAetherhues;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_ST_Adv;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                int choice = Config.CombinedAetherhueChoices;
+                var gauge = GetJobGauge<PCTGauge>();
 
-                if (actionID == FireInRed && choice is 0 or 1)
+                if (actionID is FireInRed)
                 {
+                    if (IsEnabled(CustomComboPreset.PCT_ST_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+                        return All.LucidDreaming;
+
+                    if (IsEnabled(CustomComboPreset.PCT_ST_Subtractive_OP) && gauge.PalleteGauge == 100 && CanSpellWeave(actionID) && ActionReady(SubtractivePalette))
+                        return SubtractivePalette;
+
+                    if (IsEnabled(CustomComboPreset.PCT_ST_Comet_OP) && gauge.Paint == 5 && (LevelChecked(HolyInWhite) || LevelChecked(CometinBlack)))
+                    {
+                        if (HasEffect(Buffs.MonochromeTones))
+                        {
+                            return OriginalHook(CometinBlack);
+                        }
+                        return OriginalHook(HolyInWhite);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.PCT_ST_Lucid) && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.PCT_ST_Lucid)
+                        return All.LucidDreaming;
+
                     if (HasEffect(Buffs.SubtractivePalette))
                         return OriginalHook(BlizzardinCyan);
                 }
 
-                if (actionID == FireIIinRed && choice is 0 or 2)
+                return actionID;
+            }
+        }
+
+        internal class PCT_AoE_Adv : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_AoE_Adv;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                var gauge = GetJobGauge<PCTGauge>();
+
+                if (actionID is FireIIinRed)
                 {
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+                        return All.LucidDreaming;
+
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_Subtractive_OP) && gauge.PalleteGauge == 100 && CanSpellWeave(actionID) && ActionReady(SubtractivePalette))
+                        return SubtractivePalette;
+
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_Comet_OP) && gauge.Paint == 5 && (LevelChecked(HolyInWhite) || LevelChecked(CometinBlack)))
+                    {
+                        if (HasEffect(Buffs.MonochromeTones))
+                        {
+                            return OriginalHook(CometinBlack);
+                        }
+                        return OriginalHook(HolyInWhite);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_Lucid) && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.PCT_AoE_Lucid)
+                        return All.LucidDreaming;
+
                     if (HasEffect(Buffs.SubtractivePalette))
                         return OriginalHook(BlizzardIIinCyan);
                 }

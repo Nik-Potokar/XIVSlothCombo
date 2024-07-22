@@ -1720,12 +1720,12 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region PICTOMANCER
-            if (preset == CustomComboPreset.CombinedAetherhues)
-            {
-                UserConfig.DrawRadioButton(PCT.Config.CombinedAetherhueChoices, "Both Single Target & AoE", $"Replaces both {PCT.FireInRed.ActionName()} & {PCT.FireIIinRed.ActionName()}", 0);
-                UserConfig.DrawRadioButton(PCT.Config.CombinedAetherhueChoices, "Single Target Only", $"Replace only {PCT.FireInRed.ActionName()}", 1);
-                UserConfig.DrawRadioButton(PCT.Config.CombinedAetherhueChoices, "AoE Only", $"Replace only {PCT.FireIIinRed.ActionName()}", 2);
-            }
+
+            if (preset is CustomComboPreset.PCT_ST_Lucid)
+                UserConfig.DrawSliderInt(1000, 10000, PCT.Config.PCT_ST_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+
+            if (preset is CustomComboPreset.PCT_AoE_Lucid)
+                UserConfig.DrawSliderInt(1000, 10000, PCT.Config.PCT_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.CombinedMotifs)
             {

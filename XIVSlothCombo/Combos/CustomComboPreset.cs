@@ -2254,26 +2254,61 @@ namespace XIVSlothCombo.Combos
 
         #region PICTOMANCER - 20000
         [ReplaceSkill(PCT.FireInRed)]
-        [ConflictingCombos(CombinedAetherhues)]
-        [CustomComboInfo("Simple Mode - Single Target", $"Replaces Fire in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID)]
+        [ConflictingCombos(PCT_ST_Adv)]
+        [CustomComboInfo("Simple Mode - Single Target", $"Replaces Fire in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID, 1)]
         PCT_ST_SimpleMode = 20000,
 
         [ReplaceSkill(PCT.FireIIinRed)]
-        [ConflictingCombos(CombinedAetherhues)]
-        [CustomComboInfo("Simple Mode - AoE", $"Replaces Fire II in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID)]
+        [ConflictingCombos(PCT_AoE_Adv)]
+        [CustomComboInfo("Simple Mode - AoE", $"Replaces Fire II in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID, 2)]
         PCT_AoE_SimpleMode = 20001,
 
-        [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
-        [ConflictingCombos(PCT_ST_SimpleMode, PCT_AoE_SimpleMode)]
-        [CustomComboInfo("Combined Aetherhues Feature", "Combines aetherhue actions onto one button for their respective target types.", PCT.JobID)]
-        CombinedAetherhues = 20002,
+        [ReplaceSkill(PCT.FireInRed)]
+        [ConflictingCombos(PCT_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire In Red with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation", PCT.JobID, 3)]
+        PCT_ST_Adv = 20010,
+
+            [ParentCombo(PCT_ST_Adv)]
+            [ReplaceSkill(All.LucidDreaming)]
+            [CustomComboInfo("Lucid Dreaming", "Adds Lucid Dreaming when MP drops below the slider value", PCT.JobID)]
+            PCT_ST_Lucid = 20011,
+
+            [ParentCombo(PCT_ST_Adv)]
+            [ReplaceSkill(PCT.SubtractivePalette)]
+            [CustomComboInfo("Subtractive Palette Overcap Protection", "Uses Subtractive Palette when at 100 gauge", PCT.JobID)]
+            PCT_ST_Subtractive_OP = 20012,
+
+            [ParentCombo(PCT_ST_Adv)]
+            [ReplaceSkill(PCT.HolyInWhite, PCT.CometinBlack)]
+            [CustomComboInfo("Comet Overcap Protection", "Uses White/Black Paint when at 5 stacks and Aetherhues II", PCT.JobID)]
+            PCT_ST_Comet_OP = 20013,
+
+        [ReplaceSkill(PCT.FireIIinRed)]
+        [ConflictingCombos(PCT_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Fire In Red II with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation", PCT.JobID, 3)]
+        PCT_AoE_Adv = 20030,
+
+            [ParentCombo(PCT_AoE_Adv)]
+            [ReplaceSkill(All.LucidDreaming)]
+            [CustomComboInfo("Lucid Dreaming", "Adds Lucid Dreaming when MP drops below the slider value", PCT.JobID)]
+            PCT_AoE_Lucid = 20031,
+
+            [ParentCombo(PCT_AoE_Adv)]
+            [ReplaceSkill(PCT.SubtractivePalette)]
+            [CustomComboInfo("Subtractive Palette Overcap Protection", "Uses Subtractive Palette when at 100 gauge", PCT.JobID)]
+            PCT_AoE_Subtractive_OP = 20032,
+
+            [ParentCombo(PCT_AoE_Adv)]
+            [ReplaceSkill(PCT.HolyInWhite, PCT.CometinBlack)]
+            [CustomComboInfo("Comet Overcap Protection", "Uses White/Black Paint when at 5 stacks and Aetherhues II", PCT.JobID)]
+            PCT_AoE_Comet_OP = 20033,
 
         [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
-        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button.", PCT.JobID)]
+        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button.", PCT.JobID, 4)]
         CombinedMotifs = 20003,
 
         [ReplaceSkill(PCT.HolyInWhite)]
-        [CustomComboInfo("One Button Paint", "Combines paint consuming actions into one button.", PCT.JobID)]
+        [CustomComboInfo("White & Black Comet", "Combines White and Black Comets into one button.", PCT.JobID, 5)]
         CombinedPaint = 20004,
 
         #endregion
