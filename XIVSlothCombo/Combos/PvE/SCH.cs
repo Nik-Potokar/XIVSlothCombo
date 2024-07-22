@@ -115,7 +115,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SCH_ST_DPS_EnergyDrain_Adv = new("SCH_ST_DPS_EnergyDrain_Adv");
             public static UserFloat
                 SCH_ST_DPS_Bio_Threshold = new("SCH_ST_DPS_Bio_Threshold", 3.0f),
-                SCH_ST_DPS_EnergyDrain = new("SCH_ST_DPS_EnergyDrain", 3.0f);
+                SCH_ST_DPS_EnergyDrain = new("SCH_ST_DPS_EnergyDrain", 10.0f);
             public static UserBoolArray
                 SCH_ST_DPS_Adv_Actions = new("SCH_ST_DPS_Adv_Actions");
             #endregion
@@ -245,11 +245,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain))
                         {
                             float edTime = Config.SCH_ST_DPS_EnergyDrain_Adv ? Config.SCH_ST_DPS_EnergyDrain : 10f;
-                            if (LevelChecked(EnergyDrain) && InCombat() &&
-                                Gauge.HasAetherflow() &&
-                                (GetCooldownRemainingTime(Aetherflow) <= edTime || GetCooldownRemainingTime(Dissipation) <= edTime) &&
-                                (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || (LevelChecked(ChainStratagem) && GetCooldownRemainingTime(ChainStratagem) > 10)) &&
-                                CanSpellWeave(actionID))
+                            if (LevelChecked(EnergyDrain) && InCombat() && Gauge.HasAetherflow()
+                                && (GetCooldownRemainingTime(Aetherflow) <= edTime || (IsEnabled(CustomComboPreset.SCH_ST_DPS_ED_Dissipation) && GetCooldownRemainingTime(Dissipation) <= edTime))
+                                && (!IsEnabled(CustomComboPreset.SCH_DPS_EnergyDrain_BurstSaver) || (LevelChecked(ChainStratagem) && GetCooldownRemainingTime(ChainStratagem) > 10) || !LevelChecked(ChainStratagem))
+                                && CanSpellWeave(actionID))
                                 return EnergyDrain;
                         }
 

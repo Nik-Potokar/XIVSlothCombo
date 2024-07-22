@@ -3356,10 +3356,14 @@ namespace XIVSlothCombo.Combos
             SCH_DPS_EnergyDrain = 16005,
 
                 [ParentCombo(SCH_DPS_EnergyDrain)]
-                [CustomComboInfo("Energy Drain Burst", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining", SCH.JobID)]
+                [CustomComboInfo("Energy Drain Burst", "Holds Energy Drain when Chain Stratagem is ready or has less than 10 seconds cooldown remaining", SCH.JobID, 1)]
                 SCH_DPS_EnergyDrain_BurstSaver = 16006,
 
-            [ParentCombo(SCH_DPS)]
+                [ParentCombo(SCH_DPS_EnergyDrain)]
+                [CustomComboInfo("Check Dissipation cooldown", "If enabled, Energy Drain will take both Aetherflow and Dissipation cooldowns into account. If Dissipation is available, it will dump all Aetherflow stacks.", SCH.JobID)]
+                SCH_ST_DPS_ED_Dissipation = 16010,
+
+        [ParentCombo(SCH_DPS)]
             [CustomComboInfo("Ruin II Movement", "Use Ruin II when you have to move", SCH.JobID)]
             SCH_DPS_Ruin2Movement = 16007,
 
