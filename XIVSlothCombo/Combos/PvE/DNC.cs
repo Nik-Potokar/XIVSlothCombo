@@ -254,14 +254,16 @@ namespace XIVSlothCombo.Combos.PvE
                     GetCooldownRemainingTime(TechnicalStep) < 0.05 && // Up or about to be (some anti-drift)
                     !HasEffect(Buffs.StandardStep) && // After Standard
                     IsOnCooldown(StandardStep) &&
-                    GetTargetHPPercent() > targetHpThresholdTechnical; // HP% check
+                    GetTargetHPPercent() > targetHpThresholdTechnical &&// HP% check
+                    LevelChecked(TechnicalStep);
 
                 var needToStandardOrFinish =
                     IsEnabled(CustomComboPreset.DNC_ST_Simple_SS) && // Enabled
                     GetCooldownRemainingTime(StandardStep) < 0.05 && // Up or about to be (some anti-drift)
                     GetTargetHPPercent() > targetHpThresholdStandard && // HP% check
                     (IsOffCooldown(TechnicalStep) || // Checking burst is ready for standard
-                     GetCooldownRemainingTime(TechnicalStep) > 5); // Don't mangle
+                     GetCooldownRemainingTime(TechnicalStep) > 5) && // Don't mangle
+                    LevelChecked(StandardStep);
 
                 var needToFinish =
                     HasEffect(Buffs.FinishingMoveReady) &&
@@ -326,6 +328,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // ST Devilment
                 if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Devilment) &&
                     CanWeave(actionID) &&
+                    LevelChecked(Devilment) &&
                     GetCooldownRemainingTime(Devilment) < 0.05 &&
                     (HasEffect(Buffs.TechnicalFinish) ||
                      WasLastAction(TechnicalFinish4) ||
@@ -581,14 +584,16 @@ namespace XIVSlothCombo.Combos.PvE
                     ActionReady(TechnicalStep) && // Up
                     !HasEffect(Buffs.StandardStep) && // After Standard
                     IsOnCooldown(StandardStep) &&
-                    GetTargetHPPercent() > targetHpThresholdTechnical; // HP% check
+                    GetTargetHPPercent() > targetHpThresholdTechnical && // HP% check
+                    LevelChecked(TechnicalStep);
 
                 var needToStandardOrFinish =
                     IsEnabled(CustomComboPreset.DNC_AoE_Simple_SS) && // Enabled
                     ActionReady(StandardStep) && // Up
                     GetTargetHPPercent() > targetHpThresholdStandard && // HP% check
                     (IsOffCooldown(TechnicalStep) || // Checking burst is ready for standard
-                     GetCooldownRemainingTime(TechnicalStep) > 5); // Don't mangle
+                     GetCooldownRemainingTime(TechnicalStep) > 5) && // Don't mangle
+                    LevelChecked(StandardStep);
 
                 var needToFinish =
                     HasEffect(Buffs.FinishingMoveReady) &&
@@ -623,6 +628,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // AoE Devilment
                 if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_Devilment) &&
                     CanWeave(actionID) &&
+                    LevelChecked(Devilment) &&
                     GetCooldownRemainingTime(Devilment) < 0.05 &&
                     (HasEffect(Buffs.TechnicalFinish) ||
                      WasLastAction(TechnicalFinish4) ||
