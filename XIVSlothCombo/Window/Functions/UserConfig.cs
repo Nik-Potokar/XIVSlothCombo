@@ -1784,6 +1784,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit)
             {
+                UserConfig.DrawSliderInt(2000, 10000, PLD.Config.PLD_ReserveMana, "Minimum MP gauge required.", sliderIncrement: 500);
                 UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Early Spend", "When under the effect of Divine Might, use Holy Spirit before restarting the basic combo.", 1);
                 UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Late Spend", "When under the effect of Divine Might, uses Holy Spirit before the end of the basic combo.", 2);
                 UserConfig.DrawRadioButton(PLD.Config.PLD_ST_DivineMightTiming, "Alternate Spend", "When under the effect of Divine Might, switches between early and late depending on how often Flight or Fight is used.", 3);
