@@ -2307,12 +2307,16 @@ namespace XIVSlothCombo.Combos
             PCT_AoE_Comet_OP = 20033,
 
         [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
-        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button.", PCT.JobID, 4)]
-        CombinedMotifs = 20003,
+        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button", PCT.JobID, 4)]
+        CombinedMotifs = 20051,
 
         [ReplaceSkill(PCT.HolyInWhite)]
-        [CustomComboInfo("White & Black Comet", "Combines White and Black Comets into one button.", PCT.JobID, 5)]
-        CombinedPaint = 20004,
+        [CustomComboInfo("White & Black Paint", "Combines White and Black Paints into one button", PCT.JobID, 5)]
+        CombinedPaint = 20052,
+
+        [ReplaceSkill(PCT.SubtractivePalette)]
+        [CustomComboInfo("Subtractive to Comet In Black", "Changes Subtractive Palette to Comet in Black if a Black Paint is available", PCT.JobID, 6)]
+        PCT_SubPaint_OP = 20053,
 
         #endregion
 

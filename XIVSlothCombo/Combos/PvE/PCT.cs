@@ -402,5 +402,21 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
+        internal class PCT_SubPaint_OP : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_SubPaint_OP;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID is SubtractivePalette)
+                {
+                    if (HasEffect(Buffs.MonochromeTones))
+                        return CometinBlack;
+                }
+
+                return actionID;
+            }
+        }
     }
 }
