@@ -51,7 +51,7 @@ namespace XIVSlothCombo.Attributes
 
         public uint ClassJobCategory => JobIDToClassJobCategory(JobID);
 
-        private int JobIDToRole(byte jobID)
+        private static int JobIDToRole(byte jobID)
         {
             if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
                 return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).Role;
@@ -59,7 +59,7 @@ namespace XIVSlothCombo.Attributes
             return 0;
         }
 
-        private uint JobIDToClassJobCategory(byte jobID)
+        private static uint JobIDToClassJobCategory(byte jobID)
         {
             if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
                 return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Row;

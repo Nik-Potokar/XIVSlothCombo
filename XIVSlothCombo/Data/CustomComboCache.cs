@@ -17,12 +17,10 @@ namespace XIVSlothCombo.Data
 
         // Invalidate these
         private readonly ConcurrentDictionary<(uint StatusID, ulong? TargetID, ulong? SourceID), DalamudStatus.Status?> statusCache = new();
-        private readonly ConcurrentDictionary<uint, CooldownData> cooldownCache = new();
+        private readonly ConcurrentDictionary<uint, CooldownData?> cooldownCache = new();
 
         // Do not invalidate these
-        private readonly ConcurrentDictionary<uint, byte> cooldownGroupCache = new();
         private readonly ConcurrentDictionary<Type, JobGaugeBase> jobGaugeCache = new();
-        private readonly ConcurrentDictionary<(uint ActionID, uint ClassJobID, byte Level), (ushort CurrentMax, ushort Max)> chargesCache = new();
 
         /// <summary> Initializes a new instance of the <see cref="CustomComboCache"/> class. </summary>
         public CustomComboCache() => Service.Framework.Update += Framework_Update;
@@ -74,12 +72,8 @@ namespace XIVSlothCombo.Data
         /// <returns> Cooldown data. </returns>
         internal unsafe CooldownData GetCooldown(uint actionID)
         {
-            if (cooldownCache.TryGetValue(actionID, out CooldownData found))
-                return found;
-
-            ActionManager* actionManager = ActionManager.Instance();
-            if (actionManager == null)
-                return cooldownCache[actionID] = default;
+            if (cooldownCache.TryGetValue(actionID, out CooldownData? found))
+                return found!;
 
             CooldownData data = new()
             {
@@ -106,19 +100,6 @@ namespace XIVSlothCombo.Data
             int cost = ActionManager.GetActionCost(ActionType.Action, actionID, 0, 0, 0, 0);
 
             return cost;
-        }
-
-        /// <summary> Get the cooldown group of an action. </summary>
-        /// <param name="actionID"> Action ID to check. </param>
-        private byte GetCooldownGroup(uint actionID)
-        {
-            if (cooldownGroupCache.TryGetValue(actionID, out byte cooldownGroup))
-                return cooldownGroup;
-
-            var sheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!;
-            var row = sheet.GetRow(actionID);
-
-            return cooldownGroupCache[actionID] = row!.CooldownGroup;
         }
 
         /// <summary> Triggers when the game framework updates. Clears cooldown and status caches. </summary>

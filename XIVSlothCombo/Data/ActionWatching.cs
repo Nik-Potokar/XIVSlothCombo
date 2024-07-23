@@ -173,7 +173,7 @@ namespace XIVSlothCombo.Data
             return count;
         }
 
-        public static bool WasLast2ActionsAbilities()
+        public static bool HasDoubleWeaved()
         {
             if (CombatActions.Count < 2) return false;
             var lastAction = CombatActions.Last();

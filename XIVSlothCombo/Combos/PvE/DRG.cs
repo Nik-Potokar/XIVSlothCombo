@@ -1,3 +1,4 @@
+using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.JobHelpers;
@@ -96,6 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
             internal static DRGOpenerLogic DRGOpener = new();
+            float GCD = GetCooldown(TrueThrust).CooldownTotal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -141,11 +143,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return BattleLitany;
 
                         //Life Surge Feature
-                        if (AnimationLock.CanDRGWeave(LifeSurge) &&
-                           ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
-                           ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                           (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                           (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
+                        if (((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
+                            AnimationLock.CanDRGWeave(LifeSurge) &&
+                            (HasEffect(Buffs.LanceCharge) &&
+                            ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
+                            ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                            (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                            (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
                             return LifeSurge;
 
                         //Wyrmwind Thrust Feature
@@ -200,7 +204,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 10 || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                (ChaosDoTDebuff is null ||
+                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 ||
+                                GetCooldownRemainingTime(LanceCharge) < GCD * 4)) ||
+                                (!LevelChecked(ChaosThrust) &&
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -213,6 +222,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return OriginalHook(ChaosThrust);
                         }
+
                         if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(WheelingThrust))
                         {
                             if (trueNorthReady && CanDelayedWeave(actionID) &&
@@ -248,6 +258,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
             internal static DRGOpenerLogic DRGOpener = new();
+            float GCD = GetCooldown(TrueThrust).CooldownTotal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -307,32 +318,14 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Life Surge Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
+                                ((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
                                 AnimationLock.CanDRGWeave(LifeSurge) &&
+                                (HasEffect(Buffs.LanceCharge) &&
                                 ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
                                 ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
                                 (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                                (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
+                                (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
                                 return LifeSurge;
-
-                            //Wyrmwind Thrust Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
-                                AnimationLock.CanDRGWeave(WyrmwindThrust) &&
-                                gauge.FirstmindsFocusCount is 2)
-                                return WyrmwindThrust;
-
-                            //Geirskogul Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) &&
-                                AnimationLock.CanDRGWeave(Geirskogul) &&
-                                ActionReady(Geirskogul))
-                                return Geirskogul;
-
-                            //(High) Jump Feature   
-                            if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
-                                AnimationLock.CanDRGWeave(OriginalHook(Jump)) &&
-                                ActionReady(OriginalHook(Jump)) &&
-                                (!IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) ||
-                                (IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) && !IsMoving)))
-                                return OriginalHook(Jump);
 
                             //Dragonfire Dive Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive) &&
@@ -350,6 +343,26 @@ namespace XIVSlothCombo.Combos.PvE
                                 (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)))
                                 return Stardiver;
 
+                            //(High) Jump Feature   
+                            if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
+                                AnimationLock.CanDRGWeave(OriginalHook(Jump)) &&
+                                ActionReady(OriginalHook(Jump)) &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_HighJump_Movement) && !IsMoving)))
+                                return OriginalHook(Jump);
+
+                            //Wyrmwind Thrust Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) &&
+                                AnimationLock.CanDRGWeave(WyrmwindThrust) &&
+                                gauge.FirstmindsFocusCount is 2)
+                                return WyrmwindThrust;
+
+                            //Geirskogul Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) &&
+                                AnimationLock.CanDRGWeave(Geirskogul) &&
+                                ActionReady(Geirskogul))
+                                return Geirskogul;
+
                             //Starcross Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Starcross) &&
                                 AnimationLock.CanDRGWeave(Starcross) &&
@@ -362,18 +375,19 @@ namespace XIVSlothCombo.Combos.PvE
                                 HasEffect(Buffs.DragonsFlight))
                                 return OriginalHook(DragonfireDive);
 
-                            //Mirage Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) &&
-                                AnimationLock.CanDRGWeave(MirageDive) &&
-                                HasEffect(Buffs.DiveReady))
-                                return OriginalHook(HighJump);
-
                             //Nastrond Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Nastrond) &&
                                 AnimationLock.CanDRGWeave(Nastrond) &&
                                 HasEffect(Buffs.NastrondReady) &&
                                 gauge.IsLOTDActive)
                                 return OriginalHook(Geirskogul);
+
+                            //Mirage Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) &&
+                                AnimationLock.CanDRGWeave(MirageDive) &&
+                                HasEffect(Buffs.DiveReady))
+                                return OriginalHook(HighJump);
+
                         }
                     }
 
@@ -393,7 +407,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null || ChaosDoTDebuff.RemainingTime < 10 || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                (ChaosDoTDebuff is null ||
+                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 ||
+                                GetCooldownRemainingTime(LanceCharge) < GCD * 4)) ||
+                                (!LevelChecked(ChaosThrust) &&
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }

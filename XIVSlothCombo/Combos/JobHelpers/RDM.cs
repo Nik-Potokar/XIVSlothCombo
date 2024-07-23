@@ -1,9 +1,11 @@
-﻿using XIVSlothCombo.Combos.PvE;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using System;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
-    internal class RDM
+    internal class RDMHelper
     {
         static bool HasEffect(ushort id) => CustomComboFunctions.HasEffect(id);
         static float GetBuffRemainingTime(ushort effectid) => CustomComboFunctions.GetBuffRemainingTime(effectid);
@@ -14,17 +16,35 @@ namespace XIVSlothCombo.Combos.JobHelpers
         static bool ActionReady(uint id) => CustomComboFunctions.ActionReady(id);
         static bool CanSpellWeave(uint id) => CustomComboFunctions.CanSpellWeave(id);
         static bool HasCharges(uint id) => CustomComboFunctions.HasCharges(id);
+        static bool TraitLevelChecked(uint id) => CustomComboFunctions.TraitLevelChecked(id);
+        static byte GetBuffStacks(ushort id) => CustomComboFunctions.GetBuffStacks(id);
 
-        internal class ManaBalancer : PvE.RDM
+        internal class RDMMana : PvE.RDM
         {
-            internal bool useFire;
-            internal bool useStone;
-            internal bool useThunder;
-            internal bool useAero;
-            internal bool useThunder2;
-            internal bool useAero2;
+            private static RDMGauge Gauge => CustomComboFunctions.GetJobGauge<RDMGauge>();
+            internal static int ManaStacks => Gauge.ManaStacks;
+            internal static int Black => AdjustMana(Gauge.BlackMana);
+            internal static int White => AdjustMana(Gauge.WhiteMana);
+            internal static int Min => AdjustMana(Math.Min(Gauge.BlackMana, Gauge.WhiteMana));
+            internal static int Max => AdjustMana(Math.Max(Gauge.BlackMana, Gauge.WhiteMana));
+            private static int AdjustMana(byte mana)
+            {
+                if (LevelChecked(Manafication))
+                {
+                    byte magickedSword = GetBuffStacks(Buffs.MagickedSwordPlay);
+                    byte magickedSwordMana = magickedSword switch
+                    {
+                        3 => 50,
+                        2 => 30,
+                        1 => 15,
+                        _ => 0
+                    };
+                    return (mana + magickedSwordMana);
+                }
+                else return mana;
+            }
 
-            internal void CheckBalance()
+            public static (bool useFire, bool useStone, bool useThunder, bool useAero, bool useThunder2, bool useAero2) CheckBalance()
             {
                 //SYSTEM_MANA_BALANCING_MACHINE
                 //Machine to decide which ver spell should be used.
@@ -40,15 +60,15 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 //   - Resolution adds 4/4 mana
                 //2.Stay within difference limit [DONE]
                 //3.Strive to achieve correct mana for double melee combo burst [DONE]
-                int blackmana = Gauge.BlackMana;
-                int whitemana = Gauge.WhiteMana;
+                int blackmana = Black;
+                int whitemana = White;
                 //Reset outputs
-                useFire = false;
-                useStone = false;
-                useThunder = false;
-                useAero = false;
-                useThunder2 = false;
-                useAero2 = false;
+                bool useFire = false;
+                bool useStone = false;
+                bool useThunder = false;
+                bool useAero = false;
+                bool useThunder2 = false;
+                bool useAero2 = false;
 
                 //ST
                 if (LevelChecked(Verthunder)
@@ -84,6 +104,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else useAero2 = true;
                 }
                 //END_SYSTEM_MANA_BALANCING_MACHINE
+
+                return (useFire, useStone, useThunder, useAero, useThunder2, useAero2);
             }
         }
 
@@ -91,10 +113,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
         { 
             internal static bool CanUse(in uint lastComboMove, out uint actionID)
             {
-                int blackmana = Gauge.BlackMana;
-                int whitemana = Gauge.WhiteMana;
+                int blackmana = RDMMana.Black;
+                int whitemana = RDMMana.White;
 
-                if (Gauge.ManaStacks >= 3)
+                if (RDMMana.ManaStacks >= 3)
                 {
                     if (blackmana >= whitemana && LevelChecked(Verholy))
                     {
@@ -154,6 +176,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 bool fleche = SingleTarget ? Config.RDM_ST_oGCD_Fleche : Config.RDM_AoE_oGCD_Fleche;
                 bool contra = SingleTarget ? Config.RDM_ST_oGCD_ContraSixte : Config.RDM_AoE_oGCD_ContraSixte;
                 bool engagement = SingleTarget ? Config.RDM_ST_oGCD_Engagement : Config.RDM_AoE_oGCD_Engagement;
+                bool vice = SingleTarget ? Config.RDM_ST_oGCD_ViceOfThorns : Config.RDM_AoE_oGCD_ViceOfThorns;
+                bool prefulg = SingleTarget ? Config.RDM_ST_oGCD_Prefulgence : Config.RDM_AoE_oGCD_Prefulgence;
                 int engagementPool = (SingleTarget && Config.RDM_ST_oGCD_Engagement_Pooling) || (!SingleTarget && Config.RDM_AoE_oGCD_Engagement_Pooling) ? 1 : 0;
 
                 bool corpacorps = SingleTarget ? Config.RDM_ST_oGCD_CorpACorps : Config.RDM_AoE_oGCD_CorpACorps;
@@ -175,11 +199,22 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     && LevelChecked(Corpsacorps)
                     && distance <= corpacorpsRange)
                     placeOGCD = Corpsacorps;
+                
                 if (contra
                     && ActionReady(ContreSixte))
                     placeOGCD = ContreSixte;
                 if (fleche && ActionReady(Fleche))
                     placeOGCD = Fleche;
+
+                if (vice &&
+                    TraitLevelChecked(Traits.EnhancedEmbolden) &&
+                    HasEffect(Buffs.ThornedFlourish))
+                    placeOGCD = ViceOfThorns;
+
+                if (prefulg &&
+                    TraitLevelChecked(Traits.EnhancedManaficationIII) &&
+                    HasEffect(Buffs.PrefulugenceReady))
+                    placeOGCD = Prefulgence;
 
                 if (CanSpellWeave(actionID) && placeOGCD != 0)
                 {
@@ -221,7 +256,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             internal static bool SafetoUse(in uint lastComboMove)
             {
                 return
-                    !CustomComboFunctions.HasEffect(Buffs.Dualcast)
+                    !HasEffect(Buffs.Dualcast)
                     && lastComboMove != EnchantedRiposte
                     && lastComboMove != EnchantedZwerchhau
                     && lastComboMove != EnchantedRedoublement

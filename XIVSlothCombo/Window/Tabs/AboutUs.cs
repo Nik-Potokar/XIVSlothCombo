@@ -17,14 +17,14 @@ namespace XIVSlothCombo.Window.Tabs
     {
         public Version version = null!;
 
-        private Dictionary<string, IDalamudTextureWrap> Images = new Dictionary<string, IDalamudTextureWrap>();
+        private readonly Dictionary<string, IDalamudTextureWrap> Images = [];
 
         public AboutUs()
         {
             LoadAllImages();
         }
 
-        internal void Draw()
+        public override void Draw()
         {
             try
             {
