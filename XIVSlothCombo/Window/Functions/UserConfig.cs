@@ -2402,15 +2402,6 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
-            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
-            {
-                UserConfig.DrawRoundedSliderFloat(0, 20, VPR.Config.VPR_ST_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
-            }
-
-            if (preset == CustomComboPreset.VPR_AoE_NoxiousGnash)
-            {
-                UserConfig.DrawRoundedSliderFloat(0, 20, VPR.Config.VPR_AoE_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
-            }
 
             if (preset is CustomComboPreset.VPR_ST_Reawaken)
             {
