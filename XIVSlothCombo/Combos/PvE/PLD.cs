@@ -638,7 +638,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Usage outside of burst (desync for Req, 30s windows for CoS/SW)
                         if ((!WasLastAction(FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) >= 15 || IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF)) &&
-                            !ActionWatching.WasLast2ActionsAbilities())
+                            !ActionWatching.HasDoubleWeaved())
                         {
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && ActionReady(Requiescat))
                                 return OriginalHook(Requiescat);

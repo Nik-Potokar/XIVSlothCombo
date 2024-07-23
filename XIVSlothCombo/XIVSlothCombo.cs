@@ -41,7 +41,7 @@ namespace XIVSlothCombo
         internal static XIVSlothCombo P = null!;
         internal WindowSystem ws;
         private readonly HttpClient httpClient = new();
-        
+
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
 
@@ -52,7 +52,7 @@ namespace XIVSlothCombo
             BLM.JobID,
             //BLU.JobID,
             //BRD.JobID,
-            DNC.JobID,
+            //DNC.JobID,
             //DOL.JobID,
             //DRG.JobID,
             //DRK.JobID,
@@ -162,11 +162,6 @@ namespace XIVSlothCombo
 #endif
         }
 
-        private void AddonReceiveEvent(AddonEvent type, AddonArgs args)
-        {
-            Svc.Log.Debug($"Receive event triggered on {args.AddonName}");
-        }
-
         private static void HandleConflictedCombos()
         {
             var enabledCopy = Service.Configuration.EnabledActions.ToHashSet(); //Prevents issues later removing during enumeration
@@ -192,7 +187,7 @@ namespace XIVSlothCombo
         private void OnFrameworkUpdate(IFramework framework)
         {
             if (Service.ClientState.LocalPlayer is not null)
-            JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+                JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
 
             BlueMageService.PopulateBLUSpells();
             TargetHelper.Draw();
