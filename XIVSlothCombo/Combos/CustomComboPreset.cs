@@ -1558,7 +1558,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(GNB_BS)]
         [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
-        GNB_BS_DoubleDown = 7403,
+        GNB_BS_DoubleDown = 7404,
         #endregion
 
         #region Fated Circle
