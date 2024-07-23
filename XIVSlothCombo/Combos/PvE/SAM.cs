@@ -610,18 +610,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Oka;
                         }
                     }
-
-                    if (!LevelChecked(Oka) && LevelChecked(Kasha))
-                    {
-                        if (lastComboMove is Shifu && LevelChecked(Kasha))
-                            return Kasha;
-
-                        if (lastComboMove is Hakaze && LevelChecked(Shifu))
-                            return Shifu;
-
-                        if (!gauge.Sen.HasFlag(Sen.KA) || GetBuffRemainingTime(Buffs.Fuka) < GetBuffRemainingTime(Buffs.Fugetsu) || (!HasEffect(Buffs.Fuka) && Hakaze.LevelChecked()))
-                            return Hakaze;
-                    }
                     return OriginalHook(Fuko);
                 }
                 return actionID;
