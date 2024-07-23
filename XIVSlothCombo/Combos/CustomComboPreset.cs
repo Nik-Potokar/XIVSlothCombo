@@ -2414,7 +2414,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Shield Lob / Holy Spirit Feature", "Replaces Shield Lob with Holy Spirit while not moving or when under Divine Might, provided there is sufficient MP to cast it.", PLD.JobID, 5)]
         PLD_ShieldLob_Feature = 11027,
 
-        [CustomComboInfo("MP Option", "Only use MP-consuming skills when above set threshold.", PLD.JobID)]
+        [CustomComboInfo("MP Reserve Feature", "Only use MP-consuming skills in the Advanced Mode - ST and Advanced Mode - AoE when above set threshold.", PLD.JobID)]
         PLD_MP_Reserve = 11035,
 
         // Variant Features
