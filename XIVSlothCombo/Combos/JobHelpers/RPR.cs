@@ -79,14 +79,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (CustomComboFunctions.HasEffect(Buffs.Soulsow) && PrePullStep == 1) PrePullStep++;
-                else if (PrePullStep == 1) actionID = Soulsow;
-
-                if (CustomComboFunctions.LocalPlayer.CastActionId == Harpe && CustomComboFunctions.HasEffect(Buffs.Soulsow) && PrePullStep == 2) CurrentState = OpenerState.InOpener;
-                else if (PrePullStep == 2) actionID = Harpe;
-
-                if (PrePullStep == 2 && !CustomComboFunctions.HasEffect(Buffs.Soulsow))
-                    CurrentState = OpenerState.FailedOpener;
+                if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+                else if (PrePullStep == 1) actionID = ShadowOfDeath;
 
                 if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
                     CurrentState = OpenerState.FailedOpener;
@@ -104,71 +98,68 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
-                if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && OpenerStep == 1) OpenerStep++;
-                else if (OpenerStep == 1) actionID = ShadowOfDeath;
+                if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 1) OpenerStep++;
+                else if (OpenerStep == 1) actionID = SoulSlice;
 
-                if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 2) OpenerStep++;
-                else if (OpenerStep == 2) actionID = SoulSlice;
+                if (CustomComboFunctions.WasLastAction(ArcaneCircle) && OpenerStep == 2) OpenerStep++;
+                else if (OpenerStep == 2) actionID = ArcaneCircle;
 
-                if (CustomComboFunctions.WasLastAction(ArcaneCircle) && OpenerStep == 3) OpenerStep++;
-                else if (OpenerStep == 3) actionID = ArcaneCircle;
+                if (CustomComboFunctions.WasLastAction(Gluttony) && OpenerStep == 3) OpenerStep++;
+                else if (OpenerStep == 3) actionID = Gluttony;
 
-                if (CustomComboFunctions.WasLastAction(Gluttony) && OpenerStep == 4) OpenerStep++;
-                else if (OpenerStep == 4) actionID = Gluttony;
+                if (CustomComboFunctions.WasLastAction(ExecutionersGibbet) && OpenerStep == 4) OpenerStep++;
+                else if (OpenerStep == 4) actionID = ExecutionersGibbet;
 
-                if (CustomComboFunctions.WasLastAction(ExecutionersGibbet) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = ExecutionersGibbet;
+                if (CustomComboFunctions.WasLastAction(ExecutionersGallows) && OpenerStep == 5) OpenerStep++;
+                else if (OpenerStep == 5) actionID = ExecutionersGallows;
 
-                if (CustomComboFunctions.WasLastAction(ExecutionersGallows) && OpenerStep == 6) OpenerStep++;
-                else if (OpenerStep == 6) actionID = ExecutionersGallows;
+                if (CustomComboFunctions.WasLastAction(PlentifulHarvest) && OpenerStep == 6) OpenerStep++;
+                else if (OpenerStep == 6) actionID = PlentifulHarvest;
 
-                if (CustomComboFunctions.WasLastAction(PlentifulHarvest) && OpenerStep == 7) OpenerStep++;
-                else if (OpenerStep == 7) actionID = PlentifulHarvest;
+                if (CustomComboFunctions.WasLastAction(Enshroud) && OpenerStep == 7) OpenerStep++;
+                else if (OpenerStep == 7) actionID = Enshroud;
 
-                if (CustomComboFunctions.WasLastAction(Enshroud) && OpenerStep == 8) OpenerStep++;
-                else if (OpenerStep == 8) actionID = Enshroud;
+                if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 8) OpenerStep++;
+                else if (OpenerStep == 8) actionID = VoidReaping;
 
-                if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 9) OpenerStep++;
-                else if (OpenerStep == 9) actionID = VoidReaping;
+                if (CustomComboFunctions.WasLastAction(Sacrificium) && OpenerStep == 9) OpenerStep++;
+                else if (OpenerStep == 9) actionID = Sacrificium;
 
-                if (CustomComboFunctions.WasLastAction(Sacrificium) && OpenerStep == 10) OpenerStep++;
-                else if (OpenerStep == 10) actionID = Sacrificium;
+                if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 10) OpenerStep++;
+                else if (OpenerStep == 10) actionID = CrossReaping;
 
-                if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 11) OpenerStep++;
-                else if (OpenerStep == 11) actionID = CrossReaping;
+                if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 11) OpenerStep++;
+                else if (OpenerStep == 11) actionID = LemuresSlice;
 
-                if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 12) OpenerStep++;
-                else if (OpenerStep == 12) actionID = LemuresSlice;
+                if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 12) OpenerStep++;
+                else if (OpenerStep == 12) actionID = VoidReaping;
 
-                if (CustomComboFunctions.WasLastAction(VoidReaping) && OpenerStep == 13) OpenerStep++;
-                else if (OpenerStep == 13) actionID = VoidReaping;
+                if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 13) OpenerStep++;
+                else if (OpenerStep == 13) actionID = CrossReaping;
 
-                if (CustomComboFunctions.WasLastAction(CrossReaping) && OpenerStep == 14) OpenerStep++;
-                else if (OpenerStep == 14) actionID = CrossReaping;
+                if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 14) OpenerStep++;
+                else if (OpenerStep == 14) actionID = LemuresSlice;
 
-                if (CustomComboFunctions.WasLastAction(LemuresSlice) && OpenerStep == 15) OpenerStep++;
-                else if (OpenerStep == 15) actionID = LemuresSlice;
+                if (CustomComboFunctions.WasLastAction(Communio) && OpenerStep == 15) OpenerStep++;
+                else if (OpenerStep == 15) actionID = Communio;
 
-                if (CustomComboFunctions.WasLastAction(Communio) && OpenerStep == 16) OpenerStep++;
-                else if (OpenerStep == 16) actionID = Communio;
+                if (CustomComboFunctions.WasLastAction(Perfectio) && OpenerStep == 16) OpenerStep++;
+                else if (OpenerStep == 16) actionID = Perfectio;
 
-                if (CustomComboFunctions.WasLastAction(Perfectio) && OpenerStep == 17) OpenerStep++;
-                else if (OpenerStep == 17) actionID = Perfectio;
+                if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 17) OpenerStep++;
+                else if (OpenerStep == 17) actionID = SoulSlice;
 
-                if (CustomComboFunctions.WasLastAction(SoulSlice) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = SoulSlice;
+                if (CustomComboFunctions.WasLastAction(UnveiledGibbet) && OpenerStep == 18) OpenerStep++;
+                else if (OpenerStep == 18) actionID = UnveiledGibbet;
 
-                if (CustomComboFunctions.WasLastAction(UnveiledGibbet) && OpenerStep == 19) OpenerStep++;
-                else if (OpenerStep == 19) actionID = UnveiledGibbet;
+                if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 19) OpenerStep++;
+                else if (OpenerStep == 19) actionID = Gibbet;
 
-                if (CustomComboFunctions.WasLastAction(Gibbet) && OpenerStep == 20) OpenerStep++;
-                else if (OpenerStep == 20) actionID = Gibbet;
+                if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && OpenerStep == 20) OpenerStep++;
+                else if (OpenerStep == 20) actionID = ShadowOfDeath;
 
-                if (CustomComboFunctions.WasLastAction(ShadowOfDeath) && OpenerStep == 21) OpenerStep++;
-                else if (OpenerStep == 21) actionID = ShadowOfDeath;
-
-                if (CustomComboFunctions.WasLastAction(Slice) && OpenerStep == 22) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 22) actionID = Slice;
+                if (CustomComboFunctions.WasLastAction(Slice) && OpenerStep == 21) CurrentState = OpenerState.OpenerFinished;
+                else if (OpenerStep == 21) actionID = Slice;
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
