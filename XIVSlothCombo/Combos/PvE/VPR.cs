@@ -184,7 +184,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Dreadwinder Usage
                     if (ActionReady(Dreadwinder) && !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                         GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 &&
-                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) &&
+                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                         (GetBuffRemainingTime(Buffs.FlankstungVenom) >= 20 || GetBuffRemainingTime(Buffs.FlanksbaneVenom) >= 20 ||
                         GetBuffRemainingTime(Buffs.HindstungVenom) >= 20 || GetBuffRemainingTime(Buffs.HindsbaneVenom) >= 20))
                     {
@@ -466,7 +466,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) &&
                         ActionReady(Dreadwinder) && !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                         GetDebuffRemainingTime(Debuffs.NoxiousGnash) < ST_NoxiousDebuffRefresh &&
-                        (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) &&
+                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                         (GetBuffRemainingTime(Buffs.FlankstungVenom) >= 20 || GetBuffRemainingTime(Buffs.FlanksbaneVenom) >= 20 ||
                         GetBuffRemainingTime(Buffs.HindstungVenom) >= 20 || GetBuffRemainingTime(Buffs.HindsbaneVenom) >= 20))
                     {
@@ -715,7 +715,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Pit of Dread Usage
                     if (ActionReady(PitofDread) && !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                     GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 &&
-                    (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5))
+                    ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)))
                         return PitofDread;
 
                     // Uncoiled Fury usage
@@ -892,7 +892,7 @@ namespace XIVSlothCombo.Combos.PvE
                     IsEnabled(CustomComboPreset.VPR_AoE_PitOfDread) &&
                     ActionReady(PitofDread) && !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                     GetDebuffRemainingTime(Debuffs.NoxiousGnash) < AoE_NoxiousDebuffRefresh &&
-                    (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5))
+                    ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)))
                         return PitofDread;
 
                     // Uncoiled Fury usage
