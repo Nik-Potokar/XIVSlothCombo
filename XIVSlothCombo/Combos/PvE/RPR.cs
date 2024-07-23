@@ -117,12 +117,6 @@ namespace XIVSlothCombo.Combos.PvE
                 float GCD = GetCooldown(Slice).CooldownTotal;
                 float EnGCD = GetCooldown(VoidReaping).CooldownTotal;
 
-                // Prevent the dynamic true north option from using the last charge
-                if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
-                    IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic_HoldCharge) &&
-                    GetRemainingCharges(All.TrueNorth) < 2 && trueNorthDynReady)
-                    trueNorthDynReady = false;
-
                 if (actionID is Slice)
                 {
                     if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
@@ -241,8 +235,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                         !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
-                        LevelChecked(SoulSlice) && gauge.Soul <= 50 &&
-                        ((GetCooldownRemainingTime(SoulSlice) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(SoulSlice)))
+                        LevelChecked(SoulSlice) && gauge.Soul <= 50 && ActionReady(SoulSlice))
                         return SoulSlice;
 
                     if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind))
@@ -428,8 +421,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_ST_SoulSlice) &&
                         !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                         !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
-                        LevelChecked(SoulSlice) && gauge.Soul <= 50 &&
-                        ((GetCooldownRemainingTime(SoulSlice) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(SoulSlice)))
+                        LevelChecked(SoulSlice) && gauge.Soul <= 50 && ActionReady(SoulSlice))
                         return SoulSlice;
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_ComboHeals))
