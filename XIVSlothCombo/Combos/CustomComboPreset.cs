@@ -2275,12 +2275,12 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(PLD_ST_AdvancedMode)]
         [ReplaceSkill(PLD.FastBlade)]
-        [CustomComboInfo("Simple Mode - Single Target", $"Replaces Fast Blade with an all-in-one button rotation.\nThis is ideal option for newcomers to the job.", PLD.JobID, 0)]
+        [CustomComboInfo("Simple Mode - Single Target", $"Replaces Fast Blade with an all-in-one button rotation.\nThis is the ideal option for newcomers to the job.", PLD.JobID, 0)]
         PLD_ST_SimpleMode = 11000,
 
         [ConflictingCombos(PLD_AoE_AdvancedMode)]
         [ReplaceSkill(PLD.TotalEclipse)]
-        [CustomComboInfo("Simple Mode - AoE", $"Replaces Total Eclipse with an all-in-one button rotation.\nThis is ideal option for newcomers to the job.", PLD.JobID, 1)]
+        [CustomComboInfo("Simple Mode - AoE", $"Replaces Total Eclipse with an all-in-one button rotation.\nThis is the ideal option for newcomers to the job.", PLD.JobID, 1)]
         PLD_AoE_SimpleMode = 11001,
 
         // ST Advanced Mode
