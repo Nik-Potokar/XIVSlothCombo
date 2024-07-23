@@ -2155,29 +2155,16 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAM_AoE_Overcap && enabled)
                 UserConfig.DrawSliderInt(0, 85, SAM.Config.SAM_AoE_KenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
-
-            if (preset == CustomComboPreset.SAM_ST_GekkoCombo_CDs_MeikyoShisui && enabled)
-            {
-                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_MeikyoChoice, "Use after Hakaze/Sen Applier", "Uses Meikyo Shisui after Hakaze, Gekko, Yukikaze, or Kasha.", 1);
-                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_MeikyoChoice, "Use outside of combo chain", "Uses Meikyo Shisui outside of a combo chain.", 2);
-            }
-
-            //PvP
-            if (preset == CustomComboPreset.SAMPvP_BurstMode && enabled)
-                UserConfig.DrawSliderInt(0, 2, SAMPvP.Config.SAMPvP_SotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
-
-            if (preset == CustomComboPreset.SAMPvP_KashaFeatures_GapCloser && enabled)
-                UserConfig.DrawSliderInt(0, 100, SAMPvP.Config.SAMPvP_SotenHP, "Use Soten on enemies below selected HP.");
-
+            
             //Fillers
-            if (preset == CustomComboPreset.SAM_ST_GekkoCombo_FillerCombos)
+            if (preset == CustomComboPreset.SAM_ST_FillerCombos)
             {
-                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.14+", "2 Filler GCDs", 1);
-                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 2);
-                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nUses double Yukikaze loop.", 3);
+                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.14+", "2 Filler GCDs", 0);
+                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 1);
+                UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "1.99 - 2.01", "4 Filler GCDs. \nUses double Yukikaze loop.", 2);
             }
 
-            if (preset == CustomComboPreset.SAM_ST_GekkoCombo_CDs_Iaijutsu)
+            if (preset == CustomComboPreset.SAM_ST_CDs_Iaijutsu)
             {
                 UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_Higanbana_Threshold, "Stop using Higanbana on targets below this HP % (0% = always use).", 150, SliderIncrements.Ones);
             }
@@ -2200,6 +2187,13 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, SAM.Config.SAM_VariantCure, "HP% to be at or under", 200);
+
+            //PvP
+            if (preset == CustomComboPreset.SAMPvP_BurstMode && enabled)
+                UserConfig.DrawSliderInt(0, 2, SAMPvP.Config.SAMPvP_SotenCharges, "How many charges of Soten to keep ready? (0 = Use All).");
+
+            if (preset == CustomComboPreset.SAMPvP_KashaFeatures_GapCloser && enabled)
+                UserConfig.DrawSliderInt(0, 100, SAMPvP.Config.SAMPvP_SotenHP, "Use Soten on enemies below selected HP.");
 
             #endregion
             // ====================================================================================
