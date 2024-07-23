@@ -133,7 +133,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return actionID;
 
                     // Uncoiled combo
-                    if (!HasEffect(Buffs.Reawakened) && CanWeave(actionID))
+                    if (!HasEffect(Buffs.Reawakened))
                     {
                         if (HasEffect(Buffs.PoisedForTwinfang))
                             return OriginalHook(Twinfang);
@@ -145,10 +145,10 @@ namespace XIVSlothCombo.Combos.PvE
                     //Dreadwinder Combo
                     if (!HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken))
                     {
-                        if (HasEffect(Buffs.HuntersVenom) && CanWeave(actionID))
+                        if (HasEffect(Buffs.HuntersVenom))
                             return OriginalHook(Twinfang);
 
-                        if (HasEffect(Buffs.SwiftskinsVenom) && CanWeave(actionID))
+                        if (HasEffect(Buffs.SwiftskinsVenom))
                             return OriginalHook(Twinblood);
 
                         if (SwiftskinsCoilReady)
@@ -393,7 +393,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Uncoiled combo
                     if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo) &&
-                        !HasEffect(Buffs.Reawakened) && CanWeave(actionID))
+                        !HasEffect(Buffs.Reawakened))
                     {
                         if (HasEffect(Buffs.PoisedForTwinfang))
                             return OriginalHook(Twinfang);
@@ -407,10 +407,10 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.VPR_ST_DreadwinderCombo) &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken))
                     {
-                        if (HasEffect(Buffs.HuntersVenom) && CanWeave(actionID))
+                        if (HasEffect(Buffs.HuntersVenom))
                             return OriginalHook(Twinfang);
 
-                        if (HasEffect(Buffs.SwiftskinsVenom) && CanWeave(actionID))
+                        if (HasEffect(Buffs.SwiftskinsVenom))
                             return OriginalHook(Twinblood);
 
                         if (positionalChoice is 0)
@@ -595,7 +595,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
                             (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 ||
-                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) && LevelChecked(DreadFangs) &&
+                            (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD * 4)) && LevelChecked(DreadFangs) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) && !ActionReady(Dreadwinder)) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
                             ? OriginalHook(DreadFangs)
@@ -668,7 +668,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelMaw)
                 {
-                    // Uncoiled combo
+                    // Uncoiled/Pit of Dread combo
                     if (!HasEffect(Buffs.Reawakened))
                     {
                         if (HasEffect(Buffs.PoisedForTwinfang))
