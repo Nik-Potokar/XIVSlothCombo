@@ -88,7 +88,8 @@ namespace XIVSlothCombo.Combos.PvE
                 //PLD_ST_AtonementTiming = new("PLD_ST_EquilibriumTiming"),
                 //PLD_ST_DivineMightTiming = new("PLD_ST_DivineMightTiming"),
                 PLD_Intervene_MeleeOnly = new ("PLD_Intervene_MeleeOnly", 1),
-                PLD_ShieldLob_SubOption = new ("PLD_ShieldLob_SubOption", 1);
+                PLD_ShieldLob_SubOption = new ("PLD_ShieldLob_SubOption", 1),
+                PLD_MP_Reserve = new("PLD_MP_Reserve", 1000);
         }
 
         internal class PLD_ST_SimpleMode : CustomCombo
@@ -425,12 +426,14 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.Requiescat))
                             {
                                 // Confiteor & Blades
-                                if (GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp && ((HasEffect(Buffs.ConfiteorReady) && IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor)) ||
+                                if (GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp && (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve) &&
+                                    ((HasEffect(Buffs.ConfiteorReady) && IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor)) ||
                                     (OriginalHook(Confiteor) != Confiteor) && IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades)))
                                     return OriginalHook(Confiteor);
 
                                 // Pre-Blades
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                                (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve))
                                     return HolySpirit;
                             }
                         }
@@ -477,7 +480,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Sheltron);
 
                         // Holy Spirit Prioritization
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && hasDivineMight && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && hasDivineMight && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
+                            (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve))
                         {
                             // Delay Sepulchre (Before Burst Starts) / Prefer Sepulchre (Before Burst Ends)
                             if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 6 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
@@ -495,14 +499,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Holy Spirit Usage: During Burst / Outside Melee / Before Expiring / Before Refreshing
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                            hasDivineMight && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && (JustUsed(FightOrFlight, 30f) ||
+                            hasDivineMight && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && 
+                            (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve) && (JustUsed(FightOrFlight, 30f) ||
                             !InMeleeRange() || GetBuffRemainingTime(Buffs.DivineMight) < 10 || lastComboActionID is RiotBlade))
                             return HolySpirit;
 
                         // Out of Range Options: Shield Lob / Holy Spirit (Not Moving)
                         if (!InMeleeRange() && IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob))
                         {
-                            if (!IsMoving && LevelChecked(HolySpirit) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && Config.PLD_ShieldLob_SubOption == 2)
+                            if (!IsMoving && LevelChecked(HolySpirit) && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && Config.PLD_ShieldLob_SubOption == 2 &&
+                                (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve))
                                 return HolySpirit;
 
                             if (LevelChecked(ShieldLob))
@@ -580,6 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // Confiteor & Blades
                             if (HasEffect(Buffs.Requiescat) && GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp &&
+                                (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve) &&
                                 ((HasEffect(Buffs.ConfiteorReady) && IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor)) ||
                                 (OriginalHook(Confiteor) != Confiteor && IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades))))
                                 return OriginalHook(Confiteor);
@@ -612,6 +619,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Holy Circle
                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && LevelChecked(HolyCircle) && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp &&
+                        (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve) &&
                         (HasEffect(Buffs.DivineMight) || HasEffect(Buffs.Requiescat)))
                         return HolyCircle;
 
