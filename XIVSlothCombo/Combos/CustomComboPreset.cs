@@ -1427,7 +1427,7 @@ namespace XIVSlothCombo.Combos
 
         #region ST
         [ReplaceSkill(GNB.KeenEdge)]
-        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. ***DOES NOT WORK WELL WITH 2.46-2.49***", GNB.JobID)]
+        [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. **2.5sks ONLY**", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
 
         #region Reign Combo
@@ -1551,6 +1551,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(GNB_BS)]
         [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID)]
         GNB_BS_Bloodfest = 7402,
+
+        [ParentCombo(GNB_BS)]
+        [CustomComboInfo("Reign combo on Burst Strike Feature", "Adds Reign combo to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on CD.", GNB.JobID)]
+        GNB_BS_Reign = 7403,
 
         [ParentCombo(GNB_BS)]
         [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
