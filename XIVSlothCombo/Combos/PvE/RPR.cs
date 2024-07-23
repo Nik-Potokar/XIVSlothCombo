@@ -221,10 +221,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (HasEffect(Buffs.Enshrouded))
                         {
-                            if (gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && ActionReady(Communio))
+                            if (gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
                                 return Communio;
 
-                            if (gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio))
+                            if (gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio) && LevelChecked(Sacrificium))
                                 return OriginalHook(Gluttony);
 
                             if (CanWeave(actionID) && gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
@@ -403,11 +403,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.Enshrouded))
                         {
                             if (IsEnabled(CustomComboPreset.RPR_ST_Communio) &&
-                                gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && ActionReady(Communio))
+                                gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && LevelChecked(Communio))
                                 return Communio;
 
                             if (IsEnabled(CustomComboPreset.RPR_ST_Sacrificium) &&
-                                gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio))
+                                gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio) && LevelChecked(Sacrificium))
                                 return OriginalHook(Gluttony);
 
                             if (IsEnabled(CustomComboPreset.RPR_ST_Lemure) &&
