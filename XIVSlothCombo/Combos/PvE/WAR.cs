@@ -167,6 +167,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return StormsEye;
                             return StormsPath;
                         }
+                        if (lastComboMove == Maim && LevelChecked(StormsPath) && IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_StormsEye))
+                        {
+                            return StormsPath;
+                        }
                     }
 
                     return HeavySwing;
