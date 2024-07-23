@@ -113,6 +113,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
+                if (CustomComboFunctions.IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
+                    && Gauge.Chakra >= 5
+                    && OpenerStep > 2)
+                {
+                    actionID = TheForbiddenChakra;
+                    return true;
+                }
+
                 if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 1) OpenerStep++;
                 else if (OpenerStep == 1) actionID = PerfectBalance;
 
@@ -197,6 +205,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (currentState == OpenerState.InOpener)
             {
+                if (CustomComboFunctions.IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
+                    && Gauge.Chakra >= 5
+                    && OpenerStep > 2)
+                {
+                    actionID = TheForbiddenChakra;
+                    return true;
+                }
+
                 if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 1) OpenerStep++;
                 else if (OpenerStep == 1) actionID = PerfectBalance;
 
