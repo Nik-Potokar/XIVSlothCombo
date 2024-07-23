@@ -3840,7 +3840,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(WAR.StormsPath)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1)]
-        WAR_ST_StormsPath = 18000,
+        WAR_ST_StormsPath = 18000, 
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
@@ -3849,6 +3849,10 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Tomahawk Uptime Option", "Adds Tomahawk to Advanced Mode when you are out of range.", WAR.JobID, 1, "", "")]
         WAR_ST_StormsPath_RangedUptime = 18016,
+
+        [ParentCombo(WAR_ST_StormsPath)]
+        [CustomComboInfo("Storm's Eye Option", "Adds Storms Eye to Advanced Mode.", WAR.JobID, 2, "", "")]
+        WAR_ST_StormsPath_StormsEye = 18023,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Inner Beast / Fell Cleave Option", "Adds Inner Beast / Fell Cleave to Advanced Mode. Will use when you have the set minimum gauge, or under the effect of Inner Release. Will also use Nascent Chaos.", WAR.JobID, 2, "", "")]
@@ -3879,7 +3883,7 @@ namespace XIVSlothCombo.Combos
         WAR_AoE_Overpower_Orogeny = 18010,
 
         [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode.", WAR.JobID, 7, "", "")]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode. Only uses when in the Target's target ring (1 yalm) & when not moving. Otherwise, will use when buff time is equal to 1 GCD.", WAR.JobID, 7, "", "")]
         WAR_ST_StormsPath_PrimalRend = 18011,
 
         [ReplaceSkill(WAR.Overpower)]
@@ -3925,10 +3929,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID)]
         WAR_InfuriateFellCleave_IRFirst = 18022,
-
-        [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Melee Option", "Uses Primal Rend when in the target's target ring (1 yalm) & when not moving otherwise will use it when buff is less than 10 seconds.", WAR.JobID)]
-        WAR_ST_StormsPath_PrimalRend_CloseRange = 18023,
 
         [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
         [CustomComboInfo("Primal Rend Late Option", "Uses Primal Rend after you consume 3 stacks of Inner Release & after Primal Wrath.", WAR.JobID)]

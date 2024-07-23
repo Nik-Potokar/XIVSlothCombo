@@ -63,6 +63,7 @@ namespace XIVSlothCombo.Combos.PvE
                 WAR_InfuriateRange = "WarInfuriateRange",
                 WAR_SurgingRefreshRange = "WarSurgingRefreshRange",
                 WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges",
+                WAR_KeepInfuriateCharges = "WarKeepInfuriateCharges",
                 WAR_VariantCure = "WAR_VariantCure",
                 WAR_FellCleaveGauge = "WAR_FellCleaveGauge",
                 WAR_DecimateGauge = "WAR_DecimateGauge",
@@ -82,8 +83,10 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
                     var surgingThreshold = PluginConfiguration.GetCustomIntValue(Config.WAR_SurgingRefreshRange);
                     var onslaughtChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepOnslaughtCharges);
+                    var infuriateChargesRemaining = PluginConfiguration.GetCustomIntValue(Config.WAR_KeepInfuriateCharges);
                     var fellCleaveGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_FellCleaveGauge);
                     var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateSTGauge);
+                    float GCD = GetCooldown(HeavySwing).CooldownTotal;
 
                     if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
                         return Variant.VariantCure;
@@ -91,7 +94,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && LevelChecked(Tomahawk) && !InMeleeRange() && HasBattleTarget())
                         return Tomahawk;
 
-                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) && gauge <= infuriateGauge && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_Infuriate) && InCombat() && LevelChecked(Infuriate) && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks)
+                        && gauge <= infuriateGauge && CanWeave(actionID) && GetRemainingCharges(Infuriate) > infuriateChargesRemaining)
                         return Infuriate;
 
                     //Sub Storm's Eye level check
@@ -125,28 +129,23 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Onslaught;
                             }
                         }
-                        
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && !JustUsed(InnerRelease, GetCooldown(actionID).CooldownTotal))
-                        {
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && !IsMoving && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
-                                return PrimalRend;
-                            if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
-                                return PrimalRend;
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && (!HasEffect(Buffs.InnerReleaseStacks) && !HasEffect(Buffs.BurgeoningFury) && !HasEffect(Buffs.Wrathful)))
-                                return PrimalRend;
-                            if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late))
-                                return PrimalRend;
-                        }
+
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)
+                            && GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0
+                            && !HasEffect(Buffs.Wrathful) && HasEffect(Buffs.PrimalRendReady))
+                            return PrimalRend;
+                        if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !IsMoving && HasEffect(Buffs.PrimalRendReady) && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD))
+                            return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
                             return PrimalRuination;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
                         {
-                            if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && InnerChaos.LevelChecked()))
+                            if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && !LevelChecked(InnerChaos)))
                                 return OriginalHook(InnerBeast);
 
-                            if (HasEffect(Buffs.NascentChaos) && !InnerChaos.LevelChecked())
+                            if (HasEffect(Buffs.NascentChaos) && gauge >= 50 && !LevelChecked(InnerChaos))
                                 return OriginalHook(Decimate);
                         }
 
@@ -162,10 +161,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return Maim;
                         }
 
-                        if (lastComboMove == Maim && LevelChecked(StormsPath))
+                        if (lastComboMove == Maim && LevelChecked(StormsPath) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_StormsEye))
                         {
-                            if ((GetBuffRemainingTime(Buffs.SurgingTempest) <= surgingThreshold) && LevelChecked(StormsEye))
+                            if (GetBuffRemainingTime(Buffs.SurgingTempest) <= surgingThreshold && LevelChecked(StormsEye))
                                 return StormsEye;
+                            return StormsPath;
+                        }
+                        if (lastComboMove == Maim && LevelChecked(StormsPath) && IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_StormsEye))
+                        {
                             return StormsPath;
                         }
                     }
@@ -244,13 +247,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return PrimalWrath;
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetCooldownRemainingTime(InnerRelease) < 57.5)
-                        {
-                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange) && (GetTargetDistance() <= 3 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= 10))
-                                return PrimalRend;
-                            if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_CloseRange))
-                                return PrimalRend;
-                        }
+                        if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend))
+                            return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
                             return PrimalRuination;
