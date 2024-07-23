@@ -2409,7 +2409,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Fight or Flight / Requiescat Feature", "Replaces Fight or Flight with Requiescat and Blade of Honor while under the effect of Fight or Flight. Recommended to disable the in-game Fight or Flight action change setting to avoid issues.", PLD.JobID, 7)]
         PLD_FoFRequiescat = 11026,
 
-
         [ReplaceSkill(PLD.ShieldLob)]
         [CustomComboInfo("Shield Lob / Holy Spirit Feature", "Replaces Shield Lob with Holy Spirit while not moving or when under Divine Might, provided there is sufficient MP to cast it.", PLD.JobID, 5)]
         PLD_ShieldLob_Feature = 11027,
