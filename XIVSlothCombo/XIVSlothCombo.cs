@@ -38,15 +38,15 @@ namespace XIVSlothCombo
         private readonly ConfigWindow ConfigWindow;
         private readonly TargetHelper TargetHelper;
         internal readonly AboutUs AboutUs;
-        internal static XIVSlothCombo P = null!;
+        internal static XIVSlothCombo? P = null!;
         internal WindowSystem ws;
         private readonly HttpClient httpClient = new();
 
         private readonly TextPayload starterMotd = new("[Sloth Message of the Day] ");
         private static uint? jobID;
 
-        public static readonly List<uint> DisabledJobsPVE = new List<uint>()
-        {
+        public static readonly List<uint> DisabledJobsPVE =
+        [
             //ADV.JobID,
             //AST.JobID,
             BLM.JobID,
@@ -71,35 +71,9 @@ namespace XIVSlothCombo
             //VPR.JobID,
             //WAR.JobID,
             //WHM.JobID
-        };
+        ];
 
-        public static readonly List<uint> DisabledJobsPVP = new List<uint>()
-        {
-            //ADV.JobID,
-            //AST.JobID,
-            //BLM.JobID,
-            //BLU.JobID,
-            //BRD.JobID,
-            //DNC.JobID,
-            //DOL.JobID,
-            //DRG.JobID,
-            //DRK.JobID,
-            //GNB.JobID,
-            //MCH.JobID,
-            //MNK.JobID,
-            //NIN.JobID,
-            //PCT.JobID,
-            //PLD.JobID,
-            //RDM.JobID,
-            //RPR.JobID,
-            //SAM.JobID,
-            //SCH.JobID,
-            //SGE.JobID,
-            //SMN.JobID,
-            //VPR.JobID,
-            //WAR.JobID,
-            //WHM.JobID
-        };
+        public static readonly List<uint> DisabledJobsPVP = [];
 
         public static uint? JobID
         {
@@ -258,6 +232,7 @@ namespace XIVSlothCombo
         }
 
         /// <inheritdoc/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Used for non-static only window initialization")]
         public string Name => "XIVSlothCombo";
 
         /// <inheritdoc/>
@@ -314,7 +289,7 @@ namespace XIVSlothCombo
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
-                                if (preset.ToString().ToLowerInvariant() != targetPreset)
+                                if (!preset.ToString().Equals(targetPreset, StringComparison.InvariantCultureIgnoreCase))
                                     continue;
 
                                 Service.Configuration.EnabledActions.Add(preset);
@@ -339,19 +314,17 @@ namespace XIVSlothCombo
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
-                                if (preset.ToString().ToLowerInvariant() != targetPreset)
+                                if (!preset.ToString().Equals(targetPreset, StringComparison.InvariantCultureIgnoreCase))
                                     continue;
 
-                                if (Service.Configuration.EnabledActions.Contains(preset))
-                                {
-                                    Service.Configuration.EnabledActions.Remove(preset);
-                                    Service.ChatGui.Print($"{preset} UNSET");
-                                }
-
-                                else
+                                if (!Service.Configuration.EnabledActions.Remove(preset))
                                 {
                                     Service.Configuration.EnabledActions.Add(preset);
                                     Service.ChatGui.Print($"{preset} SET");
+                                }
+                                else
+                                {
+                                    Service.ChatGui.Print($"{preset} UNSET");
                                 }
                             }
 
@@ -373,7 +346,7 @@ namespace XIVSlothCombo
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
-                                if (preset.ToString().ToLowerInvariant() != targetPreset)
+                                if (!preset.ToString().Equals(targetPreset, StringComparison.InvariantCultureIgnoreCase))
                                     continue;
 
                                 Service.Configuration.EnabledActions.Remove(preset);
@@ -487,9 +460,9 @@ namespace XIVSlothCombo
                                 {
                                     if (int.TryParse(preset.ToString(), out _)) { i++; continue; }
 
-                                    if (preset.ToString()[..3].ToLower() == specificJob ||  // Job identifier
-                                        preset.ToString()[..3].ToLower() == "all" ||        // Adds in Globals
-                                        preset.ToString()[..3].ToLower() == "pvp")          // Adds in PvP Globals
+                                    if (preset.ToString()[..3].Equals(specificJob, StringComparison.CurrentCultureIgnoreCase) ||  // Job identifier
+                                        preset.ToString()[..3].Equals("all", StringComparison.CurrentCultureIgnoreCase) ||        // Adds in Globals
+                                        preset.ToString()[..3].Equals("pvp", StringComparison.CurrentCultureIgnoreCase))          // Adds in PvP Globals
                                         file.WriteLine($"{(int)preset} - {preset}");
                                 }
                             }
