@@ -1854,8 +1854,8 @@ namespace XIVSlothCombo.Combos
         MNK_ST_AdvancedMode = 9005,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use Double Lunar Opener", "Uses Double Lunar opener", MNK.JobID)]
-        MNK_STUseLLOpener = 9006,
+        [CustomComboInfo("Use Opener", "Uses selected opener", MNK.JobID)]
+        MNK_STUseOpener = 9006,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Use Meditation", "Uses Meditation when out of combat/range", MNK.JobID)]

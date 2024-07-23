@@ -45,6 +45,7 @@ namespace XIVSlothCombo.Combos.PvE
             Enlightenment = 16474,
             SixSidedStar = 16476,
             ShadowOfTheDestroyer = 25767,
+            RisingPhoenix = 25768,
             WindsReply = 36949,
             ForbiddenMeditation = 36942,
             LeapingOpo = 36945,
@@ -105,7 +106,8 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_ST_SecondWind_Threshold = new("MNK_ST_SecondWindThreshold", 25),
                 MNK_ST_Bloodbath_Threshold = new("MNK_ST_BloodbathThreshold", 40),
                 MNK_AoE_SecondWind_Threshold = new("MNK_AoE_SecondWindThreshold", 25),
-                MNK_AoE_Bloodbath_Threshold = new("MNK_AoE_BloodbathThreshold", 40);
+                MNK_AoE_Bloodbath_Threshold = new("MNK_AoE_BloodbathThreshold", 40),
+                MNK_SelectedOpener = new("MNK_SelectedOpener");
         }
 
         internal class MNK_ST_AdvancedMode : CustomCombo
@@ -119,9 +121,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID == 53 || actionID == 36945)
                 {
-                    if (IsEnabled(CustomComboPreset.MNK_STUseLLOpener))
+                    if (IsEnabled(CustomComboPreset.MNK_STUseOpener))
                     {
-                        if (MNKOpener.DoFullOpener(ref actionID))
+                        if (MNKOpener.DoFullOpener(ref actionID, Config.MNK_SelectedOpener))
                             return actionID;
                     }
 
@@ -275,7 +277,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID == 53 || actionID == 36945)
                 {
-                    if (MNKOpener.DoFullOpener(ref actionID))
+                    if (MNKOpener.DoFullOpener(ref actionID, 1))
                         return actionID;
 
                     if ((!inCombat || !InMeleeRange())
