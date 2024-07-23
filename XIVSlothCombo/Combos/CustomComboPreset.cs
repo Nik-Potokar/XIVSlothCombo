@@ -2482,19 +2482,19 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
         RPR_ST_Enshroud = 12010,
 
-        [ParentCombo(RPR_ST_Enshroud)]
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Void/Cross Reaping Option", "Adds Void Reaping and Cross Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
         RPR_ST_Reaping = 12011,
 
-        [ParentCombo(RPR_ST_Enshroud)]
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Lemure's Slice Option", "Adds Lemure's Slice to the rotation.", RPR.JobID)]
         RPR_ST_Lemure = 12012,
 
-        [ParentCombo(RPR_ST_Enshroud)]
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
         RPR_ST_Sacrificium = 12013,
 
-        [ParentCombo(RPR_ST_Enshroud)]
+        [ParentCombo(RPR_ST_AdvancedMode)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
         RPR_ST_Communio = 12014,
 
@@ -2581,19 +2581,19 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Enshroud Option", "Adds Enshroud to the rotation.", RPR.JobID)]
         RPR_AoE_Enshroud = 12109,
 
-        [ParentCombo(RPR_AoE_Enshroud)]
+        [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Grim Reaping Option", "Adds Grim Reaping to the rotation.\n(Disabling this may stop the one-button combo working during enshroud)", RPR.JobID)]
         RPR_AoE_Reaping = 12110,
 
-        [ParentCombo(RPR_AoE_Enshroud)]
+        [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Lemure's Scythe Option", "Adds Lemure's Scythe to the rotation.", RPR.JobID)]
         RPR_AoE_Lemure = 12111,
 
-        [ParentCombo(RPR_AoE_Enshroud)]
+        [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Sacrificium Option", "Adds Sacrificium to the rotation.", RPR.JobID)]
         RPR_AoE_Sacrificium = 12112,
 
-        [ParentCombo(RPR_AoE_Enshroud)]
+        [ParentCombo(RPR_AoE_AdvancedMode)]
         [CustomComboInfo("Communio Finisher Option", "Adds Communio to the rotation.", RPR.JobID)]
         RPR_AoE_Communio = 12113,
 
@@ -2620,11 +2620,11 @@ namespace XIVSlothCombo.Combos
         RPR_GluttonyBloodSwathe = 12200,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
-        [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds Gibbet and Gallows on Blood Stalk.\nAdds Guillotine on Grim Swathe.", RPR.JobID)]
+        [CustomComboInfo("Gibbet and Gallows/Guillotine on Blood Stalk/Grim Swathe Feature", "Adds (Executioner's) Gibbet and Gallows on Blood Stalk.\nAdds (Executioner's) Guillotine on Grim Swathe.", RPR.JobID)]
         RPR_GluttonyBloodSwathe_BloodSwatheCombo = 12201,
 
         [ParentCombo(RPR_GluttonyBloodSwathe)]
-        [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, and Lemure's Slice) on Blood Stalk and Grim Swathe.", RPR.JobID)]
+        [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, Lemure's Slice, Sacrificium and Perfectio) on Blood Stalk and Grim Swathe.", RPR.JobID)]
         RPR_GluttonyBloodSwathe_Enshroud = 12202,
 
         // Last value = 12202
@@ -2663,7 +2663,7 @@ namespace XIVSlothCombo.Combos
         RPR_LemureOnGGG = 12306,
 
         [ReplaceSkill(RPR.Enshroud)]
-        [CustomComboInfo("Enshroud to Communio Feature", "Turns Enshroud to Communio when available to use.", RPR.JobID)]
+        [CustomComboInfo("Enshroud to Communio to Perfectio Feature", "Turns Enshroud to Communio and Perfectio when available to use.", RPR.JobID)]
         RPR_EnshroudCommunio = 12307,
 
         [ParentCombo(RPR_EnshroudProtection)]

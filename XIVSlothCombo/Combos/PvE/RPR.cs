@@ -76,7 +76,7 @@ namespace XIVSlothCombo.Combos.PvE
                 IdealHost = 3905,
                 Oblatio = 3857,
                 Executioner = 3858,
-                PerfectioOcculta = 3859;
+                PerfectioParata = 3860;
         }
 
         public static class Debuffs
@@ -112,8 +112,16 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 RPRGauge? gauge = GetJobGauge<RPRGauge>();
-                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
+                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID);
+                bool trueNorthDynReady = trueNorthReady;
                 float GCD = GetCooldown(Slice).CooldownTotal;
+                float EnGCD = GetCooldown(VoidReaping).CooldownTotal;
+
+                // Prevent the dynamic true north option from using the last charge
+                if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
+                    IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic_HoldCharge) &&
+                    GetRemainingCharges(All.TrueNorth) < 2 && trueNorthDynReady)
+                    trueNorthDynReady = false;
 
                 if (actionID is Slice)
                 {
@@ -141,51 +149,75 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Harpe;
                     }
 
-                    if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
-                       ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
-                       (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3 || GetCooldownRemainingTime(ArcaneCircle) <= GCD)) || // Double Enshroud windows
-                     (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6))) // Other times
+                    if (ActionReady(ArcaneCircle) && CanWeave(actionID))
+                        return ArcaneCircle;
+
+                    if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
+                        !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                        ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && ((GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 && WasLastAction(Enshroud)) || ((GetCooldownRemainingTime(ArcaneCircle) <= EnGCD) && gauge.LemureShroud is 4))) || // 2 min
+                        (!HasEffect(Buffs.Enshrouded) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6 && ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 3) || !InCombat()))))
                         return ShadowOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
-                        if (HasEffect(Buffs.PerfectioOcculta) && WasLastSpell(Communio) && !HasEffect(Buffs.ImmortalSacrifice))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
-                        if (IsEnabled(CustomComboPreset.RPR_ST_PlentifulHarvest) &&
-                            HasEffect(Buffs.ImmortalSacrifice) && LevelChecked(PlentifulHarvest) &&
-                            !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
-                            (GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 || WasLastAction(Communio)))
-                            return PlentifulHarvest;
-
-                        if (CanWeave(actionID))
-                        {
-                            if (LevelChecked(ArcaneCircle) &&
-                                ((GetCooldownRemainingTime(ArcaneCircle) <= GetCooldownRemainingTime(OriginalHook(Slice)) + 0.25) || ActionReady(ArcaneCircle)))
-                                return ArcaneCircle;
-
-                            if (LevelChecked(Gluttony) && gauge.Soul >= 50 && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.ImmortalSacrifice) &&
-                                ((GetCooldownRemainingTime(Gluttony) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(Gluttony)))
-                                return Gluttony;
-
-                            if (LevelChecked(BloodStalk) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.ImmortalSacrifice) && gauge.Soul >= 50 &&
-                                (!LevelChecked(Gluttony) || (LevelChecked(Gluttony) && (gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) >= GCD * 5) && !WasLastAction(Gluttony))))
-                                return OriginalHook(BloodStalk);
-                        }
-
-
-                        if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
-                             (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
-                             HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
-                             (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 4) || // Prep for double Enshroud + Natural Odd Minute Shrouds
-                             WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
-                             (!HasEffect(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 20) || //Natural Odd Minute Shrouds
-                             (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
+                        if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
+                           !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                           !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                           (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
+                           HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
+                           (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2) || // Prep for double Enshroud + Natural Odd Minute Shrouds
+                           WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
+                           (GetCooldownRemainingTime(ArcaneCircle) > GCD * 22 && GetDebuffRemainingTime(Debuffs.DeathsDesign) > EnGCD * 5) || //Natural Odd Minute Shrouds
+                           (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
                             return Enshroud;
 
-                        if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
-                            ActionReady(SoulSlice) && gauge.Soul <= 50)
-                            return SoulSlice;
+                        if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) &&
+                           (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) &&
+                           !HasEffect(Buffs.Enshrouded) && LevelChecked(Gibbet))
+                        {
+                            if (HasEffect(Buffs.EnhancedGibbet))
+                            {
+                                if (trueNorthDynReady && !OnTargetsFlank())
+                                    return All.TrueNorth;
+
+                                return OriginalHook(Gibbet);
+                            }
+
+                            if (HasEffect(Buffs.EnhancedGallows) ||
+                                 (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
+                            {
+                                if (trueNorthDynReady && !OnTargetsRear())
+                                    return All.TrueNorth;
+
+                                return OriginalHook(Gallows);
+                            }
+                        }
+
+                        if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
+                        {
+                            if (HasEffect(Buffs.ImmortalSacrifice) && LevelChecked(PlentifulHarvest) &&
+                                (GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 || WasLastAction(Communio)))
+                                return PlentifulHarvest;
+
+                            if (CanWeave(actionID))
+                            {
+                                if (LevelChecked(Gluttony) && gauge.Soul >= 50 && !HasEffect(Buffs.ImmortalSacrifice) &&
+                                    ((GetCooldownRemainingTime(Gluttony) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(Gluttony)))
+                                {
+                                    if (trueNorthReady)
+                                        return All.TrueNorth;
+
+                                    return Gluttony;
+                                }
+
+                                if (LevelChecked(BloodStalk) && !HasEffect(Buffs.ImmortalSacrifice) && gauge.Soul >= 50 &&
+                                    (!LevelChecked(Gluttony) || (LevelChecked(Gluttony) && (gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) > GCD * 5) && !WasLastAction(Gluttony))))
+                                    return OriginalHook(BloodStalk);
+                            }
+                        }
 
                         if (HasEffect(Buffs.Enshrouded))
                         {
@@ -207,26 +239,17 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if ((HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) &&
-                        !HasEffect(Buffs.Enshrouded) && LevelChecked(Gibbet))
-                    {
-                        if (HasEffect(Buffs.EnhancedGibbet))
-                        {
-                            if (trueNorthReady && !OnTargetsFlank())
-                                return All.TrueNorth;
+                    if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
+                        !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                        LevelChecked(SoulSlice) && gauge.Soul <= 50 &&
+                        ((GetCooldownRemainingTime(SoulSlice) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(SoulSlice)))
+                        return SoulSlice;
 
-                            return OriginalHook(Gibbet);
-                        }
+                    if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind))
+                        return All.SecondWind;
 
-                        if (HasEffect(Buffs.EnhancedGallows) ||
-                            (!HasEffect(Buffs.EnhancedGallows) && !HasEffect(Buffs.EnhancedGibbet)))
-                        {
-                            if (trueNorthReady && !OnTargetsRear())
-                                return All.TrueNorth;
-
-                            return OriginalHook(Gallows);
-                        }
-                    }
+                    if (PlayerHealthPercentageHp() <= 40 && ActionReady(All.Bloodbath))
+                        return All.Bloodbath;
 
                     if (comboTime > 0)
                     {
@@ -252,22 +275,20 @@ namespace XIVSlothCombo.Combos.PvE
                 RPRGauge? gauge = GetJobGauge<RPRGauge>();
                 double enemyHP = GetTargetHPPercent();
                 int sodRefreshRange = Config.RPR_SoDRefreshRange;
-                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
+                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID);
+                bool trueNorthDynReady = trueNorthReady;
                 int PositionalChoice = Config.RPR_Positional;
                 float GCD = GetCooldown(Slice).CooldownTotal;
+                float EnGCD = GetCooldown(VoidReaping).CooldownTotal;
 
                 // Prevent the dynamic true north option from using the last charge
                 if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
                     IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic_HoldCharge) &&
-                    GetRemainingCharges(All.TrueNorth) < 2 && trueNorthReady)
-                    trueNorthReady = false;
+                    GetRemainingCharges(All.TrueNorth) < 2 && trueNorthDynReady)
+                    trueNorthDynReady = false;
 
                 if (actionID is Slice)
                 {
-                    if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
-                        GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(actionID))
-                        return All.TrueNorth;
-
                     if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
                         PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
@@ -297,63 +318,89 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Harpe;
                     }
 
-                    if (IsEnabled(CustomComboPreset.RPR_ST_SoD) && LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && enemyHP > Config.RPR_SoDThreshold &&
-                        ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3 || GetCooldownRemainingTime(ArcaneCircle) <= GCD)) || // Double Enshroud windows
-                      (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange))) // Other times
+                    if (IsEnabled(CustomComboPreset.RPR_ST_ArcaneCircle) &&
+                        ActionReady(ArcaneCircle) && CanWeave(actionID))
+                        return ArcaneCircle;
+
+                    if (IsEnabled(CustomComboPreset.RPR_ST_SoD) &&
+                        LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
+                        !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) && enemyHP > Config.RPR_SoDThreshold &&
+                         ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && ((GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 && WasLastAction(Enshroud)) || ((GetCooldownRemainingTime(ArcaneCircle) <= EnGCD) && gauge.LemureShroud is 4))) || // 2 min
+                        (!HasEffect(Buffs.Enshrouded) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange && ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 3) || !InCombat()))))
                         return ShadowOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
                         if (IsEnabled(CustomComboPreset.RPR_ST_Perfectio) &&
-                            HasEffect(Buffs.PerfectioOcculta) && WasLastAction(Communio) &&
-                            !HasEffect(Buffs.ImmortalSacrifice))
+                            HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
-                        if (IsEnabled(CustomComboPreset.RPR_ST_CDs))
+                        if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
+                           LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
+                           !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                           !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                           (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
+                           HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
+                           (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2) || // Prep for double Enshroud + Natural Odd Minute Shrouds
+                           WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
+                           (!HasEffect(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) is >= 50 and <= 65 && GetDebuffRemainingTime(Debuffs.DeathsDesign) > EnGCD * 5) || //Natural Odd Minute Shrouds
+                           (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
+                            return Enshroud;
+
+                        if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) &&
+                           (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) &&
+                           !HasEffect(Buffs.Enshrouded) && LevelChecked(Gibbet))
+                        {
+                            if (HasEffect(Buffs.EnhancedGibbet) ||
+                                (PositionalChoice is 1 && !HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
+                                    trueNorthDynReady && !OnTargetsFlank())
+                                    return All.TrueNorth;
+
+                                return OriginalHook(Gibbet);
+                            }
+
+                            if (HasEffect(Buffs.EnhancedGallows) ||
+                                 (PositionalChoice is 0 && !HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
+                            {
+                                if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
+                                    trueNorthDynReady && !OnTargetsRear())
+                                    return All.TrueNorth;
+
+                                return OriginalHook(Gallows);
+                            }
+                        }
+
+                        if (IsEnabled(CustomComboPreset.RPR_ST_CDs) &&
+                            !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
                         {
                             if (IsEnabled(CustomComboPreset.RPR_ST_PlentifulHarvest) &&
                                 HasEffect(Buffs.ImmortalSacrifice) && LevelChecked(PlentifulHarvest) &&
-                                !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
                                 (GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 || WasLastAction(Communio)))
                                 return PlentifulHarvest;
 
                             if (CanWeave(actionID))
                             {
-                                if (IsEnabled(CustomComboPreset.RPR_ST_ArcaneCircle) &&
-                                    LevelChecked(ArcaneCircle) &&
-                                    ((GetCooldownRemainingTime(ArcaneCircle) <= GetCooldownRemainingTime(OriginalHook(Slice)) + 0.25) ||
-                                    ActionReady(ArcaneCircle)))
-                                    return ArcaneCircle;
-
                                 if (IsEnabled(CustomComboPreset.RPR_ST_Gluttony) &&
-                                    LevelChecked(Gluttony) && gauge.Soul >= 50 && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.ImmortalSacrifice) &&
-                                    (GetCooldownRemainingTime(Gluttony) <= GetCooldownRemainingTime(Slice) + 0.25 || ActionReady(Gluttony)))
+                                    LevelChecked(Gluttony) && gauge.Soul >= 50 && !HasEffect(Buffs.ImmortalSacrifice) &&
+                                    ((GetCooldownRemainingTime(Gluttony) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(Gluttony)))
+                                {
+                                    if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
+                                    trueNorthReady)
+                                        return All.TrueNorth;
+
                                     return Gluttony;
+                                }
 
                                 if (IsEnabled(CustomComboPreset.RPR_ST_Bloodstalk) &&
-                                    LevelChecked(BloodStalk) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.ImmortalSacrifice) && gauge.Soul >= 50 &&
+                                    LevelChecked(BloodStalk) && !HasEffect(Buffs.ImmortalSacrifice) && gauge.Soul >= 50 &&
                                     (!LevelChecked(Gluttony) || (LevelChecked(Gluttony) && (gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) > GCD * 5) && !WasLastAction(Gluttony))))
                                     return OriginalHook(BloodStalk);
                             }
                         }
 
-                        if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
-                            LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
-                            (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
-                            HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
-                            (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 4) || // Prep for double Enshroud + Natural Odd Minute Shrouds
-                            WasLastAction(PlentifulHarvest) || //2nd part of Double Enshroud
-                            (!HasEffect(Buffs.ArcaneCircle) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 20) || //Natural Odd Minute Shrouds
-                            (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90))) // Correction for 2 min windows
-                            return Enshroud;
-
-                        if (IsEnabled(CustomComboPreset.RPR_ST_SoulSlice) &&
-                            !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
-                            ActionReady(SoulSlice) && gauge.Soul <= 50 && !HasEffect(Buffs.PerfectioOcculta))
-                            return SoulSlice;
-
-                        if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
-                            HasEffect(Buffs.Enshrouded))
+                        if (HasEffect(Buffs.Enshrouded))
                         {
                             if (IsEnabled(CustomComboPreset.RPR_ST_Communio) &&
                                 gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && ActionReady(Communio))
@@ -378,6 +425,13 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (IsEnabled(CustomComboPreset.RPR_ST_SoulSlice) &&
+                        !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
+                        !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                        LevelChecked(SoulSlice) && gauge.Soul <= 50 &&
+                        ((GetCooldownRemainingTime(SoulSlice) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(SoulSlice)))
+                        return SoulSlice;
+
                     if (IsEnabled(CustomComboPreset.RPR_ST_ComboHeals))
                     {
                         if (PlayerHealthPercentageHp() <= Config.RPR_STSecondWindThreshold && ActionReady(All.SecondWind))
@@ -385,29 +439,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (PlayerHealthPercentageHp() <= Config.RPR_STBloodbathThreshold && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
-                    }
-
-                    if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) &&
-                        (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) &&
-                        !HasEffect(Buffs.Enshrouded) && LevelChecked(Gibbet))
-                    {
-                        if (HasEffect(Buffs.EnhancedGibbet) || PositionalChoice is 1)
-                        {
-                            if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
-                                trueNorthReady && !OnTargetsFlank())
-                                return All.TrueNorth;
-
-                            return OriginalHook(Gibbet);
-                        }
-
-                        if (HasEffect(Buffs.EnhancedGallows) || PositionalChoice is 0)
-                        {
-                            if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
-                                trueNorthReady && !OnTargetsRear())
-                                return All.TrueNorth;
-
-                            return OriginalHook(Gallows);
-                        }
                     }
 
                     if (comboTime > 0)
@@ -447,27 +478,26 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
 
                     if (LevelChecked(WhorlOfDeath) &&
-                        GetDebuffRemainingTime(Debuffs.DeathsDesign) < 6 && !HasEffect(Buffs.SoulReaver))
+                        GetDebuffRemainingTime(Debuffs.DeathsDesign) < 6 && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
                         return WhorlOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
-                        if (HasEffect(Buffs.PerfectioOcculta) && WasLastSpell(Communio) &&
-                            !HasEffect(Buffs.ImmortalSacrifice))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.ImmortalSacrifice) && LevelChecked(PlentifulHarvest) &&
-                            !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                            !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.Executioner) &&
                             (GetBuffRemainingTime(Buffs.BloodsownCircle) <= 1 || WasLastAction(Communio)))
                             return PlentifulHarvest;
 
                         if (CanWeave(actionID))
                         {
                             if (LevelChecked(ArcaneCircle) &&
-                                ((GetCooldownRemainingTime(ArcaneCircle) <= GetCooldownRemainingTime(OriginalHook(Slice)) + 0.25) || ActionReady(ArcaneCircle)))
+                                ((GetCooldownRemainingTime(ArcaneCircle) <= GCD + 0.25) || ActionReady(ArcaneCircle)))
                                 return ArcaneCircle;
 
-                            if (!HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                            if (!HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.Executioner) &&
                                 ActionReady(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)))
                                 return Enshroud;
 
@@ -477,13 +507,13 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Gluttony;
 
                             if (LevelChecked(GrimSwathe) && !HasEffect(Buffs.Enshrouded) &&
-                              !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.ImmortalSacrifice) && gauge.Soul >= 50 &&
-                              (!LevelChecked(Gluttony) || (LevelChecked(Gluttony) &&
+                              !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.ImmortalSacrifice) && !HasEffect(Buffs.Executioner) &&
+                              gauge.Soul >= 50 && (!LevelChecked(Gluttony) || (LevelChecked(Gluttony) &&
                               (gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) > GCD * 5))))
                                 return GrimSwathe;
                         }
 
-                        if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
+                        if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                             ActionReady(SoulScythe) && gauge.Soul <= 50)
                             return SoulScythe;
 
@@ -547,8 +577,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
                         if (IsEnabled(CustomComboPreset.RPR_AoE_Perfectio) &&
-                            HasEffect(Buffs.PerfectioOcculta) && WasLastSpell(Communio) &&
-                            !HasEffect(Buffs.ImmortalSacrifice))
+                            HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (IsEnabled(CustomComboPreset.RPR_AoE_CDs))
@@ -563,7 +592,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_AoE_ArcaneCircle) &&
                                    LevelChecked(ArcaneCircle) &&
-                                   ((GetCooldownRemainingTime(ArcaneCircle) <= GetCooldownRemainingTime(OriginalHook(Slice)) + 0.25) || ActionReady(ArcaneCircle)))
+                                   ((GetCooldownRemainingTime(ArcaneCircle) <= GCD + 0.25) || ActionReady(ArcaneCircle)))
                                     return ArcaneCircle;
 
                                 if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) &&
@@ -587,7 +616,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.RPR_AoE_SoulScythe) &&
-                            !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
+                            !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                             ActionReady(SoulScythe) && gauge.Soul <= 50)
                             return SoulScythe;
 
@@ -647,8 +676,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud))
                     {
-                        if (HasEffect(Buffs.PerfectioOcculta) && WasLastSpell(Communio) &&
-                            !HasEffect(Buffs.ImmortalSacrifice))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.Enshrouded))
@@ -656,10 +684,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && LevelChecked(Communio))
                                 return Communio;
 
-                            if (gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio) && CanWeave(actionID))
+                            if (gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio))
                                 return OriginalHook(Gluttony);
 
-                            if (gauge.VoidShroud >= 2 && LevelChecked(LemuresScythe) && CanWeave(actionID))
+                            if (gauge.VoidShroud >= 2 && LevelChecked(LemuresScythe))
                                 return OriginalHook(GrimSwathe);
 
                             if (gauge.LemureShroud > 1)
@@ -671,7 +699,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Gluttony;
 
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_BloodSwatheCombo) &&
-                        HasEffect(Buffs.SoulReaver) && LevelChecked(Guillotine))
+                        (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) && LevelChecked(Guillotine))
                         return Guillotine;
                 }
 
@@ -683,8 +711,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud))
                     {
-                        if (HasEffect(Buffs.PerfectioOcculta) && WasLastSpell(Communio) &&
-                           !HasEffect(Buffs.ImmortalSacrifice))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
                             return OriginalHook(Communio);
 
                         if (HasEffect(Buffs.Enshrouded))
@@ -692,10 +719,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (gauge.LemureShroud == 1 && gauge.VoidShroud == 0 && LevelChecked(Communio))
                                 return Communio;
 
-                            if (gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio) && CanWeave(actionID))
+                            if (gauge.LemureShroud is 2 && gauge.VoidShroud is 1 && HasEffect(Buffs.Oblatio))
                                 return OriginalHook(Gluttony);
 
-                            if (gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice) && CanWeave(actionID))
+                            if (gauge.VoidShroud >= 2 && LevelChecked(LemuresSlice))
                                 return OriginalHook(BloodStalk);
 
                             if (HasEffect(Buffs.EnhancedVoidReaping))
@@ -713,15 +740,13 @@ namespace XIVSlothCombo.Combos.PvE
                         return Gluttony;
 
                     if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_BloodSwatheCombo) &&
-                        HasEffect(Buffs.SoulReaver) && LevelChecked(Gibbet))
+                        (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) && LevelChecked(Gibbet))
                     {
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
 
-                        if (HasEffect(Buffs.EnhancedGallows))
-                            return OriginalHook(Gallows);
-
-                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
+                        if (HasEffect(Buffs.EnhancedGallows) ||
+                            (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
                             return OriginalHook(Gallows);
                     }
                 }
@@ -784,7 +809,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Enshroud)
                 {
                     if (IsEnabled(CustomComboPreset.RPR_TrueNorthEnshroud) &&
-                        GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanWeave(Slice))
+                        GetBuffStacks(Buffs.SoulReaver) is 2 && trueNorthReady && CanDelayedWeave(Slice))
                         return All.TrueNorth;
 
                     if (HasEffect(Buffs.SoulReaver))
@@ -792,10 +817,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.EnhancedGibbet))
                             return OriginalHook(Gibbet);
 
-                        if (HasEffect(Buffs.EnhancedGallows))
-                            return OriginalHook(Gallows);
-
-                        if (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows))
+                        if (HasEffect(Buffs.EnhancedGallows) ||
+                            (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
                             return OriginalHook(Gallows);
                     }
                 }
@@ -839,9 +862,15 @@ namespace XIVSlothCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_EnshroudCommunio;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Enshroud && HasEffect(Buffs.Enshrouded) && LevelChecked(Communio)
-                    ? Communio
-                    : actionID;
+                if (actionID is Enshroud)
+                {
+                    if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio))
+                        return OriginalHook(Communio);
+
+                    if (HasEffect(Buffs.Enshrouded) && LevelChecked(Communio))
+                        return Communio;
+                }
+                return actionID;
             }
         }
     }
