@@ -1730,11 +1730,17 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.PCT_AoE_Lucid)
                 UserConfig.DrawSliderInt(1000, 10000, PCT.Config.PCT_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 
-            if (preset == CustomComboPreset.CombinedMotifs)
+            if (preset == CustomComboPreset.PCT_CreatureWeapon)
             {
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsMog, $"{PCT.MogoftheAges.ActionName()} Feature", $"Add {PCT.MogoftheAges.ActionName()} when fully drawn and off cooldown.");
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsMadeen, $"{PCT.RetributionoftheMadeen.ActionName()} Feature", $"Add {PCT.RetributionoftheMadeen.ActionName()} when fully drawn and off cooldown.");
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsWeapon, $"{PCT.HammerStamp.ActionName()} Feature", $"Add {PCT.HammerStamp.ActionName()} when under the effect of {PCT.Buffs.HammerTime.StatusName()}.");
+            }
+
+            if (preset == CustomComboPreset.PCT_Landscape)
+            {
+                UserConfig.DrawAdditionalBoolChoice(PCT.Config.PCT_LandscapeRainbowBright, $"{PCT.RainbowDrip.ActionName()}", $"Add {PCT.RainbowDrip.ActionName()} when you have Rainbow Bright");
+                UserConfig.DrawAdditionalBoolChoice(PCT.Config.PCT_LandscapeStarstruck, $"{PCT.StarPrism.ActionName()}", $"Add {PCT.StarPrism.ActionName()} when you have Starstruck");
             }
 
             #endregion

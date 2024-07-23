@@ -2306,17 +2306,21 @@ namespace XIVSlothCombo.Combos
             [CustomComboInfo("Comet Overcap Protection", "Uses White/Black Paint when at 5 stacks and Aetherhues II", PCT.JobID)]
             PCT_AoE_Comet_OP = 20033,
 
-        [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
-        [CustomComboInfo("One Button Motifs", "Combine Motifs and Muses into one button", PCT.JobID, 4)]
-        CombinedMotifs = 20051,
+        [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif)]
+        [CustomComboInfo("Creature and Weapon One Button Motifs", "Combine Creature and Weapon Motifs and Muses into one button", PCT.JobID, 4)]
+        PCT_CreatureWeapon = 20051,
+
+        [ReplaceSkill(PCT.LandscapeMotif)]
+        [CustomComboInfo("Landscape One Button Motif", "Combine Landscape Motif and Muse into one button", PCT.JobID, 4)]
+        PCT_Landscape = 20052,
 
         [ReplaceSkill(PCT.HolyInWhite)]
         [CustomComboInfo("White & Black Paint", "Combines White and Black Paints into one button", PCT.JobID, 5)]
-        CombinedPaint = 20052,
+        PCT_Paint = 20053,
 
         [ReplaceSkill(PCT.SubtractivePalette)]
         [CustomComboInfo("Subtractive to Comet In Black", "Changes Subtractive Palette to Comet in Black if a Black Paint is available", PCT.JobID, 6)]
-        PCT_SubPaint_OP = 20053,
+        PCT_SubPaint_OP = 20054,
 
         #endregion
 

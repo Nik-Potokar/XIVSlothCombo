@@ -72,7 +72,9 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
                 CombinedMotifsMadeen = new("CombinedMotifsMadeen"),
-                CombinedMotifsWeapon = new("CombinedMotifsWeapon");
+                CombinedMotifsWeapon = new("CombinedMotifsWeapon"),
+                PCT_LandscapeRainbowBright = new("PCT_LandscapeRainbowBright"),
+                PCT_LandscapeStarstruck = new("PCT_LandscapeStarstruck");
         }
 
 
@@ -351,9 +353,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class CombinedMotifs : CustomCombo
+        internal class PCT_CreatureWeapon : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CombinedMotifs;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_CreatureWeapon;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
@@ -377,19 +379,40 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(SteelMuse);
                 }
 
-                if (actionID == LandscapeMotif)
-                {
-                    if (gauge.LandscapeMotifDrawn)
-                        return OriginalHook(ScenicMuse);
-                }
-
                 return actionID;
             }
         }
 
-        internal class CombinedPaint : CustomCombo
+        internal class PCT_Landscape : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.CombinedPaint;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_Landscape;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                var gauge = GetJobGauge<PCTGauge>();
+
+                if (actionID == LandscapeMotif)
+                {
+                    if (HasEffect(Buffs.RainbowBright))
+                    {
+                        return RainbowDrip;
+                    }
+                    if (HasEffect(Buffs.Starstruck))
+                    {
+                        return StarPrism;
+                    }
+                    if (gauge.LandscapeMotifDrawn)
+                    {
+                        return OriginalHook(ScenicMuse);
+                    } 
+                }
+                return actionID;
+            }
+        }
+
+    internal class PCT_Paint : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_Paint;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
