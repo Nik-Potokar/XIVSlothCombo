@@ -162,11 +162,6 @@ namespace XIVSlothCombo
 #endif
         }
 
-        private void AddonReceiveEvent(AddonEvent type, AddonArgs args)
-        {
-            Svc.Log.Debug($"Receive event triggered on {args.AddonName}");
-        }
-
         private static void HandleConflictedCombos()
         {
             var enabledCopy = Service.Configuration.EnabledActions.ToHashSet(); //Prevents issues later removing during enumeration
