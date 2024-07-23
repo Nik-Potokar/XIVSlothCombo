@@ -499,7 +499,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Holy Spirit Usage: During Burst / Outside Melee / Before Expiring / Before Refreshing
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) &&
-                            hasDivineMight && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp && 
+                            hasDivineMight && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp &&
                             (!IsEnabled(CustomComboPreset.PLD_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_MP_Reserve) && (JustUsed(FightOrFlight, 30f) ||
                             !InMeleeRange() || GetBuffRemainingTime(Buffs.DivineMight) < 10 || lastComboActionID is RiotBlade))
                             return HolySpirit;
@@ -642,7 +642,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     int choice = Config.PLD_RequiescatOption;
 
-                    if ((choice is 1 || choice is 3) && HasEffect(Buffs.ConfiteorReady) && Confiteor.LevelChecked() && 
+                    if ((choice is 1 || choice is 3) && HasEffect(Buffs.ConfiteorReady) && Confiteor.LevelChecked() &&
                         GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
                         return OriginalHook(Confiteor);
 
@@ -652,7 +652,7 @@ namespace XIVSlothCombo.Combos.PvE
                             GetResourceCost(Confiteor) <= LocalPlayer.CurrentMp)
                             return OriginalHook(Confiteor);
 
-                        if (choice is 4 && HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp) 
+                        if (choice is 4 && HolySpirit.LevelChecked() && GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp)
                             return HolySpirit;
 
                         if (choice is 5 && HolyCircle.LevelChecked() && GetResourceCost(HolyCircle) <= LocalPlayer.CurrentMp)
