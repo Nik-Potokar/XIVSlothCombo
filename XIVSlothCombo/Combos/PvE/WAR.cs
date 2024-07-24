@@ -134,7 +134,7 @@ namespace XIVSlothCombo.Combos.PvE
                             && GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0
                             && !HasEffect(Buffs.Wrathful) && HasEffect(Buffs.PrimalRendReady))
                             return PrimalRend;
-                        if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !IsMoving && HasEffect(Buffs.PrimalRendReady) && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD))
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !IsMoving && HasEffect(Buffs.PrimalRendReady) && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD))
                             return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
