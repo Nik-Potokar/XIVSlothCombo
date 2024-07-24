@@ -112,8 +112,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.SAM_ST_Overcap) &&
-                            gauge.Kenki >= SamKenkiOvercapAmount && LevelChecked(Shinten))
+                        if (gauge.Kenki >= SamKenkiOvercapAmount && LevelChecked(Shinten))
                             return Shinten;
                     }
 
@@ -144,8 +143,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (CanWeave(actionID))
                     {
-                        if (IsEnabled(CustomComboPreset.SAM_ST_Overcap) &&
-                            gauge.Kenki >= SamKenkiOvercapAmount && LevelChecked(Shinten))
+                        if (gauge.Kenki >= SamKenkiOvercapAmount && LevelChecked(Shinten))
                             return Shinten;
                     }
                     if (HasEffect(Buffs.MeikyoShisui))
@@ -180,6 +178,8 @@ namespace XIVSlothCombo.Combos.PvE
                 bool twoSeal = OriginalHook(Iaijutsu) is TenkaGoken;
                 bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka;
                 float enemyHP = GetTargetHPPercent();
+                float kenkiOvercap = Config.SAM_ST_KenkiOvercapAmount;
+                float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
                 bool meikyoBuff = HasEffect(Buffs.MeikyoShisui);
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
@@ -344,9 +344,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                LevelChecked(Shinten) && gauge.Kenki >= 25 &&
-                                ((IsEnabled(CustomComboPreset.SAM_ST_Overcap) && gauge.Kenki >= Config.SAM_ST_KenkiOvercapAmount) ||
-                                (IsEnabled(CustomComboPreset.SAM_ST_Execute) && GetTargetHPPercent() <= Config.SAM_ST_ExecuteThreshold)))
+                                LevelChecked(Shinten) && ((gauge.Kenki >= kenkiOvercap) ||
+                                (enemyHP <= shintenTreshhold && gauge.Kenki >= kenkiOvercap)))
                                 return Shinten;
                         }
 
@@ -432,8 +431,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Oka)
                 {
-                    if (IsEnabled(CustomComboPreset.SAM_AoE_Overcap) &&
-                        IsNotEnabled(CustomComboPreset.SAM_AoE_OkaCombo_TwoTarget) &&
+                    if (IsNotEnabled(CustomComboPreset.SAM_AoE_OkaCombo_TwoTarget) &&
                         gauge.Kenki >= Config.SAM_AoE_KenkiOvercapAmount && LevelChecked(Kyuten) && CanWeave(actionID))
                         return Kyuten;
 
@@ -508,6 +506,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 SAMGauge? gauge = GetJobGauge<SAMGauge>();
+                float kenkiOvercap = Config.SAM_AoE_KenkiOvercapAmount;
 
                 if (actionID is Fuga or Fuko)
                 {
@@ -545,9 +544,9 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_Kyuten) &&
-                            Kyuten.LevelChecked() && gauge.Kenki >= 25 &&
+                            Kyuten.LevelChecked() &&
                             ((IsOnCooldown(Guren) && LevelChecked(Guren)) ||
-                            (IsEnabled(CustomComboPreset.SAM_AoE_Overcap) && gauge.Kenki >= Config.SAM_AoE_KenkiOvercapAmount)))
+                            (gauge.Kenki >= kenkiOvercap)))
                             return Kyuten;
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_Shoha) &&

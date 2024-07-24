@@ -3161,14 +3161,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Shinten", "Adds Shinten to the rotation", SAM.JobID)]
         SAM_ST_Shinten = 15008,
 
-        [ParentCombo(SAM_ST_Shinten)]
-        [CustomComboInfo("Execute Feature", "Adds Shinten to the main combo when Kenki > 25 and your current target is below the HP percentage threshold.", SAM.JobID)]
-        SAM_ST_Execute = 15009,
-
-        [ParentCombo(SAM_ST_Shinten)]
-        [CustomComboInfo("Overcap Feature", "Adds Shinten to the rotation when Kenki is at the selected amount or more", SAM.JobID)]
-        SAM_ST_Overcap = 15010,
-
         #region CDs on Main Combo
 
         [ParentCombo(SAM_ST_AdvancedMode)]
@@ -3258,10 +3250,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(SAM_AOE_AdvancedMode)]
         [CustomComboInfo("Kyuten", "Adds Kyuten to the rotation.", SAM.JobID)]
         SAM_AoE_Kyuten = 15105,
-
-        [ParentCombo(SAM_AoE_Kyuten)]
-        [CustomComboInfo("Overcap Feature", "Adds Kyuten to the rotation when Kenki is at the selected amount or more", SAM.JobID)]
-        SAM_AoE_Overcap = 15106,
 
         [ParentCombo(SAM_AOE_AdvancedMode)]
         [CustomComboInfo("Iaijutsu", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to the rotation.", SAM.JobID)]
