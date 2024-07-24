@@ -394,7 +394,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (lastComboMove == OriginalHook(Hakaze) && Jinpu.LevelChecked())
+                        if (lastComboMove is Hakaze or Gyofu && Jinpu.LevelChecked())
                         {
                             if (IsEnabled(CustomComboPreset.SAM_ST_Yukikaze) &&
                                 !gauge.Sen.HasFlag(Sen.SETSU) && Yukikaze.LevelChecked() && HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
@@ -413,7 +413,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is Jinpu && Gekko.LevelChecked())
                             return Gekko;
 
-                        if (IsEnabled(CustomComboPreset.SAM_ST_Kasha) && lastComboMove is Shifu && Kasha.LevelChecked())
+                        if (IsEnabled(CustomComboPreset.SAM_ST_Kasha) &&
+                            lastComboMove is Shifu && Kasha.LevelChecked())
                             return Kasha;
                     }
                     return OriginalHook(Hakaze);
