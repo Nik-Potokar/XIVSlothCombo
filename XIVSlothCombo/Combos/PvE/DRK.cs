@@ -148,7 +148,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
-                        && ((CombatEngageDuration().TotalSeconds > 4 && CombatEngageDuration().TotalSeconds < 10 && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
+                        && ((CombatEngageDuration().TotalSeconds > 4 // todo: we want this immediately now
+                             && CombatEngageDuration().TotalSeconds < 10
+                             && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
                             || CombatEngageDuration().TotalSeconds >= 10))
                     {
                         // Spend mana to limit when not near even minute burst windows
