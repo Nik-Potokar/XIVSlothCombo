@@ -10,9 +10,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         private static bool HasCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(TsubameGaeshi) < 2)
-                return false;
-
             if (!CustomComboFunctions.ActionReady(Senei))
                 return false;
 
@@ -186,8 +183,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
 
-                if (((actionID == TsubameGaeshi && CustomComboFunctions.GetRemainingCharges(TsubameGaeshi) < 2) ||
-                   (actionID == Senei && CustomComboFunctions.IsOnCooldown(Senei)) ||
+                if (((actionID == Senei && CustomComboFunctions.IsOnCooldown(Senei)) ||
                    (actionID == Ikishoten && CustomComboFunctions.IsOnCooldown(Ikishoten)) ||
                    (actionID == MeikyoShisui && CustomComboFunctions.GetRemainingCharges(MeikyoShisui) < 1)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
