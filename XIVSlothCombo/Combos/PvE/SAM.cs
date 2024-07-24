@@ -176,7 +176,7 @@ namespace XIVSlothCombo.Combos.PvE
                 SAMGauge? gauge = GetJobGauge<SAMGauge>();
                 bool oneSeal = OriginalHook(Iaijutsu) is Higanbana;
                 bool twoSeal = OriginalHook(Iaijutsu) is TenkaGoken;
-                bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka;
+                bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka or TendoSetsugekka;
                 float enemyHP = GetTargetHPPercent();
                 float kenkiOvercap = Config.SAM_ST_KenkiOvercapAmount;
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
@@ -375,7 +375,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Gekko;
 
                         if (IsEnabled(CustomComboPreset.SAM_ST_Kasha) &&
-                            LevelChecked(Kasha) && ((!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu)) || !HasEffect(Buffs.Fuka)))
+                            LevelChecked(Kasha) && (!HasEffect(Buffs.Fuka) || (!gauge.Sen.HasFlag(Sen.KA) && HasEffect(Buffs.Fugetsu))))
                             return Kasha;
 
                         if (IsEnabled(CustomComboPreset.SAM_ST_Yukikaze) &&
