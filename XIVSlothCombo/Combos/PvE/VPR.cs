@@ -1107,7 +1107,7 @@ namespace XIVSlothCombo.Combos.PvE
                 int buttonChoice = Config.VPR_ReawakenLegacyButton;
 
                 if ((buttonChoice is 0 && actionID is Reawaken && HasEffect(Buffs.Reawakened)) ||
-                    (buttonChoice is 1 && actionID is DreadFangs && HasEffect(Buffs.Reawakened)))
+                    (buttonChoice is 1 && actionID is SteelFangs && HasEffect(Buffs.Reawakened)))
                 {
                     if (!TraitLevelChecked(Traits.EnhancedSerpentsLineage))
                     {

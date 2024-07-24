@@ -3675,7 +3675,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_Opener = 30002,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, is below 20 secs\n Or when it prepares for Double ReAwaken.", VPR.JobID)]
         VPR_ST_NoxiousGnash = 30003,
 
         #region Cooldowns ST
@@ -3711,10 +3711,12 @@ namespace XIVSlothCombo.Combos
         VPR_ST_UncoiledFuryCombo = 30010,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
         VPR_ST_Reawaken = 30011,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Reawaken Combo", "Adds Generation and Legacy to the rotation.", VPR.JobID)]
         VPR_ST_ReawakenCombo = 30012,
 
@@ -3753,7 +3755,7 @@ namespace XIVSlothCombo.Combos
         VPR_AoE_AdvancedMode = 30101,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
-        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, or is about to expire.", VPR.JobID)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target or is below 20 secs.", VPR.JobID)]
         VPR_AoE_NoxiousGnash = 30102,
 
         #region Cooldowns AoE
@@ -3789,10 +3791,12 @@ namespace XIVSlothCombo.Combos
         VPR_AoE_UncoiledFuryCombo = 30109,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
         VPR_AoE_Reawaken = 30110,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Reawaken Combo", "Adds Generation and Legacy to the rotation.", VPR.JobID)]
         VPR_AoE_ReawakenCombo = 30112,
 
@@ -3814,7 +3818,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Uncoiled - Twins", "Replaces Uncoiled Fury with Uncoiled Twinfang and Uncoiled Twinblood.", VPR.JobID)]
         VPR_UncoiledTwins = 30202,
 
-        [ReplaceSkill(VPR.Reawaken, VPR.DreadFangs)]
+        [ReplaceSkill(VPR.Reawaken, VPR.SteelFangs)]
+        [ConflictingCombos(VPR_ST_Reawaken, VPR_ST_ReawakenCombo, VPR_AoE_Reawaken, VPR_AoE_ReawakenCombo)]
         [CustomComboInfo("Reawaken - Generation", "Replaces Option with the Generations.", VPR.JobID)]
         VPR_ReawakenLegacy = 30203,
 
@@ -3840,7 +3845,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(WAR.StormsPath)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1)]
-        WAR_ST_StormsPath = 18000, 
+        WAR_ST_StormsPath = 18000,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
