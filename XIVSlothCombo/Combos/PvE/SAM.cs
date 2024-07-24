@@ -353,7 +353,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Iaijutsu Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && Iaijutsu.LevelChecked())
                         {
-                            if (ActionReady(TsubameGaeshi) && gauge.Kaeshi.HasFlag(Kaeshi.SETSUGEKKA) && WasLastWeaponskill(MidareSetsugekka))
+                            if (ActionReady(TsubameGaeshi) && gauge.Kaeshi.HasFlag(Kaeshi.SETSUGEKKA) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
                                 return OriginalHook(TsubameGaeshi);
 
                             if (!IsMoving && ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold) ||
