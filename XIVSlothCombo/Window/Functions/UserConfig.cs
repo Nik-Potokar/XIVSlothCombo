@@ -1837,7 +1837,7 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.RPR_ST_SoD && enabled)
             {
-                UserConfig.DrawSliderInt(0, 6, RPR.Config.RPR_SoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(4, 8, RPR.Config.RPR_SoDRefreshRange, "Seconds remaining before refreshing Death's Design.", 150, SliderIncrements.Ones);
                 UserConfig.DrawSliderInt(0, 5, RPR.Config.RPR_SoDThreshold, "Set a HP% Threshold for when SoD will not be automatically applied to the target.", 150, SliderIncrements.Ones);
             }
 
@@ -2394,6 +2394,16 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
+            }
+
+            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
+            {
+                UserConfig.DrawRoundedSliderFloat(15, 30, VPR.Config.VPR_ST_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
+            }
+
+            if (preset == CustomComboPreset.VPR_AoE_NoxiousGnash)
+            {
+                UserConfig.DrawRoundedSliderFloat(15, 30, VPR.Config.VPR_AoE_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
             }
 
             if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)

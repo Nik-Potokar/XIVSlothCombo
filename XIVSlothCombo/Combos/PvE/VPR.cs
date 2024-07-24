@@ -109,7 +109,9 @@ namespace XIVSlothCombo.Combos.PvE
 
             public static UserFloat
                 VPR_ST_Reawaken_Usage = new("VPR_ST_Reawaken_Usage", 2),
-                VPR_AoE_Reawaken_Usage = new("VPR_AoE_Reawaken_Usage", 2);
+                VPR_AoE_Reawaken_Usage = new("VPR_AoE_Reawaken_Usage", 2),
+                VPR_ST_NoxiousDebuffRefresh = new("VPR_ST_NoxiousDebuffRefresh", 20.0f),
+                VPR_AoE_NoxiousDebuffRefresh = new("VPR_AoE_NoxiousDebuffRefresh", 20.0f);
         }
 
         internal class VPR_ST_SimpleMode : CustomCombo

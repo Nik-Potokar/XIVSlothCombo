@@ -3675,7 +3675,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_Opener = 30002,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, is below 20 secs\n Or when it prepares for Double ReAwaken.", VPR.JobID)]
+        [CustomComboInfo("Noxious Gnash", "Adds Noxious Gnash if it is not present on current target, is below chosen value \n Or when it prepares for Double ReAwaken.", VPR.JobID)]
         VPR_ST_NoxiousGnash = 30003,
 
         #region Cooldowns ST
