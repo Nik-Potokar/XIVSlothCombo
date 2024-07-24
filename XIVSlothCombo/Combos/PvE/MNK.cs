@@ -630,6 +630,34 @@ namespace XIVSlothCombo.Combos.PvE
         }
         #endregion
 
+        internal class MNK_PerfectBalance : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_PerfectBalance;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID == PerfectBalance)
+                {
+                    if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && level >= Levels.MasterfulBlitz)
+                        return OriginalHook(MasterfulBlitz);
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class MNK_Riddle_Brotherhood : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_Riddle_Brotherhood;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is RiddleOfFire && level >= Levels.Brotherhood && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood))
+                    return Brotherhood;
+                else return actionID;
+            }
+        }
+
         public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
         {
             if (CustomComboFunctions.HasEffect(Buffs.OpoOpoForm))

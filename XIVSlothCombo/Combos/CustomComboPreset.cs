@@ -1836,7 +1836,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill([MNK.Bootshine])]
         [CustomComboInfo("Basic ST Rotation", "Basic Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_ST_AdvancedMode)]
+        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_BallHandlers)]
         MNK_ST_BasicMode = 9002,
         
         [ReplaceSkill([MNK.ArmOfTheDestroyer])]
@@ -1850,7 +1850,7 @@ namespace XIVSlothCombo.Combos
         #region Monk Advanced ST
         [ReplaceSkill([MNK.Bootshine])]
         [CustomComboInfo("Custom ST Rotation", "Advanced Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_ST_BasicMode)]
+        [ConflictingCombos(MNK_ST_BasicMode, MNK_ST_BallHandlers)]
         MNK_ST_AdvancedMode = 9005,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
@@ -1929,6 +1929,13 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_BallHandlers)]
         MNK_BALLS_COEURL = 9022,
 
+        [ReplaceSkill(MNK.PerfectBalance)]
+        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID)]
+        MNK_PerfectBalance = 9023,
+
+        [ReplaceSkill(MNK.RiddleOfFire)]
+        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID)]
+        MNK_Riddle_Brotherhood = 9024,
 
         // End Monk
         #endregion
