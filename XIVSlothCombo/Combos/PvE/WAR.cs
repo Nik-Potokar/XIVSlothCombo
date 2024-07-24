@@ -1,3 +1,4 @@
+using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
@@ -130,11 +131,16 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)
-                            && GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0
-                            && !HasEffect(Buffs.Wrathful) && HasEffect(Buffs.PrimalRendReady))
-                            return PrimalRend;
-                        if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && !IsMoving && HasEffect(Buffs.PrimalRendReady) && (GetTargetDistance() <= 1 || GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD))
+                        if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && !JustUsed(InnerRelease))
+                        {
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late)
+                                && GetBuffStacks(Buffs.InnerReleaseStacks) is 0 && GetBuffStacks(Buffs.BurgeoningFury) is 0
+                                && !HasEffect(Buffs.Wrathful))
+                                return PrimalRend;
+                            if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && ((!IsMoving && GetTargetDistance() <= 1) || GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD))
+                                return PrimalRend;
+                        }
+                        if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD)
                             return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
@@ -142,7 +148,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
                         {
-                            if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && !LevelChecked(InnerChaos)))
+                            if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && gauge >= 50 && !LevelChecked(InnerChaos)))
                                 return OriginalHook(InnerBeast);
 
                             if (HasEffect(Buffs.NascentChaos) && gauge >= 50 && !LevelChecked(InnerChaos))
@@ -215,6 +221,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<WARGauge>().BeastGauge;
                     var decimateGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_DecimateGauge);
                     var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateAoEGauge);
+                    float GCD = GetCooldown(HeavySwing).CooldownTotal;
 
                     if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
                         return Variant.VariantCure;
@@ -248,6 +255,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend))
+                            return PrimalRend;
+                        if (IsNotEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD)
                             return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
