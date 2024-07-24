@@ -220,7 +220,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool ReassembledTools(ref uint actionID, MCHGauge gauge)
             {
-                bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 90;
+                bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 100;
 
                 // TOOLS!! Chainsaw Drill Air Anchor Excavator
                 if (!gauge.IsOverheated && !WasLastWeaponskill(OriginalHook(Heatblast)) && !ActionWatching.HasDoubleWeaved() &&
@@ -432,7 +432,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool ReassembledTools(ref uint actionID, MCHGauge gauge)
             {
-                bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 90;
+                bool battery = Svc.Gauges.Get<MCHGauge>().Battery >= 100;
                 bool reassembledExcavator = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[0] && (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[0] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
                 bool reassembledChainsaw = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[1] && (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[1] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
                 bool reassembledAnchor = (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[2] && (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) || (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && !Config.MCH_ST_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble));
