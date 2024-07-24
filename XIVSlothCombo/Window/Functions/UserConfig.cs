@@ -2396,7 +2396,7 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
             }
 
-            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
+            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash && enabled)
             {
                 UserConfig.DrawRoundedSliderFloat(15, 30, VPR.Config.VPR_ST_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
             }
@@ -2407,10 +2407,16 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
+            {
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+                UserConfig.DrawSliderInt(0, 5, VPR.Config.VPR_ST_UncoiledFury_Threshold, "Set a HP% Threshold to use all charges.");
+            }
 
             if (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
+            {
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+                UserConfig.DrawSliderInt(0, 5, VPR.Config.VPR_AoE_UncoiledFury_Threshold, "Set a HP% Threshold to use all charges.");
+            }
 
 
             if (preset is CustomComboPreset.VPR_ST_Reawaken)
