@@ -1905,9 +1905,30 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", MNK.JobID)]
         MNK_ST_ComboHeals = 9018,
 
-        // Last value = 9031
+
 
         #endregion
+        // Last value = 9018
+
+        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_BasicMode)]
+        [CustomComboInfo("Ball Handlers", "Replace core rotation skills with single button, depending on current balls.", MNK.JobID)]
+        MNK_ST_BallHandlers = 9019,
+
+        [ReplaceSkill(MNK.Bootshine)]
+        [CustomComboInfo("Opo-opo", "Replace Bootshine/Leaping Opo with Dragon Kick.", MNK.JobID)]
+        [ParentCombo(MNK_ST_BallHandlers)]
+        MNK_BALLS_OPOOPO = 9020,
+
+        [ReplaceSkill(MNK.TrueStrike)]
+        [CustomComboInfo("Raptor", "Replace True Strike/Rising Raptor with Twin Snakes.", MNK.JobID)]
+        [ParentCombo(MNK_ST_BallHandlers)]
+        MNK_BALLS_RAPTOR = 9021,
+
+        [ReplaceSkill(MNK.SnapPunch)]
+        [CustomComboInfo("Coeurl", "Replace Snap Punch/Pouncing Coeurl with Demolish.", MNK.JobID)]
+        [ParentCombo(MNK_ST_BallHandlers)]
+        MNK_BALLS_COEURL = 9022,
+
 
         // End Monk
         #endregion

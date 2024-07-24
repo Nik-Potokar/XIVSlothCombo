@@ -27,6 +27,13 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (!CustomComboFunctions.ActionReady(Meditation) && Gauge.Chakra < 5)
                 return false;
 
+            if (Gauge.Nadi != Dalamud.Game.ClientState.JobGauge.Enums.Nadi.NONE)
+                return false;
+
+            if (Gauge.OpoOpoFury != 0) return false;
+            if (Gauge.RaptorFury != 0) return false;
+            if (Gauge.CoeurlFury != 0) return false;
+
             return true;
         }
 
@@ -91,6 +98,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (Gauge.Chakra < 5 && PrePullStep == 1)
                 {
                     actionID = ForbiddenMeditation;
+                    return true;
+                }
+
+                if (!CustomComboFunctions.HasEffect(Buffs.FormlessFist) && PrePullStep == 1)
+                {
+                    actionID = FormShift;
                     return true;
                 }
 

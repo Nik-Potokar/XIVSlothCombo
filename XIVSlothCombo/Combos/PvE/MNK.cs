@@ -49,6 +49,8 @@ namespace XIVSlothCombo.Combos.PvE
             WindsReply = 36949,
             ForbiddenMeditation = 36942,
             LeapingOpo = 36945,
+            RisingRaptor = 36946,
+            PouncingCoeurl = 36947,
             TrueNorth = 7546,
             ElixirBurst = 36948,
             FiresReply = 36950;
@@ -59,7 +61,7 @@ namespace XIVSlothCombo.Combos.PvE
                 TwinSnakes = 101,
                 OpoOpoForm = 107,
                 RaptorForm = 108,
-                CoerlForm = 109,
+                CoeurlForm = 109,
                 PerfectBalance = 110,
                 RiddleOfFire = 1181,
                 RiddleOfWind = 2687,
@@ -538,7 +540,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return TwinSnakes;
                         }
 
-                        if (HasEffect(Buffs.CoerlForm) && level >= Levels.Rockbreaker)
+                        if (HasEffect(Buffs.CoeurlForm) && level >= Levels.Rockbreaker)
                         {
                             return Rockbreaker;
                         }
@@ -547,6 +549,86 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
+        #region Ball Handlers
+        internal class MNK_BallHandler_OpoOpo : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_BALLS_OPOOPO;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID == Bootshine || actionID == LeapingOpo)
+                {
+                    if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist))
+                    {
+                        if (Gauge.OpoOpoFury == 0)
+                        {
+                            if (LevelChecked(Levels.DragonKick))
+                                return DragonKick;
+                        }
+                        else
+                        {
+                            return OriginalHook(Bootshine);
+                        }
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class MNK_BallHandler_Raptor : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_BALLS_RAPTOR;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID == TrueStrike || actionID == RisingRaptor)
+                {
+                    if (HasEffect(Buffs.RaptorForm))
+                    {
+                        if (Gauge.RaptorFury == 0)
+                        {
+                            if (LevelChecked(Levels.TwinSnakes))
+                                return TwinSnakes;
+                        }
+                        else
+                        {
+                            return OriginalHook(TrueStrike);
+                        }
+                    }
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class MNK_BallHandler_Coeurl : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_BALLS_COEURL;
+
+            protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+            {
+                if (actionID == SnapPunch || actionID == PouncingCoeurl)
+                {
+                    if (HasEffect(Buffs.CoeurlForm))
+                    {
+                        if (Gauge.CoeurlFury == 0)
+                        {
+                            if (LevelChecked(Levels.Demolish))
+                                return Demolish;
+                        }
+                        else
+                        {
+                            return OriginalHook(SnapPunch);
+                        }
+                    }
+                }
+
+                return actionID;
+            }
+        }
+        #endregion
 
         public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
         {
@@ -577,7 +659,7 @@ namespace XIVSlothCombo.Combos.PvE
                 }
             }
 
-            if (CustomComboFunctions.HasEffect(Buffs.CoerlForm))
+            if (CustomComboFunctions.HasEffect(Buffs.CoeurlForm))
             {
                 if (Gauge.CoeurlFury == 0)
                 {
