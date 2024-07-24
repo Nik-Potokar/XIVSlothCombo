@@ -1552,12 +1552,12 @@ namespace XIVSlothCombo.Combos
         GNB_BS_Bloodfest = 7402,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Reign combo on Burst Strike Feature", "Adds Reign combo to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on CD.", GNB.JobID)]
-        GNB_BS_Reign = 7403,
+        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
+        GNB_BS_DoubleDown = 7403,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
-        GNB_BS_DoubleDown = 7404,
+        [CustomComboInfo("Reign combo on Burst Strike Feature", "Adds Reign combo to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on CD.", GNB.JobID)]
+        GNB_BS_Reign = 7404,
         #endregion
 
         #region Fated Circle
