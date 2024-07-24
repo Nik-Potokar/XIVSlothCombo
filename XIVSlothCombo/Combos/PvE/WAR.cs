@@ -256,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend))
                             return PrimalRend;
-                        if (IsNotEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD)
+                        if (IsNotEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && LevelChecked(PrimalRend) && GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD)
                             return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_AOE_Overpower_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
