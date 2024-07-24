@@ -171,9 +171,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Meditation);
                         }
 
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                             return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                             return All.Bloodbath;
                     }
 
@@ -553,22 +553,25 @@ namespace XIVSlothCombo.Combos.PvE
         #region Ball Handlers
         internal class MNK_BallHandler_OpoOpo : CustomCombo
         {
-            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_BALLS_OPOOPO;
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_ST_BallHandlers;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID == Bootshine || actionID == LeapingOpo)
+                if (IsEnabled(CustomComboPreset.MNK_BALLS_OPOOPO))
                 {
-                    if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist))
+                    if (actionID == Bootshine || actionID == LeapingOpo)
                     {
-                        if (Gauge.OpoOpoFury == 0)
+                        if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist))
                         {
-                            if (LevelChecked(Levels.DragonKick))
-                                return DragonKick;
-                        }
-                        else
-                        {
-                            return OriginalHook(Bootshine);
+                            if (Gauge.OpoOpoFury == 0)
+                            {
+                                if (LevelChecked(Levels.DragonKick))
+                                    return DragonKick;
+                            }
+                            else
+                            {
+                                return OriginalHook(Bootshine);
+                            }
                         }
                     }
                 }
@@ -579,22 +582,25 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MNK_BallHandler_Raptor : CustomCombo
         {
-            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_BALLS_RAPTOR;
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_ST_BallHandlers;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID == TrueStrike || actionID == RisingRaptor)
+                if (IsEnabled(CustomComboPreset.MNK_BALLS_RAPTOR))
                 {
-                    if (HasEffect(Buffs.RaptorForm))
+                    if (actionID == TrueStrike || actionID == RisingRaptor)
                     {
-                        if (Gauge.RaptorFury == 0)
+                        if (HasEffect(Buffs.RaptorForm))
                         {
-                            if (LevelChecked(Levels.TwinSnakes))
-                                return TwinSnakes;
-                        }
-                        else
-                        {
-                            return OriginalHook(TrueStrike);
+                            if (Gauge.RaptorFury == 0)
+                            {
+                                if (LevelChecked(Levels.TwinSnakes))
+                                    return TwinSnakes;
+                            }
+                            else
+                            {
+                                return OriginalHook(TrueStrike);
+                            }
                         }
                     }
                 }
@@ -605,22 +611,25 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MNK_BallHandler_Coeurl : CustomCombo
         {
-            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_BALLS_COEURL;
+            protected internal override CustomComboPreset Preset => CustomComboPreset.MNK_ST_BallHandlers;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (actionID == SnapPunch || actionID == PouncingCoeurl)
+                if (IsEnabled(CustomComboPreset.MNK_BALLS_COEURL))
                 {
-                    if (HasEffect(Buffs.CoeurlForm))
+                    if (actionID == SnapPunch || actionID == PouncingCoeurl)
                     {
-                        if (Gauge.CoeurlFury == 0)
+                        if (HasEffect(Buffs.CoeurlForm))
                         {
-                            if (LevelChecked(Levels.Demolish))
-                                return Demolish;
-                        }
-                        else
-                        {
-                            return OriginalHook(SnapPunch);
+                            if (Gauge.CoeurlFury == 0)
+                            {
+                                if (LevelChecked(Levels.Demolish))
+                                    return Demolish;
+                            }
+                            else
+                            {
+                                return OriginalHook(SnapPunch);
+                            }
                         }
                     }
                 }

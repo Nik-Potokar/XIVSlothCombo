@@ -30,7 +30,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
             if (Gauge.Nadi != Dalamud.Game.ClientState.JobGauge.Enums.Nadi.NONE)
                 return false;
 
-            if (Gauge.OpoOpoFury != 0) return false;
             if (Gauge.RaptorFury != 0) return false;
             if (Gauge.CoeurlFury != 0) return false;
 
@@ -101,7 +100,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return true;
                 }
 
-                if (!CustomComboFunctions.HasEffect(Buffs.FormlessFist) && PrePullStep == 1)
+                if (!CustomComboFunctions.HasEffect(Buffs.FormlessFist) && !CustomComboFunctions.HasEffect(Buffs.RaptorForm) && PrePullStep == 1)
                 {
                     actionID = FormShift;
                     return true;
