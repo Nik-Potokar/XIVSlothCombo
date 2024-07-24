@@ -2350,6 +2350,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode.\n- Uses after Blade of Valor.", PLD.JobID, 12)]
         PLD_ST_AdvancedMode_BladeOfHonor = 11033,
 
+        [ParentCombo(PLD_ST_AdvancedMode)]
+        [CustomComboInfo("MP Reserve Feature", "Only use MP-consuming skills in Advanced Mode - ST when above set threshold.", PLD.JobID)]
+        PLD_ST_AdvancedMode_MP_Reserve = 11035,
+
         // AoE Advanced Mode
 
         [ConflictingCombos(PLD_AoE_SimpleMode)]
@@ -2393,6 +2397,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Sheltron Option", "Adds Sheltron to Advanced Mode.\n- Uses only while in combat.\n- Will not interrupt burst phase.\n- Required HP & gauge thresholds:", PLD.JobID, 3)]
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("MP Reserve Feature", "Only use MP-consuming skills in Advanced Mode - AoE when above set threshold.", PLD.JobID)]
+        PLD_AoE_AdvancedMode_MP_Reserve = 11036,
+
         // Extra Features
 
         [ConflictingCombos(PLD_FoFRequiescat)]
@@ -2413,9 +2421,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Shield Lob / Holy Spirit Feature", "Replaces Shield Lob with Holy Spirit while not moving or when under Divine Might, provided there is sufficient MP to cast it.", PLD.JobID, 5)]
         PLD_ShieldLob_Feature = 11027,
 
-        [CustomComboInfo("MP Reserve Feature", "Only use MP-consuming skills in the Advanced Mode - ST and Advanced Mode - AoE when above set threshold.", PLD.JobID)]
-        PLD_MP_Reserve = 11035,
-
         // Variant Features
 
         [Variant]
@@ -2433,7 +2438,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Feature", "Uses Variant Ultimatum on cooldown as long as the target is within range.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
 
-        //// Last value = 11035
+        //// Last value = 11036
 
         #endregion
 
