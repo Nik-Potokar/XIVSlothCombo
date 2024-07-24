@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Lumina.Excel.GeneratedSheets2;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -356,11 +355,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (LevelChecked(TsubameGaeshi) && gauge.Kaeshi.HasFlag(Kaeshi.SETSUGEKKA) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
                                 return OriginalHook(TsubameGaeshi);
 
-                            if (!IsMoving && ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold) ||
-                                (oneSeal && meikyostacks is 2 && GetDebuffRemainingTime(Debuffs.Higanbana) < 40) ||
+                            if (!IsMoving &&
+                                ((oneSeal && meikyostacks is 2 && GetDebuffRemainingTime(Debuffs.Higanbana) < 40) ||
+                                (oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold) ||
                                 (twoSeal && !LevelChecked(MidareSetsugekka)) ||
-                                (threeSeal && LevelChecked(MidareSetsugekka)) ||
-                                (threeSeal && HasEffect(Buffs.Tendo))))
+                                (threeSeal && meikyostacks is 3 && HasEffect(Buffs.Tendo)) ||
+                                (threeSeal && LevelChecked(MidareSetsugekka))))
                                 return OriginalHook(Iaijutsu);
                         }
                     }
