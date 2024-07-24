@@ -2180,12 +2180,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAM_ST_Shinten)
             {
-                UserConfig.DrawSliderInt(25, 85, SAM.Config.SAM_ST_KenkiOvercapAmount, "Set the Kenki overcap amount for ST combos.");
-                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to use Shinten below", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(50, 85, SAM.Config.SAM_ST_KenkiOvercapAmount, "Set the Kenki overcap amount for ST combos.");
+                UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_ST_ExecuteThreshold, "HP percent threshold to not save Kenki", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.SAM_AoE_Kyuten)
-                UserConfig.DrawSliderInt(25, 85, SAM.Config.SAM_AoE_KenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
+                UserConfig.DrawSliderInt(50, 85, SAM.Config.SAM_AoE_KenkiOvercapAmount, "Set the Kenki overcap amount for AOE combos.");
 
             if (preset == CustomComboPreset.SAM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, SAM.Config.SAM_VariantCure, "HP% to be at or under", 200);

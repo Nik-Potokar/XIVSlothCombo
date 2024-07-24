@@ -298,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Zanshin Usage
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Zanshin) &&
-                            LevelChecked(Zanshin) &&
+                            LevelChecked(Zanshin) && gauge.Kenki >= 50 &&
                             ((HasEffect(Buffs.ZanshinReady) && meikyostacks is 2 && WasLastWeaponskill(Gekko)) ||
                             (HasEffect(Buffs.ZanshinReady) && GetBuffRemainingTime(Buffs.ZanshinReady) <= 6)))
                             return OriginalHook(Ikishoten);
@@ -344,8 +344,9 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                LevelChecked(Shinten) && ((gauge.Kenki >= kenkiOvercap) ||
-                                (enemyHP <= shintenTreshhold && gauge.Kenki >= kenkiOvercap)))
+                                LevelChecked(Shinten) && gauge.Kenki >= 25 &&
+                                ((gauge.Kenki >= kenkiOvercap) ||
+                                (enemyHP <= shintenTreshhold)))
                                 return Shinten;
                         }
 
@@ -559,7 +560,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.SAM_AoE_Zanshin) &&
-                        LevelChecked(Zanshin) && HasEffect(Buffs.ZanshinReady))
+                        LevelChecked(Zanshin) && HasEffect(Buffs.ZanshinReady) && gauge.Kenki >= 50)
                         return OriginalHook(Ikishoten);
 
                     if (IsEnabled(CustomComboPreset.SAM_AoE_OgiNamikiri) &&
@@ -691,7 +692,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class SAM_Kyuten_Shoha2_Guren : CustomCombo
+        internal class SAM_Kyuten_Shoha_Guren : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Kyuten_Shoha;
 
