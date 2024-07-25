@@ -298,7 +298,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Meikyo Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
-                            !HasEffect(Buffs.MeikyoShisui) && CanWeave(actionID) && ActionReady(MeikyoShisui) &&
+                            !HasEffect(Buffs.MeikyoShisui) && CanWeave(actionID) && LevelChecked(MeikyoShisui) && (GetRemainingCharges(MeikyoShisui) == GetMaxCharges(MeikyoShisui)) &&
                             ((!TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && (WasLastWeaponskill(Yukikaze) || WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha))) ||
                             (TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && threeSeal && GetCooldownRemainingTime(Senei) <= GCD)))
                             return MeikyoShisui;
