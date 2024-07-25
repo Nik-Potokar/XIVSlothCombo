@@ -113,15 +113,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
+                    if (Variant.CanCure(CustomComboPreset.MCH_Variant_Cure, Config.MCH_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.MCH_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     // Opener for MCH
@@ -310,14 +305,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                    IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
+                    if (Variant.CanCure(CustomComboPreset.MCH_Variant_Cure, Config.MCH_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.MCH_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     // Opener for MCH
@@ -530,18 +521,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SpreadShot or Scattergun)
                 {
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                     IsEnabled(Variant.VariantCure) &&
-                     PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.MCH_Variant_Cure, Config.MCH_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasEffect(Buffs.Flamethrower) || JustUsed(Flamethrower))
                         return OriginalHook(11);
 
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.MCH_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     //Full Metal Field
@@ -619,18 +605,13 @@ namespace XIVSlothCombo.Combos.PvE
                     bool reassembledChainsaw = (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && Config.MCH_AoE_Reassembled[2] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !Config.MCH_AoE_Reassembled[2] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_AoE_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble));
                     bool reassembledExcavator = (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && Config.MCH_AoE_Reassembled[3] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !Config.MCH_AoE_Reassembled[3] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_AoE_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble));
 
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                     IsEnabled(Variant.VariantCure) &&
-                     PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.MCH_Variant_Cure, Config.MCH_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasEffect(Buffs.Flamethrower) || JustUsed(Flamethrower))
                         return OriginalHook(11);
 
-                    if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.MCH_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     //Full Metal Field

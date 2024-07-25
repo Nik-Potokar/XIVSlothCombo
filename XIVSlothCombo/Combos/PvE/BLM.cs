@@ -161,14 +161,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return UmbralSoul;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
+                        if (Variant.CanCure(CustomComboPreset.BLM_Variant_Cure, Config.BLM_VariantCure))
                             return Variant.VariantCure;
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanSpellWeave(actionID))
+                        if (Variant.CanRampart(CustomComboPreset.BLM_Variant_Rampart, actionID, true))
                             return Variant.VariantRampart;
 
                         // Handle movement
@@ -403,14 +399,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return UmbralSoul;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
+                        if (Variant.CanCure(CustomComboPreset.BLM_Variant_Cure, Config.BLM_VariantCure))
                             return Variant.VariantCure;
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanSpellWeave(actionID))
+                        if (Variant.CanRampart(CustomComboPreset.BLM_Variant_Rampart, actionID, true))
                             return Variant.VariantRampart;
 
                         // Handle movement
@@ -686,15 +678,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return UmbralSoul;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
+                        if (Variant.CanCure(CustomComboPreset.BLM_Variant_Cure, Config.BLM_VariantCure))
                             return Variant.VariantCure;
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanSpellWeave(actionID))
+                        if (Variant.CanRampart(CustomComboPreset.BLM_Variant_Rampart, actionID, true))
                             return Variant.VariantRampart;
                     }
 
@@ -810,15 +797,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return UmbralSoul;
                         }
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
-                            IsEnabled(Variant.VariantCure) &&
-                            PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
+                        if (Variant.CanCure(CustomComboPreset.BLM_Variant_Cure, Config.BLM_VariantCure))
                             return Variant.VariantCure;
 
-                        if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanSpellWeave(actionID))
+                        if (Variant.CanRampart(CustomComboPreset.BLM_Variant_Rampart, actionID, true))
                             return Variant.VariantRampart;
 
                         // Weave Buffs

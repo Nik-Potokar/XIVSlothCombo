@@ -217,10 +217,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!HasEffect(Buffs.Eukrasia))
                     {
                         // Variant Rampart
-                        if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanSpellWeave(actionID))
+                        if (Variant.CanRampart(CustomComboPreset.SGE_DPS_Variant_Rampart, actionID, true))
                             return Variant.VariantRampart;
 
                         // Variant Spirit Dart
@@ -233,8 +230,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Lucid Dreaming
                         if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Lucid) &&
-                            ActionReady(All.LucidDreaming) && CanSpellWeave(Dosis) &&
-                            LocalPlayer.CurrentMp <= Config.SGE_AoE_DPS_Lucid)
+                            All.CanUseLucid(actionID, Config.SGE_AoE_DPS_Lucid))
                             return All.LucidDreaming;
 
                         // Rhizomata
@@ -327,15 +323,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Lucid) &&
-                        ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) &&
-                        LocalPlayer.CurrentMp <= Config.SGE_ST_DPS_Lucid)
+                        All.CanUseLucid(actionID, Config.SGE_ST_DPS_Lucid))
                         return All.LucidDreaming;
 
                     // Variant
-                    if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.SGE_DPS_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     // Rhizomata

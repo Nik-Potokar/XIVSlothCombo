@@ -5,6 +5,7 @@ using FFXIVClientStructs.FFXIV.Client.UI;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -69,8 +70,8 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public const string
-                GNB_VariantCure = "GNB_VariantCure";
+            public static UserInt
+                GNB_VariantCure = new("GNB_VariantCure");
         }
 
         internal class GNB_ST_MainCombo : CustomCombo
@@ -86,7 +87,7 @@ namespace XIVSlothCombo.Combos.PvE
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
 
                     // Variant Cure
-                    if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.GNB_Variant_Cure, Config.GNB_VariantCure))
                         return Variant.VariantCure;
 
                     // Ranged option
@@ -125,7 +126,7 @@ namespace XIVSlothCombo.Combos.PvE
                             (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                             return Variant.VariantSpiritDart;
 
-                        if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                        if (Variant.CanUltimatum(CustomComboPreset.GNB_Variant_Ultimatum))
                             return Variant.VariantUltimatum;
 
                         if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup))
@@ -494,7 +495,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<GNBGauge>();
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
 
-                    if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.GNB_Variant_Cure, Config.GNB_VariantCure))
                         return Variant.VariantCure;
 
                     if (InCombat())
@@ -507,7 +508,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
-                            if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            if (Variant.CanUltimatum(CustomComboPreset.GNB_Variant_Ultimatum))
                                 return Variant.VariantUltimatum;
 
                             if (IsEnabled(CustomComboPreset.GNB_AoE_NoMercy) && ActionReady(NoMercy))

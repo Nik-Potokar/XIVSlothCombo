@@ -165,15 +165,10 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Jolt or Jolt2 or Jolt3)
                 {
                     //VARIANTS
-                    if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.RDM_Variant_Cure, Config.RDM_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.RDM_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     //RDM_BALANCE_OPENER
@@ -623,15 +618,10 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 //VARIANTS
-                if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) &&
-                    IsEnabled(Variant.VariantCure) &&
-                    PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_VariantCure))
+                if (Variant.CanCure(CustomComboPreset.RDM_Variant_Cure, Config.RDM_VariantCure))
                     return Variant.VariantCure;
 
-                if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) &&
-                    IsEnabled(Variant.VariantRampart) &&
-                    IsOffCooldown(Variant.VariantRampart) &&
-                    CanSpellWeave(actionID))
+                if (Variant.CanRampart(CustomComboPreset.RDM_Variant_Rampart, actionID, true))
                     return Variant.VariantRampart;
 
                 // LUCID
@@ -820,7 +810,7 @@ namespace XIVSlothCombo.Combos.PvE
         RDM_Verraise
         Swiftcast combos to Verraise when:
         -Swiftcast is on cooldown.
-        -Swiftcast is available, but we we have Dualcast (Dualcasting Verraise)
+        -Swiftcast is available, but we have Dualcast (Dualcasting Verraise)
         Using this variation other than the alternate feature style, as Verraise is level 63
         and swiftcast is unlocked way earlier and in theory, on a hotbar somewhere
         */
@@ -834,10 +824,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(All.Buffs.Swiftcast) && IsEnabled(CustomComboPreset.SMN_Variant_Raise) && IsEnabled(Variant.VariantRaise))
                         return Variant.VariantRaise;
 
-                    if (LevelChecked(Verraise) &&
-                        (GetCooldownRemainingTime(All.Swiftcast) > 0 ||     // Condition 1: Swiftcast is on cooldown
-                        HasEffect(Buffs.Dualcast)))                              // Condition 2: Swiftcast is available, but we have Dualcast)
-                        return Verraise;
+                    if (LevelChecked(Verraise))
+                    {
+                        bool schwifty = HasEffect(All.Buffs.Swiftcast);
+                        if (schwifty || HasEffect(Buffs.Dualcast)) return Verraise;
+                        if (IsEnabled(CustomComboPreset.RDM_Raise_Vercure) &&
+                           !schwifty && 
+                           IsOnCooldown(All.Swiftcast))
+                        return Vercure;
+                    }
+
                 }
 
                 // Else we just exit normally and return Swiftcast

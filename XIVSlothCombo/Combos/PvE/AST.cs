@@ -195,10 +195,7 @@ namespace XIVSlothCombo.Combos.PvE
                     InCombat())
                 {
 
-                    if (IsEnabled(CustomComboPreset.AST_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.AST_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
@@ -219,9 +216,7 @@ namespace XIVSlothCombo.Combos.PvE
                     
 
                     if (IsEnabled(CustomComboPreset.AST_DPS_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.AST_LucidDreaming &&
-                        CanSpellWeave(actionID))
+                        All.CanUseLucid(actionID, Config.AST_LucidDreaming))
                         return All.LucidDreaming;
 
 

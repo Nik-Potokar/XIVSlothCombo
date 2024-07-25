@@ -343,10 +343,7 @@ namespace XIVSlothCombo.Combos.PvE
                         openerState = OpenerState.InOpener;
                     }
 
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) && 
-                        IsEnabled(Variant.VariantRampart) && 
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.SCH_DPS_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     // Dissipation
@@ -363,9 +360,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_DPS_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.SCH_ST_DPS_LucidOption &&
-                        CanSpellWeave(actionID))
+                        All.CanUseLucid(actionID,Config.SCH_ST_DPS_LucidOption))
                         return All.LucidDreaming;
 
                     //Target based options
@@ -444,10 +439,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is ArtOfWar or ArtOfWarII)
                 {
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) && 
-                        IsEnabled(Variant.VariantRampart) && 
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.SCH_DPS_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
@@ -466,9 +458,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_AoE_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.SCH_AoE_LucidOption &&
-                        CanSpellWeave(actionID))
+                        All.CanUseLucid(actionID,Config.SCH_AoE_LucidOption))
                         return All.LucidDreaming;
                 }
                 return actionID;
@@ -496,8 +486,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp < 1000)
+                        All.CanUseLucid(actionID, 1000))
                         return All.LucidDreaming;
 
                     // Indomitability
@@ -560,9 +549,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp <= Config.SCH_ST_Heal_LucidOption &&
-                        CanSpellWeave(actionID))
+                        All.CanUseLucid(actionID, Config.SCH_ST_Heal_LucidOption))
                         return All.LucidDreaming;
 
                     //Grab our target (Soft->Hard->Self)

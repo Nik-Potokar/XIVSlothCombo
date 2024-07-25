@@ -112,8 +112,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // Criterion Stuff
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (Variant.CanCure(CustomComboPreset.PLD_Variant_Cure, Config.PLD_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -129,8 +128,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                     return Variant.VariantSpiritDart;
 
-                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) &&
-                                    IsOffCooldown(Variant.VariantUltimatum))
+                                if (Variant.CanUltimatum(CustomComboPreset.PLD_Variant_Ultimatum))
                                     return Variant.VariantUltimatum;
 
                                 // Requiescat Usage: After Fight or Flight
@@ -261,8 +259,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is TotalEclipse)
                 {
                     // Criterion Stuff
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (Variant.CanCure(CustomComboPreset.PLD_Variant_Cure, Config.PLD_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -276,8 +273,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
-                            if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) &&
-                                IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            if (Variant.CanUltimatum(CustomComboPreset.PLD_Variant_Ultimatum))
                                 return Variant.VariantUltimatum;
 
                             // Requiescat Usage: After Fight or Flight
@@ -363,8 +359,7 @@ namespace XIVSlothCombo.Combos.PvE
                     #endregion
 
                     // Criterion Stuff
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (Variant.CanCure(CustomComboPreset.PLD_Variant_Cure, Config.PLD_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -380,8 +375,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                     return Variant.VariantSpiritDart;
 
-                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) &&
-                                    IsOffCooldown(Variant.VariantUltimatum))
+                                if (Variant.CanUltimatum(CustomComboPreset.PLD_Variant_Ultimatum))
                                     return Variant.VariantUltimatum;
 
                                 // Requiescat Usage: After Fight or Flight
@@ -534,8 +528,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is TotalEclipse)
                 {
                     // Criterion Stuff
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (Variant.CanCure(CustomComboPreset.PLD_Variant_Cure, Config.PLD_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -549,8 +542,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
-                            if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) &&
-                                IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            if (Variant.CanUltimatum(CustomComboPreset.PLD_Variant_Ultimatum))
                                 return Variant.VariantUltimatum;
 
                             // Requiescat Usage: After Fight or Flight

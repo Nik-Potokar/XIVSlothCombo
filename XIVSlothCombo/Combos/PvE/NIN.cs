@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using static XIVSlothCombo.Combos.JobHelpers.NIN;
@@ -128,8 +129,9 @@ namespace XIVSlothCombo.Combos.PvE
                 BloodbathThresholdST = "BloodbathThresholdST",
                 SecondWindThresholdAoE = "SecondWindThresholdAoE",
                 ShadeShiftThresholdAoE = "ShadeShiftThresholdAoE",
-                BloodbathThresholdAoE = "BloodbathThresholdAoE",
-                NIN_VariantCure = "NIN_VariantCure";
+                BloodbathThresholdAoE = "BloodbathThresholdAoE";
+            public static UserInt
+                NIN_VariantCure = new("NIN_VariantCure");
         }
 
         internal class NIN_ST_AdvancedMode : CustomCombo
@@ -203,7 +205,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.NIN_Variant_Cure, Config.NIN_VariantCure))
                         return Variant.VariantCure;
 
                     if (InCombat() && !InMeleeRange())
@@ -238,9 +240,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave && !inMudraState)
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart))
+                        if (Variant.CanRampart(CustomComboPreset.NIN_Variant_Rampart, actionID))
                             return Variant.VariantRampart;
 
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug_AlignBefore) &&
@@ -469,14 +469,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.NIN_Variant_Cure, Config.NIN_VariantCure))
                         return Variant.VariantCure;
 
                     if (canWeave && !inMudraState)
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart))
+                        if (Variant.CanRampart(CustomComboPreset.NIN_Variant_Rampart, actionID))
                             return Variant.VariantRampart;
 
                         if (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Bunshin) && Bunshin.LevelChecked() && IsOffCooldown(Bunshin) && gauge.Ninki >= bunshingPool)
@@ -608,7 +606,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.NIN_Variant_Cure, Config.NIN_VariantCure))
                         return Variant.VariantCure;
 
                     if (mudraState.CastHyoshoRanryu(ref actionID))
@@ -727,7 +725,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.NIN_Variant_Cure, Config.NIN_VariantCure))
                         return Variant.VariantCure;
 
                     if (HasEffect(Buffs.Kassatsu))
@@ -758,9 +756,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart))
+                        if (Variant.CanRampart(CustomComboPreset.NIN_Variant_Rampart, actionID))
                             return Variant.VariantRampart;
 
                         if (IsOffCooldown(Bunshin) && gauge.Ninki >= 50 && Bunshin.LevelChecked())

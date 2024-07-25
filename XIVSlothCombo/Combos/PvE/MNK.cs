@@ -5,6 +5,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -92,8 +93,9 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_STSecondWindThreshold = "MNK_STSecondWindThreshold",
                 MNK_STBloodbathThreshold = "MNK_STBloodbathThreshold",
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
-                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold",
-                MNK_VariantCure = "MNK_VariantCure";
+                MNK_AoEBloodbathThreshold = "MNK_AoEBloodbathThreshold";
+            public static UserInt
+                MNK_VariantCure = new("MNK_VariantCure");
         }
 
         internal class MNK_AoE_SimpleMode : CustomCombo
@@ -130,15 +132,13 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.MNK_Variant_Cure, Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
                     // Buffs
                     if (inCombat && canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart))
+                        if (Variant.CanRampart(CustomComboPreset.MNK_Variant_Rampart, actionID))
                             return Variant.VariantRampart;
 
                         if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs))
@@ -363,7 +363,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var lunarNadi = gauge.Nadi == Nadi.LUNAR;
                     var solarNadi = gauge.Nadi == Nadi.SOLAR;
 
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.MNK_Variant_Cure, Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
                     // Opener for MNK
@@ -482,10 +482,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Buffs
                     if (inCombat && !inOpener)
                     {
-                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            canWeave)
+                        if (Variant.CanRampart(CustomComboPreset.MNK_Variant_Rampart, actionID))
                             return Variant.VariantRampart;
 
                         if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))

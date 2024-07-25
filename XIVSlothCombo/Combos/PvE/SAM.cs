@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -82,8 +83,9 @@ namespace XIVSlothCombo.Combos.PvE
                 SAM_STBloodbathThreshold = "SAM_STBloodbathThreshold",
                 SAM_AoESecondWindThreshold = "SAM_AoESecondWindThreshold",
                 SAM_AoEBloodbathThreshold = "SAM_AoEBloodbathThreshold",
-                SAM_ST_ExecuteThreshold = "SAM_ST_ExecuteThreshold",
-                SAM_VariantCure = "SAM_VariantCure";
+                SAM_ST_ExecuteThreshold = "SAM_ST_ExecuteThreshold";
+            public static UserInt
+                SAM_VariantCure = new("SAM_VariantCure");
         }
 
         internal class SAM_ST_YukikazeCombo : CustomCombo
@@ -288,13 +290,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (!inOpener)
                         {
-                            if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
+                            if (Variant.CanCure(CustomComboPreset.SAM_Variant_Cure, Config.SAM_VariantCure))
                                 return Variant.VariantCure;
 
-                            if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) &&
-                                IsEnabled(Variant.VariantRampart) &&
-                                IsOffCooldown(Variant.VariantRampart) &&
-                                CanWeave(actionID))
+                            if (Variant.CanRampart(CustomComboPreset.SAM_Variant_Rampart, actionID))
                                 return Variant.VariantRampart;
 
                             //Death desync check
@@ -651,13 +650,10 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<SAMGauge>();
                     var SamAOEKenkiOvercapAmount = PluginConfiguration.GetCustomIntValue(Config.SAM_AoE_KenkiOvercapAmount);
 
-                    if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.SAM_Variant_Cure, Config.SAM_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.SAM_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     //oGCD Features

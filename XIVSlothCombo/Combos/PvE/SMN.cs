@@ -142,8 +142,10 @@ namespace XIVSlothCombo.Combos.PvE
                 SMN_BurstPhase = "SMN_BurstPhase",
                 SMN_PrimalChoice = "SMN_PrimalChoice",
                 SMN_SwiftcastPhase = "SMN_SwiftcastPhase",
-                SMN_Burst_Delay = "SMN_Burst_Delay",
-                SMN_VariantCure = "SMN_VariantCure";
+                SMN_Burst_Delay = "SMN_Burst_Delay";
+
+            public static UserInt
+                SMN_VariantCure = new("SMN_VariantCure");
 
             public static UserBoolArray
                 SMN_ST_Egi_AstralFlow = new("SMN_ST_Egi_AstralFlow");
@@ -249,13 +251,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
-                    if (IsEnabled(CustomComboPreset.SMN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SMN_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.SMN_Variant_Cure, Config.SMN_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.SMN_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.SMN_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     if (CanSpellWeave(actionID))
@@ -425,13 +424,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ruin or Ruin2 or Outburst or Tridisaster)
                 {
-                    if (IsEnabled(CustomComboPreset.SMN_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.SMN_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.SMN_Variant_Cure, Config.SMN_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.SMN_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanSpellWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.SMN_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     if (CanSpellWeave(actionID))

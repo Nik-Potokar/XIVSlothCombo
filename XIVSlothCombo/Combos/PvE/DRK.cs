@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -85,8 +86,9 @@ namespace XIVSlothCombo.Combos.PvE
             public const string
                 DRK_ST_ManaSpenderPooling = "DRK_ST_ManaSpenderPooling",
                 DRK_ST_LivingDeadThreshold = "DRK_ST_LivingDeadThreshold",
-                DRK_AoE_LivingDeadThreshold = "DRK_AoE_LivingDeadThreshold",
-                DRK_VariantCure = "DRKVariantCure";
+                DRK_AoE_LivingDeadThreshold = "DRK_AoE_LivingDeadThreshold";
+            public static UserInt
+                DRK_VariantCure = new("DRKVariantCure");
         }
 
         // todo: chop down very long ifs
@@ -105,9 +107,7 @@ namespace XIVSlothCombo.Combos.PvE
                 var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_LivingDeadThreshold);
 
                 // Variant Cure - Heal: Priority to save your life
-                if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
-                    && IsEnabled(Variant.VariantCure)
-                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
+                if (Variant.CanCure(CustomComboPreset.DRK_Variant_Cure, Config.DRK_VariantCure))
                     return Variant.VariantCure;
 
                 // Unmend Option
@@ -141,9 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantSpiritDart;
 
                     // Variant Ultimatum - AoE Agro stun
-                    if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum)
-                        && IsEnabled(Variant.VariantUltimatum)
-                        && IsOffCooldown(Variant.VariantUltimatum))
+                    if (Variant.CanUltimatum(CustomComboPreset.DRK_Variant_Ultimatum))
                         return Variant.VariantUltimatum;
 
                     //Mana Features
@@ -289,9 +287,7 @@ namespace XIVSlothCombo.Combos.PvE
                 var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_AoE_LivingDeadThreshold);
 
                 // Variant Cure - Heal: Priority to save your life
-                if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
-                    && IsEnabled(Variant.VariantCure)
-                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_VariantCure))
+                if (Variant.CanCure(CustomComboPreset.DRK_Variant_Cure, Config.DRK_VariantCure))
                     return Variant.VariantCure;
 
                 // Disesteem
@@ -314,9 +310,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantSpiritDart;
 
                     // Variant Ultimatum - AoE Agro stun
-                    if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum)
-                        && IsEnabled(Variant.VariantUltimatum)
-                        && IsOffCooldown(Variant.VariantUltimatum))
+                    if (Variant.CanUltimatum(CustomComboPreset.DRK_Variant_Ultimatum))
                         return Variant.VariantUltimatum;
 
                     // Mana Features

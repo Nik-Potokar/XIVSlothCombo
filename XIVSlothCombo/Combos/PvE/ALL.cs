@@ -1,5 +1,4 @@
 ﻿using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -72,11 +71,12 @@ namespace XIVSlothCombo.Combos.PvE
         /// <param name="actionID">action id to check weave</param>
         /// <param name="MPThreshold">Player MP less than Threshold check</param>
         /// <param name="weave">Spell Weave check by default</param>
+        /// <param name="weaveTime"> CanSpellWeave override </param>
         /// <returns></returns>
-        public static bool CanUseLucid(uint actionID, int MPThreshold, bool weave = true) =>
-            CustomComboFunctions.ActionReady(LucidDreaming)
-            && CustomComboFunctions.LocalPlayer.CurrentMp <= MPThreshold
-            && (weave && CustomComboFunctions.CanSpellWeave(actionID));
+        public static bool CanUseLucid(uint actionID, int MPThreshold, bool weave = true, double weaveTime = 0.6) =>
+            ActionReady(LucidDreaming)
+            && LocalPlayer.CurrentMp <= MPThreshold
+            && (weave && CanSpellWeave(actionID, weaveTime));
 
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
@@ -179,6 +179,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return actionID;
                     if (IsOffCooldown(Swiftcast))
                         return Swiftcast;
+                    if (LocalPlayer.ClassJob.Id is RDM.JobID)
+                        return RDM.Vercure;
                 }
 
                 return actionID;

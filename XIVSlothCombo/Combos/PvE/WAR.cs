@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -64,11 +65,12 @@ namespace XIVSlothCombo.Combos.PvE
                 WAR_SurgingRefreshRange = "WarSurgingRefreshRange",
                 WAR_KeepOnslaughtCharges = "WarKeepOnslaughtCharges",
                 WAR_KeepInfuriateCharges = "WarKeepInfuriateCharges",
-                WAR_VariantCure = "WAR_VariantCure",
                 WAR_FellCleaveGauge = "WAR_FellCleaveGauge",
                 WAR_DecimateGauge = "WAR_DecimateGauge",
                 WAR_InfuriateSTGauge = "WAR_InfuriateSTGauge",
                 WAR_InfuriateAoEGauge = "WAR_InfuriateAoEGauge";
+            public static UserInt
+                WAR_VariantCure = new("WAR_VariantCure");
         }
 
         // Replace Storm's Path with Storm's Path combo and overcap feature on main combo to fellcleave
@@ -88,7 +90,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateSTGauge);
                     float GCD = GetCooldown(HeavySwing).CooldownTotal;
 
-                    if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.WAR_Variant_Cure, Config.WAR_VariantCure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_RangedUptime) && LevelChecked(Tomahawk) && !InMeleeRange() && HasBattleTarget())
@@ -112,7 +114,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
-                            if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            if (Variant.CanUltimatum(CustomComboPreset.WAR_Variant_Ultimatum))
                                 return Variant.VariantUltimatum;
 
 
@@ -216,7 +218,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var decimateGaugeSpend = PluginConfiguration.GetCustomIntValue(Config.WAR_DecimateGauge);
                     var infuriateGauge = PluginConfiguration.GetCustomIntValue(Config.WAR_InfuriateAoEGauge);
 
-                    if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.WAR_Variant_Cure, Config.WAR_VariantCure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_Infuriate) && InCombat() && ActionReady(Infuriate) && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerReleaseStacks) && gauge <= infuriateGauge && CanWeave(actionID))
@@ -236,7 +238,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
-                            if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                            if (Variant.CanUltimatum(CustomComboPreset.WAR_Variant_Ultimatum))
                                 return Variant.VariantUltimatum;
 
                             if (IsEnabled(CustomComboPreset.WAR_AoE_Overpower_InnerRelease) && CanWeave(actionID) && IsOffCooldown(OriginalHook(Berserk)) && LevelChecked(Berserk))

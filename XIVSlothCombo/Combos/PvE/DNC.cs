@@ -2,6 +2,7 @@
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -119,8 +120,8 @@ namespace XIVSlothCombo.Combos.PvE
                 DNCSimpleAoEPanicHealWindPercent = "DNCSimpleAoEPanicHealWindPercent";      // Second Wind      player HP% threshold
             #endregion
 
-            public const string
-                DNCVariantCurePercent = "DNCVariantCurePercent";                            // Variant Cure     player HP% threshold
+            public static UserInt
+                DNCVariantCurePercent = new("DNCVariantCurePercent");                            // Variant Cure     player HP% threshold
         }
 
         internal class DNC_DanceComboReplacer : CustomCombo
@@ -362,16 +363,11 @@ namespace XIVSlothCombo.Combos.PvE
                     return All.HeadGraze;
 
                 // Variant Cure
-                if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) &&
-                    IsEnabled(Variant.VariantCure) &&
-                    PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                if (Variant.CanCure(CustomComboPreset.DNC_Variant_Cure, Config.DNCVariantCurePercent))
                     return Variant.VariantCure;
 
                 // Variant Rampart
-                if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
-                    IsEnabled(Variant.VariantRampart) &&
-                    IsOffCooldown(Variant.VariantRampart) &&
-                    CanWeave(actionID))
+                if (Variant.CanRampart(CustomComboPreset.DNC_Variant_Rampart, actionID))
                     return Variant.VariantRampart;
 
                 if (CanWeave(actionID) && !WasLastWeaponskill(TechnicalFinish4))
@@ -657,15 +653,10 @@ namespace XIVSlothCombo.Combos.PvE
                     !HasEffect(Buffs.TechnicalFinish))
                     return All.HeadGraze;
 
-                if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) &&
-                    IsEnabled(Variant.VariantCure) &&
-                    PlayerHealthPercentageHp() <= GetOptionValue(Config.DNCVariantCurePercent))
+                if (Variant.CanCure(CustomComboPreset.DNC_Variant_Cure, Config.DNCVariantCurePercent))
                     return Variant.VariantCure;
 
-                if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) &&
-                    IsEnabled(Variant.VariantRampart) &&
-                    IsOffCooldown(Variant.VariantRampart) &&
-                    CanWeave(actionID))
+                if (Variant.CanRampart(CustomComboPreset.DNC_Variant_Rampart, actionID))
                     return Variant.VariantRampart;
 
                 if (CanWeave(actionID) && !WasLastWeaponskill(TechnicalFinish4))

@@ -125,15 +125,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Slice)
                 {
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.RPR_Variant_Cure, Config.RPR_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.RPR_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     if (RPROpener.DoFullOpener(ref actionID))
@@ -289,15 +284,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Slice)
                 {
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.RPR_Variant_Cure, Config.RPR_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.RPR_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_Opener))
@@ -466,15 +456,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SpinningScythe)
                 {
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.RPR_Variant_Cure, Config.RPR_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.RPR_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     if (LevelChecked(WhorlOfDeath) &&
@@ -557,15 +542,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SpinningScythe)
                 {
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.RPR_Variant_Cure, Config.RPR_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        CanWeave(actionID))
+                    if (Variant.CanRampart(CustomComboPreset.RPR_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.RPR_AoE_WoD) &&

@@ -6,6 +6,7 @@ using System;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using static FFXIVClientStructs.FFXIV.Client.UI.AddonJobHudBRD0;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -81,8 +82,9 @@ namespace XIVSlothCombo.Combos.PvE
                 BRD_NoWasteHPPercentage = "noWasteHpPercentage",
                 BRD_AoENoWasteHPPercentage = "AoENoWasteHpPercentage",
                 BRD_STSecondWindThreshold = "BRD_STSecondWindThreshold",
-                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold",
-                BRD_VariantCure = "BRD_VariantCure";
+                BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold";
+            public static UserInt
+                BRD_VariantCure = new("BRD_VariantCure");
         }
 
         #region Song status
@@ -344,13 +346,10 @@ namespace XIVSlothCombo.Combos.PvE
                     int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_AoENoWasteHPPercentage);
                     bool isEnemyHealthHigh = !IsEnabled(CustomComboPreset.BRD_AoE_Simple_NoWaste) || GetTargetHPPercent() > targetHPThreshold;
 
-                    if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.BRD_Variant_Cure, Config.BRD_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.BRD_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        canWeave)
+                    if (Variant.CanRampart(CustomComboPreset.BRD_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
@@ -672,13 +671,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && canInterrupt)
                         return All.HeadGraze;
 
-                    if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_VariantCure))
+                    if (Variant.CanCure(CustomComboPreset.BRD_Variant_Cure, Config.BRD_VariantCure))
                         return Variant.VariantCure;
 
-                    if (IsEnabled(CustomComboPreset.BRD_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart) &&
-                        canWeave)
+                    if (Variant.CanRampart(CustomComboPreset.BRD_Variant_Rampart, actionID))
                         return Variant.VariantRampart;
 
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Song) && isEnemyHealthHigh)

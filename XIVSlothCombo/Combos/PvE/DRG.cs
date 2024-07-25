@@ -111,9 +111,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is TrueThrust)
                 {
-                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
+                    if (Variant.CanCure(CustomComboPreset.DRG_Variant_Cure, Config.DRG_Variant_Cure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
@@ -272,9 +270,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is TrueThrust)
                 {
-                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
+                    if (Variant.CanCure(CustomComboPreset.DRG_Variant_Cure, Config.DRG_Variant_Cure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
@@ -469,9 +465,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is DoomSpike)
                 {
-                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
+                    if (Variant.CanCure(CustomComboPreset.DRG_Variant_Cure, Config.DRG_Variant_Cure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&
@@ -587,9 +581,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is DoomSpike)
                 {
-                    if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
-                        IsEnabled(Variant.VariantCure) &&
-                        PlayerHealthPercentageHp() <= Config.DRG_Variant_Cure)
+                    if (Variant.CanCure(CustomComboPreset.DRG_Variant_Cure, Config.DRG_Variant_Cure))
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) &&

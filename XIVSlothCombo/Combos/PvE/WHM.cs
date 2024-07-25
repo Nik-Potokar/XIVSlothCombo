@@ -243,24 +243,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (CanSpellWeave(actionID))
                     {
-                        bool lucidReady = ActionReady(All.LucidDreaming) && LevelChecked(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_STDPS_Lucid;
                         bool pomReady = LevelChecked(PresenceOfMind) && IsOffCooldown(PresenceOfMind);
                         bool assizeReady = LevelChecked(Assize) && IsOffCooldown(Assize);
                         bool pomEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_PresenceOfMind);
                         bool assizeEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Assize);
-                        bool lucidEnabled = IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid);
 
-                        if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            CanSpellWeave(actionID))
+                        if (Variant.CanRampart(CustomComboPreset.WHM_DPS_Variant_Rampart, actionID, true))
                             return Variant.VariantRampart;
 
                         if (pomEnabled && pomReady)
                             return PresenceOfMind;
                         if (assizeEnabled && assizeReady)
                             return Assize;
-                        if (lucidEnabled && lucidReady)
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_Lucid) && 
+                            All.CanUseLucid(actionID, Config.WHM_STDPS_Lucid))
                             return All.LucidDreaming;
                     }
 
@@ -318,7 +314,6 @@ namespace XIVSlothCombo.Combos.PvE
                     WHMGauge? gauge = GetJobGauge<WHMGauge>();
                     bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > Config.WHM_AoEHeals_ThinAir;
                     var canWeave = CanSpellWeave(actionID, 0.3);
-                    bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_AoEHeals_Lucid;
                     bool plenaryReady = ActionReady(PlenaryIndulgence) && (!Config.WHM_AoEHeals_PlenaryWeave || (Config.WHM_AoEHeals_PlenaryWeave && canWeave));
                     bool divineCaressReady = ActionReady(DivineCaress) && HasEffect(Buffs.DivineGrace);
                     bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
@@ -333,7 +328,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_DivineCaress) && divineCaressReady)
                         return OriginalHook(DivineCaress);
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Lucid) && canWeave && lucidReady)
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Lucid) && All.CanUseLucid(actionID, Config.WHM_AoEHeals_Lucid, true, 0.3))
                         return All.LucidDreaming;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Misery) && gauge.BloodLily == 3)
@@ -380,7 +375,6 @@ namespace XIVSlothCombo.Combos.PvE
                     IGameObject? healTarget = GetHealTarget(Config.WHM_STHeals_UIMouseOver);
                     bool canWeave = CanSpellWeave(actionID, 0.3);
                     bool thinAirReady = LevelChecked(ThinAir) && !HasEffect(Buffs.ThinAir) && GetRemainingCharges(ThinAir) > Config.WHM_STHeals_ThinAir;
-                    bool lucidReady = ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= Config.WHM_STHeals_Lucid;
                     bool tetraReady = ActionReady(Tetragrammaton) && (!Config.WHM_STHeals_TetraWeave || (Config.WHM_STHeals_TetraWeave && canWeave)) && GetTargetHPPercent(healTarget) <= Config.WHM_STHeals_TetraHP;
                     bool benisonReady = ActionReady(DivineBenison) && (!Config.WHM_STHeals_BenisonWeave || (Config.WHM_STHeals_BenisonWeave && canWeave)) && GetTargetHPPercent(healTarget) <= Config.WHM_STHeals_BenisonHP;
                     bool aquaReady = ActionReady(Aquaveil) && (!Config.WHM_STHeals_AquaveilWeave || (Config.WHM_STHeals_AquaveilWeave && canWeave)) && GetTargetHPPercent(healTarget) <= Config.WHM_STHeals_AquaveilHP;
@@ -398,7 +392,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_STHeals_Tetragrammaton) && tetraReady)
                         return Tetragrammaton;
 
-                    if (IsEnabled(CustomComboPreset.WHM_STHeals_Lucid) && canWeave && lucidReady)
+                    if (IsEnabled(CustomComboPreset.WHM_STHeals_Lucid) && All.CanUseLucid(actionID, Config.WHM_STHeals_Lucid))
                         return All.LucidDreaming;
 
                     if (IsEnabled(CustomComboPreset.WHM_STHeals_Benison) && benisonReady && FindEffectOnMember(Buffs.DivineBenison, healTarget) is null)
@@ -441,9 +435,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
                         return Assize;
 
-                    if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
-                        IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart))
+                    if (Variant.CanRampart(CustomComboPreset.WHM_DPS_Variant_Rampart, actionID, true))
                         return Variant.VariantRampart;
 
                     Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
