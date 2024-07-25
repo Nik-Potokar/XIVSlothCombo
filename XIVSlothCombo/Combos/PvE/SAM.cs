@@ -178,6 +178,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool twoSeal = OriginalHook(Iaijutsu) is TenkaGoken;
                 bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka or TendoSetsugekka;
                 float enemyHP = GetTargetHPPercent();
+                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 float kenkiOvercap = Config.SAM_ST_KenkiOvercapAmount;
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
@@ -186,7 +187,7 @@ namespace XIVSlothCombo.Combos.PvE
                 float GCD = GetCooldown(OriginalHook(Hakaze)).CooldownTotal;
                 bool oddMinute = GetCooldownRemainingTime(Ikishoten) is <= 65 and >= 50 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
 
-                if (actionID is Hakaze or Gyofu)
+                if (actionID is Gekko)
                 {
                     if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) &&
                         IsEnabled(Variant.VariantCure) &&
@@ -308,7 +309,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri) &&
                             LevelChecked(OgiNamikiri) &&
                             (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
-                            (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) && 
+                            (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
                             meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
                             (HasEffect(Buffs.OgiNamikiriReady) && GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6)))
                             return OriginalHook(OgiNamikiri);
@@ -318,7 +319,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Senei Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
-                                gauge.Kenki >= 25 && ActionReady(Senei) && 
+                                gauge.Kenki >= 25 && ActionReady(Senei) &&
                                 (WasLastWeaponskill(OriginalHook(MidareSetsugekka)) || WasLastWeaponskill(OriginalHook(KaeshiSetsugekka))))
                                 return Senei;
 
@@ -370,7 +371,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.MeikyoShisui))
                     {
                         if (IsEnabled(CustomComboPreset.SAM_ST_TrueNorth) &&
-                            CanDelayedWeave(actionID) && TargetNeedsPositionals() && !HasEffect(All.Buffs.TrueNorth) && ActionReady(All.TrueNorth))
+                            trueNorthReady)
                             return All.TrueNorth;
 
                         if (LevelChecked(Gekko) && (!HasEffect(Buffs.Fugetsu) || (!gauge.Sen.HasFlag(Sen.GETSU) && HasEffect(Buffs.Fuka))))
