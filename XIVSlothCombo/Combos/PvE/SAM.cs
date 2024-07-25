@@ -68,6 +68,7 @@ namespace XIVSlothCombo.Combos.PvE
                 OgiNamikiriReady = 2959,
                 Fuka = 1299,
                 Fugetsu = 1298,
+                TsubameGaeshiReady = 3852,
                 ZanshinReady = 3855,
                 Tendo = 3856;
         }
@@ -346,7 +347,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                LevelChecked(Shinten) && gauge.Kenki >= 25 && (!HasEffect(Buffs.ZanshinReady) || gauge.Kenki is 100) &&
+                                LevelChecked(Shinten) && gauge.Kenki >= 25 && 
+                                (!HasEffect(Buffs.ZanshinReady) || gauge.Kenki is 100) &&
                                 ((gauge.Kenki >= kenkiOvercap) ||
                                 (enemyHP <= shintenTreshhold)))
                                 return Shinten;
@@ -355,7 +357,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Iaijutsu Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && LevelChecked(Iaijutsu))
                         {
-                            if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi.HasFlag(Kaeshi.SETSUGEKKA) || WasLastWeaponskill(TendoSetsugekka)) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
+                            if (LevelChecked(TsubameGaeshi) && HasEffect(Buffs.TsubameGaeshiReady) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
                                 return OriginalHook(TsubameGaeshi);
 
                             if (!IsMoving &&
