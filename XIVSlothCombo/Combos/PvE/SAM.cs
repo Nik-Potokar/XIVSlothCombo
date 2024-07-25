@@ -299,7 +299,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Zanshin Usage
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Zanshin) &&
-                            LevelChecked(Zanshin) && gauge.Kenki >= 50 &&
+                            LevelChecked(Zanshin) && gauge.Kenki >= 50 && CanWeave(actionID) &&
                             ((HasEffect(Buffs.ZanshinReady) && meikyostacks is 2 && WasLastWeaponskill(Gekko)) ||
                             (HasEffect(Buffs.ZanshinReady) && GetBuffRemainingTime(Buffs.ZanshinReady) <= 6)))
                             return OriginalHook(Ikishoten);
@@ -308,7 +308,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri) &&
                             LevelChecked(OgiNamikiri) &&
                             (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
-                            (HasEffect(Buffs.OgiNamikiriReady) && meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
+                            (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) && 
+                            meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
                             (HasEffect(Buffs.OgiNamikiriReady) && GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6)))
                             return OriginalHook(OgiNamikiri);
 
@@ -343,7 +344,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                LevelChecked(Shinten) && gauge.Kenki >= 25 &&
+                                LevelChecked(Shinten) && gauge.Kenki >= 25 && !HasEffect(Buffs.ZanshinReady) &&
                                 ((gauge.Kenki >= kenkiOvercap) ||
                                 (enemyHP <= shintenTreshhold)))
                                 return Shinten;
