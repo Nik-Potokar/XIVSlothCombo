@@ -2,6 +2,7 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
+using ECommons.DalamudServices;
 using ImGuiNET;
 using System;
 using System.Linq;
@@ -14,6 +15,7 @@ using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
+
 
 namespace XIVSlothCombo.Window.Functions
 {
@@ -1411,10 +1413,10 @@ namespace XIVSlothCombo.Window.Functions
             {
                 //int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Cast<int>().ToArray();
                 int[]? actions = Service.Configuration.DancerDanceCompatActionIDs.Select(x => (int)x).ToArray();
-                
+
 
                 bool inputChanged = false;
-                
+
                 inputChanged |= ImGui.InputInt("Emboite (Red) ActionID", ref actions[0], 0);
                 inputChanged |= ImGui.InputInt("Entrechat (Blue) ActionID", ref actions[1], 0);
                 inputChanged |= ImGui.InputInt("Jete (Green) ActionID", ref actions[2], 0);
@@ -2002,7 +2004,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SAGE
 
-            if (preset is CustomComboPreset.SGE_ST_DPS) 
+            if (preset is CustomComboPreset.SGE_ST_DPS)
                 UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Adv, $"Apply all selected options to {SGE.Dosis2.ActionName()}", $"{SGE.Dosis.ActionName()} & {SGE.Dosis3.ActionName()} will behave normally.");
 
             if (preset is CustomComboPreset.SGE_ST_DPS_EDosis)
@@ -2593,13 +2595,13 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region PvP VALUES
 
-            IPlayerCharacter? pc = Service.ClientState.LocalPlayer;
+            IPlayerCharacter? pc = Svc.ClientState.LocalPlayer;
 
             if (preset == CustomComboPreset.PvP_EmergencyHeals)
             {
                 if (pc != null)
                 {
-                    uint maxHP = Service.ClientState.LocalPlayer?.MaxHp <= 15000 ? 0 : Service.ClientState.LocalPlayer.MaxHp - 15000;
+                    uint maxHP = Svc.ClientState.LocalPlayer?.MaxHp <= 15000 ? 0 : Svc.ClientState.LocalPlayer.MaxHp - 15000;
 
                     if (maxHP > 0)
                     {

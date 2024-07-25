@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using System.Numerics;
-using Dalamud.Interface;
-using Dalamud.Interface.Internal;
+﻿using Dalamud.Interface;
 using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
+using System.Linq;
+using System.Numerics;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
@@ -42,7 +41,8 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.TextWrapped($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
                         ImGui.PopFont();
                     });
-                    ImGuiEx.LineCentered($"pvpDesc2", () => {
+                    ImGuiEx.LineCentered($"pvpDesc2", () =>
+                    {
                         ImGuiEx.TextUnderlined("Select a job from below to enable and configure features for it.");
                     });
                     ImGui.Spacing();

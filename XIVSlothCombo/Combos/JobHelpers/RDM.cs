@@ -110,7 +110,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         }
 
         internal class MeleeFinisher : PvE.RDM
-        { 
+        {
             internal static bool CanUse(in uint lastComboMove, out uint actionID)
             {
                 int blackmana = RDMMana.Black;
@@ -170,7 +170,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             internal static bool CanUse(in uint actionID, in bool SingleTarget, out uint newActionID)
             {
                 var distance = CustomComboFunctions.GetTargetDistance();
-                
+
                 uint placeOGCD = 0;
 
                 bool fleche = SingleTarget ? Config.RDM_ST_oGCD_Fleche : Config.RDM_AoE_oGCD_Fleche;
@@ -199,7 +199,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     && LevelChecked(Corpsacorps)
                     && distance <= corpacorpsRange)
                     placeOGCD = Corpsacorps;
-                
+
                 if (contra
                     && ActionReady(ContreSixte))
                     placeOGCD = ContreSixte;

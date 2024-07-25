@@ -151,7 +151,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var enemyHP = GetTargetHPPercent();
                     bool openerReady = GetRemainingCharges(MeikyoShisui) == 1 && IsOffCooldown(Senei) && IsOffCooldown(Ikishoten) && GetRemainingCharges(TsubameGaeshi) == 2;
 
-                    
+
                     if (!InCombat())
                     {
                         hasDied = false;
@@ -665,7 +665,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Hagakure) && OriginalHook(Iaijutsu) == Setsugekka && LevelChecked(Hagakure))
                             return Hagakure;
-                      
+
                         if (IsEnabled(CustomComboPreset.SAM_AoE_MangetsuCombo_Guren) && ActionReady(Guren) && gauge.Kenki >= 25)
                             return Guren;
 

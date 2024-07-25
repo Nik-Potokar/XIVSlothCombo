@@ -1,11 +1,7 @@
-using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using FFXIVClientStructs.FFXIV.Client.UI;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -267,7 +263,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Gnashing Fang
                     if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && LevelChecked(GnashingFang))
                     {
-                        if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Starter) && GetCooldownRemainingTime(GnashingFang) <= 0.5 && !HasEffect(Buffs.ReadyToBlast) && gauge.AmmoComboStep == 0 && 
+                        if (IsEnabled(CustomComboPreset.GNB_ST_GnashingFang_Starter) && GetCooldownRemainingTime(GnashingFang) <= 0.5 && !HasEffect(Buffs.ReadyToBlast) && gauge.AmmoComboStep == 0 &&
                             ((HasEffect(Buffs.NoMercy) && WasLastWeaponskill(DoubleDown)) // 60s use; DD>GF (as of 7.0  DT)
                             || (gauge.Ammo == 1 && HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) > GCD * 4) //NMDDGF windows/Scuffed windows
                             || (gauge.Ammo > 0 && GetCooldownRemainingTime(NoMercy) > GCD * 7 && GetCooldownRemainingTime(NoMercy) < GCD * 14) // 30s use                                                                    
@@ -295,7 +291,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (HasEffect(Buffs.NoMercy))
                         {
-                            if (!LevelChecked(ReignOfBeasts) 
+                            if (!LevelChecked(ReignOfBeasts)
                                 && gauge.Ammo >= 1 && gauge.AmmoComboStep == 0
                                 && GetCooldownRemainingTime(NoMercy) <= GCD * 3
                                 && !HasEffect(Buffs.ReadyToReign) && !HasEffect(Buffs.ReadyToBreak)

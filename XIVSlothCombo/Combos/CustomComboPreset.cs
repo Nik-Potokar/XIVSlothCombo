@@ -3840,7 +3840,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(WAR.StormsPath)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1)]
-        WAR_ST_StormsPath = 18000, 
+        WAR_ST_StormsPath = 18000,
 
         [ParentCombo(WAR_ST_StormsPath)]
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]

@@ -28,7 +28,7 @@ internal class TargetHelper : Dalamud.Interface.Windowing.Window
                 if (CustomComboFunctions.GetPartySlot(i) is null) continue;
                 if (CustomComboFunctions.GetPartySlot(i).GameObjectId == Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId)
                 {
-                    IntPtr partyPTR = Service.GameGui.GetAddonByName("_PartyList", 1);
+                    IntPtr partyPTR = Svc.GameGui.GetAddonByName("_PartyList", 1);
                     if (partyPTR == IntPtr.Zero)
                         return;
 

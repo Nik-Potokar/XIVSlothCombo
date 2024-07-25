@@ -87,8 +87,8 @@ namespace XIVSlothCombo.Combos.PvE
                 //PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave"),
                 //PLD_ST_AtonementTiming = new("PLD_ST_EquilibriumTiming"),
                 //PLD_ST_DivineMightTiming = new("PLD_ST_DivineMightTiming"),
-                PLD_Intervene_MeleeOnly = new ("PLD_Intervene_MeleeOnly", 1),
-                PLD_ShieldLob_SubOption = new ("PLD_ShieldLob_SubOption", 1);
+                PLD_Intervene_MeleeOnly = new("PLD_Intervene_MeleeOnly", 1),
+                PLD_ShieldLob_SubOption = new("PLD_ShieldLob_SubOption", 1);
         }
 
         internal class PLD_ST_SimpleMode : CustomCombo
