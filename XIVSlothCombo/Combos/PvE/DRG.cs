@@ -698,7 +698,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (!SonicThrust.LevelChecked())
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) && 
+                            !SonicThrust.LevelChecked())
                         {
                             if (lastComboMove == TrueThrust && LevelChecked(Disembowel))
                                 return Disembowel;
