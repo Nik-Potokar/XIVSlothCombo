@@ -107,6 +107,7 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
                 WHM_ST_MainCombo_Adv = new("WHM_ST_MainCombo_Adv"),
                 WHM_ST_MainCombo_Opener_Swiftcast = new("WHM_ST_Opener_Swiftcast"),
+                WHM_AoEDPS_PresenceOfMindWeave = new("WHM_AoEDPS_PresenceOfMindWeave"),
                 WHM_STHeals_UIMouseOver = new("WHM_STHeals_UIMouseOver"),
                 WHM_STHeals_BenedictionWeave = new("WHM_STHeals_BenedictionWeave"),
                 WHM_STHeals_TetraWeave = new("WHM_STHeals_TetraWeave"),
@@ -437,13 +438,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
-
+                    bool PresenceOfMindReady = ActionReady(PresenceOfMind) && (!Config.WHM_AoEDPS_PresenceOfMindWeave);
+                        
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
                         return Assize;
-
+                                   
                     if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
-                        IsOffCooldown(Variant.VariantRampart))
+                        IsOffCooldown(Variant.VariantRampart))                                                                                                                                                                                                   
                         return Variant.VariantRampart;
 
                     Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
@@ -474,6 +476,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && LevelChecked(AfflatusMisery) &&
                         gauge.BloodLily >= 3 && HasBattleTarget())
                         return AfflatusMisery;
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && PresenceOfMindReady)
+                        return PresenceOfMind;
                 }
 
                 return actionID;
