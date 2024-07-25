@@ -309,8 +309,8 @@ namespace XIVSlothCombo.Combos.PvE
                             //Zanshin Usage
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Zanshin) &&
                                 LevelChecked(Zanshin) && gauge.Kenki >= 50 && CanWeave(actionID) &&
-                                ((HasEffect(Buffs.ZanshinReady) && HasEffect(Buffs.MeikyoShisui) && WasLastWeaponskill(Gekko)) ||
-                                (HasEffect(Buffs.ZanshinReady) && GetBuffRemainingTime(Buffs.ZanshinReady) <= 6)))
+                                HasEffect(Buffs.ZanshinReady) && ((HasEffect(Buffs.MeikyoShisui) && WasLastWeaponskill(Gekko)) ||
+                                GetBuffRemainingTime(Buffs.ZanshinReady) <= 6))
                                 return OriginalHook(Ikishoten);
 
                             //Ogi Namikiri Features
