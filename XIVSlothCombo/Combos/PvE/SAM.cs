@@ -183,10 +183,9 @@ namespace XIVSlothCombo.Combos.PvE
                 float kenkiOvercap = Config.SAM_ST_KenkiOvercapAmount;
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
-                bool meikyoBuff = HasEffect(Buffs.MeikyoShisui);
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
                 float GCD = GetCooldown(OriginalHook(Hakaze)).CooldownTotal;
-                bool oddMinute = GetCooldownRemainingTime(Ikishoten) is <= 65 and >= 50 && gauge.Sen == Sen.NONE && !meikyoBuff && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
+                bool oddMinute = GetCooldownRemainingTime(Ikishoten) is <= 65 and >= 50 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
 
                 if (actionID is Gekko)
                 {
@@ -300,7 +299,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Meikyo Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
-                            !meikyoBuff && CanWeave(actionID) && ActionReady(MeikyoShisui) &&
+                            !HasEffect(Buffs.MeikyoShisui) && CanWeave(actionID) && ActionReady(MeikyoShisui) &&
                             ((!TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && (WasLastWeaponskill(Yukikaze) || WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha))) ||
                             (TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && threeSeal && GetCooldownRemainingTime(Senei) <= GCD)))
                             return MeikyoShisui;
@@ -310,7 +309,7 @@ namespace XIVSlothCombo.Combos.PvE
                             //Zanshin Usage
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Zanshin) &&
                                 LevelChecked(Zanshin) && gauge.Kenki >= 50 && CanWeave(actionID) &&
-                                ((HasEffect(Buffs.ZanshinReady) && meikyostacks is 2 && WasLastWeaponskill(Gekko)) ||
+                                ((HasEffect(Buffs.ZanshinReady) && HasEffect(Buffs.MeikyoShisui) && WasLastWeaponskill(Gekko)) ||
                                 (HasEffect(Buffs.ZanshinReady) && GetBuffRemainingTime(Buffs.ZanshinReady) <= 6)))
                                 return OriginalHook(Ikishoten);
 
@@ -349,7 +348,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
                                     LevelChecked(Shinten) && gauge.Kenki >= 50 &&
-                                   !HasEffect(Buffs.ZanshinReady) &&
                                     ((gauge.Kenki >= kenkiOvercap) ||
                                     (enemyHP <= shintenTreshhold)))
                                     return Shinten;
