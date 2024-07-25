@@ -318,7 +318,8 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Senei Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
-                                gauge.Kenki >= 25 && ActionReady(Senei) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
+                                gauge.Kenki >= 25 && ActionReady(Senei) && 
+                                (WasLastWeaponskill(OriginalHook(MidareSetsugekka)) || WasLastWeaponskill(OriginalHook(KaeshiSetsugekka))))
                                 return Senei;
 
                             //Meikyo Features
