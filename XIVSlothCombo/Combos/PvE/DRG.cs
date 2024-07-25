@@ -203,8 +203,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff.RemainingTime < GCD * 5 ||
-                                (GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7) ||
+                                ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null ||
+                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7)) ||
                                 (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
@@ -403,8 +404,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff.RemainingTime < GCD * 5 ||
-                                (GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7) ||
+                                ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null ||
+                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7)) ||
                                 (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
@@ -419,6 +421,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return OriginalHook(ChaosThrust);
                         }
+
                         if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(WheelingThrust))
                         {
                             if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
@@ -698,7 +701,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) && 
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) &&
                             !SonicThrust.LevelChecked())
                         {
                             if (lastComboMove == TrueThrust && LevelChecked(Disembowel))
@@ -717,9 +720,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return CoerthanTorment;
                         }
                     }
-                    return HasEffect(Buffs.PowerSurge) || LevelChecked(SonicThrust)
-                        ? OriginalHook(DoomSpike)
-                        : OriginalHook(TrueThrust);
+                    return IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) && (!HasEffect(Buffs.PowerSurge) || !LevelChecked(SonicThrust))
+                        ? OriginalHook(TrueThrust)
+                        : OriginalHook(DoomSpike);
                 }
 
                 return actionID;
