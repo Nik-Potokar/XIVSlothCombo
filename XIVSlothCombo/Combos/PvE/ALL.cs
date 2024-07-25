@@ -1,4 +1,5 @@
 ﻿using XIVSlothCombo.CustomComboNS;
+using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
