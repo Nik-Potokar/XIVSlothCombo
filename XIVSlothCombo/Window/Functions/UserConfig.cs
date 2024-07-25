@@ -2438,6 +2438,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Reawaken", "Replaces Reawaken with Full Generation - Legacy combo.", 0);
                 UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Dread Fangs", "Replaces Dread Fangs with Full Generation - Legacy combo.", 1);
+                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Steel Fangs", "Replaces Steel Fangs with Full Generation - Legacy combo.", 2);
             }
 
             #endregion
