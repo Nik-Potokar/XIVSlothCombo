@@ -346,7 +346,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                LevelChecked(Shinten) && gauge.Kenki >= 25 && !HasEffect(Buffs.ZanshinReady) &&
+                                LevelChecked(Shinten) && gauge.Kenki >= 25 && (!HasEffect(Buffs.ZanshinReady) || gauge.Kenki is 100) &&
                                 ((gauge.Kenki >= kenkiOvercap) ||
                                 (enemyHP <= shintenTreshhold)))
                                 return Shinten;
@@ -355,7 +355,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Iaijutsu Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && LevelChecked(Iaijutsu))
                         {
-                            if (LevelChecked(TsubameGaeshi) && gauge.Kaeshi.HasFlag(Kaeshi.SETSUGEKKA) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
+                            if (LevelChecked(TsubameGaeshi) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
                                 return OriginalHook(TsubameGaeshi);
 
                             if (!IsMoving &&
