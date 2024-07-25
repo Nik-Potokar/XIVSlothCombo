@@ -355,7 +355,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Iaijutsu Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && LevelChecked(Iaijutsu))
                         {
-                            if (LevelChecked(TsubameGaeshi) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
+                            if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi.HasFlag(Kaeshi.SETSUGEKKA) || WasLastWeaponskill(TendoSetsugekka)) && WasLastWeaponskill(OriginalHook(MidareSetsugekka)))
                                 return OriginalHook(TsubameGaeshi);
 
                             if (!IsMoving &&
