@@ -3675,6 +3675,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_AdvancedMode = 30001,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
         VPR_ST_Opener = 30002,
 
@@ -3823,7 +3824,7 @@ namespace XIVSlothCombo.Combos
         VPR_UncoiledTwins = 30202,
 
         [ReplaceSkill(VPR.Reawaken, VPR.SteelFangs)]
-        [ConflictingCombos(VPR_ST_Reawaken, VPR_ST_ReawakenCombo, VPR_AoE_Reawaken, VPR_AoE_ReawakenCombo)]
+        [ConflictingCombos(VPR_ST_Reawaken, VPR_ST_ReawakenCombo, VPR_AoE_Reawaken, VPR_AoE_ReawakenCombo, VPR_ST_Opener)]
         [CustomComboInfo("Reawaken - Generation", "Replaces Option with the Generations.", VPR.JobID)]
         VPR_ReawakenLegacy = 30203,
 
