@@ -190,6 +190,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                 bool AlternateMode = GetIntOptionAsBool(Config.AST_DPS_AltMode); //(0 or 1 radio values)
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
+                    (AlternateMode && CombustList.ContainsKey(actionID)) ||
+                    (IsEnabled(CustomComboPreset.AST_AoE_DPS) && GravityList.Contains(actionID))) &&
+                    !InCombat())
+
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
+                        ActionReady(OriginalHook(AstralDraw)) && !InCombat())
+                        return OriginalHook(AstralDraw);
+
+                if (((!AlternateMode && MaleficList.Contains(actionID)) ||
                      (AlternateMode && CombustList.ContainsKey(actionID)) ||
                      (IsEnabled(CustomComboPreset.AST_AoE_DPS) && GravityList.Contains(actionID))) &&
                     InCombat())
