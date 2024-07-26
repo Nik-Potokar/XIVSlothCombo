@@ -303,13 +303,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
 
                         }
-                        return ((GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 ||
-                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) &&
-                            LevelChecked(DreadFangs) && !ActionReady(Dreadwinder))
+                        return (LevelChecked(DreadFangs) && !ActionReady(Dreadwinder) &&
+                            (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 ||
+                            (LevelChecked(SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD * 4)))
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
                     }
-                    return LevelChecked(DreadFangs)
+                    return LevelChecked(DreadFangs) &&
+                        (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20)
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
                 }
@@ -603,14 +604,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                         }
                         return (IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
+                            LevelChecked(DreadFangs) &&
                             (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < noxiousDebuff ||
-                            (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD * 4)) && LevelChecked(DreadFangs) &&
+                            (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
+                            LevelChecked(SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD * 4)) &&
                             ((IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder) && !ActionReady(Dreadwinder)) ||
                             !IsEnabled(CustomComboPreset.VPR_ST_Dreadwinder)))
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
                     }
-                    return IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) && LevelChecked(DreadFangs)
+                    return IsEnabled(CustomComboPreset.VPR_ST_NoxiousGnash) &&
+                        LevelChecked(DreadFangs) && (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < noxiousDebuff)
                             ? OriginalHook(DreadFangs)
                             : OriginalHook(SteelFangs);
                 }
@@ -904,7 +908,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Uncoiled Fury usage
                     if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFury) &&
                         LevelChecked(UncoiledFury) &&
-                        ((gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges) || enemyHP < uncoiledThreshold && gauge.HasRattlingCoilStack()) &&
+                        ((gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges) || (enemyHP < uncoiledThreshold && gauge.HasRattlingCoilStack())) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
                         PitOfDreadReady && !HuntersDenReady && !SwiftskinsDenReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
