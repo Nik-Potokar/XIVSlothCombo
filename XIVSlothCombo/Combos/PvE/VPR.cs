@@ -817,12 +817,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
                         }
 
-                        return ((GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 ||
-                           GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) && LevelChecked(DreadMaw) && !ActionReady(PitofDread))
-                           ? OriginalHook(DreadMaw)
-                           : OriginalHook(SteelMaw);
+                        return (LevelChecked(DreadMaw) && !ActionReady(PitofDread) &&
+                            (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20 ||
+                            (LevelChecked(SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD * 4)))
+                            ? OriginalHook(DreadMaw)
+                            : OriginalHook(SteelMaw);
                     }
-                    return LevelChecked(DreadMaw)
+                    return LevelChecked(DreadMaw) &&
+                        (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < 20)
                             ? OriginalHook(DreadMaw)
                             : OriginalHook(SteelMaw);
                 }
@@ -1003,15 +1005,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(SerpentsTail);
                         }
                         return (IsEnabled(CustomComboPreset.VPR_AoE_NoxiousGnash) &&
+                             LevelChecked(DreadMaw) &&
                             (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < noxiousDebuff ||
-                            GetCooldownRemainingTime(SerpentsIre) <= GCD * 4) && LevelChecked(DreadMaw) &&
+                            (IsEnabled(CustomComboPreset.VPR_AoE_SerpentsIre) &&
+                            LevelChecked(SerpentsIre) && GetCooldownRemainingTime(SerpentsIre) <= GCD * 4)) &&
                             ((IsEnabled(CustomComboPreset.VPR_AoE_PitOfDread) && !ActionReady(PitofDread)) ||
                             !IsEnabled(CustomComboPreset.VPR_AoE_PitOfDread)))
                             ? OriginalHook(DreadMaw)
                             : OriginalHook(SteelMaw);
                     }
                     return IsEnabled(CustomComboPreset.VPR_AoE_NoxiousGnash) &&
-                        LevelChecked(DreadMaw)
+                        LevelChecked(DreadMaw) && (GetDebuffRemainingTime(Debuffs.NoxiousGnash) < noxiousDebuff)
                             ? OriginalHook(DreadMaw)
                             : OriginalHook(SteelMaw);
                 }
