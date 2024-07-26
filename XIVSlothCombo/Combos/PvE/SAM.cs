@@ -331,7 +331,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 //Senei Features
                                 if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
                                     gauge.Kenki >= 25 && ActionReady(Senei) &&
-                                    (WasLastWeaponskill(OriginalHook(MidareSetsugekka)) || WasLastWeaponskill(OriginalHook(KaeshiSetsugekka))))
+                                    (WasLastWeaponskill(MidareSetsugekka) || WasLastWeaponskill(KaeshiSetsugekka) ||
+                                    WasLastWeaponskill(TendoSetsugekka) || WasLastWeaponskill(TendoKaeshiSetsugekka)))
                                     return Senei;
 
                                 if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Shoha) &&
