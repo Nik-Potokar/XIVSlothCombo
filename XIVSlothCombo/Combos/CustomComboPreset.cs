@@ -3756,7 +3756,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(VPR.SteelMaw)]
         [ConflictingCombos(VPR_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Mode AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", VPR.JobID)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", VPR.JobID)]
         VPR_AoE_AdvancedMode = 30101,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
