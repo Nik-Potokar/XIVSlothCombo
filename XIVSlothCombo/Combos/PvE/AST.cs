@@ -147,6 +147,11 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_QuickTarget_SkipRezWeakness = new("AST_QuickTarget_SkipRezWeakness"),
                 AST_ST_SimpleHeals_Adv = new("AST_ST_SimpleHeals_Adv"),
                 AST_ST_SimpleHeals_UIMouseOver = new("AST_ST_SimpleHeals_UIMouseOver"),
+                AST_ST_SimpleHeals_WeaveDignity = new("AST_ST_SimpleHeals_WeaveDignity"),
+                AST_ST_SimpleHeals_WeaveIntersection = new("AST_ST_SimpleHeals_WeaveIntersection"),
+                AST_ST_SimpleHeals_WeaveEwer = new("AST_ST_SimpleHeals_WeaveEwer"),
+                AST_ST_SimpleHeals_WeaveSpire = new("AST_ST_SimpleHeals_WeaveSpire"),
+                AST_ST_SimpleHeals_WeaveExalt = new("AST_ST_SimpleHeals_WeaveExalt"),
                 AST_AoE_SimpleHeals_WeaveLady = new("AST_AoE_SimpleHeals_WeaveLady"),
                 AST_AoE_SimpleHeals_Opposition = new("AST_AoE_SimpleHeals_Opposition"),
                 AST_AoE_SimpleHeals_Horoscope = new("AST_AoE_SimpleHeals_Horoscope"),
@@ -366,6 +371,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Benefic2)
                 {
+                    var canDignity = (Config.AST_ST_SimpleHeals_WeaveDignity && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveDignity;
+                    var canIntersect = (Config.AST_ST_SimpleHeals_WeaveIntersection && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveIntersection;
+                    var canExalt = (Config.AST_ST_SimpleHeals_WeaveExalt && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveExalt;
+                    var canEwer = (Config.AST_ST_SimpleHeals_WeaveEwer && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveEwer;
+                    var canSpire = (Config.AST_ST_SimpleHeals_WeaveSpire && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveSpire;
+
                     //Grab our target (Soft->Hard->Self)
                     IGameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
 
@@ -374,31 +385,32 @@ namespace XIVSlothCombo.Combos.PvE
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 
-                    if ((IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Spire) &&
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Spire) &&
                         Gauge.DrawnCards[2] == CardType.SPIRE &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Spire &&
-                        CanSpellWeave(actionID))
-                        ||
-                        (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Ewer) &&
+                        canSpire)
+                        return OriginalHook(Play3);
+
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Ewer) &&
                         Gauge.DrawnCards[2] == CardType.EWER &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Ewer &&
-                        CanSpellWeave(actionID)))
+                        canEwer)
                         return OriginalHook(Play3);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         ActionReady(EssentialDignity) &&
                         GetTargetHPPercent(healTarget) <= Config.AST_EssentialDignity &&
-                        CanSpellWeave(actionID))
+                        canDignity)
                         return EssentialDignity;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Exaltation) &&
                         ActionReady(Exaltation) &&
-                        CanSpellWeave(actionID))
+                        canExalt)
                         return Exaltation;
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection) &&
                         ActionReady(CelestialIntersection) &&
-                        CanSpellWeave(actionID) &&
+                        canIntersect &&
                         !(healTarget as IBattleChara)!.HasShield())
                         return CelestialIntersection;
 

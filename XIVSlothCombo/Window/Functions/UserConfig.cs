@@ -1242,17 +1242,28 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity)
+            {
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_EssentialDignity, "Set percentage value");
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveDignity, "Only Weave", "Will only weave this action.");
+            }
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_CelestialIntersection)
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveIntersection, "Only Weave", "Will only weave this action.");
+
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_Exaltation)
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveExalt, "Only Weave", "Will only weave this action.");
 
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Spire)
+            { 
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Spire, "Set percentage value");
-
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveSpire, "Only Weave", "Will only weave this action.");
+            }
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Ewer)
+            {  
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Ewer, "Set percentage value");
-
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveEwer, "Only Weave", "Will only weave this action.");
+            }
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_ST_SimpleHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
-
 
             if (preset is CustomComboPreset.AST_AoE_SimpleHeals_LazyLady)
                 UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_SimpleHeals_WeaveLady, "Only Weave", "Will only weave this action.");
