@@ -185,6 +185,9 @@ namespace XIVSlothCombo.Combos.PvE
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
+                bool oddMinute = GetCooldownRemainingTime(Senei) is <= 30 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
+               // bool evenMinute = GetCooldownRemainingTime(ikishoten) is <= 30 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
+
 
                 if (actionID is Gekko)
                 {
@@ -220,7 +223,7 @@ namespace XIVSlothCombo.Combos.PvE
                             fastFillerReady = false;
                         }
 
-                        if (!inFiller && GetCooldownRemainingTime(Ikishoten) is <= 65 and >= 50 && WasLastWeaponskill(MidareSetsugekka))
+                        if (!inFiller && oddMinute)
                             inFiller = true;
 
                         if (inFiller)
@@ -351,7 +354,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                    LevelChecked(Shinten) && gauge.Kenki >= 50 &&
+                                    LevelChecked(Shinten) && gauge.Kenki >= 50 && 
+                                    !HasEffect(Buffs.ZanshinReady) &&
                                     ((gauge.Kenki >= kenkiOvercap) ||
                                     (enemyHP <= shintenTreshhold)))
                                     return Shinten;
