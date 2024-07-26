@@ -81,6 +81,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Traits
         {
             public const ushort
+                EnhancedHissatsu = 591,
                 EnhancedMeikyoShishui2 = 593;
         }
 
@@ -184,7 +185,6 @@ namespace XIVSlothCombo.Combos.PvE
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
-                float GCD = GetCooldown(OriginalHook(Hakaze)).CooldownTotal;
 
                 if (actionID is Gekko)
                 {
@@ -211,7 +211,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Enpi;
 
                     //Filler Features
-                    if (IsEnabled(CustomComboPreset.SAM_ST_FillerCombos) && TraitLevelChecked(Traits.EnhancedMeikyoShishui2))
+                    if (IsEnabled(CustomComboPreset.SAM_ST_FillerCombos) && TraitLevelChecked(Traits.EnhancedHissatsu))
                     {
                         if (GetDebuffRemainingTime(Debuffs.Higanbana) < 40 && inFiller)
                         {
@@ -298,9 +298,10 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Meikyo Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
-                            !HasEffect(Buffs.MeikyoShisui) && CanWeave(actionID) && LevelChecked(MeikyoShisui) && (GetRemainingCharges(MeikyoShisui) == GetMaxCharges(MeikyoShisui)) &&
-                            ((!TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && (WasLastWeaponskill(Yukikaze) || WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha))) ||
-                            (TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && threeSeal && GetCooldownRemainingTime(Senei) <= GCD)))
+                            !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) &&
+                            ((threeSeal && CanWeave(actionID)) || !InCombat()) &&
+                            ((TraitLevelChecked(Traits.EnhancedHissatsu) && ActionReady(Senei)) ||
+                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || ActionReady(Senei)))))
                             return MeikyoShisui;
 
                         if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
@@ -315,6 +316,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Ogi Namikiri Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri) &&
+                                (!IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) ||
+                                (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) && !IsMoving)) &&
                                 LevelChecked(OgiNamikiri) &&
                                 (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
                                 (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
@@ -359,8 +362,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi is Kaeshi.SETSUGEKKA || WasLastWeaponskill(TendoSetsugekka)))
                                     return OriginalHook(TsubameGaeshi);
 
-                                if (!IsMoving &&
-                                    ((oneSeal && meikyostacks is 2 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold) ||
+                                if ((!IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) ||
+                                    (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) && !IsMoving)) &&
+                                    ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold && !LevelChecked(MeikyoShisui)) ||
+                                    (oneSeal && meikyostacks is 2 && enemyHP > HiganbanaThreshold) ||
                                     (twoSeal && !LevelChecked(MidareSetsugekka)) ||
                                     (threeSeal && LevelChecked(MidareSetsugekka))))
                                     return OriginalHook(Iaijutsu);
@@ -550,7 +555,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (IsEnabled(CustomComboPreset.SAM_AoE_Kyuten) &&
-                            Kyuten.LevelChecked() &&
+                            Kyuten.LevelChecked() && gauge.Kenki >= 50 &&
                             ((IsOnCooldown(Guren) && LevelChecked(Guren)) ||
                             (gauge.Kenki >= kenkiOvercap)))
                             return Kyuten;
@@ -669,7 +674,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(OgiNamikiri);
 
                     if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_TsubameGaeshi) &&
-                        ActionReady(TsubameGaeshi) && gauge.Kaeshi != Kaeshi.NONE)
+                        ActionReady(TsubameGaeshi) && (gauge.Kaeshi != Kaeshi.NONE || WasLastWeaponskill(TendoSetsugekka)))
                         return OriginalHook(TsubameGaeshi);
                 }
                 return actionID;
@@ -725,17 +730,12 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                SAMGauge? gauge = GetJobGauge<SAMGauge>();
+
                 if (actionID is Ikishoten)
                 {
-                    if (LevelChecked(OgiNamikiri))
-                    {
-                        if (HasEffect(Buffs.OgiNamikiriReady))
-                            return OgiNamikiri;
-
-                        if (OriginalHook(OgiNamikiri) is KaeshiNamikiri)
-                            return KaeshiNamikiri;
-                    }
-                    return Ikishoten;
+                    if ((LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady)) || gauge.Kaeshi == Kaeshi.NAMIKIRI)
+                        return OriginalHook(OgiNamikiri);
                 }
                 return actionID;
             }

@@ -3158,7 +3158,7 @@ namespace XIVSlothCombo.Combos
         SAM_ST_FillerCombos = 15007,
 
         [ParentCombo(SAM_ST_AdvancedMode)]
-        [CustomComboInfo("Shinten", "Adds Shinten to the rotation", SAM.JobID)]
+        [CustomComboInfo("Shinten Option", "Adds Shinten to the rotation", SAM.JobID)]
         SAM_ST_Shinten = 15008,
 
         #region CDs on Main Combo
@@ -3168,33 +3168,41 @@ namespace XIVSlothCombo.Combos
         SAM_ST_CDs = 15011,
 
         [ParentCombo(SAM_ST_CDs)]
-        [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
+        [CustomComboInfo("Ikishoten Option", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
         SAM_ST_CDs_Ikishoten = 15012,
 
         [ParentCombo(SAM_ST_CDs)]
-        [CustomComboInfo("Iaijutsu on Main Combo", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when ready and when you're not moving to main combo.", SAM.JobID)]
+        [CustomComboInfo("Iaijutsu Option", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka to the rotation.", SAM.JobID)]
         SAM_ST_CDs_Iaijutsu = 15013,
 
-        [ParentCombo(SAM_ST_CDs)]
-        [CustomComboInfo("Ogi Namikiri on Main Combo", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to main combo.", SAM.JobID)]
-        SAM_ST_CDs_OgiNamikiri = 15014,
+        [ParentCombo(SAM_ST_CDs_Iaijutsu)]
+        [CustomComboInfo("Iajutsu movement Option", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when you're not moving.", SAM.JobID)]
+        SAM_ST_CDs_Iaijutsu_Movement = 15014,
 
         [ParentCombo(SAM_ST_CDs)]
-        [CustomComboInfo("Zanshin on Main Combo", "Adds Zanshin when ready to main combo.", SAM.JobID)]
-        SAM_ST_CDs_Zanshin = 15015,
+        [CustomComboInfo("Ogi Namikiri Option", "Adds Ogi Namikiri and Kaeshi: Namikiri to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_OgiNamikiri = 15015,
+
+        [ParentCombo(SAM_ST_CDs_OgiNamikiri)]
+        [CustomComboInfo("Ogi Namikiri movement Option", "Adds Ogi Namikiri and Kaeshi: Namikiri when you're not moving.", SAM.JobID)]
+        SAM_ST_CDs_OgiNamikiri_Movement = 15016,
 
         [ParentCombo(SAM_ST_CDs)]
-        [CustomComboInfo("Meikyo Shisui on Main Combo", "Adds Meikyo Shisui to main combo.", SAM.JobID)]
-        SAM_ST_CDs_MeikyoShisui = 15016,
+        [CustomComboInfo("Zanshin Option", "Adds Zanshin when ready to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_Zanshin = 15017,
 
         [ParentCombo(SAM_ST_CDs)]
-        [CustomComboInfo("Shoha on Main Combo", "Adds Shoha to main combo when there are three meditation stacks.", SAM.JobID)]
-        SAM_ST_CDs_Shoha = 15017,
+        [CustomComboInfo("Meikyo Shisui Option", "Adds Meikyo Shisui to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_MeikyoShisui = 15018,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Shoha Option", "Adds Shoha when you have three meditation stacks.", SAM.JobID)]
+        SAM_ST_CDs_Shoha = 15019,
 
         [ParentCombo(SAM_ST_CDs)]
         [ConflictingCombos(SAM_Shinten_Shoha_Senei)]
-        [CustomComboInfo("Senei on Main Combo", "Adds Senei to main combo when off cooldown and above 25 Kenki.", SAM.JobID)]
-        SAM_ST_CDs_Senei = 15018,
+        [CustomComboInfo("Senei Option", "Adds Senei to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_Senei = 15020,
 
         #endregion
 
