@@ -232,7 +232,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is VorpalThrust or LanceBarrage && LevelChecked(OriginalHook(FullThrust)))
                             return OriginalHook(FullThrust);
 
-
                         if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(FangAndClaw))
                         {
                             if (trueNorthReady && CanDelayedWeave(actionID) &&
@@ -250,7 +249,6 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-
         internal class DRG_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
@@ -434,7 +432,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is VorpalThrust or LanceBarrage && LevelChecked(OriginalHook(FullThrust)))
                             return OriginalHook(FullThrust);
-
 
                         if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(FangAndClaw))
                         {
