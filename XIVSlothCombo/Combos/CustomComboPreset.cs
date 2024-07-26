@@ -4026,7 +4026,7 @@ namespace XIVSlothCombo.Combos
         WHM_AoE_DPS_LilyOvercap = 19193,
 
         [ParentCombo(WHM_AoE_DPS)]
-        [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo if you are moving or it can be weaved without GCD delay.", WHM.JobID, 25, "", "")]
+        [CustomComboInfo("Presence of Mind Option", "Adds Presence of Mind to the AoE combo with GCD delay.", WHM.JobID, 25, "", "")]
         WHM_AoE_DPS_PresenceOfMind = 19195,
 
         [ParentCombo(WHM_AoE_DPS)]
