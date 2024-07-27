@@ -156,7 +156,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Full Metal Field
                     if (HasEffect(Buffs.FullMetalMachinist) &&
-                        (GetCooldownRemainingTime(Wildfire) <= GCD || ActionReady(Wildfire)) &&
+                        (GetCooldownRemainingTime(Wildfire) <= GCD || ActionReady(Wildfire) ||
+                        GetBuffRemainingTime(Buffs.FullMetalMachinist) <= 6) &&
                         LevelChecked(FullMetalField))
                         return OriginalHook(BarrelStabilizer);
 
@@ -372,7 +373,8 @@ namespace XIVSlothCombo.Combos.PvE
                     //Full Metal Field
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Stabilizer_FullMetalField) &&
                         HasEffect(Buffs.FullMetalMachinist) &&
-                        (GetCooldownRemainingTime(Wildfire) <= GCD || ActionReady(Wildfire)) &&
+                        (GetCooldownRemainingTime(Wildfire) <= GCD || ActionReady(Wildfire) ||
+                        GetBuffRemainingTime(Buffs.FullMetalMachinist) <= 6) &&
                         LevelChecked(FullMetalField))
                         return OriginalHook(BarrelStabilizer);
 
