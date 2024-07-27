@@ -118,8 +118,14 @@ namespace XIVSlothCombo.Combos.PvE
             internal int RiddleOfFireCount = 0;
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                bool canWeave = CanWeave(actionID);
+                bool canWeave = CanWeave(actionID, 0.55);
                 bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
+                bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
+
+                if (!InCombat())
+                {
+                    RiddleOfFireCount = 0;
+                }
 
                 if (actionID is 53 or 36945)
                 {
@@ -142,12 +148,6 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood)
-                                && level >= Levels.Brotherhood
-                                && !IsOnCooldown(Brotherhood))
-                            {
-                                return Brotherhood;
-                            }
 
                             if (IsEnabled(CustomComboPreset.MNK_STUseROW)
                                 && level >= Levels.RiddleOfWind
@@ -169,14 +169,38 @@ namespace XIVSlothCombo.Combos.PvE
                         if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                             return All.Bloodbath;
 
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
+                        {
+                            if (!bothNadisOpen || (bothNadisOpen && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8))
+                            {
+                                if ((GetRemainingCharges(PerfectBalance) == 2 
+                                    || (GetRemainingCharges(PerfectBalance) == 1 
+                                    && GetCooldownChargeRemainingTime(PerfectBalance) < 4)
+                                    || HasEffect(Buffs.RiddleOfFire))
+                                    && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)))
+                                {
+                                    return PerfectBalance;
+                                }
+                            }
+                        }
+
                         if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                         {
                             if (IsEnabled(CustomComboPreset.MNK_STUseROF)
-                            && level >= Levels.RiddleOfFire
-                            && !IsOnCooldown(RiddleOfFire))
+                                && level >= Levels.RiddleOfFire
+                                && !IsOnCooldown(RiddleOfFire)
+                                && ((!bothNadisOpen) 
+                                || (bothNadisOpen && Gauge.OpoOpoFury != 0))
+                                )
+                                {
+                                    return RiddleOfFire;
+                            }
+
+                            if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood)
+                                && level >= Levels.Brotherhood
+                                && !IsOnCooldown(Brotherhood))
                             {
-                                RiddleOfFireCount++;
-                                return RiddleOfFire;
+                                return Brotherhood;
                             }
                         }
                     }
@@ -184,25 +208,22 @@ namespace XIVSlothCombo.Combos.PvE
                     // GCDs
                     if (inCombat)
                     {
+                        if (WasLastAction(MasterfulBlitz))
+                        {
+                            return FormShift;
+                        }
+
+                        if (HasEffect(Buffs.FormlessFist))
+                        {
+                            return Gauge.OpoOpoFury == 0 ? OriginalHook(DragonKick) : OriginalHook(Bootshine);
+                        }
+
                         if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
                             // Masterful Blitz
                             if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                             {
                                 return OriginalHook(MasterfulBlitz);
-                            }
-
-                            // Perfect Balance
-                            if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
-                            {
-                                if ((GetRemainingCharges(PerfectBalance) == 2) ||
-                                    (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 7.3f && WasLastWeaponskill(LeapingOpo)))
-                                {
-                                    return PerfectBalance;
-                                }
                             }
 
                             // Perfect Balance
@@ -217,17 +238,17 @@ namespace XIVSlothCombo.Combos.PvE
                                 #region Open Solar
                                 if (!solarNadi)
                                 {
-                                    if (opoOpoChakra == 0)
+                                    if (coeurlChakra == 0)
                                     {
-                                        return Gauge.OpoOpoFury == 0 ? OriginalHook(DragonKick) : OriginalHook(Bootshine);
+                                        return Gauge.CoeurlFury == 0 ? OriginalHook(Demolish) : OriginalHook(SnapPunch);
                                     }
                                     else if (raptorChakra == 0)
                                     {
                                         return Gauge.RaptorFury == 0 ? OriginalHook(TwinSnakes) : OriginalHook(TrueStrike);
                                     }
-                                    else if (coeurlChakra == 0)
+                                    else if (opoOpoChakra == 0)
                                     {
-                                        return Gauge.CoeurlFury == 0 ? OriginalHook(Demolish) : OriginalHook(SnapPunch);
+                                        return Gauge.OpoOpoFury == 0 ? OriginalHook(DragonKick) : OriginalHook(Bootshine);
                                     }
                                 }
                                 #endregion
