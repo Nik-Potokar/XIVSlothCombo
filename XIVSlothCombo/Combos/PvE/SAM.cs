@@ -301,7 +301,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         //Meikyo Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
-                            !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) &&
+                            !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
                             ((threeSeal && CanWeave(actionID)) || !InCombat()) &&
                             ((TraitLevelChecked(Traits.EnhancedHissatsu) && ActionReady(Senei)) ||
                             (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || ActionReady(Senei)))))
