@@ -1226,6 +1226,21 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_DPS_LightSpeed)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_DPS_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
 
+            //AOE added
+            if (preset is CustomComboPreset.AST_AOE_Lucid)
+                UserConfig.DrawSliderInt(4000, 9500, AST.Config.AST_LucidDreaming, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
+            
+            if (preset is CustomComboPreset.AST_AOE_Divination)
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_AOE_DivinationOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
+
+            if (preset is CustomComboPreset.AST_AOE_LightSpeed)
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_AOE_LightSpeedOption, "Stop using at Enemy HP %. Set to Zero to disable this check.");
+                        
+            if (preset is CustomComboPreset.AST_AOE_AutoDraw)
+            {
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AOE_DPS_OverwriteCards, "Overwrite Non-DPS Cards", "Will draw even if you have healing cards remaining.");
+            }
+            //end aoe added
 
             if (preset is CustomComboPreset.AST_ST_SimpleHeals)
             {
