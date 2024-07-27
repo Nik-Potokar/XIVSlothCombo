@@ -506,7 +506,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return RiddleOfWind;
                         }
 
-                        if (Gauge.Chakra == 5
+                        if (Gauge.Chakra >= 5
                             && level >= Levels.HowlingFist
                             && HasBattleTarget())
                         {
