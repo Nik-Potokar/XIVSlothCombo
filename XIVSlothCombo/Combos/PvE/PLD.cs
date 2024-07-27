@@ -73,16 +73,16 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                PLD_ST_FoF_Option = new("PLD_ST_FoF_Option", 50),
-                PLD_AoE_FoF_Option = new("PLD_AoE_FoF_Option", 50),
+                PLD_ST_FoF_Trigger = new("PLD_ST_FoF_Trigger", 0),
+                PLD_AoE_FoF_Trigger = new("PLD_AoE_FoF_Trigger", 0),
                 PLD_Intervene_HoldCharges = new("PLDKeepInterveneCharges", 1),
                 PLD_VariantCure = new("PLD_VariantCure"),
                 PLD_RequiescatOption = new("PLD_RequiescatOption"),
                 PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
                 PLD_ST_SheltronOption = new("PLD_ST_SheltronOption", 50),
                 PLD_AoE_SheltronOption = new("PLD_AoE_SheltronOption", 50),
-                PLD_ST_SheltronHP = new("PLD_ST_SheltronHP", 70),
-                PLD_AoE_SheltronHP = new("PLD_AoE_SheltronHP", 70),
+                //PLD_ST_SheltronHP = new("PLD_ST_SheltronHP", 70),
+                //PLD_AoE_SheltronHP = new("PLD_AoE_SheltronHP", 70),
                 //PLD_ST_RequiescatWeave = new("PLD_ST_RequiescatWeave"),
                 //PLD_AoE_RequiescatWeave = new("PLD_AoE_RequiescatWeave"),
                 //PLD_ST_AtonementTiming = new("PLD_ST_EquilibriumTiming"),
@@ -438,7 +438,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CanWeave(actionID) && InMeleeRange())
                         {
                             // Fight or Flight
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && ActionReady(FightOrFlight) && GetTargetHPPercent() >= Config.PLD_ST_FoF_Option)
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_FoF) && ActionReady(FightOrFlight) && GetTargetHPPercent() >= Config.PLD_ST_FoF_Trigger)
                             {
                                 if (!LevelChecked(Requiescat))
                                 {
@@ -473,7 +473,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Sheltron Overcap Protection
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Sheltron) && InCombat() && CanWeave(actionID) &&
                             LevelChecked(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                            Gauge.OathGauge >= Config.PLD_ST_SheltronOption && PlayerHealthPercentageHp() <= Config.PLD_ST_SheltronHP)
+                            Gauge.OathGauge >= Config.PLD_ST_SheltronOption && PlayerHealthPercentageHp() < 100)
                             return OriginalHook(Sheltron);
 
                         // Holy Spirit Prioritization
@@ -589,7 +589,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CanWeave(actionID) && InMeleeRange())
                         {
                             // Fight or Flight
-                            if (ActionReady(FightOrFlight) && IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && GetTargetHPPercent() >= Config.PLD_AoE_FoF_Option &&
+                            if (ActionReady(FightOrFlight) && IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && GetTargetHPPercent() >= Config.PLD_AoE_FoF_Trigger &&
                                 ((GetCooldownRemainingTime(Requiescat) < 0.5f && CanWeave(actionID, 1.5f)) || !LevelChecked(Requiescat)))
                                 return FightOrFlight;
 
@@ -606,7 +606,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Sheltron Overcap Protection
                         if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron) && InCombat() && CanWeave(actionID) &&
                             LevelChecked(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                            Gauge.OathGauge >= Config.PLD_AoE_SheltronOption && PlayerHealthPercentageHp() <= Config.PLD_AoE_SheltronHP)
+                            Gauge.OathGauge >= Config.PLD_AoE_SheltronOption && PlayerHealthPercentageHp() < 100)
                             return OriginalHook(Sheltron);
                     }
 

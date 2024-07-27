@@ -1763,19 +1763,19 @@ namespace XIVSlothCombo.Window.Functions
             }
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_FoF)
-                UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_FoF_Option, "Target HP%", 200);
+                UserConfig.DrawSliderInt(0, 50, PLD.Config.PLD_ST_FoF_Trigger, "Target HP%", 200);
 
             if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_FoF)
-                UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_FoF_Option, "Target HP%", 200);
+                UserConfig.DrawSliderInt(0, 50, PLD.Config.PLD_AoE_FoF_Trigger, "Target HP%", 200);
 
-            if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Sheltron)
-                UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_SheltronHP, "Player HP%", 200);
+            //if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Sheltron)
+            //    UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_SheltronHP, "Player HP%", 200);
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_Sheltron)
                 UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_SheltronOption, "Oath Gauge", 200, 5);
 
-            if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron)
-                UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_SheltronHP, "Player HP%", 200);
+            //if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron)
+            //    UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_SheltronHP, "Player HP%", 200);
 
             if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_Sheltron)
                 UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_SheltronOption, "Oath Gauge", 200, 5);
