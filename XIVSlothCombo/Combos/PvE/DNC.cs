@@ -800,7 +800,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // AoE Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= 80 &&
+                    gauge.Esprit >= 50 &&
                     ActionReady(SaberDance))
                     return SaberDance;
 
