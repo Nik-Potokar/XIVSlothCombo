@@ -384,7 +384,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Druochole) && Gauge.Addersgall >= Config.SGE_ST_DPS_AddersgallProtect)
                         return Druochole;
 
-                    if (HasBattleTarget() && (!HasEffect(Buffs.Eukrasia) && !inOpener))
+                    if (HasBattleTarget() && !HasEffect(Buffs.Eukrasia) && !inOpener)
                     // Buff check Above. Without it, Toxikon and any future option will interfere in the Eukrasia->Eukrasia Dosis combo
                     {
                         // Eukrasian Dosis.
@@ -429,8 +429,7 @@ namespace XIVSlothCombo.Combos.PvE
                             !inOpener &&
                             ActionReady(Psyche) &&
                             InCombat() &&
-                            CanSpellWeave(actionID) &&
-                            WasLastSpell(OriginalHook(Phlegma))) //ToDo: Verify
+                            CanSpellWeave(actionID)) //ToDo: Verify
                             return Psyche;
 
 

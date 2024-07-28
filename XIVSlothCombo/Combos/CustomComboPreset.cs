@@ -2909,7 +2909,7 @@ namespace XIVSlothCombo.Combos
         SGE_ST_DPS_Rhizo = 14007,
 
         [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Psych Option", "Weaves(?) Psych when available.", SGE.JobID, 112, "", "")]
+        [CustomComboInfo("Psych Option", "Weaves Psych when available.", SGE.JobID, 112, "", "")]
         SGE_ST_DPS_Psyche = 14008,
 
         [ParentCombo(SGE_ST_DPS)]
