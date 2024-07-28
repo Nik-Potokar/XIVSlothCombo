@@ -425,8 +425,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // FD1 Pooling
                             if (gauge.Feathers > 3 &&
-                                (GetCooldownRemainingTime(TechnicalStep) > 2.5f ||
-                                 IsOffCooldown(TechnicalStep)))
+                                (HasEffect(Buffs.SilkenSymmetry) ||
+                                 HasEffect(Buffs.SilkenFlow))
+                                )
+
                                 return FanDance1;
                         }
 
@@ -496,7 +498,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // ST Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= 80 &&
+                    gauge.Esprit >= 50 &&
                     ActionReady(SaberDance))
                     return SaberDance;
 
@@ -564,7 +566,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // ST Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            LevelChecked(FanDance1) && gauge.Feathers is 4)
+                            LevelChecked(FanDance1) && gauge.Feathers is 4 && (HasEffect(Buffs.SilkenSymmetry) ||
+                            HasEffect(Buffs.SilkenFlow)))
                             return FanDance1;
 
                         // ST Fan Dance 3/4 on combo
@@ -716,8 +719,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 // FD2 Pooling
                                 if (gauge.Feathers > 3 &&
-                                    (GetCooldownRemainingTime(TechnicalStep) > 2.5f ||
-                                     IsOffCooldown(TechnicalStep)))
+                                    (HasEffect(Buffs.SilkenSymmetry) ||
+                                     HasEffect(Buffs.SilkenFlow)))
                                     return FanDance2;
                             }
 
@@ -865,7 +868,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // AoE Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            LevelChecked(FanDance2) && gauge.Feathers is 4)
+                            LevelChecked(FanDance2) && gauge.Feathers is 4 && 
+                            (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.SilkenFlow)))
                             return FanDance2;
 
                         // AoE Fan Dance 3/4 on combo
