@@ -174,7 +174,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(LeapingOpo) && OpenerStep == 13) OpenerStep++;
                 else if (OpenerStep == 13) actionID = LeapingOpo;
 
-                if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 14) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
                 else if (OpenerStep == 14) actionID = PerfectBalance;
 
                 if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 15) OpenerStep++;
@@ -266,7 +266,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(LeapingOpo) && OpenerStep == 13) OpenerStep++;
                 else if (OpenerStep == 13) actionID = LeapingOpo;
 
-                if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 14) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
                 else if (OpenerStep == 14) actionID = PerfectBalance;
 
                 if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 15) OpenerStep++;

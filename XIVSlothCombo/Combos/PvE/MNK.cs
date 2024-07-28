@@ -330,35 +330,35 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Meditation);
                         }
 
-                        if (PlayerHealthPercentageHp() <= 25 && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= 25 && LevelChecked(All.SecondWind) && !IsOnCooldown(All.SecondWind))
                             return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= 40 && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= 40 && LevelChecked(All.Bloodbath) && !IsOnCooldown(All.Bloodbath))
                             return All.Bloodbath;
 
-                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && IsOffCooldown(PerfectBalance))
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && !IsOnCooldown(PerfectBalance))
                         {
-                            if (OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                            if (!IsOnCooldown(RiddleOfFire) || HasEffect(Buffs.RiddleOfFire))
                             {
-                                if (!bothNadisOpen || (bothNadisOpen && ((HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8)) || IsOffCooldown(RiddleOfFire)))
+                                if (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
                                 {
-                                    if (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
-                                    {
-                                        return PerfectBalance;
-                                    }
+                                    return PerfectBalance;
                                 }
                             }
                         }
 
-                        if (level >= Levels.Brotherhood
-                            && !IsOnCooldown(Brotherhood))
+                        if (HasEffect(Buffs.PerfectBalance) && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)))
                         {
-                            return Brotherhood;
-                        }
+                            if (level >= Levels.Brotherhood
+                                && !IsOnCooldown(Brotherhood))
+                            {
+                                return Brotherhood;
+                            }
 
-                        if (level >= Levels.RiddleOfFire
-                                && !IsOnCooldown(RiddleOfFire))
-                        {
-                            return RiddleOfFire;
+                            if (level >= Levels.RiddleOfFire
+                                    && !IsOnCooldown(RiddleOfFire))
+                            {
+                                return RiddleOfFire;
+                            }
                         }
                     }
 
