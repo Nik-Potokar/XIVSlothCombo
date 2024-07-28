@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
 using System;
 using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers;
@@ -115,19 +116,14 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_AdvancedMode;
             internal static MNKOpenerLogic MNKOpener = new();
-            internal int RiddleOfFireCount = 0;
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 bool canWeave = CanWeave(actionID, 0.55);
                 bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
+                bool isEvenWindow = GetCooldownChargeRemainingTime(Brotherhood) > 60;
 
-                if (!InCombat())
-                {
-                    RiddleOfFireCount = 0;
-                }
-
-                if (actionID is 53 or 36945)
+                if (actionID is Bootshine or LeapingOpo)
                 {
                     if (IsEnabled(CustomComboPreset.MNK_STUseOpener))
                     {
@@ -169,15 +165,24 @@ namespace XIVSlothCombo.Combos.PvE
                         if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                             return All.Bloodbath;
 
-                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
+                        
+
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
-                            if (!bothNadisOpen || (bothNadisOpen && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8))
+                            Svc.Log.Debug($"Even Window: {isEvenWindow}");
+                            Svc.Log.Debug($"Last Weaponskill: {WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)}");
+                            Svc.Log.Debug($"Cooldown Check: {GetCooldownRemainingTime(RiddleOfFire) < 7}");
+                            if (isEvenWindow)
                             {
-                                if ((GetRemainingCharges(PerfectBalance) == 2
-                                    || (GetRemainingCharges(PerfectBalance) == 1
-                                    && GetCooldownChargeRemainingTime(PerfectBalance) < 4)
-                                    || HasEffect(Buffs.RiddleOfFire))
-                                    && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)))
+                                if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
+                                    && GetCooldownRemainingTime(RiddleOfFire) < 7)
+                                {
+                                    return PerfectBalance;
+                                }
+                            }
+                            else
+                            {
+                                if (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick) && HasEffect(Buffs.RiddleOfFire))
                                 {
                                     return PerfectBalance;
                                 }
@@ -186,21 +191,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_STUseROF)
-                                && level >= Levels.RiddleOfFire
-                                && !IsOnCooldown(RiddleOfFire)
-                                && ((!bothNadisOpen)
-                                || (bothNadisOpen && Gauge.OpoOpoFury != 0))
-                                )
+                            if (!isEvenWindow || HasEffect(Buffs.PerfectBalance))
                             {
-                                return RiddleOfFire;
-                            }
+                                if (level >= Levels.RiddleOfFire
+                                        && !IsOnCooldown(RiddleOfFire))
+                                {
+                                    return RiddleOfFire;
+                                }
 
-                            if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood)
-                                && level >= Levels.Brotherhood
-                                && !IsOnCooldown(Brotherhood))
-                            {
-                                return Brotherhood;
+                                if (level >= Levels.Brotherhood
+                                    && !IsOnCooldown(Brotherhood))
+                                {
+                                    return Brotherhood;
+                                }
                             }
                         }
                     }
@@ -272,6 +275,7 @@ namespace XIVSlothCombo.Combos.PvE
                             && HasEffect(Buffs.FiresRumination)
                             && !HasEffect(Buffs.PerfectBalance)
                             && !HasEffect(Buffs.FormlessFist)
+                            && (isEvenWindow || !isEvenWindow && WasLastAction(LeapingOpo))
                             && level >= Levels.FiresReply)
                         {
                             return FiresReply;
@@ -290,17 +294,12 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_AdvancedMode;
             internal static MNKOpenerLogic MNKOpener = new();
-            internal int RiddleOfFireCount = 0;
+            internal bool isEvenWindow = GetCooldownChargeRemainingTime(Brotherhood) > 60;
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 bool canWeave = CanWeave(actionID, 0.55);
                 bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
-
-                if (!InCombat())
-                {
-                    RiddleOfFireCount = 0;
-                }
 
                 if (actionID is Bootshine or LeapingOpo)
                 {
@@ -337,7 +336,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && !IsOnCooldown(PerfectBalance))
                         {
-                            if (!IsOnCooldown(RiddleOfFire) || HasEffect(Buffs.RiddleOfFire))
+                            if (!IsOnCooldown(RiddleOfFire) || HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 6)
                             {
                                 if (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
                                 {
@@ -346,18 +345,18 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (HasEffect(Buffs.PerfectBalance) && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)))
+                        if ((!isEvenWindow || HasEffect(Buffs.PerfectBalance)) && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)))
                         {
-                            if (level >= Levels.Brotherhood
-                                && !IsOnCooldown(Brotherhood))
-                            {
-                                return Brotherhood;
-                            }
-
                             if (level >= Levels.RiddleOfFire
                                     && !IsOnCooldown(RiddleOfFire))
                             {
                                 return RiddleOfFire;
+                            }
+
+                            if (level >= Levels.Brotherhood
+                                && !IsOnCooldown(Brotherhood))
+                            {
+                                return Brotherhood;
                             }
                         }
                     }
@@ -424,6 +423,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.FiresRumination)
                             && !HasEffect(Buffs.PerfectBalance)
                             && !HasEffect(Buffs.FormlessFist)
+                            && (isEvenWindow || !isEvenWindow && WasLastAction(LeapingOpo))
                             && level >= Levels.FiresReply)
                         {
                             return FiresReply;
@@ -701,7 +701,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
         {
-            if (CustomComboFunctions.HasEffect(Buffs.OpoOpoForm))
+            if (CustomComboFunctions.HasEffect(Buffs.OpoOpoForm) || CustomComboFunctions.HasEffect(Buffs.FormlessFist))
             {
                 if (Gauge.OpoOpoFury == 0)
                 {
