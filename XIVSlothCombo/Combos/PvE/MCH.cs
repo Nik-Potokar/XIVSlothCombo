@@ -284,7 +284,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     //1min
-                    if (queensUsed > 1 & queensUsed < 3 && gauge.Battery >= 90)
+                    if (queensUsed >= 1 & queensUsed < 3 && gauge.Battery >= 90)
                         return true;
 
                     //even mins
@@ -519,7 +519,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     //1min
-                    if (queensUsed > 1 & queensUsed < 3 && gauge.Battery >= 90)
+                    if (queensUsed >= 1 & queensUsed < 3 && gauge.Battery >= 90)
                         return true;
 
                     //even mins
