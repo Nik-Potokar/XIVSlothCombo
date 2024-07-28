@@ -135,6 +135,8 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_EssentialDignity = new("ASTCustomEssentialDignity", 50),
                 AST_Spire = new("AST_Spire", 80),
                 AST_Ewer = new("AST_Ewer", 80),
+                AST_Arrow = new("AST_Arrow", 80),
+                AST_Bole = new("AST_Bole", 80),
                 AST_ST_SimpleHeals_Esuna = new("AST_ST_SimpleHeals_Esuna", 100),
                 AST_DPS_AltMode = new("AST_DPS_AltMode"),
                 AST_DPS_DivinationOption = new("AST_DPS_DivinationOption"),
@@ -153,6 +155,8 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_ST_SimpleHeals_WeaveIntersection = new("AST_ST_SimpleHeals_WeaveIntersection"),
                 AST_ST_SimpleHeals_WeaveEwer = new("AST_ST_SimpleHeals_WeaveEwer"),
                 AST_ST_SimpleHeals_WeaveSpire = new("AST_ST_SimpleHeals_WeaveSpire"),
+                AST_ST_SimpleHeals_WeaveArrow = new("AST_ST_SimpleHeals_WeaveArrow"),
+                AST_ST_SimpleHeals_WeaveBole = new("AST_ST_SimpleHeals_WeaveBole"),
                 AST_ST_SimpleHeals_WeaveExalt = new("AST_ST_SimpleHeals_WeaveExalt"),
                 AST_AoE_SimpleHeals_WeaveLady = new("AST_AoE_SimpleHeals_WeaveLady"),
                 AST_AoE_SimpleHeals_Opposition = new("AST_AoE_SimpleHeals_Opposition"),
@@ -525,6 +529,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var canExalt = (Config.AST_ST_SimpleHeals_WeaveExalt && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveExalt;
                     var canEwer = (Config.AST_ST_SimpleHeals_WeaveEwer && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveEwer;
                     var canSpire = (Config.AST_ST_SimpleHeals_WeaveSpire && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveSpire;
+                    var canBole = (Config.AST_ST_SimpleHeals_WeaveBole && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveBole;
+                    var canArrow = (Config.AST_ST_SimpleHeals_WeaveArrow && CanSpellWeave(actionID)) || !Config.AST_ST_SimpleHeals_WeaveArrow;
 
                     //Grab our target (Soft->Hard->Self)
                     IGameObject? healTarget = GetHealTarget(Config.AST_ST_SimpleHeals_Adv && Config.AST_ST_SimpleHeals_UIMouseOver);
@@ -545,6 +551,18 @@ namespace XIVSlothCombo.Combos.PvE
                         GetTargetHPPercent(healTarget) <= Config.AST_Ewer &&
                         canEwer)
                         return OriginalHook(Play3);
+
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Arrow) &&
+                        Gauge.DrawnCards[1] == CardType.ARROW &&
+                        GetTargetHPPercent(healTarget) <= Config.AST_Arrow &&
+                        canArrow)
+                        return OriginalHook(Play2);
+                    
+                    if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Bole) &&
+                        Gauge.DrawnCards[1] == CardType.BOLE &&
+                        GetTargetHPPercent(healTarget) <= Config.AST_Bole &&
+                        canBole)
+                        return OriginalHook(Play2);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_EssentialDignity) &&
                         ActionReady(EssentialDignity) &&

@@ -1277,6 +1277,16 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Ewer, "Set percentage value");
                 UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveEwer, "Only Weave", "Will only weave this action.");
             }
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_Bole)
+            {
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Bole, "Set percentage value");
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveBole, "Only Weave", "Will only weave this action.");
+            }
+            if (preset is CustomComboPreset.AST_ST_SimpleHeals_Arrow)
+            {
+                UserConfig.DrawSliderInt(0, 100, AST.Config.AST_Arrow, "Set percentage value");
+                UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_SimpleHeals_WeaveArrow, "Only Weave", "Will only weave this action.");
+            }
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_ST_SimpleHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 

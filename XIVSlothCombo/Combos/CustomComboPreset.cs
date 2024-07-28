@@ -201,7 +201,7 @@ namespace XIVSlothCombo.Combos
         AST_DPS_AutoDraw = 1011,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Arrow card (best used with Quick Target Cards)", AST.JobID, 6)]
+        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Spear card (best used with Quick Target Cards)", AST.JobID, 6)]
         AST_DPS_AutoPlay = 1037,
 
         [ParentCombo(AST_ST_DPS)]
@@ -240,7 +240,7 @@ namespace XIVSlothCombo.Combos
         AST_AOE_AutoDraw = 1044,
 
         [ParentCombo(AST_AOE_DPS)]
-        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Arrow card (best used with Quick Target Cards)", AST.JobID, 6)]
+        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Spear card (best used with Quick Target Cards)", AST.JobID, 6)]
         AST_AOE_AutoPlay = 1045,
 
         [ParentCombo(AST_AOE_DPS)]
@@ -279,12 +279,20 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals_Exaltation = 1028,
 
         [ParentCombo(AST_ST_SimpleHeals)]
-        [CustomComboInfo("The Spire Option", "Adds The Spire when the card has been drawn", AST.JobID)]
+        [CustomComboInfo("The Spire Option", "Adds The Spire (Shield)  when the card has been drawn", AST.JobID)]
         AST_ST_SimpleHeals_Spire = 1030,
 
         [ParentCombo(AST_ST_SimpleHeals)]
-        [CustomComboInfo("The Ewer Option", "Adds The Ewer when the card has been drawn", AST.JobID)]
+        [CustomComboInfo("The Ewer Option", "Adds The Ewer (Heal over time) when the card has been drawn", AST.JobID)]
         AST_ST_SimpleHeals_Ewer = 1032,
+
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Arrow Option", "Adds The Arrow (increased healing)  when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Arrow = 1049,
+
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Bole Option", "Adds The Bole (Reduced Damage) when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Bole = 1050,
 
         [ReplaceSkill(AST.AspectedHelios)]
         [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 3, "", "")]
@@ -335,7 +343,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1048
+        // Last value = 1050
 
         #endregion
 
