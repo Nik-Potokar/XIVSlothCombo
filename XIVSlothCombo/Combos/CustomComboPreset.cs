@@ -1423,8 +1423,30 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region GUNBREAKER
+        
+        #region Simple ST Gunbreaker
+        
+        [ReplaceSkill(GNB.KeenEdge)]
+        [ConflictingCombos(GNB_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Keen Edge with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", GNB.JobID)]
+        GNB_ST_SimpleMode = 7000,
+        
+        #endregion
 
-        #region ST
+        #region Advanced ST Gunbreakear
+
+        [ReplaceSkill(GNB.KeenEdge)]
+        [ConflictingCombos(GNB_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", GNB.JobID)]
+        GNB_ST_AdvancedMode = 7001,
+
+        [ParentCombo(GNB_ST_AdvancedMode)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation. Currently only for 2.50 Skill Speed", GNB.JobID)]
+        GNB_ST_Opener = 7002,
+        
+        #endregion
+            
+        /*#region ST
         [ReplaceSkill(GNB.KeenEdge)]
         [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. **2.5sks ONLY**", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
@@ -1609,7 +1631,7 @@ namespace XIVSlothCombo.Combos
         [Variant]
         [VariantParent(GNB_ST_MainCombo, GNB_AoE_MainCombo)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
-        GNB_Variant_Ultimatum = 7035,
+        GNB_Variant_Ultimatum = 7035,*/
 
         // Last value = 7700
 

@@ -1555,8 +1555,8 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region GUNBREAKER
 
-            if (preset == CustomComboPreset.GNB_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
+            /*if (preset == CustomComboPreset.GNB_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);*/
 
             #endregion
             // ====================================================================================

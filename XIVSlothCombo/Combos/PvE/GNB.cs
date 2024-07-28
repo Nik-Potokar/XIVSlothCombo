@@ -1,15 +1,15 @@
-using System;
+using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
-using FFXIVClientStructs.FFXIV.Client.UI;
-using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
+using System;
+using System.Linq;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class GNB
+    internal class GNB
     {
         public const byte JobID = 37;
 
@@ -73,7 +73,52 @@ namespace XIVSlothCombo.Combos.PvE
                 GNB_VariantCure = "GNB_VariantCure";
         }
 
-        internal class GNB_ST_MainCombo : CustomCombo
+        internal class GNB_ST_SimpleMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_SimpleMode;
+            internal static GNBOpenerLogic GNBOpener = new();
+            
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                var gauge = GetJobGauge<GNBGauge>();
+                var quarterWeave = GetCooldownRemainingTime(actionID) < 1 && GetCooldownRemainingTime(actionID) > 0.6;
+                float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
+
+                if (actionID is KeenEdge)
+                {
+                    //Opener for GNB
+                    if (GNBOpener.DoFullOpener(ref actionID)) return actionID;
+                }
+                return actionID;
+            }
+        }
+        
+        internal class GNB_ST_AdvancedMode : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_AdvancedMode;
+            internal static GNBOpenerLogic GNBOpener = new();
+            
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                var gauge = GetJobGauge<GNBGauge>();
+                var quarterWeave = GetCooldownRemainingTime(actionID) < 1 && GetCooldownRemainingTime(actionID) > 0.6;
+                float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
+
+                if (actionID is KeenEdge)
+                {
+                    //Opener for GNB
+                    if (IsEnabled(CustomComboPreset.GNB_ST_Opener))
+                    {
+                        if (GNBOpener.DoFullOpener(ref actionID)) return actionID;
+                    }
+                }
+                return actionID;
+            }
+        }
+        
+        
+
+        /*internal class GNB_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_MainCombo;
 
@@ -84,6 +129,9 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<GNBGauge>();
                     var quarterWeave = GetCooldownRemainingTime(actionID) < 1 && GetCooldownRemainingTime(actionID) > 0.6;
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
+                    float NoMercyCD = GetCooldown(NoMercy).CooldownTotal;
+                    float BloodfestCD = GetCooldown(Bloodfest).CooldownTotal;
+                    float DoubleDownCD = GetCooldown(DoubleDown).CooldownTotal;
 
                     // Variant Cure
                     if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))
@@ -604,6 +652,6 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 return actionID;
             }
-        }
+        }*/
     }
 }
