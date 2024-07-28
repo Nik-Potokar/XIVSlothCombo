@@ -302,7 +302,7 @@ namespace XIVSlothCombo.Combos.PvE
                     RiddleOfFireCount = 0;
                 }
 
-                if (actionID is 53 or 36945)
+                if (actionID is Bootshine or LeapingOpo)
                 {
                     if (MNKOpener.DoFullOpener(ref actionID, 1))
                         return actionID;
@@ -335,34 +335,30 @@ namespace XIVSlothCombo.Combos.PvE
                         if (PlayerHealthPercentageHp() <= 40 && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                             return All.Bloodbath;
 
-                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance))
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && IsOffCooldown(PerfectBalance))
                         {
-                            if (!bothNadisOpen || (bothNadisOpen && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8))
+                            if (OriginalHook(MasterfulBlitz) == MasterfulBlitz)
                             {
-                                if ((GetRemainingCharges(PerfectBalance) == 2
-                                    || (GetRemainingCharges(PerfectBalance) == 1
-                                    && GetCooldownChargeRemainingTime(PerfectBalance) < 4)
-                                    || HasEffect(Buffs.RiddleOfFire))
-                                    && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)))
+                                if (!bothNadisOpen || (bothNadisOpen && ((HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8)) || IsOffCooldown(RiddleOfFire)))
                                 {
-                                    return PerfectBalance;
+                                    if (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
+                                    {
+                                        return PerfectBalance;
+                                    }
                                 }
                             }
-                        }
-
-                        if (level >= Levels.RiddleOfFire
-                                && !IsOnCooldown(RiddleOfFire)
-                                && ((!bothNadisOpen)
-                                || (bothNadisOpen && Gauge.OpoOpoFury != 0))
-                                )
-                        {
-                            return RiddleOfFire;
                         }
 
                         if (level >= Levels.Brotherhood
                             && !IsOnCooldown(Brotherhood))
                         {
                             return Brotherhood;
+                        }
+
+                        if (level >= Levels.RiddleOfFire
+                                && !IsOnCooldown(RiddleOfFire))
+                        {
+                            return RiddleOfFire;
                         }
                     }
 
