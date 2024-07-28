@@ -6,6 +6,7 @@ using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -45,6 +46,7 @@ namespace XIVSlothCombo.Combos.PvE
             Dyskrasia = 24297,
             Dyskrasia2 = 24315,
             Toxikon = 24304,
+            Toxikon2 = 24316,
             Pneuma = 24318,
             EukrasianDyskrasia = 37032,
             Psyche = 37033,
@@ -284,10 +286,10 @@ namespace XIVSlothCombo.Combos.PvE
                             uint PhlegmaID = OriginalHook(Phlegma);
                             if (ActionReady(PhlegmaID) &&
                                 HasBattleTarget() &&
-                                InActionRange(PhlegmaID)) 
+                                InActionRange(PhlegmaID))
                                 return PhlegmaID;
                         }
-                        
+
                         //Toxikon
                         if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Toxikon))
                         {
@@ -314,12 +316,46 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SGE_ST_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_DPS;
+
+            internal static int Dosis3Count => ActionWatching.CombatActions.Count(x => x == Dosis3);
+
+            internal static int Toxikon2Count => ActionWatching.CombatActions.Count(x => x == Toxikon2);
+
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 bool ActionFound = actionID is Dosis2 || (!Config.SGE_ST_DPS_Adv && DosisList.ContainsKey(actionID));
-                
+
                 if (ActionFound)
                 {
+                    bool inOpener = IsEnabled(CustomComboPreset.SGE_ST_DPS_Opener)
+                                   && Dosis3Count < 8 && Gauge.Addersting > 0;
+
+                    if (inOpener)
+                    {
+                        if (((Dosis3Count is 0 && Toxikon2Count is 0) ||
+                            (Dosis3Count is 7 && Toxikon2Count is 1 && !WasLastSpell(EukrasianDosis3))) &&
+                            !HasEffect(Buffs.Eukrasia))
+                            return Eukrasia;
+
+                        if (Dosis3Count is 0 && Toxikon2Count is 0 &&
+                            HasEffect(Buffs.Eukrasia))
+                            return Toxikon2;
+
+                        if (Dosis3Count is 3)
+                        {
+                            if (WasLastSpell(Phlegma3) &&
+                                ActionReady(Psyche) &&
+                                CanWeave(actionID))
+                                return Psyche;
+
+                            if (ActionReady(Phlegma3))
+                                return Phlegma3;
+                        }
+
+                        if (Dosis3Count > 0 && Toxikon2Count > 0)
+                            return Dosis3;
+                    }
+
                     // Kardia Reminder
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && LevelChecked(Kardia) &&
                         FindEffect(Buffs.Kardia) is null)
@@ -348,7 +384,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Druochole) && Gauge.Addersgall >= Config.SGE_ST_DPS_AddersgallProtect)
                         return Druochole;
 
-                    if (HasBattleTarget() && (!HasEffect(Buffs.Eukrasia)))
+                    if (HasBattleTarget() && (!HasEffect(Buffs.Eukrasia) && !inOpener))
                     // Buff check Above. Without it, Toxikon and any future option will interfere in the Eukrasia->Eukrasia Dosis combo
                     {
                         // Eukrasian Dosis.
@@ -382,7 +418,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Phlegma
-                        if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InCombat())
+                        if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InCombat() && !inOpener)
                         {
                             uint phlegma = OriginalHook(Phlegma);
                             if (InActionRange(phlegma) && ActionReady(phlegma)) return phlegma;
@@ -390,14 +426,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Psyche
                         if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) &&
+                            !inOpener &&
                             ActionReady(Psyche) &&
                             InCombat() &&
-                            CanSpellWeave(actionID)) //ToDo: Verify
-                           return Psyche;
+                            CanSpellWeave(actionID) &&
+                            WasLastSpell(OriginalHook(Phlegma))) //ToDo: Verify
+                            return Psyche;
 
 
                         // Movement Options
-                        if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Movement) && InCombat() && IsMoving)
+                        if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Movement) && InCombat() && IsMoving && !inOpener)
                         {
                             // Psyche
                             if (Config.SGE_ST_DPS_Movement[3] && ActionReady(Psyche)) return Psyche;
@@ -521,7 +559,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is Prognosis)
                 {
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_EPrognosis) && HasEffect(Buffs.Eukrasia))
-                        return OriginalHook(Prognosis); 
+                        return OriginalHook(Prognosis);
 
                     if (IsEnabled(CustomComboPreset.SGE_AoE_Heal_Rhizomata) && ActionReady(Rhizomata) &&
                         !Gauge.HasAddersgall())
@@ -558,7 +596,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (HasEffectAny(Buffs.Kerachole) ||
                         (IsEnabled(CustomComboPreset.SGE_OverProtect_SacredSoil) && HasEffectAny(SCH.Buffs.SacredSoil)))
-                       return SCH.SacredSoil;
+                        return SCH.SacredSoil;
                 }
 
                 if (actionID is Panhaima && IsEnabled(CustomComboPreset.SGE_OverProtect_Panhaima) &&
