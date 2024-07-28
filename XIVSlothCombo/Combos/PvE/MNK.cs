@@ -597,7 +597,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (actionID is Bootshine or LeapingOpo)
                     {
-                        if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist))
+                        if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.PerfectBalance))
                         {
                             if (Gauge.OpoOpoFury == 0)
                             {
@@ -626,7 +626,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (actionID is TrueStrike or RisingRaptor)
                     {
-                        if (HasEffect(Buffs.RaptorForm))
+                        if (HasEffect(Buffs.RaptorForm) || HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.PerfectBalance))
                         {
                             if (Gauge.RaptorFury == 0)
                             {
@@ -655,7 +655,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (actionID is SnapPunch or PouncingCoeurl)
                     {
-                        if (HasEffect(Buffs.CoeurlForm))
+                        if (HasEffect(Buffs.CoeurlForm) || HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.PerfectBalance))
                         {
                             if (Gauge.CoeurlFury == 0)
                             {
