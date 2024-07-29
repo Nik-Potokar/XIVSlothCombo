@@ -481,7 +481,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     else if (OpenerStep == 34) actionID = Veraero3;
 
                     if (CustomComboFunctions.WasLastAction(ContreSixte) && OpenerStep == 35) CurrentState = OpenerState.OpenerFinished;
-                    else if (OpenerStep == 37) actionID = ContreSixte;
+                    else if (OpenerStep == 35) actionID = ContreSixte;
 
                     if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                         CurrentState = OpenerState.FailedOpener;
