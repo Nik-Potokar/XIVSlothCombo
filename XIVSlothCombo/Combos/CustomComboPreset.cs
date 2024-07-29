@@ -1097,10 +1097,10 @@ namespace XIVSlothCombo.Combos
         #endregion
         // Last value = 5015
 
-        #region Stalwart Soul (Multi Target) Combo
+        #region Advanced Multi Target Combo
 
-        [ReplaceSkill(DRK.StalwartSoul)]
-        [CustomComboInfo("Stalwart Soul Combo", "Replace Stalwart Soul with its combo chain.", DRK.JobID)]
+        [ReplaceSkill(DRK.Unleash)]
+        [CustomComboInfo("Advanced Multi Target Combo", "Replace Unleash with its combo chain.", DRK.JobID)]
         DRK_AoE_Combo = 5016,
 
         #region Buff Options

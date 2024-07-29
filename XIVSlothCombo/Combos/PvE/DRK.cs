@@ -275,14 +275,14 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DRK_StalwartSoul_Combo : CustomCombo
+        internal class DRK_AoE_Combo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_AoE_Combo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 // Bail if not looking at the replaced action
-                if (actionID != StalwartSoul) return actionID;
+                if (actionID != Unleash) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
                 var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_AoE_LivingDeadThreshold);
