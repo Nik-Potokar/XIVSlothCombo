@@ -2150,12 +2150,8 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region SAMURAI
 
-                
-
-
-            
             //Fillers
-            if (preset == CustomComboPreset.SAM_ST_FillerCombos)
+            if (preset == CustomComboPreset.SAM_ST_FillerCombos && enabled || preset == CustomComboPreset.SAM_ST_SimpleMode && enabled)
             {
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.14+", "2 Filler GCDs", 0);
                 UserConfig.DrawHorizontalRadioButton(SAM.Config.SAM_FillerCombo, "2.06 - 2.08", "3 Filler GCDs. \nWill use Yaten into Enpi as part of filler and Gyoten back into Range.\nHakaze will be delayed by half a GCD after Enpi.", 1);
