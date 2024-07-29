@@ -3237,7 +3237,7 @@ namespace XIVSlothCombo.Combos
         #region Simple AoE
 
         [ReplaceSkill(SAM.Fuga, SAM.Fuko)]
-        [ConflictingCombos(SAM_AOE_AdvancedMode)]
+        [ConflictingCombos(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Mode - AoE", "Replaces Fugo/Fuko with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
         SAM_AoE_SimpleMode = 15102,
 
@@ -3248,51 +3248,51 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(SAM.Fuga, SAM.Fuko)]
         [ConflictingCombos(SAM_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Fuga/Fuko with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", SAM.JobID)]
-        SAM_AOE_AdvancedMode = 15103,
+        SAM_AoE_AdvancedMode = 15103,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [ConflictingCombos(SAM_AoE_OkaCombo_TwoTarget)]
         [CustomComboInfo("Oka Combo", "Adds Oka combo to the rotation.", SAM.JobID)]
         SAM_AoE_Oka = 15104,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Kyuten", "Adds Kyuten to the rotation.", SAM.JobID)]
         SAM_AoE_Kyuten = 15105,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Iaijutsu", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to the rotation.", SAM.JobID)]
         SAM_AoE_TenkaGoken = 15107,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Ikishoten", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
         SAM_AOE_CDs_Ikishoten = 15108,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Ogi Namikiri", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to the rotation.", SAM.JobID)]
         SAM_AoE_OgiNamikiri = 15109,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Zanshin", "Adds Zanshin to the rotation.", SAM.JobID)]
         SAM_AoE_Zanshin = 15110,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Shoha", "Adds Shoha when you have 3 meditation stacks.", SAM.JobID)]
         SAM_AoE_Shoha = 15111,
 
         [ConflictingCombos(SAM_Kyuten_Shoha_Guren)]
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Guren", "Adds Guren to the rotation.", SAM.JobID)]
         SAM_AoE_Guren = 15112,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Hagakure", "Adds Hagakure to the rotation when there are three Sen.", SAM.JobID)]
         SAM_AoE_Hagakure = 15113,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Meikyo Shisui", "Adds Meikyo Shisui to the rotation.", SAM.JobID)]
         SAM_AoE_MeikyoShisui = 15114,
 
-        [ParentCombo(SAM_AOE_AdvancedMode)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID)]
         SAM_AoE_ComboHeals = 15199,
 
@@ -3369,12 +3369,12 @@ namespace XIVSlothCombo.Combos
         #region variant 
 
         [Variant]
-        [VariantParent(SAM_ST_AdvancedMode, SAM_AOE_AdvancedMode)]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SAM.JobID)]
         SAM_Variant_Cure = 15300,
 
         [Variant]
-        [VariantParent(SAM_ST_AdvancedMode, SAM_AOE_AdvancedMode)]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
         SAM_Variant_Rampart = 15301,
 
