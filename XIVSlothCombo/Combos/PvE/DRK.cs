@@ -185,7 +185,8 @@ namespace XIVSlothCombo.Combos.PvE
                         // Delirium
                         if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
                             && IsOffCooldown(BloodWeapon)
-                            && LevelChecked(BloodWeapon))
+                            && LevelChecked(BloodWeapon)
+                            && CombatEngageDuration().TotalSeconds > 5)
                             return OriginalHook(Delirium);
 
                         if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
@@ -205,12 +206,16 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Shadowbringer
-                            // todo: simplify this to make it easier to read
                             if (LevelChecked(Shadowbringer)
                                 && IsEnabled(CustomComboPreset.DRK_ST_CDs_Shadowbringer))
                             {
-                                if ((GetRemainingCharges(Shadowbringer) > 0 && IsNotEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)) || // Dump
-                                    (IsEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst) && GetRemainingCharges(Shadowbringer) > 0 && gauge.ShadowTimeRemaining > 1 && IsOnCooldown(Delirium))) // Burst
+                                if ((GetRemainingCharges(Shadowbringer) > 0
+                                     && IsNotEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)) // Dump
+                                    ||
+                                    (IsEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)
+                                     && GetRemainingCharges(Shadowbringer) > 0
+                                     && gauge.ShadowTimeRemaining > 1
+                                     && IsOnCooldown(Delirium))) // Burst
                                     return Shadowbringer;
                             }
 
