@@ -381,8 +381,17 @@ namespace XIVSlothCombo.Combos.PvE
                      CombatEngageDuration().TotalSeconds > 20))
                     return Flourish;
 
+                if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish_ForcedTripleWeave) &&
+                    (HasEffect(Buffs.ThreeFoldFanDance) ||
+                     HasEffect(Buffs.FourFoldFanDance)) &&
+                     CombatEngageDuration().TotalSeconds > 20 &&
+                     GetBuffRemainingTime(Buffs.TechnicalFinish) <= 17)
+                {
+                    return HasEffect(Buffs.FourFoldFanDance) ? FanDance4 : FanDance3;
+                }
+
                 // ST Interrupt
-                if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
                     CanInterruptEnemy() &&
                     ActionReady(All.HeadGraze) &&
                     !HasEffect(Buffs.TechnicalFinish))

@@ -890,8 +890,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 7)]
         DNC_ST_Simple_Flourish = 4056,
 
+        [ParentCombo(DNC_ST_Simple_Flourish)]
+        [CustomComboInfo("Force Triple Weave for alignment", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." + "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD.", DNC.JobID, 1)]
+        DNC_ST_Simple_Flourish_ForcedTripleWeave = 4088,
+
         [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped." +
+        [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped and under the effect of Flourishing Symmetry or Flourishing Flow." +
                                                    "\nWeaves feathers where possible during Technical Finish." +
                                                    "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
                                                    "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 8)]
@@ -967,7 +971,7 @@ namespace XIVSlothCombo.Combos
         DNC_AoE_Simple_Flourish = 4076,
 
         [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Feathers Option", "Expends a feather in the next available weave window when capped." +
+        [CustomComboInfo("Simple AoE Feathers Option", "Expends a feather in the next available weave window when capped and under the effect of Flourishing Symmetry or Flourishing Flow." +
        "\nWeaves feathers where possible during Technical Finish." +
        "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 7)]
         DNC_AoE_Simple_Feathers = 4077,
@@ -1012,7 +1016,7 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        // Last value = 4086
+        // Last value = 4088
 
         #endregion
 
