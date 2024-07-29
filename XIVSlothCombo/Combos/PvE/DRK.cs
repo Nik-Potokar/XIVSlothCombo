@@ -84,9 +84,9 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static readonly UserInt
-                DRK_ST_ManaSpenderPooling = new("DRK_ST_ManaSpenderPooling"),
-                DRK_ST_LivingDeadThreshold = new("DRK_ST_LivingDeadThreshold"),
-                DRK_AoE_LivingDeadThreshold = new("DRK_AoE_LivingDeadThreshold"),
+                DRK_ST_ManaSpenderPooling = new("DRK_ST_ManaSpenderPooling", 3000),
+                DRK_ST_LivingDeadThreshold = new("DRK_ST_LivingDeadThreshold", 10),
+                DRK_AoE_LivingDeadThreshold = new("DRK_AoE_LivingDeadThreshold", 40),
                 DRK_VariantCure = new("DRKVariantCure");
         }
 
