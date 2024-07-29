@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -82,11 +83,11 @@ namespace XIVSlothCombo.Combos.PvE
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public static class Config
         {
-            public const string
-                DRK_ST_ManaSpenderPooling = "DRK_ST_ManaSpenderPooling",
-                DRK_ST_LivingDeadThreshold = "DRK_ST_LivingDeadThreshold",
-                DRK_AoE_LivingDeadThreshold = "DRK_AoE_LivingDeadThreshold",
-                DRK_VariantCure = "DRKVariantCure";
+            public static readonly UserInt
+                DRK_ST_ManaSpenderPooling = new("DRK_ST_ManaSpenderPooling"),
+                DRK_ST_LivingDeadThreshold = new("DRK_ST_LivingDeadThreshold"),
+                DRK_AoE_LivingDeadThreshold = new("DRK_AoE_LivingDeadThreshold"),
+                DRK_VariantCure = new("DRKVariantCure");
         }
 
         internal class DRK_ST_Combo : CustomCombo
@@ -99,8 +100,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID != HardSlash) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
-                var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_ManaSpenderPooling);
-                var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_LivingDeadThreshold);
+                var mpRemaining = Config.DRK_ST_ManaSpenderPooling;
+                var hpRemaining = Config.DRK_ST_LivingDeadThreshold;
 
                 // Variant Cure - Heal: Priority to save your life
                 if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
@@ -290,7 +291,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID != Unleash) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
-                var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_AoE_LivingDeadThreshold);
+                var hpRemaining = Config.DRK_AoE_LivingDeadThreshold;
 
                 // Variant Cure - Heal: Priority to save your life
                 if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
