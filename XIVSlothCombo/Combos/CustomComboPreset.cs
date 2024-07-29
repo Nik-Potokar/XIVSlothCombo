@@ -1834,11 +1834,6 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
-        [ReplaceSkill([MNK.Bootshine])]
-        [CustomComboInfo("Basic ST Rotation", "Basic Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_BallHandlers)]
-        MNK_ST_BasicMode = 9002,
-        
         [ReplaceSkill([MNK.ArmOfTheDestroyer])]
         [CustomComboInfo("AOE Rotation", "Basic Monk AOE Combo on one button", MNK.JobID)]
         MNK_AOE_BasicMode = 9003,
@@ -1850,7 +1845,7 @@ namespace XIVSlothCombo.Combos
         #region Monk Advanced ST
         [ReplaceSkill([MNK.Bootshine])]
         [CustomComboInfo("Custom ST Rotation", "Advanced Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_ST_BasicMode, MNK_ST_BallHandlers)]
+        [ConflictingCombos(MNK_ST_BallHandlers)]
         MNK_ST_AdvancedMode = 9005,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
@@ -1905,12 +1900,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", MNK.JobID)]
         MNK_ST_ComboHeals = 9018,
 
-
-
         #endregion
-        // Last value = 9018
 
-        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_BasicMode)]
+        [ConflictingCombos(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Ball Handlers", "Replace core rotation skills with single button, depending on current balls.", MNK.JobID)]
         MNK_ST_BallHandlers = 9019,
 
