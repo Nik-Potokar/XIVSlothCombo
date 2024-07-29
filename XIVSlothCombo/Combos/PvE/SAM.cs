@@ -288,13 +288,12 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-
                     //Meikyo Features
                     if (!HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
                         ((threeSeal && CanWeave(actionID) &&
                         (WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha) || WasLastWeaponskill(Yukikaze))) || !InCombat()) &&
                         ((TraitLevelChecked(Traits.EnhancedHissatsu) && (GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei))) ||
-                        (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei)))))
+                        (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei) || !LevelChecked(Senei)))))
                         return MeikyoShisui;
 
                     if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
@@ -550,7 +549,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ((threeSeal && CanWeave(actionID) &&
                             (WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha) || WasLastWeaponskill(Yukikaze))) || !InCombat()) &&
                             ((TraitLevelChecked(Traits.EnhancedHissatsu) && (GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei))) ||
-                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 65 and > 50) || ActionReady(Senei)))))
+                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei) || !LevelChecked(Senei)))))
                             return MeikyoShisui;
 
                         if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
