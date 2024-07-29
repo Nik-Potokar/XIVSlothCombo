@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -180,6 +181,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool twoSeal = OriginalHook(Iaijutsu) is TenkaGoken or TendoGoken;
                 bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka or TendoSetsugekka;
                 float enemyHP = GetTargetHPPercent();
+                float GCD = GetCooldown(OriginalHook(Hakaze)).CooldownTotal;
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 float kenkiOvercap = Config.SAM_ST_KenkiOvercapAmount;
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
@@ -302,9 +304,10 @@ namespace XIVSlothCombo.Combos.PvE
                         //Meikyo Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
                             !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
-                            ((threeSeal && CanWeave(actionID)) || !InCombat()) &&
-                            ((TraitLevelChecked(Traits.EnhancedHissatsu) && ActionReady(Senei)) ||
-                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || ActionReady(Senei)))))
+                            ((threeSeal && CanWeave(actionID) && 
+                            (WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha) || WasLastWeaponskill(Yukikaze))) || !InCombat()) &&
+                            ((TraitLevelChecked(Traits.EnhancedHissatsu) && (GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei))) ||
+                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei)))))
                             return MeikyoShisui;
 
                         if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
