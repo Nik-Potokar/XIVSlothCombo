@@ -1006,10 +1006,10 @@ namespace XIVSlothCombo.Combos
 
         #region DARK KNIGHT
 
-        #region Souleater (Single Target) Combo
+        #region Advanced Single Target Combo
 
-        [ReplaceSkill(DRK.Souleater)]
-        [CustomComboInfo("Souleater Combo", "Replace Souleater with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Dark Knight)", DRK.JobID)]
+        [ReplaceSkill(DRK.HardSlash)]
+        [CustomComboInfo("Advanced Single Target Combo", "Replace Hard Slash with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Advanced Dark Knight)", DRK.JobID)]
         DRK_ST_Combo = 5001,
 
         #region Buff Options

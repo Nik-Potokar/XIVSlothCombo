@@ -89,16 +89,14 @@ namespace XIVSlothCombo.Combos.PvE
                 DRK_VariantCure = "DRKVariantCure";
         }
 
-        // todo: chop down very long ifs
-
-        internal class DRK_Souleater_Combo : CustomCombo
+        internal class DRK_ST_Combo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_ST_Combo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 // Bail if not looking at the replaced action
-                if (actionID != Souleater) return actionID;
+                if (actionID != HardSlash) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
                 var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_ManaSpenderPooling);
