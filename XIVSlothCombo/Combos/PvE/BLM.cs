@@ -185,6 +185,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return Despair;
                         }
 
+                        if (curMp == 0 && FlareStar.LevelChecked() && gauge.AstralSoulStacks == 6)
+                            return FlareStar;
+
                         if (Fire4.LevelChecked())
                         {
                             if (gcdsInTimer > 1 && curMp >= MP.FireI)
