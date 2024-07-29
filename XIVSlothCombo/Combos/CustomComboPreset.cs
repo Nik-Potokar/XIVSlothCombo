@@ -2720,7 +2720,7 @@ namespace XIVSlothCombo.Combos
         RDM_ST_DPS = 13000,
 
         [ParentCombo(RDM_ST_DPS)]
-        [CustomComboInfo("Balance Opener Option [Lv.100]", "Replaces Jolt with the Balance opener ending with Resolution.\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
+        [CustomComboInfo("Balance Opener Option", "Replaces Jolt with the Balance opener.\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
         RDM_Balance_Opener = 13110,
 
         [ParentCombo(RDM_ST_DPS)]
