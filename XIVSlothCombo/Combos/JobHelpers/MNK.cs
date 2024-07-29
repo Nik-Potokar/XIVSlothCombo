@@ -133,7 +133,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return true;
                 }
 
-                if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 1) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
                 else if (OpenerStep == 1) actionID = PerfectBalance;
 
                 if (CustomComboFunctions.WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
@@ -225,7 +225,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return true;
                 }
 
-                if (CustomComboFunctions.WasLastAction(PerfectBalance) && OpenerStep == 1) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
                 else if (OpenerStep == 1) actionID = PerfectBalance;
 
                 if (CustomComboFunctions.WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
