@@ -8,6 +8,7 @@ using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -118,10 +119,9 @@ namespace XIVSlothCombo.Combos.PvE
             internal static MNKOpenerLogic MNKOpener = new();
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                bool canWeave = CanWeave(actionID, 0.55);
+                bool canWeave = CanWeave(actionID, 0.5);
                 bool inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
                 bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
-                bool isEvenWindow = GetCooldownChargeRemainingTime(Brotherhood) > 60;
 
                 if (actionID is Bootshine or LeapingOpo)
                 {
@@ -142,8 +142,36 @@ namespace XIVSlothCombo.Combos.PvE
                     // OGCDs
                     if (inCombat && canWeave)
                     {
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
+                        {
+                            if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
+                                && GetCooldownRemainingTime(RiddleOfFire) < 7
+                                && GetCooldownRemainingTime(Brotherhood) < 7)
+                            {
+                                return PerfectBalance;
+                            }
+                            else
+                            {
+                                if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)) && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8)
+                                {
+                                    return PerfectBalance;
+                                }
+                            }
+                        }
+
                         if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                         {
+                            if (level >= Levels.Brotherhood
+                                && !IsOnCooldown(Brotherhood))
+                            {
+                                return Brotherhood;
+                            }
+
+                            if (level >= Levels.RiddleOfFire
+                                && !IsOnCooldown(RiddleOfFire))
+                            {
+                                return RiddleOfFire;
+                            }
 
                             if (IsEnabled(CustomComboPreset.MNK_STUseROW)
                                 && level >= Levels.RiddleOfWind
@@ -153,69 +181,22 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
+
                         if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
                             && Gauge.Chakra >= 5
                             && level >= Levels.SteelPeak)
                         {
                             return OriginalHook(Meditation);
                         }
-
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                            return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                            return All.Bloodbath;
-
-                        
-
-                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
-                        {
-                            Svc.Log.Debug($"Even Window: {isEvenWindow}");
-                            Svc.Log.Debug($"Last Weaponskill: {WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)}");
-                            Svc.Log.Debug($"Cooldown Check: {GetCooldownRemainingTime(RiddleOfFire) < 7}");
-                            if (isEvenWindow)
-                            {
-                                if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
-                                    && GetCooldownRemainingTime(RiddleOfFire) < 7)
-                                {
-                                    return PerfectBalance;
-                                }
-                            }
-                            else
-                            {
-                                if (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick) && HasEffect(Buffs.RiddleOfFire))
-                                {
-                                    return PerfectBalance;
-                                }
-                            }
-                        }
-
-                        if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
-                        {
-                            if (!isEvenWindow || HasEffect(Buffs.PerfectBalance))
-                            {
-                                if (level >= Levels.RiddleOfFire
-                                        && !IsOnCooldown(RiddleOfFire))
-                                {
-                                    return RiddleOfFire;
-                                }
-
-                                if (level >= Levels.Brotherhood
-                                    && !IsOnCooldown(Brotherhood))
-                                {
-                                    return Brotherhood;
-                                }
-                            }
-                        }
                     }
 
                     // GCDs
                     if (inCombat)
                     {
-                        if (WasLastAction(MasterfulBlitz))
-                        {
-                            return FormShift;
-                        }
-
                         if (HasEffect(Buffs.FormlessFist))
                         {
                             return Gauge.OpoOpoFury == 0 ? OriginalHook(DragonKick) : OriginalHook(Bootshine);
@@ -224,7 +205,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
                             // Masterful Blitz
-                            if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                            if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.RiddleOfFire) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                             {
                                 return OriginalHook(MasterfulBlitz);
                             }
@@ -275,7 +256,7 @@ namespace XIVSlothCombo.Combos.PvE
                             && HasEffect(Buffs.FiresRumination)
                             && !HasEffect(Buffs.PerfectBalance)
                             && !HasEffect(Buffs.FormlessFist)
-                            && (isEvenWindow || !isEvenWindow && WasLastAction(LeapingOpo))
+                            && (WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
                             && level >= Levels.FiresReply)
                         {
                             return FiresReply;
