@@ -187,7 +187,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
                             && IsOffCooldown(BloodWeapon)
                             && LevelChecked(BloodWeapon)
-                            && CombatEngageDuration().TotalSeconds > 5)
+                            && ((CombatEngageDuration().TotalSeconds < 10 // Opening Delirium
+                                    && WasLastWeaponskill(Souleater))
+                                || CombatEngageDuration().TotalSeconds > 10)) // Regular Delirium
                             return OriginalHook(Delirium);
 
                         if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
