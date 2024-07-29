@@ -550,7 +550,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ((threeSeal && CanWeave(actionID) &&
                             (WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha) || WasLastWeaponskill(Yukikaze))) || !InCombat()) &&
                             ((TraitLevelChecked(Traits.EnhancedHissatsu) && (GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei))) ||
-                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei)))))
+                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 65 and > 50) || ActionReady(Senei)))))
                             return MeikyoShisui;
 
                         if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
@@ -600,7 +600,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                    LevelChecked(Shinten) && gauge.Kenki >= 50 &&
+                                    LevelChecked(Shinten) && gauge.Kenki > 50 &&
                                     !HasEffect(Buffs.ZanshinReady) &&
                                     ((gauge.Kenki >= kenkiOvercap) ||
                                     (enemyHP <= shintenTreshhold)))
