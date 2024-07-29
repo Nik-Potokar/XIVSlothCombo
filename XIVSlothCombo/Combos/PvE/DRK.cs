@@ -192,7 +192,11 @@ namespace XIVSlothCombo.Combos.PvE
                                 || CombatEngageDuration().TotalSeconds > 10)) // Regular Delirium
                             return OriginalHook(Delirium);
 
-                        if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
+                        if (IsEnabled(CustomComboPreset.DRK_ST_CDs)
+                            && ((CombatEngageDuration().TotalSeconds < 10 // Opening CDs
+                                 && !HasEffect(Buffs.Scorn)
+                                 && IsOnCooldown(LivingShadow))
+                                || CombatEngageDuration().TotalSeconds > 10)) // Regular CDs
                         {
                             // Salted Earth
                             if (IsEnabled(CustomComboPreset.DRK_ST_CDs_SaltedEarth))
