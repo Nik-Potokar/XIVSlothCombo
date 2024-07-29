@@ -207,7 +207,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return SaltedEarth;
                                 //Cast Salt and Darkness
                                 if (HasEffect(Buffs.SaltedEarth)
-                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
+                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 7
                                  && ActionReady(SaltAndDarkness))
                                     return OriginalHook(SaltAndDarkness);
                             }
