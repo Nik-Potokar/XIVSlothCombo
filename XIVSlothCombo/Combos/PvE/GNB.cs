@@ -2,6 +2,7 @@ using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
@@ -9,7 +10,7 @@ using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
 {
-    internal static class GNB
+    internal class GNB
     {
         public const byte JobID = 37;
 
@@ -76,6 +77,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal class GNB_ST_MainCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_ST_MainCombo;
+            internal static GNBOpenerLogic GNBOpener = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -84,6 +86,13 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<GNBGauge>();
                     var quarterWeave = GetCooldownRemainingTime(actionID) < 1 && GetCooldownRemainingTime(actionID) > 0.6;
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
+                    
+                    // Opener for VPR
+                    if (IsEnabled(CustomComboPreset.GNB_ST_Opener))
+                    {
+                        if (GNBOpener.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
 
                     // Variant Cure
                     if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))

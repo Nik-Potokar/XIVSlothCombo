@@ -1428,61 +1428,67 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(GNB.KeenEdge)]
         [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. **2.5sks ONLY**", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
+        
+        #region Level 100 Balance Opener
+        [ParentCombo(GNB_ST_MainCombo)]
+        [CustomComboInfo("Level 100 Balance Opener", "Adds the Balance opener for 2.50GCD to the rotation.", GNB.JobID)]
+        GNB_ST_Opener = 7002,
+        #endregion
 
         #region Reign Combo
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Reign combo on Main Combo Option", "Adds Reign combo to the main combo.", GNB.JobID)]
-        GNB_ST_Reign = 7002,
+        GNB_ST_Reign = 7003,
         #endregion
 
         #region Gnashing Fang
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Gnashing Fang and Continuation on Main Combo Option", "Adds Gnashing Fang to the main combo. Gnashing Fang must be started manually and the combo will finish it off.", GNB.JobID)]
-        GNB_ST_Gnashing = 7003,
+        GNB_ST_Gnashing = 7004,
 
         [ParentCombo(GNB_ST_Gnashing)]
         [CustomComboInfo("Gnashing Fang Starter Option", "Begins Gnashing Fang to the main combo.", GNB.JobID)]
-        GNB_ST_GnashingFang_Starter = 7004,
+        GNB_ST_GnashingFang_Starter = 7005,
         #endregion
 
         #region Cooldowns
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Cooldowns on Main Combo Option", "Adds various cooldowns to the main combo when under No Mercy or when No Mercy is on cooldown.", GNB.JobID)]
-        GNB_ST_MainCombo_CooldownsGroup = 7005,
+        GNB_ST_MainCombo_CooldownsGroup = 7006,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Double Down on Main Combo Option", "Adds Double Down to the main combo when under No Mercy buff.", GNB.JobID)]
-        GNB_ST_DoubleDown = 7006,
+        GNB_ST_DoubleDown = 7007,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Danger Zone/Blasting Zone on Main Combo Option", "Adds Danger Zone/Blasting Zone to the main combo.", GNB.JobID)]
-        GNB_ST_BlastingZone = 7007,
+        GNB_ST_BlastingZone = 7008,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Bloodfest on Main Combo Option", "Adds Bloodfest to the main combo when ammo is 0.", GNB.JobID)]
-        GNB_ST_Bloodfest = 7008,
+        GNB_ST_Bloodfest = 7009,
 
         [ConflictingCombos(GNB_NoMercy_Cooldowns)]
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("No Mercy on Main Combo Option", "Adds No Mercy to the main combo when at full ammo.", GNB.JobID)]
-        GNB_ST_NoMercy = 7009,
+        GNB_ST_NoMercy = 7010,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Bow Shock on Main Combo Option", "Adds Bow Shock to the main combo.", GNB.JobID)]
-        GNB_ST_BowShock = 7010,
+        GNB_ST_BowShock = 7011,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Sonic Break on Main Combo Option", "Adds Sonic Break to the main combo.", GNB.JobID)]
-        GNB_ST_SonicBreak = 7011,
+        GNB_ST_SonicBreak = 7012,
 
         [ParentCombo(GNB_ST_MainCombo_CooldownsGroup)]
         [CustomComboInfo("Burst Strike on Main Combo Option", "Adds Burst Strike and Hypervelocity (when available) to the main combo when under No Mercy and Gnashing Fang is over.", GNB.JobID)]
-        GNB_ST_BurstStrike = 7012,
+        GNB_ST_BurstStrike = 7013,
         #endregion
 
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Lightning Shot Uptime Option", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID)]
-        GNB_ST_RangedUptime = 7013,
+        GNB_ST_RangedUptime = 7014,
         #endregion
 
         #region Gnashing Fang
