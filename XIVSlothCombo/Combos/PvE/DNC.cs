@@ -381,8 +381,19 @@ namespace XIVSlothCombo.Combos.PvE
                      CombatEngageDuration().TotalSeconds > 20))
                     return Flourish;
 
+                if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Flourish_ForcedTripleWeave) &&
+                    (HasEffect(Buffs.ThreeFoldFanDance) ||
+                     HasEffect(Buffs.FourFoldFanDance)) &&
+                     CombatEngageDuration().TotalSeconds > 20 &&
+                     HasEffect(Buffs.TechnicalFinish) && 
+                     GetCooldownRemainingTime(Flourish) > 58)
+                {
+                    if (HasEffect(Buffs.ThreeFoldFanDance) && CanDelayedWeave(actionID)) return FanDance3; 
+                    else if (HasEffect(Buffs.FourFoldFanDance)) return FanDance4;
+                }
+
                 // ST Interrupt
-                if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Simple_Interrupt) &&
                     CanInterruptEnemy() &&
                     ActionReady(All.HeadGraze) &&
                     !HasEffect(Buffs.TechnicalFinish))
@@ -425,8 +436,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                             // FD1 Pooling
                             if (gauge.Feathers > 3 &&
-                                (GetCooldownRemainingTime(TechnicalStep) > 2.5f ||
-                                 IsOffCooldown(TechnicalStep)))
+                                (HasEffect(Buffs.SilkenSymmetry) ||
+                                 HasEffect(Buffs.SilkenFlow))
+                                )
+
                                 return FanDance1;
                         }
 
@@ -496,9 +509,11 @@ namespace XIVSlothCombo.Combos.PvE
                 // ST Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_ST_Simple_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= 80 &&
+                    gauge.Esprit >= 50 &&
                     ActionReady(SaberDance))
-                    return SaberDance;
+                    return LevelChecked(DanceOfTheDawn) && HasEffect(Buffs.DanceOfTheDawnReady)
+                        ? OriginalHook(DanceOfTheDawn)
+                        : SaberDance;
 
                 if (HasEffect(Buffs.FlourishingStarfall))
                     return StarfallDance;
@@ -564,7 +579,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // ST Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_ST_FanDanceOvercap) &&
-                            LevelChecked(FanDance1) && gauge.Feathers is 4)
+                            LevelChecked(FanDance1) && gauge.Feathers is 4 && (HasEffect(Buffs.SilkenSymmetry) ||
+                            HasEffect(Buffs.SilkenFlow)))
                             return FanDance1;
 
                         // ST Fan Dance 3/4 on combo
@@ -716,8 +732,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 // FD2 Pooling
                                 if (gauge.Feathers > 3 &&
-                                    (GetCooldownRemainingTime(TechnicalStep) > 2.5f ||
-                                     IsOffCooldown(TechnicalStep)))
+                                    (HasEffect(Buffs.SilkenSymmetry) ||
+                                     HasEffect(Buffs.SilkenFlow)))
                                     return FanDance2;
                             }
 
@@ -797,7 +813,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // AoE Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_AoE_Simple_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= 80 &&
+                    gauge.Esprit >= 50 &&
                     ActionReady(SaberDance))
                     return SaberDance;
 
@@ -865,7 +881,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         // AoE Fan Dance overcap protection
                         if (IsEnabled(CustomComboPreset.DNC_AoE_FanDanceOvercap) &&
-                            LevelChecked(FanDance2) && gauge.Feathers is 4)
+                            LevelChecked(FanDance2) && gauge.Feathers is 4 && 
+                            (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.SilkenFlow)))
                             return FanDance2;
 
                         // AoE Fan Dance 3/4 on combo
