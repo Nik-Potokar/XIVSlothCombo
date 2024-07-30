@@ -134,6 +134,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.MNK_STUseMeditation)
                         && (!inCombat || !InMeleeRange())
                         && Gauge.Chakra < 5
+                        && !HasEffect(Buffs.RiddleOfFire)
                         && LevelChecked(Meditation))
                     {
                         return OriginalHook(Meditation);
@@ -150,12 +151,12 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 return PerfectBalance;
                             }
-                            else
+                            else if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)) 
+                                && HasEffect(Buffs.RiddleOfFire) 
+                                && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8 
+                                && !HasEffect(Buffs.FiresRumination))
                             {
-                                if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick)) && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 8)
-                                {
-                                    return PerfectBalance;
-                                }
+                                return PerfectBalance;
                             }
                         }
 
@@ -197,6 +198,21 @@ namespace XIVSlothCombo.Combos.PvE
                     // GCDs
                     if (inCombat)
                     {
+                        // Ensure usage if buff is almost depleted.
+                        if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply)
+                            && HasEffect(Buffs.FiresRumination)
+                            && GetBuffRemainingTime(Buffs.FiresRumination) < 4)
+                        {
+                            return FiresReply;
+                        }
+
+                        if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply)
+                            && HasEffect(Buffs.WindsRumination)
+                            && GetBuffRemainingTime(Buffs.WindsRumination) < 4)
+                        {
+                            return WindsReply;
+                        }
+
                         if (HasEffect(Buffs.FormlessFist))
                         {
                             return Gauge.OpoOpoFury == 0 ? OriginalHook(DragonKick) : OriginalHook(Bootshine);
