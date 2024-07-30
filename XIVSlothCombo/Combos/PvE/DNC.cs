@@ -10,6 +10,8 @@ namespace XIVSlothCombo.Combos.PvE
     {
         public const byte JobID = 38;
 
+        #region Actions
+
         public const uint
             // Single Target
             Cascade = 15989,
@@ -51,6 +53,8 @@ namespace XIVSlothCombo.Combos.PvE
             LastDance = 36983,
             FinishingMove = 36984,
             DanceOfTheDawn = 36985;
+
+        #endregion
 
         public static class Buffs
         {
