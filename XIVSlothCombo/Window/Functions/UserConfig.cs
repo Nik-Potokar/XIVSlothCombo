@@ -2396,21 +2396,28 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
             }
 
-            if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
-                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
-
-            if (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
-                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
-
-            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash)
+            if (preset == CustomComboPreset.VPR_ST_NoxiousGnash && enabled)
             {
-                UserConfig.DrawRoundedSliderFloat(0, 20, VPR.Config.VPR_ST_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(15, 30, VPR.Config.VPR_ST_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
             }
 
             if (preset == CustomComboPreset.VPR_AoE_NoxiousGnash)
             {
-                UserConfig.DrawRoundedSliderFloat(0, 20, VPR.Config.VPR_AoE_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
+                UserConfig.DrawRoundedSliderFloat(15, 30, VPR.Config.VPR_AoE_NoxiousDebuffRefresh, "Seconds remaining before refreshing Noxious Gnash.", digits: 1);
             }
+
+            if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
+            {
+                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+                UserConfig.DrawSliderInt(0, 5, VPR.Config.VPR_ST_UncoiledFury_Threshold, "Set a HP% Threshold to use all charges.");
+            }
+
+            if (preset == CustomComboPreset.VPR_AoE_UncoiledFury && enabled)
+            {
+                UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+                UserConfig.DrawSliderInt(0, 5, VPR.Config.VPR_AoE_UncoiledFury_Threshold, "Set a HP% Threshold to use all charges.");
+            }
+
 
             if (preset is CustomComboPreset.VPR_ST_Reawaken)
             {
@@ -2437,7 +2444,7 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.VPR_ReawakenLegacy && enabled)
             {
                 UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Reawaken", "Replaces Reawaken with Full Generation - Legacy combo.", 0);
-                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Dread Fangs", "Replaces Dread Fangs with Full Generation - Legacy combo.", 1);
+                UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Steel Fangs", "Replaces Steel Fangs with Full Generation - Legacy combo.", 1);
             }
 
             #endregion

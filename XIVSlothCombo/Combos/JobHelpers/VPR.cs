@@ -11,7 +11,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         private static bool HasCooldowns()
         {
-            if (CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)
+            if (CustomComboFunctions.GetRemainingCharges(Vicewinder) < 2)
                 return false;
 
             if (!CustomComboFunctions.ActionReady(SerpentsIre))
@@ -63,7 +63,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool DoPrePullSteps(ref uint actionID)
         {
-            if (!LevelChecked) 
+            if (!LevelChecked)
                 return false;
 
             if (CanOpener && PrePullStep == 0)
@@ -78,8 +78,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (CustomComboFunctions.WasLastAction(DreadFangs) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
-                else if (PrePullStep == 1) actionID = DreadFangs;
+                if (CustomComboFunctions.WasLastAction(ReavingFangs) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+                else if (PrePullStep == 1) actionID = ReavingFangs;
 
                 if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
                     CurrentState = OpenerState.FailedOpener;
@@ -103,8 +103,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(SwiftskinsSting) && OpenerStep == 2) OpenerStep++;
                 else if (OpenerStep == 2) actionID = SwiftskinsSting;
 
-                if (CustomComboFunctions.WasLastAction(Dreadwinder) && OpenerStep == 3) OpenerStep++;
-                else if (OpenerStep == 3) actionID = Dreadwinder;
+                if (CustomComboFunctions.WasLastAction(Vicewinder) && OpenerStep == 3) OpenerStep++;
+                else if (OpenerStep == 3) actionID = Vicewinder;
 
                 if (CustomComboFunctions.WasLastAction(HuntersCoil) && OpenerStep == 4) OpenerStep++;
                 else if (OpenerStep == 4) actionID = HuntersCoil;
@@ -178,8 +178,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(UncoiledTwinblood) && OpenerStep == 27) OpenerStep++;
                 else if (OpenerStep == 27) actionID = UncoiledTwinblood;
 
-                if (CustomComboFunctions.WasLastAction(Dreadwinder) && OpenerStep == 28) OpenerStep++;
-                else if (OpenerStep == 28) actionID = Dreadwinder;
+                if (CustomComboFunctions.WasLastAction(Vicewinder) && OpenerStep == 28) OpenerStep++;
+                else if (OpenerStep == 28) actionID = Vicewinder;
 
                 if (CustomComboFunctions.WasLastAction(UncoiledFury) && OpenerStep == 29) OpenerStep++;
                 else if (OpenerStep == 29) actionID = UncoiledFury;
@@ -212,8 +212,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == SerpentsIre && CustomComboFunctions.IsOnCooldown(SerpentsIre)) ||
-                    (actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                { 
+                    (actionID == Vicewinder && CustomComboFunctions.GetRemainingCharges(Vicewinder) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
+                {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
                 }
@@ -230,7 +230,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public bool DoFullOpener(ref uint actionID)
         {
-            if (!LevelChecked) 
+            if (!LevelChecked)
                 return false;
 
             if (CurrentState == OpenerState.PrePull)
