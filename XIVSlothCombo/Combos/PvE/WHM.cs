@@ -360,11 +360,10 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3)
-                        && LevelChecked(Cure3)
+                        && ActionReady(Cure3)
                         && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP
                             || HasEffect(Buffs.ThinAir)))
                         return Cure3;
-
                 }
 
                 return actionID;
