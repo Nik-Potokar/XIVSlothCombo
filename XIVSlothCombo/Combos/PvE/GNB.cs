@@ -87,7 +87,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var quarterWeave = GetCooldownRemainingTime(actionID) < 1 && GetCooldownRemainingTime(actionID) > 0.6;
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; // GCD is 2.5sks only
                     
-                    // Opener for VPR
+                    // Opener for GNB
                     if (IsEnabled(CustomComboPreset.GNB_ST_Opener))
                     {
                         if (GNBOpener.DoFullOpener(ref actionID))
