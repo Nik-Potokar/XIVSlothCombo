@@ -323,6 +323,8 @@ namespace XIVSlothCombo.Combos.PvE
                     bool divineCaressReady = ActionReady(DivineCaress) && HasEffect(Buffs.DivineGrace);
                     bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
                     var healTarget = GetHealTarget(Config.WHM_AoEHeals_MedicaMO);
+                    var hasMedica2 = FindEffectOnMember(Buffs.Medica2, healTarget);
+                    var hasMedica3 = FindEffectOnMember(Buffs.Medica3, healTarget);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Assize) && assizeReady)
                         return Assize;
@@ -347,8 +349,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
                         && ((FindEffectOnMember(Buffs.Medica2, healTarget) == null && FindEffectOnMember(Buffs.Medica3, healTarget) == null)
-                            || FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime
-                            || FindEffectOnMember(Buffs.Medica3, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
+                            || hasMedica2 != null && hasMedica2.RemainingTime <= Config.WHM_AoEHeals_MedicaTime
+                            || hasMedica3 != null && hasMedica3.RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
                         && (ActionReady(Medica2) || ActionReady(Medica3)))
                     {
                         // Medica 3 upgrade
