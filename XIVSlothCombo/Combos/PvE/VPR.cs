@@ -409,7 +409,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.SwiftskinsVenom))
                             return OriginalHook(Twinblood);
 
-                        if ((TargetNeedsPositionals() && OnTargetsRear()) || !TargetNeedsPositionals())
+                        if (positionalChoice is 0)
                         {
                             if (SwiftskinsCoilReady)
                                 return HuntersCoil;
@@ -424,7 +424,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (TargetNeedsPositionals() && OnTargetsFlank())
+                        if (positionalChoice is 1)
                         {
                             if (HuntersCoilReady)
                                 return SwiftskinsCoil;
