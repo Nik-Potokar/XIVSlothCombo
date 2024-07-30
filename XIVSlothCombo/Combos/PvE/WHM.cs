@@ -359,7 +359,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return Medica2;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && ActionReady(Cure3) && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP || HasEffect(Buffs.ThinAir)))
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3)
+                        && LevelChecked(Cure3)
+                        && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP
+                            || HasEffect(Buffs.ThinAir)))
                         return Cure3;
 
                 }
