@@ -1428,12 +1428,6 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(GNB.KeenEdge)]
         [CustomComboInfo("Advanced Gunbreaker Feature", "Replace Keen Edge with its combo chain and uses Burst Strike to prevent ammo overcap. **2.5sks ONLY**", GNB.JobID)]
         GNB_ST_MainCombo = 7001,
-        
-        #region Level 100 Balance Opener
-        [ParentCombo(GNB_ST_MainCombo)]
-        [CustomComboInfo("Level 100 Balance Opener", "Adds the Balance opener for 2.50GCD to the rotation.", GNB.JobID)]
-        GNB_ST_Opener = 7014,
-        #endregion
 
         #region Reign Combo
         [ParentCombo(GNB_ST_MainCombo)]
@@ -1489,6 +1483,12 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(GNB_ST_MainCombo)]
         [CustomComboInfo("Lightning Shot Uptime Option", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID)]
         GNB_ST_RangedUptime = 7013,
+        #endregion
+        
+        #region Level 100 Balance Opener
+        [ParentCombo(GNB_ST_MainCombo)]
+        [CustomComboInfo("Level 100 Balance Opener", "Adds the Balance opener for 2.50GCD to the rotation.", GNB.JobID, 2)]
+        GNB_ST_Opener = 7014,
         #endregion
 
         #region Gnashing Fang
