@@ -409,7 +409,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.SwiftskinsVenom))
                             return OriginalHook(Twinblood);
 
-                        if (positionalChoice is 0)
+                        if ((TargetNeedsPositionals() && OnTargetsRear()) || !TargetNeedsPositionals())
                         {
                             if (SwiftskinsCoilReady)
                                 return HuntersCoil;
@@ -424,7 +424,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        if (positionalChoice is 1)
+                        if (TargetNeedsPositionals() && OnTargetsFlank())
                         {
                             if (HuntersCoilReady)
                                 return SwiftskinsCoil;
@@ -711,7 +711,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Uncoiled Fury usage
                     if (LevelChecked(UncoiledFury) && gauge.HasRattlingCoilStack() &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
+                        !VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
                         !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom) &&
                         !WasLastWeaponskill(JaggedMaw) && !WasLastWeaponskill(BloodiedMaw) &&
@@ -889,7 +889,7 @@ namespace XIVSlothCombo.Combos.PvE
                         LevelChecked(UncoiledFury) &&
                         ((gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges) || (enemyHP < uncoiledThreshold && gauge.HasRattlingCoilStack())) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
+                        !VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
                         !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom) &&
                         !WasLastWeaponskill(JaggedMaw) && !WasLastWeaponskill(BloodiedMaw) &&
