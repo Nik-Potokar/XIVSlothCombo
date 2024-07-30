@@ -92,9 +92,9 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static readonly UserInt
-                DNCEspritThreshold_ST = new UserInt("DNCEspritThreshold_ST"); // ST - Esprit threshold
+                DNCEspritThreshold_ST = new UserInt("DNCEspritThreshold_ST", 50); // ST - Esprit threshold
             public static readonly UserInt
-                DNCEspritThreshold_AoE = new UserInt("DNCEspritThreshold_AoE"); // AoE - Esprit threshold
+                DNCEspritThreshold_AoE = new UserInt("DNCEspritThreshold_AoE", 50); // AoE - Esprit threshold
 
             #region Advanced ST Sliders
             public static readonly UserInt
@@ -384,8 +384,10 @@ namespace XIVSlothCombo.Combos.PvE
                      HasEffect(Buffs.TechnicalFinish) && 
                      GetCooldownRemainingTime(Flourish) > 58)
                 {
-                    if (HasEffect(Buffs.ThreeFoldFanDance) && CanDelayedWeave(actionID)) return FanDance3; 
-                    else if (HasEffect(Buffs.FourFoldFanDance)) return FanDance4;
+                    if (HasEffect(Buffs.ThreeFoldFanDance) && CanDelayedWeave(actionID))
+                        return FanDance3;
+                    if (HasEffect(Buffs.FourFoldFanDance))
+                        return FanDance4;
                 }
 
                 // ST Interrupt
@@ -505,9 +507,10 @@ namespace XIVSlothCombo.Combos.PvE
                 // ST Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_ST_Adv_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= 50 &&
+                    gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold &&
                     ActionReady(SaberDance))
-                    return LevelChecked(DanceOfTheDawn) && HasEffect(Buffs.DanceOfTheDawnReady)
+                    return LevelChecked(DanceOfTheDawn) &&
+                           HasEffect(Buffs.DanceOfTheDawnReady)
                         ? OriginalHook(DanceOfTheDawn)
                         : SaberDance;
 
@@ -809,7 +812,7 @@ namespace XIVSlothCombo.Combos.PvE
                 // AoE Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_AoE_Adv_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= 50 &&
+                    gauge.Esprit >= Config.DNC_AoE_Adv_SaberThreshold &&
                     ActionReady(SaberDance))
                     return SaberDance;
 
