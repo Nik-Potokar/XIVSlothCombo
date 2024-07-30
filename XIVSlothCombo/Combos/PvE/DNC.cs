@@ -385,9 +385,11 @@ namespace XIVSlothCombo.Combos.PvE
                     (HasEffect(Buffs.ThreeFoldFanDance) ||
                      HasEffect(Buffs.FourFoldFanDance)) &&
                      CombatEngageDuration().TotalSeconds > 20 &&
-                     GetBuffRemainingTime(Buffs.TechnicalFinish) <= 17)
+                     HasEffect(Buffs.TechnicalFinish) && 
+                     GetCooldownRemainingTime(Flourish) > 58)
                 {
-                    return HasEffect(Buffs.FourFoldFanDance) ? FanDance4 : FanDance3;
+                    if (HasEffect(Buffs.ThreeFoldFanDance) && CanDelayedWeave(actionID)) return FanDance3; 
+                    else if (HasEffect(Buffs.FourFoldFanDance)) return FanDance4;
                 }
 
                 // ST Interrupt
@@ -509,7 +511,9 @@ namespace XIVSlothCombo.Combos.PvE
                     LevelChecked(SaberDance) &&
                     gauge.Esprit >= 50 &&
                     ActionReady(SaberDance))
-                    return SaberDance;
+                    return LevelChecked(DanceOfTheDawn) && HasEffect(Buffs.DanceOfTheDawnReady)
+                        ? OriginalHook(DanceOfTheDawn)
+                        : SaberDance;
 
                 if (HasEffect(Buffs.FlourishingStarfall))
                     return StarfallDance;
