@@ -63,7 +63,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool DoPrePullSteps(ref uint actionID)
         {
-            if (!LevelChecked) 
+            if (!LevelChecked)
                 return false;
 
             if (CanOpener && PrePullStep == 0)
@@ -213,7 +213,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (((actionID == SerpentsIre && CustomComboFunctions.IsOnCooldown(SerpentsIre)) ||
                     (actionID == Dreadwinder && CustomComboFunctions.GetRemainingCharges(Dreadwinder) < 2)) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                { 
+                {
                     CurrentState = OpenerState.FailedOpener;
                     return false;
                 }
@@ -230,7 +230,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         public bool DoFullOpener(ref uint actionID)
         {
-            if (!LevelChecked) 
+            if (!LevelChecked)
                 return false;
 
             if (CurrentState == OpenerState.PrePull)
