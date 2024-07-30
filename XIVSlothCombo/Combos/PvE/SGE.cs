@@ -338,7 +338,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return Eukrasia;
 
                         if (Dosis3Count is 0 && Toxikon2Count is 0 &&
-                            HasEffect(Buffs.Eukrasia))
+                            HasEffect(Buffs.Eukrasia) && !InCombat())
                             return Toxikon2;
 
                         if (Dosis3Count is 3)
