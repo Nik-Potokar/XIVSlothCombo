@@ -721,7 +721,7 @@ namespace XIVSlothCombo.Combos
 
         #region Single Target Multibutton
         [ReplaceSkill(DNC.Cascade)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Single Target Multibutton Feature", "Single target combo with Fan Dances and Esprit use.", DNC.JobID)]
         DNC_ST_MultiButton = 4000,
 
@@ -740,7 +740,7 @@ namespace XIVSlothCombo.Combos
 
         #region AoE Multibutton
         [ReplaceSkill(DNC.Windmill)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("AoE Multibutton Feature", "AoE combo with Fan Dances and Esprit use.", DNC.JobID)]
         DNC_AoE_MultiButton = 4010,
 
@@ -758,12 +758,12 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Dance Features
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Dance Features", "Features and options involving Standard Step and Technical Step.\nCollapsing this category does NOT disable the features inside.", DNC.JobID)]
         DNC_Dance_Menu = 4020,
 
         [ParentCombo(DNC_Dance_Menu)]
-        [ConflictingCombos(DNC_DanceStepCombo, DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_DanceStepCombo, DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Custom Dance Step Feature",
         "Change custom actions into dance steps while dancing." +
         "\nThis helps ensure you can still dance with combos on, without using auto dance." +
@@ -774,21 +774,21 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Flourishing Features
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Flourishing Features", "Features and options involving Fourfold Feathers and Flourish." +
         "\nCollapsing this category does NOT disable the features inside.", DNC.JobID)]
         DNC_FlourishingFeatures_Menu = 4030,
 
         [ReplaceSkill(DNC.Flourish)]
         [ParentCombo(DNC_FlourishingFeatures_Menu)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Flourishing Fan Dance Feature", "Replace Flourish with Fan Dance 3 & 4 during weave-windows, when Flourish is on cooldown.", DNC.JobID)]
         DNC_FlourishingFanDances = 4032,
         #endregion
 
         #region Fan Dance Combo Features
         [ParentCombo(DNC_FlourishingFeatures_Menu)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Fan Dance Combo Feature", "Options for Fan Dance combos." +
         "\nFan Dance 3 takes priority over Fan Dance 4.", DNC.JobID)]
         DNC_FanDanceCombos = 4033,
@@ -816,7 +816,7 @@ namespace XIVSlothCombo.Combos
 
         // Devilment --> Starfall
         [ReplaceSkill(DNC.Devilment)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID)]
         DNC_Starfall_Devilment = 4038,
 
@@ -828,188 +828,188 @@ namespace XIVSlothCombo.Combos
 
         // StandardStep(or Finishing Move) --> Last Dance
         [ReplaceSkill(DNC.StandardStep, DNC.FinishingMove)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Standard Step to Last Dance Feature", "Change Standard Step or Finishing Move to Last Dance when available.", DNC.JobID)]
         DNC_StandardStep_LastDance = 4086,
 
             // Technical Step --> Devilment
         [ReplaceSkill(DNC.StandardStep, DNC.FinishingMove)]
-        [ConflictingCombos(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Technical Step to Devilment Feature", "Change Technical Step to Devilment as soon as possible.", DNC.JobID)]
         DNC_TechnicalStep_Devilment = 4087,
 
-        #region Simple Dancer (Single Target)
+        #region Advanced Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
         [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
-        [CustomComboInfo("Simple Dancer (Single Target) Feature", "Single button, single target. Includes songs, flourishes and overprotections.", DNC.JobID)]
-        DNC_ST_SimpleMode = 4050,
+        [CustomComboInfo("Advanced Dancer (Single Target) Feature", "Single button, single target. Can include songs, flourishes, overcap protections, and more.", DNC.JobID)]
+        DNC_ST_AdvancedMode = 4050,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Interrupt Option", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 0)]
-        DNC_ST_Simple_Interrupt = 4051,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Interrupt Option", "Includes an interrupt in the rotation (if applicable to your current target).", DNC.JobID, 0)]
+        DNC_ST_Adv_Interrupt = 4051,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [ConflictingCombos(DNC_ST_Simple_StandardFill)]
-        [CustomComboInfo("Simple Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1)]
-        DNC_ST_Simple_SS = 4052,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [ConflictingCombos(DNC_ST_Adv_StandardFill)]
+        [CustomComboInfo("Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1)]
+        DNC_ST_Adv_SS = 4052,
 
-        [ParentCombo(DNC_ST_Simple_SS)]
-        [ConflictingCombos(DNC_ST_Simple_StandardFill)]
+        [ParentCombo(DNC_ST_Adv_SS)]
+        [ConflictingCombos(DNC_ST_Adv_StandardFill)]
         [CustomComboInfo("Standard Dance Opener Option", "Starts Standard Step (and steps) before combat.", DNC.JobID)]
-        DNC_ST_Simple_SS_Prepull = 4090,
+        DNC_ST_Adv_SS_Prepull = 4090,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [ConflictingCombos(DNC_ST_Simple_SS)]
-        [CustomComboInfo("Simple Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [ConflictingCombos(DNC_ST_Adv_SS)]
+        [CustomComboInfo("Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
             "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 2)]
-        DNC_ST_Simple_StandardFill = 4061,
+        DNC_ST_Adv_StandardFill = 4061,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Peloton Opener Option", "Uses Peloton when you are out of combat, do not already have the Peloton buff and are performing Standard Step with greater than 5s remaining of your dance." +
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Peloton Opener Option", "Uses Peloton when you are out of combat, do not already have the Peloton buff and are performing Standard Step with greater than 5s remaining of your dance." +
             "\nWill not override Dance Step Combo Feature.", DNC.JobID, 3)]
-        DNC_ST_Simple_Peloton = 4062,
+        DNC_ST_Adv_Peloton = 4062,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [ConflictingCombos(DNC_ST_Simple_TechFill)]
-        [CustomComboInfo("Simple Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 4)]
-        DNC_ST_Simple_TS = 4053,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [ConflictingCombos(DNC_ST_Adv_TechFill)]
+        [CustomComboInfo("Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 4)]
+        DNC_ST_Adv_TS = 4053,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [ConflictingCombos(DNC_ST_Simple_TS)]
-        [CustomComboInfo("Simple Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the rotation." +
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [ConflictingCombos(DNC_ST_Adv_TS)]
+        [CustomComboInfo("Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the rotation." +
                                                     "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 5)]
-        DNC_ST_Simple_TechFill = 4054,
+        DNC_ST_Adv_TechFill = 4054,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Devilment Option", "Includes Devilment in the rotation." +
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Devilment Option", "Includes Devilment in the rotation." +
                                                     "\nWill activate only during Technical Finish if you're Lv70 or above." +
                                                     "\nWill be used on cooldown below Lv70.", DNC.JobID, 6)]
-        DNC_ST_Simple_Devilment = 4055,
+        DNC_ST_Adv_Devilment = 4055,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 7)]
-        DNC_ST_Simple_Flourish = 4056,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Flourish Option", "Includes Flourish in the rotation.", DNC.JobID, 7)]
+        DNC_ST_Adv_Flourish = 4056,
 
-        [ParentCombo(DNC_ST_Simple_Flourish)]
+        [ParentCombo(DNC_ST_Adv_Flourish)]
         [CustomComboInfo("Force Triple Weave for alignment", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." + "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD.", DNC.JobID, 1)]
-        DNC_ST_Simple_Flourish_ForcedTripleWeave = 4088,
+        DNC_ST_Adv_Flourish_ForcedTripleWeave = 4088,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Feathers Option", "Expends a feather in the next available weave window when capped and under the effect of Flourishing Symmetry or Flourishing Flow." +
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Feathers Option", "Expends a feather in the next available weave window when capped and under the effect of Flourishing Symmetry or Flourishing Flow." +
                                                    "\nWeaves feathers where possible during Technical Finish." +
                                                    "\nWeaves feathers outside of burst when target is below set HP percentage (Set to 0 to disable)." +
                                                    "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 8)]
-        DNC_ST_Simple_Feathers = 4057,
+        DNC_ST_Adv_Feathers = 4057,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Improvisation Option", "Includes Improvisation in the rotation when available." +
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Improvisation Option", "Includes Improvisation in the rotation when available." +
             "\nWill not use while under Technical Finish", DNC.JobID, 9)]
-        DNC_ST_Simple_Improvisation = 4060,
+        DNC_ST_Adv_Improvisation = 4060,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 10)]
-        DNC_ST_Simple_Tillana = 4092,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 10)]
+        DNC_ST_Adv_Tillana = 4092,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 11)]
-        DNC_ST_Simple_SaberDance = 4063,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 11)]
+        DNC_ST_Adv_SaberDance = 4063,
 
-        [ParentCombo(DNC_ST_Simple_SaberDance)]
-        [CustomComboInfo("Simple Dance of the Dawn Option", "Includes Dance of the Dawn in the rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
-        DNC_ST_Simple_DawnDance = 4064,
+        [ParentCombo(DNC_ST_Adv_SaberDance)]
+        [CustomComboInfo("Dance of the Dawn Option", "Includes Dance of the Dawn in the rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
+        DNC_ST_Adv_DawnDance = 4064,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 12)]
-        DNC_ST_Simple_LD = 4093,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 12)]
+        DNC_ST_Adv_LD = 4093,
 
-        [ParentCombo(DNC_ST_SimpleMode)]
-        [CustomComboInfo("Simple Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 13)]
-        DNC_ST_Simple_PanicHeals = 4059,
+        [ParentCombo(DNC_ST_AdvancedMode)]
+        [CustomComboInfo("Panic Heals Option", "Includes Curing Waltz and Second Wind in the rotation when available and your HP is below the set percentages.", DNC.JobID, 13)]
+        DNC_ST_Adv_PanicHeals = 4059,
         #endregion
 
-        #region Simple Dancer (AoE)
+        #region Advanced Dancer (AoE)
         [ReplaceSkill(DNC.Windmill)]
         [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
-        [CustomComboInfo("Simple Dancer (AoE) Feature", "Single button, AoE. Includes songs, flourishes and overprotections." +
-            "\nConflicts with all other non-simple toggles, except 'Dance Step Combo'.", DNC.JobID)]
-        DNC_AoE_SimpleMode = 4070,
+        [CustomComboInfo("Advanced Dancer (AoE) Feature", "Single button, AoE. Includes songs, flourishes, overcap protections, and more." +
+            "\nConflicts with all other non-Advanced toggles, except 'Dance Step Combo'.", DNC.JobID)]
+        DNC_AoE_AdvancedMode = 4070,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Interrupt Option", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0)]
-        DNC_AoE_Simple_Interrupt = 4071,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Interrupt Option", "Includes an interrupt in the AoE rotation (if your current target can be interrupted).", DNC.JobID, 0)]
+        DNC_AoE_Adv_Interrupt = 4071,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [ConflictingCombos(DNC_AoE_Simple_StandardFill)]
-        [CustomComboInfo("Simple AoE Standard Dance Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 1)]
-        DNC_AoE_Simple_SS = 4072,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [ConflictingCombos(DNC_AoE_Adv_StandardFill)]
+        [CustomComboInfo("Standard Dance Option", "Includes Standard Step (and all steps) in the AoE rotation.", DNC.JobID, 1)]
+        DNC_AoE_Adv_SS = 4072,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [ConflictingCombos(DNC_AoE_Simple_SS)]
-        [CustomComboInfo("Simple AoE Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the AoE rotation." +
-        "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 2)]
-        DNC_AoE_Simple_StandardFill = 4081,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [ConflictingCombos(DNC_AoE_Adv_SS)]
+        [CustomComboInfo("Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the AoE rotation." +
+                                                 "\nStandard Step itself must be initiated manually when using this option.", DNC.JobID, 2)]
+        DNC_AoE_Adv_StandardFill = 4081,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [ConflictingCombos(DNC_AoE_Simple_TechFill)]
-        [CustomComboInfo("Simple AoE Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the AoE rotation.", DNC.JobID, 3)]
-        DNC_AoE_Simple_TS = 4073,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [ConflictingCombos(DNC_AoE_Adv_TechFill)]
+        [CustomComboInfo("Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the AoE rotation.", DNC.JobID, 3)]
+        DNC_AoE_Adv_TS = 4073,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [ConflictingCombos(DNC_AoE_Simple_TS)]
-        [CustomComboInfo("Simple AoE Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the AoE rotation." +
-        "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 4)]
-        DNC_AoE_Simple_TechFill = 4074,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [ConflictingCombos(DNC_AoE_Adv_TS)]
+        [CustomComboInfo("Tech Fill Option", "Adds ONLY Technical dance steps and Technical Finish to the AoE rotation." +
+                                             "\nTechnical Step itself must be initiated manually when using this option.", DNC.JobID, 4)]
+        DNC_AoE_Adv_TechFill = 4074,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Tech Devilment Option", "Includes Devilment in the AoE rotation." +
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Tech Devilment Option", "Includes Devilment in the AoE rotation." +
             "\nWill activate only during Technical Finish if you're Lv70 or above." +
             "\nWill be used on cooldown below Lv70.", DNC.JobID, 5)]
-        DNC_AoE_Simple_Devilment = 4075,
+        DNC_AoE_Adv_Devilment = 4075,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6)]
-        DNC_AoE_Simple_Flourish = 4076,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Flourish Option", "Includes Flourish in the AoE rotation.", DNC.JobID, 6)]
+        DNC_AoE_Adv_Flourish = 4076,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Feathers Option", "Expends a feather in the next available weave window when capped and under the effect of Flourishing Symmetry or Flourishing Flow." +
-       "\nWeaves feathers where possible during Technical Finish." +
-       "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 7)]
-        DNC_AoE_Simple_Feathers = 4077,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Feathers Option", "Expends a feather in the next available weave window when capped and under the effect of Flourishing Symmetry or Flourishing Flow." +
+                                            "\nWeaves feathers where possible during Technical Finish." +
+                                            "\nWeaves feathers whenever available when under Lv.70.", DNC.JobID, 7)]
+        DNC_AoE_Adv_Feathers = 4077,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Improvisation Option", "Includes Improvisation in the AoE rotation when available." +
-        "\nWill not use while under Technical Finish", DNC.JobID, 8)]
-        DNC_AoE_Simple_Improvisation = 4080,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Improvisation Option", "Includes Improvisation in the AoE rotation when available." +
+                                                 "\nWill not use while under Technical Finish", DNC.JobID, 8)]
+        DNC_AoE_Adv_Improvisation = 4080,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 9)]
-        DNC_AoE_Simple_Tillana = 4101,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 9)]
+        DNC_AoE_Adv_Tillana = 4101,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 10)]
-        DNC_AoE_Simple_SaberDance = 4082,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 10)]
+        DNC_AoE_Adv_SaberDance = 4082,
 
-        [ParentCombo(DNC_AoE_Simple_SaberDance)]
-        [CustomComboInfo("Simple AoE Dance of the Dawn Option", "Includes Dance of the Dawn in the AoE rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
-        DNC_AoE_Simple_DawnDance = 4085,
+        [ParentCombo(DNC_AoE_Adv_SaberDance)]
+        [CustomComboInfo("Dance of the Dawn Option", "Includes Dance of the Dawn in the AoE rotation after Saber Dance and when over the threshold, or in the final seconds of Dance of the Dawn ready.", DNC.JobID)]
+        DNC_AoE_Adv_DawnDance = 4085,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 11)]
-        DNC_AoE_Simple_LD = 4102,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Last Dance Option", "Includes Last Dance in the rotation.", DNC.JobID, 11)]
+        DNC_AoE_Adv_LD = 4102,
 
-        [ParentCombo(DNC_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 12)]
-        DNC_AoE_Simple_PanicHeals = 4079,
+        [ParentCombo(DNC_AoE_AdvancedMode)]
+        [CustomComboInfo("Panic Heals Option", "Includes Curing Waltz and Second Wind in the AoE rotation when available and your HP is below the set percentages.", DNC.JobID, 12)]
+        DNC_AoE_Adv_PanicHeals = 4079,
         #endregion
 
         #region Variant
         [Variant]
-        [VariantParent(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [VariantParent(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", DNC.JobID)]
         DNC_Variant_Rampart = 4083,
 
         [Variant]
-        [VariantParent(DNC_ST_SimpleMode, DNC_AoE_SimpleMode)]
+        [VariantParent(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", DNC.JobID)]
         DNC_Variant_Cure = 4084,
 
