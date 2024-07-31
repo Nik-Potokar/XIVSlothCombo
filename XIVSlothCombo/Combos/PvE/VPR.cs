@@ -981,6 +981,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 VPRGauge? gauge = GetJobGauge<VPRGauge>();
+                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanWeave(actionID);
                 int positionalChoice = Config.VPR_Positional;
                 bool VicewinderReady = gauge.DreadCombo == DreadCombo.Dreadwinder;
                 bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
@@ -1000,19 +1001,41 @@ namespace XIVSlothCombo.Combos.PvE
                     if (positionalChoice is 0)
                     {
                         if (SwiftskinsCoilReady)
+                        {
+                            if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
+                                    trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
+                                return All.TrueNorth;
+
                             return HuntersCoil;
+                        }
 
                         if (VicewinderReady)
+                        {
+                            if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
+                                trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.FlankstungVenom))
+                                return All.TrueNorth;
                             return SwiftskinsCoil;
+                        }
                     }
 
                     if (positionalChoice is 1)
                     {
                         if (HuntersCoilReady)
+                        {
+                            if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
+                                trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.FlankstungVenom))
+                                return All.TrueNorth;
                             return SwiftskinsCoil;
+                        }
 
                         if (VicewinderReady)
+                        {
+                            if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
+                                    trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
+                                return All.TrueNorth;
+
                             return HuntersCoil;
+                        }
                     }
                 }
                 return actionID;

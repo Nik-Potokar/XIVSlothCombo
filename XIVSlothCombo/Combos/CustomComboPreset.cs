@@ -3803,6 +3803,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Vicewinder - Coils", "Replaces Vicewinder with Hunter's/Swiftskin's Coils.", VPR.JobID)]
         VPR_VicewinderCoils = 30200,
 
+        [ParentCombo(VPR_VicewinderCoils)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
+        VPR_VicewinderCoilsTN = 30208,
+
         [ReplaceSkill(VPR.Vicepit)]
         [CustomComboInfo("Vicepit - Dens", "Replaces Vicepit with Hunter's/Swiftskin's Dens.", VPR.JobID)]
         VPR_VicepitDens = 30201,
@@ -3831,7 +3835,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(VPR_VicepitDens)]
         [CustomComboInfo("Include Twin Combo Actions", "Adds Twinfang and Twinblood to the button.", VPR.JobID)]
         VPR_VicepitDens_oGCDs = 30207,
-
+        
         #endregion
 
         #region WARRIOR
