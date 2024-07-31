@@ -122,7 +122,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         private bool WasLastActionNoTFC(uint actionID)
         {
-            return CustomComboFunctions.WasLastAction(actionID) || CustomComboFunctions.WasLastAction(ActionBeforeTFC);
+            return CustomComboFunctions.WasLastAction(TheForbiddenChakra) || CustomComboFunctions.WasLastAction(ActionBeforeTFC);
         }
 
         private bool DoSLOpener(ref uint actionID)
