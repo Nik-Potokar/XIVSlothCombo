@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -147,11 +148,14 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
                         {
-                            if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && gauge >= 50 && !LevelChecked(InnerChaos)))
-                                return OriginalHook(InnerBeast);
+                            if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_FellCleave) && LevelChecked(InnerBeast))
+                            {
+                                if (HasEffect(Buffs.InnerReleaseStacks) || (HasEffect(Buffs.NascentChaos) && LevelChecked(InnerChaos)))
+                                    return OriginalHook(InnerBeast);
 
-                            if (HasEffect(Buffs.NascentChaos) && gauge >= 50 && !LevelChecked(InnerChaos))
-                                return OriginalHook(Decimate);
+                                if (HasEffect(Buffs.NascentChaos) && !LevelChecked(InnerChaos) && gauge >= 50)
+                                    return OriginalHook(Decimate);
+                            }
                         }
 
                     }
