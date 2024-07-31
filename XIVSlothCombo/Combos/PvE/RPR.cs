@@ -146,10 +146,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (ActionReady(ArcaneCircle) && CanWeave(actionID))
                         return ArcaneCircle;
 
-                    if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
-                        !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                    if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                         ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 && WasLastAction(Enshroud)) || // 2 min
-                        (!HasEffect(Buffs.Enshrouded) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6)))
+                        (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6)))
                         return ShadowOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
@@ -318,8 +317,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_ST_SoD) &&
                         LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
                         !HasEffect(Buffs.PerfectioParata) && enemyHP > Config.RPR_SoDThreshold &&
-                         ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 && WasLastAction(Enshroud)) || // 2 min
-                        (!HasEffect(Buffs.Enshrouded) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange)))
+                        ((LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) && GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 && WasLastAction(Enshroud)) || // 2 min
+                        (GetDebuffRemainingTime(Debuffs.DeathsDesign) <= sodRefreshRange)))
                         return ShadowOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
