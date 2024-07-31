@@ -40,7 +40,7 @@ namespace XIVSlothCombo.Combos.PvE
             EnergyDrain = 167,
             ArtOfWar = 16539,
             ArtOfWarII = 25866,
-            BanefulImpaction =  37012,
+            BanefulImpaction = 37012,
 
             // Faerie
             SummonSeraph = 16545,
@@ -132,8 +132,8 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserBool
                 SCH_ST_Heal_Adv = new("SCH_ST_Heal_Adv"),
                 SCH_ST_Heal_UIMouseOver = new("SCH_ST_Heal_UIMouseOver"),
-                SCH_DeploymentTactics_Adv = new ("SCH_DeploymentTactics_Adv"),
-                SCH_DeploymentTactics_UIMouseOver = new ("SCH_DeploymentTactics_UIMouseOver");
+                SCH_DeploymentTactics_Adv = new("SCH_DeploymentTactics_Adv"),
+                SCH_DeploymentTactics_UIMouseOver = new("SCH_DeploymentTactics_UIMouseOver");
             #endregion
 
             #region Utility
@@ -343,8 +343,8 @@ namespace XIVSlothCombo.Combos.PvE
                         openerState = OpenerState.InOpener;
                     }
 
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) && 
-                        IsEnabled(Variant.VariantRampart) && 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
@@ -398,28 +398,25 @@ namespace XIVSlothCombo.Combos.PvE
                                 HasEffect(Buffs.ImpactImminent) &&
                                 InCombat() &&
                                 CanSpellWeave(actionID))
-                                return BanefulImpaction; 
+                                return BanefulImpaction;
                             // Don't use OriginalHook(ChainStratagem), because player can disable ingame action replacement
                         }
-                        
+
 
                         //Bio/Biolysis
-                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio) && InCombat())
+                        if (IsEnabled(CustomComboPreset.SCH_DPS_Bio) && LevelChecked(Bio) && InCombat() &&
+                            BioList.TryGetValue(OriginalHook(Bio), out ushort dotDebuffID))
                         {
-                            uint dot = OriginalHook(Bio); //Grab the appropriate DoT Action
-                            Status? dotDebuff = FindTargetEffect(BioList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
-                            float refreshtimer = Config.SCH_ST_DPS_Bio_Adv ? Config.SCH_ST_DPS_Bio_Threshold : 3;
-
-                            if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_SpiritDart) && 
-                                IsEnabled(Variant.VariantSpiritDart) && 
-                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                            if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_SpiritDart) &&
+                                IsEnabled(Variant.VariantSpiritDart) &&
+                                GetDebuffRemainingTime(Variant.Debuffs.SustainedDamage) <= 3 &&
                                 CanSpellWeave(actionID))
                                 return Variant.VariantSpiritDart;
 
-                            if ((dotDebuff is null || dotDebuff?.RemainingTime <= refreshtimer) &&
+                            float refreshtimer = Config.SCH_ST_DPS_Bio_Adv ? Config.SCH_ST_DPS_Bio_Threshold : 3;
+                            if (GetDebuffRemainingTime(dotDebuffID) <= refreshtimer &&
                                 GetTargetHPPercent() > Config.SCH_ST_DPS_BioOption)
-                                return dot; //Use appropriate DoT Action
+                                return OriginalHook(Bio); //Use appropriate DoT Action
                         }
 
                         //Ruin 2 Movement 
@@ -444,16 +441,16 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is ArtOfWar or ArtOfWarII)
                 {
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) && 
-                        IsEnabled(Variant.VariantRampart) && 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanSpellWeave(actionID))
                         return Variant.VariantRampart;
 
                     Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_SpiritDart) && 
-                        IsEnabled(Variant.VariantSpiritDart) && 
-                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) && 
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Variant_SpiritDart) &&
+                        IsEnabled(Variant.VariantSpiritDart) &&
+                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
                         HasBattleTarget() &&
                         CanSpellWeave(actionID))
                         return Variant.VariantSpiritDart;
@@ -509,7 +506,7 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-        
+
         /*
         * SCH_Fairy_Combo
         * Overrides Whispering Dawn
@@ -534,12 +531,12 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(actionID);
 
                     if (IsEnabled(CustomComboPreset.SCH_Fairy_Combo_Consolation) && Gauge.SeraphTimer > 0 && GetRemainingCharges(Consolation) > 0)
-                    return OriginalHook(Consolation);
+                        return OriginalHook(Consolation);
                 }
                 return actionID;
             }
         }
-        
+
         /*
         * SCH_ST_Heal
         * Overrides main AoE Healing abiility, Succor
@@ -580,10 +577,10 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         return OriginalHook(Adloquium);
                     }
-                    
+
                     //Cast Lustrate if you have Aetherflow and Target HP is below %
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Lustrate) &&
-                        ActionReady(Lustrate) && 
+                        ActionReady(Lustrate) &&
                         Gauge.HasAetherflow() &&
                         GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_LustrateOption)
                     {

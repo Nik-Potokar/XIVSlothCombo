@@ -1,6 +1,6 @@
-﻿using XIVSlothCombo.CustomComboNS;
+﻿using ECommons.DalamudServices;
+using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -84,7 +84,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Sprint && Service.ClientState.TerritoryType is 1055) return IsleSprint;
+                if (actionID is Sprint && Svc.ClientState.TerritoryType is 1055) return IsleSprint;
                 else return actionID;
             }
         }
@@ -133,7 +133,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro) 
+                if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro)
                     || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.Id is SCH.JobID))
                 {
                     if (ActionReady(Swiftcast))
@@ -172,7 +172,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if ((actionID is BLU.AngelWhisper or RDM.Verraise) 
+                if ((actionID is BLU.AngelWhisper or RDM.Verraise)
                     || (actionID is SMN.Resurrection && LocalPlayer.ClassJob.Id is SMN.JobID))
                 {
                     if (HasEffect(Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast))
@@ -241,7 +241,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is FootGraze && CanInterruptEnemy() && ActionReady(HeadGraze) ) ? HeadGraze : actionID;
+                return (actionID is FootGraze && CanInterruptEnemy() && ActionReady(HeadGraze)) ? HeadGraze : actionID;
             }
         }
     }
