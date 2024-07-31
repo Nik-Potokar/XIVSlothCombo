@@ -165,10 +165,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 10) OpenerStep++;
                 else if (OpenerStep == 10) actionID = DragonKick;
 
-                if (CustomComboFunctions.WasLastAction(FiresReply) && OpenerStep == 11) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(FiresReply) || !CustomComboFunctions.HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
                 else if (OpenerStep == 11) actionID = FiresReply;
 
-                if (CustomComboFunctions.WasLastAction(WindsReply) && OpenerStep == 12) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(WindsReply) || !CustomComboFunctions.HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
                 else if (OpenerStep == 12) actionID = WindsReply;
 
                 if (CustomComboFunctions.WasLastAction(LeapingOpo) && OpenerStep == 13) OpenerStep++;
@@ -257,10 +257,10 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(DragonKick) && OpenerStep == 10) OpenerStep++;
                 else if (OpenerStep == 10) actionID = DragonKick;
 
-                if (CustomComboFunctions.WasLastAction(FiresReply) && OpenerStep == 11) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(FiresReply) || !CustomComboFunctions.HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
                 else if (OpenerStep == 11) actionID = FiresReply;
 
-                if (CustomComboFunctions.WasLastAction(WindsReply) && OpenerStep == 12) OpenerStep++;
+                if ((CustomComboFunctions.WasLastAction(WindsReply) || !CustomComboFunctions.HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
                 else if (OpenerStep == 12) actionID = WindsReply;
 
                 if (CustomComboFunctions.WasLastAction(LeapingOpo) && OpenerStep == 13) OpenerStep++;
