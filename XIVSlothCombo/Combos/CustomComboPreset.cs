@@ -1834,133 +1834,13 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
-        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
-        [CustomComboInfo("Arm of the Destroyer Combo", "Replaces Arm Of The Destroyer with its combo chain.", MNK.JobID)]
-        MNK_AoE_SimpleMode = 9000,
-
-        [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Dragon Kick --> Bootshine Feature", "Replaces Dragon Kick with Bootshine if both a form and Leaden Fist are up.", MNK.JobID)]
-        MNK_DragonKick_Bootshine = 9001,
-
-        [ReplaceSkill(MNK.TrueStrike)]
-        [CustomComboInfo("Twin Snakes Feature", "Replaces True Strike with Twin Snakes if Disciplined Fist is not applied or is less than 6 seconds from falling off.", MNK.JobID)]
-        MNK_TwinSnakes = 9011,
-
         [ReplaceSkill(MNK.Bootshine)]
-        [ConflictingCombos(MNK_ST_SimpleMode)]
         [CustomComboInfo("Basic Rotation", "Basic Monk Combo on one button", MNK.JobID)]
         MNK_BasicCombo = 9002,
 
-        [ReplaceSkill(MNK.PerfectBalance)]
-        [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID)]
-        MNK_PerfectBalance = 9003,
-
-        [ReplaceSkill(MNK.DragonKick)]
-        [CustomComboInfo("Bootshine Balance Feature", "Replaces Dragon Kick with Masterful Blitz if you have 3 Beast Chakra.", MNK.JobID)]
-        MNK_BootshineBalance = 9004,
-
-        [ReplaceSkill(MNK.HowlingFist, MNK.Enlightenment)]
-        [CustomComboInfo("Howling Fist/Meditation Feature", "Replaces Howling Fist/Enlightenment with Meditation when the Fifth Chakra is not open.", MNK.JobID)]
-        MNK_HowlingFistMeditation = 9005,
-
-        [ReplaceSkill(MNK.Bootshine)]
-        [ConflictingCombos(MNK_BasicCombo)]
-        [CustomComboInfo("Bootshine Combo", "Replace Bootshine with its combo chain. \nIf all sub options are selected will turn into a full one button rotation (Simple Monk). Slider values can be used to control Disciplined Fist + Demolish uptime.", MNK.JobID, -2, "", "")]
-        MNK_ST_SimpleMode = 9006,
-
-        [ReplaceSkill(MNK.MasterfulBlitz)]
-        [CustomComboInfo("Perfect Balance Feature Plus", "All of the (optimal?) Blitz combos on Masterful Blitz when Perfect Balance is active", MNK.JobID)]
-        MNK_PerfectBalance_Plus = 9007,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Masterful Blitz on Main Combo", "Adds Masterful Blitz to the main combo", MNK.JobID)]
-        MNK_ST_Simple_MasterfulBlitz = 9008,
-
-        [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Masterful Blitz to AoE Combo", "Adds Masterful Blitz to the AoE combo.", MNK.JobID)]
-        MNK_AoE_Simple_MasterfulBlitz = 9009,
-
-        [ReplaceSkill(MNK.RiddleOfFire)]
-        [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID)]
-        MNK_Riddle_Brotherhood = 9012,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("CDs on Main Combo", "Adds various CDs to the main combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID)]
-        MNK_ST_Simple_CDs = 9013,
-
-        [ParentCombo(MNK_ST_Simple_CDs)]
-        [CustomComboInfo("Riddle of Wind on Main Combo", "Adds Riddle of Wind to the main combo.", MNK.JobID)]
-        MNK_ST_Simple_CDs_RiddleOfWind = 9014,
-
-        [ParentCombo(MNK_ST_Simple_CDs)]
-        [CustomComboInfo("Perfect Balance on Main Combo", "Adds Perfect Balance to the main combo.", MNK.JobID)]
-        MNK_ST_Simple_CDs_PerfectBalance = 9015,
-
-        [ParentCombo(MNK_ST_Simple_CDs)]
-        [CustomComboInfo("Brotherhood on Main Combo", "Adds Brotherhood to the main combo.", MNK.JobID)]
-        MNK_ST_Simple_CDs_Brotherhood = 9016,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Meditation on Main Combo", "Adds Meditation spender to the main combo.", MNK.JobID)]
-        MNK_ST_Simple_Meditation = 9017,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Lunar Solar Opener", "Start with the Lunar Solar Opener on the main combo. Requires level 68 for Riddle of Fire.\nA 1.93/1.94 GCD is highly recommended.", MNK.JobID)]
-        MNK_ST_Simple_LunarSolarOpener = 9018,
-
-        [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("CDs on AoE Combo", "Adds various CDs to the AoE combo when under Riddle of Fire or when Riddle of Fire is on cooldown.", MNK.JobID)]
-        MNK_AoE_Simple_CDs = 9019,
-
-        [ParentCombo(MNK_AoE_Simple_CDs)]
-        [CustomComboInfo("Riddle of Wind on AoE Combo", "Adds Riddle of Wind to the AoE combo.", MNK.JobID)]
-        MNK_AoE_Simple_CDs_RiddleOfWind = 9020,
-
-        [ParentCombo(MNK_AoE_Simple_CDs)]
-        [CustomComboInfo("Perfect Balance on AoE Combo", "Adds Perfect Balance to the AoE combo.", MNK.JobID)]
-        MNK_AoE_Simple_CDs_PerfectBalance = 9021,
-
-        [ParentCombo(MNK_AoE_Simple_CDs)]
-        [CustomComboInfo("Brotherhood on AoE Combo", "Adds Brotherhood to the AoE combo.", MNK.JobID)]
-        MNK_AoE_Simple_CDs_Brotherhood = 9022,
-
-        [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Meditation on AoE Combo", "Adds Meditation to the AoE combo.", MNK.JobID)]
-        MNK_AoE_Simple_Meditation = 9023,
-
-        [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Thunderclap on AoE Combo", "Adds Thunderclap when out of combat to the AoE combo.", MNK.JobID)]
-        MNK_AoE_Simple_Thunderclap = 9024,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Thunderclap on Main Combo", "Adds Thunderclap when out of combat to the main combo.", MNK.JobID)]
-        MNK_ST_Simple_Thunderclap = 9025,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID)]
-        MNK_ST_ComboHeals = 9026,
-
-        [ParentCombo(MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", MNK.JobID)]
-        MNK_AoE_ComboHeals = 9027,
-
-        [ParentCombo(MNK_ST_Simple_Meditation)]
-        [CustomComboInfo("Mediation Uptime Feature", "Replaces Main Combo with Mediation when you are out of range and out of opener/burst.", MNK.JobID)]
-        MNK_ST_Meditation_Uptime = 9028,
-
-        [ParentCombo(MNK_ST_SimpleMode)]
-        [CustomComboInfo("Dynamic True North Option", "Adds True North to the main combo right before positionals if you aren't in the correct position for their bonuses.", MNK.JobID)]
-        MNK_TrueNorthDynamic = 9029,
-
-        [Variant]
-        [VariantParent(MNK_ST_SimpleMode, MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
-        MNK_Variant_Cure = 9030,
-
-        [Variant]
-        [VariantParent(MNK_ST_SimpleMode, MNK_AoE_SimpleMode)]
-        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
-        MNK_Variant_Rampart = 9031,
+        [ReplaceSkill(MNK.ArmOfTheDestroyer)]
+        [CustomComboInfo("Basic AOE Rotation", "Basic Monk AOE Combo on one button", MNK.JobID)]
+        MNK_BasicAOECombo = 9003,
 
         // Last value = 9031
 

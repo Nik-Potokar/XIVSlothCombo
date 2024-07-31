@@ -1615,26 +1615,7 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MONK
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
-                UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
-                UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
-
-            if (preset == CustomComboPreset.MNK_ST_ComboHeals)
-            {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_STSecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-            }
-
-            if (preset == CustomComboPreset.MNK_AoE_ComboHeals)
-            {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-            }
-
-            if (preset == CustomComboPreset.MNK_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, MNK.Config.MNK_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================

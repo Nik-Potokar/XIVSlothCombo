@@ -1,10 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using System;
-using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -15,30 +14,35 @@ namespace XIVSlothCombo.Combos.PvE
         public const byte JobID = 20;
 
         public const uint
-            Bootshine = 53,
-            DragonKick = 74,
-            SnapPunch = 56,
+            Bootshine = 36945,
+            TrueStrike = 36946,
+            SnapPunch = 36947,
+            Meditation = 36942,
+            SteelPeak = 3547,
             TwinSnakes = 61,
+            ArmOfTheDestroyer = 25767,
             Demolish = 66,
-            ArmOfTheDestroyer = 62,
+            Mantra = 65,
+            DragonKick = 74,
             Rockbreaker = 70,
+            Thunderclap = 25762,
+            HowlingFist = 16474,
             FourPointFury = 16473,
             PerfectBalance = 69,
-            TrueStrike = 54,
-            Meditation = 3546,
-            HowlingFist = 25763,
-            Enlightenment = 16474,
-            MasterfulBlitz = 25764,
-            ElixirField = 3545,
-            FlintStrike = 25882,
-            RisingPhoenix = 25768,
-            ShadowOfTheDestroyer = 25767,
-            RiddleOfFire = 7395,
-            RiddleOfWind = 25766,
-            Brotherhood = 7396,
-            ForbiddenChakra = 3546,
             FormShift = 4262,
-            Thunderclap = 25762;
+            TheForbiddenChakra = 3547,
+            MasterfulBlitz = 25764,
+            RiddleOfEarth = 7394,
+            EarthsReply = 36944,
+            RiddleOfFire = 7395,
+            Brotherhood = 7396,
+            RiddleOfWind = 25766,
+            EnlightenedMeditation = 36943,
+            Enlightenment = 16474,
+            SixSidedStar = 16476,
+            ShadowOfTheDestroyer = 25767,
+            WindsReply = 36949,
+            FiresReply = 36950;
 
         public static class Buffs
         {
@@ -53,12 +57,6 @@ namespace XIVSlothCombo.Combos.PvE
                 FormlessFist = 2513,
                 DisciplinedFist = 3001,
                 Brotherhood = 1185;
-        }
-
-        public static class Debuffs
-        {
-            public const ushort
-                Demolish = 246;
         }
 
         public static class Levels
@@ -81,14 +79,15 @@ namespace XIVSlothCombo.Combos.PvE
                 Enlightenment = 70,
                 Brotherhood = 70,
                 RiddleOfWind = 72,
+                TheForbiddenChakra = 54,
                 ShadowOfTheDestroyer = 82;
         }
+
+        public static MNKGauge Gauge => CustomComboFunctions.GetJobGauge<MNKGauge>();
 
         public static class Config
         {
             public const string
-                MNK_Demolish_Apply = "MnkDemolishApply",
-                MNK_DisciplinedFist_Apply = "MnkDisciplinedFistApply",
                 MNK_STSecondWindThreshold = "MNK_STSecondWindThreshold",
                 MNK_STBloodbathThreshold = "MNK_STBloodbathThreshold",
                 MNK_AoESecondWindThreshold = "MNK_AoESecondWindThreshold",
@@ -98,7 +97,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MNK_AoE_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_AoE_SimpleMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicAOECombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -124,78 +123,69 @@ namespace XIVSlothCombo.Combos.PvE
                             return FormShift;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        if (!InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
                         {
                             return Thunderclap;
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                    if (IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
                         return Variant.VariantCure;
 
                     // Buffs
                     if (inCombat && canWeave)
                     {
-                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
+                        if (IsEnabled(Variant.VariantRampart) &&
                             IsOffCooldown(Variant.VariantRampart))
                             return Variant.VariantRampart;
 
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs))
+                        if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
                         {
-                            if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire))
-                            {
-                                return RiddleOfFire;
-                            }
+                            return RiddleOfFire;
+                        }
 
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_PerfectBalance) && level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                        if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
+                        {
+                            // Use Perfect Balance if:
+                            // 1. It's after Bootshine/Dragon Kick.
+                            // 2. At max stacks / before overcap.
+                            // 3. During Brotherhood.
+                            // 4. During Riddle of Fire.
+                            // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
+                            if ((GetRemainingCharges(PerfectBalance) == 2) ||
+                                (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                                (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             {
-                                // Use Perfect Balance if:
-                                // 1. It's after Bootshine/Dragon Kick.
-                                // 2. At max stacks / before overcap.
-                                // 3. During Brotherhood.
-                                // 4. During Riddle of Fire.
-                                // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                                if ((GetRemainingCharges(PerfectBalance) == 2) ||
-                                    (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
-                                    (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
-                                {
-                                    return PerfectBalance;
-                                }
-                            }
-
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_Brotherhood) && level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
-                            {
-                                return Brotherhood;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_CDs_RiddleOfWind) && level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
-                            {
-                                return RiddleOfWind;
+                                return PerfectBalance;
                             }
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
+                        if (level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood))
+                        {
+                            return Brotherhood;
+                        }
+
+                        if (level >= Levels.RiddleOfWind && !IsOnCooldown(RiddleOfWind))
+                        {
+                            return RiddleOfWind;
+                        }
+
+                        if (level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) ||
                             level < Levels.TwinSnakes) && canWeaveChakra)
                         {
                             return level >= Levels.Enlightenment ? OriginalHook(Enlightenment) : OriginalHook(Meditation);
                         }
 
-                        // healing - please move if not appropriate this high priority
-                        if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
-                        {
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                return All.SecondWind;
-                            if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                return All.Bloodbath;
-                        }
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoESecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                            return All.SecondWind;
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoEBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                            return All.Bloodbath;
                     }
 
                     // Masterful Blitz
-                    if (IsEnabled(CustomComboPreset.MNK_AoE_Simple_MasterfulBlitz) &&
-                        level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    if (level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                     {
                         return OriginalHook(MasterfulBlitz);
                     }
@@ -248,87 +238,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class MNK_DragonKick_Bootshine : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_DragonKick_Bootshine;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == DragonKick)
-                {
-                    if (IsEnabled(CustomComboPreset.MNK_BootshineBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                        return OriginalHook(MasterfulBlitz);
-
-                    if (HasEffect(Buffs.LeadenFist) &&
-                        (HasEffect(Buffs.FormlessFist) ||
-                        HasEffect(Buffs.PerfectBalance) ||
-                        HasEffect(Buffs.OpoOpoForm)))
-                        return Bootshine;
-
-                    if (level < Levels.DragonKick)
-                        return Bootshine;
-                }
-
-                return actionID;
-            }
-        }
-
-        internal class MNK_TwinSnakes : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_TwinSnakes;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == TrueStrike)
-                {
-                    var disciplinedFistBuff = HasEffect(Buffs.DisciplinedFist);
-                    var disciplinedFistDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
-
-                    if (level >= Levels.TrueStrike)
-                    {
-                        if ((!disciplinedFistBuff && level >= Levels.TwinSnakes) || (disciplinedFistDuration < 6 && level >= Levels.TwinSnakes))
-                            return TwinSnakes;
-                        return TrueStrike;
-                    }
-                }
-                return actionID;
-            }
-        }
-
-        internal class MNK_BasicCombo : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicCombo;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == Bootshine)
-                {
-                    if (HasEffect(Buffs.RaptorForm) && level >= Levels.TrueStrike)
-                    {
-                        if (!HasEffect(Buffs.DisciplinedFist) && level >= Levels.TwinSnakes)
-                            return TwinSnakes;
-                        return TrueStrike;
-                    }
-
-                    if (HasEffect(Buffs.CoerlForm) && level >= Levels.SnapPunch)
-                    {
-                        if (!TargetHasEffect(Debuffs.Demolish) && level >= Levels.Demolish)
-                            return Demolish;
-                        return SnapPunch;
-                    }
-
-                    if (!HasEffect(Buffs.LeadenFist) && HasEffect(Buffs.OpoOpoForm) && level >= Levels.DragonKick)
-                        return DragonKick;
-                    return Bootshine;
-                }
-
-                return actionID;
-            }
-        }
-
         internal class MNK_PerfectBalance : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_PerfectBalance;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -344,399 +256,50 @@ namespace XIVSlothCombo.Combos.PvE
 
         internal class MNK_ST_SimpleMode : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_SimpleMode;
-
-            internal static bool inOpener = false;
-            internal static bool openerFinished = false;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_BasicCombo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (actionID == Bootshine)
                 {
                     var inCombat = HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat);
-                    var gauge = GetJobGauge<MNKGauge>();
                     var canWeave = CanWeave(actionID, 0.5);
                     var canDelayedWeave = CanWeave(actionID, 0.0) && GetCooldown(actionID).CooldownRemaining < 0.7;
-                    var twinsnakeDuration = GetBuffRemainingTime(Buffs.DisciplinedFist);
-                    var demolishDuration = GetDebuffRemainingTime(Debuffs.Demolish);
                     var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var solarNadi = gauge.Nadi == Nadi.SOLAR;
+                    var lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+                    var solarNadi = Gauge.Nadi == Nadi.SOLAR;
 
-                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
-                        return Variant.VariantCure;
-
-                    // Opener for MNK
-                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_LunarSolarOpener))
-                    {
-                        // Re-enter opener when Brotherhood is used
-                        if (lastComboMove == Brotherhood)
-                        {
-                            inOpener = true;
-                            openerFinished = false;
-                        }
-
-                        if (!inCombat)
-                        {
-                            if (inOpener || openerFinished)
-                            {
-                                inOpener = false;
-                                openerFinished = false;
-                            }
-                        }
-
-                        else
-                        {
-                            if (!inOpener && !openerFinished)
-                            {
-                                inOpener = true;
-                            }
-                        }
-
-                        if (inCombat && inOpener && !openerFinished)
-                        {
-                            if (level >= Levels.RiddleOfFire)
-                            {
-                                // Early exit out of opener
-                                if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 40)
-                                {
-                                    inOpener = false;
-                                    openerFinished = true;
-                                }
-
-                                // Delayed weave for Riddle of Fire specifically
-                                if (canDelayedWeave)
-                                {
-                                    if ((HasEffect(Buffs.CoerlForm) || lastComboMove == TwinSnakes) && !IsOnCooldown(RiddleOfFire))
-                                    {
-                                        return RiddleOfFire;
-                                    }
-                                }
-
-                                if (canWeave)
-                                {
-                                    if (IsOnCooldown(RiddleOfFire) && GetCooldownRemainingTime(RiddleOfFire) <= 59)
-                                    {
-                                        if (level >= Levels.Brotherhood && !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire) &&
-                                           (lastComboMove == Bootshine || lastComboMove == DragonKick))
-                                        {
-                                            return Brotherhood;
-                                        }
-
-                                        if (GetRemainingCharges(PerfectBalance) > 0 && !HasEffect(Buffs.PerfectBalance) && !HasEffect(Buffs.FormlessFist) &&
-                                           (lastComboMove == Bootshine || lastComboMove == DragonKick) && OriginalHook(MasterfulBlitz) == MasterfulBlitz)
-                                        {
-                                            return PerfectBalance;
-                                        }
-
-                                        if (level >= Levels.RiddleOfWind && HasEffect(Buffs.PerfectBalance) && !IsOnCooldown(RiddleOfWind))
-                                        {
-                                            return RiddleOfWind;
-                                        }
-
-                                        if (gauge.Chakra == 5)
-                                        {
-                                            return OriginalHook(Meditation);
-                                        }
-                                    }
-
-                                    // healing - please move if not appropriate this high priority
-                                    if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
-                                    {
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                            return All.SecondWind;
-                                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                            return All.Bloodbath;
-                                    }
-                                }
-                            }
-
-                            else
-                            {
-                                // Automatically exit opener if we don't have Riddle of Fire
-                                inOpener = false;
-                                openerFinished = true;
-                            }
-                        }
-                    }
-
-                    // Out of combat preparation
+                    // Buffs
                     if (!inCombat)
                     {
-                        if (!inOpener && gauge.Chakra < 5 && level >= Levels.Meditation)
+                        if (Gauge.Chakra < 5 && level >= Levels.Meditation)
                         {
                             return Meditation;
                         }
+                    }
 
-                        if (!inOpener && level >= Levels.FormShift && !HasEffect(Buffs.FormlessFist) && comboTime <= 0)
+                    if (inCombat)
+                    {
+                        if (Gauge.Chakra == 5 && level >= Levels.TheForbiddenChakra)
                         {
-                            return FormShift;
+                            return TheForbiddenChakra;
                         }
 
-                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Thunderclap) && !InMeleeRange() && gauge.Chakra == 5 && (!LevelChecked(FormShift) || HasEffect(Buffs.FormlessFist)))
+                        if (HasEffect(Buffs.OpoOpoForm))
                         {
-                            return Thunderclap;
-                        }
-                    }
-
-                    // Buffs
-                    if (inCombat && !inOpener)
-                    {
-                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
-                            IsEnabled(Variant.VariantRampart) &&
-                            IsOffCooldown(Variant.VariantRampart) &&
-                            canWeave)
-                            return Variant.VariantRampart;
-
-                        if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs))
-                        {
-                            if (canWeave)
-                            {
-
-                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_PerfectBalance) && !HasEffect(Buffs.FormlessFist) &&
-                                    level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.DisciplinedFist) &&
-                                    OriginalHook(MasterfulBlitz) == MasterfulBlitz)
-                                {
-                                    // Use Perfect Balance if:
-                                    // 1. It's after Bootshine/Dragon Kick.
-                                    // 2. At max stacks / before overcap.
-                                    // 3. During Brotherhood.
-                                    // 4. During Riddle of Fire after Demolish has been applied.
-                                    // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                                    if ((lastComboMove == Bootshine || lastComboMove == DragonKick) &&
-                                        ((GetRemainingCharges(PerfectBalance) == 2) ||
-                                        (GetRemainingCharges(PerfectBalance) == 1 && GetCooldownChargeRemainingTime(PerfectBalance) < 4) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.Brotherhood)) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) > 40) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) > 6) ||
-                                        (GetRemainingCharges(PerfectBalance) >= 1 && GetCooldownRemainingTime(RiddleOfFire) < 3 && GetCooldownRemainingTime(Brotherhood) < 10)))
-                                    {
-                                        return PerfectBalance;
-                                    }
-                                }
-                            }
-
-                            if (canDelayedWeave)
-                            {
-                                if (level >= Levels.RiddleOfFire && !IsOnCooldown(RiddleOfFire) && HasEffect(Buffs.DisciplinedFist))
-                                {
-                                    return RiddleOfFire;
-                                }
-
-                                if (TargetNeedsPositionals() && IsEnabled(CustomComboPreset.MNK_TrueNorthDynamic) && LevelChecked(All.TrueNorth) && GetRemainingCharges(All.TrueNorth) > 0 && !HasEffect(All.Buffs.TrueNorth) && LevelChecked(Demolish) && HasEffect(Buffs.CoerlForm))
-                                {
-                                    if (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
-                                    {
-                                        if (!OnTargetsRear())
-                                            return All.TrueNorth;
-                                    }
-                                    else if (!OnTargetsFlank())
-                                        return All.TrueNorth;
-                                }
-                            }
-
-                            if (canWeave)
-                            {
-                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_Brotherhood) && level >= Levels.Brotherhood &&
-                                   !IsOnCooldown(Brotherhood) && IsOnCooldown(RiddleOfFire))
-                                {
-                                    return Brotherhood;
-                                }
-
-                                if (IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs_RiddleOfWind) && level >= Levels.RiddleOfWind &&
-                                   !IsOnCooldown(RiddleOfWind) && IsOnCooldown(RiddleOfFire) && IsOnCooldown(Brotherhood))
-                                {
-                                    return RiddleOfWind;
-                                }
-
-                                // healing - please move if not appropriate this high priority
-                                if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
-                                {
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STSecondWindThreshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
-                                        return All.SecondWind;
-                                    if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_STBloodbathThreshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
-                                        return All.Bloodbath;
-                                }
-                            }
+                            return Gauge.OpoOpoFury == 0 ? DragonKick : Bootshine;
                         }
 
-                        if (canWeave)
+                        if (HasEffect(Buffs.RaptorForm))
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
-                            {
-                                if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
-                                {
-                                    return OriginalHook(Meditation);
-                                }
-                            }
-                        }
-                    }
-
-                    // Masterful Blitz
-                    if (IsEnabled(CustomComboPreset.MNK_ST_Simple_MasterfulBlitz) && level >= Levels.MasterfulBlitz && !HasEffect(Buffs.PerfectBalance) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                    {
-                        return OriginalHook(MasterfulBlitz);
-                    }
-
-                    // Perfect Balance
-                    if (HasEffect(Buffs.PerfectBalance))
-                    {
-                        bool opoopoChakra = Array.Exists(gauge.BeastChakra, e => e == BeastChakra.OPOOPO);
-                        bool coeurlChakra = Array.Exists(gauge.BeastChakra, e => e == BeastChakra.COEURL);
-                        bool raptorChakra = Array.Exists(gauge.BeastChakra, e => e == BeastChakra.RAPTOR);
-                        bool canSolar = gauge.BeastChakra.Where(e => e == BeastChakra.OPOOPO).Count() != 2;
-                        if (opoopoChakra)
-                        {
-                            if (coeurlChakra)
-                            {
-                                return TwinSnakes;
-                            }
-                            if (raptorChakra)
-                            {
-                                return Demolish;
-                            }
-                            if (lunarNadi && !solarNadi)
-                            {
-                                bool demolishFirst = !TargetHasEffect(Debuffs.Demolish);
-                                if (!demolishFirst && HasEffect(Buffs.DisciplinedFist))
-                                {
-                                    demolishFirst = twinsnakeDuration >= demolishDuration;
-                                }
-                                return demolishFirst ? Demolish : TwinSnakes;
-                            }
-                        }
-                        if (canSolar && (lunarNadi || !solarNadi))
-                        {
-                            if (!raptorChakra && (!HasEffect(Buffs.DisciplinedFist) || twinsnakeDuration <= 2.5))
-                            {
-                                return TwinSnakes;
-                            }
-                            if (!coeurlChakra && (!TargetHasEffect(Debuffs.Demolish) || demolishDuration <= 2.5))
-                            {
-                                return Demolish;
-                            }
-                        }
-                        return HasEffect(Buffs.LeadenFist) ? Bootshine : DragonKick;
-                    }
-
-                    // Monk Rotation
-                    if (IsEnabled(CustomComboPreset.MNK_ST_Meditation_Uptime) && !InMeleeRange() && gauge.Chakra < 5 && LevelChecked(Meditation))
-                    {
-                        return Meditation;
-                    }
-
-                    if (!HasEffect(Buffs.PerfectBalance))
-                    {
-                        if (HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.OpoOpoForm))
-                        {
-                            return !LevelChecked(DragonKick) || HasEffect(Buffs.LeadenFist)
-                                ? Bootshine
-                                : DragonKick;
-                        }
-                    }
-
-                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
-                    {
-                        if (!LevelChecked(TrueStrike))
-                        {
-                            return Bootshine;
+                            return Gauge.RaptorFury == 0 ? TwinSnakes : TrueStrike;
                         }
 
-                        return !LevelChecked(TwinSnakes) || (twinsnakeDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_DisciplinedFist_Apply))
-                            ? TrueStrike
-                            : TwinSnakes;
-                    }
-                    if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.CoerlForm))
-                    {
-                        return !LevelChecked(SnapPunch)
-                            ? Bootshine
-                            : !LevelChecked(Demolish) || (demolishDuration >= PluginConfiguration.GetCustomFloatValue(Config.MNK_Demolish_Apply))
-                                ? SnapPunch
-                                : Demolish;
-                    }
-                }
-                return actionID;
-            }
-        }
-
-        internal class MNK_PerfectBalance_Plus : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_PerfectBalance_Plus;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == MasterfulBlitz)
-                {
-                    var gauge = GetJobGauge<MNKGauge>();
-                    var pbStacks = FindEffectAny(Buffs.PerfectBalance);
-                    var lunarNadi = gauge.Nadi == Nadi.LUNAR;
-                    var nadiNONE = gauge.Nadi == Nadi.NONE;
-                    if (!nadiNONE && !lunarNadi)
-                    {
-                        if (pbStacks?.StackCount == 3)
-                            return DragonKick;
-
-                        if (pbStacks?.StackCount == 2)
-                            return Bootshine;
-
-                        if (pbStacks?.StackCount == 1)
-                            return DragonKick;
-                    }
-
-                    if (nadiNONE)
-                    {
-                        if (pbStacks?.StackCount == 3)
-                            return DragonKick;
-
-                        if (pbStacks?.StackCount == 2)
-                            return Bootshine;
-
-                        if (pbStacks?.StackCount == 1)
-                            return DragonKick;
-                    }
-
-                    if (lunarNadi)
-                    {
-                        if (pbStacks?.StackCount == 3)
-                            return TwinSnakes;
-
-                        if (pbStacks?.StackCount == 2)
-                            return DragonKick;
-
-                        if (pbStacks?.StackCount == 1)
-                            return Demolish;
-                    }
-
-                }
-                return actionID;
-            }
-        }
-
-        internal class MNK_Riddle_Brotherhood : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_Riddle_Brotherhood;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is RiddleOfFire && level >= Levels.Brotherhood && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood))
-                    return Brotherhood;
-                else return actionID;
-            }
-        }
-
-        internal class MNK_HowlingFistMeditation : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_HowlingFistMeditation;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID == HowlingFist || actionID == Enlightenment)
-                {
-                    var gauge = GetJobGauge<MNKGauge>();
-
-                    if (gauge.Chakra < 5)
-                    {
-                        return Meditation;
+                        if (HasEffect(Buffs.CoerlForm))
+                        {
+                            // Can we warn about the positional here?
+                            return Gauge.CoeurlFury == 0 ? Demolish : SnapPunch;
+                        }
                     }
                 }
                 return actionID;
