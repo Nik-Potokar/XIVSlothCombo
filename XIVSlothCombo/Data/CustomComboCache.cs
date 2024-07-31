@@ -1,12 +1,11 @@
-﻿using System;
-using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.ClientState.Objects.SubKinds;
-using DalamudStatus = Dalamud.Game.ClientState.Statuses; // conflicts with structs if not defined
-using FFXIVClientStructs.FFXIV.Client.Game;
-using XIVSlothCombo.Services;
 using Dalamud.Plugin.Services;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using System;
 using System.Collections.Concurrent;
+using DalamudStatus = Dalamud.Game.ClientState.Statuses; // conflicts with structs if not defined
 
 namespace XIVSlothCombo.Data
 {
@@ -23,12 +22,12 @@ namespace XIVSlothCombo.Data
         private readonly ConcurrentDictionary<Type, JobGaugeBase> jobGaugeCache = new();
 
         /// <summary> Initializes a new instance of the <see cref="CustomComboCache"/> class. </summary>
-        public CustomComboCache() => Service.Framework.Update += Framework_Update;
+        public CustomComboCache() => Svc.Framework.Update += Framework_Update;
 
         private delegate IntPtr GetActionCooldownSlotDelegate(IntPtr actionManager, int cooldownGroup);
 
         /// <inheritdoc/>
-        public void Dispose() => Service.Framework.Update -= Framework_Update;
+        public void Dispose() => Svc.Framework.Update -= Framework_Update;
 
         /// <summary> Gets a job gauge. </summary>
         /// <typeparam name="T"> Type of job gauge. </typeparam>
@@ -36,7 +35,7 @@ namespace XIVSlothCombo.Data
         internal T GetJobGauge<T>() where T : JobGaugeBase
         {
             if (!jobGaugeCache.TryGetValue(typeof(T), out JobGaugeBase? gauge))
-                gauge = jobGaugeCache[typeof(T)] = Service.JobGauges.Get<T>();
+                gauge = jobGaugeCache[typeof(T)] = Svc.Gauges.Get<T>();
 
             return (T)gauge;
         }
@@ -80,7 +79,7 @@ namespace XIVSlothCombo.Data
                 ActionID = actionID,
             };
 
-            return cooldownCache[actionID] = data;  
+            return cooldownCache[actionID] = data;
         }
 
         /// <summary> Get the maximum number of charges for an action. </summary>

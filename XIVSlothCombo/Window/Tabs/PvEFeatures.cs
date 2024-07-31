@@ -1,5 +1,4 @@
-﻿using Dalamud.Interface.Internal;
-using Dalamud.Interface.Textures.TextureWraps;
+﻿using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
@@ -183,7 +182,7 @@ namespace XIVSlothCombo.Window.Tabs
                     else
                     {
                         presetBox.Draw();
-                        
+
                         continue;
                     }
                 }
