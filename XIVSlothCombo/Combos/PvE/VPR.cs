@@ -157,6 +157,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HasEffect(Buffs.PoisedForTwinblood))
                             return OriginalHook(Twinblood);
 
+                        if (LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
+                            return gauge.HasRattlingCoilStack()
+                                ? UncoiledFury
+                                : WrithingSnap;
+
                         if (HasEffect(Buffs.HuntersVenom))
                             return OriginalHook(Twinfang);
 
@@ -174,11 +179,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return SwiftskinsCoil;
                         }
                     }
-
-                    if (LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
-                        return gauge.HasRattlingCoilStack()
-                            ? UncoiledFury
-                            : WrithingSnap;
 
                     //Reawakend Usage
                     if (UseReawaken(gauge))
@@ -304,9 +304,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingFangs)
                                 : OriginalHook(SteelFangs);
                     }
-                    return LevelChecked(ReavingFangs) && (HasEffect(Buffs.HonedReavers) || (!HasEffect(Buffs.HonedReavers) && !HasEffect(Buffs.HonedSteel)))
-                            ? OriginalHook(ReavingFangs)
-                            : OriginalHook(SteelFangs);
                 }
                 return actionID;
             }
@@ -419,6 +416,12 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Twinblood);
                     }
 
+                    if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
+                        LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget() && !HasEffect(Buffs.Reawakened))
+                        return (IsEnabled(CustomComboPreset.VPR_ST_RangedUptimeUncoiledFury) && gauge.HasRattlingCoilStack())
+                            ? UncoiledFury
+                            : WrithingSnap;
+
                     //Vicewinder Combo
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) &&
@@ -460,12 +463,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
                     }
-
-                    if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
-                        LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
-                        return (IsEnabled(CustomComboPreset.VPR_ST_RangedUptimeUncoiledFury) && gauge.HasRattlingCoilStack())
-                            ? UncoiledFury
-                            : WrithingSnap;
 
                     //Reawakend Usage
                     if (UseReawaken(gauge))
@@ -606,9 +603,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingFangs)
                                 : OriginalHook(SteelFangs);
                     }
-                    return LevelChecked(ReavingFangs) && (HasEffect(Buffs.HonedReavers) || (!HasEffect(Buffs.HonedReavers) && !HasEffect(Buffs.HonedSteel)))
-                            ? OriginalHook(ReavingFangs)
-                            : OriginalHook(SteelFangs);
                 }
                 return actionID;
             }
@@ -739,10 +733,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (LevelChecked(UncoiledFury) && gauge.HasRattlingCoilStack() &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
                         !VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
-                        !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
-                        !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom) &&
-                        !WasLastWeaponskill(JaggedMaw) && !WasLastWeaponskill(BloodiedMaw) &&
-                        !WasLastAbility(SerpentsIre))
+                        !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom) &&
+                        !WasLastWeaponskill(JaggedMaw) && !WasLastWeaponskill(BloodiedMaw) && !WasLastAbility(SerpentsIre))
                         return UncoiledFury;
 
                     //Reawaken combo
@@ -796,11 +788,11 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingMaw or SteelMaw)
                         {
-                            if (HasEffect(Buffs.GrimhuntersVenom) && LevelChecked(HuntersBite))
+                            if (LevelChecked(HuntersBite) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
                                 return OriginalHook(SteelMaw);
 
-                            if ((HasEffect(Buffs.GrimskinsVenom) ||
-                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))) && LevelChecked(SwiftskinsBite))
+                            if (LevelChecked(SwiftskinsBite) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
+                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingMaw);
                         }
 
@@ -818,10 +810,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingMaw)
                                 : OriginalHook(SteelMaw);
                     }
-                    return LevelChecked(ReavingMaw) &&
-                        (HasEffect(Buffs.HonedReavers) || (!HasEffect(Buffs.HonedReavers) && !HasEffect(Buffs.HonedSteel)))
-                            ? OriginalHook(ReavingMaw)
-                            : OriginalHook(SteelMaw);
                 }
                 return actionID;
             }
@@ -911,9 +899,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Vicepit Usage
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
-                    IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) &&
-                    ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) &&
-                    ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)))
+                        IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) &&
+                        ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) &&
+                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)))
                         return Vicepit;
 
                     // Uncoiled Fury usage
@@ -922,10 +910,8 @@ namespace XIVSlothCombo.Combos.PvE
                         ((gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges) || (enemyHP < uncoiledThreshold && gauge.HasRattlingCoilStack())) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
                         !VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
-                        !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
-                        !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom) &&
-                        !WasLastWeaponskill(JaggedMaw) && !WasLastWeaponskill(BloodiedMaw) &&
-                        !WasLastAbility(SerpentsIre))
+                        !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom) &&
+                        !WasLastWeaponskill(JaggedMaw) && !WasLastWeaponskill(BloodiedMaw) && !WasLastAbility(SerpentsIre))
                         return UncoiledFury;
 
                     //Reawaken combo
@@ -983,11 +969,11 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingMaw or SteelMaw)
                         {
-                            if (HasEffect(Buffs.GrimhuntersVenom) && LevelChecked(HuntersBite))
+                            if (LevelChecked(HuntersBite) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
                                 return OriginalHook(SteelMaw);
 
-                            if ((HasEffect(Buffs.GrimskinsVenom) ||
-                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))) && LevelChecked(SwiftskinsBite))
+                            if (LevelChecked(SwiftskinsBite) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
+                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingMaw);
                         }
 
@@ -1005,10 +991,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingMaw)
                                 : OriginalHook(SteelMaw);
                     }
-                    return LevelChecked(ReavingMaw) &&
-                        (HasEffect(Buffs.HonedReavers) || (!HasEffect(Buffs.HonedReavers) && !HasEffect(Buffs.HonedSteel)))
-                        ? OriginalHook(ReavingMaw)
-                        : OriginalHook(SteelMaw);
                 }
                 return actionID;
             }
