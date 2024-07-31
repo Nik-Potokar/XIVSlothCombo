@@ -573,7 +573,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (gauge.ElementTimeRemaining <= astralFireRefresh && !HasEffect(Buffs.Firestarter) && currentMP >= MP.FireI)
                             return OriginalHook(Fire);
 
-                        if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) && 
+                        if (IsEnabled(CustomComboPreset.BLM_Adv_Cooldowns) &&
                             Config.BLM_Adv_Cooldowns_Choice[0] &&
                             ActionReady(Manafont) && WasLastAction(Despair))
                             return Manafont;
@@ -718,7 +718,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Blizzard to Umbral Ice
                         if ((currentMP is 0 && WasLastAction(Flare)) ||
                             (currentMP < MP.FireAoE && !LevelChecked(Flare)))
-                            return  OriginalHook(Blizzard2);
+                            return OriginalHook(Blizzard2);
 
                         if (currentMP >= MP.AllMPSpells)
                         {
@@ -768,7 +768,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && Freeze.LevelChecked() && currentMP >= MP.Freeze)
                             return Freeze;
-                        
+
                         if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
                             return Transpose;
 
@@ -889,8 +889,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast))
                                 return Triplecast;
 
-                                if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && TraitLevelChecked(Traits.Enochian) &&
-                                (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                            if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) && TraitLevelChecked(Traits.Enochian) &&
+                            (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
                                 return Flare;
 
                             if (currentMP > MP.FireAoE)

@@ -1,5 +1,4 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using ImGuiNET;
@@ -7,7 +6,6 @@ using System;
 using System.Linq;
 using System.Numerics;
 using XIVSlothCombo.Combos;
-using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -31,12 +29,12 @@ namespace XIVSlothCombo.Window.Tabs
         public static int debugNum = 0;
         internal unsafe static new void Draw()
         {
-            IPlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
+            IPlayerCharacter? LocalPlayer = Svc.ClientState.LocalPlayer;
             DebugCombo? comboClass = new();
 
             if (LocalPlayer != null)
             {
-                if (Service.ClientState.LocalPlayer.TargetObject is IBattleChara chara)
+                if (Svc.ClientState.LocalPlayer.TargetObject is IBattleChara chara)
                 {
                     foreach (Status? status in chara.StatusList)
                     {
@@ -44,14 +42,14 @@ namespace XIVSlothCombo.Window.Tabs
                     }
                 }
 
-                foreach (Status? status in (Service.ClientState.LocalPlayer as IBattleChara).StatusList)
+                foreach (Status? status in (Svc.ClientState.LocalPlayer as IBattleChara).StatusList)
                 {
-                    ImGui.TextUnformatted($"SELF STATUS CHECK: {Service.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime, 1)}");
+                    ImGui.TextUnformatted($"SELF STATUS CHECK: {Svc.ClientState.LocalPlayer.Name} -> {ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime, 1)}");
                 }
 
-                ImGui.TextUnformatted($"TERRITORY: {Service.ClientState.TerritoryType}");
-                ImGui.TextUnformatted($"TARGET OBJECT KIND: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
-                ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Service.ClientState.LocalPlayer.TargetObject is IBattleChara}");
+                ImGui.TextUnformatted($"TERRITORY: {Svc.ClientState.TerritoryType}");
+                ImGui.TextUnformatted($"TARGET OBJECT KIND: {Svc.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
+                ImGui.TextUnformatted($"TARGET IS BATTLE CHARA: {Svc.ClientState.LocalPlayer.TargetObject is IBattleChara}");
                 ImGui.TextUnformatted($"IN COMBAT: {CustomComboFunctions.InCombat()}");
                 ImGui.TextUnformatted($"IN MELEE RANGE: {CustomComboFunctions.InMeleeRange()}");
                 ImGui.TextUnformatted($"DISTANCE FROM TARGET: {CustomComboFunctions.GetTargetDistance()}");
@@ -62,7 +60,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.TextUnformatted($"LAST WEAPONSKILL: {ActionWatching.GetActionName(ActionWatching.LastWeaponskill)}");
                 ImGui.TextUnformatted($"LAST SPELL: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
                 ImGui.TextUnformatted($"LAST ABILITY: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
-                ImGui.TextUnformatted($"ZONE: {Service.ClientState.TerritoryType}");
+                ImGui.TextUnformatted($"ZONE: {Svc.ClientState.TerritoryType}");
                 ImGui.BeginChild("BLUSPELLS", new Vector2(250, 100), false);
                 ImGui.TextUnformatted($"SELECTED BLU SPELLS:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
                 ImGui.EndChild();

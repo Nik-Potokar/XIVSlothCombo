@@ -347,7 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus))
                         {
                             if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) &&
-                                setupSuitonWindow && 
+                                setupSuitonWindow &&
                                 TrickAttack.LevelChecked() &&
                                 !HasEffect(Buffs.Suiton) &&
                                 chargeCheck &&
