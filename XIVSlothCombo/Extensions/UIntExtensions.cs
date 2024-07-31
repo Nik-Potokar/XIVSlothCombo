@@ -14,6 +14,6 @@ namespace XIVSlothCombo.Extensions
 
     internal static class UShortExtensions
     {
-        internal static string StatusName(this ushort value) => ActionWatching.GetStatusName(value);    
+        internal static string StatusName(this ushort value) => ActionWatching.GetStatusName(value);
     }
 }

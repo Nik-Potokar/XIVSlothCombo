@@ -1,12 +1,10 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using ECommons.DalamudServices;
 using System;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
-using static FFXIVClientStructs.FFXIV.Client.UI.AddonJobHudBRD0;
 
 namespace XIVSlothCombo.Combos.PvE
 {
