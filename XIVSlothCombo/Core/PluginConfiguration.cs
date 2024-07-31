@@ -1,13 +1,13 @@
+using Dalamud.Configuration;
+using ECommons.DalamudServices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dalamud.Configuration;
-using Newtonsoft.Json;
+using System.Numerics;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.Services;
 using XIVSlothCombo.Extensions;
-using System.Numerics;
 
 namespace XIVSlothCombo.Core
 {
@@ -192,7 +192,7 @@ namespace XIVSlothCombo.Core
 
         public void ResetFeatures(string config, int[] values)
         {
-            Service.PluginLog.Debug($"{config} {GetResetValues(config)}");
+            Svc.Log.Debug($"{config} {GetResetValues(config)}");
             if (!GetResetValues(config))
             {
                 bool needToResetMessagePrinted = false;
@@ -201,7 +201,7 @@ namespace XIVSlothCombo.Core
 
                 foreach (int value in values)
                 {
-                    Service.PluginLog.Debug(value.ToString());
+                    Svc.Log.Debug(value.ToString());
                     if (presets.Contains(value))
                     {
                         var preset = Enum.GetValues<CustomComboPreset>()
@@ -212,18 +212,18 @@ namespace XIVSlothCombo.Core
 
                         if (!needToResetMessagePrinted)
                         {
-                            Service.ChatGui.PrintError($"[XIVSlothCombo] Some features have been disabled due to an internal configuration update:");
+                            Svc.Chat.PrintError($"[XIVSlothCombo] Some features have been disabled due to an internal configuration update:");
                             needToResetMessagePrinted = !needToResetMessagePrinted;
                         }
 
                         var info = preset.GetComboAttribute();
-                        Service.ChatGui.PrintError($"[XIVSlothCombo] - {info.JobName}: {info.FancyName}");
+                        Svc.Chat.PrintError($"[XIVSlothCombo] - {info.JobName}: {info.FancyName}");
                         EnabledActions.Remove(preset);
                     }
                 }
-                
+
                 if (needToResetMessagePrinted)
-                Service.ChatGui.PrintError($"[XIVSlothCombo] Please re-enable these features to use them again. We apologise for the inconvenience");
+                    Svc.Chat.PrintError($"[XIVSlothCombo] Please re-enable these features to use them again. We apologise for the inconvenience");
             }
             SetResetValues(config, true);
             Save();
@@ -242,7 +242,7 @@ namespace XIVSlothCombo.Core
         public bool RecommendedSettingsViewed { get; set; } = false;
 
         /// <summary> Save the configuration to disk. </summary>
-        public void Save() => Service.Interface.SavePluginConfig(this);
+        public void Save() => Svc.PluginInterface.SavePluginConfig(this);
 
         #endregion
     }

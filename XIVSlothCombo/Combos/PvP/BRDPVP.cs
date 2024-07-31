@@ -32,7 +32,7 @@ namespace XIVSlothCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                
+
                 if (actionID == PowerfulShot)
                 {
                     var canWeave = CanWeave(actionID, 0.5);
@@ -57,7 +57,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                     return OriginalHook(PowerfulShot);
                 }
-                
+
                 return actionID;
             }
         }

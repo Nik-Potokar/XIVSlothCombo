@@ -8,7 +8,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         public static int GetMatchingConfigST(int i, out uint action, out bool enabled)
         {
             var healTarget = GetHealTarget(PvE.SGE.Config.SGE_ST_Heal_Adv && PvE.SGE.Config.SGE_ST_Heal_UIMouseOver);
-            
+
             switch (i)
             {
                 case 0:

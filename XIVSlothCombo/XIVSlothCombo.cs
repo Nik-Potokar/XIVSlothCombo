@@ -3,13 +3,20 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
+using Dalamud.Utility;
+using ECommons;
+using ECommons.DalamudServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
+using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Combos.PvP;
@@ -18,15 +25,6 @@ using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window;
 using XIVSlothCombo.Window.Tabs;
-using ECommons;
-using Dalamud.Plugin.Services;
-using System.Reflection;
-using Dalamud.Utility;
-using XIVSlothCombo.Attributes;
-using Dalamud.Interface.Windowing;
-using Dalamud.Game.Addon.Lifecycle;
-using ECommons.DalamudServices;
-using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 
 namespace XIVSlothCombo
 {
@@ -82,7 +80,7 @@ namespace XIVSlothCombo
             {
                 if (jobID != value && value != null)
                 {
-                    Service.PluginLog.Debug($"Switched to job {value}");
+                    Svc.Log.Debug($"Switched to job {value}");
                     PvEFeatures.HasToOpenJob = true;
                 }
                 jobID = value;
@@ -99,7 +97,7 @@ namespace XIVSlothCombo
 
             Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             Service.Address = new PluginAddressResolver();
-            Service.Address.Setup(Service.SigScanner);
+            Service.Address.Setup(Svc.SigScanner);
             PresetStorage.Init();
 
             Service.ComboCache = new CustomComboCache();
@@ -114,19 +112,19 @@ namespace XIVSlothCombo
             ws.AddWindow(ConfigWindow);
             ws.AddWindow(TargetHelper);
 
-            Service.Interface.UiBuilder.Draw += ws.Draw;
-            Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
+            Svc.PluginInterface.UiBuilder.Draw += ws.Draw;
+            Svc.PluginInterface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 
-            Service.CommandManager.AddHandler(Command, new CommandInfo(OnCommand)
+            Svc.Commands.AddHandler(Command, new CommandInfo(OnCommand)
             {
                 HelpMessage = "Open a window to edit custom combo settings.",
                 ShowInHelp = true,
             });
 
-            Service.ClientState.Login += PrintLoginMessage;
-            if (Service.ClientState.IsLoggedIn) ResetFeatures();
+            Svc.ClientState.Login += PrintLoginMessage;
+            if (Svc.ClientState.IsLoggedIn) ResetFeatures();
 
-            Service.Framework.Update += OnFrameworkUpdate;
+            Svc.Framework.Update += OnFrameworkUpdate;
 
             KillRedundantIDs();
             HandleConflictedCombos();
@@ -160,8 +158,8 @@ namespace XIVSlothCombo
 
         private void OnFrameworkUpdate(IFramework framework)
         {
-            if (Service.ClientState.LocalPlayer is not null)
-                JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+            if (Svc.ClientState.LocalPlayer is not null)
+                JobID = Svc.ClientState.LocalPlayer?.ClassJob?.Id;
 
             BlueMageService.PopulateBLUSpells();
             TargetHelper.Draw();
@@ -218,7 +216,7 @@ namespace XIVSlothCombo
                     EmphasisItalicPayload.ItalicsOff
                 ];
 
-                Service.ChatGui.Print(new XivChatEntry
+                Svc.Chat.Print(new XivChatEntry
                 {
                     Message = new SeString(payloads),
                     Type = XivChatType.Echo
@@ -227,7 +225,7 @@ namespace XIVSlothCombo
 
             catch (Exception ex)
             {
-                Service.PluginLog.Error(ex, "Unable to retrieve MotD");
+                Svc.Log.Error(ex, "Unable to retrieve MotD");
             }
         }
 
@@ -241,10 +239,10 @@ namespace XIVSlothCombo
             ConfigWindow?.Dispose();
 
             ws.RemoveAllWindows();
-            Service.CommandManager.RemoveHandler(Command);
-            Service.Framework.Update -= OnFrameworkUpdate;
-            Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
-            Service.Interface.UiBuilder.Draw -= DrawUI;
+            Svc.Commands.RemoveHandler(Command);
+            Svc.Framework.Update -= OnFrameworkUpdate;
+            Svc.PluginInterface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
+            Svc.PluginInterface.UiBuilder.Draw -= DrawUI;
 
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
@@ -252,7 +250,7 @@ namespace XIVSlothCombo
             Combos.JobHelpers.AST.Dispose();
             DisposeOpeners();
 
-            Service.ClientState.Login -= PrintLoginMessage;
+            Svc.ClientState.Login -= PrintLoginMessage;
             P = null;
         }
 
@@ -277,14 +275,14 @@ namespace XIVSlothCombo
                             Service.Configuration.EnabledActions.Remove(preset);
                         }
 
-                        Service.ChatGui.Print("All UNSET");
+                        Svc.Chat.Print("All UNSET");
                         Service.Configuration.Save();
                         break;
                     }
 
                 case "set": // set a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        if (!Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
@@ -293,7 +291,7 @@ namespace XIVSlothCombo
                                     continue;
 
                                 Service.Configuration.EnabledActions.Add(preset);
-                                Service.ChatGui.Print($"{preset} SET");
+                                Svc.Chat.Print($"{preset} SET");
                             }
 
                             Service.Configuration.Save();
@@ -301,7 +299,7 @@ namespace XIVSlothCombo
 
                         else
                         {
-                            Service.ChatGui.PrintError("Features cannot be set in combat.");
+                            Svc.Chat.PrintError("Features cannot be set in combat.");
                         }
 
                         break;
@@ -309,7 +307,7 @@ namespace XIVSlothCombo
 
                 case "toggle": // toggle a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        if (!Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
@@ -320,11 +318,11 @@ namespace XIVSlothCombo
                                 if (!Service.Configuration.EnabledActions.Remove(preset))
                                 {
                                     Service.Configuration.EnabledActions.Add(preset);
-                                    Service.ChatGui.Print($"{preset} SET");
+                                    Svc.Chat.Print($"{preset} SET");
                                 }
                                 else
                                 {
-                                    Service.ChatGui.Print($"{preset} UNSET");
+                                    Svc.Chat.Print($"{preset} UNSET");
                                 }
                             }
 
@@ -333,7 +331,7 @@ namespace XIVSlothCombo
 
                         else
                         {
-                            Service.ChatGui.PrintError("Features cannot be toggled in combat.");
+                            Svc.Chat.PrintError("Features cannot be toggled in combat.");
                         }
 
                         break;
@@ -341,7 +339,7 @@ namespace XIVSlothCombo
 
                 case "unset": // unset a feature
                     {
-                        if (!Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
+                        if (!Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat])
                         {
                             string? targetPreset = argumentsParts[1].ToLowerInvariant();
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
@@ -350,7 +348,7 @@ namespace XIVSlothCombo
                                     continue;
 
                                 Service.Configuration.EnabledActions.Remove(preset);
-                                Service.ChatGui.Print($"{preset} UNSET");
+                                Svc.Chat.Print($"{preset} UNSET");
                             }
 
                             Service.Configuration.Save();
@@ -358,7 +356,7 @@ namespace XIVSlothCombo
 
                         else
                         {
-                            Service.ChatGui.PrintError("Features cannot be unset in combat.");
+                            Svc.Chat.PrintError("Features cannot be unset in combat.");
                         }
 
                         break;
@@ -375,7 +373,7 @@ namespace XIVSlothCombo
                             foreach (bool preset in Enum.GetValues<CustomComboPreset>()
                                 .Select(preset => PresetStorage.IsEnabled(preset)))
                             {
-                                Service.ChatGui.Print(preset.ToString());
+                                Svc.Chat.Print(preset.ToString());
                             }
                         }
 
@@ -384,7 +382,7 @@ namespace XIVSlothCombo
                             foreach (bool preset in Enum.GetValues<CustomComboPreset>()
                                 .Select(preset => !PresetStorage.IsEnabled(preset)))
                             {
-                                Service.ChatGui.Print(preset.ToString());
+                                Svc.Chat.Print(preset.ToString());
                             }
                         }
 
@@ -392,13 +390,13 @@ namespace XIVSlothCombo
                         {
                             foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
                             {
-                                Service.ChatGui.Print(preset.ToString());
+                                Svc.Chat.Print(preset.ToString());
                             }
                         }
 
                         else
                         {
-                            Service.ChatGui.PrintError("Available list filters: set, unset, all");
+                            Svc.Chat.PrintError("Available list filters: set, unset, all");
                         }
 
                         break;
@@ -409,7 +407,7 @@ namespace XIVSlothCombo
                         foreach (CustomComboPreset preset in Service.Configuration.EnabledActions.OrderBy(x => x))
                         {
                             if (int.TryParse(preset.ToString(), out int pres)) continue;
-                            Service.ChatGui.Print($"{(int)preset} - {preset}");
+                            Svc.Chat.Print($"{(int)preset} - {preset}");
                         }
 
                         break;
@@ -432,14 +430,14 @@ namespace XIVSlothCombo
                             file.WriteLine($"Installation Repo: {RepoCheckFunctions.FetchCurrentRepo()?.InstalledFromUrl}");    // Installation Repo
                             file.WriteLine("");
                             file.WriteLine($"Current Job: " +                                                                   // Current Job
-                                $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
-                                $"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
-                                $"{Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");                           // - Abbreviation
-                            file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.Id}");                // Job Index
-                            file.WriteLine($"Current Job Level: {Service.ClientState.LocalPlayer.Level}");                      // Job Level
+                                $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
+                                $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
+                                $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");                           // - Abbreviation
+                            file.WriteLine($"Current Job Index: {Svc.ClientState.LocalPlayer.ClassJob.Id}");                // Job Index
+                            file.WriteLine($"Current Job Level: {Svc.ClientState.LocalPlayer.Level}");                      // Job Level
                             file.WriteLine("");
-                            file.WriteLine($"Current Zone: {Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Service.ClientState.TerritoryType).PlaceName.Value.Name}");   // Current zone location
-                            file.WriteLine($"Current Party Size: {Service.PartyList.Length}");                                  // Current party size
+                            file.WriteLine($"Current Zone: {Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name}");   // Current zone location
+                            file.WriteLine($"Current Party Size: {Svc.Party.Length}");                                  // Current party size
                             file.WriteLine("");
                             file.WriteLine($"START ENABLED FEATURES");
 
@@ -501,7 +499,7 @@ namespace XIVSlothCombo
                             else
                             {
                                 var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(specificJob.ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
-                                var jobID = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.ClassJob>()?
+                                var jobID = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.ClassJob>()?
                                     .Where(x => x.Name.RawString.Equals(jobname, StringComparison.CurrentCultureIgnoreCase))
                                     .First()
                                     .RowId;
@@ -573,12 +571,12 @@ namespace XIVSlothCombo
                                 file.WriteLine("");
                             }
 
-                            file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
+                            file.WriteLine($"Status Effect Count: {Svc.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
 
-                            if (Service.ClientState.LocalPlayer.StatusList.Length > 0)
+                            if (Svc.ClientState.LocalPlayer.StatusList.Length > 0)
                             {
                                 file.WriteLine($"START STATUS EFFECTS");
-                                foreach (Status? status in Service.ClientState.LocalPlayer.StatusList)
+                                foreach (Status? status in Svc.ClientState.LocalPlayer.StatusList)
                                 {
                                     file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceId} NAME: {ActionWatching.GetStatusName(status.StatusId)}");
                                 }
@@ -587,15 +585,15 @@ namespace XIVSlothCombo
                             }
 
                             file.WriteLine("END DEBUG LOG");
-                            Service.ChatGui.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
+                            Svc.Chat.Print("Please check your desktop for SlothDebug.txt and upload this file where requested.");
 
                             break;
                         }
 
                         catch (Exception ex)
                         {
-                            Service.PluginLog.Error(ex, "Debug Log");
-                            Service.ChatGui.Print("Unable to write Debug log.");
+                            Svc.Log.Error(ex, "Debug Log");
+                            Svc.Chat.Print("Unable to write Debug log.");
                             break;
                         }
                     }
@@ -606,7 +604,7 @@ namespace XIVSlothCombo
                     {
                         var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
                         var header = $"{jobname} - {argumentsParts[0].ToUpper()}";
-                        Service.PluginLog.Debug($"{jobname}");
+                        Svc.Log.Debug($"{jobname}");
                         PvEFeatures.HeaderToOpen = header;
                     }
                     break;
