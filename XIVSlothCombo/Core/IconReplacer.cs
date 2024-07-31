@@ -1,10 +1,11 @@
+using Dalamud.Hooking;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dalamud.Hooking;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Services;
 
@@ -30,8 +31,8 @@ namespace XIVSlothCombo.Core
                 .OrderByDescending(x => x.Preset)
                 .ToList();
 
-            getIconHook = Service.GameInteropProvider.HookFromAddress<GetIconDelegate>((nint)ActionManager.Addresses.GetAdjustedActionId.Value, GetIconDetour);
-            isIconReplaceableHook = Service.GameInteropProvider.HookFromAddress<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
+            getIconHook = Svc.Hook.HookFromAddress<GetIconDelegate>((nint)ActionManager.Addresses.GetAdjustedActionId.Value, GetIconDetour);
+            isIconReplaceableHook = Svc.Hook.HookFromAddress<IsIconReplaceableDelegate>(Service.Address.IsActionIdReplaceable, IsIconReplaceableDetour);
 
             getIconHook.Enable();
             isIconReplaceableHook.Enable();
@@ -59,17 +60,17 @@ namespace XIVSlothCombo.Core
 
             try
             {
-                if (Service.ClientState.LocalPlayer == null)
+                if (Svc.ClientState.LocalPlayer == null)
                     return OriginalHook(actionID);
 
                 if (ClassLocked() ||
-                    (DisabledJobsPVE.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && !Service.ClientState.IsPvP) ||
-                    (DisabledJobsPVP.Any(x => x == Service.ClientState.LocalPlayer.ClassJob.Id) && Service.ClientState.IsPvP))
+                    (DisabledJobsPVE.Any(x => x == Svc.ClientState.LocalPlayer.ClassJob.Id) && !Svc.ClientState.IsPvP) ||
+                    (DisabledJobsPVP.Any(x => x == Svc.ClientState.LocalPlayer.ClassJob.Id) && Svc.ClientState.IsPvP))
                     return OriginalHook(actionID);
 
                 uint lastComboMove = ActionManager.Instance()->Combo.Action;
                 float comboTime = ActionManager.Instance()->Combo.Timer;
-                byte level = Service.ClientState.LocalPlayer?.Level ?? 0;
+                byte level = Svc.ClientState.LocalPlayer?.Level ?? 0;
 
                 foreach (CustomCombo? combo in customCombos)
                 {
@@ -82,7 +83,7 @@ namespace XIVSlothCombo.Core
 
             catch (Exception ex)
             {
-                Service.PluginLog.Error(ex, "Preset error");
+                Svc.Log.Error(ex, "Preset error");
                 return OriginalHook(actionID);
             }
         }
@@ -90,20 +91,20 @@ namespace XIVSlothCombo.Core
         // Class locking
         public unsafe static bool ClassLocked()
         {
-            if (Service.ClientState.LocalPlayer is null) return false;
+            if (Svc.ClientState.LocalPlayer is null) return false;
 
-            if (Service.ClientState.LocalPlayer.Level <= 35) return false;
+            if (Svc.ClientState.LocalPlayer.Level <= 35) return false;
 
-            if (Service.ClientState.LocalPlayer.ClassJob.Id is
+            if (Svc.ClientState.LocalPlayer.ClassJob.Id is
                 (>= 8 and <= 25) or 27 or 28 or >= 30)
                 return false;
 
             if (!UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(66049))
                 return false;
 
-            if ((Service.ClientState.LocalPlayer.ClassJob.Id is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
-                Service.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
-                Service.ClientState.LocalPlayer.Level > 35) return true;
+            if ((Svc.ClientState.LocalPlayer.ClassJob.Id is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
+                Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
+                Svc.ClientState.LocalPlayer.Level > 35) return true;
 
             return false;
         }

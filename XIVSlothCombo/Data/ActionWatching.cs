@@ -4,7 +4,6 @@ using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
@@ -12,25 +11,24 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Data
 {
     public static class ActionWatching
     {
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
+        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
             .Where(i => i.RowId is not 7)
             .ToDictionary(i => i.RowId, i => i);
 
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
+        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
             .ToDictionary(i => i.RowId, i => i);
 
-        internal static Dictionary<uint, Trait> TraitSheet = Service.DataManager.GetExcelSheet<Trait>()!
+        internal static Dictionary<uint, Trait> TraitSheet = Svc.Data.GetExcelSheet<Trait>()!
             .Where(i => i.ClassJobCategory is not null) //All player traits are assigned to a category. Chocobo and other garbage lacks this, thus excluded.
             .ToDictionary(i => i.RowId, i => i);
 
-        internal static Dictionary<uint, BNpcBase> BNpcSheet = Service.DataManager.GetExcelSheet<BNpcBase>()!
+        internal static Dictionary<uint, BNpcBase> BNpcSheet = Svc.Data.GetExcelSheet<BNpcBase>()!
             .ToDictionary(i => i.RowId, i => i);
 
         private static readonly Dictionary<string, List<uint>> statusCache = [];
@@ -48,7 +46,7 @@ namespace XIVSlothCombo.Data
             if (ActionType is 13 or 2) return;
             if (header.ActionId != 7 &&
                 header.ActionId != 8 &&
-                sourceObjectId == Service.ClientState.LocalPlayer.GameObjectId)
+                sourceObjectId == Svc.ClientState.LocalPlayer.GameObjectId)
             {
                 TimeLastActionUsed = DateTime.Now;
                 LastActionUseCount++;
@@ -98,7 +96,7 @@ namespace XIVSlothCombo.Data
             }
             catch (Exception ex)
             {
-                Service.PluginLog.Error(ex, "SendActionDetour");
+                Svc.Log.Error(ex, "SendActionDetour");
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
             }
         }
@@ -107,7 +105,7 @@ namespace XIVSlothCombo.Data
         {
             if (actionId is AST.Balance or AST.Spear &&
                 Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
-                !OutOfRange(actionId, Service.ClientState.LocalPlayer!, Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember))
+                !OutOfRange(actionId, Svc.ClientState.LocalPlayer!, Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember))
             {
                 int targetOptions = AST.Config.AST_QuickTarget_Override;
 
@@ -119,7 +117,7 @@ namespace XIVSlothCombo.Data
                         break;
                     case 1:
                         if (CustomComboFunctions.HasFriendlyTarget())
-                            targetObjectId = Service.ClientState.LocalPlayer.TargetObject.GameObjectId;
+                            targetObjectId = Svc.ClientState.LocalPlayer.TargetObject.GameObjectId;
                         else
                             targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
@@ -197,7 +195,7 @@ namespace XIVSlothCombo.Data
 
         public static void OutputLog()
         {
-            Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
+            Svc.Chat.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
         }
 
         public static void Dispose()
@@ -208,8 +206,8 @@ namespace XIVSlothCombo.Data
 
         static unsafe ActionWatching()
         {
-            ReceiveActionEffectHook ??= Service.GameInteropProvider.HookFromSignature<ReceiveActionEffectDelegate>("40 55 56 57 41 54 41 55 41 56 48 8D AC 24", ReceiveActionEffectDetour);
-            SendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9", SendActionDetour);
+            ReceiveActionEffectHook ??= Svc.Hook.HookFromSignature<ReceiveActionEffectDelegate>("40 55 56 57 41 54 41 55 41 56 48 8D AC 24", ReceiveActionEffectDetour);
+            SendActionHook ??= Svc.Hook.HookFromSignature<SendActionDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9", SendActionDetour);
         }
 
 
