@@ -612,8 +612,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ActionReady(SoulScythe) && gauge.Soul <= 50)
                             return SoulScythe;
 
-                        if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) &&
-                            HasEffect(Buffs.Enshrouded))
+                        if (HasEffect(Buffs.Enshrouded))
                         {
                             if (IsEnabled(CustomComboPreset.RPR_AoE_Communio) &&
                                gauge.LemureShroud is 1 && gauge.VoidShroud is 0 && ActionReady(Communio))
