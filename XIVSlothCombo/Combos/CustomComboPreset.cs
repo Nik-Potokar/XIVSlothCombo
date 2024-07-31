@@ -3738,7 +3738,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_ComboHeals = 30097,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.\n Only for basic combo. Does NOT care about Vicewinder positionals.", VPR.JobID)]
         VPR_TrueNorthDynamic = 30098,
 
         [ParentCombo(VPR_TrueNorthDynamic)]
