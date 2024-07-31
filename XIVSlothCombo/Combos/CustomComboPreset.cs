@@ -1836,31 +1836,32 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill([MNK.Bootshine])]
         [CustomComboInfo("Basic ST Rotation", "Basic Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_CustomCombo)]
-        MNK_BasicCombo = 9002,
-
+        [ConflictingCombos(MNK_ST_AdvancedMode)]
+        MNK_ST_BasicMode = 9002,
+        
         [ReplaceSkill([MNK.ArmOfTheDestroyer])]
         [CustomComboInfo("AOE Rotation", "Basic Monk AOE Combo on one button", MNK.JobID)]
-        MNK_BasicAOECombo = 9003,
+        MNK_AOE_BasicMode = 9003,
 
-        [ParentCombo(MNK_BasicAOECombo)]
+        [ParentCombo(MNK_AOE_BasicMode)]
         [CustomComboInfo("Use Cooldowns Option", "Use large cooldowns during AOE rotation", MNK.JobID)]
         MNK_BasicAOECombo_UseCooldowns = 9004,
 
+        #region Monk Advanced ST
         [ReplaceSkill([MNK.Bootshine])]
         [CustomComboInfo("Custom ST Rotation", "Advanced Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_BasicCombo)]
-        MNK_CustomCombo = 9005,
+        [ConflictingCombos(MNK_ST_BasicMode)]
+        MNK_ST_AdvancedMode = 9005,
 
-        [ParentCombo(MNK_CustomCombo)]
+        [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Use Double Lunar Opener", "Uses Double Lunar opener", MNK.JobID)]
         MNK_STUseLLOpener = 9006,
 
-        [ParentCombo(MNK_CustomCombo)]
+        [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Use Meditation", "Uses Meditation when out of combat/range", MNK.JobID)]
         MNK_STUseMeditation = 9007,
 
-        [ParentCombo(MNK_CustomCombo)]
+        [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Buffs", "Use Buffs on cooldown", MNK.JobID)]
         MNK_STUseBuffs = 9008,
 
@@ -1876,15 +1877,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Use Riddle of Fire", "Use Riddle of Fire", MNK.JobID)]
         MNK_STUseROF = 9011,
 
-        [ParentCombo(MNK_CustomCombo)]
+        [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Use The Forbidden Chakra", "Use The Forbidden Chakra", MNK.JobID)]
         MNK_STUseTheForbiddenChakra = 9012,
 
-        [ParentCombo(MNK_CustomCombo)]
+        [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Use Perfect Balance", "Use Perfect Balance and Masterful Blitz", MNK.JobID)]
         MNK_STUsePerfectBalance = 9013,
 
-        [ParentCombo(MNK_CustomCombo)]
+        [ParentCombo(MNK_ST_AdvancedMode)]
         [CustomComboInfo("Use True North", "Use True North dynamically when not in positional", MNK.JobID)]
         MNK_STUseTrueNorth = 9014,
 
@@ -1896,8 +1897,19 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Use Fire's Reply", "Use Fire's Reply", MNK.JobID)]
         MNK_STUseFiresReply = 9016,
 
+        [ParentCombo(MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Use Form Shift", "Uses Form Shift", MNK.JobID)]
+        MNK_STUseFormShift = 9017,
+
+        [ParentCombo(MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", MNK.JobID)]
+        MNK_ST_ComboHeals = 9018,
+
         // Last value = 9031
 
+        #endregion
+
+        // End Monk
         #endregion
 
         #region NINJA
