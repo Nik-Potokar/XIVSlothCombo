@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using FFXIVClientStructs.FFXIV.Client.Game;
+﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Linq;
 
 namespace XIVSlothCombo.Services
 {

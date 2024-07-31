@@ -1,10 +1,10 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
-using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -593,7 +593,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 if (!LevelChecked) return false;
 
-                if (!openerEventsSetup) { Service.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
+                if (!openerEventsSetup) { Svc.Condition.ConditionChange += CheckCombatStatus; openerEventsSetup = true; }
 
                 if (CurrentState == OpenerState.PrePull || CurrentState == OpenerState.FailedOpener)
                     if (DoPrePullSteps(ref actionID, mudraState)) return true;
@@ -609,7 +609,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             internal void Dispose()
             {
-                Service.Condition.ConditionChange -= CheckCombatStatus;
+                Svc.Condition.ConditionChange -= CheckCombatStatus;
             }
 
             private void CheckCombatStatus(ConditionFlag flag, bool value)

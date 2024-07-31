@@ -99,7 +99,7 @@ namespace XIVSlothCombo.Window.Functions
                     }
 
                     if (!string.IsNullOrEmpty(comboInfo.JobShorthand))
-                    conflictBuilder.Insert(0, $"[{comboInfo.JobShorthand}] ");
+                        conflictBuilder.Insert(0, $"[{comboInfo.JobShorthand}] ");
 
                     ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, CustomComboNS.Functions.CustomComboFunctions.IsEnabled(conflict) ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed, 1500), $"- {conflictBuilder}");
                     conflictBuilder.Clear();
@@ -274,7 +274,7 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.BeginTooltip();
                     foreach (var icon in att.ActionIcons)
                     {
-                        var img = Svc.Texture.GetFromGameIcon(new (icon)).GetWrapOrEmpty();
+                        var img = Svc.Texture.GetFromGameIcon(new(icon)).GetWrapOrEmpty();
                         ImGui.Image(img.ImGuiHandle, (img.Size / 2f) * ImGui.GetIO().FontGlobalScale);
                         ImGui.SameLine();
                     }
