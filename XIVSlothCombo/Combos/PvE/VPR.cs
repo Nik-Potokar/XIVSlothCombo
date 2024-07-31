@@ -261,10 +261,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingFangs or SteelFangs)
                         {
-                            if (LevelChecked(HuntersSting) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
+                            if (LevelChecked(HuntersSting) &&
+                                (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)))
                                 return OriginalHook(SteelFangs);
 
-                            if (LevelChecked(SwiftskinsSting) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
+                            if (LevelChecked(SwiftskinsSting) && 
+                                (HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom) ||
                                 (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingFangs);
                         }
@@ -547,10 +549,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingFangs or SteelFangs)
                         {
-                            if (LevelChecked(HuntersSting) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
+                            if (LevelChecked(HuntersSting) && 
+                                (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)))
                                 return OriginalHook(SteelFangs);
 
-                            if (LevelChecked(SwiftskinsSting) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
+                            if (LevelChecked(SwiftskinsSting) && 
+                                (HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom) ||
                                 (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingFangs);
                         }
@@ -766,11 +770,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingMaw or SteelMaw)
                         {
-                            if (LevelChecked(HuntersBite) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
+                            if (LevelChecked(HuntersBite) &&
+                                HasEffect(Buffs.GrimhuntersVenom))
                                 return OriginalHook(SteelMaw);
 
-                            if (LevelChecked(SwiftskinsBite) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
-                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
+                            if (LevelChecked(SwiftskinsBite) &&
+                                (HasEffect(Buffs.GrimskinsVenom) || (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingMaw);
                         }
 
@@ -947,11 +952,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingMaw or SteelMaw)
                         {
-                            if (LevelChecked(HuntersBite) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
+                            if (LevelChecked(HuntersBite) &&
+                                HasEffect(Buffs.GrimhuntersVenom))
                                 return OriginalHook(SteelMaw);
 
-                            if (LevelChecked(SwiftskinsBite) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
-                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
+                            if (LevelChecked(SwiftskinsBite) &&
+                                (HasEffect(Buffs.GrimskinsVenom) || (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingMaw);
                         }
 
