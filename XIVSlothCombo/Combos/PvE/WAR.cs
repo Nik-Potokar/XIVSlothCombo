@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
 {

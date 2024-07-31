@@ -1,8 +1,8 @@
-﻿using System;
-using System.Numerics;
-using Dalamud.Interface.Utility;
+﻿using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ImGuiNET;
+using System;
+using System.Numerics;
 
 namespace XIVSlothCombo.Window
 {
@@ -50,7 +50,7 @@ namespace XIVSlothCombo.Window
             if (HasMaxWidth)
             {
                 if ((ImGui.GetItemRectMax().X - ImGui.GetItemRectMin().X + 15f) < ImGui.GetWindowSize().X - 60f)
-                Size = Size with { X = ImGui.GetItemRectMax().X - ImGui.GetItemRectMin().X + 15f };
+                    Size = Size with { X = ImGui.GetItemRectMax().X - ImGui.GetItemRectMin().X + 15f };
             }
 
             DrawCorners();
