@@ -166,6 +166,15 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Thunder);
                     }
 
+                    if (IsMoving)
+                    {
+                        if (Foul.LevelChecked() && !Xenoglossy.LevelChecked() && gauge.PolyglotStacks > 0)
+                            return Foul;
+
+                        if (Xenoglossy.LevelChecked() && gauge.PolyglotStacks > 0)
+                            return Xenoglossy;
+                    }
+
                     if (CanSpellWeave(actionID) && ActionReady(LeyLines))
                         return LeyLines;
 
@@ -177,7 +186,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Fire3;
                         }
 
-                        if (curMp < MP.FireI && Despair.LevelChecked() && curMp > MP.Despair)
+                        if (curMp < MP.FireI && Despair.LevelChecked() && curMp >= MP.Despair)
                         {
                             if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
                                 return Triplecast;
