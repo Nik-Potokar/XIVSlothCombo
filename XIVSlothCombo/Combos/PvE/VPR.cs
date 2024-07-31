@@ -469,7 +469,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Serpents Ire usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
-                        CanWeave(actionID) && !CappedOnCoils &&
+                        CanWeave(actionID) && !CappedOnCoils && ActionReady(SerpentsIre) &&
                         !HasEffect(Buffs.Reawakened))
                         return SerpentsIre;
 
@@ -872,7 +872,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Serpents Ire usage
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_AoE_SerpentsIre) &&
-                       CanWeave(actionID) && !CappedOnCoils && ActionReady(SerpentsIre) && !HasEffect(Buffs.Reawakened))
+                        CanWeave(actionID) && !CappedOnCoils && ActionReady(SerpentsIre) && !HasEffect(Buffs.Reawakened))
                         return SerpentsIre;
 
                     //Vicepit Usage
