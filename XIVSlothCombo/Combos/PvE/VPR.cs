@@ -266,11 +266,11 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingFangs or SteelFangs)
                         {
-                            if ((HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)) && LevelChecked(HuntersSting))
+                            if (LevelChecked(HuntersSting) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
                                 return OriginalHook(SteelFangs);
 
-                            if ((HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom) ||
-                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))) && LevelChecked(SwiftskinsSting))
+                            if (LevelChecked(SwiftskinsSting) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
+                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingFangs);
                         }
 
@@ -314,14 +314,17 @@ namespace XIVSlothCombo.Combos.PvE
             private static bool UseReawaken(VPRGauge gauge)
             {
                 int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
+                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
 
-                if (HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) && LevelChecked(Reawaken) &&
-                    !HasEffect(Buffs.Reawakened) &&
+                if (HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
+                     LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                 {
                     //even minutes
                     if ((SerpentsIreUsed <= 3 || SerpentsIreUsed >= 5) &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 10 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 10 &&
                         (WasLastAbility(SerpentsIre) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
@@ -330,11 +333,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // odd minutes
                     if (gauge.SerpentOffering >= 50 &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 7 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 7 &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65)
                         return true;
 
                     // 6 minutes
                     if (SerpentsIreUsed == 4 &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 10 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 10 &&
                         (WasLastAbility(SerpentsIre) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
@@ -343,6 +350,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // 7min 2RA
                     if (SerpentsIreUsed == 4 &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 10 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 10 &&
                         (gauge.SerpentOffering >= 95 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90)
@@ -555,11 +564,11 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingFangs or SteelFangs)
                         {
-                            if ((HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)) && LevelChecked(HuntersSting))
+                            if (LevelChecked(HuntersSting) && GetBuffRemainingTime(Buffs.HuntersInstinct) < GetBuffRemainingTime(Buffs.Swiftscaled))
                                 return OriginalHook(SteelFangs);
 
-                            if ((HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom) ||
-                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))) && LevelChecked(SwiftskinsSting))
+                            if (LevelChecked(SwiftskinsSting) && ((GetBuffRemainingTime(Buffs.Swiftscaled) <= GetBuffRemainingTime(Buffs.HuntersInstinct)) ||
+                                (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingFangs);
                         }
 
@@ -607,16 +616,18 @@ namespace XIVSlothCombo.Combos.PvE
             private static bool UseReawaken(VPRGauge gauge)
             {
                 int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
+                float AwGCD = GetCooldown(FirstGeneration).CooldownTotal;
 
                 if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
-                    HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) && LevelChecked(Reawaken) &&
-                    !HasEffect(Buffs.Reawakened) &&
+                    HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
+                     LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
-                    !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
-                    GetTargetHPPercent() >= Config.VPR_ST_Reawaken_Usage)
+                    !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                 {
                     //even minutes
                     if ((SerpentsIreUsed <= 3 || SerpentsIreUsed >= 5) &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 10 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 10 &&
                         (WasLastAbility(SerpentsIre) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
@@ -625,11 +636,15 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // odd minutes
                     if (gauge.SerpentOffering >= 50 &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 7 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 7 &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65)
                         return true;
 
                     // 6 minutes
                     if (SerpentsIreUsed == 4 &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 10 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 10 &&
                         (WasLastAbility(SerpentsIre) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
@@ -638,6 +653,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // 7min 2RA
                     if (SerpentsIreUsed == 4 &&
+                        GetBuffRemainingTime(Buffs.Swiftscaled) >= AwGCD * 10 &&
+                        GetBuffRemainingTime(Buffs.HuntersInstinct) >= AwGCD * 10 &&
                         (gauge.SerpentOffering >= 95 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90)
