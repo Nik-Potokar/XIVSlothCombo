@@ -441,6 +441,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 return SwiftskinsCoil;
                             }
+
+                            if (IsEnabled(CustomComboPreset.VPR_ST_DynamicFirstCoil) && HuntersCoilReady)
+                                return SwiftskinsCoil;
                         }
 
                         if (positionalChoice is 1)
@@ -459,6 +462,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 return HuntersCoil;
                             }
+
+                            if (IsEnabled(CustomComboPreset.VPR_ST_DynamicFirstCoil) && SwiftskinsCoilReady)
+                                return HuntersCoil;
                         }
                     }
 
@@ -1026,6 +1032,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return SwiftskinsCoil;
                         }
+
+                        if (IsEnabled(CustomComboPreset.VPR_DynamicFirstCoil) && HuntersCoilReady)
+                            return SwiftskinsCoil;
                     }
 
                     if (positionalChoice is 1)
@@ -1049,6 +1058,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return HuntersCoil;
                         }
+
+                        if (IsEnabled(CustomComboPreset.VPR_DynamicFirstCoil) && SwiftskinsCoilReady)
+                            return HuntersCoil;
                     }
                 }
                 return actionID;
