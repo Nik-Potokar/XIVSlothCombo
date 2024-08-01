@@ -265,7 +265,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)))
                                 return OriginalHook(SteelFangs);
 
-                            if (LevelChecked(SwiftskinsSting) && 
+                            if (LevelChecked(SwiftskinsSting) &&
                                 (HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom) ||
                                 (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingFangs);
@@ -549,11 +549,11 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove is ReavingFangs or SteelFangs)
                         {
-                            if (LevelChecked(HuntersSting) && 
+                            if (LevelChecked(HuntersSting) &&
                                 (HasEffect(Buffs.FlankstungVenom) || HasEffect(Buffs.FlanksbaneVenom)))
                                 return OriginalHook(SteelFangs);
 
-                            if (LevelChecked(SwiftskinsSting) && 
+                            if (LevelChecked(SwiftskinsSting) &&
                                 (HasEffect(Buffs.HindstungVenom) || HasEffect(Buffs.HindsbaneVenom) ||
                                 (!HasEffect(Buffs.Swiftscaled) && !HasEffect(Buffs.HuntersInstinct))))
                                 return OriginalHook(ReavingFangs);
@@ -1009,7 +1009,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (SwiftskinsCoilReady)
                         {
                             if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
-                                    trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
+                                    trueNorthReady && !OnTargetsFlank())
                                 return All.TrueNorth;
 
                             return HuntersCoil;
@@ -1018,7 +1018,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (VicewinderReady)
                         {
                             if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
-                                trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.FlankstungVenom))
+                                trueNorthReady && !OnTargetsRear())
                                 return All.TrueNorth;
                             return SwiftskinsCoil;
                         }
@@ -1029,7 +1029,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (HuntersCoilReady)
                         {
                             if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
-                                trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.FlankstungVenom))
+                                trueNorthReady && !OnTargetsRear())
                                 return All.TrueNorth;
                             return SwiftskinsCoil;
                         }
@@ -1037,7 +1037,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (VicewinderReady)
                         {
                             if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
-                                    trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
+                                    trueNorthReady && !OnTargetsFlank())
                                 return All.TrueNorth;
 
                             return HuntersCoil;
