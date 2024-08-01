@@ -436,6 +436,9 @@ namespace XIVSlothCombo.Combos.PvE
                                     trueNorthReady)
                                     return All.TrueNorth;
 
+                                if (IsEnabled(CustomComboPreset.VPR_ST_DynamicFirstCoil) && OnTargetsFlank())
+                                    return HuntersCoil;
+
                                 return SwiftskinsCoil;
                             }
                         }
@@ -450,6 +453,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (IsEnabled(CustomComboPreset.VPR_TrueNorthDynamic) &&
                                     trueNorthReady)
                                     return All.TrueNorth;
+
+                                if (IsEnabled(CustomComboPreset.VPR_ST_DynamicFirstCoil) && OnTargetsRear())
+                                    return SwiftskinsCoil;
 
                                 return HuntersCoil;
                             }
@@ -1014,6 +1020,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
                                 trueNorthReady && !OnTargetsRear() && HasEffect(Buffs.FlankstungVenom))
                                 return All.TrueNorth;
+
+                            if (IsEnabled(CustomComboPreset.VPR_DynamicFirstCoil) && OnTargetsFlank())
+                                return HuntersCoil;
+
                             return SwiftskinsCoil;
                         }
                     }
@@ -1033,6 +1043,9 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.VPR_VicewinderCoilsTN) &&
                                     trueNorthReady && !OnTargetsFlank() && HasEffect(Buffs.FlankstungVenom))
                                 return All.TrueNorth;
+
+                            if (IsEnabled(CustomComboPreset.VPR_DynamicFirstCoil) && OnTargetsRear())
+                                return SwiftskinsCoil;
 
                             return HuntersCoil;
                         }

@@ -3701,6 +3701,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
         VPR_ST_VicewinderCombo = 30007,
 
+        [ParentCombo(VPR_ST_VicewinderCombo)]
+        [CustomComboInfo("Dynamic First Coil", "Uses Hunter's Coil first if you are on the flank, and Swiftskin's Coil first if you are on the rear.\nDefaults to your selection if you are elsewhere.", VPR.JobID)]
+        VPR_ST_DynamicFirstCoil = 30013,
+
         #endregion
 
         [ParentCombo(VPR_ST_AdvancedMode)]
@@ -3810,6 +3814,10 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(VPR.Vicewinder)]
         [CustomComboInfo("Vicewinder - Coils", "Replaces Vicewinder with Hunter's/Swiftskin's Coils.", VPR.JobID)]
         VPR_VicewinderCoils = 30200,
+
+        [ParentCombo(VPR_VicewinderCoils)]
+        [CustomComboInfo("Dynamic First Coil", "Uses Hunter's Coil first if you are on the flank, and Swiftskin's Coil first if you are on the rear.\nDefaults to your selection if you are elsewhere.", VPR.JobID)]
+        VPR_DynamicFirstCoil = 30209,
 
         [ParentCombo(VPR_VicewinderCoils)]
         [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
