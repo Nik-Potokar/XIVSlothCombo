@@ -446,7 +446,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (Gauge.OpoOpoFury == 0)
                             {
-                                if (LevelChecked(Levels.DragonKick))
+                                if (LevelChecked(DragonKick))
                                     return DragonKick;
                             }
                             else
@@ -475,7 +475,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (Gauge.RaptorFury == 0)
                             {
-                                if (LevelChecked(Levels.TwinSnakes))
+                                if (LevelChecked(TwinSnakes))
                                     return TwinSnakes;
                             }
                             else
@@ -504,7 +504,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (Gauge.CoeurlFury == 0)
                             {
-                                if (LevelChecked(Levels.Demolish))
+                                if (LevelChecked(Demolish))
                                     return Demolish;
                             }
                             else
@@ -554,7 +554,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (Gauge.OpoOpoFury == 0)
                 {
-                    if (CustomComboFunctions.LevelChecked(Levels.DragonKick))
+                    if (CustomComboFunctions.LevelChecked(DragonKick))
                         return DragonKick;
                 }
                 else
@@ -567,12 +567,12 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (Gauge.RaptorFury == 0)
                 {
-                    if (CustomComboFunctions.LevelChecked(Levels.TwinSnakes))
+                    if (CustomComboFunctions.LevelChecked(TwinSnakes))
                         return TwinSnakes;
                 }
                 else
                 {
-                    if (CustomComboFunctions.LevelChecked(Levels.TrueStrike))
+                    if (CustomComboFunctions.LevelChecked(TrueStrike))
                         return CustomComboFunctions.OriginalHook(TrueStrike);
                 }
             }
@@ -585,7 +585,7 @@ namespace XIVSlothCombo.Combos.PvE
                         && CustomComboFunctions.IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
                         && CustomComboFunctions.TargetNeedsPositionals()
                         && !CustomComboFunctions.HasEffect(Buffs.TrueNorth)
-                        && CustomComboFunctions.LevelChecked(Levels.TrueNorth)
+                        && CustomComboFunctions.LevelChecked(TrueNorth)
                         && CustomComboFunctions.HasCharges(TrueNorth)
                         && useTrueNorthIfEnabled)
                     {
@@ -593,7 +593,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     else
                     {
-                        if (CustomComboFunctions.LevelChecked(Levels.Demolish))
+                        if (CustomComboFunctions.LevelChecked(Demolish))
                             return Demolish;
                     }
                 }
@@ -602,7 +602,7 @@ namespace XIVSlothCombo.Combos.PvE
                         && CustomComboFunctions.IsEnabled(CustomComboPreset.MNK_STUseTrueNorth)
                         && CustomComboFunctions.TargetNeedsPositionals()
                         && !CustomComboFunctions.HasEffect(Buffs.TrueNorth)
-                        && CustomComboFunctions.LevelChecked(Levels.TrueNorth)
+                        && CustomComboFunctions.LevelChecked(TrueNorth)
                         && CustomComboFunctions.HasCharges(TrueNorth)
                         && useTrueNorthIfEnabled)
                 {
@@ -610,7 +610,7 @@ namespace XIVSlothCombo.Combos.PvE
                 }
                 else
                 {
-                    if (CustomComboFunctions.LevelChecked(Levels.SnapPunch))
+                    if (CustomComboFunctions.LevelChecked(SnapPunch))
                         return CustomComboFunctions.OriginalHook(SnapPunch);
                 }
             }
