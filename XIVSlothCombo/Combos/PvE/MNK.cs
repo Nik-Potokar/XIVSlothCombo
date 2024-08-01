@@ -236,7 +236,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 int coeurlChakra = Gauge.BeastChakra.Where(x => x == BeastChakra.COEURL).Count();
 
                                 #region Open Solar
-                                if (!solarNadi)
+                                if (!solarNadi && !bothNadisOpen)
                                 {
                                     if (coeurlChakra == 0)
                                     {
@@ -253,7 +253,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                                 #endregion
                                 #region Open Lunar
-                                if (solarNadi || lunarNadi)
+                                if (solarNadi || lunarNadi || bothNadisOpen)
                                 {
                                     return Gauge.OpoOpoFury == 0 ? OriginalHook(DragonKick) : OriginalHook(Bootshine);
                                 }
