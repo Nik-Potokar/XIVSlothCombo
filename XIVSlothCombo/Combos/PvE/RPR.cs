@@ -526,7 +526,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.SoulReaver) || (HasEffect(Buffs.Executioner)
                         && !HasEffect(Buffs.Enshrouded) && LevelChecked(Guillotine)))
-                        return Guillotine;
+                        return OriginalHook(Guillotine);
 
                     return lastComboMove == OriginalHook(SpinningScythe) && LevelChecked(NightmareScythe)
                         ? OriginalHook(NightmareScythe)
@@ -643,7 +643,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.RPR_AoE_Guillotine) &&
                         (HasEffect(Buffs.SoulReaver) || (HasEffect(Buffs.Executioner)
                         && !HasEffect(Buffs.Enshrouded) && LevelChecked(Guillotine))))
-                        return Guillotine;
+                        return OriginalHook(Guillotine);
 
                     return lastComboMove == OriginalHook(SpinningScythe) && LevelChecked(NightmareScythe)
                         ? OriginalHook(NightmareScythe)
