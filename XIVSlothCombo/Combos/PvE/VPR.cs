@@ -303,6 +303,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingFangs)
                                 : OriginalHook(SteelFangs);
                     }
+                    //for lower lvls
+                    return LevelChecked(ReavingFangs) && HasEffect(Buffs.HonedReavers)
+                               ? OriginalHook(ReavingFangs)
+                               : OriginalHook(SteelFangs);
                 }
                 return actionID;
             }
@@ -559,6 +563,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingFangs)
                                 : OriginalHook(SteelFangs);
                     }
+                    //for lower lvls
+                    return LevelChecked(ReavingFangs) && HasEffect(Buffs.HonedReavers)
+                               ? OriginalHook(ReavingFangs)
+                               : OriginalHook(SteelFangs);
                 }
                 return actionID;
             }
