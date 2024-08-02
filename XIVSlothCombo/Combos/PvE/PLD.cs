@@ -215,9 +215,17 @@ namespace XIVSlothCombo.Combos.PvE
                         if (hasDivineMight && hasDivineMagicMP && (inBurstWindow || isDivineMightExpiring || !InMeleeRange() || lastComboActionID is RiotBlade))
                             return HolySpirit;
 
-                        // Shield Lob Outside Melee
-                        if (LevelChecked(ShieldLob) && !InMeleeRange())
-                            return ShieldLob;
+                        // Out of Range
+                        if (!InMeleeRange())
+                        {
+                            // Holy Spirit (Not Moving)
+                            if (LevelChecked(HolySpirit) && hasDivineMagicMP && !IsMoving)
+                                return HolySpirit;
+
+                            // Shield Lob
+                            if (LevelChecked(ShieldLob))
+                                return ShieldLob;
+                        }
 
                         // Basic Combo
                         if (comboTime > 0)
@@ -399,16 +407,16 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
                             }
 
+                            // Variant Spirit Dart
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                                return Variant.VariantSpiritDart;
+
                             // Intervene
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) && LevelChecked(Intervene) && hasFightOrFlight &&
                                 GetRemainingCharges(Intervene) > Config.PLD_Intervene_HoldCharges && !IsMoving && !WasLastAction(Intervene) &&
                                 ((Config.PLD_Intervene_MeleeOnly == 1 && InMeleeRange()) || (GetTargetDistance() == 0 && Config.PLD_Intervene_MeleeOnly == 2)))
                                 return Intervene;
-
-                            // Variant Spirit Dart
-                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart) &&
-                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
-                                return Variant.VariantSpiritDart;
 
                             // Blade of Honor
                             if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_BladeOfHonor) && LevelChecked(BladeOfHonor) && OriginalHook(Requiescat) == BladeOfHonor)
@@ -461,12 +469,14 @@ namespace XIVSlothCombo.Combos.PvE
                             (inBurstWindow || isDivineMightExpiring || !InMeleeRange() || lastComboActionID is RiotBlade))
                             return HolySpirit;
 
-                        // Out of Range Options: Shield Lob / Holy Spirit (Not Moving)
+                        // Out of Range
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_ShieldLob) && !InMeleeRange())
                         {
+                            // Holy Spirit (Not Moving)
                             if (LevelChecked(HolySpirit) && hasDivineMagicMP && isAboveMPReserve && !IsMoving && Config.PLD_ShieldLob_SubOption == 2)
                                 return HolySpirit;
 
+                            // Shield Lob
                             if (LevelChecked(ShieldLob))
                                 return ShieldLob;
                         }

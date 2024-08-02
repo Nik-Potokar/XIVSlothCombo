@@ -2351,7 +2351,7 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode_BladeOfHonor = 11033,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("MP Reservation Option", "Adds a minimum limit to MP-consuming actions.\n- Uses them only when at or above the threshold:", PLD.JobID, 13)]
+        [CustomComboInfo("MP Reservation Option", "Adds a minimum limit to MP-consuming actions.\n- Uses them only when at or above:", PLD.JobID, 13)]
         PLD_ST_AdvancedMode_MP_Reserve = 11035,
 
         // AoE Advanced Mode
@@ -2398,7 +2398,7 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("MP Reservation Option", "Adds a minimum limit to MP-consuming actions.\n- Uses them only when at or above the threshold:", PLD.JobID, 9)]
+        [CustomComboInfo("MP Reservation Option", "Adds a minimum limit to MP-consuming actions.\n- Uses them only when at or above:", PLD.JobID, 9)]
         PLD_AoE_AdvancedMode_MP_Reserve = 11036,
 
         // Extra Features
