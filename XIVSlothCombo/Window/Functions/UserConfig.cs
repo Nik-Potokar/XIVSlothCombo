@@ -1760,12 +1760,12 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve)
             {
-                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_ST_MP_Reserve, "Minimum MP gauge required.", sliderIncrement: 100);
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_ST_MP_Reserve, "Minimum MP", sliderIncrement: 100);
             }
 
             if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve)
             {
-                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_AoE_MP_Reserve, "Minimum MP gauge required.", sliderIncrement: 100);
+                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_AoE_MP_Reserve, "Minimum MP", sliderIncrement: 100);
             }
 
 
