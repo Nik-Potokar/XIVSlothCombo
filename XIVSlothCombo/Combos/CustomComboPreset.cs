@@ -3668,7 +3668,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(VPR.SteelFangs)]
         [ConflictingCombos(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID, -2)]
         VPR_ST_SimpleMode = 30000,
 
         #region Advanced ST Viper
@@ -3698,7 +3698,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_Vicewinder = 30006,
 
         [ParentCombo(VPR_ST_CDs)]
-        [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
+        [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.\nWill automatically swap depending on ur position.", VPR.JobID)]
         VPR_ST_VicewinderCombo = 30007,
 
         #endregion
@@ -3738,7 +3738,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_ComboHeals = 30097,
 
         [ParentCombo(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.\n Only for basic combo. Does NOT care about Vicewinder positionals.", VPR.JobID)]
+        [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
         VPR_TrueNorthDynamic = 30098,
 
         [ParentCombo(VPR_TrueNorthDynamic)]
@@ -3749,7 +3749,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(VPR.SteelMaw)]
         [ConflictingCombos(VPR_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID, -1)]
         VPR_AoE_SimpleMode = 30100,
 
         #region Advanced AoE Viper
@@ -3808,7 +3808,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(VPR.Vicewinder)]
-        [CustomComboInfo("Vicewinder - Coils", "Replaces Vicewinder with Hunter's/Swiftskin's Coils.", VPR.JobID)]
+        [CustomComboInfo("Vicewinder - Coils", "Replaces Vicewinder with Hunter's/Swiftskin's Coils.\nWill automatically swap depending on ur position.", VPR.JobID)]
         VPR_VicewinderCoils = 30200,
 
         [ParentCombo(VPR_VicewinderCoils)]
@@ -3843,7 +3843,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(VPR_VicepitDens)]
         [CustomComboInfo("Include Twin Combo Actions", "Adds Twinfang and Twinblood to the button.", VPR.JobID)]
         VPR_VicepitDens_oGCDs = 30207,
-        
+
         #endregion
 
         #region WARRIOR

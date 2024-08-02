@@ -2403,11 +2403,11 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region VIPER
 
-            if ((preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled) || (preset == CustomComboPreset.VPR_VicewinderCoils && enabled))
+           /* if ((preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled) || (preset == CustomComboPreset.VPR_VicewinderCoils && enabled))
             {
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
                 UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
-            }
+            }*/
 
             if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
             {
