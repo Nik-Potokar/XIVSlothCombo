@@ -3741,10 +3741,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
         VPR_TrueNorthDynamic = 30098,
 
-        [ParentCombo(VPR_TrueNorthDynamic)]
-        [CustomComboInfo("Hold True North for Vicewinder", "Will hold the last charge of True North for use with Vicewinder, even when out of position for other Positionals.", VPR.JobID)]
-        VPR_TrueNorthDynamic_HoldCharge = 30099,
-
         #endregion
 
         [ReplaceSkill(VPR.SteelMaw)]
