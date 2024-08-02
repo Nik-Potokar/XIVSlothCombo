@@ -187,9 +187,9 @@ namespace XIVSlothCombo.Combos.PvE
          */
         internal class SGE_DruoTauro : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_DruoTauro;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_TauroDruo;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is Druochole && ActionReady(Taurochole) ? Taurochole : actionID;
+                => actionID is Taurochole && IsOnCooldown(Taurochole) ? Druochole : actionID;
         }
 
         /*

@@ -3092,9 +3092,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14037,
 
-        [ReplaceSkill(SGE.Druochole)]
-        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
-        SGE_DruoTauro = 14038,
+        [ReplaceSkill(SGE.Taurochole)]
+        [CustomComboInfo("Taurochole to Druochole Feature", "Turns Taurochole to Druochole when Taurochole is on cooldown.", SGE.JobID, 700, "", "")]
+        SGE_TauroDruo = 14038,
 
         [ReplaceSkill(SGE.Pneuma)]
         [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown.", SGE.JobID, 701, "", "")] //Temporary to keep the order
