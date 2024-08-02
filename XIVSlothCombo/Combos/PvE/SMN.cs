@@ -515,7 +515,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (OriginalHook(Ruin) is AstralImpulse or UmbralImpulse or FountainOfFire)
                         {
                             if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && IsBahamutReady && (LevelChecked(SummonSolarBahamut) || DemiAttackCount >= burstDelay) 
-                                && (IsNotEnabled(CustomComboPreset.SMN_SearingLight_Burst) || (LevelChecked(SummonSolarBahamut) || HasEffect(Buffs.SearingLight))))
+                                && (IsNotEnabled(CustomComboPreset.SMN_SearingLight_Burst) || (LevelChecked(SummonSolarBahamut) || HasEffect(Buffs.SearingLight) ||
+                                    AoECombo && IsEnabled(CustomComboPreset.SMN_SearingLight_STOnly))))
                             {
                                 if (IsOffCooldown(OriginalHook(EnkindleBahamut)) && LevelChecked(SummonBahamut))
                                     return OriginalHook(EnkindleBahamut);
@@ -529,21 +530,22 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (IsOffCooldown(OriginalHook(EnkindlePhoenix)) && LevelChecked(SummonPhoenix) && OriginalHook(Ruin) is FountainOfFire)
                                     return OriginalHook(EnkindlePhoenix);
-                                
+
                                 if (IsOffCooldown(Rekindle) && IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Rekindle) && OriginalHook(Ruin) is FountainOfFire)
                                     return OriginalHook(AstralFlow);
                             }
-                            
+
                             // Demi Nuke 3: More Boogaloo
                             if (IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_Attacks) && IsSolarBahamutReady && DemiAttackCount >= burstDelay && 
-                                (IsNotEnabled(CustomComboPreset.SMN_SearingLight_Burst) || HasEffect(Buffs.SearingLight)))
+                                (IsNotEnabled(CustomComboPreset.SMN_SearingLight_Burst) || HasEffect(Buffs.SearingLight) ||
+                                 AoECombo && IsEnabled(CustomComboPreset.SMN_SearingLight_STOnly)))
                             {
                                 if (IsOffCooldown(OriginalHook(EnkindleSolarBahamut)) && LevelChecked(SummonSolarBahamut))
                                     return OriginalHook(EnkindleSolarBahamut);
 
                                 if (IsOffCooldown(Sunflare) && LevelChecked(Sunflare) && OriginalHook(Ruin) is UmbralImpulse)
                                     return OriginalHook(AstralFlow);
-                                
+
                                 if (IsOffCooldown(LuxSolaris) && IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_LuxSolaris) && HasEffect(Buffs.RefulgentLux))
                                     return OriginalHook(LuxSolaris);
                             }
