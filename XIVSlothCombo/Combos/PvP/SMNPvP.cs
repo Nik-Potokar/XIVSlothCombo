@@ -95,7 +95,7 @@ namespace XIVSlothCombo.Combos.PvP
                         if (IsOffCooldown(CrimsonCyclone) && InMeleeRange())
                             return CrimsonCyclone;
                     }
-                    
+
                     // Garuda
                     if (IsOffCooldown(Slipstream))
                         return Slipstream;

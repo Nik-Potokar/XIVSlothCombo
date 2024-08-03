@@ -1,24 +1,17 @@
 using Dalamud.Interface.ManagedFontAtlas;
-using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Utility;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
-using FFXIVClientStructs.FFXIV.Client.UI;
-using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
-using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Runtime.InteropServices;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
-using XIVSlothCombo.CustomComboNS.Functions;
-using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Tabs;
 
 namespace XIVSlothCombo.Window
@@ -183,7 +176,7 @@ namespace XIVSlothCombo.Window
             };
         }
 
-       
+
 
         public void Dispose()
         {

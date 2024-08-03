@@ -6,7 +6,6 @@ using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
-using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -122,7 +121,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserBoolArray
                 WHM_ST_MainCombo_Adv_Actions = new("WHM_ST_MainCombo_Adv_Actions");
         }
-        
+
         internal class WHM_SolaceMisery : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_SolaceMisery;
@@ -234,7 +233,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(PresenceOfMind);
 
                             if (ActionReady(Assize))
-                            return Assize;
+                                return Assize;
                         }
 
                         if (Glare3Count > 0)
@@ -267,21 +266,18 @@ namespace XIVSlothCombo.Combos.PvE
                     if (InCombat())
                     {
                         // DoTs
-                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && LevelChecked(Aero) && HasBattleTarget())
+                        if (IsEnabled(CustomComboPreset.WHM_ST_MainCombo_DoT) && LevelChecked(Aero) && HasBattleTarget() &&
+                            AeroList.TryGetValue(OriginalHook(Aero), out ushort dotDebuffID))
                         {
-                            Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
                             if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
                                 IsEnabled(Variant.VariantSpiritDart) &&
-                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                                GetDebuffRemainingTime(Variant.Debuffs.SustainedDamage) <= 3 &&
                                 CanSpellWeave(actionID))
                                 return Variant.VariantSpiritDart;
 
-                            uint dot = OriginalHook(Aero); //Grab the appropriate DoT Action
-                            Status? dotDebuff = FindTargetEffect(AeroList[dot]); //Match it with it's Debuff ID, and check for the Debuff
-
                             // DoT Uptime & HP% threshold
                             float refreshtimer = Config.WHM_ST_MainCombo_DoT_Adv ? Config.WHM_ST_MainCombo_DoT_Threshold : 3;
-                            if ((dotDebuff is null || dotDebuff.RemainingTime <= refreshtimer) &&
+                            if (GetDebuffRemainingTime(dotDebuffID) <= refreshtimer &&
                                 GetTargetHPPercent() > Config.WHM_STDPS_MainCombo_DoT)
                                 return OriginalHook(Aero);
                         }
@@ -323,6 +319,8 @@ namespace XIVSlothCombo.Combos.PvE
                     bool divineCaressReady = ActionReady(DivineCaress) && HasEffect(Buffs.DivineGrace);
                     bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
                     var healTarget = GetHealTarget(Config.WHM_AoEHeals_MedicaMO);
+                    var hasMedica2 = FindEffectOnMember(Buffs.Medica2, healTarget);
+                    var hasMedica3 = FindEffectOnMember(Buffs.Medica3, healTarget);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Assize) && assizeReady)
                         return Assize;
@@ -347,8 +345,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
                         && ((FindEffectOnMember(Buffs.Medica2, healTarget) == null && FindEffectOnMember(Buffs.Medica3, healTarget) == null)
-                            || FindEffectOnMember(Buffs.Medica2, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime
-                            || FindEffectOnMember(Buffs.Medica3, healTarget).RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
+                            || hasMedica2 != null && hasMedica2.RemainingTime <= Config.WHM_AoEHeals_MedicaTime
+                            || hasMedica3 != null && hasMedica3.RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
                         && (ActionReady(Medica2) || ActionReady(Medica3)))
                     {
                         // Medica 3 upgrade
@@ -359,9 +357,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return Medica2;
                     }
 
-                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3) && ActionReady(Cure3) && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP || HasEffect(Buffs.ThinAir)))
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3)
+                        && ActionReady(Cure3)
+                        && (LocalPlayer.CurrentMp >= Config.WHM_AoEHeals_Cure3MP
+                            || HasEffect(Buffs.ThinAir)))
                         return Cure3;
-
                 }
 
                 return actionID;
@@ -446,10 +446,9 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
-                    Status? sustainedDamage = FindTargetEffect(Variant.Debuffs.SustainedDamage);
                     if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_SpiritDart) &&
                         IsEnabled(Variant.VariantSpiritDart) &&
-                        (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3) &&
+                        GetDebuffRemainingTime(Variant.Debuffs.SustainedDamage) <= 3 &&
                         HasBattleTarget())
                         return Variant.VariantSpiritDart;
 
