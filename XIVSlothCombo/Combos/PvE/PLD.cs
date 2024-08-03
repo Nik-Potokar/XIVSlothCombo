@@ -216,16 +216,8 @@ namespace XIVSlothCombo.Combos.PvE
                             return HolySpirit;
 
                         // Out of Range
-                        if (!InMeleeRange())
-                        {
-                            // Holy Spirit (Not Moving)
-                            if (LevelChecked(HolySpirit) && hasDivineMagicMP && !IsMoving)
-                                return HolySpirit;
-
-                            // Shield Lob
-                            if (LevelChecked(ShieldLob))
-                                return ShieldLob;
-                        }
+                        if (LevelChecked(ShieldLob) && !InMeleeRange())
+                            return ShieldLob;
 
                         // Basic Combo
                         if (comboTime > 0)
