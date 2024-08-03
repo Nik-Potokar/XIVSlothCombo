@@ -157,29 +157,29 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (CustomComboFunctions.WasLastAction(Ouroboros) && OpenerStep == 19) OpenerStep++;
                     else if (OpenerStep == 19) actionID = Ouroboros;
 
-                    if (CustomComboFunctions.WasLastAction(HindstingStrike) && OpenerStep == 20) OpenerStep++;
-                    else if (OpenerStep == 20) actionID = HindstingStrike;
+                    if (CustomComboFunctions.WasLastAction(UncoiledFury) && OpenerStep == 20) OpenerStep++;
+                    else if (OpenerStep == 20) actionID = UncoiledFury;
 
-                    if (CustomComboFunctions.WasLastAction(DeathRattle) && OpenerStep == 21) OpenerStep++;
-                    else if (OpenerStep == 21) actionID = DeathRattle;
+                    if (CustomComboFunctions.WasLastAction(UncoiledTwinfang) && OpenerStep == 21) OpenerStep++;
+                    else if (OpenerStep == 21) actionID = UncoiledTwinfang;
 
-                    if (CustomComboFunctions.WasLastAction(UncoiledFury) && OpenerStep == 22) OpenerStep++;
-                    else if (OpenerStep == 22) actionID = UncoiledFury;
+                    if (CustomComboFunctions.WasLastAction(UncoiledTwinblood) && OpenerStep == 22) OpenerStep++;
+                    else if (OpenerStep == 22) actionID = UncoiledTwinblood;
 
-                    if (CustomComboFunctions.WasLastAction(UncoiledTwinfang) && OpenerStep == 23) OpenerStep++;
-                    else if (OpenerStep == 23) actionID = UncoiledTwinfang;
+                    if (CustomComboFunctions.WasLastAction(UncoiledFury) && OpenerStep == 23) OpenerStep++;
+                    else if (OpenerStep == 23) actionID = UncoiledFury;
 
-                    if (CustomComboFunctions.WasLastAction(UncoiledTwinblood) && OpenerStep == 24) OpenerStep++;
-                    else if (OpenerStep == 24) actionID = UncoiledTwinblood;
+                    if (CustomComboFunctions.WasLastAction(UncoiledTwinfang) && OpenerStep == 24) OpenerStep++;
+                    else if (OpenerStep == 24) actionID = UncoiledTwinfang;
 
-                    if (CustomComboFunctions.WasLastAction(UncoiledFury) && OpenerStep == 25) OpenerStep++;
-                    else if (OpenerStep == 25) actionID = UncoiledFury;
+                    if (CustomComboFunctions.WasLastAction(UncoiledTwinblood) && OpenerStep == 25) OpenerStep++;
+                    else if (OpenerStep == 25) actionID = UncoiledTwinblood;
 
-                    if (CustomComboFunctions.WasLastAction(UncoiledTwinfang) && OpenerStep == 26) OpenerStep++;
-                    else if (OpenerStep == 26) actionID = UncoiledTwinfang;
+                    if (CustomComboFunctions.WasLastAction(HindstingStrike) && OpenerStep == 26) OpenerStep++;
+                    else if (OpenerStep == 26) actionID = HindstingStrike;
 
-                    if (CustomComboFunctions.WasLastAction(UncoiledTwinblood) && OpenerStep == 27) OpenerStep++;
-                    else if (OpenerStep == 27) actionID = UncoiledTwinblood;
+                    if (CustomComboFunctions.WasLastAction(DeathRattle) && OpenerStep == 27) OpenerStep++;
+                    else if (OpenerStep == 27) actionID = DeathRattle;
 
                     if (CustomComboFunctions.WasLastAction(Vicewinder) && OpenerStep == 28) OpenerStep++;
                     else if (OpenerStep == 28) actionID = Vicewinder;
