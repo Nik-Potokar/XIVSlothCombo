@@ -172,7 +172,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     bool thinAirReady = !HasEffect(Buffs.ThinAir) && LevelChecked(ThinAir) && HasCharges(ThinAir);
 
-                    if (HasEffect(All.Buffs.Swiftcast))
+                    if (!LevelChecked(All.Swiftcast))
+                        return Raise;
+                    if (IsOnCooldown(All.Swiftcast))
                         return IsEnabled(CustomComboPreset.WHM_ThinAirRaise) && thinAirReady
                             ? ThinAir
                             : Raise;
