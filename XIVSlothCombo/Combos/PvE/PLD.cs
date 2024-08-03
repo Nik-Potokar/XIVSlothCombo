@@ -95,6 +95,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 #region Variables
+                float durationFightOrFlight = GetBuffRemainingTime(Buffs.FightOrFlight);
+                float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
+                float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
@@ -129,7 +132,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (InMeleeRange())
                             {
                                 // Requiescat
-                                if (ActionReady(Requiescat) && JustUsed(FightOrFlight, 10f))
+                                if (ActionReady(Requiescat) && cooldownFightOrFlight > 50)
                                     return OriginalHook(Requiescat);
 
                                 // Fight or Flight
@@ -150,7 +153,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Level 68+
-                                    else if (GetCooldownRemainingTime(Requiescat) < 0.5f && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
+                                    else if (cooldownRequiescat < 0.5f && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
                                         return FightOrFlight;
                                 }
 
@@ -160,7 +163,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
-                                if (hasFightOrFlight || GetCooldownRemainingTime(FightOrFlight) > 15)
+                                if (cooldownFightOrFlight > 15)
                                 {
                                     if (ActionReady(CircleOfScorn))
                                         return CircleOfScorn;
@@ -199,11 +202,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (hasDivineMight && hasDivineMagicMP)
                         {
                             // Delay Sepulchre / Prefer Sepulchre 
-                            if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 3 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
+                            if (inAtonementFinisher && (cooldownFightOrFlight < 3 || durationFightOrFlight > 3))
                                 return HolySpirit;
 
                             // Fit in Burst
-                            if (!inAtonementFinisher && hasFightOrFlight && GetBuffRemainingTime(Buffs.FightOrFlight) < 3)
+                            if (!inAtonementFinisher && hasFightOrFlight && durationFightOrFlight < 3)
                                 return HolySpirit;
                         }
 
@@ -242,11 +245,12 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 #region Variables
+                float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
+                float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
                 bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
                 #endregion
 
@@ -267,11 +271,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (InMeleeRange())
                             {
                                 // Requiescat
-                                if (ActionReady(Requiescat) && JustUsed(FightOrFlight, 10f))
+                                if (ActionReady(Requiescat) && cooldownFightOrFlight > 50)
                                     return OriginalHook(Requiescat);
 
                                 // Fight or Flight
-                                if (ActionReady(FightOrFlight) && ((GetCooldownRemainingTime(Requiescat) < 0.5f && canEarlyWeave) || !LevelChecked(Requiescat)))
+                                if (ActionReady(FightOrFlight) && ((cooldownRequiescat < 0.5f && canEarlyWeave) || !LevelChecked(Requiescat)))
                                     return FightOrFlight;
 
                                 // Variant Ultimatum
@@ -279,7 +283,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
-                                if (hasFightOrFlight || GetCooldownRemainingTime(FightOrFlight) > 15)
+                                if (cooldownFightOrFlight > 15)
                                 {
                                     if (ActionReady(CircleOfScorn))
                                         return CircleOfScorn;
@@ -324,6 +328,9 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 #region Variables
+                float durationFightOrFlight = GetBuffRemainingTime(Buffs.FightOrFlight);
+                float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
+                float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
@@ -359,7 +366,7 @@ namespace XIVSlothCombo.Combos.PvE
                             if (InMeleeRange())
                             {
                                 // Requiescat
-                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && ActionReady(Requiescat) && JustUsed(FightOrFlight, 10f))
+                                if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Requiescat) && ActionReady(Requiescat) && cooldownFightOrFlight > 50)
                                     return OriginalHook(Requiescat);
 
                                 // Fight or Flight
@@ -380,7 +387,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Level 68+
-                                    else if (GetCooldownRemainingTime(Requiescat) < 0.5f && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
+                                    else if (cooldownRequiescat < 0.5f && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
                                         return FightOrFlight;
                                 }
 
@@ -389,7 +396,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
-                                if (hasFightOrFlight || GetCooldownRemainingTime(FightOrFlight) > 15)
+                                if (cooldownFightOrFlight > 15)
                                 {
                                     if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_CircleOfScorn) && ActionReady(CircleOfScorn))
                                         return CircleOfScorn;
@@ -443,11 +450,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && hasDivineMight && hasDivineMagicMP && isAboveMPReserve)
                         {
                             // Delay Sepulchre / Prefer Sepulchre 
-                            if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 3 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
+                            if (inAtonementFinisher && (cooldownFightOrFlight < 3 || durationFightOrFlight > 3))
                                 return HolySpirit;
 
                             // Fit in Burst
-                            if (!inAtonementFinisher && hasFightOrFlight && GetBuffRemainingTime(Buffs.FightOrFlight) < 3)
+                            if (!inAtonementFinisher && hasFightOrFlight && durationFightOrFlight < 3)
                                 return HolySpirit;
                         }
 
@@ -496,11 +503,12 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
                 #region Variables
+                float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
+                float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
                 bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
                 bool isAboveMPReserve = !IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_AoE_MP_Reserve;
                 #endregion
@@ -522,12 +530,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (InMeleeRange())
                             {
                                 // Requiescat
-                                if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && ActionReady(Requiescat) && JustUsed(FightOrFlight, 10f))
+                                if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Requiescat) && ActionReady(Requiescat) && cooldownFightOrFlight > 50)
                                     return OriginalHook(Requiescat);
 
                                 // Fight or Flight
                                 if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && ActionReady(FightOrFlight) && GetTargetHPPercent() >= Config.PLD_AoE_FoF_Trigger &&
-                                    ((GetCooldownRemainingTime(Requiescat) < 0.5f && canEarlyWeave) || !LevelChecked(Requiescat)))
+                                    ((cooldownRequiescat < 0.5f && canEarlyWeave) || !LevelChecked(Requiescat)))
                                     return FightOrFlight;
 
                                 // Variant Ultimatum
@@ -535,7 +543,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
-                                if (hasFightOrFlight || GetCooldownRemainingTime(FightOrFlight) > 15)
+                                if (cooldownFightOrFlight > 15)
                                 {
                                     if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_CircleOfScorn) && ActionReady(CircleOfScorn))
                                         return CircleOfScorn;
