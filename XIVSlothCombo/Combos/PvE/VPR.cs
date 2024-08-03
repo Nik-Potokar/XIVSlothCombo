@@ -315,8 +315,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
 
-                if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
-                    LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) &&
+                if (LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6) && !VPRCheckTimers.IsVenomExpiring(6) &&
@@ -330,7 +329,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     // odd minutes
-                    if (((SerpentsIreUsed <= 3 || SerpentsIreUsed > 4) && gauge.SerpentOffering >= 50 &&
+                    if (((SerpentsIreUsed <= 3 || SerpentsIreUsed > 4) &&
+                        gauge.SerpentOffering >= 50 &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
                         (gauge.SerpentOffering >= 95 ||
@@ -590,7 +590,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     // odd minutes
-                    if (((SerpentsIreUsed <= 3 || SerpentsIreUsed > 4) && gauge.SerpentOffering >= 50 &&
+                    if (((SerpentsIreUsed <= 3 || SerpentsIreUsed > 4) &&
+                        gauge.SerpentOffering >= 50 &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
                         (gauge.SerpentOffering >= 95 ||
@@ -766,6 +767,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingMaw)
                                 : OriginalHook(SteelMaw);
                     }
+                    //for lower lvls
+                    return LevelChecked(ReavingMaw) && HasEffect(Buffs.HonedReavers)
+                               ? OriginalHook(ReavingMaw)
+                               : OriginalHook(SteelMaw);
                 }
                 return actionID;
             }
@@ -955,6 +960,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 ? OriginalHook(ReavingMaw)
                                 : OriginalHook(SteelMaw);
                     }
+                    //for lower lvls
+                    return LevelChecked(ReavingMaw) && HasEffect(Buffs.HonedReavers)
+                               ? OriginalHook(ReavingMaw)
+                               : OriginalHook(SteelMaw);
                 }
                 return actionID;
             }
