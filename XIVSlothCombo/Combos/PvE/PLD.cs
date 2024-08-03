@@ -199,7 +199,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (hasDivineMight && hasDivineMagicMP)
                         {
                             // Delay Sepulchre / Prefer Sepulchre 
-                            if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 6 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
+                            if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 3 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
                                 return HolySpirit;
 
                             // Fit in Burst
@@ -451,7 +451,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && hasDivineMight && hasDivineMagicMP && isAboveMPReserve)
                         {
                             // Delay Sepulchre / Prefer Sepulchre 
-                            if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 6 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
+                            if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 3 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
                                 return HolySpirit;
 
                             // Fit in Burst
