@@ -1,10 +1,12 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
 using System;
 using System.Collections.Generic;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -77,11 +79,12 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const uint
                 EnhancedFreeze = 295,
-                EnhancedPolyGlot = 297,
+                EnhancedPolyglot = 297,
                 AspectMasteryIII = 459,
                 EnhancedFoul = 461,
                 EnhancedManafont = 463,
-                Enochian = 460;
+                Enochian = 460,
+                EnhancedPolyglotII = 615;
         }
 
         public static class MP
@@ -146,6 +149,9 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID == Fire)
                 {
                     var gauge = GetJobGauge<BLMGauge>();
+                    var maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+                    var maxPolyglotCD = maxPolyglot * 30000;
+                    var remainingPolyglotCD = Math.Max(0, (maxPolyglot - gauge.PolyglotStacks) * 30000 + (gauge.EnochianTimer - 30000));
                     var curMp = LocalPlayer.CurrentMp;
                     int nextMpGain = gauge.UmbralIceStacks switch
                     {
@@ -166,13 +172,19 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Thunder);
                     }
 
+                    if (ActionReady(Amplifier) && remainingPolyglotCD >= 20000 && CanSpellWeave(ActionWatching.LastSpell))
+                        return Amplifier;
+
+                    if (remainingPolyglotCD < 6000 && gcdsInTimer > 2 && gauge.HasPolyglotStacks())
+                        return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
+
                     if (IsMoving)
                     {
-                        if (Foul.LevelChecked() && !Xenoglossy.LevelChecked() && gauge.PolyglotStacks > 0)
-                            return Foul;
+                        if (ActionReady(Amplifier) && gauge.PolyglotStacks < maxPolyglot)
+                            return Amplifier;
 
-                        if (Xenoglossy.LevelChecked() && gauge.PolyglotStacks > 0)
-                            return Xenoglossy;
+                        if (gauge.HasPolyglotStacks())
+                            return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
                     }
 
                     if (CanSpellWeave(actionID) && ActionReady(LeyLines))
@@ -180,9 +192,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (gauge.InAstralFire)
                     {
+
+                        if (gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
+                            return Paradox;
+
                         if (HasEffect(Buffs.Firestarter))
                         {
-                            if (gcdsInTimer < 2 || curMp < MP.FireI)
+                            if (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose))
                                 return Fire3;
                         }
 
@@ -230,14 +246,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Blizzard3;
                         }
 
-                        if (Foul.LevelChecked() && !Xenoglossy.LevelChecked() && gauge.PolyglotStacks > 0)
-                            return Foul;
-
-                        if (Xenoglossy.LevelChecked() && gauge.PolyglotStacks > 0)
-                            return Xenoglossy;
-
                         if (Blizzard4.LevelChecked() && gauge.UmbralHearts < 3)
                             return Blizzard4;
+
+                        if (gauge.IsParadoxActive)
+                            return Paradox;
+
+                        if (gauge.HasPolyglotStacks())
+                            return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
 
                         if (curMp + nextMpGain >= 7500 && (LocalPlayer.CastActionId == Blizzard || WasLastSpell(Blizzard) || WasLastSpell(Blizzard4)))
                         {
@@ -249,6 +265,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if ((curMp + nextMpGain <= 10000 || curMp < 7500))
                             return Blizzard;
+
+                        if (ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell))
+                            return Transpose;
 
                         if (Fire3.LevelChecked())
                             return Fire3;

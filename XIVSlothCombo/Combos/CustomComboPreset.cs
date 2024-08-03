@@ -307,7 +307,6 @@ namespace XIVSlothCombo.Combos
         #region BLACK MAGE
 
         [ReplaceSkill(BLM.Fire)]
-        [ConflictingCombos(BLM_Scathe_Xeno)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10, "", "")]
         BLM_ST_SimpleMode = 2012,
 
@@ -348,7 +347,6 @@ namespace XIVSlothCombo.Combos
         BLM_Blizzard_1to3 = 2003,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ST_SimpleMode)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID)]
         BLM_Scathe_Xeno = 2004,
 
