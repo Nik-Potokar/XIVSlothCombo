@@ -322,7 +322,7 @@ namespace XIVSlothCombo.Combos.PvE
                     !VPRCheckTimers.IsComboExpiring(6) && !VPRCheckTimers.IsHoningExpiring(6))
                 {
                     //even minutes
-                    if (WasLastAbility(SerpentsIre) ||
+                    if ((WasLastAbility(SerpentsIre) && HasEffect(Buffs.ReadyToReawaken)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
                         (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre)))
@@ -583,7 +583,7 @@ namespace XIVSlothCombo.Combos.PvE
                     !VPRCheckTimers.IsComboExpiring(6) && !VPRCheckTimers.IsHoningExpiring(6))
                 {
                     //even minutes
-                    if (WasLastAbility(SerpentsIre) ||
+                    if ((WasLastAbility(SerpentsIre) && HasEffect(Buffs.ReadyToReawaken)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
                         (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre)))
