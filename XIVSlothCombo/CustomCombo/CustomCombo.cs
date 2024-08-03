@@ -1,8 +1,11 @@
 ﻿using Dalamud.Utility;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.CustomComboNS
 {
@@ -50,9 +53,12 @@ namespace XIVSlothCombo.CustomComboNS
         /// <param name="newActionID"> Replacement action ID. </param>
         /// <returns> True if the action has changed, otherwise false. </returns>
 
-        public bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
+        public unsafe bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
         {
             newActionID = 0;
+
+            if (ActionManager.Instance()->QueuedActionType == ActionType.Action && ActionManager.Instance()->QueuedActionId != actionID)
+                return false;
 
             if (!IsEnabled(Preset))
                 return false;
