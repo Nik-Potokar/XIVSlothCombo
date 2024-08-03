@@ -992,7 +992,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Vicewinder Combo
-                    if (LevelChecked(Vicewinder) && InMeleeRange())
+                    if (LevelChecked(Vicewinder))
                     {
                         // Swiftskin's Coil
                         if ((VicewinderReady && (!OnTargetsFlank() || !TargetNeedsPositionals())) || HuntersCoilReady)
