@@ -448,7 +448,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return GoringBlade;
 
                         // Holy Spirit Prioritization
-                        if (hasDivineMight && hasDivineMagicMP && isAboveMPReserve)
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit) && hasDivineMight && hasDivineMagicMP && isAboveMPReserve)
                         {
                             // Delay Sepulchre / Prefer Sepulchre 
                             if (inAtonementFinisher && (GetCooldownRemainingTime(FightOrFlight) < 6 || GetBuffRemainingTime(Buffs.FightOrFlight) > 3))
