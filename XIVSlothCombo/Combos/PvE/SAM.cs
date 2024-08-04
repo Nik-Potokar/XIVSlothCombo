@@ -182,7 +182,6 @@ namespace XIVSlothCombo.Combos.PvE
                 float GCD = GetCooldown(OriginalHook(Hakaze)).CooldownTotal;
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
-                bool oddMinute = GetCooldownRemainingTime(Senei) is <= 45 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
 
                 if (actionID is Gekko)
                 {
@@ -203,90 +202,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (LevelChecked(Enpi) && !InMeleeRange() && HasBattleTarget())
                         return Enpi;
-
-                    //Filler Features
-                    if (TraitLevelChecked(Traits.EnhancedHissatsu))
-                    {
-                        if (GetDebuffRemainingTime(Debuffs.Higanbana) < 40 && inFiller)
-                        {
-                            inFiller = false;
-                            fillerComplete = false;
-                            fastFillerReady = false;
-                        }
-
-                        if (!inFiller && oddMinute)
-                            inFiller = true;
-
-                        if (inFiller)
-                        {
-                            if (fillerComplete)
-                            {
-                                fastFillerReady = false;
-                                inFiller = false;
-                                fillerComplete = false;
-                            }
-
-                            if (Config.SAM_FillerCombo == 0)
-                            {
-                                if (WasLastAbility(Hagakure))
-                                    fillerComplete = true;
-
-                                if (gauge.Kenki >= 75 && CanSpellWeave(actionID))
-                                    return Shinten;
-
-                                if (gauge.Sen == Sen.SETSU && CanSpellWeave(actionID))
-                                    return Hagakure;
-
-                                if (lastComboMove == OriginalHook(Hakaze))
-                                    return Yukikaze;
-
-                                if (gauge.Sen == 0)
-                                    return OriginalHook(Hakaze);
-                            }
-
-                            if (Config.SAM_FillerCombo == 1)
-                            {
-                                if (WasLastAbility(Hagakure))
-                                    fillerComplete = true;
-
-                                if (gauge.Kenki >= 75 && CanSpellWeave(actionID))
-                                    return Shinten;
-
-                                if (gauge.Sen == Sen.GETSU && CanSpellWeave(actionID))
-                                    return Hagakure;
-
-                                if (lastComboMove == Jinpu)
-                                    return Gekko;
-
-                                if (lastComboMove == OriginalHook(Hakaze))
-                                    return Jinpu;
-
-                                if (gauge.Sen == 0)
-                                    return OriginalHook(Hakaze);
-                            }
-
-                            if (Config.SAM_FillerCombo == 2)
-                            {
-                                if (WasLastAbility(Hagakure))
-                                    fillerComplete = true;
-
-                                if (WasLastWeaponskill(OriginalHook(Hakaze)) && gauge.Sen == Sen.SETSU)
-                                    fastFillerReady = true;
-
-                                if (gauge.Kenki >= 75 && CanSpellWeave(actionID))
-                                    return Shinten;
-
-                                if (gauge.Sen == Sen.SETSU && WasLastWeaponskill(Yukikaze) && fastFillerReady && CanSpellWeave(actionID))
-                                    return Hagakure;
-
-                                if (lastComboMove == OriginalHook(Hakaze))
-                                    return Yukikaze;
-
-                                if (gauge.Sen == 0 || gauge.Sen == Sen.SETSU)
-                                    return OriginalHook(Hakaze);
-                            }
-                        }
-                    }
 
                     //Meikyo Features
                     if (!HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
@@ -429,9 +344,6 @@ namespace XIVSlothCombo.Combos.PvE
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
-                bool oddMinute = GetCooldownRemainingTime(Senei) is <= 45 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 48 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 51;
-                // bool evenMinute = GetCooldownRemainingTime(ikishoten) is <= 30 && gauge.Sen == Sen.NONE && !HasEffect(Buffs.MeikyoShisui) && GetDebuffRemainingTime(Debuffs.Higanbana) >= 44 && GetDebuffRemainingTime(Debuffs.Higanbana) <= 47;
-
 
                 if (actionID is Gekko)
                 {
@@ -456,90 +368,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SAM_ST_RangedUptime) &&
                         LevelChecked(Enpi) && !InMeleeRange() && HasBattleTarget())
                         return Enpi;
-
-                    //Filler Features
-                    if (IsEnabled(CustomComboPreset.SAM_ST_FillerCombos) && TraitLevelChecked(Traits.EnhancedHissatsu))
-                    {
-                        if (GetDebuffRemainingTime(Debuffs.Higanbana) < 40 && inFiller)
-                        {
-                            inFiller = false;
-                            fillerComplete = false;
-                            fastFillerReady = false;
-                        }
-
-                        if (!inFiller && oddMinute)
-                            inFiller = true;
-
-                        if (inFiller)
-                        {
-                            if (fillerComplete)
-                            {
-                                fastFillerReady = false;
-                                inFiller = false;
-                                fillerComplete = false;
-                            }
-
-                            if (Config.SAM_FillerCombo == 0)
-                            {
-                                if (WasLastAbility(Hagakure))
-                                    fillerComplete = true;
-
-                                if (gauge.Kenki >= 75 && CanSpellWeave(actionID))
-                                    return Shinten;
-
-                                if (gauge.Sen == Sen.SETSU && CanSpellWeave(actionID))
-                                    return Hagakure;
-
-                                if (lastComboMove == OriginalHook(Hakaze))
-                                    return Yukikaze;
-
-                                if (gauge.Sen == 0)
-                                    return OriginalHook(Hakaze);
-                            }
-
-                            if (Config.SAM_FillerCombo == 1)
-                            {
-                                if (WasLastAbility(Hagakure))
-                                    fillerComplete = true;
-
-                                if (gauge.Kenki >= 75 && CanSpellWeave(actionID))
-                                    return Shinten;
-
-                                if (gauge.Sen == Sen.GETSU && CanSpellWeave(actionID))
-                                    return Hagakure;
-
-                                if (lastComboMove == Jinpu)
-                                    return Gekko;
-
-                                if (lastComboMove == OriginalHook(Hakaze))
-                                    return Jinpu;
-
-                                if (gauge.Sen == 0)
-                                    return OriginalHook(Hakaze);
-                            }
-
-                            if (Config.SAM_FillerCombo == 2)
-                            {
-                                if (WasLastAbility(Hagakure))
-                                    fillerComplete = true;
-
-                                if (WasLastWeaponskill(OriginalHook(Hakaze)) && gauge.Sen == Sen.SETSU)
-                                    fastFillerReady = true;
-
-                                if (gauge.Kenki >= 75 && CanSpellWeave(actionID))
-                                    return Shinten;
-
-                                if (gauge.Sen == Sen.SETSU && WasLastWeaponskill(Yukikaze) && fastFillerReady && CanSpellWeave(actionID))
-                                    return Hagakure;
-
-                                if (lastComboMove == OriginalHook(Hakaze))
-                                    return Yukikaze;
-
-                                if (gauge.Sen == 0 || gauge.Sen == Sen.SETSU)
-                                    return OriginalHook(Hakaze);
-                            }
-                        }
-                    }
 
                     if (IsEnabled(CustomComboPreset.SAM_ST_CDs))
                     {

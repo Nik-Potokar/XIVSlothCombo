@@ -3162,10 +3162,6 @@ namespace XIVSlothCombo.Combos
         SAM_ST_Opener = 15006,
 
         [ParentCombo(SAM_ST_AdvancedMode)]
-        [CustomComboInfo("Filler Combo Feature", "Adds selected Filler combos to the rotation.\nChoose Skill Speed tier with Fuka buff below.", SAM.JobID)]
-        SAM_ST_FillerCombos = 15007,
-
-        [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("Shinten Option", "Adds Shinten to the rotation", SAM.JobID)]
         SAM_ST_Shinten = 15008,
 
