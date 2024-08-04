@@ -420,8 +420,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Variant.VariantSpiritDart;
 
                             // Intervene
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) && LevelChecked(Intervene) && hasFightOrFlight &&
-                                GetRemainingCharges(Intervene) > Config.PLD_Intervene_HoldCharges && !IsMoving && !WasLastAction(Intervene) &&
+                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Intervene) && LevelChecked(Intervene) && !IsMoving &&
+                                cooldownFightOrFlight > 40 && GetRemainingCharges(Intervene) > Config.PLD_Intervene_HoldCharges && !WasLastAction(Intervene) &&
                                 ((Config.PLD_Intervene_MeleeOnly == 1 && InMeleeRange()) || (GetTargetDistance() == 0 && Config.PLD_Intervene_MeleeOnly == 2)))
                                 return Intervene;
 
@@ -517,7 +517,6 @@ namespace XIVSlothCombo.Combos.PvE
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
                 bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
                 bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_AoE_MP_Reserve;
                 #endregion
@@ -570,8 +569,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Variant.VariantSpiritDart;
 
                             // Intervene
-                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Intervene) && LevelChecked(Intervene) && hasFightOrFlight &&
-                                GetRemainingCharges(Intervene) > Config.PLD_AoE_Intervene_HoldCharges && !IsMoving && !WasLastAction(Intervene) &&
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Intervene) && LevelChecked(Intervene) && !IsMoving &&
+                                cooldownFightOrFlight > 40 && GetRemainingCharges(Intervene) > Config.PLD_AoE_Intervene_HoldCharges && !WasLastAction(Intervene) &&
                                 ((Config.PLD_AoE_Intervene_MeleeOnly == 1 && InMeleeRange()) || (GetTargetDistance() == 0 && Config.PLD_AoE_Intervene_MeleeOnly == 2)))
                                 return Intervene;
 
