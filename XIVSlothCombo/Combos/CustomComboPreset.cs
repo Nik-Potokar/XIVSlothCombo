@@ -2351,7 +2351,7 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode_BladeOfHonor = 11033,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("MP Reservation Option", "Adds a minimum limit to MP-consuming actions.\n- Uses them only when at or above:", PLD.JobID, 13)]
+        [CustomComboInfo("MP Reservation Option", "Adds a minimum MP limit to Advanced Mode.\n- Uses MP-consuming actions only when at or above:", PLD.JobID, 13)]
         PLD_ST_AdvancedMode_MP_Reserve = 11035,
 
         // AoE Advanced Mode
@@ -2362,7 +2362,7 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode = 11015,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses on cooldown alongside Requiescat, if learned.\n- Target HP must be at or above:", PLD.JobID, 0)]
+        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses on cooldown alongside Requiescat.\n- Target HP must be at or above:", PLD.JobID, 0)]
         PLD_AoE_AdvancedMode_FoF = 11016,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
@@ -2402,7 +2402,7 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("MP Reservation Option", "Adds a minimum limit to MP-consuming actions.\n- Uses them only when at or above:", PLD.JobID, 10)]
+        [CustomComboInfo("MP Reservation Option", "Adds a minimum MP limit to Advanced Mode.\n- Uses MP-consuming actions only when at or above:", PLD.JobID, 10)]
         PLD_AoE_AdvancedMode_MP_Reserve = 11036,
 
         // Extra Features
