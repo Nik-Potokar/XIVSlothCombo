@@ -88,7 +88,6 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Config
         {
             public static UserInt
-                SAM_FillerCombo = new("SamFillerCombo"),
                 SAM_STSecondWindThreshold = new("SAM_STSecondWindThreshold", 25),
                 SAM_STBloodbathThreshold = new("SAM_STBloodbathThreshold", 40),
                 SAM_AoESecondWindThreshold = new("SAM_AoESecondWindThreshold", 25),
@@ -169,9 +168,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_SimpleMode;
             internal static SAMOpenerLogic SAMOpener = new();
-            internal static bool fillerComplete = false;
-            internal static bool fastFillerReady = false;
-            internal static bool inFiller = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -205,10 +201,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Meikyo Features
                     if (!HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
-                        ((threeSeal && CanWeave(actionID) &&
-                        (WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha) || WasLastWeaponskill(Yukikaze))) || !InCombat()) &&
-                        ((TraitLevelChecked(Traits.EnhancedHissatsu) && (GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei))) ||
-                        (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei) || !LevelChecked(Senei)))))
+                        CanWeave(actionID) && WasLastWeaponskill(MidareSetsugekka))
                         return MeikyoShisui;
 
                     if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
@@ -234,8 +227,9 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Senei Features
                             if (gauge.Kenki >= 25 && ActionReady(Senei) &&
-                                (WasLastWeaponskill(MidareSetsugekka) || WasLastWeaponskill(KaeshiSetsugekka) ||
-                                WasLastWeaponskill(TendoSetsugekka) || WasLastWeaponskill(TendoKaeshiSetsugekka)))
+                                 (WasLastWeaponskill(KaeshiSetsugekka) ||
+                                 WasLastWeaponskill(TendoSetsugekka) ||
+                                 WasLastWeaponskill(TendoKaeshiSetsugekka)))
                                 return Senei;
 
                             if (LevelChecked(Shoha) && gauge.MeditationStacks is 3)
@@ -327,9 +321,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_ST_AdvancedMode;
             internal static SAMOpenerLogic SAMOpener = new();
-            internal static bool fillerComplete = false;
-            internal static bool fastFillerReady = false;
-            internal static bool inFiller = false;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -374,10 +365,7 @@ namespace XIVSlothCombo.Combos.PvE
                         //Meikyo Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
                             !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
-                            ((threeSeal && CanWeave(actionID) &&
-                            (WasLastWeaponskill(Gekko) || WasLastWeaponskill(Kasha) || WasLastWeaponskill(Yukikaze))) || !InCombat()) &&
-                            ((TraitLevelChecked(Traits.EnhancedHissatsu) && (GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei))) ||
-                            (!TraitLevelChecked(Traits.EnhancedHissatsu) && ((GetCooldownRemainingTime(Senei) is <= 60 and > 50) || GetCooldownRemainingTime(Senei) <= GCD || ActionReady(Senei) || !LevelChecked(Senei)))))
+                            CanWeave(actionID) && WasLastWeaponskill(MidareSetsugekka))
                             return MeikyoShisui;
 
                         if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
@@ -407,8 +395,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 //Senei Features
                                 if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
                                     gauge.Kenki >= 25 && ActionReady(Senei) &&
-                                    (WasLastWeaponskill(MidareSetsugekka) || WasLastWeaponskill(KaeshiSetsugekka) ||
-                                    WasLastWeaponskill(TendoSetsugekka) || WasLastWeaponskill(TendoKaeshiSetsugekka)))
+                                     (WasLastWeaponskill(KaeshiSetsugekka) ||
+                                     WasLastWeaponskill(TendoSetsugekka) ||
+                                     WasLastWeaponskill(TendoKaeshiSetsugekka)))
                                     return Senei;
 
                                 if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Shoha) &&
