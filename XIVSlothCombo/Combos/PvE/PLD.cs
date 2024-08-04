@@ -75,16 +75,18 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 PLD_ST_FoF_Trigger = new("PLD_ST_FoF_Trigger", 0),
                 PLD_AoE_FoF_Trigger = new("PLD_AoE_FoF_Trigger", 0),
-                PLD_Intervene_HoldCharges = new("PLDKeepInterveneCharges", 1),
-                PLD_VariantCure = new("PLD_VariantCure"),
-                PLD_RequiescatOption = new("PLD_RequiescatOption"),
-                PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
                 PLD_ST_SheltronOption = new("PLD_ST_SheltronOption", 50),
                 PLD_AoE_SheltronOption = new("PLD_AoE_SheltronOption", 50),
+                PLD_Intervene_HoldCharges = new("PLD_Intervene_HoldCharges", 1),
+                PLD_AoE_Intervene_HoldCharges = new("PLD_AoE_Intervene_HoldCharges", 1),
                 PLD_Intervene_MeleeOnly = new("PLD_Intervene_MeleeOnly", 1),
-                PLD_ShieldLob_SubOption = new("PLD_ShieldLob_SubOption", 1),
+                PLD_AoE_Intervene_MeleeOnly = new("PLD_AoE_Intervene_MeleeOnly", 1),
                 PLD_ST_MP_Reserve = new("PLD_ST_MP_Reserve", 1000),
-                PLD_AoE_MP_Reserve = new("PLD_AoE_MP_Reserve", 1000);
+                PLD_AoE_MP_Reserve = new("PLD_AoE_MP_Reserve", 1000),
+                PLD_ShieldLob_SubOption = new("PLD_ShieldLob_SubOption", 1),
+                PLD_RequiescatOption = new("PLD_RequiescatOption"),
+                PLD_SpiritsWithinOption = new("PLD_SpiritsWithinOption"),
+                PLD_VariantCure = new("PLD_VariantCure");
         }
 
         internal class PLD_ST_SimpleMode : CustomCombo
@@ -109,16 +111,17 @@ namespace XIVSlothCombo.Combos.PvE
                 bool inAtonementFinisher = HasEffect(Buffs.SepulchreReady);
                 bool afterOpener = LevelChecked(BladeOfFaith) && RoyalAuthorityCount > 0;
                 bool inAtonementPhase = HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady);
-                bool isDivineMightExpiring = GetBuffRemainingTime(Buffs.DivineMight) < 10;
-                bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 10) ||
-                                            (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 10) ||
-                                            (HasEffect(Buffs.SepulchreReady) && GetBuffRemainingTime(Buffs.SepulchreReady) < 10);
+                bool isDivineMightExpiring = GetBuffRemainingTime(Buffs.DivineMight) < 6;
+                bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 6) ||
+                                            (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 6) ||
+                                            (HasEffect(Buffs.SepulchreReady) && GetBuffRemainingTime(Buffs.SepulchreReady) < 6);
                 #endregion
 
                 if (actionID is FastBlade)
                 {
                     // Variant Cure
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -257,7 +260,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is TotalEclipse)
                 {
                     // Variant Cure
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -279,7 +283,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     return FightOrFlight;
 
                                 // Variant Ultimatum
-                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) &&
+                                    IsOffCooldown(Variant.VariantUltimatum))
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
@@ -294,7 +299,8 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             // Variant Spirit Dart
-                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart) && (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
+                            if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart) &&
+                                (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
 
                             // Blade of Honor
@@ -341,18 +347,19 @@ namespace XIVSlothCombo.Combos.PvE
                 bool inAtonementStarter = HasEffect(Buffs.AtonementReady);
                 bool inAtonementFinisher = HasEffect(Buffs.SepulchreReady);
                 bool afterOpener = LevelChecked(BladeOfFaith) && RoyalAuthorityCount > 0;
-                bool isAboveMPReserve = !IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_ST_MP_Reserve;
+                bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_ST_MP_Reserve;
                 bool inAtonementPhase = HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady);
-                bool isDivineMightExpiring = GetBuffRemainingTime(Buffs.DivineMight) < 10;
-                bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 10) ||
-                                            (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 10) ||
-                                            (HasEffect(Buffs.SepulchreReady) && GetBuffRemainingTime(Buffs.SepulchreReady) < 10);
+                bool isDivineMightExpiring = GetBuffRemainingTime(Buffs.DivineMight) < 6;
+                bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 6) ||
+                                            (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 6) ||
+                                            (HasEffect(Buffs.SepulchreReady) && GetBuffRemainingTime(Buffs.SepulchreReady) < 6);
                 #endregion
 
                 if (actionID is FastBlade)
                 {
                     // Variant Cure
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -392,7 +399,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 }
 
                                 // Variant Ultimatum
-                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) &&
+                                    IsOffCooldown(Variant.VariantUltimatum))
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
@@ -509,14 +517,16 @@ namespace XIVSlothCombo.Combos.PvE
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
+                bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
                 bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
-                bool isAboveMPReserve = !IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_AoE_MP_Reserve;
+                bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_AoE_MP_Reserve;
                 #endregion
 
                 if (actionID is TotalEclipse)
                 {
                     // Variant Cure
-                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
+                    if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.PLD_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasBattleTarget())
@@ -539,7 +549,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     return FightOrFlight;
 
                                 // Variant Ultimatum
-                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && IsOffCooldown(Variant.VariantUltimatum))
+                                if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) &&
+                                    IsOffCooldown(Variant.VariantUltimatum))
                                     return Variant.VariantUltimatum;
 
                                 // Circle of Scorn / Spirits Within
@@ -557,6 +568,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart) &&
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
+
+                            // Intervene
+                            if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Intervene) && LevelChecked(Intervene) && hasFightOrFlight &&
+                                GetRemainingCharges(Intervene) > Config.PLD_AoE_Intervene_HoldCharges && !IsMoving && !WasLastAction(Intervene) &&
+                                ((Config.PLD_AoE_Intervene_MeleeOnly == 1 && InMeleeRange()) || (GetTargetDistance() == 0 && Config.PLD_AoE_Intervene_MeleeOnly == 2)))
+                                return Intervene;
 
                             // Blade of Honor
                             if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_BladeOfHonor) && LevelChecked(BladeOfHonor) && OriginalHook(Requiescat) == BladeOfHonor)
