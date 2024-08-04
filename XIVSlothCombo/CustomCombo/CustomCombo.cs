@@ -57,7 +57,7 @@ namespace XIVSlothCombo.CustomComboNS
         {
             newActionID = 0;
 
-            if (ActionManager.Instance()->QueuedActionType == ActionType.Action && ActionManager.Instance()->QueuedActionId != actionID)
+            if (!Svc.ClientState.IsPvP && ActionManager.Instance()->QueuedActionType == ActionType.Action && ActionManager.Instance()->QueuedActionId != actionID)
                 return false;
 
             if (!IsEnabled(Preset))
