@@ -3359,7 +3359,7 @@ namespace XIVSlothCombo.Combos
 
         #region Other
 
-        [ConflictingCombos(SAM_ST_Opener, SAM_ST_FillerCombos)]
+        [ConflictingCombos(SAM_ST_Opener)]
         [ReplaceSkill(SAM.Gyoten)]
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID)]
         SAM_GyotenYaten = 15209,
