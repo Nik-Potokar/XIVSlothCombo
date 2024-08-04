@@ -175,7 +175,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool oneSeal = OriginalHook(Iaijutsu) is Higanbana;
                 bool twoSeal = OriginalHook(Iaijutsu) is TenkaGoken or TendoGoken;
                 bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka or TendoSetsugekka;
-                float GCD = GetCooldown(OriginalHook(Hakaze)).CooldownTotal;
+                float enemyHP = GetTargetHPPercent();
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
 
@@ -196,16 +196,33 @@ namespace XIVSlothCombo.Combos.PvE
                     if (SAMOpener.DoFullOpener(ref actionID))
                         return actionID;
 
-                    if (LevelChecked(Enpi) && !InMeleeRange() && HasBattleTarget())
-                        return Enpi;
-
-                    //Meikyo Features
-                    if (!HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
-                        CanWeave(actionID) && WasLastWeaponskill(MidareSetsugekka))
+                    //Meikyo to start before combat
+                    if (!HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !InCombat())
                         return MeikyoShisui;
 
-                    if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                    //oGCDs
+                    if (CanWeave(actionID))
                     {
+                        //Meikyo Features
+                        if (!HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) &&
+                            WasLastWeaponskill(MidareSetsugekka))
+                            return MeikyoShisui;
+
+                        //Ikishoten Features
+                        if (LevelChecked(Ikishoten))
+                        {
+                            //Dumps Kenki in preparation for Ikishoten
+                            if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
+                                return Shinten;
+
+                            if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
+                                return Ikishoten;
+                        }
+
+                        //Senei Features
+                        if (gauge.Kenki >= 25 && ActionReady(Senei) && HasEffect(Buffs.MeikyoShisui))
+                            return Senei;
+
                         //Zanshin Usage
                         if (LevelChecked(Zanshin) && gauge.Kenki >= 50 &&
                             CanWeave(actionID) && HasEffect(Buffs.ZanshinReady) &&
@@ -213,59 +230,43 @@ namespace XIVSlothCombo.Combos.PvE
                             GetBuffRemainingTime(Buffs.ZanshinReady) <= 6))
                             return OriginalHook(Ikishoten);
 
+                        if (LevelChecked(Shoha) && gauge.MeditationStacks is 3)
+                            return Shoha;
+
+                        if (LevelChecked(Shinten) && gauge.Kenki > 50 &&
+                            !HasEffect(Buffs.ZanshinReady) &&
+                            ((gauge.Kenki >= 50) ||
+                            (enemyHP <= 1)))
+                            return Shinten;
+                    }
+
+                    if (LevelChecked(Enpi) && !InMeleeRange() && HasBattleTarget())
+                        return Enpi;
+
+                    if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                    {
                         //Ogi Namikiri Features
-                        if (!IsMoving &&
-                            LevelChecked(OgiNamikiri) &&
+                        if (!IsMoving && LevelChecked(OgiNamikiri) &&
                             (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
                             (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
                             ((meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
                             GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6))))
                             return OriginalHook(OgiNamikiri);
 
-                        //oGCDs
-                        if (CanWeave(actionID))
-                        {
-                            //Senei Features
-                            if (gauge.Kenki >= 25 && ActionReady(Senei) &&
-                                 (WasLastWeaponskill(KaeshiSetsugekka) ||
-                                 WasLastWeaponskill(TendoSetsugekka) ||
-                                 WasLastWeaponskill(TendoKaeshiSetsugekka)))
-                                return Senei;
-
-                            if (LevelChecked(Shoha) && gauge.MeditationStacks is 3)
-                                return Shoha;
-
-                            //Ikishoten Features
-                            if (LevelChecked(Ikishoten))
-                            {
-                                //Dumps Kenki in preparation for Ikishoten
-                                if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
-                                    return Shinten;
-
-                                if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
-                                    return Ikishoten;
-                            }
-
-                            if (LevelChecked(Shinten) && gauge.Kenki >= 50 &&
-                                !HasEffect(Buffs.ZanshinReady))
-                                return Shinten;
-                        }
-
                         // Iaijutsu Features
                         if (LevelChecked(Iaijutsu))
                         {
-                            if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi is Kaeshi.SETSUGEKKA || WasLastWeaponskill(TendoSetsugekka)))
+                            if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi is Kaeshi.SETSUGEKKA || WasLastWeaponskill(TendoSetsugekka) || WasLastWeaponskill(MidareSetsugekka)))
                                 return OriginalHook(TsubameGaeshi);
 
                             if (!IsMoving &&
-                                ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && !LevelChecked(MeikyoShisui)) ||
-                                (oneSeal && meikyostacks is 2) ||
+                                ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > 1 && !LevelChecked(MeikyoShisui)) ||
+                                (oneSeal && meikyostacks is 2 && enemyHP > 1) ||
                                 (twoSeal && !LevelChecked(MidareSetsugekka)) ||
                                 (threeSeal && LevelChecked(MidareSetsugekka))))
                                 return OriginalHook(Iaijutsu);
                         }
                     }
-
 
                     if (HasEffect(Buffs.MeikyoShisui))
                     {
@@ -356,20 +357,39 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    if (IsEnabled(CustomComboPreset.SAM_ST_RangedUptime) &&
-                        LevelChecked(Enpi) && !InMeleeRange() && HasBattleTarget())
-                        return Enpi;
+                    //Meikyo to start before combat
+                    if (IsEnabled(CustomComboPreset.SAM_ST_CDs) &&
+                        IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
+                        !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !InCombat())
+                        return MeikyoShisui;
 
-                    if (IsEnabled(CustomComboPreset.SAM_ST_CDs))
+                    //oGCDs
+                    if (CanWeave(actionID))
                     {
-                        //Meikyo Features
-                        if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
-                            !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) && !WasLastAbility(MeikyoShisui) &&
-                            CanWeave(actionID) && WasLastWeaponskill(MidareSetsugekka))
-                            return MeikyoShisui;
-
-                        if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                        if (IsEnabled(CustomComboPreset.SAM_ST_CDs))
                         {
+                            //Meikyo Features
+                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
+                                !HasEffect(Buffs.MeikyoShisui) && ActionReady(MeikyoShisui) &&
+                                WasLastWeaponskill(MidareSetsugekka))
+                                return MeikyoShisui;
+
+                            //Ikishoten Features
+                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Ikishoten) && LevelChecked(Ikishoten))
+                            {
+                                //Dumps Kenki in preparation for Ikishoten
+                                if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
+                                    return Shinten;
+
+                                if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
+                                    return Ikishoten;
+                            }
+
+                            //Senei Features
+                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
+                                gauge.Kenki >= 25 && ActionReady(Senei) && HasEffect(Buffs.MeikyoShisui))
+                                return Senei;
+
                             //Zanshin Usage
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Zanshin) &&
                                 LevelChecked(Zanshin) && gauge.Kenki >= 50 &&
@@ -378,65 +398,50 @@ namespace XIVSlothCombo.Combos.PvE
                                 GetBuffRemainingTime(Buffs.ZanshinReady) <= 6))
                                 return OriginalHook(Ikishoten);
 
-                            //Ogi Namikiri Features
-                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri) &&
-                                (!IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) ||
-                                (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) && !IsMoving)) &&
-                                LevelChecked(OgiNamikiri) &&
-                                (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
-                                (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
-                                ((meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
-                                GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6))))
-                                return OriginalHook(OgiNamikiri);
+                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Shoha) &&
+                                LevelChecked(Shoha) && gauge.MeditationStacks is 3)
+                                return Shoha;
+                        }
 
-                            //oGCDs
-                            if (CanWeave(actionID))
-                            {
-                                //Senei Features
-                                if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
-                                    gauge.Kenki >= 25 && ActionReady(Senei) &&
-                                     (WasLastWeaponskill(KaeshiSetsugekka) ||
-                                     WasLastWeaponskill(TendoSetsugekka) ||
-                                     WasLastWeaponskill(TendoKaeshiSetsugekka)))
-                                    return Senei;
+                        if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
+                            LevelChecked(Shinten) && gauge.Kenki > 50 &&
+                            !HasEffect(Buffs.ZanshinReady) &&
+                            ((gauge.Kenki >= kenkiOvercap) ||
+                            (enemyHP <= shintenTreshhold)))
+                            return Shinten;
+                    }
 
-                                if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Shoha) &&
-                                    LevelChecked(Shoha) && gauge.MeditationStacks is 3)
-                                    return Shoha;
+                    if (IsEnabled(CustomComboPreset.SAM_ST_RangedUptime) &&
+                        LevelChecked(Enpi) && !InMeleeRange() && HasBattleTarget())
+                        return Enpi;
 
-                                //Ikishoten Features
-                                if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Ikishoten) && LevelChecked(Ikishoten))
-                                {
-                                    //Dumps Kenki in preparation for Ikishoten
-                                    if (gauge.Kenki > 50 && GetCooldownRemainingTime(Ikishoten) < 10)
-                                        return Shinten;
+                    if (IsEnabled(CustomComboPreset.SAM_ST_CDs) &&
+                        HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                    {
+                        //Ogi Namikiri Features
+                        if (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri) &&
+                            (!IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) ||
+                            (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) && !IsMoving)) &&
+                            LevelChecked(OgiNamikiri) &&
+                            (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
+                            (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
+                            ((meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
+                            GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6))))
+                            return OriginalHook(OgiNamikiri);
 
-                                    if (gauge.Kenki <= 50 && IsOffCooldown(Ikishoten))
-                                        return Ikishoten;
-                                }
+                        // Iaijutsu Features
+                        if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && LevelChecked(Iaijutsu))
+                        {
+                            if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi is Kaeshi.SETSUGEKKA || WasLastWeaponskill(TendoSetsugekka) || WasLastWeaponskill(MidareSetsugekka)))
+                                return OriginalHook(TsubameGaeshi);
 
-                                if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) &&
-                                    LevelChecked(Shinten) && gauge.Kenki > 50 &&
-                                    !HasEffect(Buffs.ZanshinReady) &&
-                                    ((gauge.Kenki >= kenkiOvercap) ||
-                                    (enemyHP <= shintenTreshhold)))
-                                    return Shinten;
-                            }
-
-                            // Iaijutsu Features
-                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && LevelChecked(Iaijutsu))
-                            {
-                                if (LevelChecked(TsubameGaeshi) && (gauge.Kaeshi is Kaeshi.SETSUGEKKA || WasLastWeaponskill(TendoSetsugekka)))
-                                    return OriginalHook(TsubameGaeshi);
-
-                                if ((!IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) ||
-                                    (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) && !IsMoving)) &&
-                                    ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold && !LevelChecked(MeikyoShisui)) ||
-                                    (oneSeal && meikyostacks is 2 && enemyHP > HiganbanaThreshold) ||
-                                    (twoSeal && !LevelChecked(MidareSetsugekka)) ||
-                                    (threeSeal && LevelChecked(MidareSetsugekka))))
-                                    return OriginalHook(Iaijutsu);
-                            }
+                            if ((!IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) ||
+                                (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) && !IsMoving)) &&
+                                ((oneSeal && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10 && enemyHP > HiganbanaThreshold && !LevelChecked(MeikyoShisui)) ||
+                                (oneSeal && meikyostacks is 2 && enemyHP > HiganbanaThreshold) ||
+                                (twoSeal && !LevelChecked(MidareSetsugekka)) ||
+                                (threeSeal && LevelChecked(MidareSetsugekka))))
+                                return OriginalHook(Iaijutsu);
                         }
                     }
 
