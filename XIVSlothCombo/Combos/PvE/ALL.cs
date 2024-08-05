@@ -179,6 +179,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return actionID;
                     if (IsOffCooldown(Swiftcast))
                         return Swiftcast;
+                    if (LocalPlayer.ClassJob.Id is RDM.JobID)
+                        return RDM.Vercure;
                 }
 
                 return actionID;
