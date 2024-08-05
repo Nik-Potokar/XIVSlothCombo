@@ -1,6 +1,6 @@
-﻿using System;
-using FFXIVClientStructs.FFXIV.Client.Game.Object;
+﻿using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
+using System;
 using GameObject = FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject;
 
 namespace XIVSlothCombo.Services
@@ -16,7 +16,7 @@ namespace XIVSlothCombo.Services
             return id.ObjectId;
         }
 
-        private static readonly delegate* unmanaged<IntPtr, uint, GameObject*> getGameObjectFromPronounID = (delegate* unmanaged<IntPtr, uint, GameObject*>)Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B D8 48 85 C0 0F 85 ?? ?? ?? ?? 8D 4F DD");
+        private static readonly delegate* unmanaged<IntPtr, uint, GameObject*> getGameObjectFromPronounID = (delegate* unmanaged<IntPtr, uint, GameObject*>)Svc.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B D8 48 85 C0 0F 85 ?? ?? ?? ?? 8D 4F DD");
         public static GameObject* GetGameObjectFromPronounID(uint id) => getGameObjectFromPronounID(pronounModule, id);
     }
 }

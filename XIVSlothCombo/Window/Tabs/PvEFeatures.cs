@@ -1,5 +1,4 @@
-﻿using Dalamud.Interface.Internal;
-using Dalamud.Interface.Textures.TextureWraps;
+﻿using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
@@ -51,7 +50,8 @@ namespace XIVSlothCombo.Window.Tabs
                         IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
                         using (var disabled = ImRaii.Disabled(DisabledJobsPVE.Any(x => x == id)))
                         {
-                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
+                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None,
+                                    icon == null ? new Vector2(0, 32f.Scale()) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
                             {
                                 OpenJob = jobName;
                             }
@@ -182,7 +182,7 @@ namespace XIVSlothCombo.Window.Tabs
                     else
                     {
                         presetBox.Draw();
-                        
+
                         continue;
                     }
                 }

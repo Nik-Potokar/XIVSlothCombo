@@ -1,7 +1,7 @@
-using System;
-using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System;
+using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
@@ -233,7 +233,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.RaptorForm))
                     {
                         if (FourPointFury.LevelChecked())
-                        return FourPointFury;
+                            return FourPointFury;
 
                         if (TwinSnakes.LevelChecked())
                             return TwinSnakes;
@@ -562,7 +562,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeave)
                         {
-                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation  && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
+                            if (IsEnabled(CustomComboPreset.MNK_ST_Simple_Meditation) && level >= Levels.Meditation && gauge.Chakra == 5 && (HasEffect(Buffs.DisciplinedFist) || level < Levels.TwinSnakes))
                             {
                                 if (level < Levels.RiddleOfFire || !IsEnabled(CustomComboPreset.MNK_ST_Simple_CDs) || (GetCooldownRemainingTime(RiddleOfFire) >= 1.5 && IsOnCooldown(RiddleOfFire) && lastComboMove != RiddleOfFire))
                                 {
@@ -637,7 +637,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.FormlessFist) && HasEffect(Buffs.RaptorForm))
                     {
-                        if (!LevelChecked(TrueStrike)) 
+                        if (!LevelChecked(TrueStrike))
                         {
                             return Bootshine;
                         }
