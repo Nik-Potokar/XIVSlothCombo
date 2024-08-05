@@ -2,12 +2,10 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
-using XIVSlothCombo.Services;
 using static XIVSlothCombo.Combos.PvE.AST;
 
 namespace XIVSlothCombo.Combos.JobHelpers
@@ -16,12 +14,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
     {
         internal static void Init()
         {
-            Service.Framework.Update += CheckCards;
+            Svc.Framework.Update += CheckCards;
         }
 
         private static void CheckCards(IFramework framework)
         {
-            if (Service.ClientState.LocalPlayer is null || Service.ClientState.LocalPlayer.ClassJob.Id != 33)
+            if (Svc.ClientState.LocalPlayer is null || Svc.ClientState.LocalPlayer.ClassJob.Id != 33)
                 return;
 
             if (Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BetweenAreas] || Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.Unconscious])
@@ -35,7 +33,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 DrawnCard = Gauge.DrawnCards[0];
             }
 
-            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) && 
+            if (CustomComboFunctions.IsEnabled(CustomComboPreset.AST_Cards_QuickTargetCards) &&
                 (AST_QuickTargetCards.SelectedRandomMember is null || BetterTargetAvailable()))
             {
                 if (CustomComboFunctions.ActionReady(Play1))
@@ -205,7 +203,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
         internal static void Dispose()
         {
-            Service.Framework.Update -= CheckCards;
+            Svc.Framework.Update -= CheckCards;
         }
     }
 }

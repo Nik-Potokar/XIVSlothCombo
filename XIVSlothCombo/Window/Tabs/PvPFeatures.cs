@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using System.Numerics;
-using Dalamud.Interface;
-using Dalamud.Interface.Internal;
+﻿using Dalamud.Interface;
 using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
+using System.Linq;
+using System.Numerics;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Services;
 using XIVSlothCombo.Window.Functions;
@@ -42,7 +41,8 @@ namespace XIVSlothCombo.Window.Tabs
                         ImGui.TextWrapped($"{FontAwesomeIcon.SkullCrossbones.ToIconString()}");
                         ImGui.PopFont();
                     });
-                    ImGuiEx.LineCentered($"pvpDesc2", () => {
+                    ImGuiEx.LineCentered($"pvpDesc2", () =>
+                    {
                         ImGuiEx.TextUnderlined("Select a job from below to enable and configure features for it.");
                     });
                     ImGui.Spacing();
@@ -55,7 +55,8 @@ namespace XIVSlothCombo.Window.Tabs
                         IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
                         using (var disabled = ImRaii.Disabled(DisabledJobsPVP.Any(x => x == id)))
                         {
-                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
+                            if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None,
+                                    icon == null ? new Vector2(0, 32f.Scale()) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
                             {
                                 OpenJob = jobName;
                             }

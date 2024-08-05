@@ -30,11 +30,11 @@ namespace XIVSlothCombo.Combos.PvP
                     if (IsEnabled(CustomComboPreset.PLDPvP_ShieldBash) &&
                         InCombat() && IsOffCooldown(ShieldBash) && CanWeave(actionID))
                         return ShieldBash;
-                        
+
                     if (IsEnabled(CustomComboPreset.PLDPvP_Confiteor))
                     {
-                       if (IsOffCooldown(Confiteor))
-                        return Confiteor;
+                        if (IsOffCooldown(Confiteor))
+                            return Confiteor;
                     }
                 }
 
