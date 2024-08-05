@@ -859,6 +859,7 @@ namespace XIVSlothCombo.Combos
         DNC_ST_Adv_SS_Prepull = 4090,
 
         [ParentCombo(DNC_ST_Adv_SS)]
+        [ConflictingCombos(DNC_ST_Adv_Flourish_ForcedTripleWeave)]
         [CustomComboInfo("Hold Standard Dance Option", "Will hold GCDs for Standard Step if it is going to come off cooldown before your next GCD. This WILL give you down-time." +
                                                        "\nThis is recommended by The Balance if you have any extra skill speed, but this can also just be a good anti-drift option.", DNC.JobID)]
         DNC_ST_Adv_SS_Hold = 4091,
@@ -896,6 +897,7 @@ namespace XIVSlothCombo.Combos
         DNC_ST_Adv_Flourish = 4056,
 
         [ParentCombo(DNC_ST_Adv_Flourish)]
+        [ConflictingCombos(DNC_ST_Adv_SS_Hold)]
         [CustomComboInfo("Force Triple Weave for alignment", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." + "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD.", DNC.JobID, 1)]
         DNC_ST_Adv_Flourish_ForcedTripleWeave = 4088,
 
