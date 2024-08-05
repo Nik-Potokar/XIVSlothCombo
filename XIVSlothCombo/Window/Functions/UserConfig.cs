@@ -1772,10 +1772,10 @@ namespace XIVSlothCombo.Window.Functions
 
             // MP Reservation
             if (preset == CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve)
-                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_ST_MP_Reserve, "Minimum MP", sliderIncrement: 100);
+                UserConfig.DrawSliderInt(1000, 6000, PLD.Config.PLD_ST_MP_Reserve, "Minimum MP", sliderIncrement: 100);
 
             if (preset == CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve)
-                UserConfig.DrawSliderInt(1000, 10000, PLD.Config.PLD_AoE_MP_Reserve, "Minimum MP", sliderIncrement: 100);
+                UserConfig.DrawSliderInt(1000, 6000, PLD.Config.PLD_AoE_MP_Reserve, "Minimum MP", sliderIncrement: 100);
 
             // Requiescat Spender Feature
             if (preset == CustomComboPreset.PLD_Requiescat_Options)

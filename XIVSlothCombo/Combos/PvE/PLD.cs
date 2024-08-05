@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.GameHelpers;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -100,12 +101,14 @@ namespace XIVSlothCombo.Combos.PvE
                 float durationFightOrFlight = GetBuffRemainingTime(Buffs.FightOrFlight);
                 float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
                 float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
+                uint playerMP = LocalPlayer.CurrentMp;
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
+                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 4;
                 bool inBurstWindow = JustUsed(FightOrFlight, 30f);
                 bool inAtonementStarter = HasEffect(Buffs.AtonementReady);
                 bool inAtonementFinisher = HasEffect(Buffs.SepulchreReady);
@@ -156,7 +159,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Level 68+
-                                    else if (cooldownRequiescat < 0.5f && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
+                                    else if (cooldownRequiescat < 0.5f && hasRequiescatMP && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
                                         return FightOrFlight;
                                 }
 
@@ -187,18 +190,19 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Requiescat Phase
-                        if (hasRequiescat && hasDivineMagicMP)
+                        if (hasDivineMagicMP)
                         {
                             // Confiteor & Blades
                             if (HasEffect(Buffs.ConfiteorReady) || (LevelChecked(BladeOfFaith) && OriginalHook(Confiteor) != Confiteor))
                                 return OriginalHook(Confiteor);
 
                             // Pre-Blades
-                            return HolySpirit;
+                            if (hasRequiescat)
+                                return HolySpirit;
                         }
 
                         // Goring Blade
-                        if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange() && (!LevelChecked(Requiescat) || IsOnCooldown(Requiescat)))
+                        if (HasEffect(Buffs.GoringBladeReady) && InMeleeRange())
                             return GoringBlade;
 
                         // Holy Spirit Prioritization
@@ -250,11 +254,13 @@ namespace XIVSlothCombo.Combos.PvE
                 #region Variables
                 float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
                 float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
+                uint playerMP = LocalPlayer.CurrentMp;
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
+                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 4;
                 #endregion
 
                 if (actionID is TotalEclipse)
@@ -279,7 +285,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return OriginalHook(Requiescat);
 
                                 // Fight or Flight
-                                if (ActionReady(FightOrFlight) && ((cooldownRequiescat < 0.5f && canEarlyWeave) || !LevelChecked(Requiescat)))
+                                if (ActionReady(FightOrFlight) && ((cooldownRequiescat < 0.5f && hasRequiescatMP && canEarlyWeave) || !LevelChecked(Requiescat)))
                                     return FightOrFlight;
 
                                 // Variant Ultimatum
@@ -309,7 +315,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Confiteor & Blades
-                        if (hasRequiescat && hasDivineMagicMP && (HasEffect(Buffs.ConfiteorReady) || (LevelChecked(BladeOfFaith) && OriginalHook(Confiteor) != Confiteor)))
+                        if (hasDivineMagicMP && (HasEffect(Buffs.ConfiteorReady) || (LevelChecked(BladeOfFaith) && OriginalHook(Confiteor) != Confiteor)))
                             return OriginalHook(Confiteor);
                     }
 
@@ -337,19 +343,23 @@ namespace XIVSlothCombo.Combos.PvE
                 float durationFightOrFlight = GetBuffRemainingTime(Buffs.FightOrFlight);
                 float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
                 float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
+                uint playerMP = LocalPlayer.CurrentMp;
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
+                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasRequiescatMP = playerMP >= 10000 || (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 4) ||
+                                       (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 4) + Config.PLD_ST_MP_Reserve);
                 bool inBurstWindow = JustUsed(FightOrFlight, 30f);
                 bool inAtonementStarter = HasEffect(Buffs.AtonementReady);
                 bool inAtonementFinisher = HasEffect(Buffs.SepulchreReady);
                 bool afterOpener = LevelChecked(BladeOfFaith) && RoyalAuthorityCount > 0;
-                bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_ST_MP_Reserve;
-                bool inAtonementPhase = HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady);
                 bool isDivineMightExpiring = GetBuffRemainingTime(Buffs.DivineMight) < 6;
+                bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) ||
+                                        (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= Config.PLD_ST_MP_Reserve);
+                bool inAtonementPhase = HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady);
                 bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 6) ||
                                             (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 6) ||
                                             (HasEffect(Buffs.SepulchreReady) && GetBuffRemainingTime(Buffs.SepulchreReady) < 6);
@@ -394,7 +404,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     }
 
                                     // Level 68+
-                                    else if (cooldownRequiescat < 0.5f && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
+                                    else if (cooldownRequiescat < 0.5f && hasRequiescatMP && canEarlyWeave && (lastComboActionID is RoyalAuthority || afterOpener))
                                         return FightOrFlight;
                                 }
 
@@ -437,7 +447,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Requiescat Phase
-                        if (hasRequiescat && hasDivineMagicMP && isAboveMPReserve)
+                        if (hasDivineMagicMP)
                         {
                             // Confiteor & Blades
                             if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) && HasEffect(Buffs.ConfiteorReady)) ||
@@ -445,13 +455,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(Confiteor);
 
                             // Pre-Blades
-                            if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_HolySpirit))
+                            if ((IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Confiteor) || IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_Blades)) && hasRequiescat)
                                 return HolySpirit;
                         }
 
                         // Goring Blade
-                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) && HasEffect(Buffs.GoringBladeReady) &&
-                            InMeleeRange() && (!LevelChecked(Requiescat) || IsOnCooldown(Requiescat)))
+                        if (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_GoringBlade) && HasEffect(Buffs.GoringBladeReady) && InMeleeRange())
                             return GoringBlade;
 
                         // Holy Spirit Prioritization
@@ -513,12 +522,16 @@ namespace XIVSlothCombo.Combos.PvE
                 #region Variables
                 float cooldownFightOrFlight = GetCooldownRemainingTime(FightOrFlight);
                 float cooldownRequiescat = GetCooldownRemainingTime(Requiescat);
+                uint playerMP = LocalPlayer.CurrentMp;
                 bool canWeave = CanWeave(actionID);
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= LocalPlayer.CurrentMp;
-                bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) || LocalPlayer.CurrentMp >= Config.PLD_AoE_MP_Reserve;
+                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasRequiescatMP = playerMP >= 10000 || (IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 4) ||
+                                       (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 4) + Config.PLD_AoE_MP_Reserve);
+                bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) ||
+                                        (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= Config.PLD_AoE_MP_Reserve);
                 #endregion
 
                 if (actionID is TotalEclipse)
@@ -544,7 +557,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 // Fight or Flight
                                 if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_FoF) && ActionReady(FightOrFlight) && GetTargetHPPercent() >= Config.PLD_AoE_FoF_Trigger &&
-                                    ((cooldownRequiescat < 0.5f && canEarlyWeave) || !LevelChecked(Requiescat)))
+                                    ((cooldownRequiescat < 0.5f && hasRequiescatMP && canEarlyWeave) || !LevelChecked(Requiescat)))
                                     return FightOrFlight;
 
                                 // Variant Ultimatum
@@ -586,15 +599,14 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Confiteor & Blades
-                        if (hasRequiescat && hasDivineMagicMP && isAboveMPReserve &&
-                            ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) && HasEffect(Buffs.ConfiteorReady)) ||
+                        if (hasDivineMagicMP && ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) && HasEffect(Buffs.ConfiteorReady)) ||
                             (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades) && LevelChecked(BladeOfFaith) && OriginalHook(Confiteor) != Confiteor)))
                             return OriginalHook(Confiteor);
                     }
 
                     // Holy Circle
-                    if (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && LevelChecked(HolyCircle) &&
-                        hasDivineMagicMP && isAboveMPReserve && (hasDivineMight || hasRequiescat))
+                    if (LevelChecked(HolyCircle) && hasDivineMagicMP && ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_HolyCircle) && isAboveMPReserve && hasDivineMight) ||
+                        ((IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Confiteor) || IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_Blades)) && hasRequiescat)))
                         return HolyCircle;
 
                     // Basic Combo
