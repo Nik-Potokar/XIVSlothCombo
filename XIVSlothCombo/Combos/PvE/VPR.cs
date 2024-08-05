@@ -324,6 +324,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //even minutes
                     if ((WasLastAbility(SerpentsIre) && HasEffect(Buffs.ReadyToReawaken)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
+                        (gauge.SerpentOffering >= 50 && !LevelChecked(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
                         (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre)))
                         return true;
@@ -585,6 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //even minutes
                     if ((WasLastAbility(SerpentsIre) && HasEffect(Buffs.ReadyToReawaken)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
+                        (gauge.SerpentOffering >= 50 && !LevelChecked(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
                         (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre)))
                         return true;
