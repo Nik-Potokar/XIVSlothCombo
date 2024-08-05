@@ -494,7 +494,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Lucid) &&
                         ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp < 1000)
+                        LocalPlayer.CurrentMp < Config.SCH_AoE_Heal_LucidOption)
                         return All.LucidDreaming;
 
                     // Indomitability
