@@ -36,7 +36,7 @@ jobs:
         dotnet build --configuration Release
       env: 
         DOTNET_CLI_TELEMETRY_OPTOUT: true
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       with:
         name: PluginRepoZip
         path: ${{ env.RELEASE_DIR }}
@@ -51,7 +51,7 @@ jobs:
       with:
         repository: ${{ env.PERSONAL_PLUGIN_REPO }}
         token: ${{ secrets.XIVCOMBO_TOKEN }}
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v4
       with:
         name: PluginRepoZip
         path: plugins/${{ env.INTERNAL_NAME }}
