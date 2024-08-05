@@ -267,10 +267,11 @@ namespace XIVSlothCombo.Combos.PvE
                 var targetHpThresholdFeather = Config.DNC_ST_Adv_FeatherBurstPercent;
                 var targetHpThresholdStandard = Config.DNC_ST_Adv_SSBurstPercent;
                 var targetHpThresholdTechnical = Config.DNC_ST_Adv_TSBurstPercent;
+                var gcd = GetCooldown(Fountain).CooldownTotal;
 
                 var needToTech =
                     IsEnabled(CustomComboPreset.DNC_ST_Adv_TS) && // Enabled
-                    GetCooldownRemainingTime(TechnicalStep) < 0.05 && // Up or about to be (some anti-drift)
+                    GetCooldownRemainingTime(TechnicalStep) < 0.05f && // Up or about to be (some anti-drift)
                     !HasEffect(Buffs.StandardStep) && // After Standard
                     IsOnCooldown(StandardStep) &&
                     GetTargetHPPercent() > targetHpThresholdTechnical &&// HP% check
@@ -286,13 +287,17 @@ namespace XIVSlothCombo.Combos.PvE
                 var needToFinish =
                     HasEffect(Buffs.FinishingMoveReady) &&
                     !HasEffect(Buffs.LastDanceReady) &&
-                    ((GetCooldownRemainingTime(StandardStep) < 0.3 && // About to be up - some more aggressive anti-drift
+                    ((GetCooldownRemainingTime(StandardStep) < 0.3f && // About to be up - some more aggressive anti-drift
                       HasEffect(Buffs.TechnicalFinish)) ||
                      (!HasEffect(Buffs.TechnicalFinish) && // Anti-Drift outside of Tech
-                      GetCooldownRemainingTime(StandardStep) < 0.05));
+                      GetCooldownRemainingTime(StandardStep) < 0.05f));
 
                 var needToStandard =
-                    GetCooldownRemainingTime(StandardStep) < 0.05 && // Up or about to be (some anti-drift)
+                    ((!IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold) &&
+                      GetCooldownRemainingTime(StandardStep) < 0.1f) || // Up or about to be (some anti-drift)
+                     IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold) &&
+                     GetCooldownRemainingTime(StandardStep) < gcd) // About to be up next GCD
+                    &&
                     !HasEffect(Buffs.FinishingMoveReady) &&
                     (IsOffCooldown(Flourish) ||
                      GetCooldownRemainingTime(Flourish) > 5) &&

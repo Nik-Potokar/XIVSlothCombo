@@ -858,6 +858,12 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Standard Dance Opener Option", "Starts Standard Step (and steps) before combat.", DNC.JobID)]
         DNC_ST_Adv_SS_Prepull = 4090,
 
+        [ParentCombo(DNC_ST_Adv_SS)]
+        [ConflictingCombos(DNC_ST_Adv_StandardFill)]
+        [CustomComboInfo("Hold Standard Dance Option", "Will hold GCDs for Standard Step if it is going to come off cooldown before your next GCD. This WILL give you down-time." +
+                                                       "\nThis is recommended by The Balance if you have any extra skill speed, but this can also just be a good anti-drift option.", DNC.JobID)]
+        DNC_ST_Adv_SS_Hold = 4091,
+
         [ParentCombo(DNC_ST_AdvancedMode)]
         [ConflictingCombos(DNC_ST_Adv_SS)]
         [CustomComboInfo("Standard Fill Option", "Adds ONLY Standard dance steps and Standard Finish to the rotation." +
