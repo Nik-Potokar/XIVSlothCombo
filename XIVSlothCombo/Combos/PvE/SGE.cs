@@ -315,8 +315,10 @@ namespace XIVSlothCombo.Combos.PvE
         internal class SGE_ST_DPS : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_DPS;
-            internal static SGEOpenerLogic SGEOpener = new();
-            internal static int PsycheCount => ActionWatching.CombatActions.Count(x => x == Psyche);
+            internal static int Dosis3Count => ActionWatching.CombatActions.Count(x => x == Dosis3);
+
+            internal static int Toxikon2Count => ActionWatching.CombatActions.Count(x => x == Toxikon2);
+
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -324,16 +326,38 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (ActionFound)
                 {
+                    bool inOpener = IsEnabled(CustomComboPreset.SGE_ST_DPS_Opener)
+                                 && Dosis3Count < 8 && Gauge.Addersting > 0;
+
                     // Kardia Reminder
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && LevelChecked(Kardia) &&
                         FindEffect(Buffs.Kardia) is null)
                         return Kardia;
 
-                    // Opener for SGE
-                    if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Opener))
+                    if (inOpener)
                     {
-                        if (SGEOpener.DoFullOpener(ref actionID))
-                            return actionID;
+                        if (((Dosis3Count is 0 && Toxikon2Count is 0) ||
+                            (Dosis3Count is 7 && Toxikon2Count is 1 && !WasLastSpell(EukrasianDosis3))) &&
+                            !HasEffect(Buffs.Eukrasia))
+                            return Eukrasia;
+
+                        if (Dosis3Count is 0 && Toxikon2Count is 0 &&
+                            HasEffect(Buffs.Eukrasia))
+                            return Toxikon2;
+
+                        if (Dosis3Count is 3)
+                        {
+                            if (WasLastSpell(Phlegma3) &&
+                                ActionReady(Psyche) &&
+                                CanWeave(actionID))
+                                return Psyche;
+
+                            if (ActionReady(Phlegma3))
+                                return Phlegma3;
+                        }
+
+                        if (Dosis3Count > 0 && Toxikon2Count > 0)
+                            return Dosis3;
                     }
 
                     // Lucid Dreaming
@@ -342,7 +366,10 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     // Variant
-                    if (Variant.CanRampart(CustomComboPreset.SGE_DPS_Variant_Rampart, actionID, true))
+                    if (IsEnabled(CustomComboPreset.SGE_DPS_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
                         return Variant.VariantRampart;
 
                     // Rhizomata
