@@ -15,6 +15,7 @@ env:
   RELEASE_DIR: XIVSlothCombo\bin\Release\XIVSlothCombo
   PERSONAL_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
   PR_PLUGIN_REPO: Nik-Potokar/MyDalamudPlugins
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
 
 jobs:
   build:
