@@ -21,7 +21,7 @@ namespace XIVSlothCombo.Combos.PvE
             Triangulate = 210,
             ArborCall = 211,
             ArborCall2 = 290,
-            TruthOfForests = 221, 
+            TruthOfForests = 221,
             //FSH
             Cast = 289,
             Hook = 296,
@@ -89,17 +89,17 @@ namespace XIVSlothCombo.Combos.PvE
         internal class FSH_CastHook : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_CastHook;
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level) 
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
                 => actionID is Cast && HasCondition(ConditionFlag.Fishing) ? Hook : actionID;
         }
-        
+
         internal class FSH_Swim : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_Swim;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if (HasCondition(ConditionFlag.Diving))
-                { 
+                {
                     if (actionID is Cast && IsEnabled(CustomComboPreset.FSH_CastGig)) return Gig;
                     if (actionID is SurfaceSlap && IsEnabled(CustomComboPreset.FSH_SurfaceTrade)) return VeteranTrade;
                     if (actionID is PrizeCatch && IsEnabled(CustomComboPreset.FSH_PrizeBounty)) return NaturesBounty;

@@ -81,7 +81,7 @@ namespace XIVSlothCombo.Combos.PvE
             // public const short placeholder = 0;
         }
 
-        
+
 
         public static class Traits
         {
@@ -89,15 +89,15 @@ namespace XIVSlothCombo.Combos.PvE
                 EnhancedEmbolden = 620,
                 EnhancedManaficationII = 622,
                 EnhancedManaficationIII = 622,
-                EnhancedAccelerationII = 624;                
+                EnhancedAccelerationII = 624;
         }
 
         public static class Config
         {
             public static UserInt
                 RDM_VariantCure = new("RDM_VariantCure"),
-                RDM_ST_Lucid_Threshold = new("RDM_LucidDreaming_Threshold",6500),
-                RDM_AoE_Lucid_Threshold = new("RDM_AoE_Lucid_Threshold",6500),
+                RDM_ST_Lucid_Threshold = new("RDM_LucidDreaming_Threshold", 6500),
+                RDM_AoE_Lucid_Threshold = new("RDM_AoE_Lucid_Threshold", 6500),
                 RDM_AoE_MoulinetRange = new("RDM_MoulinetRange");
             public static UserBool
                 RDM_ST_oGCD_OnAction_Adv = new("RDM_ST_oGCD_OnAction_Adv"),
@@ -541,7 +541,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     //Run the Mana Balance Computer
                                     var actions = RDMMana.CheckBalance();
-                                    
+
                                     if (actions.useAero && LevelChecked(OriginalHook(Veraero))) return OriginalHook(Veraero);
                                     if (actions.useThunder && LevelChecked(OriginalHook(Verthunder))) return OriginalHook(Verthunder);
                                 }
@@ -549,7 +549,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (HasCharges(Acceleration)) return Acceleration;
                             }
                             if (GetTargetDistance() <= 3)
-                            return OriginalHook(Riposte);
+                                return OriginalHook(Riposte);
                         }
 
                     }
@@ -586,7 +586,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (TraitLevelChecked(Traits.EnhancedAccelerationII)
                         && HasEffect(Buffs.GrandImpactReady))
-                       return GrandImpact;
+                        return GrandImpact;
 
                     //RDM_VERFIREVERSTONE
                     if (IsEnabled(CustomComboPreset.RDM_ST_FireStone)
@@ -609,7 +609,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (actions.useAero) return OriginalHook(Veraero);
                     }
                     //END_RDM_VERTHUNDERVERAERO
-                
+
                 }
 
                 //NO_CONDITIONS_MET
@@ -677,10 +677,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (ActionFound)
                     {
                         //Finish the combo
-                        if (LevelChecked(Moulinet) 
+                        if (LevelChecked(Moulinet)
                             && lastComboMove is EnchantedMoulinet or EnchantedMoulinetDeux
                             && comboTime > 0f)
-                           return OriginalHook(Moulinet);
+                            return OriginalHook(Moulinet);
 
                         //RDM_AOE_MANAFICATIONEMBOLDEN
                         if (IsEnabled(CustomComboPreset.RDM_AoE_MeleeCombo_ManaEmbolden))
@@ -750,7 +750,7 @@ namespace XIVSlothCombo.Combos.PvE
                         //    int ManaBuff = GetBuffStacks(Buffs.MagickedSwordPlay);
                         //    if (ManaBuff > 0) Mana = 50; //ITS FREE REAL ESTATE
                         //}
-                        
+
                         if (LevelChecked(Moulinet)
                             && LocalPlayer.IsCasting == false
                             && !HasEffect(Buffs.Dualcast)
@@ -804,7 +804,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (TraitLevelChecked(Traits.EnhancedAccelerationII)
                         && HasEffect(Buffs.GrandImpactReady))
-                       return GrandImpact;
+                        return GrandImpact;
 
                     var actions = RDMMana.CheckBalance();
                     if (actions.useThunder2) return OriginalHook(Verthunder2);
