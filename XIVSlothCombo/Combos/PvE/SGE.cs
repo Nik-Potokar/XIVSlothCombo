@@ -4,7 +4,6 @@ using Dalamud.Game.ClientState.Statuses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -327,7 +326,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (ActionFound)
                 {
                     bool inOpener = IsEnabled(CustomComboPreset.SGE_ST_DPS_Opener)
-                                 && Dosis3Count < 8 && Gauge.Addersting > 0;
+                                 && Dosis3Count < 4 && Gauge.HasAddersting();
 
                     // Kardia Reminder
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && LevelChecked(Kardia) &&
@@ -336,8 +335,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (inOpener)
                     {
-                        if (((Dosis3Count is 0 && Toxikon2Count is 0) ||
-                            (Dosis3Count is 7 && Toxikon2Count is 1 && !WasLastSpell(EukrasianDosis3))) &&
+                        if (Dosis3Count is 0 && Toxikon2Count is 0 && 
                             !HasEffect(Buffs.Eukrasia))
                             return Eukrasia;
 
