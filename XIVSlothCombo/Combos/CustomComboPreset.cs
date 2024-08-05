@@ -841,7 +841,7 @@ namespace XIVSlothCombo.Combos
         #region Advanced Dancer (Single Target)
         [ReplaceSkill(DNC.Cascade)]
         [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
-        [CustomComboInfo("Advanced Dancer (Single Target) Feature", "Single button, single target. Can include songs, flourishes, overcap protections, and more.", DNC.JobID)]
+        [CustomComboInfo("Advanced Dancer (Single Target) Feature", "Single button, single target. Can include songs, flourishes, overcap protections, and more.", DNC.JobID, 0)]
         DNC_ST_AdvancedMode = 4050,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
@@ -938,7 +938,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(DNC.Windmill)]
         [ConflictingCombos(DNC_ST_MultiButton, DNC_AoE_MultiButton, DNC_DanceComboReplacer, DNC_FlourishingFeatures_Menu, DNC_Starfall_Devilment)]
         [CustomComboInfo("Advanced Dancer (AoE) Feature", "Single button, AoE. Includes songs, flourishes, overcap protections, and more." +
-            "\nConflicts with all other non-Advanced toggles, except 'Dance Step Combo'.", DNC.JobID)]
+            "\nConflicts with all other non-Advanced toggles, except 'Dance Step Combo'.", DNC.JobID, 1)]
         DNC_AoE_AdvancedMode = 4070,
 
         [ParentCombo(DNC_AoE_AdvancedMode)]
