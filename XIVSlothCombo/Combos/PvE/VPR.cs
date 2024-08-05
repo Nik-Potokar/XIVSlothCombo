@@ -335,7 +335,8 @@ namespace XIVSlothCombo.Combos.PvE
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
                         (gauge.SerpentOffering >= 95 ||
-                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90))
                         return true;
                 }
@@ -597,7 +598,8 @@ namespace XIVSlothCombo.Combos.PvE
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
                         (gauge.SerpentOffering >= 95 ||
-                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros))) &&
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90))
                         return true;
                 }
