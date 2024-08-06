@@ -98,10 +98,10 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HeavyShot or BurstShot)
                 {
+                    BRDGauge? gauge = GetJobGauge<BRDGauge>();
+
                     if (IsEnabled(CustomComboPreset.BRD_Apex))
                     {
-                        BRDGauge? gauge = GetJobGauge<BRDGauge>();
-
                         if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow) && gauge.SoulVoice == 100)
                             return ApexArrow;
                         if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
@@ -110,6 +110,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.BRD_DoTMaintainance))
                     {
+                        int updateDotTime = 0;
                         bool venomous = TargetHasEffect(Debuffs.VenomousBite);
                         bool windbite = TargetHasEffect(Debuffs.Windbite);
                         bool caustic = TargetHasEffect(Debuffs.CausticBite);
@@ -121,18 +122,27 @@ namespace XIVSlothCombo.Combos.PvE
                         float stormRemaining = GetDebuffRemainingTime(Debuffs.Stormbite);
                         float ragingStrikeRemainings = GetBuffRemainingTime(Buffs.RagingStrikes);
 
+                        if (gauge.Song == Song.ARMY)
+                        {
+                            updateDotTime = 3;
+                        }
+                        else
+                        {
+                            updateDotTime = 4;
+                        }
+
                         if (InCombat())
                         {
                             if (LevelChecked(IronJaws) && LevelChecked(RagingStrikes) &&
-                                ragingstrikes && ragingStrikeRemainings < 4)
+                                ragingstrikes && ragingStrikeRemainings <= 4)
                                 return IronJaws;
                             if (LevelChecked(IronJaws) &&
-                                ((venomous && venomRemaining < 4) || (caustic && causticRemaining < 4)) ||
-                                (windbite && windRemaining < 4) || (stormbite && stormRemaining < 4))
+                                ((venomous && venomRemaining <= updateDotTime) || (caustic && causticRemaining <= updateDotTime)) ||
+                                (windbite && windRemaining <= updateDotTime) || (stormbite && stormRemaining <= updateDotTime))
                                 return IronJaws;
-                            if (!LevelChecked(IronJaws) && venomous && venomRemaining < 4)
+                            if (!LevelChecked(IronJaws) && venomous && venomRemaining < updateDotTime)
                                 return VenomousBite;
-                            if (!LevelChecked(IronJaws) && windbite && windRemaining < 4)
+                            if (!LevelChecked(IronJaws) && windbite && windRemaining < updateDotTime)
                                 return Windbite;
                         }
                     }
@@ -1036,6 +1046,55 @@ namespace XIVSlothCombo.Combos.PvE
                     if (armysPaeonReady || (gauge.Song == Song.ARMY && songTimerInSeconds > 2))
                         return ArmysPaeon;
 
+                }
+
+                return actionID;
+            }
+        }
+
+        internal class BRD_Apex_DoT : CustomCombo
+        {
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_Apex_DoT;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is ApexArrow or BlastArrow)
+                {
+                    if (IsEnabled(CustomComboPreset.BRD_Apex_DoT))
+                    {
+                        BRDGauge? gauge = GetJobGauge<BRDGauge>();
+                        int updateDotTime = 0;
+                        bool venomous = TargetHasEffect(Debuffs.VenomousBite);
+                        bool windbite = TargetHasEffect(Debuffs.Windbite);
+                        bool caustic = TargetHasEffect(Debuffs.CausticBite);
+                        bool stormbite = TargetHasEffect(Debuffs.Stormbite);
+                        bool ragingstrikes = HasEffect(Buffs.RagingStrikes);
+                        float venomRemaining = GetDebuffRemainingTime(Debuffs.VenomousBite);
+                        float windRemaining = GetDebuffRemainingTime(Debuffs.Windbite);
+                        float causticRemaining = GetDebuffRemainingTime(Debuffs.CausticBite);
+                        float stormRemaining = GetDebuffRemainingTime(Debuffs.Stormbite);
+                        float ragingStrikeRemainings = GetBuffRemainingTime(Buffs.RagingStrikes);
+
+                        if (gauge.Song == Song.ARMY)
+                        {
+                            updateDotTime = 3;
+                        }
+                        else
+                        {
+                            updateDotTime = 4;
+                        }
+
+                        if (InCombat())
+                        {
+                            if (LevelChecked(IronJaws) && LevelChecked(RagingStrikes) &&
+                                ragingstrikes && ragingStrikeRemainings <= updateDotTime)
+                                return IronJaws;
+                            if (LevelChecked(IronJaws) &&
+                                ((venomous && venomRemaining <= updateDotTime) || (caustic && causticRemaining <= updateDotTime)) ||
+                                (windbite && windRemaining <= updateDotTime) || (stormbite && stormRemaining <= updateDotTime))
+                                return IronJaws;
+                        }
+                    }
                 }
 
                 return actionID;

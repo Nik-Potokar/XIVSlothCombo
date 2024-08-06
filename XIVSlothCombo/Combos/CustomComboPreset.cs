@@ -713,7 +713,12 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
         BRD_AoE_Simple_NoWaste = 3033,
-        // Last value = 3033
+
+        [ReplaceSkill(BRD.ApexArrow, BRD.BlastArrow)]
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [CustomComboInfo("Apex into DoT Maintenance", "Adds a Dot option to Apex and Blast similar to Heavy.", BRD.JobID)]
+        BRD_Apex_DoT = 3034,
+        // Last value = 3034
 
         #endregion
 
