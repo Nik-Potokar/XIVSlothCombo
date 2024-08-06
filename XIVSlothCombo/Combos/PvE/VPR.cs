@@ -148,6 +148,12 @@ namespace XIVSlothCombo.Combos.PvE
                             && OriginalHook(SerpentsTail) is not SerpentsTail)
                             return OriginalHook(SerpentsTail);
 
+                        // Uncoiled weaves
+                        if (HasEffect(Buffs.PoisedForTwinfang))
+                            return OriginalHook(Twinfang);
+
+                        if (HasEffect(Buffs.PoisedForTwinblood))
+                            return OriginalHook(Twinblood);
                         if (!HasEffect(Buffs.Reawakened))
                         {
                             //Vicewinder weaves
@@ -157,20 +163,13 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.SwiftskinsVenom) && InMeleeRange())
                                 return OriginalHook(Twinblood);
 
-                            // Uncoiled weaves
-                            if (HasEffect(Buffs.PoisedForTwinfang))
-                                return OriginalHook(Twinfang);
-
-                            if (HasEffect(Buffs.PoisedForTwinblood))
-                                return OriginalHook(Twinblood);
-
                             //Serpents Ire usage
                             if (!CappedOnCoils && ActionReady(SerpentsIre))
                                 return SerpentsIre;
                         }
                     }
 
-                    if (LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget() && !HasEffect(Buffs.Reawakened))
+                    if (LevelChecked(WrithingSnap) && GetTargetDistance() > 5 && HasBattleTarget())
                         return VPRCheckRattlingCoils.HasRattlingCoilStack(gauge)
                             ? UncoiledFury
                             : WrithingSnap;
@@ -386,39 +385,40 @@ namespace XIVSlothCombo.Combos.PvE
                             && OriginalHook(SerpentsTail) is not SerpentsTail)
                             return OriginalHook(SerpentsTail);
 
+                        // Uncoiled weaves
+                        if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo))
+                        {
+                            if (HasEffect(Buffs.PoisedForTwinfang))
+                                return OriginalHook(Twinfang);
+
+                            if (HasEffect(Buffs.PoisedForTwinblood))
+                                return OriginalHook(Twinblood);
+                        }
+
                         if (!HasEffect(Buffs.Reawakened))
                         {
-                            //vicewinder weaves
-                            if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
-                           IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) && InMeleeRange())
+                            if (IsEnabled(CustomComboPreset.VPR_ST_CDs))
                             {
-                                if (HasEffect(Buffs.HuntersVenom))
-                                    return OriginalHook(Twinfang);
+                                //vicewinder weaves
+                                if (IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) && InMeleeRange())
+                                {
+                                    if (HasEffect(Buffs.HuntersVenom))
+                                        return OriginalHook(Twinfang);
 
-                                if (HasEffect(Buffs.SwiftskinsVenom))
-                                    return OriginalHook(Twinblood);
+                                    if (HasEffect(Buffs.SwiftskinsVenom))
+                                        return OriginalHook(Twinblood);
+                                }
+
+                                //Serpents Ire usage
+                                if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
+                                    !CappedOnCoils && ActionReady(SerpentsIre))
+                                    return SerpentsIre;
                             }
-
-                            // Uncoiled weaves
-                            if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo))
-                            {
-                                if (HasEffect(Buffs.PoisedForTwinfang))
-                                    return OriginalHook(Twinfang);
-
-                                if (HasEffect(Buffs.PoisedForTwinblood))
-                                    return OriginalHook(Twinblood);
-                            }
-
-                            //Serpents Ire usage
-                            if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
-                                IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
-                                !CappedOnCoils && ActionReady(SerpentsIre))
-                                return SerpentsIre;
                         }
                     }
 
                     if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
-                        LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget() && !HasEffect(Buffs.Reawakened))
+                        LevelChecked(WrithingSnap) && GetTargetDistance() > 5 && HasBattleTarget())
                         return (IsEnabled(CustomComboPreset.VPR_ST_RangedUptimeUncoiledFury) && VPRCheckRattlingCoils.HasRattlingCoilStack(gauge))
                             ? UncoiledFury
                             : WrithingSnap;
@@ -1123,7 +1123,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SerpentsTail)
                 {
                     // Death Rattle
-                    if (LevelChecked(SerpentsTail) && (OriginalHook(SerpentsTail) is DeathRattle or LastLash))
+                    if (LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
                         return OriginalHook(SerpentsTail);
 
                     // Legacy Weaves
