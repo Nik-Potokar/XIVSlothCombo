@@ -114,13 +114,18 @@ namespace XIVSlothCombo.Combos.PvE
                         bool windbite = TargetHasEffect(Debuffs.Windbite);
                         bool caustic = TargetHasEffect(Debuffs.CausticBite);
                         bool stormbite = TargetHasEffect(Debuffs.Stormbite);
+                        bool ragingstrikes = HasEffect(Buffs.RagingStrikes);
                         float venomRemaining = GetDebuffRemainingTime(Debuffs.VenomousBite);
                         float windRemaining = GetDebuffRemainingTime(Debuffs.Windbite);
                         float causticRemaining = GetDebuffRemainingTime(Debuffs.CausticBite);
                         float stormRemaining = GetDebuffRemainingTime(Debuffs.Stormbite);
+                        float ragingStrikeRemainings = GetBuffRemainingTime(Buffs.RagingStrikes);
 
                         if (InCombat())
                         {
+                            if (LevelChecked(IronJaws) && LevelChecked(RagingStrikes) &&
+                                ragingstrikes && ragingStrikeRemainings < 4)
+                                return IronJaws;
                             if (LevelChecked(IronJaws) &&
                                 ((venomous && venomRemaining < 4) || (caustic && causticRemaining < 4)) ||
                                 (windbite && windRemaining < 4) || (stormbite && stormRemaining < 4))
