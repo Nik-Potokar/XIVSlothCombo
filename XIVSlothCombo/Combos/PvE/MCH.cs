@@ -2,12 +2,12 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using System;
 using System.Linq;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
+using static XIVSlothCombo.Combos.JobHelpers.MCHHelpers;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -124,6 +124,7 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
+
                     // Opener for MCH
                     if (MCHOpener.DoFullOpener(ref actionID))
                         return actionID;
@@ -141,7 +142,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return BarrelStabilizer;
 
                     if (CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
-                   LevelChecked(Hypercharge) && !gauge.IsOverheated)
+                   LevelChecked(Hypercharge) && !gauge.IsOverheated && !MCHExtensions.IsComboExpiring(6))
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
                         if ((LevelChecked(FullMetalField) && WasLastWeaponskill(FullMetalField) && (GetCooldownRemainingTime(Wildfire) < GCD || ActionReady(Wildfire))) ||
@@ -319,7 +320,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SplitShot or HeatedSplitShot)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                    IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
                         return Variant.VariantCure;
 
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
@@ -327,6 +329,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsOffCooldown(Variant.VariantRampart) &&
                         CanWeave(actionID))
                         return Variant.VariantRampart;
+
 
                     // Opener for MCH
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener))
@@ -356,7 +359,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return BarrelStabilizer;
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                   CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) &&
+                   CanWeave(actionID) && (gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHExtensions.IsComboExpiring(6) &&
                    LevelChecked(Hypercharge) && !gauge.IsOverheated && GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
                         //Protection & ensures Hyper charged is double weaved with WF during reopener
@@ -547,8 +550,8 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SpreadShot or Scattergun)
                 {
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                     IsEnabled(Variant.VariantCure) &&
-                     PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
                         return Variant.VariantCure;
 
                     if (HasEffect(Buffs.Flamethrower) || JustUsed(Flamethrower))
@@ -636,12 +639,9 @@ namespace XIVSlothCombo.Combos.PvE
                     bool reassembledExcavator = (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && Config.MCH_AoE_Reassembled[3] && HasEffect(Buffs.Reassembled)) || (IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) && !Config.MCH_AoE_Reassembled[3] && !HasEffect(Buffs.Reassembled)) || (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_AoE_ReassemblePool) || (!IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble));
 
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
-                     IsEnabled(Variant.VariantCure) &&
-                     PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_VariantCure))
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.MCH_VariantCure)
                         return Variant.VariantCure;
-
-                    if (HasEffect(Buffs.Flamethrower) || JustUsed(Flamethrower))
-                        return OriginalHook(11);
 
                     if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
