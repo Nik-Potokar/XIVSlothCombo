@@ -169,7 +169,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (LevelChecked(WrithingSnap) && GetTargetDistance() > 5 && HasBattleTarget())
+                    if (LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
                         return VPRCheckRattlingCoils.HasRattlingCoilStack(gauge)
                             ? UncoiledFury
                             : WrithingSnap;
@@ -314,7 +314,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
 
-                if (LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) && GetTargetDistance() <= 5 &&
+                if (LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6) && !VPRCheckTimers.IsVenomExpiring(6) &&
@@ -418,7 +418,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
-                        LevelChecked(WrithingSnap) && GetTargetDistance() > 5 && HasBattleTarget())
+                        LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
                         return (IsEnabled(CustomComboPreset.VPR_ST_RangedUptimeUncoiledFury) && VPRCheckRattlingCoils.HasRattlingCoilStack(gauge))
                             ? UncoiledFury
                             : WrithingSnap;
@@ -578,7 +578,7 @@ namespace XIVSlothCombo.Combos.PvE
                 int SerpentsIreUsed = ActionWatching.CombatActions.Count(x => x == SerpentsIre);
 
                 if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) &&
-                    LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) && GetTargetDistance() <= 5 &&
+                    LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6) && !VPRCheckTimers.IsVenomExpiring(6) &&
@@ -634,29 +634,26 @@ namespace XIVSlothCombo.Combos.PvE
                             && OriginalHook(SerpentsTail) is not SerpentsTail)
                             return OriginalHook(SerpentsTail);
 
-                        if (!HasEffect(Buffs.Reawakened) && InMeleeRange())
+                        // Uncoiled combo
+                        if (HasEffect(Buffs.PoisedForTwinfang))
+                            return OriginalHook(Twinfang);
+
+                        if (HasEffect(Buffs.PoisedForTwinblood))
+                            return OriginalHook(Twinblood);
+
+                        if (!HasEffect(Buffs.Reawakened))
                         {
                             //Vicepit weaves
-                            if (HasEffect(Buffs.FellhuntersVenom))
+                            if (HasEffect(Buffs.FellhuntersVenom) && InMeleeRange())
                                 return OriginalHook(Twinfang);
 
-                            if (HasEffect(Buffs.FellskinsVenom))
+                            if (HasEffect(Buffs.FellskinsVenom) && InMeleeRange())
                                 return OriginalHook(Twinblood);
 
                             //Serpents Ire usage
                             if (!CappedOnCoils && ActionReady(SerpentsIre))
                                 return SerpentsIre;
                         }
-                    }
-
-                    // Uncoiled combo
-                    if (!HasEffect(Buffs.Reawakened))
-                    {
-                        if (HasEffect(Buffs.PoisedForTwinfang))
-                            return OriginalHook(Twinfang);
-
-                        if (HasEffect(Buffs.PoisedForTwinblood))
-                            return OriginalHook(Twinblood);
                     }
 
                     //Vicepit combo
@@ -672,7 +669,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Reawakend Usage
                     if ((HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) && LevelChecked(Reawaken) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        !HasEffect(Buffs.Reawakened) &&
+                        !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
                         !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
                         !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                         return Reawaken;
@@ -810,6 +807,16 @@ namespace XIVSlothCombo.Combos.PvE
                             && OriginalHook(SerpentsTail) is not SerpentsTail)
                             return OriginalHook(SerpentsTail);
 
+                        // Uncoiled combo
+                        if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFuryCombo))
+                        {
+                            if (HasEffect(Buffs.PoisedForTwinfang))
+                                return OriginalHook(Twinfang);
+
+                            if (HasEffect(Buffs.PoisedForTwinblood))
+                                return OriginalHook(Twinblood);
+                        }
+
                         if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
                             !HasEffect(Buffs.Reawakened))
                         {
@@ -831,17 +838,6 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    // Uncoiled combo
-                    if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFuryCombo) &&
-                    !HasEffect(Buffs.Reawakened))
-                    {
-                        if (HasEffect(Buffs.PoisedForTwinfang))
-                            return OriginalHook(Twinfang);
-
-                        if (HasEffect(Buffs.PoisedForTwinblood))
-                            return OriginalHook(Twinblood);
-                    }
-
                     //Vicepit combo
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_AoE_VicepitCombo) &&
@@ -858,7 +854,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) &&
                         (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) && LevelChecked(Reawaken) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        !HasEffect(Buffs.Reawakened) &&
+                        !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
                         !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
                         !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                         return Reawaken;
