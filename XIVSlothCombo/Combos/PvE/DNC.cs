@@ -506,13 +506,15 @@ namespace XIVSlothCombo.Combos.PvE
                     (GetCooldownRemainingTime(TechnicalStep) > 5 ||
                      IsOffCooldown(TechnicalStep)) && // Tech is up
                     (gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold || // above esprit threshold use
+                     (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50) || // will overcap with Tillana if not used
                      (GetBuffRemainingTime(Buffs.DanceOfTheDawnReady) < 5 && gauge.Esprit >= 50))) // emergency use
                     return OriginalHook(DanceOfTheDawn);
 
                 // ST Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_ST_Adv_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold &&
+                    (gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold || // above esprit threshold use
+                     (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50)) && // will overcap with Tillana if not used
                     ActionReady(SaberDance))
                     return LevelChecked(DanceOfTheDawn) &&
                            HasEffect(Buffs.DanceOfTheDawnReady)
@@ -810,14 +812,16 @@ namespace XIVSlothCombo.Combos.PvE
                     LevelChecked(DanceOfTheDawn) &&
                     (GetCooldownRemainingTime(TechnicalStep) > 5 ||
                      IsOffCooldown(TechnicalStep)) && // Tech is up
-                    (gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold || // above esprit threshold use
+                    (gauge.Esprit >= Config.DNC_AoE_Adv_SaberThreshold || // above esprit threshold use
+                     (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50) || // will overcap with Tillana if not used
                      (GetBuffRemainingTime(Buffs.DanceOfTheDawnReady) < 5 && gauge.Esprit >= 50))) // emergency use
                     return OriginalHook(DanceOfTheDawn);
 
                 // AoE Saber Dance (Emergency Use)
                 if (IsEnabled(CustomComboPreset.DNC_AoE_Adv_SaberDance) &&
                     LevelChecked(SaberDance) &&
-                    gauge.Esprit >= Config.DNC_AoE_Adv_SaberThreshold &&
+                    (gauge.Esprit >= Config.DNC_AoE_Adv_SaberThreshold || // above esprit threshold use
+                     (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50)) && // will overcap with Tillana if not used
                     ActionReady(SaberDance))
                     return SaberDance;
 
