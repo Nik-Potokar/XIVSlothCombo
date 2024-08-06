@@ -107,7 +107,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
                 bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 4;
                 bool inBurstWindow = JustUsed(FightOrFlight, 30f);
                 bool inAtonementStarter = HasEffect(Buffs.AtonementReady);
@@ -259,7 +259,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
                 bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 4;
                 #endregion
 
@@ -349,7 +349,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
                 bool hasRequiescatMP = playerMP >= 10000 || (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 4) ||
                                        (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 4) + Config.PLD_ST_MP_Reserve);
                 bool inBurstWindow = JustUsed(FightOrFlight, 30f);
@@ -358,7 +358,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool afterOpener = LevelChecked(BladeOfFaith) && RoyalAuthorityCount > 0;
                 bool isDivineMightExpiring = GetBuffRemainingTime(Buffs.DivineMight) < 6;
                 bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) ||
-                                        (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= Config.PLD_ST_MP_Reserve);
+                                        (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) + Config.PLD_ST_MP_Reserve);
                 bool inAtonementPhase = HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady);
                 bool isAtonementExpiring = (HasEffect(Buffs.AtonementReady) && GetBuffRemainingTime(Buffs.AtonementReady) < 6) ||
                                             (HasEffect(Buffs.SupplicationReady) && GetBuffRemainingTime(Buffs.SupplicationReady) < 6) ||
@@ -527,11 +527,11 @@ namespace XIVSlothCombo.Combos.PvE
                 bool canEarlyWeave = CanWeave(actionID, 1.5f);
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
-                bool hasDivineMagicMP = GetResourceCost(HolySpirit) <= playerMP;
+                bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
                 bool hasRequiescatMP = playerMP >= 10000 || (IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 4) ||
                                        (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 4) + Config.PLD_AoE_MP_Reserve);
                 bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) ||
-                                        (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= Config.PLD_AoE_MP_Reserve);
+                                        (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) + Config.PLD_AoE_MP_Reserve);
                 #endregion
 
                 if (actionID is TotalEclipse)
