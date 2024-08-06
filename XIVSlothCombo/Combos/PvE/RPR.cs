@@ -1,9 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
+using static XIVSlothCombo.Combos.JobHelpers.RPR;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -157,7 +157,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Communio);
 
                         if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
-                           !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                           !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) && !RPRHelpers.IsComboExpiring(6) &&
                            !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                            (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
                            HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
@@ -329,7 +329,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
                            LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
-                           !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
+                           !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) && !RPRHelpers.IsComboExpiring(6) &&
                            !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                            (!LevelChecked(PlentifulHarvest) || // Before Plentiful Harvest     
                            HasEffect(Buffs.ArcaneCircle) || // Shroud in Arcane Circle  
@@ -489,7 +489,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return ArcaneCircle;
 
                             if (!HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.Executioner) &&
-                                ActionReady(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)))
+                                ActionReady(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !RPRHelpers.IsComboExpiring(6))
                                 return Enshroud;
 
                             if (LevelChecked(Gluttony) && gauge.Soul >= 50 && !HasEffect(Buffs.Enshrouded) &&
@@ -588,7 +588,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                                 if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) &&
                                     !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
-                                    ActionReady(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)))
+                                    ActionReady(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) && !RPRHelpers.IsComboExpiring(6))
                                     return Enshroud;
 
                                 if (IsEnabled(CustomComboPreset.RPR_AoE_Gluttony) &&
