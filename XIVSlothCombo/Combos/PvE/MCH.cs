@@ -515,29 +515,34 @@ namespace XIVSlothCombo.Combos.PvE
                     !gauge.IsRobotActive && gauge.Battery >= 50 &&
                     ((LevelChecked(FullMetalField) && !WasLastWeaponskill(FullMetalField)) || !LevelChecked(FullMetalField)))
                 {
-                    int queensUsed = ActionWatching.CombatActions.Count(x => x == OriginalHook(RookAutoturret));
-
-                    //opener
-                    if (queensUsed < 1)
-                        return true;
+                    int BSUsed = ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
 
                     //1min
-                    if (queensUsed >= 1 & queensUsed < 3 && gauge.Battery >= 90)
+                    if (BSUsed == 1 & gauge.Battery >= 90)
                         return true;
 
                     //even mins
-                    if (queensUsed >= 3 && queensUsed % 2 == 0 && gauge.Battery == 100)
+                    if (BSUsed > 1 && gauge.Battery == 100 &&
+                        GetCooldownRemainingTime(BarrelStabilizer) is < 5)
                         return true;
 
-                    //odd mins
-                    if (queensUsed >= 3 && queensUsed % 2 == 1 && gauge.Battery >= 50)
+                    //odd mins 1st queen
+                    if (BSUsed > 1 && gauge.Battery >= 50 &&
+                        GetCooldownRemainingTime(BarrelStabilizer) is >= 60 and <= 100)
+                        return true;
+
+                    //odd mins 2nd queen
+                    if (BSUsed > 1 && gauge.Battery >= 60 &&
+                        GetCooldownRemainingTime(BarrelStabilizer) is >= 20 and <= 60)
+                        return true;
+
+                    if (!LevelChecked(BarrelStabilizer))
                         return true;
                 }
 
                 return false;
             }
         }
-
         internal class MCH_AoE_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_AoE_SimpleMode;
