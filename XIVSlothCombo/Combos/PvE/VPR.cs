@@ -1123,7 +1123,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is SerpentsTail)
                 {
                     // Death Rattle
-                    if (LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
+                    if (LevelChecked(SerpentsTail) && (OriginalHook(SerpentsTail) is DeathRattle or LastLash))
                         return OriginalHook(SerpentsTail);
 
                     // Legacy Weaves
