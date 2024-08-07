@@ -4686,6 +4686,15 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region VIPER
+        [PvPCustomCombo]
+        [ReplaceSkill(VPRPvP.SteelFangs)]
+        [CustomComboInfo("Burst Mode", "Turns Dual Fang Combo into an all-in-one damage button.", VPRPvP.JobID)]
+        VPRPvP_Burst = 130000,
+
+        // Last value = 130000
+        #endregion
+
         #region WARRIOR
         [PvPCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPvP.JobID)]
