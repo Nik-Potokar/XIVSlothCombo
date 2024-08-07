@@ -284,18 +284,17 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     //even mins
-                    if (BSUsed > 1 && gauge.Battery == 100 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is < 5)
+                    if (BSUsed > 1 && gauge.Battery == 100)
                         return true;
 
                     //odd mins 1st queen
                     if (BSUsed > 1 && gauge.Battery >= 50 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is >= 60 and <= 100)
+                        GetCooldownRemainingTime(BarrelStabilizer) is >= 60)
                         return true;
 
                     //odd mins 2nd queen
                     if (BSUsed > 1 && gauge.Battery >= 60 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is >= 20 and <= 60)
+                        GetCooldownRemainingTime(BarrelStabilizer) is <= 60)
                         return true;
 
                     if (!LevelChecked(BarrelStabilizer))
@@ -527,18 +526,17 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     //even mins
-                    if (BSUsed > 1 && gauge.Battery == 100 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is < 5)
+                    if (BSUsed > 1 && gauge.Battery == 100)
                         return true;
 
                     //odd mins 1st queen
                     if (BSUsed > 1 && gauge.Battery >= 50 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is >= 60 and <= 100)
+                        GetCooldownRemainingTime(BarrelStabilizer) is >= 60)
                         return true;
 
                     //odd mins 2nd queen
                     if (BSUsed > 1 && gauge.Battery >= 60 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is >= 20 and <= 60)
+                        GetCooldownRemainingTime(BarrelStabilizer) is <= 60)
                         return true;
 
                     if (!LevelChecked(BarrelStabilizer))
