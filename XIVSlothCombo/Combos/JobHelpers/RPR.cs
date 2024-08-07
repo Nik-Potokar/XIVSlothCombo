@@ -209,7 +209,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return false;
             }
         }
-         
+
         internal class RPRHelpers
         {
             public unsafe static bool IsComboExpiring(float Times)
@@ -217,6 +217,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
                 if (ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD)
+                    return true;
+
+                else return false;
+            }
+
+            public static bool IsDebuffExpiring(float Times)
+            {
+                float GCD = GetCooldown(Slice).CooldownTotal * Times;
+
+                if (GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD)
                     return true;
 
                 else return false;
