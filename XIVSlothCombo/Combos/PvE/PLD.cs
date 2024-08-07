@@ -107,7 +107,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
                 bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
-                bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 4;
+                bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 3.6;
                 bool inBurstWindow = JustUsed(FightOrFlight, 30f);
                 bool inAtonementStarter = HasEffect(Buffs.AtonementReady);
                 bool inAtonementFinisher = HasEffect(Buffs.SepulchreReady);
@@ -259,7 +259,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
-                bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 4;
+                bool hasRequiescatMP = playerMP >= GetResourceCost(HolySpirit) * 3.6;
                 #endregion
 
                 if (actionID is TotalEclipse)
@@ -349,8 +349,8 @@ namespace XIVSlothCombo.Combos.PvE
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasFightOrFlight = HasEffect(Buffs.FightOrFlight);
                 bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
-                bool hasRequiescatMP = (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 4) ||
-                                       (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 4) + Config.PLD_ST_MP_Reserve);
+                bool hasRequiescatMP = (IsNotEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 3.6) ||
+                                       (IsEnabled(CustomComboPreset.PLD_ST_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 3.6) + Config.PLD_ST_MP_Reserve);
                 bool inBurstWindow = JustUsed(FightOrFlight, 30f);
                 bool inAtonementStarter = HasEffect(Buffs.AtonementReady);
                 bool inAtonementFinisher = HasEffect(Buffs.SepulchreReady);
@@ -527,8 +527,8 @@ namespace XIVSlothCombo.Combos.PvE
                 bool hasRequiescat = HasEffect(Buffs.Requiescat);
                 bool hasDivineMight = HasEffect(Buffs.DivineMight);
                 bool hasDivineMagicMP = playerMP >= GetResourceCost(HolySpirit);
-                bool hasRequiescatMP = (IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 4) ||
-                                       (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 4) + Config.PLD_AoE_MP_Reserve);
+                bool hasRequiescatMP = (IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) * 3.6) ||
+                                       (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= (GetResourceCost(HolySpirit) * 3.6) + Config.PLD_AoE_MP_Reserve);
                 bool isAboveMPReserve = IsNotEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) ||
                                         (IsEnabled(CustomComboPreset.PLD_AoE_AdvancedMode_MP_Reserve) && playerMP >= GetResourceCost(HolySpirit) + Config.PLD_AoE_MP_Reserve);
                 #endregion
