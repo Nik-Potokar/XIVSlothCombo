@@ -769,10 +769,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.HawksEye) && HasEffect(Buffs.RagingStrikes))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
-
-                            if (LevelChecked(Bloodletter) && bloodletterCharges > 2 && HasEffect(Buffs.RagingStrikes))
-                                return OriginalHook(Bloodletter);
-                            else if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
+                                                        
+                            if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
                             else if (LevelChecked(BattleVoice) && HasEffect(Buffs.BattleVoice))
                                 return Barrage;
