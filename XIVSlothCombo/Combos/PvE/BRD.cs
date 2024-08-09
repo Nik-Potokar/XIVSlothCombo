@@ -432,8 +432,8 @@ namespace XIVSlothCombo.Combos.PvE
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
                            && HasEffect(Buffs.BattleVoice))
                             return RadiantFinale;
-
-                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.HawksEye) && HasEffect(Buffs.RagingStrikes))
+                        //removed requirement to not have hawks eye, it is better to maybe lose 60 potency than allow it to drift a 1000 potency gain out of the window
+                        if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
                         {
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
@@ -742,9 +742,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
                            && HasEffect(Buffs.BattleVoice))
-                            return RadiantFinale;                        
-
-                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.HawksEye) && HasEffect(Buffs.RagingStrikes))
+                            return RadiantFinale;
+                        //removed requirement to not have hawks eye, it is better to maybe lose 60 potency than allow it to drift a 1000 potency gain out of the window
+                        if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
                         {   
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
