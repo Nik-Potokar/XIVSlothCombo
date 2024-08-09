@@ -98,7 +98,10 @@ namespace XIVSlothCombo.Combos.PvE
         internal class MCH_ST_SimpleMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
-            internal static MCHOpenerLogic MCHOpener = new();
+            internal static MCHOpenerLogic100 MCHOpener100 = new();
+            internal static MCHOpenerLogic96 MCHOpener96 = new();
+            internal static MCHOpenerLogic92 MCHOpener92 = new();
+            internal static MCHOpenerLogic90 MCHOpener90 = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -124,9 +127,33 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // Opener for MCH
-                    if (MCHOpener.DoFullOpener(ref actionID))
-                        return actionID;
+                    // Opener for MCH 90
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && !LevelChecked(CheckMate))
+                    {
+                        if (MCHOpener90.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // Opener for MCH 92
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && LevelChecked(CheckMate) && !LevelChecked(Excavator))
+                    {
+                        if (MCHOpener92.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // Opener for MCH 96
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && LevelChecked(Excavator) && !LevelChecked(FullMetalField))
+                    {
+                        if (MCHOpener96.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // Opener for MCH 100
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && LevelChecked(FullMetalField))
+                    {
+                        if (MCHOpener100.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
 
                     // Interrupt
                     if (interruptReady)
@@ -295,7 +322,10 @@ namespace XIVSlothCombo.Combos.PvE
         internal class MCH_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_AdvancedMode;
-            internal static MCHOpenerLogic MCHOpener = new();
+            internal static MCHOpenerLogic100 MCHOpener100 = new();
+            internal static MCHOpenerLogic96 MCHOpener96 = new();
+            internal static MCHOpenerLogic92 MCHOpener92 = new();
+            internal static MCHOpenerLogic90 MCHOpener90 = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -320,10 +350,31 @@ namespace XIVSlothCombo.Combos.PvE
                         CanWeave(actionID))
                         return Variant.VariantRampart;
 
-                    // Opener for MCH
-                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener))
+                    // Opener for MCH 90
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && !LevelChecked(CheckMate))
                     {
-                        if (MCHOpener.DoFullOpener(ref actionID))
+                        if (MCHOpener90.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // Opener for MCH 92
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && LevelChecked(CheckMate) && !LevelChecked(Excavator))
+                    {
+                        if (MCHOpener92.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // Opener for MCH 96
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && LevelChecked(Excavator) && !LevelChecked(FullMetalField))
+                    {
+                        if (MCHOpener96.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // Opener for MCH 100
+                    if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Opener) && LevelChecked(FullMetalField))
+                    {
+                        if (MCHOpener100.DoFullOpener(ref actionID))
                             return actionID;
                     }
 
