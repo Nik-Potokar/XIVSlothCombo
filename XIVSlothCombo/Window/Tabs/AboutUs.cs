@@ -157,7 +157,7 @@ namespace XIVSlothCombo.Window.Tabs
                     {
                         if (IconButtons.IconImageButton(Images["discord"], "Click here to join our Discord Server!", new(0, 0), imageScale: 0.05f))
                         {
-                            Util.OpenLink("https://discord.gg/xT7zyjzjtY");
+                            Util.OpenLink("https://discord.gg/punishxiv");
                         }
                     });
                     ImGuiEx.LineCentered("GitHubButton", delegate
