@@ -17,14 +17,6 @@ namespace XIVSlothCombo.Combos.PvP
             SwiftskinsCoil = 39167,
             UncoiledFury = 39168,
             SerpentsTail = 39183,
-            DeathRattle = 39174,
-            TwinfangBite = 39175,
-            TwinbloodBite = 39176,
-            UncoiledTwinfang = 39177,
-            FirstLegacy = 39179,
-            SecondLegacy = 39180,
-            ThirdLegacy = 39181,
-            FourthLegacy = 39182,
             FirstGeneration = 39169,
             SecondGeneration = 39170,
             ThirdGeneration = 39171,
@@ -63,7 +55,7 @@ namespace XIVSlothCombo.Combos.PvP
                         }
 
                         // Uncoiled Fury
-                        if (IsOffCooldown(UncoiledFury) && (!inMeleeRange || !HasCharges(HuntersSnap)))
+                        if (IsOffCooldown(UncoiledFury) && (!inMeleeRange || (!HasCharges(HuntersSnap) && OriginalHook(HuntersSnap) != SwiftskinsCoil)))
                             return OriginalHook(UncoiledFury);
 
                         // Hunter's Snap / Swiftskin's Coil
