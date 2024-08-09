@@ -17,8 +17,8 @@
     <img src="https://img.shields.io/github/issues-raw/Nik-Potokar/XIVSlothCombo?color=EA9C0A&style=for-the-badge" /></a>
   <a href="https://github.com/Nik-Potokar/XIVSlothCombo/graphs/contributors" alt="Contributors">
     <img src="https://img.shields.io/github/contributors/Nik-Potokar/XIVSlothCombo?color=009009&style=for-the-badge" /></a>
-  <a href="https://discord.gg/xT7zyjzjtY" alt="Discord">
-    <img src="https://img.shields.io/discord/957680331056615506?color=5865F2&label=&logo=Discord&logoColor=ffffff&style=for-the-badge" /></a>
+  <a href="https://discord.gg/punishxiv" alt="Discord">
+    <img src="https://img.shields.io/discord/1001823907193552978?color=5865F2&label=&logo=Discord&logoColor=ffffff&style=for-the-badge" /></a>
   <br> <!-- Version -->
   <a href="https://github.com/Nik-Potokar/XIVSlothCombo/tags" alt="Release">
     <img src="https://img.shields.io/github/v/tag/Nik-Potokar/XIVSlothCombo?label=Release&logo=git&logoColor=ffffff&style=for-the-badge" /></a>
@@ -165,7 +165,7 @@
     
   </details>
 
-  To experience the full set of features on offer, <a href="#installation" alt="install">install</a> the plugin or visit the [Discord](https://discord.gg/xT7zyjzjtY) server for more info.
+  To experience the full set of features on offer, <a href="#installation" alt="install">install</a> the plugin or visit the [Discord](https://discord.gg/punishxiv) server for more info.
  
   <p align="right"><a href="#top" alt="Back to top"><img src=/res/readme_images/arrowhead-up.png width ="25"/></a></p>
 </section> 
@@ -174,7 +174,7 @@
 <section id="contributing">
 <a href="#contributing" alt="Contributing"><img src="/res/readme_images/Contributing.png" height="60px" /></a>
   
-  Contributions to the project are always welcome - please feel free to submit a [pull request](https://github.com/Nik-Potokar/XIVSlothCombo/pulls) here on GitHub, but ideally get in contact with us over on the [Discord](https://discord.gg/xT7zyjzjtY) server so we can communicate with one another to make any necessary changes and review your submission!
+  Contributions to the project are always welcome - please feel free to submit a [pull request](https://github.com/Nik-Potokar/XIVSlothCombo/pulls) here on GitHub, but ideally get in contact with us over on the [Discord](https://discord.gg/punishxiv) server so we can communicate with one another to make any necessary changes and review your submission!
   
    <p align="right"><a href="#top" alt="Back to top"><img src=/res/readme_images/arrowhead-up.png width ="25"/></a></p>
 </section> 
