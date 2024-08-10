@@ -2967,8 +2967,12 @@ namespace XIVSlothCombo.Combos
 
         #region Single Target DPS Feature
         [ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
-        [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100, "", "")]
+        [CustomComboInfo("Single Target DPS Feature", "Adds various options to Dosis I/II/III.", SGE.JobID, 100)]
         SGE_ST_DPS = 14001,
+
+        [ParentCombo(SGE_ST_DPS)]
+        [CustomComboInfo("Opener Option", "Use the Balance opener from level 56+.", SGE.JobID,101)]
+        SGE_ST_DPS_Opener = 14055,
 
         [ParentCombo(SGE_ST_DPS)]
         [CustomComboInfo("Lucid Dreaming Option", "Weaves Lucid Dreaming when your MP drops below the specified value.", SGE.JobID, 120, "", "")]
@@ -2995,7 +2999,7 @@ namespace XIVSlothCombo.Combos
         SGE_ST_DPS_Rhizo = 14007,
 
         [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Psych Option", "Weaves(?) Psych when available.", SGE.JobID, 112, "", "")]
+        [CustomComboInfo("Psych Option", "Weaves Psych when available.", SGE.JobID, 112, "", "")]
         SGE_ST_DPS_Psyche = 14008,
 
         [ParentCombo(SGE_ST_DPS)]
@@ -3193,7 +3197,7 @@ namespace XIVSlothCombo.Combos
         SGE_DPS_Variant_Rampart = 14049,
         #endregion
 
-        // Last used number = 14054
+        // Last used number = 14055
 
         #endregion
 
