@@ -2548,7 +2548,8 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoEDPS_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);
 
             if (preset == CustomComboPreset.WHM_AoE_DPS_PresenceOfMind)
-                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEDPS_PresenceOfMindWeave, "Only Weave but will delay it. Holy has no window.", "");
+                UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_AoEDPS_PresenceOfMindWeave, "Only Weave or Use Whilst Moving.", "Holy has no weave window so this can only be used to weave against healing or single target damage spells.\n\n" +
+                    "This will minimize the amount of GCD delay you will get but reduce the frequency it will be used.");
                 
             if (preset == CustomComboPreset.WHM_AoEHeals_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, WHM.Config.WHM_AoEHeals_Lucid, "Set value for your MP to be at or under for this feature to work", 150, SliderIncrements.Hundreds);

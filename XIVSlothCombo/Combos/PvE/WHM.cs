@@ -457,7 +457,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget())
                         return Variant.VariantSpiritDart;
 
-                    if (CanSpellWeave(actionID) || IsMoving)
+                    if (CanSpellWeave(ActionWatching.LastSpell) || IsMoving)
                     {
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                             return PresenceOfMind;
