@@ -175,20 +175,15 @@ namespace XIVSlothCombo.Combos
 
         #region ASTROLOGIAN
 
-        #region DPS
-        [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
-        [CustomComboInfo("DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID)]
+        #region ST DPS
+        [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3)]
+        [CustomComboInfo("ST DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID)]
         AST_ST_DPS = 1004,
 
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Combust Uptime Option", "Adds Combust to the DPS feature if it's not present on current target, or is about to expire.", AST.JobID)]
         AST_ST_DPS_CombustUptime = 1018,
-
-        [ReplaceSkill(AST.Gravity, AST.Gravity2)]
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("AoE DPS Option", "Every option below (Lucid/AutoDraws/etc) will also be added to Gravity", AST.JobID, 1, "", "")]
-        AST_AoE_DPS = 1013,
-
+              
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
         AST_DPS_LightSpeed = 1020,
@@ -206,7 +201,7 @@ namespace XIVSlothCombo.Combos
         AST_DPS_AutoDraw = 1011,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Arrow card (best used with Quick Target Cards)", AST.JobID, 6)]
+        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Spear card (best used with Quick Target Cards)", AST.JobID, 6)]
         AST_DPS_AutoPlay = 1037,
 
         [ParentCombo(AST_ST_DPS)]
@@ -216,6 +211,46 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Oracle Option", "Adds Oracle after Divination", AST.JobID)]
         AST_DPS_Oracle = 1015,
+
+        [ParentCombo(AST_ST_DPS)]
+        [CustomComboInfo("Opener Option lvl 100", "Use the Balance opener. Have a deck of cards pulled and umbral draw off cooldown. It WILL use a lightspeed charge", AST.JobID, 11, "", "")]
+        AST_ST_DPS_Opener = 1040,
+
+        #endregion
+
+        #region AOE DPS
+        [ReplaceSkill(AST.Gravity, AST.Gravity2)]
+        [CustomComboInfo("AOE DPS Feature", "Replaces Gravity with options below", AST.JobID)]
+        AST_AOE_DPS = 1041,    
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
+        AST_AOE_LightSpeed = 1048,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value", AST.JobID, 3, "", "")]
+        AST_AOE_Lucid = 1042,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Divination Weave Option", "Adds Divination", AST.JobID, 4, "", "")]
+        AST_AOE_Divination = 1043,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Card Draw Weave Option", "Draws your cards", AST.JobID, 5, "", "")]
+        AST_AOE_AutoDraw = 1044,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Card Play Weave Option", "Weaves your Balance or Spear card (best used with Quick Target Cards)", AST.JobID, 6)]
+        AST_AOE_AutoPlay = 1045,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
+        AST_AOE_LazyLord = 1046,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Oracle Option", "Adds Oracle after Divination", AST.JobID)]
+        AST_AOE_Oracle = 1047,       
+
         #endregion
 
         #region Healing
@@ -244,12 +279,20 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals_Exaltation = 1028,
 
         [ParentCombo(AST_ST_SimpleHeals)]
-        [CustomComboInfo("The Spire Option", "Adds The Spire when the card has been drawn", AST.JobID)]
+        [CustomComboInfo("The Spire Option", "Adds The Spire (Shield)  when the card has been drawn", AST.JobID)]
         AST_ST_SimpleHeals_Spire = 1030,
 
         [ParentCombo(AST_ST_SimpleHeals)]
-        [CustomComboInfo("The Ewer Option", "Adds The Ewer when the card has been drawn", AST.JobID)]
+        [CustomComboInfo("The Ewer Option", "Adds The Ewer (Heal over time) when the card has been drawn", AST.JobID)]
         AST_ST_SimpleHeals_Ewer = 1032,
+
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Arrow Option", "Adds The Arrow (increased healing)  when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Arrow = 1049,
+
+        [ParentCombo(AST_ST_SimpleHeals)]
+        [CustomComboInfo("The Bole Option", "Adds The Bole (Reduced Damage) when the card has been drawn", AST.JobID)]
+        AST_ST_SimpleHeals_Bole = 1050,
 
         [ReplaceSkill(AST.AspectedHelios)]
         [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 3, "", "")]
@@ -280,7 +323,7 @@ namespace XIVSlothCombo.Combos
         AST_Raise_Alternative = 1003,
 
         [Variant]
-        [VariantParent(AST_ST_DPS_CombustUptime, AST_AoE_DPS)]
+        [VariantParent(AST_ST_DPS_CombustUptime)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", AST.JobID)]
         AST_Variant_SpiritDart = 1035,
 
@@ -300,7 +343,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1039
+        // Last value = 1050
 
         #endregion
 
@@ -3096,9 +3139,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Rhizomata Feature", "Replaces Addersgall skills with Rhizomata when empty.", SGE.JobID, 600, "", "")]
         SGE_Rhizo = 14037,
 
-        [ReplaceSkill(SGE.Druochole)]
-        [CustomComboInfo("Druochole to Taurochole Feature", "Upgrades Druochole to Taurochole when Taurochole is available.", SGE.JobID, 700, "", "")]
-        SGE_DruoTauro = 14038,
+        [ReplaceSkill(SGE.Taurochole)]
+        [CustomComboInfo("Taurochole to Druochole Feature", "Turns Taurochole to Druochole when Taurochole is on cooldown.", SGE.JobID, 700, "", "")]
+        SGE_TauroDruo = 14038,
 
         [ReplaceSkill(SGE.Pneuma)]
         [CustomComboInfo("Zoe Pneuma Feature", "Places Zoe on top of Pneuma when both actions are on cooldown.", SGE.JobID, 701, "", "")] //Temporary to keep the order
