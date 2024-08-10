@@ -139,8 +139,6 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend_Late) && ((!IsMoving && GetTargetDistance() <= 1) || GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD))
                                 return PrimalRend;
                         }
-                        if (IsNotEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRend) && HasEffect(Buffs.PrimalRendReady) && GetBuffRemainingTime(Buffs.PrimalRendReady) <= GCD)
-                            return PrimalRend;
 
                         if (IsEnabled(CustomComboPreset.WAR_ST_StormsPath_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && LevelChecked(PrimalRuination) && WasLastWeaponskill(PrimalRend))
                             return PrimalRuination;
