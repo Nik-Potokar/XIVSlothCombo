@@ -1595,28 +1595,41 @@ namespace XIVSlothCombo.Combos
         GNB_GF_Continuation = 7300,
 
         [ParentCombo(GNB_GF_Continuation)]
-        [CustomComboInfo("Cooldowns on Gnashing Fang Option", "Adds Bloodfest/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff.", GNB.JobID)]
+        [CustomComboInfo("Cooldowns Option", "Adds Bloodfest/Bow Shock/Blasting Zone on Gnashing Fang, order dependent on No Mercy buff.", GNB.JobID)]
         GNB_GF_Cooldowns = 7301,
 
         [ParentCombo(GNB_GF_Continuation)]
-        [CustomComboInfo("No Mercy on Gnashing Fang Option", "Adds No Mercy to Gnashing Fang when available.", GNB.JobID)]
+        [CustomComboInfo("No Mercy Option", "Adds No Mercy to Gnashing Fang when available.", GNB.JobID)]
         GNB_GF_NoMercy = 7302,
 
         [ParentCombo(GNB_GF_Continuation)]
-        [CustomComboInfo("Double Down on Gnashing Fang Option", "Adds Double Down to Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
-        GNB_GF_DoubleDown = 7303,
+        [CustomComboInfo("Danger/Blasting Zone Option", "Adds Danger/Blasting Zone to Gnashing Fang when available.", GNB.JobID)]
+        GNB_GF_Zone = 7303,
 
         [ParentCombo(GNB_GF_Continuation)]
-        [CustomComboInfo("Sonic Break on Gnashing Fang Option", "Adds Sonic Break on Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
-        GNB_GF_SonicBreak = 7304,
+        [CustomComboInfo("Bow Shock Option", "Adds Bow Shock to Gnashing Fang when available.", GNB.JobID)]
+        GNB_GF_BowShock = 7304,
 
         [ParentCombo(GNB_GF_Continuation)]
-        [CustomComboInfo("Burst Strike on Gnashing Fang Option", "Adds Burst Strike on Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
-        GNB_GF_BurstStrike = 7305,
+        [CustomComboInfo("Bloodfest Option", "Adds Bloodfest to Gnashing Fang when available.", GNB.JobID)]
+        GNB_GF_Bloodfest = 7305,
 
         [ParentCombo(GNB_GF_Continuation)]
-        [CustomComboInfo("Reign combo on Gnashing Fang Option", "Adds Reign combo on Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
-        GNB_GF_Reign = 7306,
+        [CustomComboInfo("Sonic Break Option", "Adds Sonic Break on Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
+        GNB_GF_SonicBreak = 7306,
+
+        [ParentCombo(GNB_GF_Continuation)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
+        GNB_GF_DoubleDown = 7307,
+
+        [ParentCombo(GNB_GF_Continuation)]
+        [CustomComboInfo("Reign combo Option", "Adds Reign combo on Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
+        GNB_GF_Reign = 7308,
+
+        [ParentCombo(GNB_GF_Continuation)]
+        [CustomComboInfo("Burst Strike Option", "Adds Burst Strike on Gnashing Fang under No Mercy when appropriate.", GNB.JobID)]
+        GNB_GF_BurstStrike = 7309,
+
         #endregion
 
         #region Burst Strike

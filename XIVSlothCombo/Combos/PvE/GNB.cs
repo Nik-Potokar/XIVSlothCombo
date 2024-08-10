@@ -127,11 +127,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.GNB_ST_MainCombo_CooldownsGroup))
                         {
                             // Bloodfest
-                            if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && gauge.Ammo is 0 && HasEffect(Buffs.NoMercy))
-                            {
-                                if (IsOnCooldown(NoMercy))
+                            if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && gauge.Ammo is 0 && (JustUsed(NoMercy, 20f)))
                                     return Bloodfest;
-                            }
 
                             // Zone
                             if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone) && !JustUsed(NoMercy))
@@ -364,7 +361,8 @@ namespace XIVSlothCombo.Combos.PvE
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; // 2.5 supported, 2.45 is iffy
 
                     // No Mercy
-                    if ((LevelChecked(ReignOfBeasts) && LevelChecked(DoubleDown) && gauge.Ammo == 0 && lastComboMove is BrutalShell && IsOffCooldown(Bloodfest)) // Lv100 Opener/Reopener (0cart)
+                    if (IsEnabled(CustomComboPreset.GNB_GF_NoMercy) && ActionReady(NoMercy) &&
+                        (LevelChecked(ReignOfBeasts) && LevelChecked(DoubleDown) && gauge.Ammo == 0 && lastComboMove is BrutalShell && IsOffCooldown(Bloodfest)) // Lv100 Opener/Reopener (0cart)
                         || (LevelChecked(ReignOfBeasts) && gauge.Ammo >= 2 && IsOffCooldown(NoMercy)) // Lv100 on CD use (2 or 3 cart, never 1)
                         || (!LevelChecked(ReignOfBeasts) && LevelChecked(DoubleDown) && gauge.Ammo == 0 && lastComboMove is BrutalShell && IsOffCooldown(Bloodfest)) // Lv90 Opener/Reopener (0cart)
                         || (!LevelChecked(ReignOfBeasts) && LevelChecked(DoubleDown) && (GetCooldownRemainingTime(Bloodfest) < GCD * 12 || IsOffCooldown(Bloodfest)) && gauge.Ammo == 3) // Lv90 2min 3cart force
@@ -374,18 +372,17 @@ namespace XIVSlothCombo.Combos.PvE
                         return NoMercy;
 
                     // oGCDs
-                    if (CanWeave(actionID))
+                    if (CanWeave(SavageClaw))
                     {
                         if (IsEnabled(CustomComboPreset.GNB_GF_Cooldowns))
                         {
                             // Bloodfest
-                            if (ActionReady(Bloodfest) && gauge.Ammo is 0 && HasEffect(Buffs.NoMercy))
-                            {
-                                if (IsOnCooldown(NoMercy))
+                            if (IsEnabled(CustomComboPreset.GNB_GF_Bloodfest) && ActionReady(Bloodfest) && 
+                                gauge.Ammo is 0 && JustUsed(NoMercy, 20f))
                                     return Bloodfest;
-                            }
 
-                            if (ActionReady(DangerZone) && !JustUsed(NoMercy))
+                            // Zone
+                            if (IsEnabled(CustomComboPreset.GNB_GF_Zone) && ActionReady(DangerZone) && !JustUsed(NoMercy))
                             {
                                 // Lv90
                                 if (!LevelChecked(ReignOfBeasts) && !HasEffect(Buffs.NoMercy) && ((IsOnCooldown(GnashingFang) && GetCooldownRemainingTime(NoMercy) > 17) || // >=Lv60
@@ -408,17 +405,17 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.NoMercy) && (GetBuffRemainingTime(Buffs.NoMercy) < 17.5))
                             {
                                 // >=Lv90
-                                if (ActionReady(BowShock) && LevelChecked(BowShock))
+                                if (IsEnabled(CustomComboPreset.GNB_GF_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock))
                                     return BowShock;
-                                if (ActionReady(DangerZone))
+                                if (IsEnabled(CustomComboPreset.GNB_GF_Zone) && ActionReady(DangerZone))
                                     return OriginalHook(DangerZone);
 
                                 // <Lv90
                                 if (!LevelChecked(DoubleDown))
                                 {
-                                    if (ActionReady(DangerZone))
+                                    if (IsEnabled(CustomComboPreset.GNB_GF_Zone) &&ActionReady(DangerZone))
                                         return OriginalHook(DangerZone);
-                                    if (ActionReady(BowShock) && LevelChecked(BowShock))
+                                    if (IsEnabled(CustomComboPreset.GNB_GF_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock))
                                         return BowShock;
                                 }
                             }
