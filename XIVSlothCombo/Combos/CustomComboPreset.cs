@@ -2379,11 +2379,11 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode = 11002,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses after Royal Authority during opener.\n- Afterward, on cooldown alongside Requiescat.\n- Uses at lower levels when appropriate.\n- Target HP must be at or above:", PLD.JobID, 0)]
+        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses after Royal Authority during opener.\n- Afterward, on cooldown alongside Requiescat.\n- Target HP must be at or above:", PLD.JobID, 0)]
         PLD_ST_AdvancedMode_FoF = 11003,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Shield Lob Option", "Adds Shield Lob to Advanced Mode.\n- Uses only while out of melee range.\n- Yields to Holy Spirit when under Divine Might.\n- Yields to Confiteor and Blades when available.", PLD.JobID, 4)]
+        [CustomComboInfo("Shield Lob Option", "Adds Shield Lob to Advanced Mode.\n- Uses only while out of melee range.\n- Will not overwrite better actions.", PLD.JobID, 3)]
         PLD_ST_AdvancedMode_ShieldLob = 11004,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
@@ -2395,15 +2395,15 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode_SpiritsWithin = 11006,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Sheltron Option", "Adds Sheltron to Advanced Mode.\n- Uses only when taking damage.\n- Will not interrupt burst phase.\n- Required gauge threshold:", PLD.JobID, 3)]
+        [CustomComboInfo("Sheltron Option", "Adds Sheltron to Advanced Mode.\n- Uses only when taking damage.\n- Will not interrupt burst phase.\n- Required gauge threshold:", PLD.JobID, 4)]
         PLD_ST_AdvancedMode_Sheltron = 11007,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Goring Blade Option", "Adds Goring Blade to Advanced Mode.\n- Prefers to use after Confiteor and Blades.", PLD.JobID, 6)]
+        [CustomComboInfo("Goring Blade Option", "Adds Goring Blade to Advanced Mode.\n- Prefers to use after Requiescat.", PLD.JobID, 6)]
         PLD_ST_AdvancedMode_GoringBlade = 11008,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Holy Spirit Option", "Adds Holy Spirit to Advanced Mode.\n- Uses only when under Divine Might.\n- Prefers to use while out of melee range.\n- Prefers to use during Fight or Flight.\n- Yields to Sepulchre when appropriate.\n- Will be prioritized if buff is expiring.", PLD.JobID, 8)]
+        [CustomComboInfo("Holy Spirit Option", "Adds Holy Spirit to Advanced Mode.\n- Uses only when under Divine Might.\n- Will be prioritized if buff is expiring.", PLD.JobID, 8)]
         PLD_ST_AdvancedMode_HolySpirit = 11009,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
@@ -2411,19 +2411,19 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode_Requiescat = 11010,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Intervene Option", "Adds Intervene to Advanced Mode.\n- Prefers to use during Fight or Flight.\n- Will not use while moving.\n- Amount of charges to keep:", PLD.JobID, 5)]
+        [CustomComboInfo("Intervene Option", "Adds Intervene to Advanced Mode.\n- Prefers to use during Fight or Flight.\n- Will not use during movement.\n- Amount of charges to keep:", PLD.JobID, 5)]
         PLD_ST_AdvancedMode_Intervene = 11011,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Atonement Option", "Adds the Atonement combo to Advanced Mode.\n- Uses Atonement as soon as possible.\n- Prefers to use Supplication after Riot Blade.\n- Prefers to use Sepulchre during Fight or Flight.\n- Will be prioritized if buff is expiring.", PLD.JobID, 9)]
+        [CustomComboInfo("Atonement Option", "Adds the Atonement chain to Advanced Mode.\n- Will be prioritized if buff is expiring.", PLD.JobID, 9)]
         PLD_ST_AdvancedMode_Atonement = 11012,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode.\n- Uses after Requiescat.", PLD.JobID, 10)]
+        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode.\n- At lower levels, uses Holy Spirit instead.", PLD.JobID, 10)]
         PLD_ST_AdvancedMode_Confiteor = 11013,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("Blade of Faith/Truth/Valor Option", "Adds Blade of Faith/Truth/Valor to Advanced Mode.\n- Uses after Confiteor.", PLD.JobID, 11)]
+        [CustomComboInfo("Blade Chain Option", "Adds Blade of Faith/Truth/Valor to Advanced Mode.\n- At lower levels, uses Holy Spirit instead.", PLD.JobID, 11)]
         PLD_ST_AdvancedMode_Blades = 11014,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
@@ -2431,7 +2431,7 @@ namespace XIVSlothCombo.Combos
         PLD_ST_AdvancedMode_BladeOfHonor = 11033,
 
         [ParentCombo(PLD_ST_AdvancedMode)]
-        [CustomComboInfo("MP Reserve Feature", "Only use MP-consuming skills in Advanced Mode - ST when above set threshold.", PLD.JobID)]
+        [CustomComboInfo("MP Reservation Option", "Adds a minimum MP limit to Advanced Mode.\n- This is not recommended in most cases.\n- Player MP must remain at or above:", PLD.JobID, 13)]
         PLD_ST_AdvancedMode_MP_Reserve = 11035,
 
         // AoE Advanced Mode
@@ -2442,7 +2442,7 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode = 11015,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses on cooldown alongside Requiescat, if learned.\n- Target HP must be at or above:", PLD.JobID, 0)]
+        [CustomComboInfo("Fight or Flight Option", "Adds Fight or Flight to Advanced Mode.\n- Uses on cooldown alongside Requiescat.\n- Target HP must be at or above:", PLD.JobID, 0)]
         PLD_AoE_AdvancedMode_FoF = 11016,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
@@ -2454,23 +2454,27 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_CircleOfScorn = 11018,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Requiescat Option", "Adds Requiescat to Advanced Mode.\n- Uses after Fight or Flight.", PLD.JobID, 4)]
+        [CustomComboInfo("Requiescat Option", "Adds Requiescat to Advanced Mode.\n- Uses after Fight or Flight.", PLD.JobID, 5)]
         PLD_AoE_AdvancedMode_Requiescat = 11019,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Holy Circle Option", "Adds Holy Circle to Advanced Mode.\n- Uses only when under Divine Might or Requiescat.", PLD.JobID, 5)]
+        [CustomComboInfo("Intervene Option", "Adds Intervene to Advanced Mode.\n- Prefers to use during Fight or Flight.\n- Will not use during movement.\n- Amount of charges to keep:", PLD.JobID, 4)]
+        PLD_AoE_AdvancedMode_Intervene = 11037,
+
+        [ParentCombo(PLD_AoE_AdvancedMode)]
+        [CustomComboInfo("Holy Circle Option", "Adds Holy Circle to Advanced Mode.\n- Uses only when under Divine Might.", PLD.JobID, 6)]
         PLD_AoE_AdvancedMode_HolyCircle = 11020,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode.\n- Uses after Requiescat.", PLD.JobID, 6)]
+        [CustomComboInfo("Confiteor Option", "Adds Confiteor to Advanced Mode.\n- At lower levels, uses Holy Circle instead.", PLD.JobID, 7)]
         PLD_AoE_AdvancedMode_Confiteor = 11021,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Blade of Faith/Truth/Valor Option", "Adds Blade of Faith/Truth/Valor to Advanced Mode.\n- Uses after Confiteor.", PLD.JobID, 7)]
+        [CustomComboInfo("Blade Chain Option", "Adds Blade of Faith/Truth/Valor to Advanced Mode.\n- At lower levels, uses Holy Circle instead.", PLD.JobID, 8)]
         PLD_AoE_AdvancedMode_Blades = 11022,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode.\n- Uses after Blade of Valor.", PLD.JobID, 8)]
+        [CustomComboInfo("Blade of Honor Option", "Adds Blade of Honor to Advanced Mode.\n- Uses after Blade of Valor.", PLD.JobID, 9)]
         PLD_AoE_AdvancedMode_BladeOfHonor = 11034,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
@@ -2478,7 +2482,7 @@ namespace XIVSlothCombo.Combos
         PLD_AoE_AdvancedMode_Sheltron = 11023,
 
         [ParentCombo(PLD_AoE_AdvancedMode)]
-        [CustomComboInfo("MP Reserve Feature", "Only use MP-consuming skills in Advanced Mode - AoE when above set threshold.", PLD.JobID)]
+        [CustomComboInfo("MP Reservation Option", "Adds a minimum MP limit to Advanced Mode.\n- This is not recommended in most cases.\n- Player MP must remain at or above:", PLD.JobID, 10)]
         PLD_AoE_AdvancedMode_MP_Reserve = 11036,
 
         // Extra Features
@@ -2518,7 +2522,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Ultimatum Feature", "Uses Variant Ultimatum on cooldown as long as the target is within range.", PLD.JobID)]
         PLD_Variant_Ultimatum = 11032,
 
-        //// Last value = 11036
+        //// Last value = 11037
 
         #endregion
 
@@ -3787,7 +3791,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(VPR.SteelFangs)]
         [ConflictingCombos(VPR_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Steel Fangs with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID, -2)]
         VPR_ST_SimpleMode = 30000,
 
         #region Advanced ST Viper
@@ -3817,7 +3821,7 @@ namespace XIVSlothCombo.Combos
         VPR_ST_Vicewinder = 30006,
 
         [ParentCombo(VPR_ST_CDs)]
-        [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.", VPR.JobID)]
+        [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.\nWill automatically swap depending on your position.", VPR.JobID)]
         VPR_ST_VicewinderCombo = 30007,
 
         #endregion
@@ -3860,15 +3864,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Dynamic True North Option", "Adds True North when you are not in the correct position for the enhanced potency bonus.", VPR.JobID)]
         VPR_TrueNorthDynamic = 30098,
 
-        [ParentCombo(VPR_TrueNorthDynamic)]
-        [CustomComboInfo("Hold True North for Vicewinder", "Will hold the last charge of True North for use with Vicewinder, even when out of position for other Positionals.", VPR.JobID)]
-        VPR_TrueNorthDynamic_HoldCharge = 30099,
-
         #endregion
 
         [ReplaceSkill(VPR.SteelMaw)]
         [ConflictingCombos(VPR_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Steel Maw with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", VPR.JobID, -1)]
         VPR_AoE_SimpleMode = 30100,
 
         #region Advanced AoE Viper
@@ -3927,7 +3927,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ReplaceSkill(VPR.Vicewinder)]
-        [CustomComboInfo("Vicewinder - Coils", "Replaces Vicewinder with Hunter's/Swiftskin's Coils.", VPR.JobID)]
+        [CustomComboInfo("Vicewinder - Coils", "Replaces Vicewinder with Hunter's/Swiftskin's Coils.\nWill automatically swap depending on your position.", VPR.JobID)]
         VPR_VicewinderCoils = 30200,
 
         [ParentCombo(VPR_VicewinderCoils)]
@@ -3962,7 +3962,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(VPR_VicepitDens)]
         [CustomComboInfo("Include Twin Combo Actions", "Adds Twinfang and Twinblood to the button.", VPR.JobID)]
         VPR_VicepitDens_oGCDs = 30207,
-        
+
         #endregion
 
         #region WARRIOR
@@ -4803,6 +4803,15 @@ namespace XIVSlothCombo.Combos
 
         // Last value = 127001
 
+        #endregion
+
+        #region VIPER
+        [PvPCustomCombo]
+        [ReplaceSkill(VPRPvP.SteelFangs)]
+        [CustomComboInfo("Burst Mode", "Turns Dual Fang Combo into an all-in-one damage button.", VPRPvP.JobID)]
+        VPRPvP_Burst = 130000,
+
+        // Last value = 130000
         #endregion
 
         #region WARRIOR
