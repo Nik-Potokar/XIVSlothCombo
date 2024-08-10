@@ -488,7 +488,7 @@ namespace XIVSlothCombo.Combos
 
         [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
         [ReplaceSkill(BLU.FeatherRain)]
-        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance.\nWill cause primals to desync from Moon Flute burst phases if used on CD.", BLU.JobID, 5)]
+        [CustomComboInfo("Primal Feature", "Turns Feather Rain into Shock Strike, Rose of Destruction, and Glass Dance.\nWill cause primals to desync from Moon Flute burst phases if used on cooldown.", BLU.JobID, 5)]
         BLU_PrimalCombo = 70008,
 
         [BlueInactive(BLU.FeatherRain, BLU.ShockStrike, BLU.RoseOfDestruction, BLU.GlassDance)]
@@ -1333,7 +1333,7 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region CDs AoE
+        #region cooldowns AoE
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
         [CustomComboInfo("Cooldowns Option", "Adds various cooldowns to the rotation.", DRG.JobID)]
@@ -1572,7 +1572,7 @@ namespace XIVSlothCombo.Combos
         GNB_BS_DoubleDown = 7403,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Reign combo on Burst Strike Feature", "Adds Reign combo to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on CD.", GNB.JobID)]
+        [CustomComboInfo("Reign combo on Burst Strike Feature", "Adds Reign combo to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on cooldown.", GNB.JobID)]
         GNB_BS_Reign = 7404,
         #endregion
 
@@ -3181,7 +3181,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Shinten Option", "Adds Shinten to the rotation", SAM.JobID)]
         SAM_ST_Shinten = 15008,
 
-        #region CDs on Main Combo
+        #region cooldowns on Main Combo
 
         [ParentCombo(SAM_ST_AdvancedMode)]
         [CustomComboInfo("CDs on Main Combo", "Collection of CD features on main combo.", SAM.JobID)]
