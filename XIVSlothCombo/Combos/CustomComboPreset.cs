@@ -1835,65 +1835,66 @@ namespace XIVSlothCombo.Combos
         #region MONK
 
         [ReplaceSkill([MNK.ArmOfTheDestroyer])]
-        [CustomComboInfo("AOE Rotation", "Basic Monk AOE Combo on one button", MNK.JobID)]
-        MNK_AOE_BasicMode = 9003,
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
+        MNK_AOE_SimpleMode = 9003,
 
-        [ParentCombo(MNK_AOE_BasicMode)]
-        [CustomComboInfo("Use Cooldowns Option", "Use large cooldowns during AOE rotation", MNK.JobID)]
-        MNK_BasicAOECombo_UseCooldowns = 9004,
+        [ReplaceSkill([MNK.Bootshine])]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one - button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
+        [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_AdvancedMode)]
+        MNK_ST_SimpleMode = 9004,
 
         #region Monk Advanced ST
         [ReplaceSkill([MNK.Bootshine])]
-        [CustomComboInfo("Custom ST Rotation", "Advanced Monk Combo on one button", MNK.JobID)]
-        [ConflictingCombos(MNK_ST_BallHandlers)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
+        [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_SimpleMode)]
         MNK_ST_AdvancedMode = 9005,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use Opener", "Uses selected opener", MNK.JobID)]
+        [CustomComboInfo("Opener Option", "Uses selected opener", MNK.JobID)]
         MNK_STUseOpener = 9006,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use Meditation", "Uses Meditation when out of combat/range", MNK.JobID)]
+        [CustomComboInfo("Meditation Option", "Adds Meditation to the rotation", MNK.JobID)]
         MNK_STUseMeditation = 9007,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Buffs", "Use Buffs on cooldown", MNK.JobID)]
+        [CustomComboInfo("Buffs Option", "Adds selected buffs to the rotation", MNK.JobID)]
         MNK_STUseBuffs = 9008,
 
         [ParentCombo(MNK_STUseBuffs)]
-        [CustomComboInfo("Use Brotherhood", "Use Brotherhood", MNK.JobID)]
+        [CustomComboInfo("Brotherhood Option", "Adds Brotherhood to the rotation", MNK.JobID)]
         MNK_STUseBrotherhood = 9009,
 
         [ParentCombo(MNK_STUseBuffs)]
-        [CustomComboInfo("Use Riddle of Wind", "Use Riddle of Wind", MNK.JobID)]
+        [CustomComboInfo("Riddle of Wind Option", "Adds Riddle of Wind to the rotation", MNK.JobID)]
         MNK_STUseROW = 9010,
 
         [ParentCombo(MNK_STUseBuffs)]
-        [CustomComboInfo("Use Riddle of Fire", "Use Riddle of Fire", MNK.JobID)]
+        [CustomComboInfo("Riddle of Fire Option", "Adds Riddle of Fire to the rotation", MNK.JobID)]
         MNK_STUseROF = 9011,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use The Forbidden Chakra", "Use The Forbidden Chakra", MNK.JobID)]
+        [CustomComboInfo("The Forbidden Chakra Option", "Adds The Forbidden Chakra to the rotation", MNK.JobID)]
         MNK_STUseTheForbiddenChakra = 9012,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use Perfect Balance", "Use Perfect Balance and Masterful Blitz", MNK.JobID)]
+        [CustomComboInfo("Perfect Balance Option", "Adds Perfect Balance and Masterful Blitz to the rotation", MNK.JobID)]
         MNK_STUsePerfectBalance = 9013,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use True North", "Use True North dynamically when not in positional", MNK.JobID)]
+        [CustomComboInfo("True North Option", "Adds True North dynamically, when not in positional, to the rotation", MNK.JobID)]
         MNK_STUseTrueNorth = 9014,
 
         [ParentCombo(MNK_STUseROW)]
-        [CustomComboInfo("Use Wind's Reply", "Use Wind's Reply", MNK.JobID)]
+        [CustomComboInfo("Wind's Reply Option", "Adds Wind's Reply to the rotation", MNK.JobID)]
         MNK_STUseWindsReply = 9015,
 
         [ParentCombo(MNK_STUseROF)]
-        [CustomComboInfo("Use Fire's Reply", "Use Fire's Reply", MNK.JobID)]
+        [CustomComboInfo("Fire's Reply Option", "Adds Fire's Reply to the rotation", MNK.JobID)]
         MNK_STUseFiresReply = 9016,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Use Form Shift", "Uses Form Shift", MNK.JobID)]
+        [CustomComboInfo("Form Shift Option", "Adds Form Shift to the rotation", MNK.JobID)]
         MNK_STUseFormShift = 9017,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
@@ -1902,24 +1903,24 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        [ConflictingCombos(MNK_ST_AdvancedMode)]
-        [CustomComboInfo("Ball Handlers", "Replace core rotation skills with single button, depending on current balls.", MNK.JobID)]
-        MNK_ST_BallHandlers = 9019,
+        [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_SimpleMode)]
+        [CustomComboInfo("Beast Chakra Handlers", "Replace core rotation skills with single button, depending on current chakras.", MNK.JobID)]
+        MNK_ST_BeastChakras = 9019,
 
         [ReplaceSkill(MNK.Bootshine)]
-        [CustomComboInfo("Opo-opo", "Replace Bootshine/Leaping Opo with Dragon Kick.", MNK.JobID)]
-        [ParentCombo(MNK_ST_BallHandlers)]
-        MNK_BALLS_OPOOPO = 9020,
+        [CustomComboInfo("Opo-opo Option", "Replace Bootshine/Leaping Opo with Dragon Kick.", MNK.JobID)]
+        [ParentCombo(MNK_ST_BeastChakras)]
+        MNK_BC_OPOOPO = 9020,
 
         [ReplaceSkill(MNK.TrueStrike)]
-        [CustomComboInfo("Raptor", "Replace True Strike/Rising Raptor with Twin Snakes.", MNK.JobID)]
-        [ParentCombo(MNK_ST_BallHandlers)]
-        MNK_BALLS_RAPTOR = 9021,
+        [CustomComboInfo("Raptor Option", "Replace True Strike/Rising Raptor with Twin Snakes.", MNK.JobID)]
+        [ParentCombo(MNK_ST_BeastChakras)]
+        MNK_BC_RAPTOR = 9021,
 
         [ReplaceSkill(MNK.SnapPunch)]
-        [CustomComboInfo("Coeurl", "Replace Snap Punch/Pouncing Coeurl with Demolish.", MNK.JobID)]
-        [ParentCombo(MNK_ST_BallHandlers)]
-        MNK_BALLS_COEURL = 9022,
+        [CustomComboInfo("Coeurl Option", "Replace Snap Punch/Pouncing Coeurl with Demolish.", MNK.JobID)]
+        [ParentCombo(MNK_ST_BeastChakras)]
+        MNK_BC_COEURL = 9022,
 
         [ReplaceSkill(MNK.PerfectBalance)]
         [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID)]
