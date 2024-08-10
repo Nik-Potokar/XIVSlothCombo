@@ -1495,18 +1495,21 @@ namespace XIVSlothCombo.Combos
         #region GUNBREAKER
 
         #region Simple ST
+        [ConflictingCombos(GNB_ST_Advanced, GNB_NoMercy_Cooldowns)]
         [ReplaceSkill(GNB.KeenEdge)]
         [CustomComboInfo("Simple Mode - Single Target", "Replace Keen Edge with its combo chain.\n This is the ideal selection for newcomers to the job.", GNB.JobID)]
         GNB_ST_Simple = 7001,
         #endregion
 
         #region Simple AOE
-        [ReplaceSkill(GNB.KeenEdge)]
+        [ConflictingCombos(GNB_AoE_Advanced, GNB_NoMercy_Cooldowns)]
+        [ReplaceSkill(GNB.DemonSlice)]
         [CustomComboInfo("Simple Mode - AoE", "Replace Demon Slice with its combo chain.\n This is the ideal selection for newcomers to the job.", GNB.JobID)]
         GNB_AoE_Simple = 7002,
         #endregion
 
         #region Advanced ST
+        [ConflictingCombos(GNB_ST_Simple)]
         [ReplaceSkill(GNB.KeenEdge)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replace Keen Edge with its combo chain.\n Uses Burst Strike when you have 3 cartridges & your last combo action was Brutal Shell.", GNB.JobID)]
         GNB_ST_Advanced = 7003,
@@ -1569,6 +1572,7 @@ namespace XIVSlothCombo.Combos
         #endregion 
 
         #region Advanced AoE
+        [ConflictingCombos(GNB_AoE_Simple)]
         [ReplaceSkill(GNB.DemonSlice)]
         [CustomComboInfo("Advanced Mode - AoE", "Replace Demon Slice with its combo chain.", GNB.JobID)]
         GNB_AoE_Advanced = 7200,
@@ -1595,7 +1599,7 @@ namespace XIVSlothCombo.Combos
         GNB_AOE_SonicBreak = 7205,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Double Down AoE Option", "Adds Double Down to the AoE combo when it's available and you have 2 or more cartrdiges.", GNB.JobID)]
+        [CustomComboInfo("Double Down AoE Option", "Adds Double Down to the AoE combo when it's available and you have 2 or more cartridges.", GNB.JobID)]
         GNB_AoE_DoubleDown = 7206,
 
         [ParentCombo(GNB_AoE_Advanced)]
@@ -1652,24 +1656,24 @@ namespace XIVSlothCombo.Combos
         GNB_BS = 7400,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Burst Strike Continuation Feature", "Adds Hypervelocity on Burst Strike.", GNB.JobID)]
+        [CustomComboInfo("Hypervelocity Option", "Adds Continuation (Hypervelocity) to Burst Strike.", GNB.JobID)]
         GNB_BS_Continuation = 7401,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Burst Strike to Bloodfest Feature", "Replace Burst Strike with Bloodfest if you have no powder gauge.", GNB.JobID)]
+        [CustomComboInfo("Bloodfest Option", "Replace Burst Strike with Bloodfest if under No Mercy & you have 0 cartridges.", GNB.JobID)]
         GNB_BS_Bloodfest = 7402,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Double Down on Burst Strike Feature", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to Burst Strike when under No Mercy and ammo is above 2.", GNB.JobID)]
         GNB_BS_DoubleDown = 7403,
 
         [ParentCombo(GNB_BS)]
-        [CustomComboInfo("Reign combo on Burst Strike Feature", "Adds Reign/Noble/Lionheart to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on cooldown.", GNB.JobID)]
+        [CustomComboInfo("Reign Combo Option", "Adds Reign/Noble/Lionheart to Burst Strike when under No Mercy and when Double Down & Gnashing Fang are on cooldown.", GNB.JobID)]
         GNB_BS_Reign = 7404,
         #endregion
 
         #region No Mercy
-        [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy)]
+        [ConflictingCombos(GNB_ST_NoMercy, GNB_AoE_NoMercy, GNB_ST_Simple, GNB_AoE_Simple)]
         [ReplaceSkill(GNB.NoMercy)]
         [CustomComboInfo("No Mercy Features", "Collection of No Mercy related features.", GNB.JobID)]
         GNB_NoMercy_Cooldowns = 7500,
@@ -1689,15 +1693,15 @@ namespace XIVSlothCombo.Combos
         GNB_FC = 7600,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Fated Circle Continuation Feature", "Adds Continuation on Fated Circle.", GNB.JobID)]
+        [CustomComboInfo("Fated Brand Option", "Adds Continuation (Fated Brand) on Fated Circle.", GNB.JobID)]
         GNB_FC_Continuation = 7601,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Fated Circle to Bloodfest Feature", "Replace Fated Circle with Bloodfest if you have no powder gauge.", GNB.JobID)]
+        [CustomComboInfo("Bloodfest Option", "Replace Fated Circle with Bloodfest when under No Mercy & you have 0 cartridges.", GNB.JobID)]
         GNB_FC_Bloodfest = 7602,
 
         [ParentCombo(GNB_FC)]
-        [CustomComboInfo("Double Down on Fated Circle Feature", "Adds Double Down to Fated Circle when under No Mercy and ammo is above 2.", GNB.JobID)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to Fated Circle when under No Mercy and ammo is above 2.", GNB.JobID)]
         GNB_FC_DoubleDown = 7603,
         #endregion
 
