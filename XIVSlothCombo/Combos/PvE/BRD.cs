@@ -459,11 +459,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
-                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)) &&
-                            ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5)))
+                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
-                        if (sidewinderReady && ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5) || !IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs)))
+                        if (sidewinderReady)
                         {
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
                             {
@@ -768,11 +767,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
-                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)) &&
-                            ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5)))
+                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
-                        if (sidewinderReady && ((!openerFinished && IsOnCooldown(RagingStrikes)) || (openerFinished && battleVoiceCD >= 3.5) || !IsEnabled(CustomComboPreset.BRD_Simple_Buffs)))
+                        if (sidewinderReady)
                         {
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
                             {

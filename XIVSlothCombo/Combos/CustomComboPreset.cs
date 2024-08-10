@@ -715,7 +715,7 @@ namespace XIVSlothCombo.Combos
         //BardSimpleOpener = 3022,
 
         [ParentCombo(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Simple Pooling Option", "Pools Bloodletter charges to allow for optimum burst phases.", BRD.JobID)]
+        [CustomComboInfo("Simple Pooling Option", "Pools Bloodletter charges to allow for optimum burst phases, will also keep sidewinder in the buff window during wanderers.", BRD.JobID)]
         BRD_Simple_Pooling = 3023,
 
         [ConflictingCombos(BRD_ST_SimpleMode)]
