@@ -3117,235 +3117,274 @@ namespace XIVSlothCombo.Combos
 
         #region SAMURAI
 
-        #region Overcap Features
-        [ReplaceSkill(SAM.Kasha, SAM.Gekko, SAM.Yukikaze)]
-        [CustomComboInfo("Samurai Overcap Feature", "Adds Shinten onto main combo when Kenki is at the selected amount or more", SAM.JobID)]
-        SAM_ST_Overcap = 15001,
-
-        [ReplaceSkill(SAM.Mangetsu, SAM.Oka)]
-        [CustomComboInfo("Samurai AoE Overcap Feature", "Adds Kyuten onto main AoE combos when Kenki is at the selected amount or more", SAM.JobID)]
-        SAM_AoE_Overcap = 15002,
-        #endregion
-
-        #region Main Combo (Gekko) Features
-        [ReplaceSkill(SAM.Gekko)]
-        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.\nIf all sub options are selected will turn into a full one button rotation (Advanced Samurai)", SAM.JobID)]
-        SAM_ST_GekkoCombo = 15003,
-
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("Enpi Uptime Feature", "Replace main combo with Enpi when you are out of range.", SAM.JobID)]
-        SAM_ST_GekkoCombo_RangedUptime = 15004,
-
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("Yukikaze Combo on Main Combo", "Adds Yukikaze combo to main combo. Will add Yukikaze during Meikyo Shisui as well", SAM.JobID)]
-        SAM_ST_GekkoCombo_Yukikaze = 15005,
-
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("Kasha Combo on Main Combo", "Adds Kasha combo to main combo. Will add Kasha during Meikyo Shisui as well.", SAM.JobID)]
-        SAM_ST_GekkoCombo_Kasha = 15006,
-
-        [ConflictingCombos(SAM_GyotenYaten)]
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("Level 90 Samurai Opener", "Adds the Level 90 Opener to the main combo.\nOpener triggered by using Meikyo Shisui before combat. If you have any Sen, Hagakure will be used to clear them.\nWill work at any levels of Kenki, requires 2 charges of Meikyo Shisui and all CDs ready. If conditions aren't met it will skip into the regular rotation. \nIf the Opener is interrupted, it will exit the opener via a Goken and a Kaeshi: Goken at the end or via the last Yukikaze. If the latter, CDs will be used on cooldown regardless of burst options.", SAM.JobID)]
-        SAM_ST_GekkoCombo_Opener = 15007,
-
-        [ConflictingCombos(SAM_GyotenYaten)]
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("Filler Combo Feature", "Adds selected Filler combos to main combo at the appropriate time.\nChoose Skill Speed tier with Fuka buff below.\nWill disable if you die or if you don't activate the opener.", SAM.JobID)]
-        SAM_ST_GekkoCombo_FillerCombos = 15008,
-
-        #region CDs on Main Combo
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("CDs on Main Combo", "Collection of CD features on main combo.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs = 15099,
-
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Ikishoten on Main Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_Ikishoten = 15009,
-
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Iaijutsu on Main Combo", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when ready and when you're not moving to main combo.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_Iaijutsu = 15010,
-
-        #region Ogi Namikiri on Main Combo
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Ogi Namikiri on Main Combo", "Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to main combo.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_OgiNamikiri = 15011,
-
-        [ParentCombo(SAM_ST_GekkoCombo_CDs_OgiNamikiri)]
-        [CustomComboInfo("Ogi Namikiri Burst Feature", "Saves Ogi Namikiri for even minute burst windows.\nIf you don't activate the opener or die, Ogi Namikiri will instead be used on CD.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_OgiNamikiri_Burst = 15012,
-        #endregion
-
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Meikyo Shisui on Main Combo", "Adds Meikyo Shisui to main combo when off cooldown.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_MeikyoShisui = 15013,
-
-        #region Meikyo Shisui on Main Combo
-        [ParentCombo(SAM_ST_GekkoCombo_CDs_MeikyoShisui)]
-        [CustomComboInfo("Meikyo Shisui Burst Feature", "Saves Meikyo Shisui for burst windows.\nIf you don't activate the opener or die, Meikyo Shisui will instead be used on CD.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_MeikyoShisui_Burst = 15014,
-        #endregion
-
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Shoha on Main Combo", "Adds Shoha to main combo when there are three meditation stacks.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_Shoha = 15015,
-
-        [ConflictingCombos(SAM_Shinten_Shoha_Senei)]
-        [ParentCombo(SAM_ST_GekkoCombo_CDs)]
-        [CustomComboInfo("Senei on Main Combo", "Adds Senei to main combo when off cooldown and above 25 Kenki.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_Senei = 15016,
-
-        [ParentCombo(SAM_ST_GekkoCombo_CDs_Senei)]
-        [CustomComboInfo("Senei Burst Feature", "Saves Senei for even minute burst windows.\nIf you don't activate the opener or die, Senei will instead be used on CD.", SAM.JobID)]
-        SAM_ST_GekkoCombo_CDs_Senei_Burst = 15017,
-
-        [ParentCombo(SAM_ST_Overcap)]
-        [CustomComboInfo("Execute Feature", "Adds Shinten to the main combo when Kenki > 25 and your current target is below the HP percentage threshold.", SAM.JobID)]
-        SAM_ST_Execute = 15046,
-        #endregion
-
-        #endregion
-
         #region Yukikaze/Kasha Combos
+
         [ReplaceSkill(SAM.Yukikaze)]
+        [ConflictingCombos(SAM_ST_Yukikaze)]
         [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID)]
-        SAM_ST_YukikazeCombo = 15018,
+        SAM_ST_YukikazeCombo = 15000,
 
         [ReplaceSkill(SAM.Kasha)]
+        [ConflictingCombos(SAM_ST_Kasha)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID)]
-        SAM_ST_KashaCombo = 15019,
+        SAM_ST_KashaCombo = 15001,
         #endregion
 
-        #region AoE Combos
-        [ReplaceSkill(SAM.Mangetsu)]
-        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.\nIf all sub options are toggled will turn into a full one button AoE rotation.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo = 15020,
+        #region  Simple ST
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [ConflictingCombos(SAM_AoE_OkaCombo_TwoTarget)]
-        [CustomComboInfo("Oka to Mangetsu Combo", "Adds Oka combo after Mangetsu combo loop.\nWill add Oka if needed during Meikyo Shisui.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_Oka = 15021,
+        [ReplaceSkill(SAM.Gekko)]
+        [ConflictingCombos(SAM_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Gekko with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
+        SAM_ST_SimpleMode = 15002,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Iaijutsu on Mangetsu Combo", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to Mangetsu combo.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_TenkaGoken = 15022,
+        #endregion
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Ogi Namikiri on Mangetsu Combo", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to Mangetsu combo.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_OgiNamikiri = 15023,
+        #region Advanced ST
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Shoha 2 on Mangetsu Combo", "Adds Shoha 2 when you have 3 meditation stacks to Mangetsu combo.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_Shoha2 = 15024,
+        [ReplaceSkill(SAM.Gekko)]
+        [ConflictingCombos(SAM_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Gekko with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", SAM.JobID)]
+        SAM_ST_AdvancedMode = 15003,
 
-        [ConflictingCombos(SAM_Kyuten_Shoha2_Guren)]
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Guren on Mangetsu Combo", "Adds Guren when it's off cooldown and you have 25 Kenki to Mangetsu combo.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_Guren = 15025,
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [ConflictingCombos(SAM_ST_YukikazeCombo)]
+        [CustomComboInfo("Yukikaze Combo", "Adds Yukikaze combo to the rotation.", SAM.JobID)]
+        SAM_ST_Yukikaze = 15004,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Meikyo Shisui on Mangetsu Combo", "Adds Meikyo Shisui to Mangetsu combo.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_MeikyoShisui = 15039,
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [ConflictingCombos(SAM_ST_KashaCombo)]
+        [CustomComboInfo("Kasha Combo", "Adds Kasha combo to the rotation.", SAM.JobID)]
+        SAM_ST_Kasha = 15005,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Ikishoten on Mangetsu Combo", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
-        SAM_AOE_GekkoCombo_CDs_Ikishoten = 15040,
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [ConflictingCombos(SAM_GyotenYaten)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", SAM.JobID)]
+        SAM_ST_Opener = 15006,
 
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Hagakure on Mangetsu Combo", "Adds Hagakure to Mangetsu combo when there are three Sen.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo_Hagakure = 15041,
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [CustomComboInfo("Shinten Option", "Adds Shinten to the rotation", SAM.JobID)]
+        SAM_ST_Shinten = 15008,
+
+        #region CDs on Main Combo
+
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [CustomComboInfo("CDs on Main Combo", "Collection of CD features on main combo.", SAM.JobID)]
+        SAM_ST_CDs = 15011,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Ikishoten Option", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
+        SAM_ST_CDs_Ikishoten = 15012,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Iaijutsu Option", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_Iaijutsu = 15013,
+
+        [ParentCombo(SAM_ST_CDs_Iaijutsu)]
+        [CustomComboInfo("Iajutsu movement Option", "Adds Midare: Setsugekka, Higanbana, and Kaeshi: Setsugekka when you're not moving.", SAM.JobID)]
+        SAM_ST_CDs_Iaijutsu_Movement = 15014,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Ogi Namikiri Option", "Adds Ogi Namikiri and Kaeshi: Namikiri to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_OgiNamikiri = 15015,
+
+        [ParentCombo(SAM_ST_CDs_OgiNamikiri)]
+        [CustomComboInfo("Ogi Namikiri movement Option", "Adds Ogi Namikiri and Kaeshi: Namikiri when you're not moving.", SAM.JobID)]
+        SAM_ST_CDs_OgiNamikiri_Movement = 15016,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Zanshin Option", "Adds Zanshin when ready to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_Zanshin = 15017,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Meikyo Shisui Option", "Adds Meikyo Shisui to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_MeikyoShisui = 15018,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [CustomComboInfo("Shoha Option", "Adds Shoha when you have three meditation stacks.", SAM.JobID)]
+        SAM_ST_CDs_Shoha = 15019,
+
+        [ParentCombo(SAM_ST_CDs)]
+        [ConflictingCombos(SAM_Shinten_Shoha_Senei)]
+        [CustomComboInfo("Senei Option", "Adds Senei to the rotation.", SAM.JobID)]
+        SAM_ST_CDs_Senei = 15020,
+
+        #endregion
+
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [CustomComboInfo("Ranged Uptime Feature", "Adds Enpi to the rotation when you are out of range.", SAM.JobID)]
+        SAM_ST_RangedUptime = 15097,
+
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID)]
+        SAM_ST_ComboHeals = 15098,
+
+        [ParentCombo(SAM_ST_AdvancedMode)]
+        [CustomComboInfo("True North Feature", "Adds True North if Meikyo Shisui's buff is on you.", SAM.JobID)]
+        SAM_ST_TrueNorth = 15099,
+
+
+        #endregion
+
+        #region AoE Oka Combo
 
         [ReplaceSkill(SAM.Oka)]
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID)]
-        SAM_AoE_OkaCombo = 15026,
+        SAM_AoE_OkaCombo = 15100,
 
         [ParentCombo(SAM_AoE_OkaCombo)]
-        [ConflictingCombos(SAM_AoE_MangetsuCombo_Oka)]
+        [ConflictingCombos(SAM_AoE_Oka)]
         [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze combo, Mangetsu combo, Senei, Shinten, and Shoha to Oka combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID)]
-        SAM_AoE_OkaCombo_TwoTarget = 150261,
+        SAM_AoE_OkaCombo_TwoTarget = 15101,
+
+        #endregion
+
+        #region Simple AoE
+
+        [ReplaceSkill(SAM.Fuga, SAM.Fuko)]
+        [ConflictingCombos(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Fugo/Fuko with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
+        SAM_AoE_SimpleMode = 15102,
+
+        #endregion
+
+        #region AoE Combos
+
+        [ReplaceSkill(SAM.Fuga, SAM.Fuko)]
+        [ConflictingCombos(SAM_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Fuga/Fuko with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", SAM.JobID)]
+        SAM_AoE_AdvancedMode = 15103,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [ConflictingCombos(SAM_AoE_OkaCombo_TwoTarget)]
+        [CustomComboInfo("Oka Combo", "Adds Oka combo to the rotation.", SAM.JobID)]
+        SAM_AoE_Oka = 15104,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Kyuten", "Adds Kyuten to the rotation.", SAM.JobID)]
+        SAM_AoE_Kyuten = 15105,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Iaijutsu", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to the rotation.", SAM.JobID)]
+        SAM_AoE_TenkaGoken = 15107,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Ikishoten", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
+        SAM_AOE_CDs_Ikishoten = 15108,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Ogi Namikiri", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to the rotation.", SAM.JobID)]
+        SAM_AoE_OgiNamikiri = 15109,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Zanshin", "Adds Zanshin to the rotation.", SAM.JobID)]
+        SAM_AoE_Zanshin = 15110,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Shoha", "Adds Shoha when you have 3 meditation stacks.", SAM.JobID)]
+        SAM_AoE_Shoha = 15111,
+
+        [ConflictingCombos(SAM_Kyuten_Shoha_Guren)]
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Guren", "Adds Guren to the rotation.", SAM.JobID)]
+        SAM_AoE_Guren = 15112,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Hagakure", "Adds Hagakure to the rotation when there are three Sen.", SAM.JobID)]
+        SAM_AoE_Hagakure = 15113,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Meikyo Shisui", "Adds Meikyo Shisui to the rotation.", SAM.JobID)]
+        SAM_AoE_MeikyoShisui = 15114,
+
+        [ParentCombo(SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID)]
+        SAM_AoE_ComboHeals = 15199,
+
+
         #endregion
 
         #region Cooldown Features
+
         [ReplaceSkill(SAM.MeikyoShisui)]
         [CustomComboInfo("Jinpu/Shifu Feature", "Replace Meikyo Shisui with Jinpu, Shifu, and Yukikaze depending on what is needed.", SAM.JobID)]
-        SAM_JinpuShifu = 15027,
+        SAM_JinpuShifu = 15200,
+
         #endregion
 
         #region Iaijutsu Features
+
         [ReplaceSkill(SAM.Iaijutsu)]
         [CustomComboInfo("Iaijutsu Features", "Collection of Iaijutsu Features.", SAM.JobID)]
-        SAM_Iaijutsu = 15028,
+        SAM_Iaijutsu = 15201,
 
         [ParentCombo(SAM_Iaijutsu)]
         [CustomComboInfo("Iaijutsu to Tsubame-Gaeshi", "Replace Iaijutsu with  Tsubame-gaeshi when Sen is empty.", SAM.JobID)]
-        SAM_Iaijutsu_TsubameGaeshi = 15029,
+        SAM_Iaijutsu_TsubameGaeshi = 15202,
 
         [ParentCombo(SAM_Iaijutsu)]
         [CustomComboInfo("Iaijutsu to Shoha", "Replace Iaijutsu with Shoha when meditation is 3.", SAM.JobID)]
-        SAM_Iaijutsu_Shoha = 15030,
+        SAM_Iaijutsu_Shoha = 15203,
 
         [ParentCombo(SAM_Iaijutsu)]
         [CustomComboInfo("Iaijutsu to Ogi Namikiri", "Replace Iaijutsu with Ogi Namikiri and Kaeshi: Namikiri when buffed with Ogi Namikiri Ready.", SAM.JobID)]
-        SAM_Iaijutsu_OgiNamikiri = 15031,
+        SAM_Iaijutsu_OgiNamikiri = 15204,
+
         #endregion
 
         #region Shinten Features
+
         [ReplaceSkill(SAM.Shinten)]
         [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID)]
-        SAM_Shinten_Shoha = 15032,
+        SAM_Shinten_Shoha = 15205,
 
-        [ConflictingCombos(SAM_ST_GekkoCombo_CDs_Senei)]
+        [ConflictingCombos(SAM_ST_CDs_Senei)]
         [ParentCombo(SAM_Shinten_Shoha)]
         [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID)]
-        SAM_Shinten_Shoha_Senei = 15033,
+        SAM_Shinten_Shoha_Senei = 15206,
+
         #endregion
 
         #region Kyuten Features
-        [ReplaceSkill(SAM.Kyuten)]
-        [CustomComboInfo("Kyuten to Shoha II", "Replace Hissatsu: Kyuten with Shoha II when Meditation is full.", SAM.JobID)]
-        SAM_Kyuten_Shoha2 = 15034,
 
-        [ConflictingCombos(SAM_AoE_MangetsuCombo_Guren)]
-        [ParentCombo(SAM_Kyuten_Shoha2)]
+        [ReplaceSkill(SAM.Kyuten)]
+        [CustomComboInfo("Kyuten to Shoha", "Replace Hissatsu: Kyuten with Shoha when Meditation is full.", SAM.JobID)]
+        SAM_Kyuten_Shoha = 15207,
+
+        [ConflictingCombos(SAM_AoE_Guren)]
+        [ParentCombo(SAM_Kyuten_Shoha)]
         [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID)]
-        SAM_Kyuten_Shoha2_Guren = 15035,
+        SAM_Kyuten_Shoha_Guren = 15208,
+
         #endregion
 
         #region Other
-        [ConflictingCombos(SAM_ST_GekkoCombo_Opener, SAM_ST_GekkoCombo_FillerCombos)]
+
+        [ConflictingCombos(SAM_ST_Opener)]
         [ReplaceSkill(SAM.Gyoten)]
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID)]
-        SAM_GyotenYaten = 15036,
+        SAM_GyotenYaten = 15209,
 
         [ReplaceSkill(SAM.Ikishoten)]
         [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID)]
-        SAM_Ikishoten_OgiNamikiri = 15037,
+        SAM_Ikishoten_OgiNamikiri = 15210,
 
-        [ReplaceSkill(SAM.Gekko, SAM.Yukikaze, SAM.Kasha)]
-        [CustomComboInfo("True North Feature", "Adds True North on all single target combos if Meikyo Shisui's buff is on you.", SAM.JobID)]
-        SAM_TrueNorth = 15038,
-
-        [ParentCombo(SAM_ST_GekkoCombo)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID)]
-        SAM_ST_ComboHeals = 15043,
-
-        [ParentCombo(SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID)]
-        SAM_AoE_ComboHeals = 15045,
-
-        [Variant]
-        [VariantParent(SAM_ST_GekkoCombo, SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SAM.JobID)]
-        SAM_Variant_Cure = 15047,
-
-        [Variant]
-        [VariantParent(SAM_ST_GekkoCombo, SAM_AoE_MangetsuCombo)]
-        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
-        SAM_Variant_Rampart = 15048,
         #endregion
 
-        // Last value = 15048
+        #region variant 
+
+        [Variant]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", SAM.JobID)]
+        SAM_Variant_Cure = 15300,
+
+        [Variant]
+        [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", SAM.JobID)]
+        SAM_Variant_Rampart = 15301,
+
+        #endregion
+
+        // Last value = 15050
 
         #endregion
 
