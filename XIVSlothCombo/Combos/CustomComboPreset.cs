@@ -1904,7 +1904,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_SimpleMode)]
-        [CustomComboInfo("Beast Chakra Handlers", "Replace core rotation skills with single button, depending on current chakras.", MNK.JobID)]
+        [CustomComboInfo("Beast Chakra Handlers", "Merge single target GCDs which share the same beast chakra", MNK.JobID)]
         MNK_ST_BeastChakras = 9019,
 
         [ReplaceSkill(MNK.Bootshine)]
