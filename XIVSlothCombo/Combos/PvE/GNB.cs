@@ -227,7 +227,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Sonic Break 
-                    if (HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToBreak))
+                    if (JustUsed(NoMercy, 20f) || (HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToBreak)))
                     {
                         // Lv100
                         if (LevelChecked(ReignOfBeasts))
@@ -471,7 +471,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Sonic Break 
-                    if (IsEnabled(CustomComboPreset.GNB_GF_SonicBreak) && HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToBreak))
+                    if (IsEnabled(CustomComboPreset.GNB_GF_SonicBreak) && (JustUsed(NoMercy) || (HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToBreak))))
                     {
                         // Lv100
                         if (LevelChecked(ReignOfBeasts))
