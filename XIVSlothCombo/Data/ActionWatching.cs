@@ -33,6 +33,8 @@ namespace XIVSlothCombo.Data
 
         private static readonly Dictionary<string, List<uint>> statusCache = [];
 
+        internal static readonly Dictionary<uint, long> ChargeTimestamps = [];
+
         internal readonly static List<uint> CombatActions = [];
 
         private delegate void ReceiveActionEffectDelegate(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
@@ -42,7 +44,7 @@ namespace XIVSlothCombo.Data
             if (!CustomComboFunctions.InCombat()) CombatActions.Clear();
             ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
             ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
-
+            
             if (ActionType is 13 or 2) return;
             if (header.ActionId != 7 &&
                 header.ActionId != 8 &&
@@ -87,6 +89,9 @@ namespace XIVSlothCombo.Data
         {
             try
             {
+                if (CustomComboFunctions.GetMaxCharges(actionId) > 0)
+                    ChargeTimestamps[actionId] = Environment.TickCount64;
+
                 CheckForChangedTarget(actionId, ref targetObjectId);
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
                 TimeLastActionUsed = DateTime.Now;
