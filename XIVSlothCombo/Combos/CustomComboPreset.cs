@@ -177,7 +177,7 @@ namespace XIVSlothCombo.Combos
 
         #region ST DPS
         [ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3)]
-        [CustomComboInfo("ST DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID)]
+        [CustomComboInfo("Single Target DPS Feature", "Replaces Malefic or Combust with options below", AST.JobID, 1)]
         AST_ST_DPS = 1004,
 
         [ParentCombo(AST_ST_DPS)]
@@ -213,14 +213,14 @@ namespace XIVSlothCombo.Combos
         AST_DPS_Oracle = 1015,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Opener Option lvl 100", "Use the Balance opener. Have a deck of cards pulled and umbral draw off cooldown. It WILL use a lightspeed charge", AST.JobID, 11, "", "")]
+        [CustomComboInfo("Level 100 Opener", "Use the Balance opener.", AST.JobID, 11, "", "")]
         AST_ST_DPS_Opener = 1040,
 
         #endregion
 
         #region AOE DPS
         [ReplaceSkill(AST.Gravity, AST.Gravity2)]
-        [CustomComboInfo("AOE DPS Feature", "Replaces Gravity with options below", AST.JobID)]
+        [CustomComboInfo("AoE DPS Feature", "Replaces Gravity with options below", AST.JobID, 2)]
         AST_AOE_DPS = 1041,    
 
         [ParentCombo(AST_AOE_DPS)]
@@ -255,7 +255,7 @@ namespace XIVSlothCombo.Combos
 
         #region Healing
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Benefic II with a one button healing replacement.", AST.JobID, 2)]
+        [CustomComboInfo("Simple Heals (Single Target)", "Replaces Benefic II with a one button healing replacement.", AST.JobID, 3)]
         AST_ST_SimpleHeals = 1023,
 
         [ParentCombo(AST_ST_SimpleHeals)]
@@ -295,7 +295,7 @@ namespace XIVSlothCombo.Combos
         AST_ST_SimpleHeals_Bole = 1050,
 
         [ReplaceSkill(AST.AspectedHelios)]
-        [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 3, "", "")]
+        [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 4)]
         AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
@@ -311,7 +311,7 @@ namespace XIVSlothCombo.Combos
         AST_AoE_SimpleHeals_Horoscope = 1026,
 
         [ReplaceSkill(AST.Benefic2)]
-        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 4, "", "")]
+        [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 7)]
         AST_Benefic = 1002,
 
         #endregion
@@ -319,7 +319,7 @@ namespace XIVSlothCombo.Combos
         #region Utility
         [ReplaceSkill(All.Swiftcast)]
         [ConflictingCombos(ALL_Healer_Raise)]
-        [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 5, "", "")]
+        [CustomComboInfo("Alternative Raise Feature", "Changes Swiftcast to Ascend", AST.JobID, 8)]
         AST_Raise_Alternative = 1003,
 
         [Variant]
@@ -335,7 +335,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region Cards
-        [CustomComboInfo("Quick Target Damage Cards", "When you play the Balance or Spear, this will automatically apply the buff to a party member. It will look at DPS that suit the card first, if none found or they have buffs already, will look at the other DPS instead.", AST.JobID)]
+        [CustomComboInfo("Quick Target Damage Cards", "When you play the Balance or Spear, this will automatically apply the buff to a party member. It will look at DPS that suit the card first, if none found or they have buffs already, will look at the other DPS instead.", AST.JobID, 5)]
         AST_Cards_QuickTargetCards = 1029,
 
         [ParentCombo(AST_Cards_QuickTargetCards)]
