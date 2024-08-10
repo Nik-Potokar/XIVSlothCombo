@@ -1394,6 +1394,10 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
+        [CustomComboInfo("Low lvl Disembowel", "Adds Disembowel combo to the rotation when you are (synched) below lvl 62.", DRG.JobID)]
+        DRG_AoE_Disembowel = 6297,
+
+        [ParentCombo(DRG_AOE_AdvancedMode)]
         [CustomComboInfo("Ranged Uptime Option", "Adds Piercing Talon to the rotation when you are out of melee range.", DRG.JobID)]
         DRG_AoE_RangedUptime = 6298,
 
