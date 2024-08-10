@@ -301,18 +301,15 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is RainOfDeath)
                 {
                     BRDGauge? gauge = GetJobGauge<BRDGauge>();
-                    bool songWanderer = gauge.Song == Song.WANDERER;
-                    bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
-                    bool bloodletterReady = LevelChecked(Bloodletter) && IsOffCooldown(Bloodletter);
-                    bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
+                    bool songWanderer = gauge.Song == Song.WANDERER;                    
 
                     if (LevelChecked(WanderersMinuet) && songWanderer && gauge.Repertoire == 3)
                         return OriginalHook(WanderersMinuet);
-                    if (empyrealReady)
+                    if (ActionReady(EmpyrealArrow))
                         return EmpyrealArrow;
-                    if (bloodletterReady)
+                    if (ActionReady(RainOfDeath))
                         return RainOfDeath;
-                    if (sidewinderReady)
+                    if (ActionReady(Sidewinder))
                         return Sidewinder;
                 }
 
@@ -360,8 +357,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             bool minuetReady = IsOffCooldown(WanderersMinuet);
                             bool balladReady = IsOffCooldown(MagesBallad);
-                            bool paeonReady = IsOffCooldown(ArmysPaeon);
-                            bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
+                            bool paeonReady = IsOffCooldown(ArmysPaeon);                            
 
                             if (canWeave)
                             {
@@ -391,7 +387,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (songTimerInSeconds <= 3 && paeonReady)
                                     {
                                         // Special case for Empyreal Arrow: it must be cast before you change to it to avoid drift!
-                                        if (empyrealReady)
+                                        if (ActionReady(EmpyrealArrow))
                                             return EmpyrealArrow;
                                         return ArmysPaeon;
                                     }
@@ -448,21 +444,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave)
                     {
-                        bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
-                        bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
                         float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
                         float empyrealCD = GetCooldownRemainingTime(EmpyrealArrow);
                         float ragingCD = GetCooldownRemainingTime(RagingStrikes);
                         float radiantCD = GetCooldownRemainingTime(RadiantFinale);
 
-                        if (empyrealReady && ((!openerFinished && IsOnCooldown(RagingStrikes) || (!openerFinished && JustUsed(WanderersMinuet)) || (openerFinished && battleVoiceCD >= 3.5) || !IsEnabled(CustomComboPreset.BRD_Simple_Buffs))))
+                        if (ActionReady(EmpyrealArrow))
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
                             (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
-                        if (sidewinderReady)
+                        if (ActionReady(Sidewinder))
                         {
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
                             {
@@ -553,11 +547,8 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songWanderer = gauge.Song == Song.WANDERER;
                     bool minuetReady = LevelChecked(WanderersMinuet) && IsOffCooldown(WanderersMinuet);
                     bool balladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
-                    bool paeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);
-                    bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
-                    bool bloodletterReady = LevelChecked(Bloodletter) && IsOffCooldown(Bloodletter);
-                    bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
-
+                    bool paeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);                    
+                    
                     if (IsEnabled(CustomComboPreset.BRD_oGCDSongs) &&
                         (gauge.SongTimer < 1 || songArmy))
                     {
@@ -570,12 +561,12 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (songWanderer && gauge.Repertoire == 3)
-                        return OriginalHook(WanderersMinuet);
-                    if (empyrealReady)
+                        return OriginalHook(PitchPerfect);
+                    if (ActionReady(EmpyrealArrow))
                         return EmpyrealArrow;
-                    if (bloodletterReady)
+                    if (ActionReady(Bloodletter))
                         return OriginalHook(Bloodletter);
-                    if (sidewinderReady)
+                    if (ActionReady(Sidewinder))
                         return Sidewinder;
                 }
 
@@ -641,10 +632,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         openerFinished = false;
                     }
-
-                    if (!IsEnabled(CustomComboPreset.BRD_Simple_NoWaste))
-                        openerFinished = true;
-
+                                        
                     if (IsEnabled(CustomComboPreset.BRD_Simple_Interrupt) && canInterrupt)
                         return All.HeadGraze;
 
@@ -668,9 +656,8 @@ namespace XIVSlothCombo.Combos.PvE
                             bool minuetReady = IsOffCooldown(WanderersMinuet);
                             bool balladReady = IsOffCooldown(MagesBallad);
                             bool paeonReady = IsOffCooldown(ArmysPaeon);
-                            bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
-
-                            if (empyrealReady && !openerFinished && JustUsed(WanderersMinuet))
+                            
+                            if (ActionReady(EmpyrealArrow) && JustUsed(WanderersMinuet))
                                 return EmpyrealArrow;
 
                             if (canWeave)
@@ -701,7 +688,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (songTimerInSeconds <= 3 && paeonReady)
                                     {
                                         // Special case for Empyreal Arrow: it must be cast before you change to it to avoid drift!
-                                        if (empyrealReady)
+                                        if (ActionReady(EmpyrealArrow))
                                             return EmpyrealArrow;
                                         return ArmysPaeon;
                                     }
@@ -756,21 +743,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (canWeave)
                     {
-                        bool empyrealReady = LevelChecked(EmpyrealArrow) && IsOffCooldown(EmpyrealArrow);
-                        bool sidewinderReady = LevelChecked(Sidewinder) && IsOffCooldown(Sidewinder);
                         float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
                         float empyrealCD = GetCooldownRemainingTime(EmpyrealArrow);
                         float ragingCD = GetCooldownRemainingTime(RagingStrikes);
                         float radiantCD = GetCooldownRemainingTime(RadiantFinale);
 
-                        if (empyrealReady && ((!openerFinished && IsOnCooldown(RagingStrikes) || (!openerFinished && JustUsed(WanderersMinuet)) || (openerFinished && battleVoiceCD >= 3.5) || !IsEnabled(CustomComboPreset.BRD_Simple_Buffs))))
+                        if (ActionReady(EmpyrealArrow))
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
                             (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
-                        if (sidewinderReady)
+                        if (ActionReady(Sidewinder))
                         {
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
                             {
@@ -788,7 +773,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
+                        if (ActionReady(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
@@ -985,7 +970,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return ArmysPaeon;
 
                 }
-
+                
                 return actionID;
             }
         }
