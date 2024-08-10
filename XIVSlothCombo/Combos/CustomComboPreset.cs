@@ -2810,12 +2810,8 @@ namespace XIVSlothCombo.Combos
         RDM_ST_DPS = 13000,
 
         [ParentCombo(RDM_ST_DPS)]
-        [CustomComboInfo("Balance Opener Option [Lv.90]", "Replaces Jolt with the Balance opener ending with Resolution.\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
+        [CustomComboInfo("Balance Opener Option", "Replaces Jolt with the Balance opener.\n**Must move into melee range before melee combo**", RDM.JobID, 110)]
         RDM_Balance_Opener = 13110,
-
-        [ParentCombo(RDM_Balance_Opener)]
-        [CustomComboInfo("Use Opener at any Mana Option", "Removes 0/0 Mana reqirement to reset opener\n**All other actions must be off cooldown**", RDM.JobID, 111)]
-        RDM_Balance_Opener_AnyMana = 13111,
 
         [ParentCombo(RDM_ST_DPS)]
         [CustomComboInfo("Verthunder/Veraero Option", "Replace Jolt with Verthunder and Veraero.", RDM.JobID, 210)]
