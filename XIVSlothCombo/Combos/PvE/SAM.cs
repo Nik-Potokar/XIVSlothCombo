@@ -71,7 +71,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Fuka = 1299,
                 Fugetsu = 1298,
                 KaeshiSetsugekkaReady = 4216,
-                TendoKaeshiSetsugekkaReady = 4128,
+                TendoKaeshiSetsugekkaReady = 4218,
                 KaeshiGokenReady = 3852,
                 TendoKaeshiGokenReady = 4217,
                 ZanshinReady = 3855,
