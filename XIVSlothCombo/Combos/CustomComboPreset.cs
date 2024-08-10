@@ -1394,7 +1394,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
-        [CustomComboInfo("Low lvl Disembowel", "Adds Disembowel combo to the rotation when you are (synched) below lvl 62.", DRG.JobID)]
+        [CustomComboInfo("Low Level Disembowel", "Adds Disembowel combo to the rotation when you are (synced) below level 62.", DRG.JobID)]
         DRG_AoE_Disembowel = 6297,
 
         [ParentCombo(DRG_AOE_AdvancedMode)]
