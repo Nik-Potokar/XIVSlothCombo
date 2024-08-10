@@ -481,7 +481,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
+                        if (LevelChecked(RainOfDeath) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint rainOfDeathCharges = GetRemainingCharges(RainOfDeath);
 
@@ -790,7 +790,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
+                        if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
