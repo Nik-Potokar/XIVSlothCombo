@@ -396,7 +396,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeaveDelayed && ActionReady(RadiantFinale) &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
-                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
+                           && (battleVoiceCD < 3 || ActionReady(BattleVoice)) && (ragingCD < 3 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
 
                         if (canWeaveBuffs && ActionReady(BattleVoice) && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
@@ -698,7 +698,7 @@ namespace XIVSlothCombo.Combos.PvE
                                                 
                         if (canWeaveDelayed && IsEnabled(CustomComboPreset.BRD_Adv_BuffsRadiant) && radiantReady &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
-                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
+                           && (battleVoiceCD < 3 || ActionReady(BattleVoice)) && (ragingCD < 3 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
                                                
                         if (canWeaveBuffs && battleVoiceReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
@@ -1022,7 +1022,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeaveDelayed && ActionReady(RadiantFinale) &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
-                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
+                           && (battleVoiceCD < 3 || ActionReady(BattleVoice)) && (ragingCD < 3 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
 
                         if (canWeaveBuffs && ActionReady(BattleVoice) && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
@@ -1252,7 +1252,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (canWeaveDelayed && radiantReady &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
-                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
+                           && (battleVoiceCD < 3 || ActionReady(BattleVoice)) && (ragingCD < 3 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
 
                         if (canWeaveBuffs && battleVoiceReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
