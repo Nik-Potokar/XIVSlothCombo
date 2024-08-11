@@ -482,7 +482,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (LevelChecked(RainOfDeath) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
-                            uint rainOfDeathCharges = GetRemainingCharges(RainOfDeath);
+                            uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && LevelChecked(WanderersMinuet))
                             {
