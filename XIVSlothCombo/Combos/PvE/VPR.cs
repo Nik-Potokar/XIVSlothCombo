@@ -612,8 +612,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return true;
 
                     // overcap protection
-                    if (gauge.SerpentOffering >= 95 && GetCooldownRemainingTime(SerpentsIre) < 50)
-                        return true;
+                    if (SerpentsIreUsed <= 3 && gauge.SerpentOffering >= 95 && GetCooldownRemainingTime(SerpentsIre) < 50)
+                        return true; 
                 }
                 return false;
             }
