@@ -419,16 +419,20 @@ namespace XIVSlothCombo.Combos.PvE
                         bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
                         bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
                         bool barrageReady = LevelChecked(Barrage) && IsOffCooldown(Barrage);
-                        //Raging and BV before Finale to minimize drift
-                        if (canWeaveBuffs && ragingReady)
-                            return RagingStrikes;
-                        if (canWeaveBuffs && battleVoiceReady)
-                            return BattleVoice;
-                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
+                        float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
+                        float ragingCD = GetCooldownRemainingTime(RagingStrikes);
+
+                        if (canWeaveDelayed && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
-                           && HasEffect(Buffs.BattleVoice))
+                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
-                        //removed requirement to not have hawks eye, it is better to maybe lose 60 potency than allow it to drift a 1000 potency gain out of the window
+
+                        if (canWeaveBuffs && battleVoiceReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            return BattleVoice;
+
+                        if (canWeaveBuffs && ragingReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            return RagingStrikes;
+
                         if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
                         {
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
@@ -720,15 +724,20 @@ namespace XIVSlothCombo.Combos.PvE
                         bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
                         bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
                         bool barrageReady = LevelChecked(Barrage) && IsOffCooldown(Barrage);
-                        //Raging and BV before Finale to minimize drift
-                        if (canWeaveBuffs && ragingReady)
-                            return RagingStrikes;
-                        if (canWeaveBuffs && battleVoiceReady)
-                            return BattleVoice;                       
-                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
+                        float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
+                        float ragingCD = GetCooldownRemainingTime(RagingStrikes);
+                                                
+                        if (canWeaveDelayed && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
-                           && HasEffect(Buffs.BattleVoice))
+                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
+                                               
+                        if (canWeaveBuffs && battleVoiceReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            return BattleVoice;
+
+                        if (canWeaveBuffs && ragingReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            return RagingStrikes;
+                                               
                         //removed requirement to not have hawks eye, it is better to maybe lose 60 potency than allow it to drift a 1000 potency gain out of the window
                         if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
                         {   
@@ -740,7 +749,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Barrage;
                         }                                             
                     }                                      
-
+                    
                     if (canWeave)
                     {
                         float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
@@ -822,6 +831,9 @@ namespace XIVSlothCombo.Combos.PvE
                         float windRemaining = GetDebuffRemainingTime(Debuffs.Windbite);
                         float causticRemaining = GetDebuffRemainingTime(Debuffs.CausticBite);
                         float stormRemaining = GetDebuffRemainingTime(Debuffs.Stormbite);
+                        float ragingStrikesDuration = GetBuffRemainingTime(Buffs.RagingStrikes);
+                        float radiantFinaleDuration = GetBuffRemainingTime(Buffs.RadiantFinale);
+                        int ragingJawsRenewTime = PluginConfiguration.GetCustomIntValue(Config.BRD_RagingJawsRenewTime);
 
                         DotRecast poisonRecast = delegate (int duration)
                         {
@@ -831,27 +843,31 @@ namespace XIVSlothCombo.Combos.PvE
                         DotRecast windRecast = delegate (int duration)
                         {
                             return (windbite && windRemaining < duration) || (stormbite && stormRemaining < duration);
-                        };
-
-                        float ragingStrikesDuration = GetBuffRemainingTime(Buffs.RagingStrikes);
-                        float radiantFinaleDuration = GetBuffRemainingTime(Buffs.RadiantFinale);
-                        int ragingJawsRenewTime = PluginConfiguration.GetCustomIntValue(Config.BRD_RagingJawsRenewTime);
-                        bool useIronJaws = (LevelChecked(IronJaws) && poisonRecast(4)) ||
-                            (LevelChecked(IronJaws) && windRecast(4)) ||
-                            ((LevelChecked(IronJaws) && IsEnabled(CustomComboPreset.BRD_Simple_RagingJaws) ||
-                            HasEffect(Buffs.RagingStrikes) && ragingStrikesDuration < ragingJawsRenewTime) &&
-                            HasEffect(Buffs.RadiantFinale) && radiantFinaleDuration < 4 &&
-                            poisonRecast(40) && windRecast(40));
-
-
-                        if (!LevelChecked(Stormbite))
+                        };                  
+                        
+                        if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
                         {
-                            if (useIronJaws)
+                            if (ActionReady(IronJaws) && IsEnabled(CustomComboPreset.BRD_Simple_RagingJaws) && HasEffect(Buffs.RagingStrikes) && 
+                            !WasLastAction(IronJaws) && ragingStrikesDuration < ragingJawsRenewTime && poisonRecast(40) && windRecast(40))                         
+                            { 
+                                 openerFinished = true;
+                                 return IronJaws;
+                            }
+
+                            if (LevelChecked(Stormbite) && !stormbite)
+                                return Stormbite;
+                            if (LevelChecked(CausticBite) && !caustic)
+                                return CausticBite;     
+                            if (LevelChecked(Windbite) && !windbite && !LevelChecked(Stormbite))
+                                return Windbite;
+                            if (LevelChecked(VenomousBite) && !venomous && !LevelChecked(CausticBite))
+                                return VenomousBite;
+
+                            if (ActionReady(IronJaws) && poisonRecast(4) && windRecast(4))
                             {
                                 openerFinished = true;
                                 return IronJaws;
                             }
-
                             if (!LevelChecked(IronJaws))
                             {
                                 if (windbite && windRemaining < 4)
@@ -865,32 +881,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     openerFinished = true;
                                     return VenomousBite;
                                 }
-                            }
-
-                            if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
-                            {
-                                if (LevelChecked(Windbite) && !windbite)
-                                    return Windbite;
-                                if (LevelChecked(VenomousBite) && !venomous)
-                                    return VenomousBite;
-                            }
-                        }
-
-                        else
-                        {
-                            if (useIronJaws)
-                            {
-                                openerFinished = true;
-                                return IronJaws;
-                            }
-
-                            if (IsEnabled(CustomComboPreset.BRD_Simple_DoT))
-                            {
-                                if (LevelChecked(Stormbite) && !stormbite)
-                                    return Stormbite;
-                                if (LevelChecked(CausticBite) && !caustic)
-                                    return CausticBite;
-                            }
+                            }                           
                         }
                     }
 
