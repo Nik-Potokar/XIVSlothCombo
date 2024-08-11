@@ -628,6 +628,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("DoT Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID)]
         BRD_DoTMaintainance = 3002,
 
+        [ConflictingCombos(BRD_ST_SimpleMode)]
+        [ParentCombo(BRD_StraightShotUpgrade)]
+        [CustomComboInfo("Apex Arrow Feature", "Replaces Burst Shot with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
+        BRD_ApexST = 3034,
+
         [ReplaceSkill(BRD.IronJaws)]
         [ConflictingCombos(BRD_IronJaws_Alternate)]
         [CustomComboInfo("Iron Jaws Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nAlternates between the two if Iron Jaws isn't available.", BRD.JobID)]
@@ -638,9 +643,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Iron Jaws Alternate Feature", "Iron Jaws is replaced with Caustic Bite/Stormbite if one or both are not up.\nIron Jaws will only show up when debuffs are about to expire.", BRD.JobID)]
         BRD_IronJaws_Alternate = 3004,
 
-        [ReplaceSkill(BRD.BurstShot, BRD.QuickNock)]
+        [ReplaceSkill(BRD.Ladonsbite, BRD.QuickNock)]
         [ConflictingCombos(BRD_ST_SimpleMode)]
-        [CustomComboInfo("Burst Shot/Quick Nock to Apex Arrow Feature", "Replaces Burst Shot and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
+        [CustomComboInfo("Ladonsbite/Quick Nock to Apex Arrow Feature", "Replaces Ladonsbite and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
         BRD_Apex = 3005,
 
         [ReplaceSkill(BRD.Bloodletter)]
@@ -756,7 +761,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_AoE_SimpleMode)]
         [CustomComboInfo("Simple AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
         BRD_AoE_Simple_NoWaste = 3033,
-        // Last value = 3033
+        // Last value = 3034
 
         #endregion
 

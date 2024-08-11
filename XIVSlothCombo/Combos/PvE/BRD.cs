@@ -90,7 +90,7 @@ namespace XIVSlothCombo.Combos.PvE
         internal static bool SongIsWandererMinuet(Song value) => value == Song.WANDERER;
         #endregion
 
-        // Replace HS/BS with SS/RA when procced.
+        // Replace HS/BS with SS/RA when procced, Apex feature added. 
         internal class BRD_StraightShotUpgrade : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_StraightShotUpgrade;
@@ -99,11 +99,11 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HeavyShot or BurstShot)
                 {
-                    if (IsEnabled(CustomComboPreset.BRD_Apex))
+                    if (IsEnabled(CustomComboPreset.BRD_ApexST))
                     {
                         BRDGauge? gauge = GetJobGauge<BRDGauge>();
 
-                        if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow) && gauge.SoulVoice == 100)
+                        if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
                             return ApexArrow;
                         if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
                             return BlastArrow;
@@ -284,8 +284,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     BRDGauge? gauge = GetJobGauge<BRDGauge>();
 
-                    if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow) && LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
+                    if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
                         return ApexArrow;
+                    if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
+                        return BlastArrow;
                 }
 
                 return actionID;
