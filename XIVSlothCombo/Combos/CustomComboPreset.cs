@@ -3201,33 +3201,35 @@ namespace XIVSlothCombo.Combos
 
         #region SAMURAI
 
-        #region Yukikaze/Kasha Combos
+        #region Yukikaze/Kasha/Gekko Combos
 
         [ReplaceSkill(SAM.Yukikaze)]
-        [ConflictingCombos(SAM_ST_Yukikaze)]
         [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID)]
         SAM_ST_YukikazeCombo = 15000,
 
         [ReplaceSkill(SAM.Kasha)]
-        [ConflictingCombos(SAM_ST_Kasha)]
         [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID)]
         SAM_ST_KashaCombo = 15001,
+
+        [ReplaceSkill(SAM.Gekko)]
+        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID)]
+        SAM_ST_GekkoCombo = 15010,
         #endregion
 
         #region  Simple ST
 
-        [ReplaceSkill(SAM.Gekko)]
+        [ReplaceSkill(SAM.Hakaze, SAM.Gyofu)]
         [ConflictingCombos(SAM_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Gekko with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Hakaze/Gyofu with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
         SAM_ST_SimpleMode = 15002,
 
         #endregion
 
         #region Advanced ST
 
-        [ReplaceSkill(SAM.Gekko)]
+        [ReplaceSkill(SAM.Hakaze, SAM.Gyofu)]
         [ConflictingCombos(SAM_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Gekko with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", SAM.JobID)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Hakaze/Gyofu with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", SAM.JobID)]
         SAM_ST_AdvancedMode = 15003,
 
         [ParentCombo(SAM_ST_AdvancedMode)]

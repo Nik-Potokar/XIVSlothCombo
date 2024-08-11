@@ -2206,6 +2206,27 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.SAMPvP_KashaFeatures_GapCloser && enabled)
                 UserConfig.DrawSliderInt(0, 100, SAMPvP.Config.SAMPvP_SotenHP, "Use Soten on enemies below selected HP.");
 
+            if (preset == CustomComboPreset.SAM_ST_KashaCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Kasha_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Kasha_KenkiOvercap)
+                    UserConfig.DrawSliderInt(50, 100, SAM.Config.SAM_Kasha_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
+            if (preset == CustomComboPreset.SAM_ST_YukikazeCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Yukaze_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Yukaze_KenkiOvercap)
+                    UserConfig.DrawSliderInt(50, 100, SAM.Config.SAM_Yukaze_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
+            if (preset == CustomComboPreset.SAM_ST_GekkoCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Gekko_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Gekko_KenkiOvercap)
+                    UserConfig.DrawSliderInt(50, 100, SAM.Config.SAM_Gekko_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
             #endregion
             // ====================================================================================
             #region SCHOLAR
