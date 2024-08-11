@@ -43,6 +43,7 @@ namespace XIVSlothCombo.Combos.PvE
             BlastArrow = 25784,
             RadiantFinale = 25785,
             WideVolley = 36974,
+            HeartbreakShot = 36975,
             ResonantArrow = 36976,
             RadiantEncore = 36977;
 
@@ -272,27 +273,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 return actionID;
             }
-        }
-
-        internal class BRD_Apex : CustomCombo
-        {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_Apex;
-
-            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-            {
-                if (actionID is QuickNock)
-                {
-                    BRDGauge? gauge = GetJobGauge<BRDGauge>();
-
-                    if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
-                        return ApexArrow;
-                    if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
-                        return BlastArrow;
-                }
-
-                return actionID;
-            }
-        }
+        }    
 
         internal class BRD_AoE_oGCD : CustomCombo
         {
@@ -546,7 +527,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is Bloodletter)
+                if (actionID is Bloodletter or HeartbreakShot)
                 {
                     BRDGauge? gauge = GetJobGauge<BRDGauge>();
                     bool songArmy = gauge.Song == Song.ARMY;
@@ -555,8 +536,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool balladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
                     bool paeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);                    
                     
-                    if (IsEnabled(CustomComboPreset.BRD_oGCDSongs) &&
-                        (gauge.SongTimer < 1 || songArmy))
+                    if (gauge.SongTimer < 1 || songArmy)
                     {
                         if (minuetReady)
                             return WanderersMinuet;
@@ -570,10 +550,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(PitchPerfect);
                     if (ActionReady(EmpyrealArrow))
                         return EmpyrealArrow;
-                    if (ActionReady(Bloodletter))
-                        return OriginalHook(Bloodletter);
                     if (ActionReady(Sidewinder))
                         return Sidewinder;
+                    if (ActionReady(Bloodletter))
+                        return OriginalHook(Bloodletter);
+                    
                 }
 
                 return actionID;
@@ -926,12 +907,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is Barrage)
                 {
-                    bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
-                    bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
-
-                    if (ragingReady)
+                    if (ActionReady(RagingStrikes))
                         return RagingStrikes;
-                    if (battleVoiceReady)
+                    if (ActionReady(BattleVoice))
                         return BattleVoice;
                 }
 
@@ -948,18 +926,15 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     // Doesn't display the lowest cooldown song if they have been used out of order and are all on cooldown.
                     BRDGauge? gauge = GetJobGauge<BRDGauge>();
-                    int songTimerInSeconds = gauge.SongTimer / 1000;
-                    bool wanderersMinuetReady = LevelChecked(WanderersMinuet) && IsOffCooldown(WanderersMinuet);
-                    bool magesBalladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
-                    bool armysPaeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);
+                    int songTimerInSeconds = gauge.SongTimer / 1000;                    
 
-                    if (wanderersMinuetReady || (gauge.Song == Song.WANDERER && songTimerInSeconds > 11))
+                    if (ActionReady(WanderersMinuet) || (gauge.Song == Song.WANDERER && songTimerInSeconds > 11))
                         return WanderersMinuet;
 
-                    if (magesBalladReady || (gauge.Song == Song.MAGE && songTimerInSeconds > 2))
+                    if (ActionReady(MagesBallad) || (gauge.Song == Song.MAGE && songTimerInSeconds > 2))
                         return MagesBallad;
 
-                    if (armysPaeonReady || (gauge.Song == Song.ARMY && songTimerInSeconds > 2))
+                    if (ActionReady(ArmysPaeon) || (gauge.Song == Song.ARMY && songTimerInSeconds > 2))
                         return ArmysPaeon;
 
                 }
