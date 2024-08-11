@@ -110,7 +110,8 @@ namespace XIVSlothCombo.Combos.PvE
             #region DPS
             public static UserBool
                 SGE_ST_DPS_Adv = new("SGE_ST_DPS_Adv"),
-                SGE_ST_DPS_EDosis_Adv = new("SGE_ST_Dosis_EDosis_Adv");
+                SGE_ST_DPS_EDosis_Adv = new("SGE_ST_Dosis_EDosis_Adv"),
+                SGE_ST_DPS_Phlegma_Adv = new("SGE_ST_DPS_Phlegma_Adv");
             public static UserBoolArray
                 SGE_ST_DPS_Movement = new("SGE_ST_DPS_Movement");
             public static UserInt
@@ -122,7 +123,8 @@ namespace XIVSlothCombo.Combos.PvE
                 SGE_AoE_DPS_Rhizo = new("SGE_AoE_DPS_Rhizo"),
                 SGE_AoE_DPS_AddersgallProtect = new("SGE_AoE_DPS_AddersgallProtect", 3);
             public static UserFloat
-                SGE_ST_DPS_EDosisThreshold = new("SGE_ST_Dosis_EDosisThreshold", 3.0f);
+                SGE_ST_DPS_EDosisThreshold = new("SGE_ST_Dosis_EDosisThreshold", 3.0f),
+                SGE_ST_DPS_PhlegmaThreshold = new("SGE_ST_DPS_PhlegmaThreshold", 5.0f);
             #endregion
 
             #region Healing
@@ -416,7 +418,18 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InCombat())
                         {
                             uint phlegma = OriginalHook(Phlegma);
-                            if (InActionRange(phlegma) && ActionReady(phlegma)) return phlegma;
+
+                            if (InActionRange(Phlegma) && ActionReady(Phlegma))
+                            {
+                                if (!Config.SGE_ST_DPS_Phlegma_Adv || GetRemainingCharges(Phlegma) == GetMaxCharges(Phlegma)) 
+                                    return phlegma;
+                                
+                                if (GetRemainingCharges(Phlegma) == 1 && 
+                                    GetCooldownChargeRemainingTime(Phlegma) <= Config.SGE_ST_DPS_PhlegmaThreshold)
+                                {
+                                    return phlegma;
+                                }
+                            }
                         }
 
                         // Psyche

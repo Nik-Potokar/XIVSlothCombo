@@ -2038,6 +2038,17 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.Unindent();
                 }
             }
+            
+            if (preset is CustomComboPreset.SGE_ST_DPS_Phlegma)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SGE.Config.SGE_ST_DPS_Phlegma_Adv, "Hold Phlegma charges", "", isConditionalChoice: true);
+                if (SGE.Config.SGE_ST_DPS_Phlegma_Adv)
+                {
+                    ImGui.Indent();
+                    UserConfig.DrawRoundedSliderFloat(0, 40, SGE.Config.SGE_ST_DPS_PhlegmaThreshold, "Seconds of cooldown remaining before using Phlegma to avoid overcapping.", digits: 1);
+                    ImGui.Unindent();
+                }
+            }
 
             if (preset is CustomComboPreset.SGE_ST_DPS_Lucid)
                 UserConfig.DrawSliderInt(4000, 9500, SGE.Config.SGE_ST_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
