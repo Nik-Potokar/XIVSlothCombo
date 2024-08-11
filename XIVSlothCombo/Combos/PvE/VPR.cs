@@ -347,6 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ST_AdvancedMode;
             internal static VPROpenerLogic VPROpener = new();
+            internal static VPROpenerLogicNoUncoiledFury VPROpener2 = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -368,6 +369,13 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
                     {
                         if (VPROpener.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // No UF Opener for VPR
+                    if (IsEnabled(CustomComboPreset.VPR_ST_Opener) && IsEnabled(CustomComboPreset.VPR_ST_Opener_NoUncoiledFury))
+                    {
+                        if (VPROpener2.DoFullOpener(ref actionID))
                             return actionID;
                     }
 
@@ -1044,6 +1052,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                VPRGauge? gauge = GetJobGauge<VPRGauge>();
+
                 if (actionID is UncoiledFury)
                 {
                     if (HasEffect(Buffs.PoisedForTwinfang))
@@ -1051,6 +1061,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.PoisedForTwinblood))
                         return OriginalHook(Twinblood);
+
+                    if (IsEnabled(CustomComboPreset.VPR_UncoiledTwins_Snap) && gauge.RattlingCoilStacks == 0)
+                        return WrithingSnap;
                 }
                 return actionID;
             }
