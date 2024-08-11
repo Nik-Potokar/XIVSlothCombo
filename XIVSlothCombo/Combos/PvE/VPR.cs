@@ -594,7 +594,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     //even minutes
                     if ((WasLastAbility(SerpentsIre) && HasEffect(Buffs.ReadyToReawaken)) ||
-                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) && GetCooldownRemainingTime(SerpentsIre) >= 90 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
                         (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre)))
@@ -603,12 +603,16 @@ namespace XIVSlothCombo.Combos.PvE
                     // odd minutes
                     if (((SerpentsIreUsed <= 3 || SerpentsIreUsed > 4) &&
                         gauge.SerpentOffering >= 50 &&
-                        GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
+                        GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 90) ||
                         (SerpentsIreUsed is 4 &&
                         (gauge.SerpentOffering >= 95 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90))
+                        return true;
+
+                    // overcap protection
+                    if (gauge.SerpentOffering >= 95 && GetCooldownRemainingTime(SerpentsIre) < 50)
                         return true;
                 }
                 return false;
