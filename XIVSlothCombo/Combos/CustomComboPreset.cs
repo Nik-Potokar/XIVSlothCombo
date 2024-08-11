@@ -618,15 +618,20 @@ namespace XIVSlothCombo.Combos
 
         #region BARD
 
+        [ConflictingCombos(BRD_AoE_Combo, BRD_AoE_oGCD, BRD_AoE_AdvMode)]
+        [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
+        [CustomComboInfo("Simple AoE Bard Feature", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
+        BRD_AoE_SimpleMode = 3035,
+
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
         [ConflictingCombos(BRD_StraightShotUpgrade, BRD_DoTMaintainance, BRD_ST_oGCD, BRD_IronJawsApex)]
         [CustomComboInfo("Simple Bard Feature", "Adds every single target ability to one button,\nIf there are DoTs on target, Simple Bard will try to maintain their uptime.", BRD.JobID)]
         BRD_ST_SimpleMode = 3009,
 
-        [ConflictingCombos(BRD_AoE_Combo, BRD_AoE_oGCD)]
+        [ConflictingCombos(BRD_AoE_Combo, BRD_AoE_oGCD, BRD_AoE_SimpleMode)]
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [CustomComboInfo("Simple AoE Bard Feature", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
-        BRD_AoE_SimpleMode = 3015,
+        [CustomComboInfo("Advanced AoE Bard Feature", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
+        BRD_AoE_AdvMode = 3015,
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
         [ConflictingCombos(BRD_ST_SimpleMode)]
@@ -661,12 +666,12 @@ namespace XIVSlothCombo.Combos
         BRD_ST_oGCD = 3006,
 
         [ReplaceSkill(BRD.RainOfDeath)]
-        [ConflictingCombos(BRD_AoE_SimpleMode)]
+        [ConflictingCombos(BRD_AoE_AdvMode, BRD_AoE_SimpleMode)]
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on Rain of Death depending on their CD.", BRD.JobID)]
         BRD_AoE_oGCD = 3007,
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [ConflictingCombos(BRD_AoE_SimpleMode)]
+        [ConflictingCombos(BRD_AoE_AdvMode, BRD_AoE_SimpleMode)]
         [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID)]
         BRD_AoE_Combo = 3008,
                 
@@ -690,9 +695,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("One Button Songs Feature", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID)]
         BRD_OneButtonSongs = 3014,
                 
-        [ParentCombo(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE Bard Song Option", "Weave Songs on the Simple AoE.", BRD.JobID)]
-        BRD_AoE_Simple_Songs = 3016,
+        [ParentCombo(BRD_AoE_AdvMode)]
+        [CustomComboInfo("AoE Bard Song Option", "Weave Songs on the Advanced AoE.", BRD.JobID)]
+        BRD_AoE_Adv_Songs = 3016,
 
         [ParentCombo(BRD_ST_SimpleMode)]
         [CustomComboInfo("Simple Buffs Option", "Adds buffs onto the Simple Bard feature.", BRD.JobID)]
@@ -738,27 +743,27 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Second Wind Option", "Uses Second Wind when below set HP percentage.", BRD.JobID)]
         BRD_ST_SecondWind = 3028,
 
-        [ParentCombo(BRD_AoE_SimpleMode)]
+        [ParentCombo(BRD_AoE_AdvMode)]
         [CustomComboInfo("Second Wind Option", "Uses Second Wind when below set HP percentage.", BRD.JobID)]
         BRD_AoE_SecondWind = 3029,
 
         [Variant]
-        [VariantParent(BRD_ST_SimpleMode, BRD_AoE_SimpleMode)]
+        [VariantParent(BRD_ST_SimpleMode, BRD_AoE_AdvMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", BRD.JobID)]
         BRD_Variant_Rampart = 3030,
 
         [Variant]
-        [VariantParent(BRD_ST_SimpleMode, BRD_AoE_SimpleMode)]
+        [VariantParent(BRD_ST_SimpleMode, BRD_AoE_AdvMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BRD.JobID)]
         BRD_Variant_Cure = 3031,
 
-        [ParentCombo(BRD_AoE_Simple_Songs)]
-        [CustomComboInfo("Simple AoE Buffs Option", "Adds buffs onto the Simple AoE Bard feature.", BRD.JobID)]
-        BRD_AoE_Simple_Buffs = 3032,
+        [ParentCombo(BRD_AoE_Adv_Songs)]
+        [CustomComboInfo("AoE Buffs Option", "Adds buffs onto the Advance AoE Bard feature.", BRD.JobID)]
+        BRD_AoE_Adv_Buffs = 3032,
 
-        [ParentCombo(BRD_AoE_SimpleMode)]
-        [CustomComboInfo("Simple AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
-        BRD_AoE_Simple_NoWaste = 3033,
+        [ParentCombo(BRD_AoE_AdvMode)]
+        [CustomComboInfo("AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
+        BRD_AoE_Adv_NoWaste = 3033,
         // Last value = 3034
 
         #endregion

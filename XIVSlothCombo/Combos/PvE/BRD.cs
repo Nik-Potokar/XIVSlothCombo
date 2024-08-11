@@ -300,12 +300,12 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class BRD_AoE_SimpleMode : CustomCombo
+        internal class BRD_AoE_AdvMode : CustomCombo
         {
             internal static bool inOpener = false;
             internal static bool openerFinished = false;
 
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_AoE_SimpleMode;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_AoE_AdvMode;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -321,7 +321,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songMage = gauge.Song == Song.MAGE;
                     bool songArmy = gauge.Song == Song.ARMY;
                     int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_AoENoWasteHPPercentage);
-                    bool isEnemyHealthHigh = !IsEnabled(CustomComboPreset.BRD_AoE_Simple_NoWaste) || GetTargetHPPercent() > targetHPThreshold;
+                    bool isEnemyHealthHigh = !IsEnabled(CustomComboPreset.BRD_AoE_Adv_NoWaste) || GetTargetHPPercent() > targetHPThreshold;
 
                     if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_VariantCure))
                         return Variant.VariantCure;
@@ -332,26 +332,22 @@ namespace XIVSlothCombo.Combos.PvE
                         canWeave)
                         return Variant.VariantRampart;
 
-                    if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Songs) && canWeave)
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Adv_Songs) && canWeave)
                     {
 
                         // Limit optimisation to when you are high enough level to benefit from it.
                         if (LevelChecked(WanderersMinuet))
-                        {
-                            bool minuetReady = IsOffCooldown(WanderersMinuet);
-                            bool balladReady = IsOffCooldown(MagesBallad);
-                            bool paeonReady = IsOffCooldown(ArmysPaeon);                            
-
+                        {         
                             if (canWeave)
                             {
                                 if (songNone)
                                 {
                                     // Logic to determine first song
-                                    if (minuetReady && !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)))
+                                    if (ActionReady(WanderersMinuet) && !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)))
                                         return WanderersMinuet;
-                                    if (balladReady && !(JustUsed(WanderersMinuet) || JustUsed(ArmysPaeon)))
+                                    if (ActionReady(MagesBallad) && !(JustUsed(WanderersMinuet) || JustUsed(ArmysPaeon)))
                                         return MagesBallad;
-                                    if (paeonReady && !(JustUsed(MagesBallad) || JustUsed(WanderersMinuet)))
+                                    if (ActionReady(ArmysPaeon) && !(JustUsed(MagesBallad) || JustUsed(WanderersMinuet)))
                                         return ArmysPaeon;
                                 }
 
@@ -359,7 +355,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
                                     if (songTimerInSeconds <= 3 && gauge.Repertoire > 0) // Spend any repertoire before switching to next song
                                         return OriginalHook(PitchPerfect);
-                                    if (songTimerInSeconds <= 3 && balladReady)          // Move to Mage's Ballad if <= 3 seconds left on song
+                                    if (songTimerInSeconds <= 3 && ActionReady(MagesBallad))          // Move to Mage's Ballad if <= 3 seconds left on song
                                         return MagesBallad;
                                 }
 
@@ -367,7 +363,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 {
 
                                     // Move to Army's Paeon if < 3 seconds left on song
-                                    if (songTimerInSeconds <= 3 && paeonReady)
+                                    if (songTimerInSeconds <= 3 && ActionReady(ArmysPaeon))
                                     {
                                         // Special case for Empyreal Arrow: it must be cast before you change to it to avoid drift!
                                         if (ActionReady(EmpyrealArrow))
@@ -380,43 +376,36 @@ namespace XIVSlothCombo.Combos.PvE
                             if (songArmy && canWeaveDelayed)
                             {
                                 // Move to Wanderer's Minuet if <= 12 seconds left on song or WM off CD and have 4 repertoires of AP
-                                if (songTimerInSeconds <= 12 || (minuetReady && gauge.Repertoire == 4))
+                                if (songTimerInSeconds <= 12 || (ActionReady(WanderersMinuet) && gauge.Repertoire == 4))
                                     return WanderersMinuet;
                             }
                         }
                         else if (songTimerInSeconds <= 3 && canWeave)
                         {
-                            bool balladReady = LevelChecked(MagesBallad) && IsOffCooldown(MagesBallad);
-                            bool paeonReady = LevelChecked(ArmysPaeon) && IsOffCooldown(ArmysPaeon);
-
-                            if (balladReady)
+                            if (ActionReady(MagesBallad))
                                 return MagesBallad;
-                            if (paeonReady)
+                            if (ActionReady(ArmysPaeon))
                                 return ArmysPaeon;
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.BRD_AoE_Simple_Buffs) && (!songNone || !LevelChecked(MagesBallad)) && isEnemyHealthHigh)
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Adv_Buffs) && (!songNone || !LevelChecked(MagesBallad)) && isEnemyHealthHigh)
                     {
-                        bool radiantReady = LevelChecked(RadiantFinale) && IsOffCooldown(RadiantFinale);
-                        bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
-                        bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
-                        bool barrageReady = LevelChecked(Barrage) && IsOffCooldown(Barrage);
                         float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
                         float ragingCD = GetCooldownRemainingTime(RagingStrikes);
 
-                        if (canWeaveDelayed && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
+                        if (canWeaveDelayed && ActionReady(RadiantFinale) &&
                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
                            && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
                             return RadiantFinale;
 
-                        if (canWeaveBuffs && battleVoiceReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                        if (canWeaveBuffs && ActionReady(BattleVoice) && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
                             return BattleVoice;
 
-                        if (canWeaveBuffs && ragingReady && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                        if (canWeaveBuffs && ActionReady(RagingStrikes) && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
                             return RagingStrikes;
 
-                        if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
+                        if (canWeaveBuffs && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
                         {
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
@@ -444,20 +433,17 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(PitchPerfect);
 
                         if (ActionReady(Sidewinder))
-                        {
-                            if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling))
+                        {                                                       
+                            if (songWanderer)
                             {
-                                if (songWanderer)
-                                {
-                                    if ((HasEffect(Buffs.RagingStrikes) || ragingCD > 10) &&
-                                        (HasEffect(Buffs.BattleVoice) || battleVoiceCD > 10) &&
-                                        (HasEffect(Buffs.RadiantFinale) || radiantCD > 10 ||
-                                        !LevelChecked(RadiantFinale)))
-                                        return Sidewinder;
-                                }
-                                else return Sidewinder;
+                                if ((HasEffect(Buffs.RagingStrikes) || ragingCD > 10) &&
+                                (HasEffect(Buffs.BattleVoice) || battleVoiceCD > 10) &&
+                                (HasEffect(Buffs.RadiantFinale) || radiantCD > 10 ||
+                                !LevelChecked(RadiantFinale)))
+                                return Sidewinder;
                             }
                             else return Sidewinder;
+                                                        
                         }
 
 
@@ -465,7 +451,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
-                            if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && LevelChecked(WanderersMinuet))
+                            if (LevelChecked(WanderersMinuet))
                             {
                                 if (songWanderer)
                                 {
@@ -493,7 +479,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(RadiantEncore);
 
                         // healing - please move if not appropriate priority
-                        if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
+                        if (IsEnabled(CustomComboPreset.BRD_AoE_SecondWind))
                         {
                             if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.BRD_AoESecondWindThreshold) && ActionReady(All.SecondWind))
                                 return All.SecondWind;
@@ -939,6 +925,208 @@ namespace XIVSlothCombo.Combos.PvE
 
                 }
                 
+                return actionID;
+            }
+        }
+        internal class BRD_AoE_SimpleMode : CustomCombo
+        {
+            internal static bool inOpener = false;
+            internal static bool openerFinished = false;
+
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_AoE_SimpleMode;
+
+            protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+            {
+                if (actionID is Ladonsbite or QuickNock)
+                {
+                    BRDGauge? gauge = GetJobGauge<BRDGauge>();
+                    bool canWeave = CanWeave(actionID);
+                    bool canWeaveBuffs = CanWeave(actionID, 0.6);
+                    bool canWeaveDelayed = CanDelayedWeave(actionID, 0.9);
+                    int songTimerInSeconds = gauge.SongTimer / 1000;
+                    bool songNone = gauge.Song == Song.NONE;
+                    bool songWanderer = gauge.Song == Song.WANDERER;
+                    bool songMage = gauge.Song == Song.MAGE;
+                    bool songArmy = gauge.Song == Song.ARMY;
+                    int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_AoENoWasteHPPercentage);
+                    bool isEnemyHealthHigh = GetTargetHPPercent() > 5;
+
+                    if (IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= 50)
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+
+                    if (canWeave)
+                    {
+                        // Limit optimisation to when you are high enough level to benefit from it.
+                        if (LevelChecked(WanderersMinuet))
+                        {
+                            if (canWeave)
+                            {
+                                if (songNone)
+                                {
+                                    // Logic to determine first song
+                                    if (ActionReady(WanderersMinuet) && !(JustUsed(MagesBallad) || JustUsed(ArmysPaeon)))
+                                        return WanderersMinuet;
+                                    if (ActionReady(MagesBallad) && !(JustUsed(WanderersMinuet) || JustUsed(ArmysPaeon)))
+                                        return MagesBallad;
+                                    if (ActionReady(ArmysPaeon) && !(JustUsed(MagesBallad) || JustUsed(WanderersMinuet)))
+                                        return ArmysPaeon;
+                                }
+
+                                if (songWanderer)
+                                {
+                                    if (songTimerInSeconds <= 3 && gauge.Repertoire > 0) // Spend any repertoire before switching to next song
+                                        return OriginalHook(PitchPerfect);
+                                    if (songTimerInSeconds <= 3 && ActionReady(MagesBallad))          // Move to Mage's Ballad if <= 3 seconds left on song
+                                        return MagesBallad;
+                                }
+
+                                if (songMage)
+                                {
+
+                                    // Move to Army's Paeon if < 3 seconds left on song
+                                    if (songTimerInSeconds <= 3 && ActionReady(ArmysPaeon))
+                                    {
+                                        // Special case for Empyreal Arrow: it must be cast before you change to it to avoid drift!
+                                        if (ActionReady(EmpyrealArrow))
+                                            return EmpyrealArrow;
+                                        return ArmysPaeon;
+                                    }
+                                }
+                            }
+
+                            if (songArmy && canWeaveDelayed)
+                            {
+                                // Move to Wanderer's Minuet if <= 12 seconds left on song or WM off CD and have 4 repertoires of AP
+                                if (songTimerInSeconds <= 12 || (ActionReady(WanderersMinuet) && gauge.Repertoire == 4))
+                                    return WanderersMinuet;
+                            }
+                        }
+                        else if (songTimerInSeconds <= 3 && canWeave)
+                        {
+                            if (ActionReady(MagesBallad))
+                                return MagesBallad;
+                            if (ActionReady(ArmysPaeon))
+                                return ArmysPaeon;
+                        }
+                    }
+
+                    if ((!songNone || !LevelChecked(MagesBallad)) && isEnemyHealthHigh)
+                    {
+                        float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
+                        float ragingCD = GetCooldownRemainingTime(RagingStrikes);
+
+                        if (canWeaveDelayed && ActionReady(RadiantFinale) &&
+                           (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
+                           && (battleVoiceCD < 2 || ActionReady(BattleVoice)) && (ragingCD < 2 || ActionReady(RagingStrikes)))
+                            return RadiantFinale;
+
+                        if (canWeaveBuffs && ActionReady(BattleVoice) && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            return BattleVoice;
+
+                        if (canWeaveBuffs && ActionReady(RagingStrikes) && (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            return RagingStrikes;
+
+                        if (canWeaveBuffs && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
+                        {
+                            if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
+                                return Barrage;
+                            else if (LevelChecked(BattleVoice) && HasEffect(Buffs.BattleVoice))
+                                return Barrage;
+                            else if (!LevelChecked(BattleVoice) && HasEffect(Buffs.RagingStrikes))
+                                return Barrage;
+
+                        }
+                    }
+
+
+                    if (canWeave)
+                    {
+                        float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
+                        float empyrealCD = GetCooldownRemainingTime(EmpyrealArrow);
+                        float ragingCD = GetCooldownRemainingTime(RagingStrikes);
+                        float radiantCD = GetCooldownRemainingTime(RadiantFinale);
+
+                        if (ActionReady(EmpyrealArrow))
+                            return EmpyrealArrow;
+
+                        if (LevelChecked(PitchPerfect) && songWanderer &&
+                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
+                            return OriginalHook(PitchPerfect);
+
+                        if (ActionReady(Sidewinder))
+                        {
+                            if (songWanderer)
+                            {
+                                if ((HasEffect(Buffs.RagingStrikes) || ragingCD > 10) &&
+                                    (HasEffect(Buffs.BattleVoice) || battleVoiceCD > 10) &&
+                                    (HasEffect(Buffs.RadiantFinale) || radiantCD > 10 ||
+                                    !LevelChecked(RadiantFinale)))
+                                    return Sidewinder;
+
+                            }
+                            else return Sidewinder;
+                        }
+
+                        if (LevelChecked(RainOfDeath) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
+                        {
+                            uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
+
+                            if (LevelChecked(WanderersMinuet))
+                            {
+                                if (songWanderer)
+                                {
+                                    if (((HasEffect(Buffs.RagingStrikes) || ragingCD > 10) &&
+                                        (HasEffect(Buffs.BattleVoice) || battleVoiceCD > 10 ||
+                                        !LevelChecked(BattleVoice)) &&
+                                        (HasEffect(Buffs.RadiantFinale) || radiantCD > 10 ||
+                                        !LevelChecked(RadiantFinale)) &&
+                                        rainOfDeathCharges > 0) || rainOfDeathCharges > 2)
+                                        return OriginalHook(RainOfDeath);
+                                }
+
+                                if (songArmy && (rainOfDeathCharges == 3 || ((gauge.SongTimer / 1000) > 30 && rainOfDeathCharges > 0)))
+                                    return OriginalHook(RainOfDeath);
+                                if (songMage && rainOfDeathCharges > 0)
+                                    return OriginalHook(RainOfDeath);
+                                if (songNone && rainOfDeathCharges == 3)
+                                    return OriginalHook(RainOfDeath);
+                            }
+                            else if (rainOfDeathCharges > 0)
+                                return OriginalHook(RainOfDeath);
+                        }
+                        //Moved Below ogcds as it was preventing them from happening. 
+                        if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
+                            return OriginalHook(RadiantEncore);
+
+                        // healing - please move if not appropriate priority
+                        
+                        if (PlayerHealthPercentageHp() <= 40 && ActionReady(All.SecondWind))
+                            return All.SecondWind;
+                        
+                    }
+
+                    bool wideVolleyReady = LevelChecked(WideVolley) && HasEffect(Buffs.HawksEye);
+                    bool blastArrowReady = LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady);
+                    bool resonantArrowReady = LevelChecked(ResonantArrow) && HasEffect(Buffs.ResonantArrowReady);
+
+                    if (wideVolleyReady)
+                        return OriginalHook(WideVolley);
+                    if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
+                        return ApexArrow;
+                    if (blastArrowReady)
+                        return BlastArrow;
+                    if (resonantArrowReady)
+                        return ResonantArrow;
+                    if (HasEffect(Buffs.RadiantEncoreReady))
+                        return OriginalHook(RadiantEncore);
+
+                }
+
                 return actionID;
             }
         }
