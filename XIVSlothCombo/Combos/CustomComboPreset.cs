@@ -2342,20 +2342,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Mode - AoE", $"Replaces Fire II in Red with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", PCT.JobID)]
         PCT_AoE_SimpleMode = 20001,
 
-        [ReplaceSkill(PCT.FireInRed)]
-        [ConflictingCombos(CombinedAetherhues, PCT_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", $"Replaces Fire in Red with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", PCT.JobID)]
-        PCT_ST_AdvancedMode = 20005,
-
-        [ReplaceSkill(PCT.FireIIinRed)]
-        [ConflictingCombos(CombinedAetherhues, PCT_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - AoE", $"Replaces Fire II in Red with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", PCT.JobID)]
-        PCT_AoE_AdvancedMode = 20006,
-
-        [ParentCombo(PCT_ST_AdvancedMode)]
-        [CustomComboInfo("Openers", $"Adds openers based on level.", PCT.JobID)]
-        PCT_ST_Advanced_Openers = 20007,
-
         [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
         [ConflictingCombos(PCT_ST_SimpleMode, PCT_AoE_SimpleMode)]
         [CustomComboInfo("Combined Aetherhues Feature", "Combines aetherhue actions onto one button for their respective target types.", PCT.JobID)]
@@ -3819,6 +3805,11 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
         VPR_ST_Opener = 30002,
+
+        [ParentCombo(VPR_ST_Opener)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
+        [CustomComboInfo("Level 100 Opener No Rattling", "Adds the No Rattling opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
+        VPR_ST_Opener_NoRattling = 30300,
 
         #region Cooldowns ST
 

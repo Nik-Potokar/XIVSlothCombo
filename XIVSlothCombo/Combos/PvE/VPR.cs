@@ -117,6 +117,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ST_SimpleMode;
             internal static VPROpenerLogic VPROpener = new();
+            internal static VPROpenerLogicNoRattling VPROpener2 = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -135,6 +136,13 @@ namespace XIVSlothCombo.Combos.PvE
                     // Opener for VPR
                     if (VPROpener.DoFullOpener(ref actionID))
                         return actionID;
+
+                    // No Rattling Opener for VPR
+                    if (IsEnabled(CustomComboPreset.VPR_ST_Opener) && IsEnabled(CustomComboPreset.VPR_ST_Opener_NoRattling))
+                    {
+                        if (VPROpener2.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
 
                     //All Weaves
                     if (CanWeave(actionID))
@@ -347,6 +355,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ST_AdvancedMode;
             internal static VPROpenerLogic VPROpener = new();
+            internal static VPROpenerLogicNoRattling VPROpener2 = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -368,6 +377,13 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
                     {
                         if (VPROpener.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
+                    // No Rattling Opener for VPR
+                    if (IsEnabled(CustomComboPreset.VPR_ST_Opener) && IsEnabled(CustomComboPreset.VPR_ST_Opener_NoRattling))
+                    {
+                        if (VPROpener2.DoFullOpener(ref actionID))
                             return actionID;
                     }
 
