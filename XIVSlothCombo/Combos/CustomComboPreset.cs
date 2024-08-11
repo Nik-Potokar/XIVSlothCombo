@@ -3233,17 +3233,14 @@ namespace XIVSlothCombo.Combos
         SAM_ST_AdvancedMode = 15003,
 
         [ParentCombo(SAM_ST_AdvancedMode)]
-        [ConflictingCombos(SAM_ST_YukikazeCombo)]
         [CustomComboInfo("Yukikaze Combo", "Adds Yukikaze combo to the rotation.", SAM.JobID)]
         SAM_ST_Yukikaze = 15004,
 
         [ParentCombo(SAM_ST_AdvancedMode)]
-        [ConflictingCombos(SAM_ST_KashaCombo)]
         [CustomComboInfo("Kasha Combo", "Adds Kasha combo to the rotation.", SAM.JobID)]
         SAM_ST_Kasha = 15005,
 
         [ParentCombo(SAM_ST_AdvancedMode)]
-        [ConflictingCombos(SAM_GyotenYaten)]
         [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", SAM.JobID)]
         SAM_ST_Opener = 15006,
 
@@ -3290,7 +3287,6 @@ namespace XIVSlothCombo.Combos
         SAM_ST_CDs_Shoha = 15019,
 
         [ParentCombo(SAM_ST_CDs)]
-        [ConflictingCombos(SAM_Shinten_Shoha_Senei)]
         [CustomComboInfo("Senei Option", "Adds Senei to the rotation.", SAM.JobID)]
         SAM_ST_CDs_Senei = 15020,
 
@@ -3317,10 +3313,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID)]
         SAM_AoE_OkaCombo = 15100,
 
-        [ParentCombo(SAM_AoE_OkaCombo)]
-        [ConflictingCombos(SAM_AoE_Oka)]
-        [CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze combo, Mangetsu combo, Senei, Shinten, and Shoha to Oka combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID)]
-        SAM_AoE_OkaCombo_TwoTarget = 15101,
+        //[ParentCombo(SAM_AoE_OkaCombo)]
+        //[CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze combo, Mangetsu combo, Senei, Shinten, and Shoha to Oka combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID)]
+        //SAM_AoE_OkaCombo_TwoTarget = 15101,
+
+        [ReplaceSkill(SAM.Mangetsu)]
+        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.", SAM.JobID)]
+        SAM_AoE_MangetsuCombo = 15101,
 
         #endregion
 
@@ -3328,7 +3327,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(SAM.Fuga, SAM.Fuko)]
         [ConflictingCombos(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Fugo/Fuko with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Fuga/Fuko with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", SAM.JobID)]
         SAM_AoE_SimpleMode = 15102,
 
         #endregion
@@ -3341,7 +3340,6 @@ namespace XIVSlothCombo.Combos
         SAM_AoE_AdvancedMode = 15103,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [ConflictingCombos(SAM_AoE_OkaCombo_TwoTarget)]
         [CustomComboInfo("Oka Combo", "Adds Oka combo to the rotation.", SAM.JobID)]
         SAM_AoE_Oka = 15104,
 
@@ -3369,7 +3367,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Shoha", "Adds Shoha when you have 3 meditation stacks.", SAM.JobID)]
         SAM_AoE_Shoha = 15111,
 
-        [ConflictingCombos(SAM_Kyuten_Shoha_Guren)]
         [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Guren", "Adds Guren to the rotation.", SAM.JobID)]
         SAM_AoE_Guren = 15112,
@@ -3423,7 +3420,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID)]
         SAM_Shinten_Shoha = 15205,
 
-        [ConflictingCombos(SAM_ST_CDs_Senei)]
         [ParentCombo(SAM_Shinten_Shoha)]
         [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID)]
         SAM_Shinten_Shoha_Senei = 15206,
@@ -3436,7 +3432,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Kyuten to Shoha", "Replace Hissatsu: Kyuten with Shoha when Meditation is full.", SAM.JobID)]
         SAM_Kyuten_Shoha = 15207,
 
-        [ConflictingCombos(SAM_AoE_Guren)]
         [ParentCombo(SAM_Kyuten_Shoha)]
         [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID)]
         SAM_Kyuten_Shoha_Guren = 15208,
@@ -3445,7 +3440,6 @@ namespace XIVSlothCombo.Combos
 
         #region Other
 
-        [ConflictingCombos(SAM_ST_Opener)]
         [ReplaceSkill(SAM.Gyoten)]
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID)]
         SAM_GyotenYaten = 15209,
