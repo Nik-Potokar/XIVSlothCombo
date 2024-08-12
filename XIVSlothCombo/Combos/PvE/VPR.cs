@@ -365,13 +365,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelFangs)
                 {
-                    // Opener for VPR
-                    if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
-                    {
-                        if (VPROpener.DoFullOpener(ref actionID))
-                            return actionID;
-                    }
-
                     // No UF Opener for VPR
                     if (IsEnabled(CustomComboPreset.VPR_ST_Opener) && IsEnabled(CustomComboPreset.VPR_ST_Opener_NoUncoiledFury))
                     {
@@ -379,6 +372,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    // Opener for VPR
+                    if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
+                    {
+                        if (VPROpener.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+               
                     //All Weaves
                     if (CanWeave(actionID))
                     {
@@ -603,16 +603,22 @@ namespace XIVSlothCombo.Combos.PvE
                     // odd minutes
                     if (((SerpentsIreUsed <= 3 || SerpentsIreUsed > 4) &&
                         gauge.SerpentOffering >= 50 &&
-                        GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 90) ||
+                        GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
                         (gauge.SerpentOffering >= 95 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) &&
-                        GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90))
+                        GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90) ||
+                        gauge.SerpentOffering >= 60 && GetCooldownRemainingTime(SerpentsIre) is >= 65 and <= 95)
+                        return true;
+
+                    // 5min failsafe
+                    if (SerpentsIreUsed == 3 && gauge.SerpentOffering >= 90)
                         return true;
 
                     // overcap protection
-                    if (SerpentsIreUsed <= 3 && gauge.SerpentOffering >= 95 && GetCooldownRemainingTime(SerpentsIre) < 50)
+                    if (SerpentsIreUsed is < 3 or > 3 && gauge.SerpentOffering >= 95 && GetCooldownRemainingTime(SerpentsIre) < 50 && 
+                        (WasLastWeaponskill(SwiftskinsSting) || WasLastWeaponskill(HuntersSting)))
                         return true; 
                 }
                 return false;
