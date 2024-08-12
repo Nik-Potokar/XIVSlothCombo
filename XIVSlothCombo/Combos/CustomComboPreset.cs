@@ -621,22 +621,22 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
         [ConflictingCombos(BRD_StraightShotUpgrade, BRD_ST_oGCD, BRD_IronJaws, BRD_IronJaws_Alternate, BRD_ST_AdvMode)]
-        [CustomComboInfo("Simple Bard Feature", "Adds every single target ability to one button,\nIf there are DoTs on target, will try to maintain their uptime.", BRD.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Adds every single target ability to one button,\nIf there are DoTs on target, will try to maintain their uptime.", BRD.JobID)]
         BRD_ST_SimpleMode = 3036,
 
         [ConflictingCombos(BRD_AoE_Combo, BRD_AoE_oGCD, BRD_AoE_AdvMode)]
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [CustomComboInfo("Simple AoE Bard Feature", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
+        [CustomComboInfo("Simple Mode - AoE", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
         BRD_AoE_SimpleMode = 3035,
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
         [ConflictingCombos(BRD_StraightShotUpgrade, BRD_ST_oGCD, BRD_IronJaws, BRD_IronJaws_Alternate, BRD_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Bard Feature", "Adds every single target ability to one button,\nIf there are DoTs on target, will try to maintain their uptime.", BRD.JobID)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Adds every single target ability to one button,\nIf there are DoTs on target, will try to maintain their uptime.", BRD.JobID)]
         BRD_ST_AdvMode = 3009,
 
         [ConflictingCombos(BRD_AoE_Combo, BRD_AoE_oGCD, BRD_AoE_SimpleMode)]
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
-        [CustomComboInfo("Advanced AoE Bard Feature", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
+        [CustomComboInfo("Advanced Mode - AoE", "Weaves oGCDs onto Quick Nock/Ladonsbite.", BRD.JobID)]
         BRD_AoE_AdvMode = 3015,
 
         [ReplaceSkill(BRD.HeavyShot, BRD.BurstShot)]
@@ -649,7 +649,7 @@ namespace XIVSlothCombo.Combos
         BRD_DoTMaintainance = 3002,
 
         [ParentCombo(BRD_StraightShotUpgrade)]
-        [CustomComboInfo("Apex Arrow Feature", "Replaces Burst Shot with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
+        [CustomComboInfo("Apex Arrow Option", "Replaces Burst Shot with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
         BRD_ApexST = 3034,
 
         [ReplaceSkill(BRD.IronJaws)]
@@ -663,7 +663,7 @@ namespace XIVSlothCombo.Combos
         BRD_IronJaws_Alternate = 3004,
 
         [ParentCombo(BRD_AoE_Combo)]
-        [CustomComboInfo("Ladonsbite/Quick Nock to Apex Arrow Feature", "Replaces Ladonsbite and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
+        [CustomComboInfo("Apex Arrow Option", "Replaces Ladonsbite and Quick Nock with Apex Arrow when gauge is full and Blast Arrow when you are Blast Arrow ready.", BRD.JobID)]
         BRD_Apex = 3005,
 
         [ReplaceSkill(BRD.Bloodletter)]
@@ -678,7 +678,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(BRD.QuickNock, BRD.Ladonsbite)]
         [ConflictingCombos(BRD_AoE_AdvMode, BRD_AoE_SimpleMode)]
-        [CustomComboInfo("AoE Combo Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID)]
+        [CustomComboInfo("Quick Nock Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID)]
         BRD_AoE_Combo = 3008,
                 
         [ParentCombo(BRD_ST_AdvMode)]
@@ -690,7 +690,7 @@ namespace XIVSlothCombo.Combos
         BRD_Adv_Song = 3011,
 
         [ParentCombo(BRD_AoE_oGCD)]
-        [CustomComboInfo("Songs Feature", "Adds Songs onto AoE oGCD Feature.", BRD.JobID)]
+        [CustomComboInfo("Songs Option", "Adds Songs onto AoE oGCD Feature.", BRD.JobID)]
         BRD_oGCDSongs = 3012,
 
         [ReplaceSkill(BRD.Barrage)]
@@ -702,7 +702,7 @@ namespace XIVSlothCombo.Combos
         BRD_OneButtonSongs = 3014,
                 
         [ParentCombo(BRD_AoE_AdvMode)]
-        [CustomComboInfo("AoE Bard Song Option", "Weave Songs on the Advanced AoE.", BRD.JobID)]
+        [CustomComboInfo("Bard Song Option", "Weave Songs on the Advanced AoE.", BRD.JobID)]
         BRD_AoE_Adv_Songs = 3016,
 
         [ParentCombo(BRD_ST_AdvMode)]
