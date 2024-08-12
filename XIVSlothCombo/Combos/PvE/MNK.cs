@@ -110,7 +110,8 @@ namespace XIVSlothCombo.Combos.PvE
                 MNK_ST_Bloodbath_Threshold = new("MNK_ST_BloodbathThreshold", 40),
                 MNK_AoE_SecondWind_Threshold = new("MNK_AoE_SecondWindThreshold", 25),
                 MNK_AoE_Bloodbath_Threshold = new("MNK_AoE_BloodbathThreshold", 40),
-                MNK_SelectedOpener = new("MNK_SelectedOpener");
+                MNK_SelectedOpener = new("MNK_SelectedOpener"),
+                MNK_VariantCure = new("MNK_Variant_Cure");
         }
 
         internal class MNK_ST_SimpleMode : CustomCombo
@@ -128,6 +129,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (MNKOpener.DoFullOpener(ref actionID, Config.MNK_SelectedOpener))
                         return actionID;
 
+
+                    if (IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.MNK_VariantCure)
+                        return Variant.VariantCure;
+
                     if ((!inCombat || !InMeleeRange())
                         && Gauge.Chakra < 5
                         && !HasEffect(Buffs.RiddleOfFire)
@@ -139,6 +145,10 @@ namespace XIVSlothCombo.Combos.PvE
                     // OGCDs
                     if (inCombat && canWeave)
                     {
+                        if (IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance))
                         {
                             if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
@@ -298,9 +308,17 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(Meditation);
                     }
 
+                    if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
                     // OGCDs
                     if (inCombat && canWeave)
                     {
+                        if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart))
+                            return Variant.VariantRampart;
+
                         if (level >= Levels.PerfectBalance && !HasEffect(Buffs.PerfectBalance) && HasCharges(PerfectBalance) && IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
                             if ((WasLastWeaponskill(LeapingOpo) || WasLastWeaponskill(DragonKick))
@@ -469,9 +487,14 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+
+                    if (IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_VariantCure))
+                        return Variant.VariantCure;
+
                     // Buffs
                     if (inCombat && canWeave)
                     {
+
                         if (IsEnabled(Variant.VariantRampart) &&
                             IsOffCooldown(Variant.VariantRampart))
                             return Variant.VariantRampart;

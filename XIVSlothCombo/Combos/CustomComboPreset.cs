@@ -1903,6 +1903,8 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region Monk Beast Chakras
+
         [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_SimpleMode)]
         [CustomComboInfo("Beast Chakra Handlers", "Merge single target GCDs which share the same beast chakra", MNK.JobID)]
         MNK_ST_BeastChakras = 9019,
@@ -1922,6 +1924,8 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_ST_BeastChakras)]
         MNK_BC_COEURL = 9022,
 
+        #endregion
+
         [ReplaceSkill(MNK.PerfectBalance)]
         [CustomComboInfo("Perfect Balance Feature", "Perfect Balance becomes Masterful Blitz while you have 3 Beast Chakra.", MNK.JobID)]
         MNK_PerfectBalance = 9023,
@@ -1929,6 +1933,20 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(MNK.RiddleOfFire)]
         [CustomComboInfo("Riddle of Fire/Brotherhood Feature", "Replaces Riddle of Fire with Brotherhood when Riddle of Fire is on cooldown.", MNK.JobID)]
         MNK_Riddle_Brotherhood = 9024,
+
+        #region Variant
+
+        [Variant]
+        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_SimpleMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
+        MNK_Variant_Rampart = 9025,
+
+        [Variant]
+        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_SimpleMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
+        MNK_Variant_Cure = 9026,
+
+        #endregion
 
         // End Monk
         #endregion

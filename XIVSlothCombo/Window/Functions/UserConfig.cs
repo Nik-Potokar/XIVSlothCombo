@@ -1627,6 +1627,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Solar Lunar", "Uses Solar/Lunar opener", 2);
             }
 
+            if (preset == CustomComboPreset.MNK_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, MNK.Config.MNK_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region NINJA
