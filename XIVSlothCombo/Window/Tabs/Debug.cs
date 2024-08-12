@@ -140,7 +140,7 @@ namespace XIVSlothCombo.Window.Tabs
                 CustomStyleText("Last Weaponskill:", ActionWatching.GetActionName(ActionWatching.LastWeaponskill));
                 CustomStyleText("Last Spell:", ActionWatching.GetActionName(ActionWatching.LastSpell));
                 CustomStyleText("Last Ability:", ActionWatching.GetActionName(ActionWatching.LastAbility));
-                CustomStyleText("Combo Timer:", Math.Round(CustomComboFunctions.ComboTimer, 2));
+                CustomStyleText("Combo Timer:", Math.Round(CustomComboFunctions.ComboTimer, 1));
                 CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{ActionWatching.GetActionName(CustomComboFunctions.ComboAction)} (ID: {CustomComboFunctions.ComboAction})");
                 CustomStyleText("Cast Action:", Svc.ClientState.LocalPlayer.CastActionId == 0 ? string.Empty : $"{ActionWatching.GetActionName(Svc.ClientState.LocalPlayer.CastActionId)} (ID: {Svc.ClientState.LocalPlayer.CastActionId})");
                 CustomStyleText("Cast Time (Total):", Math.Round(Svc.ClientState.LocalPlayer.TotalCastTime, 2));
