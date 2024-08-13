@@ -1,4 +1,6 @@
-﻿using ECommons.DalamudServices;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -6,6 +8,30 @@ using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
+    internal class SAMHelper : SAM
+    {
+        internal static int SenCount => GetSenCount();
+        private static int GetSenCount()
+        {
+            var gauge = CustomComboFunctions.GetJobGauge<SAMGauge>();
+            var senCount = 0;
+            if (gauge.HasGetsu) senCount++;
+            if (gauge.HasSetsu) senCount++;
+            if (gauge.HasKa) senCount++;
+
+            return senCount;
+        }
+        internal static bool ComboStarted => GetComboStarted(); 
+        private unsafe static bool GetComboStarted()
+        {
+            var comboAction = ActionManager.Instance()->Combo.Action;
+            if (comboAction == CustomComboFunctions.OriginalHook(Hakaze) || comboAction == CustomComboFunctions.OriginalHook(Jinpu) || comboAction == CustomComboFunctions.OriginalHook(Shifu))
+                return true;
+            return false;
+        }
+    }
+
+
     internal class SAMOpenerLogic : SAM
     {
         private static bool HasCooldowns()
