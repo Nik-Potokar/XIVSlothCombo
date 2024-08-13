@@ -12,24 +12,23 @@ using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
-
 namespace XIVSlothCombo.Window.Tabs
 {
     internal class Debug : ConfigWindow
     {
+        public static int debugNum = 0;
+
         internal class DebugCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; }
-
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) => actionID;
         }
 
-        public static int debugNum = 0;
         internal unsafe static new void Draw()
         {
-            IPlayerCharacter? LocalPlayer = Svc.ClientState.LocalPlayer;
             DebugCombo? comboClass = new();
-            uint[] statusBlacklist = { 360, 361, 362, 363, 364, 365, 366, 367, 368 }; // Prevents status durations from being displayed
+            IPlayerCharacter? LocalPlayer = Svc.ClientState.LocalPlayer;
+            uint[] statusBlacklist = { 360, 361, 362, 363, 364, 365, 366, 367, 368 }; // Duration will not be displayed for these status effects
 
             // Custom Styling
             static void CustomStyleText(string label, object? value)
