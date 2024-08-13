@@ -1,5 +1,8 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Component.GUI;
+using System;
 using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
@@ -70,7 +73,7 @@ namespace XIVSlothCombo.Combos.PvE
                 OgiNamikiriReady = 2959,
                 Fuka = 1299,
                 Fugetsu = 1298,
-                KaeshiSetsugekkaReady = 4216,
+                TsubameReady = 4216,
                 TendoKaeshiSetsugekkaReady = 4218,
                 KaeshiGokenReady = 3852,
                 TendoKaeshiGokenReady = 4217,
@@ -305,7 +308,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 (oneSeal && enemyHP > 1 && LevelChecked(Traits.EnhancedMeikyoShishui2) && !HasEffect(Buffs.Tendo) && WasLastWeaponskill(Gekko)) ||
                                 (twoSeal && !LevelChecked(MidareSetsugekka)) ||
                                 (threeSeal && LevelChecked(MidareSetsugekka)) ||
-                                (threeSeal && LevelChecked(TendoSetsugekka) && !HasEffect(Buffs.KaeshiSetsugekkaReady))))
+                                (threeSeal && LevelChecked(TendoSetsugekka) && !HasEffect(Buffs.TsubameReady))))
                                 return OriginalHook(Iaijutsu);
                         }
                     }
@@ -371,7 +374,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (WasLastWeaponskill(TendoSetsugekka) && HasEffect(Buffs.TendoKaeshiSetsugekkaReady))
                         return true;
 
-                    if (HasEffect(Buffs.KaeshiSetsugekkaReady))
+                    if (HasEffect(Buffs.TsubameReady))
                     {
                         //1 and 2 min
                         if ((MeikyoUsed is 0 or 1 or 2 or 3 or 4 or 9 or 10) &&
@@ -404,12 +407,17 @@ namespace XIVSlothCombo.Combos.PvE
                 bool oneSeal = OriginalHook(Iaijutsu) is Higanbana;
                 bool twoSeal = OriginalHook(Iaijutsu) is TenkaGoken or TendoGoken;
                 bool threeSeal = OriginalHook(Iaijutsu) is MidareSetsugekka or TendoSetsugekka;
+                int senCount = 0;
+                if (gauge.HasKa) senCount++;
+                if (gauge.HasGetsu) senCount++;
+                if (gauge.HasSetsu) senCount++;
                 float enemyHP = GetTargetHPPercent();
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 int kenkiOvercap = Config.SAM_ST_KenkiOvercapAmount;
                 float shintenTreshhold = Config.SAM_ST_ExecuteThreshold;
                 float HiganbanaThreshold = Config.SAM_ST_Higanbana_Threshold;
                 float meikyostacks = GetBuffStacks(Buffs.MeikyoShisui);
+                bool startedCombo = lastComboMove == OriginalHook(Hakaze) || lastComboMove == OriginalHook(Jinpu) || lastComboMove == OriginalHook(Shifu);
 
                 if (actionID is Hakaze or Gyofu)
                 {
@@ -438,14 +446,17 @@ namespace XIVSlothCombo.Combos.PvE
                         return MeikyoShisui;
 
                     //oGCDs
-                    if (CanWeave(actionID))
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs))
                         {
                             //Meikyo Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_MeikyoShisui) &&
                                !HasEffect(Buffs.MeikyoShisui) &&
-                               ActionReady(MeikyoShisui) && JustUsed(MidareSetsugekka, 1))
+                               ActionReady(MeikyoShisui) &&
+                               GetCooldownRemainingTime(MeikyoShisui) <= 10 &&
+                               senCount < 3 &&
+                               !startedCombo)
                                 return MeikyoShisui;
 
                             //Ikishoten Features
@@ -512,13 +523,10 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if ((!IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) ||
                                 (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) && !IsMoving)) &&
-                                ((oneSeal && enemyHP > HiganbanaThreshold &&
-                                ((!TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10) ||
-                                (TraitLevelChecked(Traits.EnhancedMeikyoShishui2) && !HasEffect(Buffs.Tendo) && WasLastWeaponskill(Gekko)))) ||
+                                ((oneSeal && enemyHP > HiganbanaThreshold && GetDebuffRemainingTime(Debuffs.Higanbana) <= 10) ||
                                 (twoSeal && !LevelChecked(MidareSetsugekka)) ||
                                 (threeSeal &&
-                                (LevelChecked(MidareSetsugekka) ||
-                                (LevelChecked(TendoSetsugekka) && !HasEffect(Buffs.KaeshiSetsugekkaReady))))))
+                                (LevelChecked(MidareSetsugekka) && !HasEffect(Buffs.TsubameReady)))))
                                 return OriginalHook(Iaijutsu);
                         }
                     }
@@ -592,7 +600,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (WasLastWeaponskill(TendoSetsugekka) && HasEffect(Buffs.TendoKaeshiSetsugekkaReady))
                         return true;
 
-                    if (HasEffect(Buffs.KaeshiSetsugekkaReady))
+                    if (HasEffect(Buffs.TsubameReady))
                     {
                         //1 and 2 min
                         if ((MeikyoUsed is 0 or 1 or 2 or 3 or 4 or 9 or 10) &&
