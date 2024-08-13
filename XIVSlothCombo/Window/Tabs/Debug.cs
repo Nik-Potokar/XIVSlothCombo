@@ -29,7 +29,7 @@ namespace XIVSlothCombo.Window.Tabs
         {
             IPlayerCharacter? LocalPlayer = Svc.ClientState.LocalPlayer;
             DebugCombo? comboClass = new();
-            uint[] statusBlacklist = { 360, 361, 362, 363, 364, 365, 366, 367, 368 }; // Prevents status duration from being displayed
+            uint[] statusBlacklist = { 360, 361, 362, 363, 364, 365, 366, 367, 368 }; // Prevents status durations from being displayed
 
             // Custom Styling
             static void CustomStyleText(string label, object? value)
@@ -173,7 +173,7 @@ namespace XIVSlothCombo.Window.Tabs
                 CustomStyleText("Last Weaponskill:", ActionWatching.GetActionName(ActionWatching.LastWeaponskill));
                 CustomStyleText("Last Spell:", ActionWatching.GetActionName(ActionWatching.LastSpell));
                 CustomStyleText("Last Ability:", ActionWatching.GetActionName(ActionWatching.LastAbility));
-                CustomStyleText("Combo Timer:", $"{Math.Round(CustomComboFunctions.ComboTimer, 1)}");
+                CustomStyleText("Combo Timer:", Math.Round(CustomComboFunctions.ComboTimer, 1));
                 CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(CustomComboFunctions.ComboAction)) ? "Unknown" : ActionWatching.GetActionName(CustomComboFunctions.ComboAction))} (ID: {CustomComboFunctions.ComboAction})");
                 CustomStyleText("Cast Action:", LocalPlayer.CastActionId == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(LocalPlayer.CastActionId)) ? "Unknown" : ActionWatching.GetActionName(LocalPlayer.CastActionId))} (ID: {LocalPlayer.CastActionId})");
                 CustomStyleText("Cast Time (Total):", Math.Round(LocalPlayer.TotalCastTime, 2));
