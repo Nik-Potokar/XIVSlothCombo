@@ -605,15 +605,11 @@ namespace XIVSlothCombo.Combos.PvE
                         gauge.SerpentOffering >= 50 &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
-                        (gauge.SerpentOffering >= 95 ||
+                        (gauge.SerpentOffering >= 90 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90) ||
                         gauge.SerpentOffering >= 60 && GetCooldownRemainingTime(SerpentsIre) is >= 65 and <= 95)
-                        return true;
-
-                    // 5min failsafe
-                    if (SerpentsIreUsed == 3 && gauge.SerpentOffering >= 90)
                         return true;
 
                     // overcap protection
