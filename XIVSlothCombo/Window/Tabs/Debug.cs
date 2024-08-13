@@ -15,10 +15,8 @@ using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Window.Tabs
 {
-
     internal class Debug : ConfigWindow
     {
-
         internal class DebugCombo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; }
@@ -31,6 +29,7 @@ namespace XIVSlothCombo.Window.Tabs
         {
             IPlayerCharacter? LocalPlayer = Svc.ClientState.LocalPlayer;
             DebugCombo? comboClass = new();
+            uint[] statusBlacklist = { 360, 361, 362, 363, 364, 365, 366, 367, 368 }; // Prevents status duration from being displayed
 
             // Custom Styling
             static void CustomStyleText(string label, object? value)
@@ -50,7 +49,7 @@ namespace XIVSlothCombo.Window.Tabs
                 // Player Status Effects
                 if (ImGui.CollapsingHeader("Player Status Effects"))
                 {
-                    foreach (Status? status in Svc.ClientState.LocalPlayer.StatusList)
+                    foreach (Status? status in LocalPlayer.StatusList)
                     {
                         // Null Check (Source Name)
                         if (status.SourceObject is not null)
@@ -63,12 +62,29 @@ namespace XIVSlothCombo.Window.Tabs
                         if (!string.IsNullOrEmpty(ActionWatching.GetStatusName(status.StatusId)))
                         {
                             CustomStyleText(ActionWatching.GetStatusName(status.StatusId) + ":", status.StatusId);
-                            ImGui.SameLine(0, 4f);
-                            CustomStyleText("", $"({Math.Round(status.RemainingTime, 1)})");
+
                         }
                         else
                         {
-                            CustomStyleText("", $"{status.StatusId} ({Math.Round(status.RemainingTime, 1)})");
+                            CustomStyleText("", status.StatusId);
+                        }
+
+                        // Duration + Blacklist Check
+                        if (status.RemainingTime > 0 && !statusBlacklist.Contains(status.StatusId))
+                        {
+                            string formattedDuration;
+                            if (status.RemainingTime >= 60)
+                            {
+                                int minutes = (int)(status.RemainingTime / 60);
+                                formattedDuration = $"{minutes}m";
+                            }
+                            else
+                            {
+                                formattedDuration = $"{Math.Round(status.RemainingTime, 1)}s";
+                            }
+
+                            ImGui.SameLine(0, 4f);
+                            CustomStyleText("", $"({formattedDuration})");
                         }
                     }
                 }
@@ -76,7 +92,7 @@ namespace XIVSlothCombo.Window.Tabs
                 // Target Status Effects
                 if (ImGui.CollapsingHeader("Target Status Effects"))
                 {
-                    if (Svc.ClientState.LocalPlayer.TargetObject is IBattleChara chara)
+                    if (LocalPlayer.TargetObject is IBattleChara chara)
                     {
                         foreach (Status? status in chara.StatusList)
                         {
@@ -91,12 +107,29 @@ namespace XIVSlothCombo.Window.Tabs
                             if (!string.IsNullOrEmpty(ActionWatching.GetStatusName(status.StatusId)))
                             {
                                 CustomStyleText(ActionWatching.GetStatusName(status.StatusId) + ":", status.StatusId);
-                                ImGui.SameLine(0, 4f);
-                                CustomStyleText("", $"({Math.Round(status.RemainingTime, 1)})");
+
                             }
                             else
                             {
-                                CustomStyleText("", $"{status.StatusId} ({Math.Round(status.RemainingTime, 1)})");
+                                CustomStyleText("", status.StatusId);
+                            }
+
+                            // Duration + Blacklist Check
+                            if (status.RemainingTime > 0 && !statusBlacklist.Contains(status.StatusId))
+                            {
+                                string formattedDuration;
+                                if (status.RemainingTime >= 60)
+                                {
+                                    int minutes = (int)(status.RemainingTime / 60);
+                                    formattedDuration = $"{minutes}m";
+                                }
+                                else
+                                {
+                                    formattedDuration = $"{Math.Round(status.RemainingTime, 1)}s";
+                                }
+
+                                ImGui.SameLine(0, 4f);
+                                CustomStyleText("", $"({formattedDuration})");
                             }
                         }
 
@@ -108,25 +141,25 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Spacing();
                 ImGui.Text("Player Info");
                 ImGui.Separator();
-                CustomStyleText("Job:", $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} (ID: {Svc.ClientState.LocalPlayer.ClassJob.Id})");
+                CustomStyleText("Job:", $"{LocalPlayer.ClassJob.GameData.NameEnglish} (ID: {LocalPlayer.ClassJob.Id})");
                 CustomStyleText("Zone:", $"{Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name} (ID: {Svc.ClientState.TerritoryType})");
                 CustomStyleText("In PvP:", CustomComboFunctions.InPvP());
                 CustomStyleText("In Combat:", CustomComboFunctions.InCombat());
-                CustomStyleText("Hitbox Radius:", Svc.ClientState.LocalPlayer.HitboxRadius);
+                CustomStyleText("Hitbox Radius:", LocalPlayer.HitboxRadius);
                 ImGui.Spacing();
 
                 // Target Info
                 ImGui.Spacing();
                 ImGui.Text("Target Info");
                 ImGui.Separator();
-                CustomStyleText("ObjectId:", Svc.ClientState.LocalPlayer.TargetObject?.GameObjectId);
-                CustomStyleText("ObjectKind:", Svc.ClientState.LocalPlayer.TargetObject?.ObjectKind);
-                CustomStyleText("Is BattleChara:", Svc.ClientState.LocalPlayer.TargetObject is IBattleChara);
-                CustomStyleText("Is PlayerCharacter:", Svc.ClientState.LocalPlayer.TargetObject is IPlayerCharacter);
+                CustomStyleText("ObjectId:", LocalPlayer.TargetObject?.GameObjectId);
+                CustomStyleText("ObjectKind:", LocalPlayer.TargetObject?.ObjectKind);
+                CustomStyleText("Is BattleChara:", LocalPlayer.TargetObject is IBattleChara);
+                CustomStyleText("Is PlayerCharacter:", LocalPlayer.TargetObject is IPlayerCharacter);
                 CustomStyleText("Distance:", $"{Math.Round(CustomComboFunctions.GetTargetDistance(), 2)}y");
-                CustomStyleText("Hitbox Radius:", Svc.ClientState.LocalPlayer.TargetObject?.HitboxRadius);
+                CustomStyleText("Hitbox Radius:", LocalPlayer.TargetObject?.HitboxRadius);
                 CustomStyleText("In Melee Range:", CustomComboFunctions.InMeleeRange());
-                CustomStyleText("Relative Direction:", CustomComboFunctions.AngleToTarget() == 2 ? "Rear" : (CustomComboFunctions.AngleToTarget() == 1 || CustomComboFunctions.AngleToTarget() == 3) ? "Flank" : CustomComboFunctions.AngleToTarget() == 4 ? "Front" : "");
+                CustomStyleText("Relative Direction:", CustomComboFunctions.AngleToTarget() is 2 ? "Rear" : (CustomComboFunctions.AngleToTarget() is 1 or 3) ? "Flank" : CustomComboFunctions.AngleToTarget() is 4 ? "Front" : "");
                 CustomStyleText("Health:", $"{CustomComboFunctions.EnemyHealthCurrentHp().ToString("N0")} / {CustomComboFunctions.EnemyHealthMaxHp().ToString("N0")} ({Math.Round(CustomComboFunctions.GetTargetHPPercent(), 2)}%)");
                 ImGui.Spacing();
 
@@ -134,17 +167,17 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Spacing();
                 ImGui.Text("Action Info");
                 ImGui.Separator();
-                CustomStyleText("Last Action:", ActionWatching.LastAction == 0 ? string.Empty : $"{ActionWatching.GetActionName(ActionWatching.LastAction)} (ID: {ActionWatching.LastAction})");
+                CustomStyleText("Last Action:", ActionWatching.LastAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(ActionWatching.LastAction)) ? "Unknown" : ActionWatching.GetActionName(ActionWatching.LastAction))} (ID: {ActionWatching.LastAction})");
                 CustomStyleText("Last Action Cost:", CustomComboFunctions.GetResourceCost(ActionWatching.LastAction));
                 CustomStyleText("Last Action Type:", ActionWatching.GetAttackType(ActionWatching.LastAction));
                 CustomStyleText("Last Weaponskill:", ActionWatching.GetActionName(ActionWatching.LastWeaponskill));
                 CustomStyleText("Last Spell:", ActionWatching.GetActionName(ActionWatching.LastSpell));
                 CustomStyleText("Last Ability:", ActionWatching.GetActionName(ActionWatching.LastAbility));
-                CustomStyleText("Combo Timer:", Math.Round(CustomComboFunctions.ComboTimer, 1));
-                CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{ActionWatching.GetActionName(CustomComboFunctions.ComboAction)} (ID: {CustomComboFunctions.ComboAction})");
-                CustomStyleText("Cast Action:", Svc.ClientState.LocalPlayer.CastActionId == 0 ? string.Empty : $"{ActionWatching.GetActionName(Svc.ClientState.LocalPlayer.CastActionId)} (ID: {Svc.ClientState.LocalPlayer.CastActionId})");
-                CustomStyleText("Cast Time (Total):", Math.Round(Svc.ClientState.LocalPlayer.TotalCastTime, 2));
-                CustomStyleText("Cast Time (Current):", Math.Round(Svc.ClientState.LocalPlayer.CurrentCastTime, 2));
+                CustomStyleText("Combo Timer:", $"{Math.Round(CustomComboFunctions.ComboTimer, 1)}");
+                CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(CustomComboFunctions.ComboAction)) ? "Unknown" : ActionWatching.GetActionName(CustomComboFunctions.ComboAction))} (ID: {CustomComboFunctions.ComboAction})");
+                CustomStyleText("Cast Action:", LocalPlayer.CastActionId == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(LocalPlayer.CastActionId)) ? "Unknown" : ActionWatching.GetActionName(LocalPlayer.CastActionId))} (ID: {LocalPlayer.CastActionId})");
+                CustomStyleText("Cast Time (Total):", Math.Round(LocalPlayer.TotalCastTime, 2));
+                CustomStyleText("Cast Time (Current):", Math.Round(LocalPlayer.CurrentCastTime, 2));
                 ImGui.Spacing();
 
                 // Party Info
