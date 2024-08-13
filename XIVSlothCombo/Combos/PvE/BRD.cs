@@ -100,16 +100,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is HeavyShot or BurstShot)
                 {
-                    if (IsEnabled(CustomComboPreset.BRD_ApexST))
-                    {
-                        BRDGauge? gauge = GetJobGauge<BRDGauge>();
-
-                        if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
-                            return ApexArrow;
-                        if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
-                            return BlastArrow;
-                    }
-
+                    
                     if (IsEnabled(CustomComboPreset.BRD_DoTMaintainance))
                     {
                         bool venomous = TargetHasEffect(Debuffs.VenomousBite);
@@ -133,6 +124,16 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Windbite;
                         }
                     }
+
+                    if (IsEnabled(CustomComboPreset.BRD_ApexST))
+                        {
+                            BRDGauge? gauge = GetJobGauge<BRDGauge>();
+
+                            if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
+                                return ApexArrow;
+                            if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
+                                return BlastArrow;
+                        }
 
                     if (HasEffect(Buffs.HawksEye))
                         return LevelChecked(RefulgentArrow)
