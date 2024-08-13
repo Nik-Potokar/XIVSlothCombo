@@ -108,8 +108,6 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 MNK_ST_SecondWind_Threshold = new("MNK_ST_SecondWindThreshold", 25),
                 MNK_ST_Bloodbath_Threshold = new("MNK_ST_BloodbathThreshold", 40),
-                MNK_AoE_SecondWind_Threshold = new("MNK_AoE_SecondWindThreshold", 25),
-                MNK_AoE_Bloodbath_Threshold = new("MNK_AoE_BloodbathThreshold", 40),
                 MNK_SelectedOpener = new("MNK_SelectedOpener"),
                 MNK_VariantCure = new("MNK_Variant_Cure");
         }
@@ -539,9 +537,9 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(EnlightenedMeditation);
                         }
 
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoE_SecondWind_Threshold) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= 25 && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
                             return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_AoE_Bloodbath_Threshold) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= 40 && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
                             return All.Bloodbath;
                     }
 
