@@ -266,7 +266,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         //Senei Features
-                        if (gauge.Kenki >= 25 && ActionReady(Senei) && HasEffect(Buffs.MeikyoShisui) &&
+                        if (gauge.Kenki >= 25 && ActionReady(Senei) &&
                             HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                             return Senei;
 
@@ -293,12 +293,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                     {
                         //Ogi Namikiri Features
-                        if (!IsMoving &&
-                            LevelChecked(OgiNamikiri) &&
-                            (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
-                            (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
-                            ((meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
-                            GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6))))
+                        if (ActionReady(OgiNamikiri) &&
+                            (gauge.Kaeshi == Kaeshi.NAMIKIRI || HasEffect(Buffs.OgiNamikiriReady)))
                             return OriginalHook(OgiNamikiri);
 
                         // Iaijutsu Features
@@ -470,7 +466,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             //Senei Features
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
-                                gauge.Kenki >= 25 && ActionReady(Senei) && HasEffect(Buffs.MeikyoShisui) &&
+                                gauge.Kenki >= 25 && ActionReady(Senei) &&
                                 HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                                 return Senei;
 
@@ -506,11 +502,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri) &&
                             (!IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) ||
                             (IsEnabled(CustomComboPreset.SAM_ST_CDs_OgiNamikiri_Movement) && !IsMoving)) &&
-                            LevelChecked(OgiNamikiri) &&
-                            (gauge.Kaeshi == Kaeshi.NAMIKIRI ||
-                            (HasEffect(Buffs.OgiNamikiriReady) && !HasEffect(Buffs.ZanshinReady) &&
-                            ((meikyostacks is 2 && WasLastWeaponskill(Higanbana)) ||
-                            GetBuffRemainingTime(Buffs.OgiNamikiriReady) <= 6))))
+                            ActionReady(OgiNamikiri) &&
+                            (gauge.Kaeshi == Kaeshi.NAMIKIRI || HasEffect(Buffs.OgiNamikiriReady)))
                             return OriginalHook(OgiNamikiri);
 
                         // Iaijutsu Features
