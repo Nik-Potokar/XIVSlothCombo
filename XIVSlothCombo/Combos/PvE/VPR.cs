@@ -1,7 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using System;
-using System.Linq;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -137,7 +135,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return actionID;
 
                     //All Weaves
-                    if (CanWeave(actionID))
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         // Death Rattle
                         if (LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
@@ -163,11 +161,12 @@ namespace XIVSlothCombo.Combos.PvE
                             if (HasEffect(Buffs.SwiftskinsVenom) && InMeleeRange())
                                 return OriginalHook(Twinblood);
                         }
-                    }
 
-                    //Serpents Ire usage
-                    if (!CappedOnCoils && CanWeave(Ouroboros) && ActionReady(SerpentsIre))
-                        return SerpentsIre;
+                        //Serpents Ire usage
+                        if (!CappedOnCoils && ActionReady(SerpentsIre))
+                            return SerpentsIre;
+
+                    }
 
                     if (LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
                         return VPRCheckRattlingCoils.HasRattlingCoilStack(gauge)
@@ -204,12 +203,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     // Uncoiled Fury usage
                     if (LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        (((gauge.RattlingCoilStacks > 1) ||
+                        ((gauge.RattlingCoilStacks > 1) ||
                         (enemyHP < 1 && VPRCheckRattlingCoils.HasRattlingCoilStack(gauge))) &&
                         !VicewinderReady && !HuntersCoilReady && !SwiftskinsCoilReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
                          !VPRCheckTimers.IsEmpowermentExpiring(6) && !VPRCheckTimers.IsVenomExpiring(6) &&
-                        !VPRCheckTimers.IsComboExpiring(6) && !VPRCheckTimers.IsHoningExpiring(6)))
+                        !VPRCheckTimers.IsComboExpiring(6) && !VPRCheckTimers.IsHoningExpiring(6))
                         return UncoiledFury;
 
                     //Reawaken combo
@@ -358,7 +357,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //All Weaves
-                    if (CanWeave(actionID))
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         // Death Rattle
                         if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) &&
@@ -394,15 +393,15 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (HasEffect(Buffs.SwiftskinsVenom))
                                         return OriginalHook(Twinblood);
                                 }
+
+                                //Serpents Ire usage
+                                if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
+                                    !CappedOnCoils && ActionReady(SerpentsIre))
+                                    return SerpentsIre;
                             }
                         }
                     }
 
-                    //Serpents Ire usage
-                    if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) &&
-                        CanWeave(Ouroboros) &&
-                        !CappedOnCoils && ActionReady(SerpentsIre))
-                        return SerpentsIre;
 
                     if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
                         LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
@@ -594,7 +593,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelMaw)
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         // Death Rattle
                         if (LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is LastLash)
@@ -765,7 +764,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelMaw)
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         // Death Rattle
                         if (IsEnabled(CustomComboPreset.VPR_AoE_SerpentsTail) &&
