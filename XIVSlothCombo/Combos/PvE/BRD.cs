@@ -153,16 +153,7 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is IronJaws)
                 {
-                    if (IsEnabled(CustomComboPreset.BRD_IronJawsApex) && LevelChecked(ApexArrow))
-                    {
-                        BRDGauge? gauge = GetJobGauge<BRDGauge>();
-
-                        if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
-                            return BlastArrow;
-                        if (gauge.SoulVoice == 100 && IsOffCooldown(ApexArrow))
-                            return ApexArrow;
-                    }
-
+                    
                     if (!LevelChecked(IronJaws))
                     {
                         Status? venomous = FindTargetEffect(Debuffs.VenomousBite);
@@ -206,6 +197,16 @@ namespace XIVSlothCombo.Combos.PvE
                         return CausticBite;
                     if (LevelChecked(Stormbite))
                         return Stormbite;
+
+                    if (IsEnabled(CustomComboPreset.BRD_IronJawsApex) && LevelChecked(ApexArrow))
+                    {
+                        BRDGauge? gauge = GetJobGauge<BRDGauge>();
+
+                        if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
+                            return BlastArrow;
+                        if (gauge.SoulVoice == 100 && IsOffCooldown(ApexArrow))
+                            return ApexArrow;
+                    }
                 }
 
                 return actionID;
@@ -419,7 +420,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
                     
 
-                    if (canWeave)
+                    if (canWeave && IsEnabled(CustomComboPreset.BRD_AoE_Adv_oGCD))
                     {
                         float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
                         float empyrealCD = GetCooldownRemainingTime(EmpyrealArrow);
@@ -476,7 +477,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(RainOfDeath);
                         }
                         //Moved Below ogcds as it was preventing them from happening. 
-                        if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
+                        if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f && IsEnabled(CustomComboPreset.BRD_AoE_Adv_Buffs))
                             return OriginalHook(RadiantEncore);
 
                         // healing - please move if not appropriate priority
@@ -493,7 +494,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (wideVolleyReady)
                         return OriginalHook(WideVolley);
-                    if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
+                    if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100 && IsEnabled(CustomComboPreset.BRD_Aoe_ApexArrow))
                         return ApexArrow;
                     if (blastArrowReady)
                         return BlastArrow;
@@ -560,7 +561,7 @@ namespace XIVSlothCombo.Combos.PvE
                         BRDGauge? gauge = GetJobGauge<BRDGauge>();
                         bool blastReady = LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady);
 
-                        if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100 && !IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
+                        if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100)
                             return ApexArrow;
                         if (blastReady)
                             return BlastArrow;
@@ -720,7 +721,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }                                             
                     }                                      
                     
-                    if (canWeave)
+                    if (canWeave && IsEnabled(CustomComboPreset.BRD_ST_Adv_oGCD))
                     {
                         float battleVoiceCD = GetCooldownRemainingTime(BattleVoice);
                         float empyrealCD = GetCooldownRemainingTime(EmpyrealArrow);
@@ -788,7 +789,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
                     //Moved below weaves bc roobert says it is blocking his weaves from happening
-                    if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
+                    if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f && IsEnabled(CustomComboPreset.BRD_Adv_BuffsRadiant))
                         return OriginalHook(RadiantEncore);
 
                     if (isEnemyHealthHigh)
@@ -855,7 +856,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
-                    if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow))
+                    if (IsEnabled(CustomComboPreset.BRD_ST_ApexArrow))
                     {
                         if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
                             return BlastArrow;
