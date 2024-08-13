@@ -185,7 +185,7 @@ namespace XIVSlothCombo.Combos
         AST_ST_DPS_CombustUptime = 1018,
               
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
+        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
         AST_DPS_LightSpeed = 1020,
 
         [ParentCombo(AST_ST_DPS)]
@@ -224,7 +224,7 @@ namespace XIVSlothCombo.Combos
         AST_AOE_DPS = 1041,    
 
         [ParentCombo(AST_AOE_DPS)]
-        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
+        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
         AST_AOE_LightSpeed = 1048,
 
         [ParentCombo(AST_AOE_DPS)]
