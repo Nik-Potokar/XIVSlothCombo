@@ -144,11 +144,11 @@ namespace XIVSlothCombo.Combos.PvE
                         //Life Surge Feature
                         if (((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
                             AnimationLock.CanDRGWeave(LifeSurge) &&
-                            (HasEffect(Buffs.LanceCharge) &&
+                            HasEffect(Buffs.LanceCharge) &&
                             ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
                             ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
                             (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                            (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
+                            (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
                             return LifeSurge;
 
                         //Wyrmwind Thrust Feature
@@ -200,15 +200,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //1-2-3 Combo
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is TrueThrust or RaidenThrust)
+                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null ||
+                                ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null ||
                                 ChaosDoTDebuff.RemainingTime < GCD * 5 ||
-                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 ||
-                                GetCooldownRemainingTime(LanceCharge) < GCD * 4)) ||
-                                (!LevelChecked(ChaosThrust) &&
-                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7)) ||
+                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -234,7 +232,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is VorpalThrust or LanceBarrage && LevelChecked(OriginalHook(FullThrust)))
                             return OriginalHook(FullThrust);
 
-
                         if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(FangAndClaw))
                         {
                             if (trueNorthReady && CanDelayedWeave(actionID) &&
@@ -252,7 +249,6 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
-
         internal class DRG_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
@@ -319,11 +315,11 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
                                 ((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
                                 AnimationLock.CanDRGWeave(LifeSurge) &&
-                                (HasEffect(Buffs.LanceCharge) &&
+                                HasEffect(Buffs.LanceCharge) &&
                                 ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
                                 ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane)) ||
                                 (WasLastWeaponskill(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                                (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust))))))
+                                (WasLastWeaponskill(OriginalHook(VorpalThrust)) && LevelChecked(OriginalHook(FullThrust)))))
                                 return LifeSurge;
 
                             //Dragonfire Dive Feature
@@ -403,15 +399,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //1-2-3 Combo
                     if (comboTime > 0)
                     {
-                        if (lastComboMove is TrueThrust or RaidenThrust)
+                        if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                (ChaosDoTDebuff is null ||
+                                ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null ||
                                 ChaosDoTDebuff.RemainingTime < GCD * 5 ||
-                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7 ||
-                                GetCooldownRemainingTime(LanceCharge) < GCD * 4)) ||
-                                (!LevelChecked(ChaosThrust) &&
-                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)
+                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7)) ||
+                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -425,6 +419,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             return OriginalHook(ChaosThrust);
                         }
+
                         if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(WheelingThrust))
                         {
                             if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
@@ -437,7 +432,6 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is VorpalThrust or LanceBarrage && LevelChecked(OriginalHook(FullThrust)))
                             return OriginalHook(FullThrust);
-
 
                         if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(FangAndClaw))
                         {
@@ -704,7 +698,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (comboTime > 0)
                     {
-                        if (!SonicThrust.LevelChecked())
+                        if (IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) &&
+                            !SonicThrust.LevelChecked())
                         {
                             if (lastComboMove == TrueThrust && LevelChecked(Disembowel))
                                 return Disembowel;
@@ -722,9 +717,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return CoerthanTorment;
                         }
                     }
-                    return HasEffect(Buffs.PowerSurge) || LevelChecked(SonicThrust)
-                        ? OriginalHook(DoomSpike)
-                        : OriginalHook(TrueThrust);
+                    return IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) && (!HasEffect(Buffs.PowerSurge) || !LevelChecked(SonicThrust))
+                        ? OriginalHook(TrueThrust)
+                        : OriginalHook(DoomSpike);
                 }
 
                 return actionID;

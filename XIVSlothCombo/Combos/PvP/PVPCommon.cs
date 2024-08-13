@@ -39,6 +39,7 @@ namespace XIVSlothCombo.Combos.PvP
         internal class Buffs
         {
             public const ushort
+                Sprint = 1342,
                 Guard = 3054;
         }
 
