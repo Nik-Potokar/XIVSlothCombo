@@ -496,11 +496,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return OriginalHook(WideVolley);
                     if (LevelChecked(ApexArrow) && gauge.SoulVoice == 100 && IsEnabled(CustomComboPreset.BRD_Aoe_ApexArrow))
                         return ApexArrow;
-                    if (blastArrowReady)
+                    if (blastArrowReady && IsEnabled(CustomComboPreset.BRD_Aoe_ApexArrow))
                         return BlastArrow;
-                    if (resonantArrowReady)
+                    if (resonantArrowReady && IsEnabled(CustomComboPreset.BRD_AoE_Adv_Buffs))
                         return ResonantArrow;
-                    if (HasEffect(Buffs.RadiantEncoreReady))
+                    if (HasEffect(Buffs.RadiantEncoreReady) && IsEnabled(CustomComboPreset.BRD_AoE_Adv_Buffs))
                         return OriginalHook(RadiantEncore);
 
                 }
@@ -879,7 +879,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage))
                         return OriginalHook(StraightShot);
 
-                    if (HasEffect(Buffs.ResonantArrowReady))
+                    if (HasEffect(Buffs.ResonantArrowReady) && IsEnabled(CustomComboPreset.BRD_Adv_Buffs))
                         return ResonantArrow;
 
                 }
