@@ -757,11 +757,22 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
         BRD_AoE_Simple_NoWaste = 3033,
 
+        [ParentCombo(BRD_DoTMaintainance)]
+        [CustomComboInfo("DoT Maintenance RagingStrike Option", "Adds a DoT maintenance that causes the Raging Strikes buff to refresh with 3 seconds remaining.", BRD.JobID)]
+        BRD_DoTRagingStrikesMaintainance = 3034,
+
+        [ParentCombo(BRD_DoTMaintainance)]
+        [CustomComboInfo("DoT Army's Paeon Option", "If you are casting Army's Paeon,\ntake into consideration that the DoT can be shortened by 1 second.", BRD.JobID)]
+        BRD_DoTArmyMaintainance = 3035,
+
+        [ParentCombo(BRD_StraightShotUpgrade)]
+        [CustomComboInfo("Song  Option", "A mismatch in the song is fatal. Therefore,\nthe song will be switched at the timing of the song change.\nNote: If you switch from Wanderer's, Pitch Perfect will be performed.", BRD.JobID)]
+        BRD_SongMaintainance = 3036,
+
         [ReplaceSkill(BRD.ApexArrow, BRD.BlastArrow)]
-        [ConflictingCombos(BRD_ST_SimpleMode)]
         [CustomComboInfo("Apex into DoT Maintenance", "Adds a Dot option to Apex and Blast similar to Heavy.", BRD.JobID)]
-        BRD_Apex_DoT = 3034,
-        // Last value = 3034
+        BRD_Apex_DoT = 3037,
+        // Last value = 3037
 
         #endregion
 

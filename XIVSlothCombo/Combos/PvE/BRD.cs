@@ -101,14 +101,6 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     BRDGauge? gauge = GetJobGauge<BRDGauge>();
 
-                    if (IsEnabled(CustomComboPreset.BRD_Apex))
-                    {
-                        if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow) && gauge.SoulVoice == 100)
-                            return ApexArrow;
-                        if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
-                            return BlastArrow;
-                    }
-
                     if (IsEnabled(CustomComboPreset.BRD_DoTMaintainance))
                     {
                         int updateDotTime = 0;
@@ -123,7 +115,7 @@ namespace XIVSlothCombo.Combos.PvE
                         float stormRemaining = GetDebuffRemainingTime(Debuffs.Stormbite);
                         float ragingStrikeRemainings = GetBuffRemainingTime(Buffs.RagingStrikes);
 
-                        if (gauge.Song == Song.ARMY)
+                        if (gauge.Song == Song.ARMY && IsEnabled(CustomComboPreset.BRD_DoTArmyMaintainance))
                         {
                             updateDotTime = 3;
                         }
@@ -135,6 +127,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (InCombat())
                         {
                             if (LevelChecked(IronJaws) && LevelChecked(RagingStrikes) &&
+                                IsEnabled(CustomComboPreset.BRD_DoTRagingStrikesMaintainance) &&
                                 ragingstrikes && ragingStrikeRemainings <= 4)
                                 return IronJaws;
                             if (LevelChecked(IronJaws) &&
@@ -146,6 +139,50 @@ namespace XIVSlothCombo.Combos.PvE
                             if (!LevelChecked(IronJaws) && windbite && windRemaining < updateDotTime)
                                 return Windbite;
                         }
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_SongMaintainance))
+                    {
+                        int songTimerInSeconds = gauge.SongTimer / 1000;
+
+                        bool canWeave = CanWeave(actionID);
+                        bool canWeaveBuffs = CanWeave(actionID, 0.6);
+                        bool canWeaveDelayed = CanDelayedWeave(actionID, 0.9);
+
+                        // Song None
+                        // If Song is None, No Operation
+
+                        // Song Wanderer
+                        // If it's a Wanderer, switch to Mage. If you have any left in your repertoire, use Pitch Perfect and then switch.
+                        if ((canWeave) && (canWeaveBuffs) &&
+                            (gauge.Song == Song.WANDERER) &&
+                            (songTimerInSeconds < 3) && (gauge.Repertoire > 0))
+                            return OriginalHook(PitchPerfect);
+                        else if ((gauge.Song == Song.WANDERER) &&
+                                 (songTimerInSeconds <= 3) && IsOffCooldown(MagesBallad))
+                            return MagesBallad;
+
+                        // Song Mage
+                        // If it's a Mage, switch to Army.
+                        if ((canWeave) && (canWeaveBuffs) &&
+                            (gauge.Song == Song.MAGE) &&
+                            (songTimerInSeconds < 6) && IsOffCooldown(ArmysPaeon))
+                            return ArmysPaeon;
+
+                        // Song Army
+                        // If it's an Army, switch to Wanderer.
+                        if ((canWeave) && (canWeaveBuffs) &&
+                            (gauge.Song == Song.ARMY) &&
+                            (songTimerInSeconds < 9) && IsOffCooldown(WanderersMinuet))
+                            return WanderersMinuet;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_Apex))
+                    {
+                        if (!IsEnabled(CustomComboPreset.BRD_RemoveApexArrow) && gauge.SoulVoice == 100)
+                            return ApexArrow;
+                        if (LevelChecked(BlastArrow) && HasEffect(Buffs.BlastArrowReady))
+                            return BlastArrow;
                     }
 
                     if (HasEffect(Buffs.HawksEye))
