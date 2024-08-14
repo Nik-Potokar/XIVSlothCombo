@@ -47,29 +47,38 @@ namespace XIVSlothCombo.Combos.PvP
                 if (actionID == BlastCharge)
                 {
                     var canWeave = CanWeave(actionID);
-                    var analysisStacks = GetRemainingCharges(Analysis);
-                    var bigDamageStacks = GetRemainingCharges(OriginalHook(Drill));
+                    var hasAnalysis = GetRemainingCharges(Analysis); //How many stacks of Analysis we have
+                    var hasDrill = GetRemainingCharges(OriginalHook(Drill)); //How many charges
                     var overheated = HasEffect(Buffs.Overheated);
 
-                    if (canWeave && HasEffect(Buffs.Overheated) && IsOffCooldown(Wildfire))
+                    //Wildfire
+                    if (canWeave && overheated && ActionReady(Wildfire))
                         return OriginalHook(Wildfire);
 
+                    //Turret
+                    //TODO: I'm not sure the opti on this skill. So I'm just going to include it as an option.
+                    if (canWeave && ActionReady(BishopTurret))
+                        return OriginalHook(BishopTurret);
+
+                    //HeatBlast
                     if (overheated)
                         return OriginalHook(HeatBlast);
 
-                    if ((HasEffect(Buffs.DrillPrimed) ||
-                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis)) ||
-                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis))) &&
-                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltDrill)
-                        || IsOnCooldown(Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
+                    //Analysis
+                    if ((HasEffect(Buffs.DrillPrimed) || //Drill
+                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis)) || //Chainsaw
+                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis))) && //AirAnchor
+                        !HasEffect(Buffs.Analysis) && hasAnalysis > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltDrill) //Optimal use
+                        || !ActionReady(Wildfire)) && !canWeave && !overheated && hasDrill > 0)
                         return OriginalHook(Analysis);
 
-                    if (bigDamageStacks > 0)
+                    //Analysis procs Primed skills
+                    if (hasDrill > 0)
                     {
                         if (HasEffect(Buffs.DrillPrimed))
                             return OriginalHook(Drill);
 
-                        if (HasEffect(Buffs.BioblasterPrimed) && GetTargetDistance() <= 12)
+                        if (HasEffect(Buffs.BioblasterPrimed) && GetTargetDistance() <= 10)
                             return OriginalHook(BioBlaster);
 
                         if (HasEffect(Buffs.AirAnchorPrimed))

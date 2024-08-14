@@ -4485,7 +4485,7 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
         [PvPCustomCombo]
-        [CustomComboInfo("Advanced Mode", "Replaces Wheeling Thrust Combo with its optimal combo chain.", DRG.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Wheeling Thrust Combo into an all-in-one damage button.", DRG.JobID)]
         DRGPvP_Burst = 116000,
 
         [ParentCombo(DRGPvP_Burst)]
@@ -4828,7 +4828,7 @@ namespace XIVSlothCombo.Combos
 
         #region WARRIOR
         [PvPCustomCombo]
-        [CustomComboInfo("Advanced Mode", "Turns Heavy Swing Combo into its optimal combo chain.", WARPvP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing Combo into its optimal combo chain.", WARPvP.JobID)]
         WARPvP_BurstMode = 128000,
 
         [PvPCustomCombo]
