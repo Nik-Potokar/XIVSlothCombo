@@ -1730,9 +1730,12 @@ namespace XIVSlothCombo.Combos
         GNB_FC_Reign = 7604,
         #endregion
 
+        #region Aurora
         [CustomComboInfo("Aurora Protection Feature", "Locks out Aurora if Aurora's effect is on the target.", GNB.JobID, 0, "", "")]
         GNB_AuroraProtection = 7700,
+        #endregion
 
+        #region Variant Skills
         [Variant]
         [VariantParent(GNB_ST_Advanced, GNB_AoE_Advanced)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", GNB.JobID)]
@@ -1747,6 +1750,8 @@ namespace XIVSlothCombo.Combos
         [VariantParent(GNB_ST_Advanced, GNB_AoE_Advanced)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", GNB.JobID)]
         GNB_Variant_Ultimatum = 7035,
+        #endregion
+
         #endregion
 
         #region MACHINIST
@@ -4576,47 +4581,58 @@ namespace XIVSlothCombo.Combos
 
         #region GUNBREAKER
 
+        #region Advanced Mode
         [PvPCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Solid Barrel Combo into an all-in-one damage button.", GNB.JobID)]
+        [CustomComboInfo("Advanced Mode", "Replace Solid Barrel Combo with it's optimal combo chain.", GNB.JobID)]
         GNBPvP_Burst = 117000,
 
         [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Double Down Option", "Adds Double Down to Burst Mode while under the No Mercy buff.", GNB.JobID)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to rotation when appropriate.", GNB.JobID)]
         GNBPvP_DoubleDown = 117001,
 
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Draw & Junction Option", "Adds Draw And Junction to rotation when appropriate.", GNB.JobID)]
+        GNBPvP_ST_DrawAndJunction = 117002,
+
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang to to rotation when appropriate.", GNB.JobID)]
+        GNBPvP_ST_GnashingFang = 117003,
+
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Continuation Option", "Adds Continuation to rotation when appropriate.", GNB.JobID)]
+        GNBPvP_ST_Continuation = 117004,
+
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Rough Divide Option", "Adds Rough Divide to rotation when appropriate.", GNB.JobID)]
+        GNBPvP_RoughDivide = 117005,
+
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to rotation.", GNB.JobID)]
+        GNBPvP_JunctionDPS = 117006,
+
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to rotation.", GNB.JobID)]
+        GNBPvP_JunctionHealer = 117007,
+
+        [ParentCombo(GNBPvP_Burst)]
+        [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to rotation.", GNB.JobID)]
+        GNBPvP_JunctionTank = 117008,
+        #endregion
+
+        #region Option Select
+        [ConflictingCombos(GNBPvP_ST_GnashingFang)]
         [PvPCustomCombo]
-        [CustomComboInfo("Gnashing Fang Continuation Feature", "Adds Continuation onto Gnashing Fang.", GNB.JobID)]
-        GNBPvP_GnashingFang = 117002,
+        [CustomComboInfo("Continuation Feature", "Adds Continuation to Gnashing Fang.", GNB.JobID)]
+        GNBPvP_GnashingFang = 117009,
 
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Draw And Junction Option", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
-        GNBPvP_DrawAndJunction = 117003,
+        [ConflictingCombos(GNBPvP_ST_DrawAndJunction)]
+        [PvPCustomCombo]
+        [CustomComboInfo("Junctioned Cast Feature", "Adds Junctioned Cast to Draw and Junction.", GNB.JobID)]
+        GNBPvP_DrawAndJunction = 117010,
 
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang to Burst Mode while under the No Mercy buff.", GNB.JobID)]
-        GNBPvP_ST_GnashingFang = 117004,
+        // Last value = 117012
 
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Continuation Option", "Adds Continuation to Burst Mode.", GNB.JobID)]
-        GNBPvP_ST_Continuation = 117005,
-
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Rough Divide Option", "Weaves Rough Divide when No Mercy Buff is about to expire.", GNB.JobID)]
-        GNBPvP_RoughDivide = 117006,
-
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to Burst Mode.", GNB.JobID)]
-        GNBPvP_JunctionDPS = 117007,
-
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to Burst Mode.", GNB.JobID)]
-        GNBPvP_JunctionHealer = 117008,
-
-        [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to Burst Mode.", GNB.JobID)]
-        GNBPvP_JunctionTank = 117009,
-
-        // Last value = 117009
+        #endregion
 
         #endregion
 
