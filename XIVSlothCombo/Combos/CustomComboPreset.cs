@@ -4484,6 +4484,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region DRAGOON
+        [ReplaceSkill(DRGPvP.RaidenThrust)]
         [PvPCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Wheeling Thrust Combo into an all-in-one damage button.", DRG.JobID)]
         DRGPvP_Burst = 116000,
@@ -4579,21 +4580,57 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region MACHINIST
+        [ReplaceSkill(MCHPvP.BlastCharge)]
         [PvPCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPvP.JobID)]
         MCHPvP_BurstMode = 118000,
 
         [PvPCustomCombo]
         [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_AltDrill = 118001,
+        [CustomComboInfo("Wildfire Option", "Adds Wildfire into the rotation.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_Wildfire = 118001,
 
         [PvPCustomCombo]
         [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_AltAnalysis = 118002,
+        [CustomComboInfo("Heat Blast Option", "Adds Heat Blast into the rotation when appropriate.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_HeatBlast = 118002,
 
-        // Last value = 118002
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode)]
+        [CustomComboInfo("Analysis Option", "Adds Analysis into the rotation when appropriate.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_Analysis = 118003,
+
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode)]
+        [CustomComboInfo("Drill Option", "Adds Drill into the rotation when primed.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_Drill = 118004,
+
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode)]
+        [CustomComboInfo("BioBlaster Option", "Adds BioBlaster into the rotation when primed.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_BioBlaster = 118005,
+
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode)]
+        [CustomComboInfo("Air Anchor Option", "Adds Heat Blast into the rotation when primed.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_AirAnchor = 118006,
+
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode)]
+        [CustomComboInfo("Chain Saw Option", "Adds Heat Blast into the rotation when primed.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_ChainSaw = 118007,
+
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode_Drill)]
+        [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_AltDrill = 118008,
+
+        [PvPCustomCombo]
+        [ParentCombo(MCHPvP_BurstMode_AirAnchor)]
+        [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPvP.JobID)]
+        MCHPvP_BurstMode_AltAnalysis = 118009,
+
+        // Last value = 118009
 
         #endregion
 
