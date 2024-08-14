@@ -4828,25 +4828,48 @@ namespace XIVSlothCombo.Combos
 
         #region WARRIOR
         [PvPCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPvP.JobID)]
+        [CustomComboInfo("Advanced Mode", "Turns Heavy Swing Combo into its optimal combo chain.", WARPvP.JobID)]
         WARPvP_BurstMode = 128000,
 
         [PvPCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPvP.JobID)]
+        [CustomComboInfo("Bloodwhetting Option", "Adds Bloodwhetting to the rotation.", WARPvP.JobID)]
         WARPvP_BurstMode_Bloodwhetting = 128001,
 
         [PvPCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Blota Option", "Adds Blota to Burst Mode when not in melee range.", WARPvP.JobID)]
-        WARPvP_BurstMode_Blota = 128003,
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to the rotation.", WARPvP.JobID)]
+        WARPvP_BurstMode_Onslaught = 128002,
 
         [PvPCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Burst Mode.", WARPvP.JobID)]
-        WARPvP_BurstMode_PrimalRend = 128004,
+        [CustomComboInfo("Orogeny Option", "Adds Orogeny to the rotation when available.", WARPvP.JobID)]
+        WARPvP_BurstMode_Orogeny = 128003,
 
-        // Last value = 128002
+        [PvPCustomCombo]
+        [ConflictingCombos(WARPvP_BurstMode_Stunlock)]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Blota Option", "Adds Blota to the rotation.", WARPvP.JobID)]
+        WARPvP_BurstMode_Blota = 128004,
+
+        [PvPCustomCombo]
+        [ConflictingCombos(WARPvP_BurstMode_Blota, WARPvP_BurstMode_PrimalRend)]
+        [ParentCombo(WARPvP_BurstMode_PrimalRend)]
+        [CustomComboInfo("StunLock Option", "Adds Primal Rend & Blota to the rotation together to execute a 4s stun lock.", WARPvP.JobID)]
+        WARPvP_BurstMode_Stunlock = 128005,
+
+        [PvPCustomCombo]
+        [ConflictingCombos(WARPvP_BurstMode_Stunlock)]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend the rotation.", WARPvP.JobID)]
+        WARPvP_BurstMode_PrimalRend = 128006,
+
+        [PvPCustomCombo]
+        [ParentCombo(WARPvP_BurstMode)]
+        [CustomComboInfo("Chaotic Cyclone Option", "Adds Chaotic Cyclone the rotation when available.", WARPvP.JobID)]
+        WARPvP_BurstMode_ChaoticCyclone = 128007,
+
+        // Last value = 128007
 
         #endregion
 
