@@ -51,32 +51,46 @@ namespace XIVSlothCombo.Combos.PvP
                 if (actionID is RaidenThrust or FangAndClaw or WheelingThrust)
                 {
                     bool enemyGuarded = TargetHasEffectAny(PvPCommon.Buffs.Guard);
+                    bool closeEnough = GetTargetDistance() <= 7;
+                    bool farEnough = GetTargetDistance() <= 13;
+                    float enemyHP = GetTargetHPPercent();
+                    float playerHP = PlayerHealthPercentageHp();
+                    float GCD = GetCooldown(WheelingThrust).CooldownTotal;
 
                     if (!enemyGuarded)
                     {
                         if (CanWeave(actionID))
                         {
-                            if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && IsOffCooldown(HighJump) && HasEffect(Buffs.LifeOfTheDragon))
+                            //ElusiveJump
+                            if (IsEnabled(CustomComboPreset.DRGPvP_ElusiveJump) && ActionReady(ElusiveJump) && GetCooldownRemainingTime(HighJump) < 1.5f) //use on CD to keep rotation going
+                                return ElusiveJump;
+
+                            //HighJump
+                            if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && ActionReady(HighJump) && (JustUsed(WyrmwindThrust) || enemyHP <= 10)) //use to re-engage after ElusiveJump > far WyrmwindThrust, best held for burst or to execute
                                 return HighJump;
 
-                            if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && InMeleeRange())
+                            //Nastrond
+                            if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && farEnough)
                             {
-                                if (HasEffect(Buffs.LifeOfTheDragon) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPvP_LOTD_HPValue)
-                                 || HasEffect(Buffs.LifeOfTheDragon) && GetBuffRemainingTime(Buffs.LifeOfTheDragon) < GetOptionValue(Config.DRGPvP_LOTD_Duration))
+                                if (HasEffect(Buffs.LifeOfTheDragon) && 
+                                    ((IsEnabled(CustomComboPreset.DRGPvP_NastrondOpti) && (enemyHP <= 50 || GetBuffRemainingTime(Buffs.LifeOfTheDragon) <= GCD)) || //best used when TargetHP is lower than 50
+                                    (IsNotEnabled(CustomComboPreset.DRGPvP_NastrondOpti) && playerHP < GetOptionValue(Config.DRGPvP_LOTD_HPValue)) || //PlayerHP slider
+                                    (IsNotEnabled(CustomComboPreset.DRGPvP_NastrondOpti) && GetBuffRemainingTime(Buffs.LifeOfTheDragon) < GetOptionValue(Config.DRGPvP_LOTD_Duration)))) //Buff duration slider
                                     return Nastrond;
                             }
-                            if (IsEnabled(CustomComboPreset.DRGPvP_HorridRoar) && IsOffCooldown(HorridRoar) && InMeleeRange())
+                            if (IsEnabled(CustomComboPreset.DRGPvP_HorridRoar) && ActionReady(HorridRoar) && HasEffect(Buffs.LifeOfTheDragon) && closeEnough) //best used when under LOTD to prevent dying due to squishiness
                                 return HorridRoar;
                         }
-                        if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpringSustain) && IsOffCooldown(ChaoticSpring) && PlayerHealthPercentageHp() < GetOptionValue(Config.DRGPvP_CS_HP_Threshold))
+                        if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpring) && InMeleeRange() && ActionReady(ChaoticSpring))
                         {
-                            if (!HasEffect(Buffs.FirstmindsFocus) && !HasEffect(Buffs.LifeOfTheDragon) && IsOnCooldown(Geirskogul) && IsOnCooldown(ElusiveJump)
-                             || !HasEffect(Buffs.FirstmindsFocus) && HasEffect(Buffs.LifeOfTheDragon) && IsOnCooldown(Geirskogul) && IsOnCooldown(ElusiveJump) && WasLastWeaponskill(HeavensThrust))
+                            if ((!HasEffect(Buffs.FirstmindsFocus) && !HasEffect(Buffs.LifeOfTheDragon) && !ActionReady(Geirskogul) && !ActionReady(ElusiveJump)) //for damage
+                                || (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpringSustain) && playerHP < GetOptionValue(Config.DRGPvP_CS_HP_Threshold)) //PlayerHP slider
+                                || (!IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpringSustain) && playerHP < 60)) //force heal self
                                 return ChaoticSpring;
                         }
-                        if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && IsOffCooldown(Geirskogul) && WasLastAbility(ElusiveJump) && HasEffect(Buffs.FirstmindsFocus))
+                        if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && ActionReady(Geirskogul) && farEnough)
                             return Geirskogul;
-                        if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && GetTargetDistance() >= GetOptionValue(Config.DRGPvP_Distance_Threshold))
+                        if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && JustUsed(ElusiveJump, 3f) && GetTargetDistance() >= GetOptionValue(Config.DRGPvP_Distance_Threshold))
                             return WyrmwindThrust;
                     }
                 }

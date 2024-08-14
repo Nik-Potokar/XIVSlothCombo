@@ -4485,38 +4485,50 @@ namespace XIVSlothCombo.Combos
 
         #region DRAGOON
         [PvPCustomCombo]
-        [CustomComboInfo("Burst Mode", "Using Elusive Jump turns Wheeling Thrust Combo into all-in-one burst damage button.", DRG.JobID)]
+        [CustomComboInfo("Advanced Mode", "Replaces Wheeling Thrust Combo with its optimal combo chain.", DRG.JobID)]
         DRGPvP_Burst = 116000,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to Burst Mode.", DRG.JobID)]
-        DRGPvP_Geirskogul = 116001,
+        [CustomComboInfo("Elusive Jump Option", "Adds Elusive Jump to the rotation.\n WARNING: This does not take into account anything whatsoever besides the rotation.\n Will always use on CD no matter any situation regarding AoEs or outside interference. Use at your own risk.", DRG.JobID)]
+        DRGPvP_ElusiveJump = 116001,
+
+        [ParentCombo(DRGPvP_Burst)]
+        [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to the rotation.", DRG.JobID)]
+        DRGPvP_Geirskogul = 116002,
 
         [ParentCombo(DRGPvP_Geirskogul)]
-        [CustomComboInfo("Nastrond Option", "Adds Nastrond to Burst Mode.", DRG.JobID)]
-        DRGPvP_Nastrond = 116002,
+        [CustomComboInfo("Nastrond Option", "Adds Nastrond to the rotation.", DRG.JobID)]
+        DRGPvP_Nastrond = 116003,
+
+        [ParentCombo(DRGPvP_Geirskogul)]
+        [CustomComboInfo("Optimal Nastrond Option", "Adds Nastrond to the rotation when the target has 50 percent or lower HP or when buff is about to expire, regardless of settings above.", DRG.JobID)]
+        DRGPvP_NastrondOpti = 116004,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Horrid Roar Option", "Adds Horrid Roar to Burst Mode.", DRG.JobID)]
-        DRGPvP_HorridRoar = 116003,
+        [CustomComboInfo("Horrid Roar Option", "Adds Horrid Roar to the rotation.", DRG.JobID)]
+        DRGPvP_HorridRoar = 116005,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Sustain Chaos Spring Option", "Adds Chaos Spring to Burst Mode when below the set HP percentage.", DRG.JobID)]
-        DRGPvP_ChaoticSpringSustain = 116004,
+        [CustomComboInfo("Chaotic Spring Option", "Adds Chaotic Spring to the rotation, essentially only for damage purposes.", DRG.JobID)]
+        DRGPvP_ChaoticSpring = 116006,
+
+        [ParentCombo(DRGPvP_ChaoticSpring)]
+        [CustomComboInfo("Chaotic Spring Self-Heal Option", "Adds Chaotic Spring to the rotation when below the set HP percentage, essentially only for healing purposes.", DRG.JobID)]
+        DRGPvP_ChaoticSpringSustain = 116007,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to Burst Mode.", DRG.JobID)]
-        DRGPvP_WyrmwindThrust = 116006,
+        [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to the rotation.", DRG.JobID)]
+        DRGPvP_WyrmwindThrust = 116008,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("High Jump Weave Option", "Adds High Jump to Burst Mode.", DRG.JobID)]
-        DRGPvP_HighJump = 116007,
+        [CustomComboInfo("High Jump Option", "Adds High Jump to the rotation, optimally.", DRG.JobID)]
+        DRGPvP_HighJump = 116009,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Elusive Jump Burst Protection Option", "Disables Elusive Jump if Burst is not ready.", DRG.JobID)]
-        DRGPvP_BurstProtection = 116008,
+        DRGPvP_BurstProtection = 116010,
 
-        // Last value = 116008
+        // Last value = 116010
 
         #endregion
 
@@ -4535,7 +4547,7 @@ namespace XIVSlothCombo.Combos
         GNBPvP_GnashingFang = 117002,
 
         [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Draw And Junction Option", "Adds Draw And Junction to Burst Mode.", GNB.JobID)]
+        [CustomComboInfo("Draw And Junction Option", "Adds Draw And Junction to the rotation.", GNB.JobID)]
         GNBPvP_DrawAndJunction = 117003,
 
         [ParentCombo(GNBPvP_Burst)]
@@ -4543,7 +4555,7 @@ namespace XIVSlothCombo.Combos
         GNBPvP_ST_GnashingFang = 117004,
 
         [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Continuation Option", "Adds Continuation to Burst Mode.", GNB.JobID)]
+        [CustomComboInfo("Continuation Option", "Adds Continuation to the rotation.", GNB.JobID)]
         GNBPvP_ST_Continuation = 117005,
 
         [ParentCombo(GNBPvP_Burst)]
@@ -4551,15 +4563,15 @@ namespace XIVSlothCombo.Combos
         GNBPvP_RoughDivide = 117006,
 
         [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to Burst Mode.", GNB.JobID)]
+        [CustomComboInfo("Junction Cast DPS Option", "Adds Junction Cast (DPS) to the rotation.", GNB.JobID)]
         GNBPvP_JunctionDPS = 117007,
 
         [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to Burst Mode.", GNB.JobID)]
+        [CustomComboInfo("Junction Cast Healer Option", "Adds Junction Cast (Healer) to the rotation.", GNB.JobID)]
         GNBPvP_JunctionHealer = 117008,
 
         [ParentCombo(GNBPvP_Burst)]
-        [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to Burst Mode.", GNB.JobID)]
+        [CustomComboInfo("Junction Cast Tank Option", "Adds Junction Cast (Tank) to the rotation.", GNB.JobID)]
         GNBPvP_JunctionTank = 117009,
 
         // Last value = 117009
