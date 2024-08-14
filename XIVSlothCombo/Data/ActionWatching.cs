@@ -89,7 +89,7 @@ namespace XIVSlothCombo.Data
         {
             try
             {
-                if (CustomComboFunctions.GetMaxCharges(actionId) > 0)
+                if (actionType == 1 && CustomComboFunctions.GetMaxCharges(actionId) > 0)
                     ChargeTimestamps[actionId] = Environment.TickCount64;
 
                 CheckForChangedTarget(actionId, ref targetObjectId);
