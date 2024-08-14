@@ -1522,7 +1522,7 @@ namespace XIVSlothCombo.Combos
 
         #region Gnashing Fang
         [ParentCombo(GNB_ST_Advanced)]
-        [CustomComboInfo("Gnashing Fang & Continuation Option", "Adds Gnashing Fang to the main combo.\n Gnashing Fang Starter option must be enabled or started manually and Sloth will finish it off.", GNB.JobID)]
+        [CustomComboInfo("Gnashing Fang & Continuation Option", "Adds Gnashing Fang's full combo to the main combo.\n 'Gnashing Fang Starter' option must be enabled or started manually and Sloth will finish it off.", GNB.JobID)]
         GNB_ST_Gnashing = 7005,
 
         [ParentCombo(GNB_ST_Gnashing)]
