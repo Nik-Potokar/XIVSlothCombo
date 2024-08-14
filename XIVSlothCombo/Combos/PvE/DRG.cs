@@ -96,7 +96,6 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
             internal static DRGOpenerLogic DRGOpener = new();
-            float GCD = GetCooldown(TrueThrust).CooldownTotal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -142,7 +141,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return BattleLitany;
 
                         //Life Surge Feature
-                        if (((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
+                        if (((GetCooldownRemainingTime(LifeSurge) <40 ) || (GetCooldownRemainingTime(BattleLitany) > 50)) &&
                             AnimationLock.CanDRGWeave(LifeSurge) &&
                             HasEffect(Buffs.LanceCharge) &&
                             ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
@@ -203,17 +202,15 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null ||
-                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
-                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7)) ||
-                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)))
+                                ((LevelChecked(OriginalHook(ChaosThrust)) && ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15)) ||
+                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < 15)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
 
                         if (lastComboMove is Disembowel or SpiralBlow && LevelChecked(OriginalHook(ChaosThrust)))
                         {
-                            if (trueNorthReady && CanDelayedWeave(actionID) &&
+                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                                 !OnTargetsRear())
                                 return All.TrueNorth;
 
@@ -222,7 +219,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(WheelingThrust))
                         {
-                            if (trueNorthReady && CanDelayedWeave(actionID) &&
+                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                               !OnTargetsRear())
                                 return All.TrueNorth;
 
@@ -234,7 +231,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(FangAndClaw))
                         {
-                            if (trueNorthReady && CanDelayedWeave(actionID) &&
+                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                                 !OnTargetsFlank())
                                 return All.TrueNorth;
 
@@ -249,11 +246,11 @@ namespace XIVSlothCombo.Combos.PvE
                 return actionID;
             }
         }
+
         internal class DRG_ST_AdvancedMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
             internal static DRGOpenerLogic DRGOpener = new();
-            float GCD = GetCooldown(TrueThrust).CooldownTotal;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -313,7 +310,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Life Surge Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) &&
-                                ((GetCooldownRemainingTime(LifeSurge) < GCD * 16) || (GetCooldownRemainingTime(BattleLitany) > GCD * 20)) &&
+                                ((GetCooldownRemainingTime(LifeSurge) < 40) || (GetCooldownRemainingTime(BattleLitany) > 50)) &&
                                 AnimationLock.CanDRGWeave(LifeSurge) &&
                                 HasEffect(Buffs.LanceCharge) &&
                                 ActionReady(LifeSurge) && !HasEffect(Buffs.LifeSurge) &&
@@ -402,18 +399,15 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(OriginalHook(Disembowel)) &&
-                                ((LevelChecked(OriginalHook(ChaosThrust)) && (ChaosDoTDebuff is null ||
-                                ChaosDoTDebuff.RemainingTime < GCD * 5 ||
-                                GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 7)) ||
-                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < GCD * 4)))
+                                ((LevelChecked(OriginalHook(ChaosThrust)) && ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15)) ||
+                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < 15)))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
 
                         if (lastComboMove is Disembowel or SpiralBlow && LevelChecked(OriginalHook(ChaosThrust)))
                         {
-                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                                trueNorthReady && CanDelayedWeave(actionID) &&
+                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                                 !OnTargetsRear())
                                 return All.TrueNorth;
 
@@ -422,8 +416,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is ChaosThrust or ChaoticSpring && LevelChecked(WheelingThrust))
                         {
-                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                              trueNorthReady && CanDelayedWeave(actionID) &&
+                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                               !OnTargetsRear())
                                 return All.TrueNorth;
 
@@ -435,8 +428,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove is FullThrust or HeavensThrust && LevelChecked(FangAndClaw))
                         {
-                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
-                                trueNorthReady && CanDelayedWeave(actionID) &&
+                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                                 !OnTargetsFlank())
                                 return All.TrueNorth;
 
