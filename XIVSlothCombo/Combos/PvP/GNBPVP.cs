@@ -81,7 +81,7 @@ namespace XIVSlothCombo.Combos.PvP
                     }
 
                     //RoughDivide overcap protection
-                    if (ActionReady(DoubleDown) && GetRemainingCharges(RoughDivide) == 2)
+                    if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && ActionReady(DoubleDown) && GetRemainingCharges(RoughDivide) == 2)
                         return RoughDivide;
 
                     //DoubleDown
@@ -90,7 +90,7 @@ namespace XIVSlothCombo.Combos.PvP
                         !HasEffect(Buffs.ReadyToBlast) || !HasEffect(Buffs.ReadyToRip) || !HasEffect(Buffs.ReadyToTear) || !HasEffect(Buffs.ReadyToGouge))) //Continuation buff check
                         return DoubleDown;
 
-                    if (HasEffect(Buffs.PowderBarrel) && ActionReady(GnashingFang)) //Burst Strike has prio over GnashingFang, but not DoubleDown
+                    if (IsEnabled(CustomComboPreset.GNBPvP_BurstStrike) && HasEffect(Buffs.PowderBarrel) && ActionReady(GnashingFang)) //Burst Strike has prio over GnashingFang, but not DoubleDown
                         return BurstStrike;
 
                     //GnashingFang
