@@ -50,6 +50,15 @@ namespace XIVSlothCombo.Combos.PvP
                     var hasAnalysis = GetRemainingCharges(Analysis); //How many stacks of Analysis we have
                     var hasDrill = GetRemainingCharges(OriginalHook(Drill)); //How many charges
                     var hasHeat = HasEffect(Buffs.Overheated);
+                    var hasLB = HasPVPLimitBreak();
+                    var isLow = GetTargetHPPercent() < 33;
+                    bool enemyGuard = TargetHasEffectAny(PvPCommon.Buffs.Guard);
+
+                    if (hasLB && isLow && !enemyGuard)
+                        return MarksmanSpite;
+
+                    if (ActionReady(BishopTurret))
+                        return OriginalHook(BishopTurret);
 
                     //Wildfire
                     if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_Wildfire) && 

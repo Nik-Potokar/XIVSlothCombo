@@ -16,6 +16,7 @@ namespace XIVSlothCombo.Combos.PvP
             Flare = 29651,
             Blizzard4 = 29654,
             Freeze = 29655,
+            SoulResonance = 29662,
             Foul = 29371;
 
         public static class Buffs
@@ -48,6 +49,10 @@ namespace XIVSlothCombo.Combos.PvP
                 if (actionID is Fire or Fire4 or Flare)
                 {
                     bool canWeave = CanSpellWeave(actionID);
+                    var hasLB = HasPVPLimitBreak();
+
+                    if (hasLB && GetTargetDistance() > 10 && PlayerHealthPercentageHp() > 80)
+                        return SoulResonance;
 
                     if (HasEffect(Buffs.Polyglot))
                         return Foul;
@@ -61,6 +66,9 @@ namespace XIVSlothCombo.Combos.PvP
                         IsOffCooldown(Burst))
                         return Burst;
 
+                    if (PlayerHealthPercentageHp() < 50)
+                        return PvPCommon.Sprint;
+
                     if (!TargetHasEffect(Debuffs.AstralWarmth))
                         return OriginalHook(Fire);
 
@@ -69,7 +77,7 @@ namespace XIVSlothCombo.Combos.PvP
                         return Paradox;
 
                     if (IsEnabled(CustomComboPreset.BLMPvP_BurstMode_NightWing) &&
-                        IsOffCooldown(NightWing))
+                        ActionReady(NightWing))
                         return NightWing;
 
                     if (FindTargetEffect(Debuffs.AstralWarmth).StackCount == 3 &&
