@@ -860,7 +860,7 @@ namespace XIVSlothCombo.Combos
         // Devilment --> Starfall
         [ReplaceSkill(DNC.Devilment)]
         [ConflictingCombos(DNC_ST_AdvancedMode, DNC_AoE_AdvancedMode)]
-        [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after No Mercy is used.", DNC.JobID)]
+        [CustomComboInfo("Devilment to Starfall Feature", "Change Devilment into Starfall Dance after use.", DNC.JobID)]
         DNC_Starfall_Devilment = 4038,
 
         [ReplaceSkill(DNC.StandardStep, DNC.TechnicalStep)]
@@ -1658,21 +1658,21 @@ namespace XIVSlothCombo.Combos
         #region Burst Strike
         [ReplaceSkill(GNB.BurstStrike)]
         [CustomComboInfo("Burst Strike Features", "Collection of Burst Strike related features.", GNB.JobID)]
-        GNB_BS = 7400,
+        GNB_BS_Features = 7400,
 
-        [ParentCombo(GNB_BS)]
+        [ParentCombo(GNB_BS_Features)]
         [CustomComboInfo("Hypervelocity Option", "Adds Continuation (Hypervelocity) to Burst Strike when available.", GNB.JobID)]
         GNB_BS_Continuation = 7401,
 
-        [ParentCombo(GNB_BS)]
+        [ParentCombo(GNB_BS_Features)]
         [CustomComboInfo("Bloodfest Option", "Adds Bloodfest to Burst Strike when approrpiate.", GNB.JobID)]
         GNB_BS_Bloodfest = 7402,
 
-        [ParentCombo(GNB_BS)]
+        [ParentCombo(GNB_BS_Features)]
         [CustomComboInfo("Double Down Option", "Adds Double Down to Burst Strike when appropriate.", GNB.JobID)]
         GNB_BS_DoubleDown = 7403,
 
-        [ParentCombo(GNB_BS)]
+        [ParentCombo(GNB_BS_Features)]
         [CustomComboInfo("Reign Combo Option", "Adds Reign/Noble/Lionheart to Burst Strike when appropriate.", GNB.JobID)]
         GNB_BS_Reign = 7404,
         #endregion

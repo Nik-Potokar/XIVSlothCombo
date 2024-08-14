@@ -906,9 +906,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class GNB_BS : CustomCombo
+        internal class GNB_BS_Features : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_BS;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_BS_Features;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -943,7 +943,7 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class GNB_FC_Features_Features : CustomCombo
+        internal class GNB_FC_Features : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_FC_Features;
 
