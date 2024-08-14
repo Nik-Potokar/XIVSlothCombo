@@ -125,7 +125,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return actionID;
 
                     // Piercing Talon Uptime Option
-                    if (LevelChecked(PiercingTalon) && 
+                    if (LevelChecked(PiercingTalon) &&
                         !InMeleeRange() &&
                         HasBattleTarget())
                         return PiercingTalon;
@@ -214,8 +214,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(Disembowel) &&
-                                ((LevelChecked(ChaosThrust) && ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15)) ||
-                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < 15)))
+                                ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
                                 ? OriginalHook(Disembowel)
                                 : OriginalHook(VorpalThrust);
                         }
@@ -416,10 +415,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(Disembowel) &&
-                                ((LevelChecked(ChaosThrust) && ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15)) ||
-                                (!LevelChecked(ChaosThrust) && GetBuffRemainingTime(Buffs.PowerSurge) < 15)))
-                                ? OriginalHook(Disembowel)
-                                : OriginalHook(VorpalThrust);
+                                 ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                 ? OriginalHook(Disembowel)
+                                 : OriginalHook(VorpalThrust);
                         }
 
                         if (lastComboMove == OriginalHook(Disembowel) && LevelChecked(ChaosThrust))
@@ -499,7 +497,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return BattleLitany;
 
                         //Life Surge Feature
-                        if (ActionReady(LifeSurge) && 
+                        if (ActionReady(LifeSurge) &&
                             AnimationLock.CanDRGWeave(LifeSurge) &&
                             !HasEffect(Buffs.LifeSurge) &&
                             ((JustUsed(SonicThrust) && LevelChecked(CoerthanTorment)) ||
