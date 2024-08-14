@@ -951,7 +951,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songMage = gauge.Song == Song.MAGE;
                     bool songArmy = gauge.Song == Song.ARMY;
                     int targetHPThreshold = PluginConfiguration.GetCustomIntValue(Config.BRD_AoENoWasteHPPercentage);
-                    bool isEnemyHealthHigh = GetTargetHPPercent() > 5;
+                    bool isEnemyHealthHigh = GetTargetHPPercent() > 1;
 
                     if (IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= 50)
                         return Variant.VariantCure;
@@ -1156,7 +1156,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool songMage = gauge.Song == Song.MAGE;
                     bool songArmy = gauge.Song == Song.ARMY;
                     bool canInterrupt = CanInterruptEnemy() && IsOffCooldown(All.HeadGraze);
-                    bool isEnemyHealthHigh = GetTargetHPPercent() > 5;
+                    bool isEnemyHealthHigh = GetTargetHPPercent() > 1;
 
                     if (!InCombat() && (inOpener || openerFinished))
                     {
