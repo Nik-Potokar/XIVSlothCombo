@@ -147,7 +147,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Continuation);
 
                         //60s weaves
-                        if (HasEffect(Buffs.NoMercy) && (GetBuffRemainingTime(Buffs.NoMercy) < 17.5))
+                        if (HasEffect(Buffs.NoMercy) && (!JustUsed(NoMercy, 3f)))
                         {
                             //>=Lv90
                             if (ActionReady(BowShock) && LevelChecked(BowShock))

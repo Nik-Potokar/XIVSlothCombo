@@ -79,7 +79,7 @@ namespace XIVSlothCombo.Combos.PvP
                             return OriginalHook(JunctionedCast);
 
                         //Draw&Junction
-                        if (IsEnabled(CustomComboPreset.GNBPvP_DrawAndJunction) && ActionReady(DrawAndJunction) && !HasEffect(Buffs.PowderBarrel) && !HasEffect(Buffs.ReadyToBlast))
+                        if (IsEnabled(CustomComboPreset.GNBPvP_ST_DrawAndJunction) && ActionReady(DrawAndJunction) && !HasEffect(Buffs.PowderBarrel) && !HasEffect(Buffs.ReadyToBlast))
                             return DrawAndJunction;
 
                         //RoughDivide
@@ -97,7 +97,7 @@ namespace XIVSlothCombo.Combos.PvP
                         return RoughDivide;
 
                     //SavageClaw & WickedTalon
-                    if (IsEnabled(CustomComboPreset.GNBPvP_GnashingFang) &&
+                    if (IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) &&
                         JustUsed(GnashingFang, 3f) || JustUsed(SavageClaw, 3f))
                         return OriginalHook(GnashingFang);
 
@@ -113,7 +113,7 @@ namespace XIVSlothCombo.Combos.PvP
                         return BurstStrike;
 
                     //GnashingFang
-                    if (IsEnabled(CustomComboPreset.GNBPvP_GnashingFang) && ActionReady(GnashingFang) && !HasEffect(Buffs.PowderBarrel)) //BurstStrike first to avoid losing the buff if applicable
+                    if (IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) && ActionReady(GnashingFang) && !HasEffect(Buffs.PowderBarrel)) //BurstStrike first to avoid losing the buff if applicable
                         return GnashingFang;
                 }
 
