@@ -158,7 +158,7 @@ namespace XIVSlothCombo.Window.Tabs
                 CustomStyleText("Distance:", $"{Math.Round(CustomComboFunctions.GetTargetDistance(), 2)}y");
                 CustomStyleText("Hitbox Radius:", LocalPlayer.TargetObject?.HitboxRadius);
                 CustomStyleText("In Melee Range:", CustomComboFunctions.InMeleeRange());
-                CustomStyleText("Relative Direction:", CustomComboFunctions.AngleToTarget() is 2 ? "Rear" : (CustomComboFunctions.AngleToTarget() is 1 or 3) ? "Flank" : CustomComboFunctions.AngleToTarget() is 4 ? "Front" : "");
+                CustomStyleText("Relative Position:", CustomComboFunctions.AngleToTarget() is 2 ? "Rear" : (CustomComboFunctions.AngleToTarget() is 1 or 3) ? "Flank" : CustomComboFunctions.AngleToTarget() is 4 ? "Front" : "");
                 CustomStyleText("Health:", $"{CustomComboFunctions.EnemyHealthCurrentHp().ToString("N0")} / {CustomComboFunctions.EnemyHealthMaxHp().ToString("N0")} ({Math.Round(CustomComboFunctions.GetTargetHPPercent(), 2)}%)");
                 ImGui.Spacing();
 
