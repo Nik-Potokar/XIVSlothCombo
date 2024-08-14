@@ -1,4 +1,3 @@
-using System;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
@@ -183,7 +182,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if ((Ammo == 2 && JustUsed(NoMercy, 3f) && !HasEffect(Buffs.ReadyToBlast) && (GetCooldownRemainingTime(Bloodfest) < GCD * 12 || ActionReady(Bloodfest))) //2min
                                 || (JustUsed(GnashingFang, 3f) && GetCooldownRemainingTime(Bloodfest) > GCD * 14 && GetCooldownRemainingTime(DoubleDown) > GCD * 14 && Ammo == 0 && !HasEffect(Buffs.ReadyToRip) && HasEffect(Buffs.ReadyToBreak)) //1min 2cart
-                                || (Ammo == 3 && (GetCooldownRemainingTime(Bloodfest) is < 75 and > 40 && JustUsed(NoMercy, 3f)) //1min 3cart
+                                || (Ammo == 3 && (GetCooldownRemainingTime(Bloodfest) is < 90 and > 15 && JustUsed(NoMercy, 3f)) //1min 3cart
                                 || (JustUsed(Bloodfest, 2f) && JustUsed(BrutalShell)))) //opener
                                 return SonicBreak;
                         }
@@ -433,7 +432,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if ((Ammo == 2 && JustUsed(NoMercy, 3f) && !HasEffect(Buffs.ReadyToBlast) && (GetCooldownRemainingTime(Bloodfest) < GCD * 12 || ActionReady(Bloodfest))) //2min
                                 || (JustUsed(GnashingFang, 3f) && GetCooldownRemainingTime(Bloodfest) > GCD * 14 && GetCooldownRemainingTime(DoubleDown) > GCD * 14 && Ammo == 0 && !HasEffect(Buffs.ReadyToRip) && HasEffect(Buffs.ReadyToBreak)) //1min 2cart
-                                || (Ammo == 3 && (GetCooldownRemainingTime(Bloodfest) is < 75 and > 40 && JustUsed(NoMercy, 3f)) //1min 3cart
+                                || (Ammo == 3 && (GetCooldownRemainingTime(Bloodfest) is < 90 and > 15 && JustUsed(NoMercy, 3f)) //1min 3cart
                                 || (JustUsed(Bloodfest, 2f) && JustUsed(BrutalShell)))) //opener
                                 return SonicBreak;
                         }
@@ -655,7 +654,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if ((Ammo == 2 && JustUsed(NoMercy, 3f) && !HasEffect(Buffs.ReadyToBlast) && (GetCooldownRemainingTime(Bloodfest) < GCD * 12 || ActionReady(Bloodfest))) //2min
                                 || (JustUsed(GnashingFang, 3f) && GetCooldownRemainingTime(Bloodfest) > GCD * 14 && GetCooldownRemainingTime(DoubleDown) > GCD * 14 && Ammo == 0 && !HasEffect(Buffs.ReadyToRip) && HasEffect(Buffs.ReadyToBreak)) //1min 2cart
-                                || (Ammo == 3 && (GetCooldownRemainingTime(Bloodfest) is < 75 and > 40 && JustUsed(NoMercy, 3f)) //1min 3cart
+                                || (Ammo == 3 && (GetCooldownRemainingTime(Bloodfest) is < 90 and > 15 && JustUsed(NoMercy, 3f)) //1min 3cart
                                 || (JustUsed(Bloodfest, 2f) && JustUsed(BrutalShell)))) //opener
                                 return SonicBreak;
                         }
@@ -752,7 +751,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Lv100 2cart 2min starter
-                    if (LevelChecked(ReignOfBeasts) && (GetCooldownRemainingTime(NoMercy) <= GCD || ActionReady(NoMercy)) && Ammo is 3 && (GetCooldownRemainingTime(Bloodfest) < GCD * 12 || ActionReady(Bloodfest)))
+                    if (IsEnabled(CustomComboPreset.GNB_GF_BurstStrike) && LevelChecked(ReignOfBeasts) && (GetCooldownRemainingTime(NoMercy) <= GCD || ActionReady(NoMercy)) && Ammo is 3 && (GetCooldownRemainingTime(Bloodfest) < GCD * 12 || ActionReady(Bloodfest)))
                         return BurstStrike;
 
                     //GF combo safety net
