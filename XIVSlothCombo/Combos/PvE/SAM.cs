@@ -300,7 +300,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Iaijutsu Features
                         if (LevelChecked(Iaijutsu))
                         {
-                            if (UseTsubame())
+                            if (SAMHelper.UseTsubame)
                                 return OriginalHook(TsubameGaeshi);
 
                             if (!IsMoving &&
@@ -361,37 +361,6 @@ namespace XIVSlothCombo.Combos.PvE
                     return OriginalHook(Hakaze);
                 }
                 return actionID;
-            }
-
-            private static bool UseTsubame()
-            {
-                int MeikyoUsed = ActionWatching.CombatActions.Count(x => x == MeikyoShisui);
-
-                if (LevelChecked(TsubameGaeshi))
-                {
-                    //Tendo
-                    if (WasLastWeaponskill(TendoSetsugekka) && HasEffect(Buffs.TendoKaeshiSetsugekkaReady))
-                        return true;
-
-                    if (HasEffect(Buffs.TsubameReady))
-                    {
-                        //1 and 2 min
-                        if ((MeikyoUsed is 0 or 1 or 2 or 3 or 4 or 9 or 10) &&
-                            WasLastWeaponskill(MidareSetsugekka))
-                            return true;
-
-                        // 3 and 4 min
-                        if ((MeikyoUsed is 5 or 6 or 11 or 12) &&
-                            GetBuffStacks(Buffs.MeikyoShisui) is 2)
-                            return true;
-
-                        // 5 and 6 min
-                        if ((MeikyoUsed is 7 or 8 or 13 or 14) &&
-                            GetBuffStacks(Buffs.MeikyoShisui) is 1)
-                            return true;
-                    }
-                }
-                return false;
             }
         }
 
@@ -509,7 +478,7 @@ namespace XIVSlothCombo.Combos.PvE
                         // Iaijutsu Features
                         if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) && LevelChecked(Iaijutsu))
                         {
-                            if (UseTsubame())
+                            if (SAMHelper.UseTsubame)
                                 return OriginalHook(TsubameGaeshi);
 
                             if ((!IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu_Movement) ||
@@ -578,38 +547,6 @@ namespace XIVSlothCombo.Combos.PvE
                     return OriginalHook(Hakaze);
                 }
                 return actionID;
-            }
-
-            private static bool UseTsubame()
-            {
-                int MeikyoUsed = ActionWatching.CombatActions.Count(x => x == MeikyoShisui);
-
-                if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Iaijutsu) &&
-                    LevelChecked(TsubameGaeshi))
-                {
-                    //Tendo
-                    if (WasLastWeaponskill(TendoSetsugekka) && HasEffect(Buffs.TendoKaeshiSetsugekkaReady))
-                        return true;
-
-                    if (HasEffect(Buffs.TsubameReady))
-                    {
-                        //1 and 2 min
-                        if ((MeikyoUsed is 0 or 1 or 2 or 3 or 4 or 9 or 10) &&
-                            WasLastWeaponskill(MidareSetsugekka))
-                            return true;
-
-                        // 3 and 4 min
-                        if ((MeikyoUsed is 5 or 6 or 11 or 12) &&
-                            GetBuffStacks(Buffs.MeikyoShisui) is 2)
-                            return true;
-
-                        // 5 and 6 min
-                        if ((MeikyoUsed is 7 or 8 or 13 or 14) &&
-                            GetBuffStacks(Buffs.MeikyoShisui) is 1)
-                            return true;
-                    }
-                }
-                return false;
             }
         }
 
