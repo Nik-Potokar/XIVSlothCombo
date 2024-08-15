@@ -539,24 +539,28 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Spire) &&
                         Gauge.DrawnCards[2] == CardType.SPIRE &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Spire &&
+                        ActionReady(Play3) &&
                         canSpire)
                         return OriginalHook(Play3);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Ewer) &&
                         Gauge.DrawnCards[2] == CardType.EWER &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Ewer &&
+                        ActionReady(Play3) &&
                         canEwer)
                         return OriginalHook(Play3);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Arrow) &&
                         Gauge.DrawnCards[1] == CardType.ARROW &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Arrow &&
+                        ActionReady(Play2) &&
                         canArrow)
                         return OriginalHook(Play2);
                     
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Bole) &&
                         Gauge.DrawnCards[1] == CardType.BOLE &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Bole &&
+                        ActionReady(Play2) &&
                         canBole)
                         return OriginalHook(Play2);
 
