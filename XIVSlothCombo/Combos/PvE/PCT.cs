@@ -254,8 +254,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(HammerMotif);
                         if (!gauge.LandscapeMotifDrawn && LevelChecked(LandscapeMotif) && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(LandscapeMotif);
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_BlizzardInCyan) && HasEffect(Buffs.SubtractivePalette))
-                            return OriginalHook(BlizzardinCyan);
+
                     }
 
                     if (IsMoving && InCombat())
@@ -263,11 +262,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HammerStampCombo) && HasEffect(Buffs.HammerTime))
                             return OriginalHook(HammerStamp);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HolyInWhite) && gauge.Paint >= 1 && !HasEffect(Buffs.MonochromeTones))
-                            return OriginalHook(HolyInWhite);
-
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_CometinBlack) && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
+
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HolyInWhite) && gauge.Paint >= 1)
+                            return OriginalHook(HolyInWhite);
                     }
 
                     //Prepare for Burst
@@ -507,8 +506,6 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(HammerMotif);
                         if (!gauge.LandscapeMotifDrawn && LevelChecked(LandscapeMotif) && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(LandscapeMotif);
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_BlizzardInCyan) && HasEffect(Buffs.SubtractivePalette))
-                            return OriginalHook(BlizzardIIinCyan);
                     }
 
                     if (IsMoving && InCombat())
@@ -516,11 +513,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HammerStampCombo) && HasEffect(Buffs.HammerTime))
                             return OriginalHook(HammerStamp);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HolyInWhite) && gauge.Paint >= 1 && !HasEffect(Buffs.MonochromeTones))
-                            return OriginalHook(HolyInWhite);
-
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_CometinBlack) && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
+
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HolyInWhite) && gauge.Paint >= 1)
+                            return OriginalHook(HolyInWhite);
+
                     }
 
                     //Prepare for Burst
