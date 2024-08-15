@@ -175,8 +175,7 @@ namespace XIVSlothCombo.Window.Tabs
                 CustomStyleText("Combo Timer:", Math.Round(CustomComboFunctions.ComboTimer, 1));
                 CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(CustomComboFunctions.ComboAction)) ? "Unknown" : ActionWatching.GetActionName(CustomComboFunctions.ComboAction))} (ID: {CustomComboFunctions.ComboAction})");
                 CustomStyleText("Cast Action:", LocalPlayer.CastActionId == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(LocalPlayer.CastActionId)) ? "Unknown" : ActionWatching.GetActionName(LocalPlayer.CastActionId))} (ID: {LocalPlayer.CastActionId})");
-                CustomStyleText("Cast Time (Total):", Math.Round(LocalPlayer.TotalCastTime, 2));
-                CustomStyleText("Cast Time (Current):", Math.Round(LocalPlayer.CurrentCastTime, 2));
+                CustomStyleText("Cast Time:", $"{LocalPlayer.CurrentCastTime:F2} / {LocalPlayer.TotalCastTime:F2}");
                 ImGui.Spacing();
 
                 // Party Info
