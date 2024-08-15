@@ -236,14 +236,14 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SwitfcastOption) &&
                             IsMoving &&
                             IsOffCooldown(All.Swiftcast) &&
-                            All.Swiftcast.LevelChecked() && 
+                            All.Swiftcast.LevelChecked() &&
                             (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
                         {
                             return All.Swiftcast;
                         }
 
                         // Palette
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SubtractivePalette) && SubtractivePalette.LevelChecked() && !HasEffect(Buffs.SubtractivePalette))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SubtractivePalette) && SubtractivePalette.LevelChecked() && !HasEffect(Buffs.SubtractivePalette) && !HasEffect(Buffs.MonochromeTones))
                         {
                             if (HasEffect(Buffs.SubtractiveSpectrum) || gauge.PalleteGauge >= 50)
                                 return SubtractivePalette;
@@ -317,7 +317,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.RainbowBright) && !HasEffect(Buffs.StarryMuse))
                         return RainbowDrip;
 
-                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CometinBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0 && GetCooldownRemainingTime(Buffs.StarryMuse) > 30f)
+                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CometinBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0 && GetCooldownRemainingTime(StarryMuse) > 30f)
                         return OriginalHook(CometinBlack);
 
                     if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_HammerStampCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime))
@@ -500,7 +500,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // Palette
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SubtractivePalette) && SubtractivePalette.LevelChecked() && !HasEffect(Buffs.SubtractivePalette))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SubtractivePalette) && SubtractivePalette.LevelChecked() && !HasEffect(Buffs.SubtractivePalette) && !HasEffect(Buffs.MonochromeTones))
                         {
                             if (HasEffect(Buffs.SubtractiveSpectrum) || gauge.PalleteGauge >= 50)
                                 return SubtractivePalette;
