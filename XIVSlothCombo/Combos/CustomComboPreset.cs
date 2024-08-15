@@ -1579,27 +1579,27 @@ namespace XIVSlothCombo.Combos
 
         [ConflictingCombos(GNB_NM_Features)]
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("No Mercy Option", "Adds No Mercy to the AoE combo when it's available.", GNB.JobID)]
+        [CustomComboInfo("No Mercy Option", "Adds No Mercy to the AoE combo when appropriate.", GNB.JobID)]
         GNB_AoE_NoMercy = 7201,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Danger/Blasting Zone Option", "Adds Danger/Blasting Zone to the AoE combo when it's available.", GNB.JobID)]
-        GNB_AOE_DangerZone = 7202,
+        [CustomComboInfo("Danger/Blasting Zone Option", "Adds Danger/Blasting Zone to the AoE combo when appropriate.", GNB.JobID)]
+        GNB_AoE_DangerZone = 7202,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Bow Shock Option", "Adds Bow Shock onto the AoE combo when it's available.", GNB.JobID)]
+        [CustomComboInfo("Bow Shock Option", "Adds Bow Shock onto the AoE combo when appropriate.", GNB.JobID)]
         GNB_AoE_BowShock = 7203,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Bloodfest Option", "Adds Bloodfest to the AoE combo when it's available.\n Will spend cartridges through Fated Circle to prepare for Bloodfest usage.", GNB.JobID)]
+        [CustomComboInfo("Bloodfest Option", "Adds Bloodfest to the AoE combo when appropriate.", GNB.JobID)]
         GNB_AoE_Bloodfest = 7204,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Sonic Break Option", "Adds Sonic Break to the AoE combo when it's available.", GNB.JobID)]
-        GNB_AOE_SonicBreak = 7205,
+        [CustomComboInfo("Sonic Break Option", "Adds Sonic Break to the AoE combo when appropriate.", GNB.JobID)]
+        GNB_AoE_SonicBreak = 7205,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Double Down Option", "Adds Double Down to the AoE combo when it's available and you have 2 or more cartridges.", GNB.JobID)]
+        [CustomComboInfo("Double Down Option", "Adds Double Down to the AoE combo when appropriate.", GNB.JobID)]
         GNB_AoE_DoubleDown = 7206,
 
         [ParentCombo(GNB_AoE_Advanced)]
@@ -1607,8 +1607,12 @@ namespace XIVSlothCombo.Combos
         GNB_AoE_Reign = 7207,
 
         [ParentCombo(GNB_AoE_Advanced)]
+        [CustomComboInfo("Fated Circle Option", "Adds Fated Circle to the AoE combo when appropriate.", GNB.JobID)]
+        GNB_AoE_FatedCircle = 7208,
+
+        [ParentCombo(GNB_AoE_Advanced)]
         [CustomComboInfo("Ammo Overcap Option", "Adds Fated Circle to the AoE combo when about to overcap.", GNB.JobID)]
-        GNB_AOE_Overcap = 7208,
+        GNB_AoE_Overcap = 7209,
         #endregion
 
         #region Gnashing Fang
