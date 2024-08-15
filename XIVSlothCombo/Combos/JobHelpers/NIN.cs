@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
+using System;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -10,6 +11,22 @@ namespace XIVSlothCombo.Combos.JobHelpers
 {
     internal class NIN
     {
+        internal class NINHelper : PvE.NIN
+        {
+            internal static bool TrickDebuff => TargetHasTrickDebuff();
+            private static bool TargetHasTrickDebuff()
+            {
+                return CustomComboFunctions.TargetHasEffect(Debuffs.TrickAttack) || CustomComboFunctions.TargetHasEffect(Debuffs.Dokumori);
+            }
+
+            internal static bool MugDebuff => TargetHasMugDebuff();
+
+            private static bool TargetHasMugDebuff()
+            {
+                return CustomComboFunctions.TargetHasEffect(Debuffs.Mug) || CustomComboFunctions.TargetHasEffect(Debuffs.KunaisBane);
+            }
+        }
+
         internal class MudraCasting : PvE.NIN
         {
             ///<summary> Checks if the player is in a state to be able to cast a ninjitsu.</summary>
@@ -569,7 +586,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                     //Failure states
                     if ((OpenerStep is 13 or 14 or 15 && CustomComboFunctions.IsMoving) ||
-                        (OpenerStep is 7 && !CustomComboFunctions.HasEffect(Buffs.Suiton)) ||
+                        (OpenerStep is 7 && !CustomComboFunctions.HasEffect(Buffs.ShadowWalker)) ||
                         (OpenerStep is 18 or 20 && CustomComboFunctions.GetJobGauge<NINGauge>().Ninki < 45) ||
                         (OpenerStep is 17 or 19 && !CustomComboFunctions.HasEffect(Buffs.RaijuReady)) ||
                         (OpenerStep is 10 && !CustomComboFunctions.HasEffect(Buffs.Kassatsu)))

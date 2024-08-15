@@ -2049,7 +2049,7 @@ namespace XIVSlothCombo.Combos
         #region NINJA
 
         [ReplaceSkill(NIN.SpinningEdge)]
-        [ConflictingCombos(NIN_ArmorCrushCombo, NIN_ST_AdvancedMode, NIN_KassatsuChiJin, NIN_KassatsuTrick)]
+        [ConflictingCombos(NIN_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Spinning Edge with a one-button full single target rotation.\nThis is the ideal option for newcomers to the job.", NIN.JobID)]
         NIN_ST_SimpleMode = 10000,
 
