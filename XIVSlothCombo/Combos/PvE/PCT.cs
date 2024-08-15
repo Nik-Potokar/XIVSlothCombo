@@ -187,19 +187,18 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireInRed)
                 {
                     var gauge = GetJobGauge<PCTGauge>();
-                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed)) || CanSpellWeave(OriginalHook(HammerStamp)) || CanSpellWeave(CometinBlack) || CanSpellWeave(HolyInWhite);
-
+                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed)) || CanSpellWeave(OriginalHook(HammerStamp)) || CanSpellWeave(CometinBlack) || CanSpellWeave(HolyInWhite) || CanSpellWeave(OriginalHook(CreatureMotif)) || CanSpellWeave(HammerMotif) || CanSpellWeave(LandscapeMotif);
 
                     // Prepull logic
                     if (!InCombat() || (InCombat() && CurrentTarget == null))
                     {
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_PrePullMotifs))
                         {
-                            if (LevelChecked(OriginalHook(CreatureMotif)) && !gauge.CreatureMotifDrawn)
+                            if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                                 return OriginalHook(CreatureMotif);
-                            if (LevelChecked(OriginalHook(WeaponMotif)) && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
+                            if (WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
                                 return OriginalHook(WeaponMotif);
-                            if (LevelChecked(OriginalHook(LandscapeMotif)) && !gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse))
+                            if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse))
                                 return OriginalHook(LandscapeMotif);
                         }
                     }
@@ -212,13 +211,13 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // General Weaves
-                    if (canWeave)
+                    if (InCombat() && canWeave)
                     {
                         //Muses
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_ScenicMuse) && gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && IsOffCooldown(ScenicMuse))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_ScenicMuse) && ScenicMuse.LevelChecked() && gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && IsOffCooldown(ScenicMuse))
                             return OriginalHook(ScenicMuse);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LivingMuse) && gauge.CreatureMotifDrawn &&
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LivingMuse) && LivingMuse.LevelChecked() && gauge.CreatureMotifDrawn &&
                             (!(gauge.MooglePortraitReady || gauge.MadeenPortraitReady) ||
                             GetCooldown(LivingMuse).CooldownRemaining > GetCooldown(ScenicMuse).CooldownRemaining ||
                             GetRemainingCharges(LivingMuse) == GetMaxCharges(LivingMuse) || !ScenicMuse.LevelChecked()) &&
@@ -228,18 +227,23 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(LivingMuse);
                         }
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SteelMuse) && !HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SteelMuse) && SteelMuse.LevelChecked() && !HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()))
                             return OriginalHook(SteelMuse);
 
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MogOfTheAges) && MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldownRemainingTime(StarryMuse) >= 40 || !ScenicMuse.LevelChecked()))
                             return OriginalHook(MogoftheAges);
 
-                        // Swiftcast motifs
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SwitfcastOption) && IsMoving && IsOffCooldown(All.Swiftcast) && (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SwitfcastOption) &&
+                            IsMoving &&
+                            IsOffCooldown(All.Swiftcast) &&
+                            All.Swiftcast.LevelChecked() && 
+                            (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
+                        {
                             return All.Swiftcast;
+                        }
 
                         // Palette
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SubtractivePalette) && LevelChecked(SubtractivePalette) && !HasEffect(Buffs.SubtractivePalette))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SubtractivePalette) && SubtractivePalette.LevelChecked() && !HasEffect(Buffs.SubtractivePalette))
                         {
                             if (HasEffect(Buffs.SubtractiveSpectrum) || gauge.PalleteGauge >= 50)
                                 return SubtractivePalette;
@@ -248,37 +252,37 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(All.Buffs.Swiftcast))
                     {
-                        if (!gauge.CreatureMotifDrawn && LevelChecked(CreatureMotif) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(CreatureMotif);
-                        if (!gauge.WeaponMotifDrawn && LevelChecked(WeaponMotif) && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.WeaponMotifDrawn && HammerMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(HammerMotif);
-                        if (!gauge.LandscapeMotifDrawn && LevelChecked(LandscapeMotif) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(LandscapeMotif);
 
                     }
 
                     if (IsMoving && InCombat())
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HammerStampCombo) && HasEffect(Buffs.HammerTime))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HammerStampCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime))
                             return OriginalHook(HammerStamp);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_CometinBlack) && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_CometinBlack) && CometinBlack.LevelChecked() && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HolyInWhite) && gauge.Paint >= 1)
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HolyInWhite) && HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
                     }
 
                     //Prepare for Burst
                     if (GetCooldownRemainingTime(ScenicMuse) <= 20)
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif) && LevelChecked(LandscapeMotif) && !gauge.LandscapeMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif) && LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn)
                             return OriginalHook(LandscapeMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif) && LevelChecked(CreatureMotif) && !gauge.CreatureMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif) && CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                             return OriginalHook(CreatureMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif) && LevelChecked(WeaponMotif) && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif) && WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
                             return OriginalHook(WeaponMotif);
                     }
 
@@ -286,11 +290,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_Burst_Phase) && HasEffect(Buffs.StarryMuse))
                     {
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_Burst_CometInBlack) && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0)
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_Burst_CometInBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0)
                             return CometinBlack;
 
                         // Check for HammerTime 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_Burst_HammerCombo) && HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.Starstruck))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_Burst_HammerCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.Starstruck))
                             return OriginalHook(HammerStamp);
 
                         // Check for Starstruck
@@ -313,10 +317,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.RainbowBright) && !HasEffect(Buffs.StarryMuse))
                         return RainbowDrip;
 
-                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CometinBlack) && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0 && GetCooldownRemainingTime(Buffs.StarryMuse) > 30f)
+                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CometinBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0 && GetCooldownRemainingTime(Buffs.StarryMuse) > 30f)
                         return OriginalHook(CometinBlack);
 
-                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_HammerStampCombo) && HasEffect(Buffs.HammerTime))
+                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_HammerStampCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime))
                         return OriginalHook(HammerStamp);
 
 
@@ -332,10 +336,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(WeaponMotif);
                     }
 
-                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LucidDreaming) && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.PCT_ST_AdvancedMode_LucidOption)
+                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LucidDreaming) && All.LucidDreaming.LevelChecked() && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.PCT_ST_AdvancedMode_LucidOption)
                         return All.LucidDreaming;
 
-                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_BlizzardInCyan) && HasEffect(Buffs.SubtractivePalette))
+                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_BlizzardInCyan) && BlizzardIIinCyan.LevelChecked() && HasEffect(Buffs.SubtractivePalette))
                         return OriginalHook(BlizzardinCyan);
                 }
                 return actionID;
@@ -446,7 +450,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireIIinRed)
                 {
                     var gauge = GetJobGauge<PCTGauge>();
-                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardIIinCyan)) : CanSpellWeave(OriginalHook(FireIIinRed)) || CanSpellWeave(OriginalHook(HammerStamp)) || CanSpellWeave(CometinBlack) || CanSpellWeave(HolyInWhite);
+                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardIIinCyan)) : CanSpellWeave(OriginalHook(FireInRed)) || CanSpellWeave(OriginalHook(HammerStamp)) || CanSpellWeave(CometinBlack) || CanSpellWeave(HolyInWhite) || CanSpellWeave(OriginalHook(CreatureMotif)) || CanSpellWeave(HammerMotif) || CanSpellWeave(LandscapeMotif);
 
 
                     // Prepull logic
@@ -454,23 +458,23 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_PrePullMotifs))
                         {
-                            if (LevelChecked(OriginalHook(CreatureMotif)) && !gauge.CreatureMotifDrawn)
+                            if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                                 return OriginalHook(CreatureMotif);
-                            if (LevelChecked(OriginalHook(WeaponMotif)) && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
+                            if (WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
                                 return OriginalHook(WeaponMotif);
-                            if (LevelChecked(OriginalHook(LandscapeMotif)) && !gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse))
+                            if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse))
                                 return OriginalHook(LandscapeMotif);
                         }
                     }
 
                     // General Weaves
-                    if (canWeave)
+                    if (InCombat() && canWeave)
                     {
                         //Muses
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_ScenicMuse) && gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && IsOffCooldown(ScenicMuse))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_ScenicMuse) && ScenicMuse.LevelChecked() && gauge.LandscapeMotifDrawn && gauge.WeaponMotifDrawn && IsOffCooldown(ScenicMuse))
                             return OriginalHook(ScenicMuse);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LivingMuse) && gauge.CreatureMotifDrawn &&
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LivingMuse) && LivingMuse.LevelChecked() && gauge.CreatureMotifDrawn &&
                             (!(gauge.MooglePortraitReady || gauge.MadeenPortraitReady) ||
                             GetCooldown(LivingMuse).CooldownRemaining > GetCooldown(ScenicMuse).CooldownRemaining ||
                             GetRemainingCharges(LivingMuse) == GetMaxCharges(LivingMuse) || !ScenicMuse.LevelChecked()) &&
@@ -480,18 +484,23 @@ namespace XIVSlothCombo.Combos.PvE
                                 return OriginalHook(LivingMuse);
                         }
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SteelMuse) && !HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SteelMuse) && SteelMuse.LevelChecked() && !HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()))
                             return OriginalHook(SteelMuse);
 
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MogOfTheAges) && MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldownRemainingTime(StarryMuse) >= 40 || !ScenicMuse.LevelChecked()))
                             return OriginalHook(MogoftheAges);
 
-                        // Swiftcast motifs
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SwitfcastOption) && IsMoving && IsOffCooldown(All.Swiftcast) && (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SwitfcastOption) &&
+                            IsMoving &&
+                            IsOffCooldown(All.Swiftcast) &&
+                            All.Swiftcast.LevelChecked() &&  // Added this condition
+                            (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
+                        {
                             return All.Swiftcast;
+                        }
 
                         // Palette
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SubtractivePalette) && LevelChecked(SubtractivePalette) && !HasEffect(Buffs.SubtractivePalette))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SubtractivePalette) && SubtractivePalette.LevelChecked() && !HasEffect(Buffs.SubtractivePalette))
                         {
                             if (HasEffect(Buffs.SubtractiveSpectrum) || gauge.PalleteGauge >= 50)
                                 return SubtractivePalette;
@@ -500,23 +509,23 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(All.Buffs.Swiftcast))
                     {
-                        if (!gauge.CreatureMotifDrawn && LevelChecked(CreatureMotif) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(CreatureMotif);
-                        if (!gauge.WeaponMotifDrawn && LevelChecked(WeaponMotif) && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.WeaponMotifDrawn && HammerMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(HammerMotif);
-                        if (!gauge.LandscapeMotifDrawn && LevelChecked(LandscapeMotif) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(LandscapeMotif);
                     }
 
                     if (IsMoving && InCombat())
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HammerStampCombo) && HasEffect(Buffs.HammerTime))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HammerStampCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime))
                             return OriginalHook(HammerStamp);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_CometinBlack) && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_CometinBlack) && CometinBlack.LevelChecked() && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HolyInWhite) && gauge.Paint >= 1)
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HolyInWhite) && HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
 
                     }
@@ -524,13 +533,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //Prepare for Burst
                     if (GetCooldownRemainingTime(ScenicMuse) <= 20)
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif) && LevelChecked(LandscapeMotif) && !gauge.LandscapeMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif) && LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn)
                             return OriginalHook(LandscapeMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif) && LevelChecked(CreatureMotif) && !gauge.CreatureMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif) && CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                             return OriginalHook(CreatureMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif) && LevelChecked(WeaponMotif) && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif) && WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
                             return OriginalHook(WeaponMotif);
                     }
 
@@ -538,11 +547,11 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_Phase) && HasEffect(Buffs.StarryMuse))
                     {
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_CometInBlack) && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0)
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_CometInBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0)
                             return CometinBlack;
 
                         // Check for HammerTime 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_HammerCombo) && HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.Starstruck))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_HammerCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.Starstruck))
                             return OriginalHook(HammerStamp);
 
                         // Check for Starstruck
@@ -562,10 +571,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (HasEffect(Buffs.RainbowBright) && !HasEffect(Buffs.StarryMuse))
                         return RainbowDrip;
 
-                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CometinBlack) && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0 && GetCooldownRemainingTime(StarryMuse) > 30)
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CometinBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0 && GetCooldownRemainingTime(StarryMuse) > 30)
                         return OriginalHook(CometinBlack);
 
-                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_HammerStampCombo) && HasEffect(Buffs.HammerTime))
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_HammerStampCombo) && HammerStamp.LevelChecked() && HasEffect(Buffs.HammerTime))
                         return OriginalHook(HammerStamp);
 
 
@@ -581,10 +590,10 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(WeaponMotif);
                     }
 
-                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LucidDreaming) && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.PCT_ST_AdvancedMode_LucidOption)
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LucidDreaming) && All.LucidDreaming.LevelChecked() && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= Config.PCT_ST_AdvancedMode_LucidOption)
                         return All.LucidDreaming;
 
-                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_BlizzardInCyan) && HasEffect(Buffs.SubtractivePalette))
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_BlizzardInCyan) && BlizzardIIinCyan.LevelChecked() && HasEffect(Buffs.SubtractivePalette))
                         return OriginalHook(BlizzardIIinCyan);
 
                 }
