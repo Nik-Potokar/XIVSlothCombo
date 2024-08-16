@@ -4547,52 +4547,39 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region DRAGOON
-        [ReplaceSkill(DRGPvP.RaidenThrust)]
         [PvPCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Wheeling Thrust Combo into an all-in-one damage button.", DRG.JobID)]
+        [CustomComboInfo("Burst Mode", "Using Elusive Jump turns Wheeling Thrust Combo into all-in-one burst damage button.", DRG.JobID)]
         DRGPvP_Burst = 116000,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Elusive Jump Option", "Adds Elusive Jump to the rotation.\n WARNING: This does not take into account anything whatsoever besides the rotation.\n Will always use on CD no matter any situation regarding AoEs or outside interference. Use at your own risk.", DRG.JobID)]
-        DRGPvP_ElusiveJump = 116001,
-
-        [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to the rotation.", DRG.JobID)]
-        DRGPvP_Geirskogul = 116002,
+        [CustomComboInfo("Geirskogul Option", "Adds Geirskogul to Burst Mode.", DRG.JobID)]
+        DRGPvP_Geirskogul = 116001,
 
         [ParentCombo(DRGPvP_Geirskogul)]
-        [CustomComboInfo("Nastrond Option", "Adds Nastrond to the rotation.", DRG.JobID)]
-        DRGPvP_Nastrond = 116003,
-
-        [ParentCombo(DRGPvP_Geirskogul)]
-        [CustomComboInfo("Optimal Nastrond Option", "Adds Nastrond to the rotation when the target has 50 percent or lower HP or when buff is about to expire, regardless of settings above.", DRG.JobID)]
-        DRGPvP_NastrondOpti = 116004,
+        [CustomComboInfo("Nastrond Option", "Adds Nastrond to Burst Mode.", DRG.JobID)]
+        DRGPvP_Nastrond = 116002,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Horrid Roar Option", "Adds Horrid Roar to the rotation.", DRG.JobID)]
-        DRGPvP_HorridRoar = 116005,
+        [CustomComboInfo("Horrid Roar Option", "Adds Horrid Roar to Burst Mode.", DRG.JobID)]
+        DRGPvP_HorridRoar = 116003,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Chaotic Spring Option", "Adds Chaotic Spring to the rotation, essentially only for damage purposes.", DRG.JobID)]
-        DRGPvP_ChaoticSpring = 116006,
-
-        [ParentCombo(DRGPvP_ChaoticSpring)]
-        [CustomComboInfo("Chaotic Spring Self-Heal Option", "Adds Chaotic Spring to the rotation when below the set HP percentage, essentially only for healing purposes.", DRG.JobID)]
-        DRGPvP_ChaoticSpringSustain = 116007,
+        [CustomComboInfo("Sustain Chaos Spring Option", "Adds Chaos Spring to Burst Mode when below the set HP percentage.", DRG.JobID)]
+        DRGPvP_ChaoticSpringSustain = 116004,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to the rotation.", DRG.JobID)]
-        DRGPvP_WyrmwindThrust = 116008,
+        [CustomComboInfo("Wyrmwind Thrust Option", "Adds Wyrmwind Thrust to Burst Mode.", DRG.JobID)]
+        DRGPvP_WyrmwindThrust = 116006,
 
         [ParentCombo(DRGPvP_Burst)]
-        [CustomComboInfo("High Jump Option", "Adds High Jump to the rotation, optimally.", DRG.JobID)]
-        DRGPvP_HighJump = 116009,
+        [CustomComboInfo("High Jump Weave Option", "Adds High Jump to Burst Mode.", DRG.JobID)]
+        DRGPvP_HighJump = 116007,
 
         [ParentCombo(DRGPvP_Burst)]
         [CustomComboInfo("Elusive Jump Burst Protection Option", "Disables Elusive Jump if Burst is not ready.", DRG.JobID)]
-        DRGPvP_BurstProtection = 116010,
+        DRGPvP_BurstProtection = 116008,
 
-        // Last value = 116010
+        // Last value = 116008
 
         #endregion
 
@@ -4614,7 +4601,6 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Draw & Junction Option", "Adds Draw And Junction to rotation when appropriate.", GNB.JobID)]
         GNBPvP_ST_DrawAndJunction = 117003,
-
 
         [ParentCombo(GNBPvP_Burst)]
         [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang to to rotation when appropriate.", GNB.JobID)]
@@ -4660,57 +4646,21 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region MACHINIST
-        [ReplaceSkill(MCHPvP.BlastCharge)]
         [PvPCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Blast Charge into an all-in-one damage button.", MCHPvP.JobID)]
         MCHPvP_BurstMode = 118000,
 
         [PvPCustomCombo]
         [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Wildfire Option", "Adds Wildfire into the rotation.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_Wildfire = 118001,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Heat Blast Option", "Adds Heat Blast into the rotation when appropriate.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_HeatBlast = 118002,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Analysis Option", "Adds Analysis into the rotation when appropriate.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_Analysis = 118003,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Drill Option", "Adds Drill into the rotation when primed.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_Drill = 118004,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("BioBlaster Option", "Adds BioBlaster into the rotation when primed.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_BioBlaster = 118005,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Air Anchor Option", "Adds Heat Blast into the rotation when primed.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_AirAnchor = 118006,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode)]
-        [CustomComboInfo("Chain Saw Option", "Adds Heat Blast into the rotation when primed.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_ChainSaw = 118007,
-
-        [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode_Drill)]
         [CustomComboInfo("Alternate Drill Option", "Saves Drill for use after Wildfire.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_AltDrill = 118008,
+        MCHPvP_BurstMode_AltDrill = 118001,
 
         [PvPCustomCombo]
-        [ParentCombo(MCHPvP_BurstMode_AirAnchor)]
+        [ParentCombo(MCHPvP_BurstMode)]
         [CustomComboInfo("Alternate Analysis Option", "Uses Analysis with Air Anchor instead of Chain Saw.", MCHPvP.JobID)]
-        MCHPvP_BurstMode_AltAnalysis = 118009,
+        MCHPvP_BurstMode_AltAnalysis = 118002,
 
-        // Last value = 118009
+        // Last value = 118002
 
         #endregion
 
@@ -4945,48 +4895,25 @@ namespace XIVSlothCombo.Combos
 
         #region WARRIOR
         [PvPCustomCombo]
-        [CustomComboInfo("Burst Mode", "Turns Heavy Swing Combo into its optimal combo chain.", WARPvP.JobID)]
+        [CustomComboInfo("Burst Mode", "Turns Heavy Swing into an all-in-one damage button.", WARPvP.JobID)]
         WARPvP_BurstMode = 128000,
 
         [PvPCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Bloodwhetting Option", "Adds Bloodwhetting to the rotation.", WARPvP.JobID)]
+        [CustomComboInfo("Bloodwhetting Option", "Allows use of Bloodwhetting any time, not just between GCDs.", WARPvP.JobID)]
         WARPvP_BurstMode_Bloodwhetting = 128001,
 
         [PvPCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Onslaught Option", "Adds Onslaught to the rotation.", WARPvP.JobID)]
-        WARPvP_BurstMode_Onslaught = 128002,
+        [CustomComboInfo("Blota Option", "Adds Blota to Burst Mode when not in melee range.", WARPvP.JobID)]
+        WARPvP_BurstMode_Blota = 128003,
 
         [PvPCustomCombo]
         [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Orogeny Option", "Adds Orogeny to the rotation when available.", WARPvP.JobID)]
-        WARPvP_BurstMode_Orogeny = 128003,
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Burst Mode.", WARPvP.JobID)]
+        WARPvP_BurstMode_PrimalRend = 128004,
 
-        [PvPCustomCombo]
-        [ConflictingCombos(WARPvP_BurstMode_Stunlock)]
-        [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Blota Option", "Adds Blota to the rotation.", WARPvP.JobID)]
-        WARPvP_BurstMode_Blota = 128004,
-
-        [PvPCustomCombo]
-        [ConflictingCombos(WARPvP_BurstMode_Blota, WARPvP_BurstMode_PrimalRend)]
-        [ParentCombo(WARPvP_BurstMode_PrimalRend)]
-        [CustomComboInfo("StunLock Option", "Adds Primal Rend & Blota to the rotation together to execute a 4s stun lock.", WARPvP.JobID)]
-        WARPvP_BurstMode_Stunlock = 128005,
-
-        [PvPCustomCombo]
-        [ConflictingCombos(WARPvP_BurstMode_Stunlock)]
-        [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend the rotation.", WARPvP.JobID)]
-        WARPvP_BurstMode_PrimalRend = 128006,
-
-        [PvPCustomCombo]
-        [ParentCombo(WARPvP_BurstMode)]
-        [CustomComboInfo("Chaotic Cyclone Option", "Adds Chaotic Cyclone the rotation when available.", WARPvP.JobID)]
-        WARPvP_BurstMode_ChaoticCyclone = 128007,
-
-        // Last value = 128007
+        // Last value = 128002
 
         #endregion
 
