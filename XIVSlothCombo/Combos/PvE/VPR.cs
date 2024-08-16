@@ -135,39 +135,42 @@ namespace XIVSlothCombo.Combos.PvE
                     if (VPROpener.DoFullOpener(ref actionID))
                         return actionID;
 
-                    //oGCDs - All oGCD weaves must be forced or possibly clipped or else it is a potency loss for every skill skipped/unused, unless disengaged for >= GCD
-                    // Death Rattle - 280p loss if skipped
-                    if (in5y && LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
-                        return OriginalHook(SerpentsTail);
-
-                    // Legacy Weaves - 280p loss if skipped
-                    if (in5y && TraitLevelChecked(Traits.SerpentsLegacy) && HasEffect(Buffs.Reawakened)
-                        && OriginalHook(SerpentsTail) is not SerpentsTail)
-                        return OriginalHook(SerpentsTail);
-
-                    // Fury Twin Weaves - 170p loss if skipped
-                    if (HasEffect(Buffs.PoisedForTwinfang))
-                        return OriginalHook(Twinfang);
-
-                    if (HasEffect(Buffs.PoisedForTwinblood))
-                        return OriginalHook(Twinblood);
-
-                    //Vice Twin Weaves - 170p loss if skipped
-                    if (!HasEffect(Buffs.Reawakened))
+                    //oGCDs
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
-                        //Vicewinder weaves
-                        if (in5y)
+                        // Death Rattle
+                        if (in5y && LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
+                            return OriginalHook(SerpentsTail);
+
+                        // Legacy Weaves
+                        if (in5y && TraitLevelChecked(Traits.SerpentsLegacy) && HasEffect(Buffs.Reawakened)
+                            && OriginalHook(SerpentsTail) is not SerpentsTail)
+                            return OriginalHook(SerpentsTail);
+
+                        // Fury Twin Weaves
+                        if (HasEffect(Buffs.PoisedForTwinfang))
+                            return OriginalHook(Twinfang);
+
+                        if (HasEffect(Buffs.PoisedForTwinblood))
+                            return OriginalHook(Twinblood);
+
+                        //Vice Twin Weaves
+                        if (!HasEffect(Buffs.Reawakened))
                         {
-                            if (HasEffect(Buffs.HuntersVenom))
-                                return OriginalHook(Twinfang);
+                            //Vicewinder weaves
+                            if (in5y)
+                            {
+                                if (HasEffect(Buffs.HuntersVenom))
+                                    return OriginalHook(Twinfang);
 
-                            if (HasEffect(Buffs.SwiftskinsVenom))
-                                return OriginalHook(Twinblood);
+                                if (HasEffect(Buffs.SwiftskinsVenom))
+                                    return OriginalHook(Twinblood);
+                            }
+
+                            //Serpents Ire
+                            if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
+                                return SerpentsIre;
                         }
-
-                        //Serpents Ire - The only skill allowed to weave and not exactly force, however weave window is wide in case of Reawaken use before Ire is up
-                        if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
-                            return SerpentsIre;
                     }
 
                     //GCDs
@@ -352,47 +355,50 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
-                    //oGCDs - All oGCD weaves must be forced or possibly clipped or else it is a potency loss for every skill skipped/unused, unless disengaged for >= GCD
-                    // Death Rattle - 280p loss if skipped
-                    if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) && in5y &&
-                        LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
-                        return OriginalHook(SerpentsTail);
-
-                    // Legacy Weaves - 280p loss if skipped
-                    if (IsEnabled(CustomComboPreset.VPR_ST_ReawakenCombo) && in5y &&
-                        TraitLevelChecked(Traits.SerpentsLegacy) && HasEffect(Buffs.Reawakened)
-                        && OriginalHook(SerpentsTail) is not SerpentsTail)
-                        return OriginalHook(SerpentsTail);
-
-                    // Fury Twin Weaves - 170p loss if skipped
-                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo))
+                    //oGCDs
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
-                        if (HasEffect(Buffs.PoisedForTwinfang))
-                            return OriginalHook(Twinfang);
+                        // Death Rattle
+                        if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) && in5y &&
+                            LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
+                            return OriginalHook(SerpentsTail);
 
-                        if (HasEffect(Buffs.PoisedForTwinblood))
-                            return OriginalHook(Twinblood);
-                    }
+                        // Legacy Weaves
+                        if (IsEnabled(CustomComboPreset.VPR_ST_ReawakenCombo) && in5y &&
+                            TraitLevelChecked(Traits.SerpentsLegacy) && HasEffect(Buffs.Reawakened)
+                            && OriginalHook(SerpentsTail) is not SerpentsTail)
+                            return OriginalHook(SerpentsTail);
 
-                    //Vice Twin Weaves - 170p loss if skipped
-                    if (!HasEffect(Buffs.Reawakened))
-                    {
-                        if (IsEnabled(CustomComboPreset.VPR_ST_CDs))
+                        // Fury Twin Weaves
+                        if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFuryCombo))
                         {
-                            //Vicewinder weaves
-                            if (IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) && in5y)
+                            if (HasEffect(Buffs.PoisedForTwinfang))
+                                return OriginalHook(Twinfang);
+
+                            if (HasEffect(Buffs.PoisedForTwinblood))
+                                return OriginalHook(Twinblood);
+                        }
+
+                        //Vice Twin Weaves
+                        if (!HasEffect(Buffs.Reawakened))
+                        {
+                            if (IsEnabled(CustomComboPreset.VPR_ST_CDs))
                             {
-                                if (HasEffect(Buffs.HuntersVenom))
-                                    return OriginalHook(Twinfang);
+                                //Vicewinder weaves
+                                if (IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) && in5y)
+                                {
+                                    if (HasEffect(Buffs.HuntersVenom))
+                                        return OriginalHook(Twinfang);
 
-                                if (HasEffect(Buffs.SwiftskinsVenom))
-                                    return OriginalHook(Twinblood);
+                                    if (HasEffect(Buffs.SwiftskinsVenom))
+                                        return OriginalHook(Twinblood);
+                                }
+
+                                //Serpents Ire - Force this in order to maintain raid buff upkeep
+                                if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && InCombat() &&
+                                    CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
+                                    return SerpentsIre;
                             }
-
-                            //Serpents Ire - The only skill allowed to weave and not exactly force, however weave window is wide in case of Reawaken use before Ire is up
-                            if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && InCombat() &&
-                                CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
-                                return SerpentsIre;
                         }
                     }
 
