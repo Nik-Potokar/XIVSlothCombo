@@ -2054,7 +2054,7 @@ namespace XIVSlothCombo.Combos
         NIN_ST_SimpleMode = 10000,
 
         [ParentCombo(NIN_ST_SimpleMode)]
-        [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
+        [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nRequires level 100, with the following requirements:\n- 2 mudra charges ready\n- Dokumori off cooldown.\n- Kunai's Bane off cooldown.\n- TenChiJin off cooldown.\n- Phantom Kamaitachi off cooldown.\n- Bunshin off cooldown.\n- Dream Within a Dream off cooldown.\n- Kassatsu off cooldown.", NIN.JobID)]
         NIN_ST_SimpleMode_BalanceOpener = 10001,
 
         [ReplaceSkill(NIN.DeathBlossom)]
@@ -2162,7 +2162,7 @@ namespace XIVSlothCombo.Combos
         NIN_ST_AdvancedMode_Raiju_Forked = 10028,
 
         [ParentCombo(NIN_ST_AdvancedMode)]
-        [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nDoes pre-pull first, if you enter combat before hiding the opener will fail.\nLikewise, moving during TCJ will cause the opener to fail too.\nRequires you to be out of combat with majority of your cooldowns available for it to work.", NIN.JobID)]
+        [CustomComboInfo("Balance Opener Option", "Starts with the Balance opener.\nRequires level 100, with the following requirements:\n- 2 mudra charges ready\n- Dokumori off cooldown.\n- Kunai's Bane off cooldown.\n- TenChiJin off cooldown.\n- Phantom Kamaitachi off cooldown.\n- Bunshin off cooldown.\n- Dream Within a Dream off cooldown.\n- Kassatsu off cooldown.", NIN.JobID)]
         NIN_ST_AdvancedMode_BalanceOpener = 10029,
 
         [ParentCombo(NIN_ST_AdvancedMode)]

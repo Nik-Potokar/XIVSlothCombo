@@ -452,6 +452,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.IsOnCooldown(Bunshin)) return false;
                 if (CustomComboFunctions.IsOnCooldown(DreamWithinADream)) return false;
                 if (CustomComboFunctions.IsOnCooldown(Kassatsu)) return false;
+                if (CustomComboFunctions.IsOnCooldown(TrickAttack)) return false;
 
                 return true;
             }
