@@ -1583,10 +1583,10 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(2, 8, DRGPvP.Config.DRGPvP_LOTD_Duration, "Seconds remaining of Life of the Dragon buff before using Nastrond if you are still above the set HP percentage.", 150, SliderIncrements.Ones);
 
             if (preset is CustomComboPreset.DRGPvP_ChaoticSpringSustain)
-                UserConfig.DrawSliderInt(0, 101, DRGPvP.Config.DRGPvP_CS_HP_Threshold, "Chaos Spring HP percentage threshold", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 101, DRGPvP.Config.DRGPvP_CS_HP_Threshold, "Chaotic Spring HP percentage threshold", 150, SliderIncrements.Ones);
 
             if (preset is CustomComboPreset.DRGPvP_WyrmwindThrust)
-                UserConfig.DrawSliderInt(0, 20, DRGPvP.Config.DRGPvP_Distance_Threshold, "Distance Treshold for Wyrmwind Thrust", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 20, DRGPvP.Config.DRGPvP_Distance_Threshold, "Distance Threshold for Wyrmwind Thrust", 150, SliderIncrements.Ones);
             #endregion
 
             #endregion
@@ -2475,12 +2475,6 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
-
-            if (preset == CustomComboPreset.WARPvP_BurstMode_Blota)
-            {
-                UserConfig.DrawHorizontalRadioButton(WARPvP.Config.WARPVP_BlotaTiming, "Before Primal Rend", "", 0);
-                UserConfig.DrawHorizontalRadioButton(WARPvP.Config.WARPVP_BlotaTiming, "After Primal Rend", "", 1);
-            }
 
             #endregion
             // ====================================================================================

@@ -1,3 +1,4 @@
+using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 
@@ -15,6 +16,7 @@ namespace XIVSlothCombo.Combos.PvP
             Onslaught = 29079,
             Orogeny = 29080,
             Blota = 29081,
+            PrimalScream = 29083, //LB
             Bloodwhetting = 29082;
 
         internal class Buffs
@@ -24,46 +26,60 @@ namespace XIVSlothCombo.Combos.PvP
                 InnerRelease = 1303;
         }
 
-        public static class Config
+        internal class Debuffs
         {
-            public static UserInt
-                WARPVP_BlotaTiming = new("WARPVP_BlotaTiming");
-
+            internal const ushort
+                Onslaught = 3029;
         }
+
         internal class WARPvP_BurstMode : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WARPvP_BurstMode;
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
+                bool enemyStun = TargetHasEffectAny(PvPCommon.Debuffs.Stun);
+                bool enemyGuard = TargetHasEffectAny(PvPCommon.Buffs.Guard);
+                var canWeave = CanWeave(actionID);
+
                 if (actionID is HeavySwing or Maim or StormsPath)
                 {
-                    var canWeave = CanWeave(actionID);
-
-                    if (!GetCooldown(Bloodwhetting).IsCooldown && (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Bloodwhetting) || canWeave))
-                        return OriginalHook(Bloodwhetting);
-
-                    if (!InMeleeRange() && IsOffCooldown(Blota) && !TargetHasEffectAny(PvPCommon.Debuffs.Stun) && IsEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) && Config.WARPVP_BlotaTiming == 0 && IsOffCooldown(PrimalRend))
-                        return OriginalHook(Blota);
-
-                    if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_PrimalRend) && IsOffCooldown(PrimalRend))
-                        return OriginalHook(PrimalRend);
-
-                    if (!InMeleeRange() && IsOffCooldown(Blota) && !TargetHasEffectAny(PvPCommon.Debuffs.Stun) && IsEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) && Config.WARPVP_BlotaTiming == 1 && IsOnCooldown(PrimalRend))
-                        return OriginalHook(Blota);
-
-                    if (!GetCooldown(Onslaught).IsCooldown && canWeave)
-                        return OriginalHook(Onslaught);
-
-                    if (InMeleeRange())
+                    if (canWeave && !enemyGuard)
                     {
-                        if (HasEffect(Buffs.NascentChaos))
-                            return OriginalHook(Bloodwhetting);
-
-                        if (!GetCooldown(Orogeny).IsCooldown && canWeave)
+                        //Orogeny
+                        if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Orogeny) &&
+                            ActionReady(Orogeny) && InMeleeRange() && !enemyGuard) //use on CD
                             return OriginalHook(Orogeny);
                     }
+
+                    //Bloodwhetting
+                    if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Bloodwhetting) &&
+                        ActionReady(Bloodwhetting) && (ActionReady(PrimalRend) || GetCooldownRemainingTime(PrimalRend) > 5) && GetCooldownRemainingTime(Onslaught) < 1) //use before Primal Rend burst
+                        return OriginalHook(Bloodwhetting);
+
+                    //Blota
+                    if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) && !enemyStun && !enemyGuard &&
+                        (!InMeleeRange() && ActionReady(Blota) && !enemyStun && canWeave) || //use when out of range
+                        (!IsEnabled(CustomComboPreset.WARPvP_BurstMode_Blota) && IsEnabled(CustomComboPreset.WARPvP_BurstMode_Stunlock) && JustUsed(PrimalRend, 3f))) //stunlock
+                        return OriginalHook(Blota);
+
+                    //Onslaught
+                    if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_Onslaught) && 
+                        ActionReady(Onslaught) && (ActionReady(PrimalRend)) && !enemyGuard)
+                        return OriginalHook(Onslaught);
+
+                    //ChaoticCyclone
+                    if (IsEnabled(CustomComboPreset.WARPvP_BurstMode_ChaoticCyclone) && 
+                        HasEffect(Buffs.NascentChaos) && !ActionReady(PrimalRend) && InMeleeRange()) //use on CD
+                        return OriginalHook(Bloodwhetting);
+
+                    //PrimalRend
+                    if (!enemyGuard && JustUsed(Onslaught, 3f) && ActionReady(PrimalRend) &&
+                        (IsEnabled(CustomComboPreset.WARPvP_BurstMode_PrimalRend) || //use on CD
+                       (!IsEnabled(CustomComboPreset.WARPvP_BurstMode_PrimalRend) && IsEnabled(CustomComboPreset.WARPvP_BurstMode_Stunlock) && GetCooldownRemainingTime(Blota) < 0.6f))) //stunlock
+                        return OriginalHook(PrimalRend);
                 }
+
                 return actionID;
             }
         }

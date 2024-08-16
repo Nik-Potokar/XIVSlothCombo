@@ -47,35 +47,49 @@ namespace XIVSlothCombo.Combos.PvP
                 if (actionID == BlastCharge)
                 {
                     var canWeave = CanWeave(actionID);
-                    var analysisStacks = GetRemainingCharges(Analysis);
-                    var bigDamageStacks = GetRemainingCharges(OriginalHook(Drill));
-                    var overheated = HasEffect(Buffs.Overheated);
+                    var hasAnalysis = GetRemainingCharges(Analysis); //How many stacks of Analysis we have
+                    var hasDrill = GetRemainingCharges(OriginalHook(Drill)); //How many charges
+                    var hasHeat = HasEffect(Buffs.Overheated);
+                    var hasLB = HasPVPLimitBreak();
+                    var isLow = GetTargetHPPercent() < 33;
+                    bool enemyGuard = TargetHasEffectAny(PvPCommon.Buffs.Guard);
 
-                    if (canWeave && HasEffect(Buffs.Overheated) && IsOffCooldown(Wildfire))
+                    if (hasLB && isLow && !enemyGuard)
+                        return MarksmanSpite;
+
+                    if (ActionReady(BishopTurret))
+                        return OriginalHook(BishopTurret);
+
+                    //Wildfire
+                    if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_Wildfire) && 
+                        canWeave && hasHeat && ActionReady(Wildfire)) 
                         return OriginalHook(Wildfire);
 
-                    if (overheated)
+                    //HeatBlast
+                    if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_HeatBlast) && hasHeat)
                         return OriginalHook(HeatBlast);
 
-                    if ((HasEffect(Buffs.DrillPrimed) ||
-                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis)) ||
-                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis))) &&
-                        !HasEffect(Buffs.Analysis) && analysisStacks > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltDrill)
-                        || IsOnCooldown(Wildfire)) && !canWeave && !overheated && bigDamageStacks > 0)
+                    //Analysis
+                    if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_Analysis) && (HasEffect(Buffs.DrillPrimed) || //Drill
+                        (HasEffect(Buffs.ChainSawPrimed) && !IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis)) || //Chainsaw
+                        (HasEffect(Buffs.AirAnchorPrimed) && IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltAnalysis))) && //Alternate AirAnchor
+                        !HasEffect(Buffs.Analysis) && hasAnalysis > 0 && (!IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AltDrill) //Althernate Drill
+                        || !ActionReady(Wildfire)) && !canWeave && !hasHeat && hasDrill > 0)
                         return OriginalHook(Analysis);
 
-                    if (bigDamageStacks > 0)
+                    //Primed skills
+                    if (hasDrill > 0)
                     {
-                        if (HasEffect(Buffs.DrillPrimed))
+                        if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_Drill) && HasEffect(Buffs.DrillPrimed))
                             return OriginalHook(Drill);
 
-                        if (HasEffect(Buffs.BioblasterPrimed) && GetTargetDistance() <= 12)
+                        if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_BioBlaster) && HasEffect(Buffs.BioblasterPrimed) && GetTargetDistance() <= 10)
                             return OriginalHook(BioBlaster);
 
-                        if (HasEffect(Buffs.AirAnchorPrimed))
+                        if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_AirAnchor) && HasEffect(Buffs.AirAnchorPrimed))
                             return OriginalHook(AirAnchor);
 
-                        if (HasEffect(Buffs.ChainSawPrimed))
+                        if (IsEnabled(CustomComboPreset.MCHPvP_BurstMode_ChainSaw) && HasEffect(Buffs.ChainSawPrimed))
                             return OriginalHook(ChainSaw);
                     }
                 }

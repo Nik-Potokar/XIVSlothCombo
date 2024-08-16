@@ -100,9 +100,15 @@ namespace XIVSlothCombo.Combos.PvP
                     if (IsEnabled(CustomComboPreset.GNBPvP_ST_GnashingFang) &&
                         JustUsed(GnashingFang, 3f) || JustUsed(SavageClaw, 3f))
                         return OriginalHook(GnashingFang);
+                  
+                    //LB
+                    if (HasPVPLimitBreak() && PlayerHealthPercentageHp() > 70 && HasEffect(Buffs.NoMercy) && !enemyGuard)
+                        return RelentlessRush;
+                    if (GetTargetHPPercent() < 20 && JustUsed(RelentlessRush, 4f))
+                        return TerminalTrigger;
 
                     //DoubleDown
-                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && !enemyGuard && ActionReady(DoubleDown) &&
+                    if (IsEnabled(CustomComboPreset.GNBPvP_DoubleDown) && !enemyGuard && ActionReady(DoubleDown)
                         HasEffect(Buffs.NoMercy) && InMeleeRange() && !inGF) //DoubleDown breaks Gnashing combo in PvP
                         return DoubleDown;
 
