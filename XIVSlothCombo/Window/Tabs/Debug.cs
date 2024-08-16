@@ -69,7 +69,7 @@ namespace XIVSlothCombo.Window.Tabs
                         }
 
                         // Duration + Blacklist Check
-                        if (status.RemainingTime > 0 && !statusBlacklist.Contains(status.StatusId))
+                        if (status.RemainingTime != 0 && !statusBlacklist.Contains(status.StatusId))
                         {
                             string formattedDuration;
                             if (status.RemainingTime >= 60)
@@ -114,7 +114,7 @@ namespace XIVSlothCombo.Window.Tabs
                             }
 
                             // Duration + Blacklist Check
-                            if (status.RemainingTime > 0 && !statusBlacklist.Contains(status.StatusId))
+                            if (status.RemainingTime != 0 && !statusBlacklist.Contains(status.StatusId))
                             {
                                 string formattedDuration;
                                 if (status.RemainingTime >= 60)
