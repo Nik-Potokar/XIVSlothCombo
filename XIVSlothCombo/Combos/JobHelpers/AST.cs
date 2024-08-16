@@ -1,7 +1,9 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿    using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
+using ECommons.GameFunctions;
+using ECommons.ExcelServices;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -52,11 +54,16 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 CustomComboFunctions.OutOfRange(Balance, AST_QuickTargetCards.SelectedRandomMember))
                 return true;
 
-            Svc.Log.Debug($"Picking better?");
+            var m = AST_QuickTargetCards.SelectedRandomMember as IBattleChara;
+            if ((DrawnCard is CardType.BALANCE && CustomComboFunctions.JobIDs.Melee.Any(x => x == m.ClassJob.Id)) ||
+                (DrawnCard is CardType.SPEAR && CustomComboFunctions.JobIDs.Ranged.Any(x => x == m.ClassJob.Id)))
+                return false;
+
             var targets = new List<IBattleChara>();
             for (int i = 1; i <= 8; i++) //Checking all 8 available slots and skipping nulls & DCs
             {
                 if (CustomComboFunctions.GetPartySlot(i) is not IBattleChara member) continue;
+                if (member.GameObjectId == AST_QuickTargetCards.SelectedRandomMember.GameObjectId) continue;
                 if (member is null) continue; //Skip nulls/disconnected people
                 if (member.IsDead) continue;
                 if (CustomComboFunctions.OutOfRange(Balance, member)) continue;
@@ -67,13 +74,18 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (Config.AST_QuickTarget_SkipDamageDown && CustomComboFunctions.TargetHasDamageDown(member)) continue;
                 if (Config.AST_QuickTarget_SkipRezWeakness && CustomComboFunctions.TargetHasRezWeakness(member)) continue;
 
+                if (member.GetRole() is CombatRole.Healer or CombatRole.Tank) continue;
+
                 targets.Add(member);
             }
 
             if (targets.Count == 0) return false;
             if ((DrawnCard is CardType.BALANCE && targets.Any(x => CustomComboFunctions.JobIDs.Melee.Any(y => y == x.ClassJob.Id))) ||
                 (DrawnCard is CardType.SPEAR && targets.Any(x => CustomComboFunctions.JobIDs.Ranged.Any(y => y == x.ClassJob.Id))))
+            {
+                AST_QuickTargetCards.SelectedRandomMember = null;
                 return true;
+            }
 
             return false;
 
@@ -97,6 +109,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     }
                     else
                     {
+                        Svc.Log.Debug($"Setting card to {LocalPlayer.Name}");
                         SelectedRandomMember = LocalPlayer;
                     }
                 }
