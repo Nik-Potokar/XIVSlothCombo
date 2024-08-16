@@ -550,7 +550,7 @@ namespace XIVSlothCombo.Combos.PvE
                         
                         // Lux Solaris 
                         if (IsOffCooldown(LuxSolaris) && IsEnabled(CustomComboPreset.SMN_Advanced_Combo_DemiSummons_LuxSolaris) && HasEffect(Buffs.RefulgentLux) &&
-                            (PlayerHealthPercentageHp() < 100 || GetBuffRemainingTime(Buffs.RefulgentLux) < 3))
+                            (PlayerHealthPercentageHp() < 100 || GetBuffRemainingTime(Buffs.RefulgentLux) is < 3 and > 0))
                             return OriginalHook(LuxSolaris);
 
                         // Fester/Painflare
