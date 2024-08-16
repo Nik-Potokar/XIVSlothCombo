@@ -2,6 +2,7 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface.Colors;
 using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using System;
 using System.Linq;
@@ -68,18 +69,22 @@ namespace XIVSlothCombo.Window.Tabs
                             CustomStyleText("", status.StatusId);
                         }
 
+                        float buffDuration = (CustomComboFunctions.FindEffectAny((ushort)status.StatusId).RemainingTime < 0)
+                            ? (CustomComboFunctions.FindEffectAny((ushort)status.StatusId).RemainingTime * -1) + ActionManager.Instance()->AnimationLock
+                            : CustomComboFunctions.FindEffectAny((ushort)status.StatusId).RemainingTime;
+
                         // Duration + Blacklist Check
-                        if (status.RemainingTime != 0 && !statusBlacklist.Contains(status.StatusId))
+                        if (buffDuration != 0 && !statusBlacklist.Contains(status.StatusId))
                         {
                             string formattedDuration;
-                            if (status.RemainingTime >= 60)
+                            if (buffDuration >= 60)
                             {
-                                int minutes = (int)(status.RemainingTime / 60);
+                                int minutes = (int)(buffDuration / 60);
                                 formattedDuration = $"{minutes}m";
                             }
                             else
                             {
-                                formattedDuration = $"{Math.Round(status.RemainingTime, 1)}s";
+                                formattedDuration = $"{Math.Round(buffDuration, 1)}s";
                             }
 
                             ImGui.SameLine(0, 4f);
@@ -113,18 +118,22 @@ namespace XIVSlothCombo.Window.Tabs
                                 CustomStyleText("", status.StatusId);
                             }
 
+                            float debuffDuration = (CustomComboFunctions.FindTargetEffectAny((ushort)status.StatusId).RemainingTime < 0)
+                                ? (CustomComboFunctions.FindTargetEffectAny((ushort)status.StatusId).RemainingTime * -1) + ActionManager.Instance()->AnimationLock
+                                : CustomComboFunctions.FindTargetEffectAny((ushort)status.StatusId).RemainingTime;
+
                             // Duration + Blacklist Check
-                            if (status.RemainingTime != 0 && !statusBlacklist.Contains(status.StatusId))
+                            if (debuffDuration != 0 && !statusBlacklist.Contains(status.StatusId))
                             {
                                 string formattedDuration;
-                                if (status.RemainingTime >= 60)
+                                if (debuffDuration >= 60)
                                 {
-                                    int minutes = (int)(status.RemainingTime / 60);
+                                    int minutes = (int)(debuffDuration / 60);
                                     formattedDuration = $"{minutes}m";
                                 }
                                 else
                                 {
-                                    formattedDuration = $"{Math.Round(status.RemainingTime, 1)}s";
+                                    formattedDuration = $"{Math.Round(debuffDuration, 1)}s";
                                 }
 
                                 ImGui.SameLine(0, 4f);
