@@ -347,6 +347,7 @@ namespace XIVSlothCombo.Combos.PvE
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ST_AdvancedMode;
             internal static VPROpenerLogic VPROpener = new();
+            internal static VPROpenerLogicNoUncoiledFury VPROpener2 = new();
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -364,13 +365,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelFangs)
                 {
+                    // No UF Opener for VPR
+                    if (IsEnabled(CustomComboPreset.VPR_ST_Opener) && IsEnabled(CustomComboPreset.VPR_ST_Opener_NoUncoiledFury))
+                    {
+                        if (VPROpener2.DoFullOpener(ref actionID))
+                            return actionID;
+                    }
+
                     // Opener for VPR
                     if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
                     {
                         if (VPROpener.DoFullOpener(ref actionID))
                             return actionID;
                     }
-
+               
                     //All Weaves
                     if (CanWeave(actionID))
                     {
@@ -586,7 +594,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     //even minutes
                     if ((WasLastAbility(SerpentsIre) && HasEffect(Buffs.ReadyToReawaken)) ||
-                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
+                        (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) && GetCooldownRemainingTime(SerpentsIre) >= 90 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros)) ||
                         HasEffect(Buffs.ReadyToReawaken) ||
                         (gauge.SerpentOffering >= 95 && WasLastAbility(SerpentsIre)))
@@ -597,11 +605,17 @@ namespace XIVSlothCombo.Combos.PvE
                         gauge.SerpentOffering >= 50 &&
                         GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) ||
                         (SerpentsIreUsed is 4 &&
-                        (gauge.SerpentOffering >= 95 ||
+                        (gauge.SerpentOffering >= 90 ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(Ouroboros)) ||
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) &&
-                        GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90))
+                        GetCooldownRemainingTime(SerpentsIre) is >= 45 and <= 90) ||
+                        gauge.SerpentOffering >= 60 && GetCooldownRemainingTime(SerpentsIre) is >= 65 and <= 95)
                         return true;
+
+                    // overcap protection
+                    if (SerpentsIreUsed is < 3 or > 3 && gauge.SerpentOffering >= 95 && GetCooldownRemainingTime(SerpentsIre) < 50 && 
+                        (WasLastWeaponskill(SwiftskinsSting) || WasLastWeaponskill(HuntersSting)))
+                        return true; 
                 }
                 return false;
             }
@@ -1044,6 +1058,8 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
+                VPRGauge? gauge = GetJobGauge<VPRGauge>();
+
                 if (actionID is UncoiledFury)
                 {
                     if (HasEffect(Buffs.PoisedForTwinfang))
@@ -1051,6 +1067,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(Buffs.PoisedForTwinblood))
                         return OriginalHook(Twinblood);
+
+                    if (IsEnabled(CustomComboPreset.VPR_UncoiledTwins_Snap) && gauge.RattlingCoilStacks == 0)
+                        return WrithingSnap;
                 }
                 return actionID;
             }

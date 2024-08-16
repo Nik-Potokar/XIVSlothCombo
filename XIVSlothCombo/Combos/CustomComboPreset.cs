@@ -3803,8 +3803,13 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [ConflictingCombos(VPR_ReawakenLegacy)]
-        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.\n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
+        [CustomComboInfo("Level 100 Openers", "Adds the selected opener to the rotation.\n Uses the early Uncoiled Fury opener by default. \n Does not check positional choice.\n Always does Hunter's Coil first ( FLANK )", VPR.JobID)]
         VPR_ST_Opener = 30002,
+
+        [ParentCombo(VPR_ST_Opener)]
+        [ConflictingCombos(VPR_ReawakenLegacy)]
+        [CustomComboInfo("No Uncoiled Fury Opener", "Swap to the No Uncoiled Fury opener.", VPR.JobID)]
+        VPR_ST_Opener_NoUncoiledFury = 30300,
 
         #region Cooldowns ST
 
@@ -3941,6 +3946,10 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(VPR.UncoiledFury)]
         [CustomComboInfo("Uncoiled - Twins", "Replaces Uncoiled Fury with Uncoiled Twinfang and Uncoiled Twinblood.", VPR.JobID)]
         VPR_UncoiledTwins = 30202,
+
+        [ParentCombo(VPR_UncoiledTwins)]
+        [CustomComboInfo("Uncoiled - Twins", "Replaces Uncoiled Fury with Writhing Snap when at 0 Rattling Coil stacks.", VPR.JobID)]
+        VPR_UncoiledTwins_Snap = 30400,
 
         [ReplaceSkill(VPR.Reawaken, VPR.SteelFangs)]
         [ConflictingCombos(VPR_ST_Reawaken, VPR_ST_ReawakenCombo, VPR_AoE_Reawaken, VPR_AoE_ReawakenCombo, VPR_ST_Opener)]
