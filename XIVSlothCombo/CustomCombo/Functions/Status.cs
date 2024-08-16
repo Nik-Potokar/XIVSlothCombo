@@ -1,7 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
+using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
 {
@@ -18,10 +20,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return eff?.StackCount ?? 0;
         }
 
-        public static float GetBuffRemainingTime(ushort effectId)
+        public unsafe static float GetBuffRemainingTime(ushort effectId)
         {
             Status? eff = FindEffect(effectId);
-            return eff?.RemainingTime ?? 0;
+            if (eff is null) return 0;
+            if (eff.RemainingTime < 0) return (eff.RemainingTime * -1) + ActionManager.Instance()->AnimationLock;
+            return eff.RemainingTime;
         }
 
         /// <summary> Finds an effect on the player. The effect must be owned by the player or unowned. </summary>
@@ -40,10 +44,12 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         public static Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 
         /// <summary></summary>
-        public static float GetDebuffRemainingTime(ushort effectId)
+        public unsafe static float GetDebuffRemainingTime(ushort effectId)
         {
             Status? eff = FindTargetEffect(effectId);
-            return eff?.RemainingTime ?? 0;
+            if (eff is null) return 0;
+            if (eff.RemainingTime < 0) return (eff.RemainingTime * -1) + ActionManager.Instance()->AnimationLock;
+            return eff.RemainingTime;
         }
 
         /// <summary> Find if an effect on the player exists. The effect may be owned by anyone or unowned. </summary>
