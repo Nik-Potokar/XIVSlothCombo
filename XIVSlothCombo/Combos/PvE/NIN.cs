@@ -833,12 +833,12 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (comboTime > 0f)
                     {
-                        if (lastComboMove == SpinningEdge && level >= 4)
+                        if (lastComboMove == SpinningEdge && GustSlash.LevelChecked())
                         {
                             return GustSlash;
                         }
 
-                        if (lastComboMove == GustSlash && level >= 54)
+                        if (lastComboMove == GustSlash && ArmorCrush.LevelChecked())
                         {
                             return ArmorCrush;
                         }
@@ -860,12 +860,12 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (HasCondition(Dalamud.Game.ClientState.Conditions.ConditionFlag.InCombat))
                     {
-                        return Mug;
+                        return OriginalHook(Mug);
                     }
 
                     if (HasEffect(Buffs.Hidden))
                     {
-                        return TrickAttack;
+                        return OriginalHook(TrickAttack);
                     }
 
                 }
