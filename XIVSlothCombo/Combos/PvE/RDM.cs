@@ -669,6 +669,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (schwifty || HasEffect(Buffs.Dualcast)) return Verraise;
                         if (IsEnabled(CustomComboPreset.RDM_Raise_Vercure) &&
                             !schwifty &&
+                            ActionReady(Vercure) &&
                             IsOnCooldown(All.Swiftcast))
                             return Vercure;
                     }
