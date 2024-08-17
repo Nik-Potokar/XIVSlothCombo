@@ -230,7 +230,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SteelMuse) && SteelMuse.LevelChecked() && !HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()))
                             return OriginalHook(SteelMuse);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MogOfTheAges) && MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldownRemainingTime(StarryMuse) >= 40 || !ScenicMuse.LevelChecked()))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MogOfTheAges) && MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldownRemainingTime(StarryMuse) >= 60 || !ScenicMuse.LevelChecked()))
                             return OriginalHook(MogoftheAges);
 
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SwitfcastOption) &&
@@ -488,7 +488,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SteelMuse) && SteelMuse.LevelChecked() && !HasEffect(Buffs.HammerTime) && gauge.WeaponMotifDrawn && HasCharges(OriginalHook(SteelMuse)) && (GetCooldown(SteelMuse).CooldownRemaining < GetCooldown(ScenicMuse).CooldownRemaining || GetRemainingCharges(SteelMuse) == GetMaxCharges(SteelMuse) || !ScenicMuse.LevelChecked()))
                             return OriginalHook(SteelMuse);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MogOfTheAges) && MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldownRemainingTime(StarryMuse) >= 40 || !ScenicMuse.LevelChecked()))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MogOfTheAges) && MogoftheAges.LevelChecked() && (gauge.MooglePortraitReady || gauge.MadeenPortraitReady) && IsOffCooldown(OriginalHook(MogoftheAges)) && (GetCooldownRemainingTime(StarryMuse) >= 60 || !ScenicMuse.LevelChecked()))
                             return OriginalHook(MogoftheAges);
 
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SwitfcastOption) &&
