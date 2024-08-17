@@ -20,9 +20,16 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return eff?.StackCount ?? 0;
         }
 
-        public unsafe static float GetBuffRemainingTime(ushort effectId)
+        /// <summary> Gets the duration of a status effect on the player. By default, the effect must be owned by the player or unowned. </summary>
+        /// <param name="effectId"> Status effect ID. </param>
+        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player, or whether it can be owned by anyone. </param>
+        /// <returns> A value indicating if the effect exists. </returns>
+        public unsafe static float GetBuffRemainingTime(ushort effectId, bool isPlayerOwned = true)
         {
-            Status? eff = FindEffect(effectId);
+            Status? eff = (isPlayerOwned == true)
+                ? FindEffect(effectId)
+                : FindEffectAny(effectId);
+
             if (eff is null) return 0;
             if (eff.RemainingTime < 0) return (eff.RemainingTime * -1) + ActionManager.Instance()->AnimationLock;
             return eff.RemainingTime;
@@ -43,10 +50,16 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> Status object or null. </returns>
         public static Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 
-        /// <summary></summary>
-        public unsafe static float GetDebuffRemainingTime(ushort effectId)
+        /// <summary> Gets the duration of a status effect on the current target. By default, the effect must be owned by the player or unowned. </summary>
+        /// <param name="effectId"> Status effect ID. </param>
+        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player, or whether it can be owned by anyone. </param>
+        /// <returns> A value indicating if the effect exists. </returns>
+        public unsafe static float GetDebuffRemainingTime(ushort effectId, bool isPlayerOwned = true)
         {
-            Status? eff = FindTargetEffect(effectId);
+            Status? eff = (isPlayerOwned == true)
+                ? FindTargetEffect(effectId)
+                : FindTargetEffectAny(effectId);
+
             if (eff is null) return 0;
             if (eff.RemainingTime < 0) return (eff.RemainingTime * -1) + ActionManager.Instance()->AnimationLock;
             return eff.RemainingTime;

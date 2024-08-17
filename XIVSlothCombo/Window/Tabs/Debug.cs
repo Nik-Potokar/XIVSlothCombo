@@ -2,7 +2,6 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface.Colors;
 using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using System;
 using System.Linq;
@@ -62,18 +61,11 @@ namespace XIVSlothCombo.Window.Tabs
                         if (!string.IsNullOrEmpty(ActionWatching.GetStatusName(status.StatusId)))
                         {
                             CustomStyleText(ActionWatching.GetStatusName(status.StatusId) + ":", status.StatusId);
-
                         }
-                        else
-                        {
-                            CustomStyleText("", status.StatusId);
-                        }
-
-                        float buffDuration = (CustomComboFunctions.FindEffectAny((ushort)status.StatusId).RemainingTime < 0)
-                            ? (CustomComboFunctions.FindEffectAny((ushort)status.StatusId).RemainingTime * -1) + ActionManager.Instance()->AnimationLock
-                            : CustomComboFunctions.FindEffectAny((ushort)status.StatusId).RemainingTime;
+                        else CustomStyleText("", status.StatusId);
 
                         // Duration + Blacklist Check
+                        float buffDuration = CustomComboFunctions.GetBuffRemainingTime((ushort)status.StatusId, false);
                         if (buffDuration != 0 && !statusBlacklist.Contains(status.StatusId))
                         {
                             string formattedDuration;
@@ -82,10 +74,7 @@ namespace XIVSlothCombo.Window.Tabs
                                 int minutes = (int)(buffDuration / 60);
                                 formattedDuration = $"{minutes}m";
                             }
-                            else
-                            {
-                                formattedDuration = $"{Math.Round(buffDuration, 1)}s";
-                            }
+                            else formattedDuration = $"{buffDuration:F1}s";
 
                             ImGui.SameLine(0, 4f);
                             CustomStyleText("", $"({formattedDuration})");
@@ -111,18 +100,11 @@ namespace XIVSlothCombo.Window.Tabs
                             if (!string.IsNullOrEmpty(ActionWatching.GetStatusName(status.StatusId)))
                             {
                                 CustomStyleText(ActionWatching.GetStatusName(status.StatusId) + ":", status.StatusId);
-
                             }
-                            else
-                            {
-                                CustomStyleText("", status.StatusId);
-                            }
-
-                            float debuffDuration = (CustomComboFunctions.FindTargetEffectAny((ushort)status.StatusId).RemainingTime < 0)
-                                ? (CustomComboFunctions.FindTargetEffectAny((ushort)status.StatusId).RemainingTime * -1) + ActionManager.Instance()->AnimationLock
-                                : CustomComboFunctions.FindTargetEffectAny((ushort)status.StatusId).RemainingTime;
+                            else CustomStyleText("", status.StatusId);
 
                             // Duration + Blacklist Check
+                            float debuffDuration = CustomComboFunctions.GetDebuffRemainingTime((ushort)status.StatusId, false);
                             if (debuffDuration != 0 && !statusBlacklist.Contains(status.StatusId))
                             {
                                 string formattedDuration;
@@ -131,10 +113,7 @@ namespace XIVSlothCombo.Window.Tabs
                                     int minutes = (int)(debuffDuration / 60);
                                     formattedDuration = $"{minutes}m";
                                 }
-                                else
-                                {
-                                    formattedDuration = $"{Math.Round(debuffDuration, 1)}s";
-                                }
+                                else formattedDuration = $"{debuffDuration:F1}s";
 
                                 ImGui.SameLine(0, 4f);
                                 CustomStyleText("", $"({formattedDuration})");
@@ -181,7 +160,7 @@ namespace XIVSlothCombo.Window.Tabs
                 CustomStyleText("Last Weaponskill:", ActionWatching.GetActionName(ActionWatching.LastWeaponskill));
                 CustomStyleText("Last Spell:", ActionWatching.GetActionName(ActionWatching.LastSpell));
                 CustomStyleText("Last Ability:", ActionWatching.GetActionName(ActionWatching.LastAbility));
-                CustomStyleText("Combo Timer:", Math.Round(CustomComboFunctions.ComboTimer, 1));
+                CustomStyleText("Combo Timer:", $"{CustomComboFunctions.ComboTimer:F1}");
                 CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(CustomComboFunctions.ComboAction)) ? "Unknown" : ActionWatching.GetActionName(CustomComboFunctions.ComboAction))} (ID: {CustomComboFunctions.ComboAction})");
                 CustomStyleText("Cast Action:", LocalPlayer.CastActionId == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(LocalPlayer.CastActionId)) ? "Unknown" : ActionWatching.GetActionName(LocalPlayer.CastActionId))} (ID: {LocalPlayer.CastActionId})");
                 CustomStyleText("Cast Time:", $"{LocalPlayer.CurrentCastTime:F2} / {LocalPlayer.TotalCastTime:F2}");
