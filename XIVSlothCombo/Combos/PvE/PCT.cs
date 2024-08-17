@@ -93,7 +93,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireInRed)
                 {
                     var gauge = GetJobGauge<PCTGauge>();
-                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed));
+                    bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
                     if (HasEffect(Buffs.Starstruck))
                         return OriginalHook(StarPrism);
@@ -187,7 +187,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireInRed)
                 {
                     var gauge = GetJobGauge<PCTGauge>();
-                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed)) || CanSpellWeave(OriginalHook(HammerStamp)) || CanSpellWeave(CometinBlack) || CanSpellWeave(HolyInWhite) || CanSpellWeave(OriginalHook(CreatureMotif)) || CanSpellWeave(HammerMotif) || CanSpellWeave(LandscapeMotif);
+                    bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
                     // Prepull logic
                     if (!InCombat() || (InCombat() && CurrentTarget == null))
@@ -342,6 +342,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_BlizzardInCyan) && BlizzardIIinCyan.LevelChecked() && HasEffect(Buffs.SubtractivePalette))
                         return OriginalHook(BlizzardinCyan);
                 }
+
                 return actionID;
             }
         }
@@ -355,7 +356,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireIIinRed)
                 {
                     var gauge = GetJobGauge<PCTGauge>();
-                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardinCyan)) : CanSpellWeave(OriginalHook(FireInRed));
+                    bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
                     if (HasEffect(Buffs.Starstruck))
                         return OriginalHook(StarPrism);
@@ -450,7 +451,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (actionID is FireIIinRed)
                 {
                     var gauge = GetJobGauge<PCTGauge>();
-                    bool canWeave = HasEffect(Buffs.SubtractivePalette) ? CanSpellWeave(OriginalHook(BlizzardIIinCyan)) : CanSpellWeave(OriginalHook(FireInRed)) || CanSpellWeave(OriginalHook(HammerStamp)) || CanSpellWeave(CometinBlack) || CanSpellWeave(HolyInWhite) || CanSpellWeave(OriginalHook(CreatureMotif)) || CanSpellWeave(HammerMotif) || CanSpellWeave(LandscapeMotif);
+                    bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
 
                     // Prepull logic
