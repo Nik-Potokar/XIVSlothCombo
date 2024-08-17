@@ -223,16 +223,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else return false;
             }
 
-            public static bool IsDebuffExpiring(float Times)
-            {
-                float GCD = GetCooldown(Slice).CooldownTotal * Times;
-
-                if (GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD)
-                    return true;
-
-                else return false;
-            }
-
             public static bool IsBuffExpiring(float Times)
             {
                 float GCD = GetCooldown(Slice).CooldownTotal * Times;

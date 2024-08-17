@@ -134,18 +134,20 @@ namespace XIVSlothCombo.Combos.PvE
                     if (RPROpener.DoFullOpener(ref actionID))
                         return actionID;
 
-                    if (CanWeave(actionID))
+                    if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         if (ActionReady(ArcaneCircle))
                             return ArcaneCircle;
 
+                        if (RPRHelpers.UseEnshroud(gauge))
+                            return Enshroud;
+
                         if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                             !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
-                            !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
+                            !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) && !RPRHelpers.IsComboExpiring(2) &&
                             gauge.Soul >= 50)
                         {
-                            if (LevelChecked(Gluttony) && !JustUsed(Perfectio) &&
-                                ((GetCooldownRemainingTime(Gluttony) <= GetCooldownRemainingTime(Slice) + 0.25) || ActionReady(Gluttony)))
+                            if (!JustUsed(Perfectio) && ActionReady(Gluttony))
                             {
                                 if (trueNorthReady)
                                     return All.TrueNorth;
@@ -155,7 +157,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                             if (LevelChecked(BloodStalk) &&
                                 (!LevelChecked(Gluttony) ||
-                                (LevelChecked(Gluttony) && !JustUsed(Gluttony) &&
+                                (LevelChecked(Gluttony) && IsOnCooldown(Gluttony) &&
                                 (gauge.Soul is 100 || GetCooldownRemainingTime(Gluttony) > GCD * 5))))
                                 return OriginalHook(BloodStalk);
                         }
@@ -181,19 +183,16 @@ namespace XIVSlothCombo.Combos.PvE
                                 : Harpe;
                     }
 
-                    if (RPRHelpers.UseShadowOfDeath() && enemyHP > 1)
+                    if (RPRHelpers.UseShadowOfDeath() && enemyHP > Config.RPR_SoDThreshold)
                         return ShadowOfDeath;
 
                     if (TargetHasEffect(Debuffs.DeathsDesign))
                     {
-                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio) && !RPRHelpers.IsComboExpiring(2))
+                        if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio) && !RPRHelpers.IsComboExpiring(1))
                             return OriginalHook(Communio);
 
-                        if (RPRHelpers.UseEnshroud(gauge))
-                            return Enshroud;
-
                         if (LevelChecked(Gibbet) && !HasEffect(Buffs.Enshrouded) &&
-                            (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)))
+                           (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)))
                         {
                             if (HasEffect(Buffs.EnhancedGibbet))
                             {
@@ -204,7 +203,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             if (HasEffect(Buffs.EnhancedGallows) ||
-                                 (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
+                                (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
                             {
                                 if (trueNorthDynReady && !OnTargetsRear())
                                     return All.TrueNorth;
@@ -233,15 +232,15 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         if (!HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.IdealHost) &&
-                            !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
-                            LevelChecked(SoulSlice) && gauge.Soul <= 50 && ActionReady(SoulSlice))
+                            !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.ImmortalSacrifice) &&
+                            !RPRHelpers.IsComboExpiring(2) && gauge.Soul <= 50 && ActionReady(SoulSlice))
                             return SoulSlice;
                     }
 
-                    if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind))
+                    if (PlayerHealthPercentageHp() <= 40 && ActionReady(All.SecondWind))
                         return All.SecondWind;
 
-                    if (PlayerHealthPercentageHp() <= 40 && ActionReady(All.Bloodbath))
+                    if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.Bloodbath))
                         return All.Bloodbath;
 
                     if (comboTime > 0)
