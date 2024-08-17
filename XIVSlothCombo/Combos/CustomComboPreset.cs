@@ -2363,7 +2363,7 @@ namespace XIVSlothCombo.Combos
         PCT_ST_AdvancedMode = 20005,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
-        [CustomComboInfo("Lvl 100 Opener Option", $"Uses the Balance Opener.", PCT.JobID)]
+        [CustomComboInfo("Balance Opener Option", $"Uses the Balance Opener depending on your current level. \n Supports lvl 70, 80, 90, 92, 100. \n - Requirements: \n - Starry Muse off cooldown \n - Pom. Weapon, Landscape Motif", PCT.JobID)]
         PCT_ST_Advanced_Openers = 20006,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
