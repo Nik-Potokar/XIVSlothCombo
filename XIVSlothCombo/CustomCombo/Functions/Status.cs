@@ -22,8 +22,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets the duration of a status effect on the player. By default, the effect must be owned by the player or unowned. </summary>
         /// <param name="effectId"> Status effect ID. </param>
-        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player, or whether it can be owned by anyone. </param>
-        /// <returns> A value indicating if the effect exists. </returns>
+        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player or can be owned by anyone. </param>
+        /// <returns> The duration of the status effect. </returns>
         public unsafe static float GetBuffRemainingTime(ushort effectId, bool isPlayerOwned = true)
         {
             Status? eff = (isPlayerOwned == true)
@@ -52,8 +52,8 @@ namespace XIVSlothCombo.CustomComboNS.Functions
 
         /// <summary> Gets the duration of a status effect on the current target. By default, the effect must be owned by the player or unowned. </summary>
         /// <param name="effectId"> Status effect ID. </param>
-        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player, or whether it can be owned by anyone. </param>
-        /// <returns> A value indicating if the effect exists. </returns>
+        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player or can be owned by anyone. </param>
+        /// <returns> The duration of the status effect. </returns>
         public unsafe static float GetDebuffRemainingTime(ushort effectId, bool isPlayerOwned = true)
         {
             Status? eff = (isPlayerOwned == true)
