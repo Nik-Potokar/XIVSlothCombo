@@ -171,8 +171,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(RainbowDrip) && OpenerStep == 17) OpenerStep++;
                 else if (OpenerStep == 17) actionID = RainbowDrip;
 
-                if (CustomComboFunctions.WasLastAction(HolyInWhite) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = HolyInWhite;
 
                 Svc.Log.Debug($"TimeSinceLastAction: {ActionWatching.TimeSinceLastAction.TotalSeconds}, OpenerStep: {OpenerStep}");
 
@@ -183,7 +181,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return false;
                 }
 
-                if (OpenerStep > 18) // Assuming 18 is the last step
+                if (OpenerStep > 17) // Assuming 17 is the last step
                 {
                     CurrentState = OpenerState.OpenerFinished;
                     Svc.Log.Information("Opener completed successfully.");
