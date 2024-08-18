@@ -218,7 +218,8 @@ namespace XIVSlothCombo.Combos.PvE
                                     (IsEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)
                                      && GetRemainingCharges(Shadowbringer) > 0
                                      && gauge.ShadowTimeRemaining > 1
-                                     && IsOnCooldown(Delirium))) // Burst
+                                     && IsOnCooldown(LivingShadow)
+                                     && !HasEffect(Buffs.Scorn))) // Burst
                                     return Shadowbringer;
                             }
 
