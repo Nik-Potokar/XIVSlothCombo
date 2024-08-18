@@ -135,12 +135,16 @@ namespace XIVSlothCombo.Combos.PvE
                     if (VPROpener.DoFullOpener(ref actionID))
                         return actionID;
 
+                    //Serpents Ire - ForceWeave
+                    if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
+                        return SerpentsIre;
+
                     //oGCDs
                     if (CanWeave(ActionWatching.LastWeaponskill))
                     {
-                        // Death Rattle
-                        if (in5y && LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
-                            return OriginalHook(SerpentsTail);
+                        //Serpents Ire
+                        if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
+                            return SerpentsIre;
 
                         // Legacy Weaves
                         if (in5y && TraitLevelChecked(Traits.SerpentsLegacy) && HasEffect(Buffs.Reawakened)
@@ -166,12 +170,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (HasEffect(Buffs.SwiftskinsVenom))
                                     return OriginalHook(Twinblood);
                             }
-
-                            //Serpents Ire
-                            if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
-                                return SerpentsIre;
                         }
                     }
+
+                    // Death Rattle - Force to avoid loss
+                    if (in5y && LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
+                        return OriginalHook(SerpentsTail);
 
                     //GCDs
                     if (LevelChecked(WrithingSnap) && !InMeleeRange() && HasBattleTarget())
@@ -355,6 +359,11 @@ namespace XIVSlothCombo.Combos.PvE
                             return actionID;
                     }
 
+                    //Serpents Ire - MaxPrio oGCD, ForceWeave this in order to maintain raid buff upkeep or to avoid delay when inside RA
+                    if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && InCombat() &&
+                        CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
+                        return SerpentsIre;
+
                     //oGCDs
                     if (CanWeave(ActionWatching.LastWeaponskill))
                     {
@@ -393,14 +402,14 @@ namespace XIVSlothCombo.Combos.PvE
                                     if (HasEffect(Buffs.SwiftskinsVenom))
                                         return OriginalHook(Twinblood);
                                 }
-
-                                //Serpents Ire - Force this in order to maintain raid buff upkeep
-                                if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && InCombat() &&
-                                    CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
-                                    return SerpentsIre;
                             }
                         }
                     }
+
+                    // Death Rattle - Force to avoid loss
+                    if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsTail) && in5y &&
+                        LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is DeathRattle)
+                        return OriginalHook(SerpentsTail);
 
                     //GCDs
                     if (IsEnabled(CustomComboPreset.VPR_ST_RangedUptime) &&
