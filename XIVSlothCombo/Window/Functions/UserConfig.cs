@@ -2449,31 +2449,31 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region WARRIOR
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_StormsEye && enabled)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_StormsEye && enabled)
                 UserConfig.DrawSliderInt(0, 30, WAR.Config.WAR_SurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
 
             if (preset == CustomComboPreset.WAR_InfuriateFellCleave && enabled)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateRange, "Set how much rage to be at or under to use this feature.");
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_Onslaught && enabled)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_Onslaught && enabled)
                 UserConfig.DrawSliderInt(0, 2, WAR.Config.WAR_KeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_Infuriate && enabled)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_Infuriate && enabled)
                 UserConfig.DrawSliderInt(0, 2, WAR.Config.WAR_KeepInfuriateCharges, "How many charges to keep ready? (0 = Use All)");
 
             if (preset == CustomComboPreset.WAR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, WAR.Config.WAR_VariantCure, "HP% to be at or under", 200);
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_FellCleave)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_FellCleave)
                 UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_FellCleaveGauge, "Minimum gauge to spend");
 
-            if (preset == CustomComboPreset.WAR_AoE_Overpower_Decimate)
+            if (preset == CustomComboPreset.WAR_AoE_Advanced_Decimate)
                 UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, "Minimum gauge to spend");
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_Infuriate)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateSTGauge, "Use when gauge is under or equal to");
 
-            if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
+            if (preset == CustomComboPreset.WAR_AoE_Advanced_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
 
             if (preset == CustomComboPreset.WARPvP_BurstMode_Blota)
