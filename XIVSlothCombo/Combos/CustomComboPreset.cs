@@ -2366,6 +2366,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Balance Opener Option", $"Uses the Balance Opener depending on your current level. \n Supports lvl 70, 80, 90, 92, 100. \n - Requirements: \n - Starry Muse off cooldown \n - Pom. Weapon, Landscape Motif", PCT.JobID)]
         PCT_ST_Advanced_Openers = 20006,
 
+        [ParentCombo(PCT_ST_Advanced_Openers)]
+        [CustomComboInfo("Early Balance Opener Option", $"Uses Early Starry Muse Balance Opener depending on your current level.", PCT.JobID)]
+        PCT_ST_Advanced_Openers_EarlyOpener = 20034,
+
         [ParentCombo(PCT_ST_AdvancedMode)]
         [ReplaceSkill(PCT.FireInRed, PCT.AeroInGreen, PCT.WaterinBlue)]
         [CustomComboInfo("Prepull Motifs", "Adds missing Motifs to the combo while out of combat or while no target is present in combat.", PCT.JobID)]

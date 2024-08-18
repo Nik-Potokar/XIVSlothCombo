@@ -425,7 +425,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Weapon Motif
+                        // WeaponMotif
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif))
                         {
                             if (WeaponMotif.LevelChecked() &&
@@ -651,10 +651,8 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(CreatureMotif);
-
                         if (!gauge.WeaponMotifDrawn && HammerMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(HammerMotif);
-
                         if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(LandscapeMotif);
                     }
@@ -688,7 +686,6 @@ namespace XIVSlothCombo.Combos.PvE
                     // Burst 
                     if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_Phase) && HasEffect(Buffs.StarryMuse))
                     {
-
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_CometInBlack) && CometinBlack.LevelChecked() && HasEffect(Buffs.MonochromeTones) && gauge.Paint > 0)
                             return CometinBlack;
 
