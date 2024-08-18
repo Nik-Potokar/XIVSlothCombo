@@ -1523,11 +1523,11 @@ namespace XIVSlothCombo.Combos
         #region Gnashing Fang
         [ParentCombo(GNB_ST_Advanced)]
         [CustomComboInfo("Continuation Option", "Adds Continuation to the main combo.\n 'Gnashing Fang Starter' option must be enabled or started manually.", GNB.JobID)]
-        GNB_ST_Gnashing = 7005,
+        GNB_ST_Continuation = 7005,
 
-        [ParentCombo(GNB_ST_Gnashing)]
+        [ParentCombo(GNB_ST_Continuation)]
         [CustomComboInfo("Gnashing Fang Starter Option", "Begins Gnashing Fang for you on the main combo.", GNB.JobID)]
-        GNB_ST_GnashingFang_Starter = 7006,
+        GNB_ST_GnashingStarter = 7006,
         #endregion
 
         #region Cooldowns
