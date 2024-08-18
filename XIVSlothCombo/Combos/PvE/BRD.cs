@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System;
+using System.ComponentModel.Design;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
@@ -378,7 +379,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (songWanderer)
                                 {
                                     if (songTimerInSeconds <= 3 && gauge.Repertoire > 0) // Spend any repertoire before switching to next song
-                                        return OriginalHook(WanderersMinuet);
+                                        return OriginalHook(PitchPerfect);
                                     if (songTimerInSeconds <= 3 && balladReady)          // Move to Mage's Ballad if <= 3 seconds left on song
                                         return MagesBallad;
                                 }
@@ -422,24 +423,17 @@ namespace XIVSlothCombo.Combos.PvE
                         bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
                         bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
                         bool barrageReady = LevelChecked(Barrage) && IsOffCooldown(Barrage);
-                        bool firstMinute = CombatEngageDuration().Minutes == 0;
-                        bool restOfFight = CombatEngageDuration().Minutes > 0;
-
-                        if (!openerFinished && (!JustUsed(WanderersMinuet) || HasEffect(Buffs.BattleVoice)))
-                        {
-                            if (ragingReady && ((canWeaveBuffs && firstMinute) || (canWeaveDelayed && restOfFight)) &&
-                                (GetCooldownElapsed(BattleVoice) >= 2.3 || battleVoiceReady || !LevelChecked(BattleVoice)))
-                                return RagingStrikes;
-                        }
-                        else if (openerFinished)
-                        {
-                            if (ragingReady && ((canWeaveBuffs && firstMinute) || (canWeaveDelayed && restOfFight)) &&
-                            (HasEffect(Buffs.BattleVoice) || battleVoiceReady || !LevelChecked(BattleVoice)))
-                                return RagingStrikes;
-
-                        }
-
-                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.HawksEye) && HasEffect(Buffs.RagingStrikes))
+                        //Raging and BV before Finale to minimize drift
+                        if (canWeaveBuffs && ragingReady)
+                            return RagingStrikes;
+                        if (canWeaveBuffs && battleVoiceReady)
+                            return BattleVoice;
+                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
+                           (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
+                           && HasEffect(Buffs.BattleVoice))
+                            return RadiantFinale;
+                        //removed requirement to not have hawks eye, it is better to maybe lose 60 potency than allow it to drift a 1000 potency gain out of the window
+                        if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
                         {
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
@@ -447,28 +441,10 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Barrage;
                             else if (!LevelChecked(BattleVoice) && HasEffect(Buffs.RagingStrikes))
                                 return Barrage;
-                        }
 
-                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
-                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet)) &&
-                            (battleVoiceReady || GetCooldownRemainingTime(BattleVoice) < 0.7) &&
-                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished))
-                        {
-                            if (!JustUsed(RagingStrikes))
-                                return RadiantFinale;
                         }
-
-                        if (canWeaveBuffs && battleVoiceReady &&
-                            ((GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || GetBuffRemainingTime(Buffs.RadiantFinale) <= 16.5) || openerFinished) && (IsOnCooldown(RagingStrikes) || IsOnCooldown(RadiantFinale)))
-                        {
-                            if (!JustUsed(RagingStrikes))
-                                return BattleVoice;
-                        }
-
                     }
-
-                    if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
-                        return OriginalHook(RadiantEncore);
+                    
 
                     if (canWeave)
                     {
@@ -505,9 +481,9 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
+                        if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
-                            uint rainOfDeathCharges = GetRemainingCharges(RainOfDeath);
+                            uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && LevelChecked(WanderersMinuet))
                             {
@@ -532,6 +508,9 @@ namespace XIVSlothCombo.Combos.PvE
                             else if (rainOfDeathCharges > 0)
                                 return OriginalHook(RainOfDeath);
                         }
+                        //Moved Below ogcds as it was preventing them from happening. 
+                        if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
+                            return OriginalHook(RadiantEncore);
 
                         // healing - please move if not appropriate priority
                         if (IsEnabled(CustomComboPreset.BRD_ST_SecondWind))
@@ -711,7 +690,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 if (songWanderer)
                                 {
                                     if (songTimerInSeconds <= 3 && gauge.Repertoire > 0) // Spend any repertoire before switching to next song
-                                        return OriginalHook(WanderersMinuet);
+                                        return OriginalHook(PitchPerfect);
                                     if (songTimerInSeconds <= 3 && balladReady)          // Move to Mage's Ballad if <= 3 seconds left on song
                                         return MagesBallad;
                                 }
@@ -755,53 +734,26 @@ namespace XIVSlothCombo.Combos.PvE
                         bool ragingReady = LevelChecked(RagingStrikes) && IsOffCooldown(RagingStrikes);
                         bool battleVoiceReady = LevelChecked(BattleVoice) && IsOffCooldown(BattleVoice);
                         bool barrageReady = LevelChecked(Barrage) && IsOffCooldown(Barrage);
-                        bool firstMinute = CombatEngageDuration().Minutes == 0;
-                        bool restOfFight = CombatEngageDuration().Minutes > 0;
-
-                        if (!openerFinished && (!JustUsed(WanderersMinuet) || HasEffect(Buffs.BattleVoice)))
-                        {
-                            if (ragingReady && ((canWeaveBuffs && firstMinute) || (canWeaveDelayed && restOfFight)) &&
-                                (GetCooldownElapsed(BattleVoice) >= 2.3 || battleVoiceReady || !LevelChecked(BattleVoice)))
-                                return RagingStrikes;
-                        }
-                        else if (openerFinished)
-                        {
-                            if (ragingReady && ((canWeaveBuffs && firstMinute) || (canWeaveDelayed && restOfFight)) &&
-                            (HasEffect(Buffs.BattleVoice) || battleVoiceReady || !LevelChecked(BattleVoice)))
-                                return RagingStrikes;
-
-                        }
-
-                        if (canWeaveBuffs && barrageReady && !HasEffect(Buffs.HawksEye) && HasEffect(Buffs.RagingStrikes))
-                        {
+                        //Raging and BV before Finale to minimize drift
+                        if (canWeaveBuffs && ragingReady)
+                            return RagingStrikes;
+                        if (canWeaveBuffs && battleVoiceReady)
+                            return BattleVoice;                       
+                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
+                           (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet))
+                           && HasEffect(Buffs.BattleVoice))
+                            return RadiantFinale;
+                        //removed requirement to not have hawks eye, it is better to maybe lose 60 potency than allow it to drift a 1000 potency gain out of the window
+                        if (canWeaveBuffs && barrageReady && HasEffect(Buffs.RagingStrikes))
+                        {   
                             if (LevelChecked(RadiantFinale) && HasEffect(Buffs.RadiantFinale))
                                 return Barrage;
                             else if (LevelChecked(BattleVoice) && HasEffect(Buffs.BattleVoice))
                                 return Barrage;
                             else if (!LevelChecked(BattleVoice) && HasEffect(Buffs.RagingStrikes))
                                 return Barrage;
-                        }
-
-                        if (canWeaveBuffs && IsEnabled(CustomComboPreset.BRD_Simple_BuffsRadiant) && radiantReady &&
-                            (Array.TrueForAll(gauge.Coda, SongIsNotNone) || Array.Exists(gauge.Coda, SongIsWandererMinuet)) &&
-                            (battleVoiceReady || GetCooldownRemainingTime(BattleVoice) < 0.7) &&
-                            (GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || openerFinished))
-                        {
-                            if (!JustUsed(RagingStrikes))
-                                return RadiantFinale;
-                        }
-
-                        if (canWeaveBuffs && battleVoiceReady &&
-                            ((GetBuffRemainingTime(Buffs.RagingStrikes) <= 16.5 || GetBuffRemainingTime(Buffs.RadiantFinale) <= 16.5) || openerFinished) && (IsOnCooldown(RagingStrikes) || IsOnCooldown(RadiantFinale)))
-                        {
-                            if (!JustUsed(RagingStrikes))
-                                return BattleVoice;
-                        }
-
-                    }
-
-                    if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
-                        return OriginalHook(RadiantEncore);
+                        }                                             
+                    }                                      
 
                     if (canWeave)
                     {
@@ -838,7 +790,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (LevelChecked(Bloodletter) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
+                        if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
@@ -873,6 +825,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return All.SecondWind;
                         }
                     }
+                    //Moved below weaves bc roobert says it is blocking his weaves from happening
+                    if (HasEffect(Buffs.RadiantEncoreReady) && !JustUsed(RadiantFinale) && GetCooldownElapsed(BattleVoice) >= 4.2f)
+                        return OriginalHook(RadiantEncore);
 
                     if (isEnemyHealthHigh)
                     {

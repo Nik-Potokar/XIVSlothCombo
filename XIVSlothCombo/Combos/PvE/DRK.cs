@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 
 namespace XIVSlothCombo.Combos.PvE
 {
@@ -77,27 +78,25 @@ namespace XIVSlothCombo.Combos.PvE
 
         public static class Config
         {
-            public const string
-                DRK_ST_ManaSpenderPooling = "DRK_ST_ManaSpenderPooling",
-                DRK_ST_LivingDeadThreshold = "DRK_ST_LivingDeadThreshold",
-                DRK_AoE_LivingDeadThreshold = "DRK_AoE_LivingDeadThreshold",
-                DRK_VariantCure = "DRKVariantCure";
+            public static readonly UserInt
+                DRK_ST_ManaSpenderPooling = new("DRK_ST_ManaSpenderPooling", 3000),
+                DRK_ST_LivingDeadThreshold = new("DRK_ST_LivingDeadThreshold", 10),
+                DRK_AoE_LivingDeadThreshold = new("DRK_AoE_LivingDeadThreshold", 40),
+                DRK_VariantCure = new("DRKVariantCure");
         }
 
-        // todo: chop down very long ifs
-
-        internal class DRK_Souleater_Combo : CustomCombo
+        internal class DRK_ST_Combo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_ST_Combo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 // Bail if not looking at the replaced action
-                if (actionID != Souleater) return actionID;
+                if (actionID != HardSlash) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
-                var mpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_ManaSpenderPooling);
-                var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_ST_LivingDeadThreshold);
+                var mpRemaining = Config.DRK_ST_ManaSpenderPooling;
+                var hpRemaining = Config.DRK_ST_LivingDeadThreshold;
 
                 // Variant Cure - Heal: Priority to save your life
                 if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
@@ -143,7 +142,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Mana Features
                     if (IsEnabled(CustomComboPreset.DRK_ST_ManaOvercap)
-                        && ((CombatEngageDuration().TotalSeconds > 4 && CombatEngageDuration().TotalSeconds < 10 && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
+                        && ((CombatEngageDuration().TotalSeconds < 10
+                             && gauge.DarksideTimeRemaining == 0) // Initial Darkside upping
                             || CombatEngageDuration().TotalSeconds >= 10))
                     {
                         // Spend mana to limit when not near even minute burst windows
@@ -181,10 +181,17 @@ namespace XIVSlothCombo.Combos.PvE
                         // Delirium
                         if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
                             && IsOffCooldown(BloodWeapon)
-                            && LevelChecked(BloodWeapon))
+                            && LevelChecked(BloodWeapon)
+                            && ((CombatEngageDuration().TotalSeconds < 8 // Opening Delirium
+                                    && WasLastWeaponskill(Souleater))
+                                || CombatEngageDuration().TotalSeconds > 8)) // Regular Delirium
                             return OriginalHook(Delirium);
 
-                        if (IsEnabled(CustomComboPreset.DRK_ST_CDs))
+                        if (IsEnabled(CustomComboPreset.DRK_ST_CDs)
+                            && ((CombatEngageDuration().TotalSeconds < 10 // Opening CDs
+                                 && !HasEffect(Buffs.Scorn)
+                                 && IsOnCooldown(LivingShadow))
+                                || CombatEngageDuration().TotalSeconds > 10)) // Regular CDs
                         {
                             // Salted Earth
                             if (IsEnabled(CustomComboPreset.DRK_ST_CDs_SaltedEarth))
@@ -195,18 +202,22 @@ namespace XIVSlothCombo.Combos.PvE
                                     return SaltedEarth;
                                 //Cast Salt and Darkness
                                 if (HasEffect(Buffs.SaltedEarth)
-                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 9
+                                 && GetBuffRemainingTime(Buffs.SaltedEarth) < 7
                                  && ActionReady(SaltAndDarkness))
                                     return OriginalHook(SaltAndDarkness);
                             }
 
                             // Shadowbringer
-                            // todo: simplify this to make it easier to read
                             if (LevelChecked(Shadowbringer)
                                 && IsEnabled(CustomComboPreset.DRK_ST_CDs_Shadowbringer))
                             {
-                                if ((GetRemainingCharges(Shadowbringer) > 0 && IsNotEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)) || // Dump
-                                    (IsEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst) && GetRemainingCharges(Shadowbringer) > 0 && gauge.ShadowTimeRemaining > 1 && IsOnCooldown(Delirium))) // Burst
+                                if ((GetRemainingCharges(Shadowbringer) > 0
+                                     && IsNotEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)) // Dump
+                                    ||
+                                    (IsEnabled(CustomComboPreset.DRK_ST_CDs_ShadowbringerBurst)
+                                     && GetRemainingCharges(Shadowbringer) > 0
+                                     && gauge.ShadowTimeRemaining > 1
+                                     && IsOnCooldown(Delirium))) // Burst
                                     return Shadowbringer;
                             }
 
@@ -271,17 +282,17 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class DRK_StalwartSoul_Combo : CustomCombo
+        internal class DRK_AoE_Combo : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_AoE_Combo;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 // Bail if not looking at the replaced action
-                if (actionID != StalwartSoul) return actionID;
+                if (actionID != Unleash) return actionID;
 
                 var gauge = GetJobGauge<DRKGauge>();
-                var hpRemaining = PluginConfiguration.GetCustomIntValue(Config.DRK_AoE_LivingDeadThreshold);
+                var hpRemaining = Config.DRK_AoE_LivingDeadThreshold;
 
                 // Variant Cure - Heal: Priority to save your life
                 if (IsEnabled(CustomComboPreset.DRK_Variant_Cure)
