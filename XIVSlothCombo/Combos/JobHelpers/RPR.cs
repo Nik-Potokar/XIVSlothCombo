@@ -252,7 +252,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                         return true;
 
                     // Prep for double Enshroud
-                    if (GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 + 1.5)
+                    if (GetCooldownRemainingTime(ArcaneCircle) <= (GCD * 2) + 1.5)
                         return true;
 
                     //2nd part of Double Enshroud
@@ -276,20 +276,22 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 float GCD = GetCooldown(Slice).CooldownTotal;
 
                 if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
-                    !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.ImmortalSacrifice))
+                    !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
+                    !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(1))
                 {
                     if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
-                        GetCooldownRemainingTime(ArcaneCircle) <= GCD * 3 && JustUsed(Enshroud))
+                        GetCooldownRemainingTime(ArcaneCircle) <= (GCD * 2) + 1.5 && JustUsed(Enshroud))
                         return true;
 
                     if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
-                        ((GetCooldownRemainingTime(ArcaneCircle) < GCD) || ActionReady(ArcaneCircle)) &&
+                        ((GetCooldownRemainingTime(ArcaneCircle) <= GCD) || ActionReady(ArcaneCircle)) &&
                         (JustUsed(VoidReaping) || JustUsed(CrossReaping)))
                         return true;
 
-                    if (((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 6) ||
+                    if (!HasEffect(Buffs.Enshrouded) &&
+                        ((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 8) ||
                         (IsEnabled(CustomComboPreset.RPR_ST_AdvancedMode) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= Config.RPR_SoDRefreshRange)) &&
-                        ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 5) || ActionReady(ArcaneCircle) || !LevelChecked(ArcaneCircle)) && !HasEffect(Buffs.Enshrouded))
+                        ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 6) || ActionReady(ArcaneCircle) || !LevelChecked(ArcaneCircle)))
                         return true;
                 }
                 return false;
