@@ -1,4 +1,5 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using System;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 
@@ -40,7 +41,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <param name="actionID"> Action ID to check. </param>
         /// <param name="variance"> Variance of how long to check the elapsed cooldown</param>
         /// <returns> True or false. </returns>
-        public static bool JustUsed(uint actionID, float variance = 3f) => IsOnCooldown(actionID) && GetCooldownElapsed(actionID) <= variance;
+        public static bool JustUsed(uint actionID, float variance = 3f) => GetMaxCharges(actionID) == 0 ? IsOnCooldown(actionID) && GetCooldownElapsed(actionID) <= variance : ActionWatching.ChargeTimestamps.ContainsKey(actionID) ? (Environment.TickCount64 - ActionWatching.ChargeTimestamps[actionID]) / 1000f <= variance : false;
 
         /// <summary> Gets a value indicating whether an action has any available charges. </summary>
         /// <param name="actionID"> Action ID to check. </param>

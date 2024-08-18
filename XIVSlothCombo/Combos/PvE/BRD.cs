@@ -483,7 +483,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (LevelChecked(Bloodletter) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)) && ((!openerFinished && IsOnCooldown(RagingStrikes)) || openerFinished))
                         {
-                            uint rainOfDeathCharges = GetRemainingCharges(RainOfDeath);
+                            uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
                             if (IsEnabled(CustomComboPreset.BRD_Simple_Pooling) && LevelChecked(WanderersMinuet))
                             {
