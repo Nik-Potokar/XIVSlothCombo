@@ -119,7 +119,8 @@ namespace XIVSlothCombo.Combos.PvE
                     && LevelChecked(Disesteem)
                     && IsEnabled(CustomComboPreset.DRK_ST_CDs_Disesteem)
                     && HasEffect(Buffs.Scorn)
-                    && ((gauge.DarksideTimeRemaining > 0 && GetBuffRemainingTime(Buffs.Scorn) < 26) // Optimal usage
+                    && ((gauge.DarksideTimeRemaining > 0 // Optimal usage
+                         && GetBuffRemainingTime(Buffs.Scorn) < 24)
                         || GetBuffRemainingTime(Buffs.Scorn) < 14) // Emergency usage
                     )
                     return OriginalHook(Disesteem);
