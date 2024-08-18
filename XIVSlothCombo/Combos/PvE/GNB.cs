@@ -834,8 +834,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (Ammo >= 2 && ActionReady(DoubleDown) && HasEffect(Buffs.NoMercy)) //use on CD under NM
                             return DoubleDown;
                         //FatedCircle
-                        if (Ammo > 0 && (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
-                            (bfCD < 6 && LevelChecked(FatedCircle))) // Bloodfest prep
+                        if (Ammo > 0 && LevelChecked(FatedCircle) && (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
+                            (bfCD < 6)) // Bloodfest prep
                             return FatedCircle;
                         //Reign
                         if (LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
@@ -922,8 +922,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && Ammo >= 2 && ActionReady(DoubleDown) && HasEffect(Buffs.NoMercy)) //use on CD under NM
                             return DoubleDown;
                         //FatedCircle
-                        if (Ammo > 0 && ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
-                            (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD < 6 && LevelChecked(FatedCircle)))) // Bloodfest prep
+                        if (Ammo > 0 && LevelChecked(FatedCircle) && ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
+                            (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD < 6))) // Bloodfest prep
                             return FatedCircle;
                         //Reign
                         if (IsEnabled(CustomComboPreset.GNB_AoE_Reign) && LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
