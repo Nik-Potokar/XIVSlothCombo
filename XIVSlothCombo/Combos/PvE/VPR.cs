@@ -119,15 +119,16 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 VPRGauge? gauge = GetJobGauge<VPRGauge>();
+                int RattlingCoils = gauge.RattlingCoilStacks;
+                var enemyHP = GetTargetHPPercent();
+                var ireCD = GetCooldownRemainingTime(SerpentsIre);
                 bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
-                double enemyHP = GetTargetHPPercent();
                 bool VicewinderReady = gauge.DreadCombo == DreadCombo.Dreadwinder;
                 bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
                 bool SwiftskinsCoilReady = gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
-                float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
                 bool in5y = GetTargetDistance() <= 5;
-                int RattlingCoils = gauge.RattlingCoilStacks;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
+                float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
                 if (actionID is SteelFangs)
                 {
@@ -202,13 +203,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //Overcap protection
                     if (CappedOnCoils &&
                         ((HasCharges(Vicewinder) && !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.Reawakened)) || //spend if Vicewinder is up, after Reawaken
-                        (GetCooldownRemainingTime(SerpentsIre) <= GCD * 5))) //spend in case under Reawaken right as Ire comes up
+                        (ireCD <= GCD * 5))) //spend in case under Reawaken right as Ire comes up
                         return UncoiledFury;
 
                     //Vicewinder Usage
                     if (HasEffect(Buffs.Swiftscaled) &&
                         ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
-                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
+                        ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                          !VPRCheckTimers.IsVenomExpiring(3) && !VPRCheckTimers.IsHoningExpiring(3))
                         return Vicewinder;
 
@@ -314,14 +315,16 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool UseReawaken(VPRGauge gauge)
             {
+                var ireCD = GetCooldownRemainingTime(SerpentsIre);
+
                 if (LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6))
                 {
                     if ((!JustUsed(SerpentsIre, 3f) && HasEffect(Buffs.ReadyToReawaken)) || //2min burst
-                        (WasLastWeaponskill(Ouroboros) && gauge.SerpentOffering >= 50) || //2nd RA
-                        (gauge.SerpentOffering is >= 50 and <= 80 && GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) || //1min
+                        (WasLastWeaponskill(Ouroboros) && gauge.SerpentOffering >= 50 && ireCD >= 50) || //2nd RA
+                        (gauge.SerpentOffering is >= 50 and <= 80 && ireCD is >= 50 and <= 62) || //1min
                         (gauge.SerpentOffering >= 100) || //overcap
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) //<100
                         return true;
@@ -338,16 +341,17 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 VPRGauge? gauge = GetJobGauge<VPRGauge>();
-                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 int uncoiledThreshold = Config.VPR_ST_UncoiledFury_Threshold;
-                double enemyHP = GetTargetHPPercent();
+                int RattlingCoils = gauge.RattlingCoilStacks;
+                var enemyHP = GetTargetHPPercent();
+                var ireCD = GetCooldownRemainingTime(SerpentsIre);
+                bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) && !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
                 bool VicewinderReady = gauge.DreadCombo == DreadCombo.Dreadwinder;
                 bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
                 bool SwiftskinsCoilReady = gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
-                float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
                 bool in5y = GetTargetDistance() <= 5;
-                int RattlingCoils = gauge.RattlingCoilStacks;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
+                float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
 
                 if (actionID is SteelFangs)
@@ -439,14 +443,14 @@ namespace XIVSlothCombo.Combos.PvE
                     //Overcap protection
                     if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) && CappedOnCoils &&
                         ((HasCharges(Vicewinder) && !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.Reawakened)) || //spend if Vicewinder is up, after Reawaken
-                        (GetCooldownRemainingTime(SerpentsIre) <= GCD * 5))) //spend in case under Reawaken right as Ire comes up
+                        (ireCD <= GCD * 5))) //spend in case under Reawaken right as Ire comes up
                         return UncoiledFury;
 
                     //Vicewinder Usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_ST_Vicewinder) && HasEffect(Buffs.Swiftscaled) &&
                         ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
-                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
+                        ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                          !VPRCheckTimers.IsVenomExpiring(3) && !VPRCheckTimers.IsHoningExpiring(3))
                         return Vicewinder;
 
@@ -569,14 +573,16 @@ namespace XIVSlothCombo.Combos.PvE
 
             private static bool UseReawaken(VPRGauge gauge)
             {
+                var ireCD = GetCooldownRemainingTime(SerpentsIre);
+
                 if (LevelChecked(Reawaken) && !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
                     !HasEffect(Buffs.HuntersVenom) && !HasEffect(Buffs.SwiftskinsVenom) &&
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6))
                 {
                     if ((!JustUsed(SerpentsIre, 2.1f) && HasEffect(Buffs.ReadyToReawaken)) || //2min burst
-                        (WasLastWeaponskill(Ouroboros) && gauge.SerpentOffering >= 50) || //2nd RA
-                        (gauge.SerpentOffering is >= 50 and <= 80 && GetCooldownRemainingTime(SerpentsIre) is >= 50 and <= 65) || //1min
+                        (WasLastWeaponskill(Ouroboros) && gauge.SerpentOffering >= 50 && ireCD >= 50) || //2nd RA
+                        (gauge.SerpentOffering is >= 50 and <= 80 && ireCD is >= 50 and <= 62) || //1min
                         (gauge.SerpentOffering >= 100) || //overcap
                         (gauge.SerpentOffering >= 50 && WasLastWeaponskill(FourthGeneration) && !LevelChecked(Ouroboros))) //<100
                         return true;
@@ -592,12 +598,13 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 VPRGauge? gauge = GetJobGauge<VPRGauge>();
+                int RattlingCoils = gauge.RattlingCoilStacks;
+                var ireCD = GetCooldownRemainingTime(SerpentsIre);
                 bool VicepitReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
-                float GCD = GetCooldown(ReavingMaw).CooldownTotal;
-                int RattlingCoils = gauge.RattlingCoilStacks;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
+                float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
                 if (actionID is SteelMaw)
                 {
@@ -654,12 +661,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Overcap protection
                     if (((HasCharges(Vicepit) && !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom)) ||
-                        GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
+                        ireCD <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
                         return UncoiledFury;
 
                     //Vicepit Usage
                     if (ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) &&
-                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)) && InMeleeRange())
+                        ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) && InMeleeRange())
                         return Vicepit;
 
                     // Uncoiled Fury usage
@@ -762,13 +769,14 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 VPRGauge? gauge = GetJobGauge<VPRGauge>();
                 int uncoiledThreshold = Config.VPR_AoE_UncoiledFury_Threshold;
-                double enemyHP = GetTargetHPPercent();
+                int RattlingCoils = gauge.RattlingCoilStacks;
+                var enemyHP = GetTargetHPPercent();
+                var ireCD = GetCooldownRemainingTime(SerpentsIre);
                 bool VicepitReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
-                float GCD = GetCooldown(ReavingMaw).CooldownTotal;
-                int RattlingCoils = gauge.RattlingCoilStacks;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
+                float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
                 if (actionID is SteelMaw)
                 {
@@ -840,14 +848,14 @@ namespace XIVSlothCombo.Combos.PvE
                     //Overcap protection
                     if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFury) &&
                         ((HasCharges(Vicepit) && !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom)) ||
-                        GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
+                        ireCD <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
                         return UncoiledFury;
 
                     //Vicepit Usage
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) &&
                         ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
-                        ((GetCooldownRemainingTime(SerpentsIre) >= GCD * 5) || !LevelChecked(SerpentsIre)))
+                        ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)))
                         return Vicepit;
 
                     // Uncoiled Fury usage
