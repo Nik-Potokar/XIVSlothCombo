@@ -91,7 +91,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 RPR_SoDThreshold = new("RPRSoDThreshold", 1),
                 RPR_WoDThreshold = new("RPRWoDThreshold", 1),
-                RPR_SoDRefreshRange = new("RPRSoDRefreshRange", 6),
+                RPR_SoDRefreshRange = new("RPRSoDRefreshRange", 8),
                 RPR_Positional = new("RPR_Positional", 0),
                 RPR_VariantCure = new("RPRVariantCure"),
                 RPR_STSecondWindThreshold = new("RPR_STSecondWindThreshold", 25),
