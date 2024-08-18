@@ -325,8 +325,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (ActionFound)
                 {
-                    bool inOpener = IsEnabled(CustomComboPreset.SGE_ST_DPS_Opener)
-                                 && Dosis3Count < 4 && Gauge.HasAddersting();
+                    bool inOpener = IsEnabled(CustomComboPreset.SGE_ST_DPS_Opener) &&
+                                 ActionReady(Psyche) && Dosis3Count < 4 && Gauge.HasAddersting();
 
                     // Kardia Reminder
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && LevelChecked(Kardia) &&
