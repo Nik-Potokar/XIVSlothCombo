@@ -142,10 +142,6 @@ namespace XIVSlothCombo.Combos.PvE
                     //oGCDs
                     if (CanWeave(ActionWatching.LastWeaponskill))
                     {
-                        //Serpents Ire
-                        if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
-                            return SerpentsIre;
-
                         // Legacy Weaves
                         if (in5y && TraitLevelChecked(Traits.SerpentsLegacy) && HasEffect(Buffs.Reawakened)
                             && OriginalHook(SerpentsTail) is not SerpentsTail)
