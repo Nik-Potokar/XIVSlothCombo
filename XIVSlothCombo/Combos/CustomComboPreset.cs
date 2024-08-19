@@ -4643,7 +4643,7 @@ namespace XIVSlothCombo.Combos
         PCTPvP_BurstControl = 140001,
 
         [ParentCombo(PCTPvP_Burst)]
-        [CustomComboInfo("Tempera Coat Option", "Uses Tempera Coat when HP falls under the set threshold during combat.\n - Transforms Tempera Coat into Tempera Grassa before buff expires.", PCTPvP.JobID)]
+        [CustomComboInfo("Tempera Coat Option", "Uses Tempera Coat when HP falls under the set threshold during combat.\n- Transforms Tempera Coat into Tempera Grassa before buff expires.", PCTPvP.JobID)]
         PCTPvP_TemperaCoat = 140002,
 
         [ParentCombo(PCTPvP_Burst)]
