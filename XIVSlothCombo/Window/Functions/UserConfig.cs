@@ -2674,7 +2674,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(1, 100, NINPvP.Config.NINPvP_Meisui_AoE, description);
             }
 
+            // Pictomancer PvP
+            if (preset == CustomComboPreset.PCTPvP_BurstControl)
+                UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_BurstHP, "Target HP%", 200);
 
+            if (preset == CustomComboPreset.PCTPvP_TemperaCoat)
+                UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_TemperaHP, "Player HP%", 200);
             #endregion
         }
     }
