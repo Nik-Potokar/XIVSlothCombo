@@ -15,7 +15,6 @@ namespace XIVSlothCombo.Combos.PvP
             CreatureMotif = 39204,
             LivingMuse = 39209,
             TemperaCoat = 39211,
-            TemperaGrassa = 39212,
             SubtractivePalette = 39213,
             StarPrism = 39216,
             MogOfTheAges = 39782;
@@ -28,7 +27,6 @@ namespace XIVSlothCombo.Combos.PvP
                 ClawMotif = 4107,
                 MawMotif = 4108,
                 TemperaCoat = 4114,
-                PomMuse = 4109,
                 Starstruck = 4118,
                 MooglePortrait = 4103,
                 MadeenPortrait = 4104,
@@ -86,16 +84,16 @@ namespace XIVSlothCombo.Combos.PvP
                             if (HasCharges(OriginalHook(HolyInWhite)) && isBurstControlled)
                                 return OriginalHook(HolyInWhite);
                         }
-
-                        // Subtractive Palette
-                        if (IsEnabled(CustomComboPreset.PCTPvP_SubtractivePalette) && IsOffCooldown(OriginalHook(SubtractivePalette)) &&
-                            ((isMoving && hasSubtractivePalette) || (!isMoving && !hasSubtractivePalette)))
-                            return OriginalHook(SubtractivePalette);
                     }
 
                     // Creature Motif
                     if (!hasMotifDrawn && !isMoving)
                         return OriginalHook(CreatureMotif);
+
+                    // Subtractive Palette
+                    if (IsEnabled(CustomComboPreset.PCTPvP_SubtractivePalette) && IsOffCooldown(OriginalHook(SubtractivePalette)) &&
+                        HasTarget() && ((isMoving && hasSubtractivePalette) || (!isMoving && !hasSubtractivePalette)))
+                        return OriginalHook(SubtractivePalette);
                 }
 
                 return actionID;

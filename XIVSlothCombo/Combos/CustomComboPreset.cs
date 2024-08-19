@@ -4639,15 +4639,15 @@ namespace XIVSlothCombo.Combos
         PCTPvP_Burst = 140000,
 
         [ParentCombo(PCTPvP_Burst)]
-        [CustomComboInfo("Burst Control Option", "Saves high-damaging actions until the target's HP falls below the set threshold.", PCTPvP.JobID)]
+        [CustomComboInfo("Burst Control Option", "Saves high-damaging actions until the target's HP falls below the threshold.", PCTPvP.JobID)]
         PCTPvP_BurstControl = 140001,
 
         [ParentCombo(PCTPvP_Burst)]
-        [CustomComboInfo("Tempera Coat Option", "Uses Tempera Coat when HP falls under the set threshold during combat.\n- Transforms Tempera Coat into Tempera Grassa before buff expires.", PCTPvP.JobID)]
+        [CustomComboInfo("Tempera Coat Option", "Uses Tempera Coat when HP falls below the threshold during combat.", PCTPvP.JobID)]
         PCTPvP_TemperaCoat = 140002,
 
         [ParentCombo(PCTPvP_Burst)]
-        [CustomComboInfo("Smart Subtractive Palette Option", "Uses Subtractive Palette when standing still and releases it when moving.", PCTPvP.JobID)]
+        [CustomComboInfo("Smart Palette Option", "Uses Subtractive Palette when standing still and releases it when moving.", PCTPvP.JobID)]
         PCTPvP_SubtractivePalette = 140003,
 
         // Last value = 140003
