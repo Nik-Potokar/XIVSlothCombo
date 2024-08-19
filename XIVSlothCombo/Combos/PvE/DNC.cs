@@ -506,7 +506,9 @@ namespace XIVSlothCombo.Combos.PvE
                     (GetCooldownRemainingTime(TechnicalStep) > 5 ||
                      IsOffCooldown(TechnicalStep)) && // Tech is up
                     (gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold || // above esprit threshold use
-                     (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50) || // will overcap with Tillana if not used
+                     (HasEffect(Buffs.TechnicalFinish) && // will overcap with Tillana if not used
+                      IsNotEnabled(CustomComboPreset.DNC_ST_Adv_TillanaOverEsprit) &&
+                      gauge.Esprit >= 50) ||
                      (GetBuffRemainingTime(Buffs.DanceOfTheDawnReady) < 5 && gauge.Esprit >= 50))) // emergency use
                     return OriginalHook(DanceOfTheDawn);
 
@@ -514,8 +516,9 @@ namespace XIVSlothCombo.Combos.PvE
                 if (IsEnabled(CustomComboPreset.DNC_ST_Adv_SaberDance) &&
                     LevelChecked(SaberDance) &&
                     (gauge.Esprit >= Config.DNC_ST_Adv_SaberThreshold || // above esprit threshold use
-                     (HasEffect(Buffs.TechnicalFinish) && gauge.Esprit >= 50)) && // will overcap with Tillana if not used
-                    ActionReady(SaberDance))
+                     (HasEffect(Buffs.TechnicalFinish) && // will overcap with Tillana if not used
+                      IsNotEnabled(CustomComboPreset.DNC_ST_Adv_TillanaOverEsprit) &&
+                      gauge.Esprit >= 50)))
                     return LevelChecked(DanceOfTheDawn) &&
                            HasEffect(Buffs.DanceOfTheDawnReady)
                         ? OriginalHook(DanceOfTheDawn)
