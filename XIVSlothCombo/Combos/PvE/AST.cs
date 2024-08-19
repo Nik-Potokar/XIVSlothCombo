@@ -27,6 +27,8 @@ namespace XIVSlothCombo.Combos.PvE
             Gravity = 3615,
             Gravity2 = 25872,
             Oracle = 37029,
+            EarthlyStar = 7439,
+            DetonateStar = 8324,
 
             //Cards
             AstralDraw = 37017,
@@ -86,6 +88,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Divination = 1878,
                 LordOfCrownsDrawn = 2054,
                 LadyOfCrownsDrawn = 2055,
+                GiantDominance = 1248,
                 ClarifyingDraw = 2713,
                 Macrocosmos = 2718,
                 //The "Buff" that shows when you're holding onto the card
@@ -341,6 +344,12 @@ namespace XIVSlothCombo.Combos.PvE
                         CanDelayedWeave(actionID))
                         return OriginalHook(MinorArcana);
 
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                     if (HasBattleTarget())
                     {
                         //Combust
@@ -450,8 +459,14 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.AST_AOE_LazyLord) && Gauge.DrawnCrownCard is CardType.LORD &&
                         HasBattleTarget() &&
                         CanDelayedWeave(actionID))
-                        return OriginalHook(MinorArcana);                 
-                                            
+                        return OriginalHook(MinorArcana);
+
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                 }
                 return actionID;
             }
