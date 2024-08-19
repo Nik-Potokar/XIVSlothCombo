@@ -47,6 +47,7 @@ namespace XIVSlothCombo.Combos.PvP
             {
                 #region Variables
                 bool isMoving = IsMoving;
+                bool hasTarget = HasTarget();
                 bool hasStarPrism = HasEffect(Buffs.Starstruck);
                 bool targetHasGuard = TargetHasEffectAny(PvPCommon.Buffs.Guard);
                 bool hasSubtractivePalette = HasEffect(Buffs.SubtractivePalette);
@@ -64,26 +65,23 @@ namespace XIVSlothCombo.Combos.PvP
                         InCombat() && PlayerHealthPercentageHp() < Config.PCTPvP_TemperaHP) || isTemperaCoatExpiring))
                         return OriginalHook(TemperaCoat);
 
-                    if (HasTarget())
+                    if (hasTarget && !targetHasGuard)
                     {
-                        if (!targetHasGuard)
-                        {
-                            // Star Prism
-                            if (hasStarPrism && (isBurstControlled || isStarPrismExpiring))
-                                return StarPrism;
+                        // Star Prism
+                        if (hasStarPrism && (isBurstControlled || isStarPrismExpiring))
+                            return StarPrism;
 
-                            // Moogle / Madeen Portrait
-                            if (hasPortrait && isBurstControlled)
-                                return OriginalHook(MogOfTheAges);
+                        // Moogle / Madeen Portrait
+                        if (hasPortrait && isBurstControlled)
+                            return OriginalHook(MogOfTheAges);
 
-                            // Living Muse
-                            if (hasMotifDrawn && HasCharges(OriginalHook(LivingMuse)) && isBurstControlled)
-                                return OriginalHook(LivingMuse);
+                        // Living Muse
+                        if (hasMotifDrawn && HasCharges(OriginalHook(LivingMuse)) && isBurstControlled)
+                            return OriginalHook(LivingMuse);
 
-                            // Holy in White / Comet in Black
-                            if (HasCharges(OriginalHook(HolyInWhite)) && isBurstControlled)
-                                return OriginalHook(HolyInWhite);
-                        }
+                        // Holy in White / Comet in Black
+                        if (HasCharges(OriginalHook(HolyInWhite)) && isBurstControlled)
+                            return OriginalHook(HolyInWhite);
                     }
 
                     // Creature Motif
@@ -92,7 +90,7 @@ namespace XIVSlothCombo.Combos.PvP
 
                     // Subtractive Palette
                     if (IsEnabled(CustomComboPreset.PCTPvP_SubtractivePalette) && IsOffCooldown(OriginalHook(SubtractivePalette)) &&
-                        HasTarget() && ((isMoving && hasSubtractivePalette) || (!isMoving && !hasSubtractivePalette)))
+                        hasTarget && ((isMoving && hasSubtractivePalette) || (!isMoving && !hasSubtractivePalette)))
                         return OriginalHook(SubtractivePalette);
                 }
 
