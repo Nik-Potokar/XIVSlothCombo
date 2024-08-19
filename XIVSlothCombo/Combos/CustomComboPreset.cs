@@ -968,7 +968,8 @@ namespace XIVSlothCombo.Combos
         DNC_ST_Adv_TillanaOverEsprit = 4094,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
-        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 11)]
+        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold." +
+                                               "\n(And to prevent overcapping while under Technical Finish)", DNC.JobID, 11)]
         DNC_ST_Adv_SaberDance = 4063,
 
         [ParentCombo(DNC_ST_Adv_SaberDance)]
@@ -1043,7 +1044,8 @@ namespace XIVSlothCombo.Combos
         DNC_AoE_Adv_Tillana = 4101,
 
         [ParentCombo(DNC_AoE_AdvancedMode)]
-        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 10)]
+        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold." +
+                                                    "\n(And to prevent overcapping while under Technical Finish)", DNC.JobID, 10)]
         DNC_AoE_Adv_SaberDance = 4082,
 
         [ParentCombo(DNC_AoE_Adv_SaberDance)]
