@@ -194,9 +194,9 @@ namespace XIVSlothCombo.Combos.PvE
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell) || CanSpellWeave(actionID);
 
                     // Prepull logic
-                    if (!InCombat() || (InCombat() && CurrentTarget == null))
+                    if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_PrePullMotifs))
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_PrePullMotifs))
+                        if (!InCombat() || (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_NoTargetMotifs) && InCombat() && CurrentTarget == null))
                         {
                             if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                                 return OriginalHook(CreatureMotif);
@@ -245,7 +245,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // General Weaves
                     if (InCombat() && canWeave)
                     {
-                        // Scenic Muse
+                        // ScenicMuse
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_ScenicMuse))
                         {
                             if (ScenicMuse.LevelChecked() &&
@@ -257,7 +257,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Living Muse
+                        // LivingMuse
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LivingMuse))
                         {
                             if (LivingMuse.LevelChecked() &&
@@ -276,7 +276,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Steel Muse
+                        // SteelMuse
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SteelMuse))
                         {
                             if (SteelMuse.LevelChecked() &&
@@ -317,7 +317,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Subtractive Palette
+                        // SubtractivePalette
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SubtractivePalette))
                         {
                             if (SubtractivePalette.LevelChecked() &&
@@ -405,7 +405,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.StarryMuse))
                     {
-                        // Landscape Motif
+                        // LandscapeMotif
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif))
                         {
                             if (LandscapeMotif.LevelChecked() &&
@@ -416,7 +416,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Creature Motif
+                        // CreatureMotif
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif))
                         {
                             if (CreatureMotif.LevelChecked() &&
@@ -427,7 +427,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Weapon Motif
+                        // WeaponMotif
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif))
                         {
                             if (WeaponMotif.LevelChecked() &&
@@ -559,9 +559,9 @@ namespace XIVSlothCombo.Combos.PvE
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
                     // Prepull logic
-                    if (!InCombat() || (InCombat() && CurrentTarget == null))
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_PrePullMotifs))
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_PrePullMotifs))
+                        if (!InCombat() || (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_NoTargetMotifs) && InCombat() && CurrentTarget == null))
                         {
                             if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                                 return OriginalHook(CreatureMotif);
@@ -575,7 +575,7 @@ namespace XIVSlothCombo.Combos.PvE
                     // General Weaves
                     if (InCombat() && canWeave)
                     {
-                        // Living Muse
+                        // LivingMuse
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LivingMuse))
                         {
                             if (LivingMuse.LevelChecked() &&
@@ -594,7 +594,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Scenic Muse
+                        // ScenicMuse
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_ScenicMuse))
                         {
                             if (ScenicMuse.LevelChecked() &&
@@ -606,7 +606,7 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Steel Muse
+                        // SteelMuse
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SteelMuse))
                         {
                             if (SteelMuse.LevelChecked() &&

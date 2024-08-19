@@ -2333,7 +2333,6 @@ namespace XIVSlothCombo.Combos
 
         #region PICTOMANCER
 
-        #region Single Target
         [ReplaceSkill(PCT.FireInRed)]
         [ConflictingCombos(CombinedAetherhues)]
         [CustomComboInfo("Simple Mode - Single Target", "Consolidates the single target rotation into one button, ideal for newcomers.", PCT.JobID)]
@@ -2357,6 +2356,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("One Button Paint", "Consolidates paint-consuming actions into one button.", PCT.JobID)]
         CombinedPaint = 20004,
 
+        #region ST
+
         [ReplaceSkill(PCT.FireInRed)]
         [ConflictingCombos(CombinedAetherhues, PCT_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", $"Replaces Fire in Red with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", PCT.JobID)]
@@ -2368,200 +2369,204 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(PCT_ST_Advanced_Openers)]
         [CustomComboInfo("Early Balance Opener Option", $"Uses Early Starry Muse Balance Opener depending on your current level.", PCT.JobID)]
-        PCT_ST_Advanced_Openers_EarlyOpener = 20034,
+        PCT_ST_Advanced_Openers_EarlyOpener = 20007,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
-        [ReplaceSkill(PCT.FireInRed, PCT.AeroInGreen, PCT.WaterinBlue)]
-        [CustomComboInfo("Prepull Motifs", "Adds missing Motifs to the combo while out of combat or while no target is present in combat.", PCT.JobID)]
-        PCT_ST_AdvancedMode_PrePullMotifs = 20007,
+        [CustomComboInfo("Prepull Motifs Feature", "Adds missing Motifs to the combo while out of combat.", PCT.JobID)]
+        PCT_ST_AdvancedMode_PrePullMotifs = 20008,
+
+        [ParentCombo(PCT_ST_AdvancedMode_PrePullMotifs)]
+        [CustomComboInfo("Downtime Motifs Option", "Adds missing Motifs to the combo while no target is present in combat.", PCT.JobID)]
+        PCT_ST_AdvancedMode_NoTargetMotifs = 20009,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Starry Muse Burst Feature", $"Adds selected spells below to the burst phase.", PCT.JobID)]
-        PCT_ST_AdvancedMode_Burst_Phase = 20008,
+        PCT_ST_AdvancedMode_Burst_Phase = 20010,
 
         [ParentCombo(PCT_ST_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the burst phase.", PCT.JobID)]
-        PCT_ST_AdvancedMode_Burst_CometInBlack = 20009,
+        PCT_ST_AdvancedMode_Burst_CometInBlack = 20011,
 
         [ParentCombo(PCT_ST_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Star Prism Option", $"Adds Star Prism to the burst phase.", PCT.JobID)]
-        PCT_ST_AdvancedMode_Burst_StarPrism = 20010,
+        PCT_ST_AdvancedMode_Burst_StarPrism = 20012,
 
         [ParentCombo(PCT_ST_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Rainbow Drip Option", $"Adds Rainbow Drip to the burst phase.", PCT.JobID)]
-        PCT_ST_AdvancedMode_Burst_RainbowDrip = 20011,
+        PCT_ST_AdvancedMode_Burst_RainbowDrip = 20013,
 
         [ParentCombo(PCT_ST_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp Combo to the burst phase.", PCT.JobID)]
-        PCT_ST_AdvancedMode_Burst_HammerCombo = 20012,
+        PCT_ST_AdvancedMode_Burst_HammerCombo = 20014,
 
         [ParentCombo(PCT_ST_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Blizzard in Cyan Option", $"Adds Blizzard in Cyan to the burst phase.", PCT.JobID)]
-        PCT_ST_AdvancedMode_Burst_BlizzardInCyan = 20013,
+        PCT_ST_AdvancedMode_Burst_BlizzardInCyan = 20015,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Motif Selection Feature", $"Add Selected Motifs to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MotifFeature = 20014,
+        PCT_ST_AdvancedMode_MotifFeature = 20016,
 
         [ParentCombo(PCT_ST_AdvancedMode_MotifFeature)]
         [CustomComboInfo("Landscape Motif Option", $"Adds Landscape Motif.", PCT.JobID)]
-        PCT_ST_AdvancedMode_LandscapeMotif = 20015,
+        PCT_ST_AdvancedMode_LandscapeMotif = 20017,
 
         [ParentCombo(PCT_ST_AdvancedMode_MotifFeature)]
         [CustomComboInfo("Creature Motif Option", $"Adds Landscape Motif.", PCT.JobID)]
-        PCT_ST_AdvancedMode_CreatureMotif = 20016,
+        PCT_ST_AdvancedMode_CreatureMotif = 20018,
 
         [ParentCombo(PCT_ST_AdvancedMode_MotifFeature)]
         [CustomComboInfo("Weapon Motif Option", $"Adds Weapon Motif.", PCT.JobID)]
-        PCT_ST_AdvancedMode_WeaponMotif = 20017,
+        PCT_ST_AdvancedMode_WeaponMotif = 20019,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Muse Selection Feature", $"Adds Selected Muses to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MuseFeature = 20018,
+        PCT_ST_AdvancedMode_MuseFeature = 20020,
 
         [ParentCombo(PCT_ST_AdvancedMode_MuseFeature)]
         [CustomComboInfo("Scenic Muse Option", $"Adds Scenic Muse.", PCT.JobID)]
-        PCT_ST_AdvancedMode_ScenicMuse = 20019,
+        PCT_ST_AdvancedMode_ScenicMuse = 20021,
 
         [ParentCombo(PCT_ST_AdvancedMode_MuseFeature)]
         [CustomComboInfo("Living Muse Option", $"Adds Living Muse.", PCT.JobID)]
-        PCT_ST_AdvancedMode_LivingMuse = 20020,
+        PCT_ST_AdvancedMode_LivingMuse = 20022,
 
         [ParentCombo(PCT_ST_AdvancedMode_MuseFeature)]
         [CustomComboInfo("Steel Muse Option", $"Adds Steel Muse.", PCT.JobID)]
-        PCT_ST_AdvancedMode_SteelMuse = 20021,
+        PCT_ST_AdvancedMode_SteelMuse = 20023,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Mog/Madeen Feature", $"Adds Mog/Madeen to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MogOfTheAges = 20022,
+        PCT_ST_AdvancedMode_MogOfTheAges = 20024,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Subtractive Palette Feature", $"Adds Subtractive Palette to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_SubtractivePalette = 20023,
-
-        //Pooling option to be added - 20024
+        PCT_ST_AdvancedMode_SubtractivePalette = 20025,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_CometinBlack = 20025,
+        PCT_ST_AdvancedMode_CometinBlack = 20026,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_HammerStampCombo = 20026,
+        PCT_ST_AdvancedMode_HammerStampCombo = 20027,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Movement Features", $"Adds selected features to the combo while moving.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MovementFeature = 20027,
+        PCT_ST_AdvancedMode_MovementFeature = 20028,
 
         [ParentCombo(PCT_ST_AdvancedMode_MovementFeature)]
         [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp Combo to the combo while moving.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MovementOption_HammerStampCombo = 20028,
+        PCT_ST_AdvancedMode_MovementOption_HammerStampCombo = 20029,
 
         [ParentCombo(PCT_ST_AdvancedMode_MovementFeature)]
         [CustomComboInfo("Holy in White Option", $"Adds Holy in White to the combo while moving.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MovementOption_HolyInWhite = 20029,
+        PCT_ST_AdvancedMode_MovementOption_HolyInWhite = 20030,
 
         [ParentCombo(PCT_ST_AdvancedMode_MovementFeature)]
         [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the combo while moving.", PCT.JobID)]
-        PCT_ST_AdvancedMode_MovementOption_CometinBlack = 20030,
+        PCT_ST_AdvancedMode_MovementOption_CometinBlack = 20031,
 
         [ParentCombo(PCT_ST_AdvancedMode_MovementFeature)]
         [CustomComboInfo("Swiftcast Option ", $"Adds Swiftcast to the combo while moving.", PCT.JobID)]
-        PCT_ST_AdvancedMode_SwitfcastOption = 20031,
+        PCT_ST_AdvancedMode_SwitfcastOption = 20032,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Blizzard in Cyan Option", $"Adds Blizzard in Cyan to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_BlizzardInCyan = 20032,
+        PCT_ST_AdvancedMode_BlizzardInCyan = 20033,
 
         [ParentCombo(PCT_ST_AdvancedMode)]
         [CustomComboInfo("Lucid Dreaming Option", $"Adds Lucid Dreaming to the combo.", PCT.JobID)]
-        PCT_ST_AdvancedMode_LucidDreaming = 20033,
+        PCT_ST_AdvancedMode_LucidDreaming = 20034,
 
-        // Last value for ST = 20033 
+        // Last value for ST = 20034 
         #endregion
+
+        #region AoE
 
         [ReplaceSkill(PCT.FireIIinRed)]
         [ConflictingCombos(CombinedAetherhues, PCT_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - AoE", $"Replaces Fire II in Red with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", PCT.JobID)]
+        [CustomComboInfo("Advanced Mode - AoE", $"Replaces Fire II in Red with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", PCT.JobID)]
         PCT_AoE_AdvancedMode = 20040,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [ReplaceSkill(PCT.FireIIinRed)]
-        [CustomComboInfo("Prepull Motifs", "Adds missing Motifs to the combo while out of combat or while no target is present in combat.", PCT.JobID)]
+        [CustomComboInfo("Prepull Motifs Feature", "Adds missing Motifs to the combo while out of combat.", PCT.JobID)]
         PCT_AoE_AdvancedMode_PrePullMotifs = 20041,
+
+        [ParentCombo(PCT_AoE_AdvancedMode_PrePullMotifs)]
+        [CustomComboInfo("Downtime Motifs Option", "Adds missing Motifs to the combo while no target is present in combat.", PCT.JobID)]
+        PCT_AoE_AdvancedMode_NoTargetMotifs = 20042,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Starry Muse Burst Feature", $"Adds selected spells below to the burst phase.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_Burst_Phase = 20042,
+        PCT_AoE_AdvancedMode_Burst_Phase = 20043,
 
         [ParentCombo(PCT_AoE_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the burst phase.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_Burst_CometInBlack = 20043,
+        PCT_AoE_AdvancedMode_Burst_CometInBlack = 20044,
 
         [ParentCombo(PCT_AoE_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Star Prism Option", $"Adds Star Prism to the burst phase.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_Burst_StarPrism = 20044,
+        PCT_AoE_AdvancedMode_Burst_StarPrism = 20045,
 
         [ParentCombo(PCT_AoE_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Rainbow Drip Option", $"Adds Rainbow Drip to the burst phase.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_Burst_RainbowDrip = 20045,
+        PCT_AoE_AdvancedMode_Burst_RainbowDrip = 20046,
 
         [ParentCombo(PCT_AoE_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp Combo to the burst phase.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_Burst_HammerCombo = 20046,
+        PCT_AoE_AdvancedMode_Burst_HammerCombo = 20047,
 
         [ParentCombo(PCT_AoE_AdvancedMode_Burst_Phase)]
         [CustomComboInfo("Blizzard in Cyan Option", $"Adds Blizzard in Cyan to the burst phase.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_Burst_BlizzardInCyan = 20047,
+        PCT_AoE_AdvancedMode_Burst_BlizzardInCyan = 20048,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Motif Selection Feature", $"Add Selected Motifs to the combo.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_MotifFeature = 20048,
+        PCT_AoE_AdvancedMode_MotifFeature = 20049,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MotifFeature)]
         [CustomComboInfo("Landscape Motif Option", $"Adds Landscape Motif.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_LandscapeMotif = 20049,
+        PCT_AoE_AdvancedMode_LandscapeMotif = 20050,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MotifFeature)]
         [CustomComboInfo("Creature Motif Option", $"Adds Landscape Motif.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_CreatureMotif = 20050,
+        PCT_AoE_AdvancedMode_CreatureMotif = 20051,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MotifFeature)]
         [CustomComboInfo("Weapon Motif Option", $"Adds Weapon Motif.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_WeaponMotif = 20051,
+        PCT_AoE_AdvancedMode_WeaponMotif = 20052,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Muse Selection Feature", $"Adds Selected Muses to the combo.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_MuseFeature = 20052,
+        PCT_AoE_AdvancedMode_MuseFeature = 20053,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MuseFeature)]
         [CustomComboInfo("Scenic Muse Option", $"Adds Scenic Muse.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_ScenicMuse = 20053,
+        PCT_AoE_AdvancedMode_ScenicMuse = 20054,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MuseFeature)]
         [CustomComboInfo("Living Muse Option", $"Adds Living Muse.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_LivingMuse = 20054,
+        PCT_AoE_AdvancedMode_LivingMuse = 20055,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MuseFeature)]
         [CustomComboInfo("Steel Muse Option", $"Adds Steel Muse.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_SteelMuse = 20055,
+        PCT_AoE_AdvancedMode_SteelMuse = 20056,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Mog/Madeen Feature", $"Adds Mog/Madeen to the combo.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_MogOfTheAges = 20056,
+        PCT_AoE_AdvancedMode_MogOfTheAges = 20057,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Subtractive Palette Feature", $"Adds Subtractive Palette to the combo.", PCT.JobID)]
-        PCT_AoE_AdvancedMode_SubtractivePalette = 20057,
-
-        // Pooling Option to be added - 20058
+        PCT_AoE_AdvancedMode_SubtractivePalette = 20058,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Comet in Black Feature", $"Adds Comet in Black to the combo.", PCT.JobID)]
+        [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the combo.", PCT.JobID)]
         PCT_AoE_AdvancedMode_CometinBlack = 20059,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Hammer Stamp Combo Feature", $"Adds Hammer Stamp combo.", PCT.JobID)]
+        [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp combo.", PCT.JobID)]
         PCT_AoE_AdvancedMode_HammerStampCombo = 20060,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
@@ -2593,6 +2598,8 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode_LucidDreaming = 20067,
 
         // Last value for AoE = 20067
+        #endregion
+
         #endregion
 
         #region PALADIN
