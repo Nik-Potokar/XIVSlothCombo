@@ -355,12 +355,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 CanSpellWeave(actionID))
                                 return Variant.VariantSpiritDart;
                             
-                            float refreshtimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
-                            if (GetDebuffRemainingTime(dotDebuffID) <= refreshtimer &&
+                            float refreshTimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
+                            if (GetDebuffRemainingTime(dotDebuffID) <= refreshTimer &&
                                 GetTargetHPPercent() > Config.AST_DPS_CombustOption)
                                 return OriginalHook(Combust);
 
-                            //AlterateMode idles as Malefic
+                            //Alternate Mode (idles as Malefic)
                             if (AlternateMode) return OriginalHook(Malefic);
                         }
                     }
