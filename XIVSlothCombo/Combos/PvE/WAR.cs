@@ -479,7 +479,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (LevelChecked(PrimalRend) && HasEffect(Buffs.PrimalRendReady))
                         return PrimalRend;
-                    if (LevelChecked(PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady) && JustUsed(PrimalRend))
+                    if (LevelChecked(PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady))
                         return PrimalRuination;
                 }
 
