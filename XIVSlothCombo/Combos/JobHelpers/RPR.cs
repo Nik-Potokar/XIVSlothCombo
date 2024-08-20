@@ -234,14 +234,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else return false;
             }
 
+            public static bool IsDebuffExpiring(float Times)
+            {
+                float GCD = GetCooldown(Slice).CooldownTotal * Times;
+
+                if (TargetHasEffect(Debuffs.DeathsDesign) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD)
+                    return true;
+
+                else return false;
+            }
+
             public static bool UseEnshroud(RPRGauge gauge)
             {
                 float GCD = GetCooldown(Slice).CooldownTotal;
 
                 if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
                     !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
-                    !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.Enshrouded) &&
-                    !IsBuffExpiring(4))
+                    !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.Enshrouded))
                 {
                     // Before Plentiful Harvest 
                     if (!LevelChecked(PlentifulHarvest))
@@ -252,20 +261,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
                         return true;
 
                     // Prep for double Enshroud
-                    if (GetCooldownRemainingTime(ArcaneCircle) <= (GCD * 2) + 1.5)
+                    if (LevelChecked(PlentifulHarvest) &&
+                        GetCooldownRemainingTime(ArcaneCircle) <= (GCD * 2) + 1.5)
                         return true;
 
                     //2nd part of Double Enshroud
-                    if (WasLastWeaponskill(PlentifulHarvest))
+                    if (LevelChecked(PlentifulHarvest) &&
+                        WasLastWeaponskill(PlentifulHarvest))
                         return true;
 
                     //Natural Odd Minute Shrouds
-                    if (!HasEffect(Buffs.ArcaneCircle) &&
-                        GetCooldownRemainingTime(ArcaneCircle) is >= 50 and <= 65)
+                    if (!HasEffect(Buffs.ArcaneCircle) && !IsDebuffExpiring(5) &&
+                       GetCooldownRemainingTime(ArcaneCircle) is >= 50 and <= 65)
                         return true;
 
                     // Correction for 2 min windows 
-                    if (!HasEffect(Buffs.ArcaneCircle) && gauge.Soul >= 90)
+                    if (!HasEffect(Buffs.ArcaneCircle) && !IsDebuffExpiring(5) &&
+                        gauge.Soul >= 90)
                         return true;
                 }
                 return false;
@@ -277,22 +289,23 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
                 if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
                     !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
-                    !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(1))
+                    !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(1) && !JustUsed(Perfectio) && !JustUsed(ShadowOfDeath))
                 {
                     if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
                         GetCooldownRemainingTime(ArcaneCircle) <= (GCD * 2) + 1.5 && JustUsed(Enshroud))
                         return true;
 
                     if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
-                        ((GetCooldownRemainingTime(ArcaneCircle) <= GCD) || ActionReady(ArcaneCircle)) &&
+                        ((GetCooldownRemainingTime(ArcaneCircle) <= GCD) || IsOffCooldown(ArcaneCircle)) &&
                         (JustUsed(VoidReaping) || JustUsed(CrossReaping)))
                         return true;
 
                     if (!HasEffect(Buffs.Enshrouded) &&
                         ((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 8) ||
                         (IsEnabled(CustomComboPreset.RPR_ST_AdvancedMode) && GetDebuffRemainingTime(Debuffs.DeathsDesign) <= Config.RPR_SoDRefreshRange)) &&
-                        ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 6) || ActionReady(ArcaneCircle) || !LevelChecked(ArcaneCircle)))
+                        ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 8) || IsOffCooldown(ArcaneCircle) || !LevelChecked(ArcaneCircle)))
                         return true;
+
                 }
                 return false;
             }
