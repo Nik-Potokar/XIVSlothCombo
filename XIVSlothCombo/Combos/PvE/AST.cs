@@ -66,7 +66,8 @@ namespace XIVSlothCombo.Combos.PvE
             Horoscope = 16557,
             Exaltation = 25873,
             Macrocosmos = 25874,
-            Synastry = 3612;
+            Synastry = 3612,
+            CollectiveUnconscious = 3613;
 
         //Action Groups
         internal static readonly List<uint>
@@ -139,6 +140,7 @@ namespace XIVSlothCombo.Combos.PvE
                 AST_Bole = new("AST_Bole", 80),
                 AST_ST_SimpleHeals_Esuna = new("AST_ST_SimpleHeals_Esuna", 100),
                 AST_DPS_AltMode = new("AST_DPS_AltMode"),
+                AST_AoEHeals_AltMode = new("AST_AoEHeals_AltMode"),
                 AST_DPS_DivinationOption = new("AST_DPS_DivinationOption"),
                 AST_AOE_DivinationOption = new("AST_AOE_DivinationOption"),
                 AST_DPS_LightSpeedOption = new("AST_DPS_LightSpeedOption"),
@@ -462,14 +464,17 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (actionID is AspectedHelios)
+                bool NonaspectedMode = GetIntOptionAsBool(Config.AST_AoEHeals_AltMode); //(0 or 1 radio values)
+
+                if (NonaspectedMode && actionID is Helios || !NonaspectedMode && actionID is AspectedHelios or HeliosConjuction)
+
+                
                 {
                     var canLady = (Config.AST_AoE_SimpleHeals_WeaveLady && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_WeaveLady;
                     var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
                     var canOppose = (Config.AST_AoE_SimpleHeals_Opposition && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Opposition;
 
-                    //Level check to exit if we can't use
-                    if (!LevelChecked(AspectedHelios))
+                    if (!LevelChecked(AspectedHelios)) //Level check to return helios immediately below 40
                         return Helios;
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_LazyLady) &&
@@ -487,18 +492,31 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (ActionReady(Horoscope) &&
                             canHoroscope)
-                            return Horoscope;
+                            return Horoscope;                                               
 
+                        if (HasEffect(Buffs.HoroscopeHelios) &&
+                            canHoroscope)
+                            return OriginalHook(Horoscope);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Aspected) && NonaspectedMode) // So helios mode can run aspected option 
+                    {
                         if ((ActionReady(AspectedHelios)
                                  && !HasEffect(Buffs.AspectedHelios)
                                  && !HasEffect(Buffs.HeliosConjunction))
                              || HasEffect(Buffs.Horoscope)
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
                             return OriginalHook(AspectedHelios);
+                    }
 
-                        if (HasEffect(Buffs.HoroscopeHelios) &&
-                            canHoroscope)
-                            return OriginalHook(Horoscope);
+                    if (!NonaspectedMode) //So aspected mode runs normal without having to select it from the option as well
+                    {
+                        if ((ActionReady(AspectedHelios)
+                                 && !HasEffect(Buffs.AspectedHelios)
+                                 && !HasEffect(Buffs.HeliosConjunction))
+                             || HasEffect(Buffs.Horoscope)
+                             || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
+                            return OriginalHook(AspectedHelios);
                     }
 
                     if ((HasEffect(Buffs.AspectedHelios)
