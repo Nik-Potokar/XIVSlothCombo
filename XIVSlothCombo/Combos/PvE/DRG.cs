@@ -422,7 +422,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove == OriginalHook(Disembowel) && LevelChecked(ChaosThrust))
                         {
-                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                                trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                                 !OnTargetsRear())
                                 return All.TrueNorth;
 
@@ -431,8 +432,9 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove == OriginalHook(ChaosThrust) && LevelChecked(WheelingThrust))
                         {
-                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
-                              !OnTargetsRear())
+                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                                trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                                !OnTargetsRear())
                                 return All.TrueNorth;
 
                             return WheelingThrust;
@@ -443,7 +445,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove == OriginalHook(FullThrust) && LevelChecked(FangAndClaw))
                         {
-                            if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
+                            if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
+                                trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                                 !OnTargetsFlank())
                                 return All.TrueNorth;
 
