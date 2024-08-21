@@ -1,5 +1,7 @@
-﻿using ECommons.DalamudServices;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.PvE.MCH;
@@ -269,6 +271,40 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return true;
 
                 else return false;
+            }
+
+            public static bool UseQueen(MCHGauge gauge)
+            {
+                int BSUsed = ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
+
+                if (!ActionWatching.HasDoubleWeaved() && CanWeave(OriginalHook(SplitShot)) &&
+                    !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) && !JustUsed(OriginalHook(Heatblast)) &&
+                    LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50 &&
+                    ((LevelChecked(FullMetalField) && !JustUsed(FullMetalField)) || !LevelChecked(FullMetalField)))
+                {
+                    //1min
+                    if (BSUsed == 1 & gauge.Battery >= 90)
+                        return true;
+
+                    //even mins
+                    if (BSUsed >= 2 && gauge.Battery >= 100)
+                        return true;
+
+                    //odd mins 1st queen
+                    if (BSUsed >= 2 && gauge.Battery >= 50 &&
+                        GetCooldownRemainingTime(BarrelStabilizer) is >= 30 and <= 65)
+                        return true;
+
+                    //odd mins 2nd queen
+                    if (BSUsed >= 2 && gauge.Battery >= 60 &&
+                        GetCooldownRemainingTime(BarrelStabilizer) is >= 10 and <= 30)
+                        return true;
+
+                    if (!LevelChecked(BarrelStabilizer))
+                        return true;
+                }
+
+                return false;
             }
         }
     }
