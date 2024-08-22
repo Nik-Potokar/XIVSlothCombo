@@ -336,8 +336,11 @@ namespace XIVSlothCombo.Combos.PvE
                         return Triplecast;
                 }
 
+                // Ley Lines
                 if (CanSpellWeave(actionID) && ActionReady(LeyLines))
                     return LeyLines;
+
+                // HB2>Fr>Foul>Fire II (x1-4, based on level)>Flare>Flare Star>Foul
 
                 // Astral Fire
                 if (gauge.InAstralFire)
@@ -355,14 +358,23 @@ namespace XIVSlothCombo.Combos.PvE
                     // Polyglot usage
                     if (LevelChecked(Foul) &&
                         gauge.HasPolyglotStacks() &&
-                        (WasLastAction(OriginalHook(FlareStar)) ||
-                         WasLastAction(OriginalHook(Freeze))))
+                        ((LevelChecked(FlareStar) && // 100 rotation repeat
+                          (WasLastAction(OriginalHook(FlareStar)) ||
+                           WasLastAction(OriginalHook(Freeze)))) ||
+                         (!LevelChecked(FlareStar) && // 58+ rotation repeat
+                          IsOnCooldown(Manafont) &&
+                          WasLastSpell(Flare))))
                         return Foul;
 
-                    // Transpose to keep mana rolling
+                    // Transpose to repeat rotation
                     if (LevelChecked(Transpose) &&
-                        curMp < MP.FireAoE &&
-                        (WasLastAction(Foul) || !gauge.HasPolyglotStacks()))
+                        (curMp < MP.FireAoE || gauge.UmbralHearts == 0) &&
+                        (LevelChecked(Foul) && // 70+ rotation repeat
+                          (WasLastAction(Foul) || !gauge.HasPolyglotStacks()) ||
+                          (!LevelChecked(Foul) && // 50+ rotation repeat
+                           LevelChecked(Flare) &&
+                           WasLastAction(Flare)) ||
+                          !LevelChecked(Flare))) // lower rotation repeat
                         return Transpose;
 
                     if (curMp >= MP.AllMPSpells)
@@ -381,20 +393,41 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Thunder2;
                         }
 
+                        // Triplecast usage
                         if (LevelChecked(Flare) &&
                             ActionReady(Triplecast) &&
                             GetBuffStacks(Buffs.Triplecast) == 0)
                             return Triplecast;
 
-                        if (curMp < MP.FireAoE &&
-                            FlareStar.LevelChecked() &&
-                            gauge.AstralSoulStacks == 6)
+                        // Flare Star
+                        if (LevelChecked(FlareStar) &&
+                            gauge.AstralSoulStacks == 6 &&
+                            (curMp < MP.FireAoE || gauge.UmbralHearts == 0))
                             return FlareStar;
 
-                        if (LevelChecked(Flare) && curMp < MP.FireAoE)
+                        // Flare
+                        if (LevelChecked(Flare) &&
+                            (curMp < MP.FireAoE ||
+                             (LevelChecked(FlareStar) && // 100
+                               gauge.UmbralHearts < 3) ||
+                             (!LevelChecked(FlareStar) && // 50+
+                              gauge.UmbralHearts < 2)))
                             return Flare;
 
-                        if (curMp > MP.FireAoE)
+                        // Fire II
+                        if (curMp > MP.FireAoE &&
+                            // Try to keep to Umbral charge usages
+                            (TraitLevelChecked(Traits.UmbralHeart) &&
+                              ((LevelChecked(FlareStar) && // 100
+                                gauge.UmbralHearts > 2) ||
+                               (!LevelChecked(FlareStar) && // 58+
+                                gauge.UmbralHearts > 1)) ||
+                             !TraitLevelChecked(Traits.UmbralHeart)) &&
+                            // Only do it at the beginning of fire phase
+                            ((LevelChecked(FlareStar) && // 100
+                              (WasLastAction(Foul) || WasLastAction(Freeze))) ||
+                             (!LevelChecked(FlareStar) && // lower
+                              !WasLastAction(Flare) && !WasLastAction(Foul))))
                             return OriginalHook(Fire2);
                     }
                 }
@@ -402,12 +435,14 @@ namespace XIVSlothCombo.Combos.PvE
                 // Umbral Ice
                 if (gauge.InUmbralIce)
                 {
-                    if (gauge.UmbralHearts < 3 &&
+                    // Give mana
+                    if (WasLastAction(HighBlizzard2) &&
                         LevelChecked(Freeze) &&
                         TraitLevelChecked(Traits.UmbralHeart) &&
                         curMp >= MP.Freeze)
                         return Freeze;
 
+                    // Polyglot usage
                     if (ActionReady(Foul) &&
                         gauge.HasPolyglotStacks() &&
                         WasLastAction(Freeze) &&
@@ -428,14 +463,14 @@ namespace XIVSlothCombo.Combos.PvE
                             return Thunder2;
                     }
 
-                    if (curMp >= MP.FlareAoE*2 ||
-                        (curMp >= 9400 &&
-                         !TraitLevelChecked(Traits.AspectMasteryIII)))
-                        return Transpose;
-
+                    // Switch to Fire
                     if (curMp == MP.MaxMP &&
                         TraitLevelChecked(Traits.AspectMasteryIII))
                         return OriginalHook(Fire2);
+
+                    // Force switch to Fire backup
+                    if (curMp >= 9400)
+                        return Transpose;
                 }
 
                 return actionID;
