@@ -1177,7 +1177,7 @@ namespace XIVSlothCombo.Combos
         DRK_ST_ManaOvercap = 5011,
 
         [ParentCombo(DRK_ST_ManaOvercap)]
-        [CustomComboInfo("Edge of Shadow Burst Option", "Pools Edge of Shadow for even minute burst windows, and otherwise uses them until chosen MP limit is reached.", DRK.JobID)]
+        [CustomComboInfo("Edge of Shadow Burst Option", "Pools Edge of Shadow for even minute burst windows, and then uses them until chosen MP limit is reached.", DRK.JobID)]
         DRK_ST_ManaSpenderPooling = 5012,
 
         #endregion
