@@ -186,7 +186,7 @@ namespace XIVSlothCombo.Combos
         AST_ST_DPS_CombustUptime = 1018,
               
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
+        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
         AST_DPS_LightSpeed = 1020,
 
         [ParentCombo(AST_ST_DPS)]
@@ -214,8 +214,13 @@ namespace XIVSlothCombo.Combos
         AST_DPS_Oracle = 1015,
 
         [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Level 100 Opener", "Use the Balance opener.", AST.JobID, 11, "", "")]
+        [CustomComboInfo("Level 100 Opener", "Use the Balance opener.", AST.JobID, 1)]
         AST_ST_DPS_Opener = 1040,
+
+        [ParentCombo(AST_ST_DPS)]
+        [CustomComboInfo("Earthly Star Option", "Adds Earthly Star." +
+                                                "\nTo be used in conjunction with Redirect/Reaction/etc", AST.JobID, 11)]
+        AST_ST_DPS_EarthlyStar = 1051,
 
         #endregion
 
@@ -225,7 +230,7 @@ namespace XIVSlothCombo.Combos
         AST_AOE_DPS = 1041,    
 
         [ParentCombo(AST_AOE_DPS)]
-        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed", AST.JobID, 2, "", "")]
+        [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
         AST_AOE_LightSpeed = 1048,
 
         [ParentCombo(AST_AOE_DPS)]
@@ -245,12 +250,17 @@ namespace XIVSlothCombo.Combos
         AST_AOE_AutoPlay = 1045,
 
         [ParentCombo(AST_AOE_DPS)]
-        [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 10, "", "")]
+        [CustomComboInfo("Lord of Crowns Weave Option", "Adds Lord Of Crowns", AST.JobID, 7, "", "")]
         AST_AOE_LazyLord = 1046,
 
         [ParentCombo(AST_AOE_DPS)]
-        [CustomComboInfo("Oracle Option", "Adds Oracle after Divination", AST.JobID)]
-        AST_AOE_Oracle = 1047,       
+        [CustomComboInfo("Oracle Option", "Adds Oracle after Divination", AST.JobID, 8)]
+        AST_AOE_Oracle = 1047,
+
+        [ParentCombo(AST_AOE_DPS)]
+        [CustomComboInfo("Earthly Star Option", "Adds Earthly Star." +
+                                                "\nTo be used in conjunction with Redirect/Reaction/etc", AST.JobID, 9)]
+        AST_AOE_DPS_EarthlyStar = 1052,
 
         #endregion
 
