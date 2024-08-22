@@ -1,4 +1,7 @@
-﻿using ECommons.DalamudServices;
+﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -6,6 +9,64 @@ using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
+    internal class SAMHelper : SAM
+    {
+        internal static int SenCount => GetSenCount();
+        private static int GetSenCount()
+        {
+            var gauge = CustomComboFunctions.GetJobGauge<SAMGauge>();
+            var senCount = 0;
+            if (gauge.HasGetsu) senCount++;
+            if (gauge.HasSetsu) senCount++;
+            if (gauge.HasKa) senCount++;
+
+            return senCount;
+        }
+        internal static bool ComboStarted => GetComboStarted(); 
+        private unsafe static bool GetComboStarted()
+        {
+            var comboAction = ActionManager.Instance()->Combo.Action;
+            if (comboAction == CustomComboFunctions.OriginalHook(Hakaze) || comboAction == CustomComboFunctions.OriginalHook(Jinpu) || comboAction == CustomComboFunctions.OriginalHook(Shifu))
+                return true;
+            return false;
+        }
+
+        internal static bool UseTsubame => GetUseTsubame();
+
+        private static bool GetUseTsubame()
+        {
+            int MeikyoUsed = ActionWatching.CombatActions.Count(x => x == MeikyoShisui);
+
+            if (CustomComboFunctions.ActionReady(TsubameGaeshi))
+            {
+                //Tendo
+                if (CustomComboFunctions.HasEffect(Buffs.TendoKaeshiSetsugekkaReady))
+                    return true;
+
+                if (CustomComboFunctions.HasEffect(Buffs.TsubameReady))
+                {
+                    var meikyoModulo = MeikyoUsed % 15;
+                    //1 and 2 min
+                    if ((meikyoModulo is 0 or 1 or 2 or 3 or 4 or 9 or 10))
+                        return true;
+
+                    // 3 and 4 min
+                    if ((meikyoModulo is 5 or 6 or 11 or 12) &&
+                        CustomComboFunctions.GetBuffStacks(Buffs.MeikyoShisui) is 2)
+                        return true;
+
+                    // 5 and 6 min
+                    if ((meikyoModulo is 7 or 8 or 13 or 14) &&
+                        CustomComboFunctions.GetBuffStacks(Buffs.MeikyoShisui) is 1)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+    }
+
+
     internal class SAMOpenerLogic : SAM
     {
         private static bool HasCooldowns()
