@@ -583,9 +583,9 @@ namespace XIVSlothCombo.Combos.PvE
                                 return CoerthanTorment;
                         }
                     }
-                    return HasEffect(Buffs.PowerSurge) || LevelChecked(SonicThrust)
-                        ? OriginalHook(DoomSpike)
-                        : OriginalHook(TrueThrust);
+                    return !HasEffect(Buffs.PowerSurge) && !LevelChecked(SonicThrust)
+                        ? OriginalHook(TrueThrust)
+                        : OriginalHook(DoomSpike);
                 }
                 return actionID;
             }
@@ -748,7 +748,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
                     return IsEnabled(CustomComboPreset.DRG_AoE_Disembowel) &&
-                        (!HasEffect(Buffs.PowerSurge) || !LevelChecked(SonicThrust))
+                        !HasEffect(Buffs.PowerSurge) && !LevelChecked(SonicThrust)
                         ? OriginalHook(TrueThrust)
                         : OriginalHook(DoomSpike);
                 }
