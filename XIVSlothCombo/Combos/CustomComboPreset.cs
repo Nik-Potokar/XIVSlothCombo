@@ -1914,14 +1914,14 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
-        [ReplaceSkill([MNK.ArmOfTheDestroyer])]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
-        MNK_AOE_SimpleMode = 9003,
-
         [ReplaceSkill([MNK.Bootshine])]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one - button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
         [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_AdvancedMode)]
         MNK_ST_SimpleMode = 9004,
+
+        [ReplaceSkill([MNK.ArmOfTheDestroyer])]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
+        MNK_AOE_SimpleMode = 9003,
 
         #region Monk Advanced ST
         [ReplaceSkill([MNK.Bootshine])]

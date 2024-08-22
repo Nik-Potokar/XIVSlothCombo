@@ -8,6 +8,78 @@ using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
+
+    internal class MNKHelper : MNK
+    {
+        public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
+        {
+            if (CustomComboFunctions.HasEffect(Buffs.OpoOpoForm) || CustomComboFunctions.HasEffect(Buffs.FormlessFist))
+            {
+                if (Gauge.OpoOpoFury == 0)
+                {
+                    if (CustomComboFunctions.LevelChecked(DragonKick))
+                        return DragonKick;
+                }
+                else
+                {
+                    return CustomComboFunctions.OriginalHook(Bootshine);
+                }
+            }
+
+            if (CustomComboFunctions.HasEffect(Buffs.RaptorForm))
+            {
+                if (Gauge.RaptorFury == 0)
+                {
+                    if (CustomComboFunctions.LevelChecked(TwinSnakes))
+                        return TwinSnakes;
+                }
+                else
+                {
+                    if (CustomComboFunctions.LevelChecked(TrueStrike))
+                        return CustomComboFunctions.OriginalHook(TrueStrike);
+                }
+            }
+
+            if (CustomComboFunctions.HasEffect(Buffs.CoeurlForm))
+            {
+                if (Gauge.CoeurlFury == 0)
+                {
+                    if (!CustomComboFunctions.OnTargetsRear()
+                        && CustomComboFunctions.TargetNeedsPositionals()
+                        && !CustomComboFunctions.HasEffect(Buffs.TrueNorth)
+                        && CustomComboFunctions.LevelChecked(TrueNorth)
+                        && CustomComboFunctions.HasCharges(TrueNorth)
+                        && useTrueNorthIfEnabled)
+                    {
+                        return TrueNorth;
+                    }
+                    else
+                    {
+                        if (CustomComboFunctions.LevelChecked(Demolish))
+                            return Demolish;
+                    }
+                }
+
+                if (!CustomComboFunctions.OnTargetsFlank()
+                        && CustomComboFunctions.TargetNeedsPositionals()
+                        && !CustomComboFunctions.HasEffect(Buffs.TrueNorth)
+                        && CustomComboFunctions.LevelChecked(TrueNorth)
+                        && CustomComboFunctions.HasCharges(TrueNorth)
+                        && useTrueNorthIfEnabled)
+                {
+                    return TrueNorth;
+                }
+                else
+                {
+                    if (CustomComboFunctions.LevelChecked(SnapPunch))
+                        return CustomComboFunctions.OriginalHook(SnapPunch);
+                }
+            }
+
+            return actionId;
+        }
+    }
+
     internal class MNKOpenerLogic : MNK
     {
         private static bool HasCooldowns()
