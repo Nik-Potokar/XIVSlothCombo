@@ -32,6 +32,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             //Cards
             AstralDraw = 37017,
+            UmbralDraw = 37018,
             Play1 = 37019,
             Play2 = 37020,
             Play3 = 37021,
