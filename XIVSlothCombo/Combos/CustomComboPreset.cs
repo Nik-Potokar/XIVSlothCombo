@@ -976,7 +976,8 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_ST_Adv_Flourish)]
         [ConflictingCombos(DNC_ST_Adv_SS_Hold)]
-        [CustomComboInfo("Force Triple Weave for alignment", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." + "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD.", DNC.JobID, 1)]
+        [CustomComboInfo("Force Triple Weave for alignment", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." +
+                                                                    "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD.", DNC.JobID, 1)]
         DNC_ST_Adv_Flourish_ForcedTripleWeave = 4088,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
@@ -988,15 +989,22 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_ST_AdvancedMode)]
         [CustomComboInfo("Improvisation Option", "Includes Improvisation in the rotation when available." +
-            "\nWill not use while under Technical Finish", DNC.JobID, 9)]
+                                                        "\nWill not use while under Technical Finish", DNC.JobID, 9)]
         DNC_ST_Adv_Improvisation = 4060,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
         [CustomComboInfo("Tillana Option", "Includes Tillana in the rotation.", DNC.JobID, 10)]
         DNC_ST_Adv_Tillana = 4092,
 
+        [ParentCombo(DNC_ST_Adv_Tillana)]
+        [CustomComboInfo("Favor over Esprit Option", "Will perform Tillana over Saber or Dance of the Dawn, even if above 50 Esprit." +
+                                                            "\nCan prevent Tillana from drifting out of burst windows." +
+                                                            "\nShould be used with Saber Dance's Esprit slider being a value above 50.", DNC.JobID, 1)]
+        DNC_ST_Adv_TillanaOverEsprit = 4094,
+
         [ParentCombo(DNC_ST_AdvancedMode)]
-        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold.", DNC.JobID, 11)]
+        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the rotation when at or over the Esprit threshold." +
+                                               "\n(And to prevent overcapping while under Technical Finish)", DNC.JobID, 11)]
         DNC_ST_Adv_SaberDance = 4063,
 
         [ParentCombo(DNC_ST_Adv_SaberDance)]
@@ -1071,7 +1079,8 @@ namespace XIVSlothCombo.Combos
         DNC_AoE_Adv_Tillana = 4101,
 
         [ParentCombo(DNC_AoE_AdvancedMode)]
-        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold.", DNC.JobID, 10)]
+        [CustomComboInfo("Saber Dance Option", "Includes Saber Dance in the AoE rotation when at or over the Esprit threshold." +
+                                                    "\n(And to prevent overcapping while under Technical Finish)", DNC.JobID, 10)]
         DNC_AoE_Adv_SaberDance = 4082,
 
         [ParentCombo(DNC_AoE_Adv_SaberDance)]
