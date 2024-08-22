@@ -126,7 +126,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(RDM.Verraise, SMN.Resurrection, BLU.AngelWhisper)]
         [ConflictingCombos(SMN_Raise, RDM_Raise)]
         [ParentCombo(ALL_Caster_Menu)]
-        [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast or Dualcast in the case of RDM.", ADV.JobID)]
+        [CustomComboInfo("Magical Ranged DPS: Raise Feature", "Changes the class' Raise Ability into Swiftcast. Red Mage will also show VerCure if Swiftcast is on cooldown.", ADV.JobID)]
         ALL_Caster_Raise = 100021,
         #endregion
 
@@ -2901,6 +2901,10 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(ALL_Caster_Raise)]
         [CustomComboInfo("Verraise Feature", "Changes Swiftcast to Verraise when under the effect of Swiftcast or Dualcast.", RDM.JobID, 620)]
         RDM_Raise = 13620,
+
+            [ParentCombo(RDM_Raise)]
+            [CustomComboInfo("Vercure Option", "If Swiftcast is on cooldown, change to Vercure to proc Dualcast.", RDM.JobID, 621)]
+            RDM_Raise_Vercure = 13621,
         #endregion
 
         #region Sections 8 to 9 - Miscellaneous
