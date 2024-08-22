@@ -370,7 +370,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Foul;
 
                     // Transpose to repeat rotation
-                    if (LevelChecked(Transpose) &&
+                    if (ActionReady(Transpose) &&
+                        !WasLastAbility(Transpose) && // To deal with no poly
                         (curMp < MP.FireAoE || gauge.UmbralHearts == 0) &&
                         (LevelChecked(Foul) && // 70+ rotation repeat
                           (WasLastAction(Foul) || !gauge.HasPolyglotStacks()) ||
@@ -467,7 +468,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Switch to Fire
-                    if (curMp == MP.MaxMP &&
+                    if (curMp >= 9400 &&
                         TraitLevelChecked(Traits.AspectMasteryIII))
                         return OriginalHook(Fire2);
 
