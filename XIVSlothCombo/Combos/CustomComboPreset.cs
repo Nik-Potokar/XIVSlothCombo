@@ -3278,21 +3278,6 @@ namespace XIVSlothCombo.Combos
 
         #region SAMURAI
 
-        #region Yukikaze/Kasha/Gekko Combos
-
-        [ReplaceSkill(SAM.Yukikaze)]
-        [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID)]
-        SAM_ST_YukikazeCombo = 15000,
-
-        [ReplaceSkill(SAM.Kasha)]
-        [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID)]
-        SAM_ST_KashaCombo = 15001,
-
-        [ReplaceSkill(SAM.Gekko)]
-        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID)]
-        SAM_ST_GekkoCombo = 15010,
-        #endregion
-
         #region  Simple ST
 
         [ReplaceSkill(SAM.Hakaze, SAM.Gyofu)]
@@ -3384,22 +3369,6 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region AoE Oka Combo
-
-        [ReplaceSkill(SAM.Oka)]
-        [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID)]
-        SAM_AoE_OkaCombo = 15100,
-
-        //[ParentCombo(SAM_AoE_OkaCombo)]
-        //[CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze combo, Mangetsu combo, Senei, Shinten, and Shoha to Oka combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID)]
-        //SAM_AoE_OkaCombo_TwoTarget = 15101,
-
-        [ReplaceSkill(SAM.Mangetsu)]
-        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.", SAM.JobID)]
-        SAM_AoE_MangetsuCombo = 15101,
-
-        #endregion
-
         #region Simple AoE
 
         [ReplaceSkill(SAM.Fuga, SAM.Fuko)]
@@ -3421,45 +3390,76 @@ namespace XIVSlothCombo.Combos
         SAM_AoE_Oka = 15104,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Kyuten", "Adds Kyuten to the rotation.", SAM.JobID)]
+        [CustomComboInfo("Kyuten Option", "Adds Kyuten to the rotation.", SAM.JobID)]
         SAM_AoE_Kyuten = 15105,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Iaijutsu", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to the rotation.", SAM.JobID)]
+        [CustomComboInfo("Iaijutsu Option", "Adds Tenka Goken, Midare: Setsugekka, and Kaeshi: Goken when ready and when you're not moving to the rotation.", SAM.JobID)]
         SAM_AoE_TenkaGoken = 15107,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Ikishoten", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
+        [CustomComboInfo("Ikishoten Option", "Adds Ikishoten when at or below 50 Kenki.\nWill dump Kenki at 10 seconds left to allow Ikishoten to be used.", SAM.JobID)]
         SAM_AOE_CDs_Ikishoten = 15108,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Ogi Namikiri", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to the rotation.", SAM.JobID)]
+        [CustomComboInfo("Ogi Namikiri Option", "Adds Ogi Namikiri and Kaeshi: Namikiri when ready and when you're not moving to the rotation.", SAM.JobID)]
         SAM_AoE_OgiNamikiri = 15109,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Zanshin", "Adds Zanshin to the rotation.", SAM.JobID)]
+        [CustomComboInfo("Zanshin Option", "Adds Zanshin to the rotation.", SAM.JobID)]
         SAM_AoE_Zanshin = 15110,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Shoha", "Adds Shoha when you have 3 meditation stacks.", SAM.JobID)]
+        [CustomComboInfo("Shoha Option", "Adds Shoha when you have 3 meditation stacks.", SAM.JobID)]
         SAM_AoE_Shoha = 15111,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Guren", "Adds Guren to the rotation.", SAM.JobID)]
+        [CustomComboInfo("Guren Option", "Adds Guren to the rotation.", SAM.JobID)]
         SAM_AoE_Guren = 15112,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Hagakure", "Adds Hagakure to the rotation when there are three Sen.", SAM.JobID)]
+        [CustomComboInfo("Hagakure Option", "Adds Hagakure to the rotation when there are three Sen.", SAM.JobID)]
         SAM_AoE_Hagakure = 15113,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
-        [CustomComboInfo("Meikyo Shisui", "Adds Meikyo Shisui to the rotation.", SAM.JobID)]
+        [CustomComboInfo("Meikyo Shisui Option", "Adds Meikyo Shisui to the rotation.", SAM.JobID)]
         SAM_AoE_MeikyoShisui = 15114,
 
         [ParentCombo(SAM_AoE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the combo, using them when below the HP Percentage threshold.", SAM.JobID)]
         SAM_AoE_ComboHeals = 15199,
 
+
+        #endregion
+
+        #region Yukikaze/Kasha/Gekko Combos
+
+        [ReplaceSkill(SAM.Yukikaze)]
+        [CustomComboInfo("Yukikaze Combo", "Replace Yukikaze with its combo chain.", SAM.JobID)]
+        SAM_ST_YukikazeCombo = 15000,
+
+        [ReplaceSkill(SAM.Kasha)]
+        [CustomComboInfo("Kasha Combo", "Replace Kasha with its combo chain.", SAM.JobID)]
+        SAM_ST_KashaCombo = 15001,
+
+        [ReplaceSkill(SAM.Gekko)]
+        [CustomComboInfo("Gekko Combo", "Replace Gekko with its combo chain.", SAM.JobID)]
+        SAM_ST_GekkoCombo = 15010,
+        #endregion
+
+        #region AoE Oka Combo
+
+        [ReplaceSkill(SAM.Oka)]
+        [CustomComboInfo("Oka Combo", "Replace Oka with its combo chain.", SAM.JobID)]
+        SAM_AoE_OkaCombo = 15100,
+
+        //[ParentCombo(SAM_AoE_OkaCombo)]
+        //[CustomComboInfo("Oka Two Target Rotation Feature", "Adds the Yukikaze combo, Mangetsu combo, Senei, Shinten, and Shoha to Oka combo.\nUsed for two targets only and when Lv86 and above.", SAM.JobID)]
+        //SAM_AoE_OkaCombo_TwoTarget = 15101,
+
+        [ReplaceSkill(SAM.Mangetsu)]
+        [CustomComboInfo("Mangetsu Combo", "Replace Mangetsu with its combo chain.", SAM.JobID)]
+        SAM_AoE_MangetsuCombo = 15101,
 
         #endregion
 
