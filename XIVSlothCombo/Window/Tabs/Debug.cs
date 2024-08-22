@@ -1,8 +1,12 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Utility.Raii;
 using ECommons.DalamudServices;
+using ECommons.ImGuiMethods;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
+using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Linq;
 using XIVSlothCombo.Combos;
@@ -11,6 +15,7 @@ using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
 using static XIVSlothCombo.Combos.JobHelpers.NIN;
+using Action = Lumina.Excel.GeneratedSheets.Action;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Window.Tabs
@@ -25,6 +30,7 @@ namespace XIVSlothCombo.Window.Tabs
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) => actionID;
         }
 
+        internal static Action? debugSpell;
         internal unsafe static new void Draw()
         {
             DebugCombo? comboClass = new();
@@ -123,7 +129,36 @@ namespace XIVSlothCombo.Window.Tabs
 
                     }
                 }
-                ImGui.Spacing();
+                if (ImGui.CollapsingHeader("Action Info"))
+                {
+                    string prev = debugSpell == null ? "Select Action" : $"{debugSpell.ClassJobLevel}. {debugSpell.Name} - {(debugSpell.IsPvP ? "PvP" : "Normal")}";
+                    ImGuiEx.SetNextItemFullWidth();
+                    using (var comboBox = ImRaii.Combo("###ActionCombo", prev))
+                    {
+                        if (comboBox)
+                        {
+                            if (ImGui.Selectable("", debugSpell == null))
+                            {
+                                debugSpell = null;
+                            }
+
+                            var classId = CustomComboFunctions.JobIDs.JobToClass(JobID.Value);
+                            foreach (var act in Svc.Data.GetExcelSheet<Action>().Where(x => x.ClassJob.Row == classId || x.ClassJob.Row == JobID.Value).OrderBy(x => x.ClassJobLevel))
+                            {
+                                if (ImGui.Selectable($"{act.ClassJobLevel}. {act.Name} - {(act.IsPvP ? "PvP" : "Normal")}", debugSpell?.RowId == act.RowId))
+                                {
+                                    debugSpell = act;
+                                }
+                            }
+                        }
+                    }
+
+                    if (debugSpell != null)
+                    {
+                        var actionStatus = ActionManager.Instance()->GetActionStatus(ActionType.Action, debugSpell.RowId);
+                        CustomStyleText($"Action Status:", $"{actionStatus} ({Svc.Data.GetExcelSheet<LogMessage>().GetRow(actionStatus).Text})");
+                    }
+                }
 
                 // Player Info
                 ImGui.Spacing();
