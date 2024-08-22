@@ -60,8 +60,7 @@ namespace XIVSlothCombo.Combos.PvE
                 CircleOfPower = 738,
                 Sharpcast = 867,
                 Triplecast = 1211,
-                Thunderhead = 3870,
-                EnhancedFlare = 2960;
+                Thunderhead = 3870;
         }
 
         public static class Debuffs
@@ -78,7 +77,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static class Traits
         {
             public const uint
-                EnhancedFreeze = 295,
+                UmbralHeart = 295,
                 EnhancedPolyglot = 297,
                 AspectMasteryIII = 459,
                 EnhancedFoul = 461,
@@ -92,9 +91,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const int MaxMP = 10000;
 
             public const int AllMPSpells = 800; //"ALL MP" spell. Only caring about the absolute minimum.
-            public static int ThunderST => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder));
-            public static int ThunderAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Thunder2));
             public static int FireI => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire));
+            public static int FlareAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Flare));
             public static int FireAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire2));
             public static int FireIII => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Fire3));
             public static int BlizzardAoE => CustomComboFunctions.GetResourceCost(CustomComboFunctions.OriginalHook(Blizzard2));
@@ -287,12 +285,9 @@ namespace XIVSlothCombo.Combos.PvE
             {
                 if (actionID is not (Blizzard2 or HighBlizzard2)) return actionID;
 
-                uint currentMP = LocalPlayer.CurrentMp;
-                BLMGauge? gauge = GetJobGauge<BLMGauge>();
-
-                // 2xHF2 Transpose with Freeze [A7]
-                if (gauge.ElementTimeRemaining <= 0)
-                    return OriginalHook(Blizzard2);
+                var gauge = GetJobGauge<BLMGauge>();
+                var maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+                var curMp = LocalPlayer.CurrentMp;
 
                 if (gauge.ElementTimeRemaining > 0)
                 {
@@ -317,13 +312,24 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
                 }
 
+                // Movement
+                if (IsMoving)
+                {
+                    if (gauge.HasPolyglotStacks() && ActionReady(Foul))
+                        return Foul;
+
+                    if (ActionReady(All.Swiftcast) &&
+                        !HasEffect(All.Buffs.Swiftcast))
+                        return All.Swiftcast;
+                }
+
                 // Astral Fire
                 if (gauge.InAstralFire)
                 {
                     // Manafont to Flare
                     if (LevelChecked(Flare))
                     {
-                        if (ActionReady(Manafont) && currentMP is 0)
+                        if (ActionReady(Manafont) && curMp is 0)
                             return Manafont;
 
                         if (WasLastAction(Manafont))
@@ -331,38 +337,48 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Polyglot usage
-                    if (LevelChecked(Foul) && gauge.HasPolyglotStacks() && WasLastAction(OriginalHook(Flare)))
+                    if (LevelChecked(Foul) &&
+                        gauge.HasPolyglotStacks() &&
+                        (WasLastAction(OriginalHook(FlareStar)) ||
+                         WasLastAction(OriginalHook(Freeze))))
                         return Foul;
 
-                    // Blizzard to Umbral Ice
-                    if ((currentMP is 0 && WasLastAction(Flare)) ||
-                        (currentMP < MP.FireAoE && !LevelChecked(Flare)))
-                        return OriginalHook(Blizzard2);
+                    // Transpose to keep mana rolling
+                    if (LevelChecked(Transpose) &&
+                        curMp < MP.FireAoE &&
+                        (WasLastAction(Foul) || !gauge.HasPolyglotStacks()))
+                        return Transpose;
 
-                    if (currentMP >= MP.AllMPSpells)
+                    if (curMp >= MP.AllMPSpells)
                     {
                         // Thunder II/IV uptime
-                        if (!ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
+                        if (!ThunderList.ContainsKey(lastComboMove) &&
+                            HasEffect(Buffs.Thunderhead))
                         {
                             if (LevelChecked(Thunder4) &&
                                 GetDebuffRemainingTime(Debuffs.Thunder4) <= 4)
                                 return Thunder4;
 
-                            if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
+                            if (LevelChecked(Thunder2) &&
+                                !LevelChecked(Thunder4) &&
                                 GetDebuffRemainingTime(Debuffs.Thunder2) <= 4)
                                 return Thunder2;
                         }
 
-                        if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                            (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE) &&
-                            ActionReady(Triplecast) && !HasEffect(Buffs.Triplecast))
+                        if (LevelChecked(Flare) &&
+                            ActionReady(Triplecast) &&
+                            GetBuffStacks(Buffs.Triplecast) == 0)
                             return Triplecast;
 
-                        if (LevelChecked(Flare) && HasEffect(Buffs.EnhancedFlare) &&
-                            (gauge.UmbralHearts is 1 || currentMP < MP.FireAoE))
+                        if (curMp < MP.FireAoE &&
+                            FlareStar.LevelChecked() &&
+                            gauge.AstralSoulStacks == 6)
+                            return FlareStar;
+
+                        if (LevelChecked(Flare) && curMp < MP.FireAoE)
                             return Flare;
 
-                        if (currentMP > MP.FireAoE)
+                        if (curMp > MP.FireAoE)
                             return OriginalHook(Fire2);
                     }
                 }
@@ -370,28 +386,38 @@ namespace XIVSlothCombo.Combos.PvE
                 // Umbral Ice
                 if (gauge.InUmbralIce)
                 {
-                    if (gauge.UmbralHearts < 3 && LevelChecked(Freeze) && TraitLevelChecked(Traits.EnhancedFreeze) && currentMP >= MP.Freeze)
+                    if (gauge.UmbralHearts < 3 &&
+                        LevelChecked(Freeze) &&
+                        TraitLevelChecked(Traits.UmbralHeart) &&
+                        curMp >= MP.Freeze)
                         return Freeze;
 
+                    if (ActionReady(Foul) &&
+                        gauge.HasPolyglotStacks() &&
+                        WasLastAction(Freeze) &&
+                        GetDebuffRemainingTime(Debuffs.Thunder4) is <= 0 or > 4)
+                        return Foul;
+
                     // Thunder II/IV uptime
-                    if (!ThunderList.ContainsKey(lastComboMove) && currentMP >= MP.ThunderAoE)
+                    if (!ThunderList.ContainsKey(lastComboMove) &&
+                        HasEffect(Buffs.Thunderhead))
                     {
                         if (LevelChecked(Thunder4) &&
                             GetDebuffRemainingTime(Debuffs.Thunder4) <= 4)
                             return Thunder4;
 
-                        if (LevelChecked(Thunder2) && !LevelChecked(Thunder4) &&
+                        if (LevelChecked(Thunder2) &&
+                            !LevelChecked(Thunder4) &&
                             GetDebuffRemainingTime(Debuffs.Thunder2) <= 4)
                             return Thunder2;
                     }
 
-                    if (currentMP < 9400 && !TraitLevelChecked(Traits.EnhancedFreeze) && Freeze.LevelChecked() && currentMP >= MP.Freeze)
-                        return Freeze;
-
-                    if (currentMP >= 9400 && !TraitLevelChecked(Traits.AspectMasteryIII))
+                    if (curMp >= MP.FlareAoE*2 ||
+                        (curMp >= 9400 &&
+                         !TraitLevelChecked(Traits.AspectMasteryIII)))
                         return Transpose;
 
-                    if ((gauge.UmbralHearts is 3 || currentMP == MP.MaxMP) &&
+                    if (curMp == MP.MaxMP &&
                         TraitLevelChecked(Traits.AspectMasteryIII))
                         return OriginalHook(Fire2);
                 }
