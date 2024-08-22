@@ -105,11 +105,11 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     if (GetPartySlot(2) is not null)
                     {
                         SetTarget();
-                        Svc.Log.Debug($"Set card to {SelectedRandomMember.Name}");
+                        Svc.Log.Debug($"Set card to {SelectedRandomMember?.Name}");
                     }
                     else
                     {
-                        Svc.Log.Debug($"Setting card to {LocalPlayer.Name}");
+                        Svc.Log.Debug($"Setting card to {LocalPlayer?.Name}");
                         SelectedRandomMember = LocalPlayer;
                     }
                 }
