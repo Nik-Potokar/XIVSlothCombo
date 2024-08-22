@@ -483,8 +483,6 @@ namespace XIVSlothCombo.Combos.PvE
                 bool NonaspectedMode = GetIntOptionAsBool(Config.AST_AoEHeals_AltMode); //(0 or 1 radio values)
 
                 if (NonaspectedMode && actionID is Helios || !NonaspectedMode && actionID is AspectedHelios or HeliosConjuction)
-
-                
                 {
                     var canLady = (Config.AST_AoE_SimpleHeals_WeaveLady && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_WeaveLady;
                     var canHoroscope = (Config.AST_AoE_SimpleHeals_Horoscope && CanSpellWeave(actionID)) || !Config.AST_AoE_SimpleHeals_Horoscope;
@@ -515,30 +513,23 @@ namespace XIVSlothCombo.Combos.PvE
                             return OriginalHook(Horoscope);
                     }
 
-                    if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Aspected) && NonaspectedMode) // So helios mode can run aspected option 
+                    // Only check for our own HoTs
+                    var aspectedHeliosHoT = FindEffect(Buffs.AspectedBenefic, LocalPlayer, LocalPlayer?.GameObjectId);
+                    var heliosConjunctionHoT = FindEffect(Buffs.AspectedBenefic, LocalPlayer, LocalPlayer?.GameObjectId);
+
+                    if ((IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Aspected) && NonaspectedMode) || // Helios mode: option must be on
+                        !NonaspectedMode) // Aspected mode: option is not required
                     {
                         if ((ActionReady(AspectedHelios)
-                                 && !HasEffect(Buffs.AspectedHelios)
-                                 && !HasEffect(Buffs.HeliosConjunction))
+                                 && aspectedHeliosHoT is null
+                                 && heliosConjunctionHoT is null)
                              || HasEffect(Buffs.Horoscope)
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
                             return OriginalHook(AspectedHelios);
                     }
 
-                    if (!NonaspectedMode) //So aspected mode runs normal without having to select it from the option as well
-                    {
-                        if ((ActionReady(AspectedHelios)
-                                 && !HasEffect(Buffs.AspectedHelios)
-                                 && !HasEffect(Buffs.HeliosConjunction))
-                             || HasEffect(Buffs.Horoscope)
-                             || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
-                            return OriginalHook(AspectedHelios);
-                    }
-
-                    if ((HasEffect(Buffs.AspectedHelios)
-                         || HasEffect(Buffs.HeliosConjunction))
-                        && (FindEffect(Buffs.AspectedHelios)?.RemainingTime > 2
-                            || FindEffect(Buffs.HeliosConjunction)?.RemainingTime > 2))
+                    if ((aspectedHeliosHoT is not null || heliosConjunctionHoT is not null)
+                        && (aspectedHeliosHoT?.RemainingTime > 2 || heliosConjunctionHoT?.RemainingTime > 2))
                         return Helios;
                 }
 

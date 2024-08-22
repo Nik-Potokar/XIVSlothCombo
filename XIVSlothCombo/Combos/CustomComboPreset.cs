@@ -322,7 +322,8 @@ namespace XIVSlothCombo.Combos
         AST_AoE_SimpleHeals_Horoscope = 1026,
                
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
-        [CustomComboInfo("Aspected Helios Option", "In Helios mode: Will Cast Aspected Helios when the HoT is missing on yourself.", AST.JobID)]
+        [CustomComboInfo("Aspected Helios Option", "In Helios mode: Will Cast Aspected Helios when the HoT is missing on yourself."
+                                                   + "\nIn Aspected Helios mode: Is considered enabled regardless.", AST.JobID)]
         AST_AoE_SimpleHeals_Aspected = 1053,
 
         [ReplaceSkill(AST.Benefic2)]
