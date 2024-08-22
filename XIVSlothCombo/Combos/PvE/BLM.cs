@@ -325,7 +325,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.Swiftcast;
 
                     if (ActionReady(Amplifier) &&
-                        gauge.PolyglotStacks < maxPolyglot)
+                        gauge.PolyglotStacks < maxPolyglot &&
+                        (gauge.InAstralFire || gauge.InUmbralIce))
                         return Amplifier;
 
                     if (gauge.HasPolyglotStacks() && ActionReady(Foul))
@@ -337,7 +338,9 @@ namespace XIVSlothCombo.Combos.PvE
                 }
 
                 // Ley Lines
-                if (CanSpellWeave(actionID) && ActionReady(LeyLines))
+                if (CanSpellWeave(actionID) &&
+                    ActionReady(LeyLines) &&
+                    !IsMoving)
                     return LeyLines;
 
                 // HB2>Fr>Foul>Fire II (x1-4, based on level)>Flare>Flare Star>Foul
