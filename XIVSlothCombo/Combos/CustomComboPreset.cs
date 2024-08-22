@@ -3293,7 +3293,7 @@ namespace XIVSlothCombo.Combos
         SGE_ST_DPS = 14001,
 
         [ParentCombo(SGE_ST_DPS)]
-        [CustomComboInfo("Opener Option", "Use the Balance opener from level 56+.", SGE.JobID,101)]
+        [CustomComboInfo("Opener Option", "Use the Balance opener from level 92+.", SGE.JobID,101)]
         SGE_ST_DPS_Opener = 14055,
 
         [ParentCombo(SGE_ST_DPS)]
