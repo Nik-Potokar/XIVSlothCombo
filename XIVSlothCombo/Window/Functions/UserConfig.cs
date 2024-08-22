@@ -1423,13 +1423,13 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BARD
 
-            if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
+            if (preset == CustomComboPreset.BRD_Adv_RagingJaws)
                 UserConfig.DrawSliderInt(3, 5, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds)");
 
-            if (preset == CustomComboPreset.BRD_Simple_NoWaste)
+            if (preset == CustomComboPreset.BRD_Adv_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_NoWasteHPPercentage, "Remaining target HP percentage");
 
-            if (preset == CustomComboPreset.BRD_AoE_Simple_NoWaste)
+            if (preset == CustomComboPreset.BRD_AoE_Adv_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_AoENoWasteHPPercentage, "Remaining target HP percentage");
 
             if (preset == CustomComboPreset.BRD_ST_SecondWind)
