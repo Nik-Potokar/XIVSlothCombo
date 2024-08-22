@@ -2407,29 +2407,14 @@ namespace XIVSlothCombo.Combos
         #region PICTOMANCER
 
         [ReplaceSkill(PCT.FireInRed)]
-        [ConflictingCombos(CombinedAetherhues)]
+        [ConflictingCombos(CombinedAetherhues, PCT_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Consolidates the single target rotation into one button, ideal for newcomers.", PCT.JobID)]
         PCT_ST_SimpleMode = 20000,
 
         [ReplaceSkill(PCT.FireIIinRed)]
-        [ConflictingCombos(CombinedAetherhues)]
+        [ConflictingCombos(CombinedAetherhues, PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Mode - AoE", "Consolidates the AoE rotation into one button, ideal for newcomers.", PCT.JobID)]
         PCT_AoE_SimpleMode = 20001,
-
-        [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
-        [ConflictingCombos(PCT_ST_SimpleMode, PCT_AoE_SimpleMode)]
-        [CustomComboInfo("Combined Aetherhues Feature", "Merges aetherhue actions for specific target types into a single button.", PCT.JobID)]
-        CombinedAetherhues = 20002,
-
-        [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
-        [CustomComboInfo("One Button Motifs", "Merges Motifs and Muses into a single button.", PCT.JobID)]
-        CombinedMotifs = 20003,
-
-        [ReplaceSkill(PCT.HolyInWhite)]
-        [CustomComboInfo("One Button Paint", "Consolidates paint-consuming actions into one button.", PCT.JobID)]
-        CombinedPaint = 20004,
-
-        #region ST
 
         [ReplaceSkill(PCT.FireInRed)]
         [ConflictingCombos(CombinedAetherhues, PCT_ST_SimpleMode)]
@@ -2669,6 +2654,23 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(PCT_AoE_AdvancedMode)]
         [CustomComboInfo("Lucid Dreaming Option", $"Adds Lucid Dreaming to the combo.", PCT.JobID)]
         PCT_AoE_AdvancedMode_LucidDreaming = 20067,
+
+        [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
+        [ConflictingCombos(PCT_ST_SimpleMode, PCT_AoE_SimpleMode)]
+        [CustomComboInfo("Combined Aetherhues Feature", "Merges aetherhue actions for specific target types into a single button.", PCT.JobID)]
+        CombinedAetherhues = 20002,
+
+        [ReplaceSkill(PCT.CreatureMotif, PCT.WeaponMotif, PCT.LandscapeMotif)]
+        [CustomComboInfo("One Button Motifs", "Merges Motifs and Muses into a single button.", PCT.JobID)]
+        CombinedMotifs = 20003,
+
+        [ReplaceSkill(PCT.HolyInWhite)]
+        [CustomComboInfo("One Button Paint", "Consolidates paint-consuming actions into one button.", PCT.JobID)]
+        CombinedPaint = 20004,
+
+        #region ST
+
+       
 
         // Last value for AoE = 20067
         #endregion
