@@ -27,9 +27,12 @@ namespace XIVSlothCombo.Combos.PvE
             Gravity = 3615,
             Gravity2 = 25872,
             Oracle = 37029,
+            EarthlyStar = 7439,
+            DetonateStar = 8324,
 
             //Cards
             AstralDraw = 37017,
+            UmbralDraw = 37018,
             Play1 = 37019,
             Play2 = 37020,
             Play3 = 37021,
@@ -87,6 +90,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Divination = 1878,
                 LordOfCrownsDrawn = 2054,
                 LadyOfCrownsDrawn = 2055,
+                GiantDominance = 1248,
                 ClarifyingDraw = 2713,
                 Macrocosmos = 2718,
                 //The "Buff" that shows when you're holding onto the card
@@ -343,6 +347,12 @@ namespace XIVSlothCombo.Combos.PvE
                         CanDelayedWeave(actionID))
                         return OriginalHook(MinorArcana);
 
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                     if (HasBattleTarget())
                     {
                         //Combust
@@ -357,12 +367,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 CanSpellWeave(actionID))
                                 return Variant.VariantSpiritDart;
                             
-                            float refreshtimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
-                            if (GetDebuffRemainingTime(dotDebuffID) <= refreshtimer &&
+                            float refreshTimer = Config.AST_ST_DPS_CombustUptime_Adv ? Config.AST_ST_DPS_CombustUptime_Threshold : 3;
+                            if (GetDebuffRemainingTime(dotDebuffID) <= refreshTimer &&
                                 GetTargetHPPercent() > Config.AST_DPS_CombustOption)
                                 return OriginalHook(Combust);
 
-                            //AlterateMode idles as Malefic
+                            //Alternate Mode (idles as Malefic)
                             if (AlternateMode) return OriginalHook(Malefic);
                         }
                     }
@@ -452,8 +462,14 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.AST_AOE_LazyLord) && Gauge.DrawnCrownCard is CardType.LORD &&
                         HasBattleTarget() &&
                         CanDelayedWeave(actionID))
-                        return OriginalHook(MinorArcana);                 
-                                            
+                        return OriginalHook(MinorArcana);
+
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                 }
                 return actionID;
             }
@@ -557,24 +573,28 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Spire) &&
                         Gauge.DrawnCards[2] == CardType.SPIRE &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Spire &&
+                        ActionReady(Play3) &&
                         canSpire)
                         return OriginalHook(Play3);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Ewer) &&
                         Gauge.DrawnCards[2] == CardType.EWER &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Ewer &&
+                        ActionReady(Play3) &&
                         canEwer)
                         return OriginalHook(Play3);
 
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Arrow) &&
                         Gauge.DrawnCards[1] == CardType.ARROW &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Arrow &&
+                        ActionReady(Play2) &&
                         canArrow)
                         return OriginalHook(Play2);
                     
                     if (IsEnabled(CustomComboPreset.AST_ST_SimpleHeals_Bole) &&
                         Gauge.DrawnCards[1] == CardType.BOLE &&
                         GetTargetHPPercent(healTarget) <= Config.AST_Bole &&
+                        ActionReady(Play2) &&
                         canBole)
                         return OriginalHook(Play2);
 

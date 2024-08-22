@@ -125,6 +125,7 @@ namespace XIVSlothCombo.Window
                 {
                     OpenWindow = OpenWindow.PvE;
                 }
+                ImGui.Spacing();
                 if (ImGui.Selectable("PvP Features", OpenWindow == OpenWindow.PvP))
                 {
                     OpenWindow = OpenWindow.PvP;
