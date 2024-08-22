@@ -325,7 +325,7 @@ namespace XIVSlothCombo.Combos.PvE
                     CanSpellWeave(actionID))
                     return Variant.VariantRampart;
 
-                if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1)
+                if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && Thunder2.LevelChecked())
                 {
                     if (thunderDebuff is null || thunderDebuff.RemainingTime < 3)
                         return OriginalHook(Thunder2);
