@@ -69,7 +69,7 @@ namespace XIVSlothCombo.Core
                     return OriginalHook(actionID);
 
                 uint lastComboMove = ActionManager.Instance()->Combo.Action;
-                float comboTime = ActionManager.Instance()->Combo.Timer;
+                float comboTime = ActionManager.Instance()->Combo.Action != 0 ? ActionManager.Instance()->Combo.Timer : 0;
                 byte level = Svc.ClientState.LocalPlayer?.Level ?? 0;
 
                 foreach (CustomCombo? combo in customCombos)

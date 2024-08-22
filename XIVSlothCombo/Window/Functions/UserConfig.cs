@@ -1423,13 +1423,13 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region BARD
 
-            if (preset == CustomComboPreset.BRD_Simple_RagingJaws)
+            if (preset == CustomComboPreset.BRD_Adv_RagingJaws)
                 UserConfig.DrawSliderInt(3, 5, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds)");
 
-            if (preset == CustomComboPreset.BRD_Simple_NoWaste)
+            if (preset == CustomComboPreset.BRD_Adv_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_NoWasteHPPercentage, "Remaining target HP percentage");
 
-            if (preset == CustomComboPreset.BRD_AoE_Simple_NoWaste)
+            if (preset == CustomComboPreset.BRD_AoE_Adv_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_AoENoWasteHPPercentage, "Remaining target HP percentage");
 
             if (preset == CustomComboPreset.BRD_ST_SecondWind)
@@ -1651,22 +1651,16 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region MONK
 
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
-                UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_Demolish_Apply, "Seconds remaining before refreshing Demolish.");
-
-            if (preset == CustomComboPreset.MNK_ST_SimpleMode)
-                UserConfig.DrawRoundedSliderFloat(5.0f, 10.0f, MNK.Config.MNK_DisciplinedFist_Apply, "Seconds remaining before refreshing Disciplined Fist.");
-
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
             {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_STSecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_STBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
-            if (preset == CustomComboPreset.MNK_AoE_ComboHeals)
+            if (preset == CustomComboPreset.MNK_STUseOpener && enabled)
             {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoESecondWindThreshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoEBloodbathThreshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Double Lunar", "Uses Lunar/Lunar opener", 1);
+                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Solar Lunar", "Uses Solar/Lunar opener", 2);
             }
 
             if (preset == CustomComboPreset.MNK_Variant_Cure)
@@ -1764,6 +1758,15 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsMog, $"{PCT.MogoftheAges.ActionName()} Feature", $"Add {PCT.MogoftheAges.ActionName()} when fully drawn and off cooldown.");
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsMadeen, $"{PCT.RetributionoftheMadeen.ActionName()} Feature", $"Add {PCT.RetributionoftheMadeen.ActionName()} when fully drawn and off cooldown.");
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsWeapon, $"{PCT.HammerStamp.ActionName()} Feature", $"Add {PCT.HammerStamp.ActionName()} when under the effect of {PCT.Buffs.HammerTime.StatusName()}.");
+            }
+
+            if(preset == CustomComboPreset.PCT_ST_AdvancedMode_LucidDreaming )
+            {
+                UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_ST_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
+            }
+            if(preset == CustomComboPreset.PCT_AoE_AdvancedMode_LucidDreaming)
+            {
+                UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
             }
 
             #endregion
@@ -1927,7 +1930,6 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.Unindent();
                 }
                 UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_ViceOfThorns, "Vice of Thorns", "");
-                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_ST_oGCD_Prefulgence, "Prefulgence", "");
             }
 
             if (preset is CustomComboPreset.RDM_ST_MeleeCombo)
@@ -1979,7 +1981,6 @@ namespace XIVSlothCombo.Window.Functions
                     ImGui.Unindent();
                 }
                 UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_ViceOfThorns, "Vice of Thorns", "");
-                UserConfig.DrawAdditionalBoolChoice(RDM.Config.RDM_AoE_oGCD_Prefulgence, "Prefulgence", "");
             }
 
             if (preset is CustomComboPreset.RDM_AoE_MeleeCombo)
@@ -2205,6 +2206,41 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.SAMPvP_KashaFeatures_GapCloser && enabled)
                 UserConfig.DrawSliderInt(0, 100, SAMPvP.Config.SAMPvP_SotenHP, "Use Soten on enemies below selected HP.");
+
+            if (preset == CustomComboPreset.SAM_ST_KashaCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Kasha_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Kasha_KenkiOvercap)
+                    UserConfig.DrawSliderInt(25, 100, SAM.Config.SAM_Kasha_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
+            if (preset == CustomComboPreset.SAM_ST_YukikazeCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Yukaze_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Yukaze_KenkiOvercap)
+                    UserConfig.DrawSliderInt(25, 100, SAM.Config.SAM_Yukaze_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
+            if (preset == CustomComboPreset.SAM_ST_GekkoCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Gekko_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Gekko_KenkiOvercap)
+                    UserConfig.DrawSliderInt(25, 100, SAM.Config.SAM_Gekko_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
+            if (preset == CustomComboPreset.SAM_AoE_OkaCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Oka_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Oka_KenkiOvercap)
+                    UserConfig.DrawSliderInt(25, 100, SAM.Config.SAM_Oka_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
+
+            if (preset == CustomComboPreset.SAM_AoE_MangetsuCombo)
+            {
+                UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_Mangetsu_KenkiOvercap, "Kenki Overcap Protection", "Spends Kenki when at the set value or above.");
+                if (SAM.Config.SAM_Mangetsu_KenkiOvercap)
+                    UserConfig.DrawSliderInt(25, 100, SAM.Config.SAM_Mangetsu_KenkiOvercapAmount, "Kenki Amount", sliderIncrement: SliderIncrements.Fives);
+            }
 
             #endregion
             // ====================================================================================
@@ -2449,31 +2485,31 @@ namespace XIVSlothCombo.Window.Functions
             // ====================================================================================
             #region WARRIOR
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_StormsEye && enabled)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_StormsEye && enabled)
                 UserConfig.DrawSliderInt(0, 30, WAR.Config.WAR_SurgingRefreshRange, "Seconds remaining before refreshing Surging Tempest.");
 
             if (preset == CustomComboPreset.WAR_InfuriateFellCleave && enabled)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateRange, "Set how much rage to be at or under to use this feature.");
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_Onslaught && enabled)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_Onslaught && enabled)
                 UserConfig.DrawSliderInt(0, 2, WAR.Config.WAR_KeepOnslaughtCharges, "How many charges to keep ready? (0 = Use All)");
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_Infuriate && enabled)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_Infuriate && enabled)
                 UserConfig.DrawSliderInt(0, 2, WAR.Config.WAR_KeepInfuriateCharges, "How many charges to keep ready? (0 = Use All)");
 
             if (preset == CustomComboPreset.WAR_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, WAR.Config.WAR_VariantCure, "HP% to be at or under", 200);
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_FellCleave)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_FellCleave)
                 UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_FellCleaveGauge, "Minimum gauge to spend");
 
-            if (preset == CustomComboPreset.WAR_AoE_Overpower_Decimate)
+            if (preset == CustomComboPreset.WAR_AoE_Advanced_Decimate)
                 UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, "Minimum gauge to spend");
 
-            if (preset == CustomComboPreset.WAR_ST_StormsPath_Infuriate)
+            if (preset == CustomComboPreset.WAR_ST_Advanced_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateSTGauge, "Use when gauge is under or equal to");
 
-            if (preset == CustomComboPreset.WAR_AoE_Overpower_Infuriate)
+            if (preset == CustomComboPreset.WAR_AoE_Advanced_Infuriate)
                 UserConfig.DrawSliderInt(0, 50, WAR.Config.WAR_InfuriateAoEGauge, "Use when gauge is under or equal to");
 
             if (preset == CustomComboPreset.WARPvP_BurstMode_Blota)
