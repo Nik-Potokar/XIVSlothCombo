@@ -305,8 +305,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("The Bole Option", "Adds The Bole (Reduced Damage) when the card has been drawn", AST.JobID)]
         AST_ST_SimpleHeals_Bole = 1050,
 
-        [ReplaceSkill(AST.AspectedHelios)]
-        [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios with a one button healing replacement.", AST.JobID, 4)]
+        [ReplaceSkill(AST.Helios, AST.AspectedHelios, AST.HeliosConjuction)]
+        [CustomComboInfo("Simple Heals (AoE)", "Replaces Aspected Helios or Helios with a one button healing replacement.", AST.JobID, 4)]
         AST_AoE_SimpleHeals_AspectedHelios = 1010,
 
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
@@ -320,6 +320,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
         [CustomComboInfo("Horoscope Option", "Adds Horoscope.", AST.JobID)]
         AST_AoE_SimpleHeals_Horoscope = 1026,
+               
+        [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
+        [CustomComboInfo("Aspected Helios Option", "In Helios mode: Will Cast Aspected Helios when the HoT is missing on yourself."
+                                                   + "\nIn Aspected Helios mode: Is considered enabled regardless.", AST.JobID)]
+        AST_AoE_SimpleHeals_Aspected = 1053,
 
         [ReplaceSkill(AST.Benefic2)]
         [CustomComboInfo("Benefic 2 Downgrade", "Changes Benefic 2 to Benefic when Benefic 2 is not unlocked or available.", AST.JobID, 7)]
@@ -354,7 +359,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1050
+        // Last value = 1053
 
         #endregion
 
