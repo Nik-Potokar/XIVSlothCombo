@@ -1760,6 +1760,15 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawAdditionalBoolChoice(PCT.Config.CombinedMotifsWeapon, $"{PCT.HammerStamp.ActionName()} Feature", $"Add {PCT.HammerStamp.ActionName()} when under the effect of {PCT.Buffs.HammerTime.StatusName()}.");
             }
 
+            if(preset == CustomComboPreset.PCT_ST_AdvancedMode_LucidDreaming )
+            {
+                UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_ST_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
+            }
+            if(preset == CustomComboPreset.PCT_AoE_AdvancedMode_LucidDreaming)
+            {
+                UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
+            }
+
             #endregion
             // ====================================================================================
             #region PALADIN
