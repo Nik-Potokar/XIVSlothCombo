@@ -204,7 +204,7 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.SetCursorPosX(ImGui.GetCursorPosX() + length.Length());
                 if (ImGui.Button($"Image of rotation###ninrtn{i}"))
                 {
-                    Util.OpenLink("https://i.imgur.com/q3lXeSZ.png");
+                    Util.OpenLink("https://i.imgur.com/IeP27KF.png");
                 }
             }
 
