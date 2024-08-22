@@ -1764,6 +1764,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
             }
 
+            // PvP
+            if (preset == CustomComboPreset.PCTPvP_BurstControl)
+                UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_BurstHP, "Target HP%", 200);
+
+            if (preset == CustomComboPreset.PCTPvP_TemperaCoat)
+                UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_TemperaHP, "Player HP%", 200);
             #endregion
             // ====================================================================================
             #region PALADIN

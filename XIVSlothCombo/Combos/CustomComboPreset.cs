@@ -5021,6 +5021,27 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region PICTOMANCER
+        [PvPCustomCombo]
+        [ReplaceSkill(PCTPvP.FireInRed)]
+        [CustomComboInfo("Burst Mode", "Turns Fire in Red into an all-in-one damage button.", PCTPvP.JobID)]
+        PCTPvP_Burst = 140000,
+
+        [ParentCombo(PCTPvP_Burst)]
+        [CustomComboInfo("Burst Control Option", "Saves high-damaging actions until the target's HP falls below the threshold.", PCTPvP.JobID)]
+        PCTPvP_BurstControl = 140001,
+
+        [ParentCombo(PCTPvP_Burst)]
+        [CustomComboInfo("Tempera Coat Option", "Uses Tempera Coat when HP falls below the threshold during combat.", PCTPvP.JobID)]
+        PCTPvP_TemperaCoat = 140002,
+
+        [ParentCombo(PCTPvP_Burst)]
+        [CustomComboInfo("Smart Palette Option", "Uses Subtractive Palette when standing still and releases it when moving.", PCTPvP.JobID)]
+        PCTPvP_SubtractivePalette = 140003,
+
+        // Last value = 140003
+        #endregion
+
         #region REAPER
         [PvPCustomCombo]
         [CustomComboInfo("Burst Mode", "Turns Slice Combo into an all-in-one damage button.\nAdds Soul Slice to the main combo.", RPR.JobID)]
