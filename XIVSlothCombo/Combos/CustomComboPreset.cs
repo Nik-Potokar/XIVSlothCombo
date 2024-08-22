@@ -4019,126 +4019,148 @@ namespace XIVSlothCombo.Combos
 
         #region WARRIOR
 
+        #region Simple ST
+        [ConflictingCombos(WAR_ST_Advanced)]
         [ReplaceSkill(WAR.StormsPath)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 1)]
-        WAR_ST_StormsPath = 18000,
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThis is the ideal selection for newcomers to the job.", WAR.JobID, 1)]
+        WAR_ST_Simple = 18000,
+        #endregion
 
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
-        WAR_ST_StormsPath_InnerRelease = 18020,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Tomahawk Uptime Option", "Adds Tomahawk to Advanced Mode when you are out of range.", WAR.JobID, 1, "", "")]
-        WAR_ST_StormsPath_RangedUptime = 18016,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Storm's Eye Option", "Adds Storms Eye to Advanced Mode.", WAR.JobID, 2, "", "")]
-        WAR_ST_StormsPath_StormsEye = 18023,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Inner Beast / Fell Cleave Option", "Adds Inner Beast / Fell Cleave to Advanced Mode. Will use when you have the set minimum gauge, or under the effect of Inner Release. Will also use Nascent Chaos.", WAR.JobID, 2, "", "")]
-        WAR_ST_StormsPath_FellCleave = 18012,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode.", WAR.JobID, 3, "", "")]
-        WAR_ST_StormsPath_Infuriate = 18021,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Advanced Mode if you are under Surging Tempest Buff.", WAR.JobID, 4, "", "")]
-        WAR_ST_StormsPath_Onslaught = 18013,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Upheaval Option", "Adds Upheaval to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_ST_StormsPath_Upheaval = 18007,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_ST_StormsPath_PrimalWrath = 18008,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_ST_StormsPath_PrimalRuination = 18009,
-
-        [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Orogeny Option", "Adds Orogeny to Advanced Mode when you are buffed with Surging Tempest.", WAR.JobID, 6, "", "")]
-        WAR_AoE_Overpower_Orogeny = 18010,
-
-        [ParentCombo(WAR_ST_StormsPath)]
-        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode. Only uses when in the Target's target ring (1 yalm) & when not moving. Otherwise, will use when buff time is equal to 1 GCD.", WAR.JobID, 7, "", "")]
-        WAR_ST_StormsPath_PrimalRend = 18011,
-
+        #region Simple AoE
+        [ConflictingCombos(WAR_AoE_Advanced)]
         [ReplaceSkill(WAR.Overpower)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThese features are ideal if you want to customize the rotation.", WAR.JobID, 2, "", "")]
-        WAR_AoE_Overpower = 18002,
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThis is the ideal selection for newcomers to the job.", WAR.JobID, 1)]
+        WAR_AoE_Simple = 18001,
+        #endregion
 
-        [ReplaceSkill(WAR.StormsEye)]
-        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
-        War_ST_StormsEye = 18001,
+        #region Advanced ST
+        [ConflictingCombos(WAR_ST_Simple)]
+        [ReplaceSkill(WAR.StormsPath)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Storm's Path with a one-button full single target rotation.\nThis is the ideal selection for users experienced with the job.", WAR.JobID, 2)]
+        WAR_ST_Advanced = 18002,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
+        WAR_ST_Advanced_InnerRelease = 18003,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Tomahawk Uptime Option", "Adds Tomahawk to Advanced Mode when you are out of range.", WAR.JobID, 1, "", "")]
+        WAR_ST_Advanced_RangedUptime = 18004,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Storm's Eye Option", "Adds Storms Eye to Advanced Mode.", WAR.JobID, 2, "", "")]
+        WAR_ST_Advanced_StormsEye = 18005,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Inner Beast / Fell Cleave Option", "Adds Inner Beast / Fell Cleave to Advanced Mode. Will use when you have the set minimum gauge, or under the effect of Inner Release. Will also use Nascent Chaos.", WAR.JobID, 2, "", "")]
+        WAR_ST_Advanced_FellCleave = 18006,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode.", WAR.JobID, 3, "", "")]
+        WAR_ST_Advanced_Infuriate = 18007,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Onslaught Option", "Adds Onslaught to Advanced Mode if you are under Surging Tempest Buff.", WAR.JobID, 4, "", "")]
+        WAR_ST_Advanced_Onslaught = 18008,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Upheaval Option", "Adds Upheaval to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_Advanced_Upheaval = 18009,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_Advanced_PrimalWrath = 18010,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
+        WAR_ST_Advanced_PrimalRuination = 18011,
+
+        [ParentCombo(WAR_AoE_Advanced)]
+        [CustomComboInfo("Orogeny Option", "Adds Orogeny to Advanced Mode when you are buffed with Surging Tempest.", WAR.JobID, 6, "", "")]
+        WAR_AoE_Advanced_Orogeny = 18012,
+
+        [ParentCombo(WAR_ST_Advanced)]
+        [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode. Only uses when in the Target's target ring (1 yalm) & when not moving. Otherwise, will use when buff time is equal to 1 GCD.", WAR.JobID, 7, "", "")]
+        WAR_ST_Advanced_PrimalRend = 18013,
+
+        [ParentCombo(WAR_ST_Advanced_PrimalRend)]
+        [CustomComboInfo("Primal Rend Late Option", "Uses Primal Rend after you consume 3 stacks of Inner Release & after Primal Wrath.", WAR.JobID)]
+        WAR_ST_Advanced_PrimalRend_Late = 18014,
+
+        [ParentCombo(WAR_ST_Advanced_Onslaught)]
+        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest & in the target ring (1 yalm) & when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID)]
+        WAR_ST_Advanced_Onslaught_MeleeSpender = 18015,
+        #endregion
+
+        #region Advanced AoE
+        [ConflictingCombos(WAR_AoE_Simple)]
+        [ReplaceSkill(WAR.Overpower)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Overpower with a one-button full AoE rotation.\nThis is the ideal selection for users experienced with the job.", WAR.JobID, 2, "", "")]
+        WAR_AoE_Advanced = 18016,
 
         [ReplaceSkill(WAR.NascentFlash)]
         [CustomComboInfo("Nascent Flash Feature", "Replace Nascent Flash with Raw intuition when level synced below 76.", WAR.JobID, 5, "", "")]
-        WAR_NascentFlash = 18005,
+        WAR_NascentFlash = 18017,
 
-        [ParentCombo(WAR_AoE_Overpower)]
+        [ParentCombo(WAR_AoE_Advanced)]
         [CustomComboInfo("Infuriate Option", "Adds Infuriate to Advanced Mode when gauge is below 50 and not under Inner Release.", WAR.JobID)]
-        WAR_AoE_Overpower_Infuriate = 18014,
+        WAR_AoE_Advanced_Infuriate = 18018,
 
-        [ParentCombo(WAR_AoE_Overpower)]
+        [ParentCombo(WAR_AoE_Advanced)]
         [CustomComboInfo("Berserk / Inner Release Option", "Adds Berserk / Inner Release to Advanced Mode.", WAR.JobID)]
-        WAR_AoE_Overpower_InnerRelease = 18015,
+        WAR_AoE_Advanced_InnerRelease = 18019,
 
-        [ParentCombo(WAR_AoE_Overpower)]
+        [ParentCombo(WAR_AoE_Advanced)]
         [CustomComboInfo("Primal Wrath Option", "Adds Primal Wrath to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_AOE_Overpower_PrimalWrath = 18017,
+        WAR_AoE_Advanced_PrimalWrath = 18020,
 
-        [ParentCombo(WAR_AoE_Overpower)]
+        [ParentCombo(WAR_AoE_Advanced)]
         [CustomComboInfo("Primal Rend Option", "Adds Primal Rend to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_AOE_Overpower_PrimalRend = 18018,
+        WAR_AoE_Advanced_PrimalRend = 18021,
 
-        [ParentCombo(WAR_AoE_Overpower)]
+        [ParentCombo(WAR_AoE_Advanced)]
         [CustomComboInfo("Primal Ruination Option", "Adds Primal Ruination to Advanced Mode if you have Surging Tempest.", WAR.JobID, 5, "", "")]
-        WAR_AOE_Overpower_PrimalRuination = 18019,
+        WAR_AoE_Advanced_PrimalRuination = 18022,
 
+        [ParentCombo(WAR_AoE_Advanced)]
+        [CustomComboInfo("Steel Cyclone / Decimate Option", "Adds Steel Cyclone / Decimate to Advanced Mode.", WAR.JobID)]
+        WAR_AoE_Advanced_Decimate = 18023,
+        #endregion
+
+        #region  Misc
         [ReplaceSkill(WAR.FellCleave, WAR.Decimate)]
         [CustomComboInfo("Infuriate on Fell Cleave / Decimate Feature", "Turns Fell Cleave and Decimate into Infuriate if at or under set rage value.", WAR.JobID, 4, "", "")]
-        WAR_InfuriateFellCleave = 18031,
+        WAR_InfuriateFellCleave = 18024,
+
+        [ReplaceSkill(WAR.StormsEye)]
+        [CustomComboInfo("Storm's Eye Combo Feature", "Replace Storm's Eye with its combo chain.", WAR.JobID, 3, "", "")]
+        War_ST_StormsEye = 18025,
 
         [ReplaceSkill(WAR.InnerRelease)]
         [CustomComboInfo("Primal Combo Feature", "Turns Inner Release into the Primal combo on use.", WAR.JobID, 3, "", "")]
-        WAR_PrimalCombo_InnerRelease = 18032,
+        WAR_PrimalCombo_InnerRelease = 18026,
 
         [ParentCombo(WAR_InfuriateFellCleave)]
         [CustomComboInfo("Inner Release Priority Option", "Prevents the use of Infuriate while you have Inner Release stacks available.", WAR.JobID)]
-        WAR_InfuriateFellCleave_IRFirst = 18022,
-
-        [ParentCombo(WAR_ST_StormsPath_PrimalRend)]
-        [CustomComboInfo("Primal Rend Late Option", "Uses Primal Rend after you consume 3 stacks of Inner Release & after Primal Wrath.", WAR.JobID)]
-        WAR_ST_StormsPath_PrimalRend_Late = 18024,
-
-        [ParentCombo(WAR_ST_StormsPath_Onslaught)]
-        [CustomComboInfo("Melee Onslaught Option", "Uses Onslaught when under Surging Tempest & in the target ring (1 yalm) & when not moving.\nWill use as many stacks as selected in the above slider.", WAR.JobID)]
-        WAR_ST_StormsPath_Onslaught_MeleeSpender = 18025,
+        WAR_InfuriateFellCleave_IRFirst = 18027,
 
         [Variant]
-        [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
+        [VariantParent(WAR_ST_Advanced, WAR_AoE_Advanced)]
         [CustomComboInfo("Spirit Dart Option", "Use Variant Spirit Dart whenever the debuff is not present or less than 3s.", WAR.JobID)]
-        WAR_Variant_SpiritDart = 18026,
+        WAR_Variant_SpiritDart = 18028,
 
         [Variant]
-        [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
+        [VariantParent(WAR_ST_Advanced, WAR_AoE_Advanced)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", WAR.JobID)]
-        WAR_Variant_Cure = 18027,
+        WAR_Variant_Cure = 18029,
 
         [Variant]
-        [VariantParent(WAR_ST_StormsPath, WAR_AoE_Overpower)]
+        [VariantParent(WAR_ST_Advanced, WAR_AoE_Advanced)]
         [CustomComboInfo("Ultimatum Option", "Use Variant Ultimatum on cooldown.", WAR.JobID)]
-        WAR_Variant_Ultimatum = 18028,
+        WAR_Variant_Ultimatum = 18030,
+        #endregion
 
-        [ParentCombo(WAR_AoE_Overpower)]
-        [CustomComboInfo("Steel Cyclone / Decimate Option", "Adds Steel Cyclone / Decimate to Advanced Mode.", WAR.JobID)]
-        WAR_AoE_Overpower_Decimate = 18029,
-
-        // Last value = 18029
+        // Last value = 18030
 
         #endregion
 
