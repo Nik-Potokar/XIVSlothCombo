@@ -239,7 +239,8 @@ namespace XIVSlothCombo.Combos.JobHelpers
             DRG.WyrmwindThrust,
             DRG.RiseOfTheDragon,
             DRG.Starcross,
-            PvE.Content.Variant.VariantRampart
+            PvE.Content.Variant.VariantRampart,
+            PvE.All.TrueNorth
         ];
 
         internal static readonly List<uint> MidLocks =
