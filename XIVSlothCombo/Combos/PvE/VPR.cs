@@ -317,7 +317,7 @@ namespace XIVSlothCombo.Combos.PvE
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6))
                 {
-                    if ((!JustUsed(SerpentsIre, 3f) && HasEffect(Buffs.ReadyToReawaken)) || //2min burst
+                    if ((!JustUsed(SerpentsIre, 2.2f) && HasEffect(Buffs.ReadyToReawaken)) || //2min burst
                         (WasLastWeaponskill(Ouroboros) && gauge.SerpentOffering >= 50 && ireCD >= 50) || //2nd RA
                         (gauge.SerpentOffering is >= 50 and <= 80 && ireCD is >= 50 and <= 62) || //1min
                         (gauge.SerpentOffering >= 100) || //overcap
@@ -575,7 +575,7 @@ namespace XIVSlothCombo.Combos.PvE
                     !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang) &&
                     !VPRCheckTimers.IsEmpowermentExpiring(6))
                 {
-                    if ((!JustUsed(SerpentsIre, 2.1f) && HasEffect(Buffs.ReadyToReawaken)) || //2min burst
+                    if ((!JustUsed(SerpentsIre, 2.2f) && HasEffect(Buffs.ReadyToReawaken)) || //2min burst
                         (WasLastWeaponskill(Ouroboros) && gauge.SerpentOffering >= 50 && ireCD >= 50) || //2nd RA
                         (gauge.SerpentOffering is >= 50 and <= 80 && ireCD is >= 50 and <= 62) || //1min
                         (gauge.SerpentOffering >= 100) || //overcap
