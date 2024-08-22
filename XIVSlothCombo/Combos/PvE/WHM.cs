@@ -106,6 +106,7 @@ namespace XIVSlothCombo.Combos.PvE
                 WHM_ST_MainCombo_DoT_Adv = new("WHM_ST_MainCombo_DoT_Adv"),
                 WHM_ST_MainCombo_Adv = new("WHM_ST_MainCombo_Adv"),
                 WHM_ST_MainCombo_Opener_Swiftcast = new("WHM_ST_Opener_Swiftcast"),
+                WHM_AoEDPS_PresenceOfMindWeave = new("WHM_AoEDPS_PresenceOfMindWeave"),
                 WHM_STHeals_UIMouseOver = new("WHM_STHeals_UIMouseOver"),
                 WHM_STHeals_BenedictionWeave = new("WHM_STHeals_BenedictionWeave"),
                 WHM_STHeals_TetraWeave = new("WHM_STHeals_TetraWeave"),
@@ -319,8 +320,8 @@ namespace XIVSlothCombo.Combos.PvE
                     bool divineCaressReady = ActionReady(DivineCaress) && HasEffect(Buffs.DivineGrace);
                     bool assizeReady = ActionReady(Assize) && (!Config.WHM_AoEHeals_AssizeWeave || (Config.WHM_AoEHeals_AssizeWeave && canWeave));
                     var healTarget = GetHealTarget(Config.WHM_AoEHeals_MedicaMO);
-                    var hasMedica2 = FindEffectOnMember(Buffs.Medica2, healTarget);
-                    var hasMedica3 = FindEffectOnMember(Buffs.Medica3, healTarget);
+                    var hasMedica2 = FindEffect(Buffs.Medica2, healTarget, LocalPlayer?.GameObjectId);
+                    var hasMedica3 = FindEffect(Buffs.Medica3, healTarget, LocalPlayer?.GameObjectId);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Assize) && assizeReady)
                         return Assize;
@@ -344,9 +345,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return ThinAir;
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2)
-                        && ((FindEffectOnMember(Buffs.Medica2, healTarget) == null && FindEffectOnMember(Buffs.Medica3, healTarget) == null)
-                            || hasMedica2 != null && hasMedica2.RemainingTime <= Config.WHM_AoEHeals_MedicaTime
-                            || hasMedica3 != null && hasMedica3.RemainingTime <= Config.WHM_AoEHeals_MedicaTime)
+                        && ((hasMedica2 == null && hasMedica3 == null) // No Medica buffs
+                            || hasMedica2 != null && hasMedica2.RemainingTime <= Config.WHM_AoEHeals_MedicaTime // Medica buff, but falling off soon
+                            || hasMedica3 != null && hasMedica3.RemainingTime <= Config.WHM_AoEHeals_MedicaTime) // ^
                         && (ActionReady(Medica2) || ActionReady(Medica3)))
                     {
                         // Medica 3 upgrade
@@ -437,9 +438,13 @@ namespace XIVSlothCombo.Combos.PvE
 
                     bool liliesFullNoBlood = gauge.Lily == 3 && gauge.BloodLily < 3;
                     bool liliesNearlyFull = gauge.Lily == 2 && gauge.LilyTimer >= 17000;
+                    bool PresenceOfMindReady = ActionReady(PresenceOfMind) && (!Config.WHM_AoEDPS_PresenceOfMindWeave);
 
                     if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
                         return Assize;
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && PresenceOfMindReady)
+                        return PresenceOfMind;
 
                     if (IsEnabled(CustomComboPreset.WHM_DPS_Variant_Rampart) &&
                         IsEnabled(Variant.VariantRampart) &&
@@ -452,7 +457,7 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget())
                         return Variant.VariantSpiritDart;
 
-                    if (CanSpellWeave(actionID) || IsMoving)
+                    if (CanSpellWeave(ActionWatching.LastSpell) || IsMoving)
                     {
                         if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                             return PresenceOfMind;

@@ -1,7 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
+using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
 {
@@ -18,10 +20,19 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             return eff?.StackCount ?? 0;
         }
 
-        public static float GetBuffRemainingTime(ushort effectId)
+        /// <summary> Gets the duration of a status effect on the player. By default, the effect must be owned by the player or unowned. </summary>
+        /// <param name="effectId"> Status effect ID. </param>
+        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player or can be owned by anyone. </param>
+        /// <returns> The duration of the status effect. </returns>
+        public unsafe static float GetBuffRemainingTime(ushort effectId, bool isPlayerOwned = true)
         {
-            Status? eff = FindEffect(effectId);
-            return eff?.RemainingTime ?? 0;
+            Status? eff = (isPlayerOwned == true)
+                ? FindEffect(effectId)
+                : FindEffectAny(effectId);
+
+            if (eff is null) return 0;
+            if (eff.RemainingTime < 0) return (eff.RemainingTime * -1) + ActionManager.Instance()->AnimationLock;
+            return eff.RemainingTime;
         }
 
         /// <summary> Finds an effect on the player. The effect must be owned by the player or unowned. </summary>
@@ -39,11 +50,19 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> Status object or null. </returns>
         public static Status? FindTargetEffect(ushort effectID) => FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 
-        /// <summary></summary>
-        public static float GetDebuffRemainingTime(ushort effectId)
+        /// <summary> Gets the duration of a status effect on the current target. By default, the effect must be owned by the player or unowned. </summary>
+        /// <param name="effectId"> Status effect ID. </param>
+        /// <param name="isPlayerOwned"> Whether the status effect must be owned by the player or can be owned by anyone. </param>
+        /// <returns> The duration of the status effect. </returns>
+        public unsafe static float GetDebuffRemainingTime(ushort effectId, bool isPlayerOwned = true)
         {
-            Status? eff = FindTargetEffect(effectId);
-            return eff?.RemainingTime ?? 0;
+            Status? eff = (isPlayerOwned == true)
+                ? FindTargetEffect(effectId)
+                : FindTargetEffectAny(effectId);
+
+            if (eff is null) return 0;
+            if (eff.RemainingTime < 0) return (eff.RemainingTime * -1) + ActionManager.Instance()->AnimationLock;
+            return eff.RemainingTime;
         }
 
         /// <summary> Find if an effect on the player exists. The effect may be owned by anyone or unowned. </summary>

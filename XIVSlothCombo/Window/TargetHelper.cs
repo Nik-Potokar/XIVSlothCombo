@@ -17,23 +17,25 @@ internal class TargetHelper : Dalamud.Interface.Windowing.Window
     internal TargetHelper() : base("###SlothComboTargeteHelper", ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.AlwaysUseWindowPadding | ImGuiWindowFlags.AlwaysAutoResize, true)
     {
         this.IsOpen = true;
+        this.RespectCloseHotkey = false;
     }
 
     internal unsafe void DrawTargetHelper()
     {
         if (Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null)
         {
+            IntPtr partyPTR = Svc.GameGui.GetAddonByName("_PartyList", 1);
+            if (partyPTR == IntPtr.Zero)
+                return;
+
+            AddonPartyList plist = Marshal.PtrToStructure<AddonPartyList>(partyPTR);
+            if (!plist.IsVisible) return;
+
             for (int i = 1; i <= 8; i++)
             {
                 if (CustomComboFunctions.GetPartySlot(i) is null) continue;
                 if (CustomComboFunctions.GetPartySlot(i).GameObjectId == Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId)
                 {
-                    IntPtr partyPTR = Svc.GameGui.GetAddonByName("_PartyList", 1);
-                    if (partyPTR == IntPtr.Zero)
-                        return;
-
-                    AddonPartyList plist = Marshal.PtrToStructure<AddonPartyList>(partyPTR);
-
                     var member = i switch
                     {
                         1 => plist.PartyMembers[0].TargetGlow,
