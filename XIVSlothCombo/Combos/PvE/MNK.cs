@@ -160,12 +160,12 @@ namespace XIVSlothCombo.Combos.PvE
                     if (inCombat)
                     {
                         // Ensure usage if buff is almost depleted.
-                        if (GetBuffRemainingTime(Buffs.FiresRumination) < 4)
+                        if (HasEffect(Buffs.FiresRumination) && GetBuffRemainingTime(Buffs.FiresRumination) < 4)
                         {
                             return FiresReply;
                         }
 
-                        if (GetBuffRemainingTime(Buffs.WindsRumination) < 4)
+                        if (HasEffect(Buffs.WindsRumination) && GetBuffRemainingTime(Buffs.WindsRumination) < 4)
                         {
                             return WindsReply;
                         }
