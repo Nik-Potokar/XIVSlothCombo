@@ -1292,6 +1292,12 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.AST_ST_SimpleHeals_Esuna)
                 UserConfig.DrawSliderInt(0, 100, AST.Config.AST_ST_SimpleHeals_Esuna, "Stop using when below HP %. Set to Zero to disable this check");
 
+            if (preset is CustomComboPreset.AST_AoE_SimpleHeals_AspectedHelios)
+            {
+                UserConfig.DrawRadioButton(AST.Config.AST_AoEHeals_AltMode, "On Aspected Helios", "", 0);
+                UserConfig.DrawRadioButton(AST.Config.AST_AoEHeals_AltMode, "On Helios", "Alternative AOE Mode. Leaves Aspected Helios alone for manual HoTs", 1);
+            }
+
             if (preset is CustomComboPreset.AST_AoE_SimpleHeals_LazyLady)
                 UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_SimpleHeals_WeaveLady, "Only Weave", "Will only weave this action.");
 
@@ -1758,6 +1764,12 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
             }
 
+            // PvP
+            if (preset == CustomComboPreset.PCTPvP_BurstControl)
+                UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_BurstHP, "Target HP%", 200);
+
+            if (preset == CustomComboPreset.PCTPvP_TemperaCoat)
+                UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_TemperaHP, "Player HP%", 200);
             #endregion
             // ====================================================================================
             #region PALADIN
