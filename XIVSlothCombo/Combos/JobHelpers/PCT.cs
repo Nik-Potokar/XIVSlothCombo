@@ -111,7 +111,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CurrentState = OpenerState.FailedOpener;
 
                 if (!HasMotifs())
-                    CurrentState = OpenerState.FailedOpener;
+                    return false;
 
                 return true;
             }
@@ -364,7 +364,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     CurrentState = OpenerState.FailedOpener;
 
                 if (!HasMotifs())
-                    CurrentState = OpenerState.FailedOpener;
+                    return false;
 
                 return true;
             }
@@ -612,7 +612,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else if (PrePullStep == 1) actionID = FireInRed;
 
                 if (!HasMotifs())
-                    CurrentState = OpenerState.FailedOpener;
+                    return false;
 
                 return true;
             }
@@ -880,7 +880,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else if (PrePullStep == 1) actionID = FireInRed;
 
                 if (!HasMotifs())
-                    CurrentState = OpenerState.FailedOpener;
+                    return false;
 
                 return true;
             }
@@ -1154,7 +1154,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 else if (PrePullStep == 1) actionID = FireInRed;
 
                 if (!HasMotifs())
-                    CurrentState = OpenerState.FailedOpener;
+                    return false;
 
                 return true;
             }
@@ -1267,7 +1267,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return false;
                 }
 
-                if (OpenerStep > 14) // Assuming 15 is the last step
+                if (OpenerStep > 14)
                 {
                     CurrentState = OpenerState.OpenerFinished;
                     Svc.Log.Information("Opener completed successfully.");
