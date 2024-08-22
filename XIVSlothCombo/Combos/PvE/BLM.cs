@@ -312,16 +312,32 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantRampart;
                 }
 
+                if (ActionReady(Amplifier) &&
+                    gauge.PolyglotStacks < maxPolyglot &&
+                    CanSpellWeave(actionID))
+                    return Amplifier;
+
                 // Movement
                 if (IsMoving)
                 {
-                    if (gauge.HasPolyglotStacks() && ActionReady(Foul))
-                        return Foul;
-
                     if (ActionReady(All.Swiftcast) &&
                         !HasEffect(All.Buffs.Swiftcast))
                         return All.Swiftcast;
+
+                    if (ActionReady(Amplifier) &&
+                        gauge.PolyglotStacks < maxPolyglot)
+                        return Amplifier;
+
+                    if (gauge.HasPolyglotStacks() && ActionReady(Foul))
+                        return Foul;
+
+                    if (ActionReady(Triplecast) &&
+                        GetBuffStacks(Buffs.Triplecast) == 0)
+                        return Triplecast;
                 }
+
+                if (CanSpellWeave(actionID) && ActionReady(LeyLines))
+                    return LeyLines;
 
                 // Astral Fire
                 if (gauge.InAstralFire)
