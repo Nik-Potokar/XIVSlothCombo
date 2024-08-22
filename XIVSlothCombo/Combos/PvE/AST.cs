@@ -516,16 +516,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     if (IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Aspected) && NonaspectedMode) // So helios mode can run aspected option 
-                    {
-                        if ((ActionReady(AspectedHelios)
-                                 && !HasEffect(Buffs.AspectedHelios)
-                                 && !HasEffect(Buffs.HeliosConjunction))
-                             || HasEffect(Buffs.Horoscope)
-                             || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
-                            return OriginalHook(AspectedHelios);
-                    }
-
-                    if (!NonaspectedMode) //So aspected mode runs normal without having to select it from the option as well
+                    if ((IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Aspected) && NonaspectedMode) || // Helios mode: option must be on
+                        !NonaspectedMode) // Aspected mode: option is not required
                     {
                         if ((ActionReady(AspectedHelios)
                                  && !HasEffect(Buffs.AspectedHelios)
