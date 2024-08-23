@@ -366,95 +366,17 @@ namespace XIVSlothCombo.Combos
         #region BLACK MAGE
 
         [ReplaceSkill(BLM.Fire)]
-        [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10, "", "")]
         BLM_ST_SimpleMode = 2012,
 
-        #region Advanced ST
-
-        [ReplaceSkill(BLM.Fire)]
-        [ConflictingCombos(BLM_Scathe_Xeno, BLM_ST_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID, -9, "", "")]
-        BLM_ST_AdvancedMode = 2021,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Thunder I/III Option", "Adds Thunder I/Thunder III when the debuff isn't present or is expiring.", BLM.JobID)]
-        BLM_ST_Adv_Thunder = 2029,
-
-        [ParentCombo(BLM_ST_Adv_Thunder)]
-        [CustomComboInfo("Thundercloud Spender Option", "Spends Thundercloud as soon as possible rather than waiting until Thunder is expiring.", BLM.JobID)]
-        BLM_ST_Adv_Thunder_ThunderCloud = 2030,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul Option", "Uses Transpose/Umbral Soul when no target is selected.", BLM.JobID, 10, "", "")]
-        BLM_Adv_UmbralSoul = 2035,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Movement Options", "Choose options to be used during movement.", BLM.JobID)]
-        BLM_Adv_Movement = 2036,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Triplecast/Swiftcast Option", "Adds Triplecast/Swiftcast to the rotation.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Casts = 2039,
-
-        [ParentCombo(BLM_Adv_Casts)]
-        [CustomComboInfo("Pool Triplecast Option", "Keep one Triplecast charge for movement.", BLM.JobID)]
-        BLM_Adv_Triplecast_Pooling = 2040,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, -8, "", "")]
-        BLM_Adv_Cooldowns = 2042,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Opener Option", "Adds the Lv.90 opener." +
-            "\nWill default to the Standard opener when nothing is selected.", BLM.JobID, -10, "", "")]
-        BLM_Adv_Opener = 2043,
-
-        [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Rotation Option", "Choose which rotation to use." +
-            "\nWill default to the Standard rotation when nothing is selected.", BLM.JobID, -9, "", "")]
-        BLM_Adv_Rotation = 2045,
-
-        #endregion
-
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
-        [ConflictingCombos(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -8, "", "")]
         BLM_AoE_SimpleMode = 2008,
-
-        #region Advanced AoE
-
-        [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
-        [ConflictingCombos(BLM_AoE_SimpleMode)]
-        [CustomComboInfo("Advanced Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID, -8, "", "")]
-        BLM_AoE_AdvancedMode = 2054,
-
-        [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Thunder Uptime Option", "Adds Thunder II/Thunder IV during Umbral Ice.", BLM.JobID, 1, "", "")]
-        BLM_AoE_Adv_ThunderUptime = 2055,
-
-        [ParentCombo(BLM_AoE_Adv_ThunderUptime)]
-        [CustomComboInfo("Uptime in Astral Fire", "Maintains uptime during Astral Fire.", BLM.JobID, 1, "", "")]
-        BLM_AoE_Adv_ThunderUptime_AstralFire = 2056,
-
-        [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Foul Option", "Adds Foul when available during Astral Fire.", BLM.JobID, 2, "", "")]
-        BLM_AoE_Adv_Foul = 2044,
-
-        [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Umbral Soul Option", "Use Transpose/Umbral Soul when no target is selected.", BLM.JobID, 99, "", "")]
-        BLM_AoE_Adv_UmbralSoul = 2049,
-
-        [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Cooldown Options", "Select which cooldowns to add to the rotation.", BLM.JobID, 1, "", "")]
-        BLM_AoE_Adv_Cooldowns = 2052,
-
-        #endregion
 
         #region Variant
 
         [Variant]
-        [VariantParent(BLM_ST_SimpleMode, BLM_ST_AdvancedMode, BLM_AoE_SimpleMode)]
+        [VariantParent(BLM_ST_SimpleMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", BLM.JobID)]
         BLM_Variant_Rampart = 2032,
 
@@ -463,7 +385,7 @@ namespace XIVSlothCombo.Combos
         BLM_Variant_Raise = 2033,
 
         [Variant]
-        [VariantParent(BLM_ST_SimpleMode, BLM_ST_AdvancedMode, BLM_AoE_SimpleMode)]
+        [VariantParent(BLM_ST_SimpleMode, BLM_AoE_SimpleMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", BLM.JobID)]
         BLM_Variant_Cure = 2034,
 
@@ -484,7 +406,6 @@ namespace XIVSlothCombo.Combos
         BLM_Blizzard_1to3 = 2003,
 
         [ReplaceSkill(BLM.Scathe)]
-        [ConflictingCombos(BLM_ST_SimpleMode, BLM_ST_AdvancedMode)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID)]
         BLM_Scathe_Xeno = 2004,
 

@@ -1,5 +1,7 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
+using System;
+using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -437,8 +439,54 @@ namespace XIVSlothCombo.Combos.JobHelpers
         }
     }
 
-    internal static class BLMHelpers
+    internal static class BLMExtensions
     {
         public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
+    }
+
+    internal class BLMHelper : BLM
+    {
+        public static float MPAfterCast()
+        {
+            var castedSpell = CustomComboFunctions.LocalPlayer.CastActionId;
+            var gauge = Svc.Gauges.Get<BLMGauge>();
+            int nextMpGain = gauge.UmbralIceStacks switch
+            {
+                0 => 0,
+                1 => 2500,
+                2 => 5000,
+                3 => 10000,
+                _ => 0
+            };
+            if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
+                return Math.Max(CustomComboFunctions.LocalPlayer.MaxMp, CustomComboFunctions.LocalPlayer.CurrentMp + nextMpGain);
+
+            return Math.Max(0, CustomComboFunctions.LocalPlayer.CurrentMp - CustomComboFunctions.GetResourceCost(castedSpell));
+
+        }
+
+        public static bool DoubleBlizz()
+        {
+            var spells = ActionWatching.CombatActions.Where(x => ActionWatching.GetAttackType(x) == ActionWatching.ActionAttackType.Spell && x != CustomComboFunctions.OriginalHook(Thunder) && x != CustomComboFunctions.OriginalHook(Thunder2)).ToList();
+            if (spells.Count < 1) return false;
+
+            var firstSpell = spells[^1];
+
+            if (firstSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
+            {
+                var castedSpell = CustomComboFunctions.LocalPlayer.CastActionId;
+                if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2) return true;
+
+                if (spells.Count >= 2)
+                {
+                    var secondSpell = spells[^2];
+                    if (secondSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
+                        return true;
+                }
+            }
+
+            return false;
+
+        }
     }
 }
