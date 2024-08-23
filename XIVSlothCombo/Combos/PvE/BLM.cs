@@ -352,7 +352,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (curMp == 0 && FlareStar.LevelChecked() && gauge.AstralSoulStacks == 6)
                         return FlareStar;
 
-                    if (!FlareStar.LevelChecked() && ActionReady(OriginalHook(Fire2)) && gauge.UmbralHearts > 1)
+                    if (!FlareStar.LevelChecked() && Fire2.LevelChecked() && curMp >= MP.FireAoE && (gauge.UmbralHearts > 1 || !TraitLevelChecked(Traits.UmbralHeart)))
                         return OriginalHook(Fire2);
 
                     if (Flare.LevelChecked() && curMp >= MP.FlareAoE)

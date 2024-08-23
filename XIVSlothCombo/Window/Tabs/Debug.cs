@@ -5,6 +5,7 @@ using Dalamud.Interface.Utility.Raii;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using System;
@@ -131,7 +132,7 @@ namespace XIVSlothCombo.Window.Tabs
                 }
                 if (ImGui.CollapsingHeader("Action Info"))
                 {
-                    string prev = debugSpell == null ? "Select Action" : $"{debugSpell.ClassJobLevel}. {debugSpell.Name} - {(debugSpell.IsPvP ? "PvP" : "Normal")}";
+                    string prev = debugSpell == null ? "Select Action" : $"({debugSpell.RowId}) Lv.{debugSpell.ClassJobLevel}. {debugSpell.Name} - {(debugSpell.IsPvP ? "PvP" : "Normal")}";
                     ImGuiEx.SetNextItemFullWidth();
                     using (var comboBox = ImRaii.Combo("###ActionCombo", prev))
                     {
@@ -143,9 +144,9 @@ namespace XIVSlothCombo.Window.Tabs
                             }
 
                             var classId = CustomComboFunctions.JobIDs.JobToClass(JobID.Value);
-                            foreach (var act in Svc.Data.GetExcelSheet<Action>().Where(x => x.ClassJob.Row == classId || x.ClassJob.Row == JobID.Value).OrderBy(x => x.ClassJobLevel))
+                            foreach (var act in Svc.Data.GetExcelSheet<Action>().Where(x => x.IsPlayerAction && x.ClassJob.Row == classId || x.ClassJob.Row == JobID.Value).OrderBy(x => x.ClassJobLevel))
                             {
-                                if (ImGui.Selectable($"{act.ClassJobLevel}. {act.Name} - {(act.IsPvP ? "PvP" : "Normal")}", debugSpell?.RowId == act.RowId))
+                                if (ImGui.Selectable($"({act.RowId}) Lv.{act.ClassJobLevel}. {act.Name} - {(act.IsPvP ? "PvP" : "Normal")}", debugSpell?.RowId == act.RowId))
                                 {
                                     debugSpell = act;
                                 }
@@ -156,7 +157,18 @@ namespace XIVSlothCombo.Window.Tabs
                     if (debugSpell != null)
                     {
                         var actionStatus = ActionManager.Instance()->GetActionStatus(ActionType.Action, debugSpell.RowId);
+                        var icon = Svc.Texture.GetFromGameIcon(new(debugSpell.Icon)).GetWrapOrEmpty().ImGuiHandle;
+                        ImGui.Image(icon, new System.Numerics.Vector2(60f.Scale(), 60f.Scale()));
+                        ImGui.SameLine();
+                        ImGui.Image(icon, new System.Numerics.Vector2(30f.Scale(), 30f.Scale()));
                         CustomStyleText($"Action Status:", $"{actionStatus} ({Svc.Data.GetExcelSheet<LogMessage>().GetRow(actionStatus).Text})");
+                        CustomStyleText($"Action Type:", debugSpell.ActionCategory.Value.Name);
+                        if (debugSpell.UnlockLink != 0)
+                        CustomStyleText($"Quest:", $"{Svc.Data.GetExcelSheet<Quest>().GetRow(debugSpell.UnlockLink).Name} ({(UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(debugSpell.UnlockLink) ? "Completed" : "Not Completed")})");
+                        CustomStyleText($"Base Recast:", $"{debugSpell.Recast100ms / 10f}s");
+                        CustomStyleText($"Max Charges:", $"{debugSpell.MaxCharges}");
+                        if (ActionWatching.ActionTimestamps.ContainsKey(debugSpell.RowId))
+                            CustomStyleText($"Time Since Last Use:", $"{(Environment.TickCount64 - ActionWatching.ActionTimestamps[debugSpell.RowId])/1000f:F2}");
                     }
                 }
 
@@ -165,7 +177,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Text("Player Info");
                 ImGui.Separator();
                 CustomStyleText("Job:", $"{LocalPlayer.ClassJob.GameData.NameEnglish} (ID: {LocalPlayer.ClassJob.Id})");
-                CustomStyleText("Zone:", $"{Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name} (ID: {Svc.ClientState.TerritoryType})");
+                CustomStyleText("Zone:", $"{Svc.Data.GetExcelSheet<TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name} (ID: {Svc.ClientState.TerritoryType})");
                 CustomStyleText("In PvP:", CustomComboFunctions.InPvP());
                 CustomStyleText("In Combat:", CustomComboFunctions.InCombat());
                 CustomStyleText("Hitbox Radius:", LocalPlayer.HitboxRadius);
