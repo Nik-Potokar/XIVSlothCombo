@@ -214,9 +214,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(Disembowel) &&
-                                ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
-                                ? OriginalHook(Disembowel)
-                                : OriginalHook(VorpalThrust);
+                                 (((ChaosDoTDebuff is null) && LevelChecked(ChaosThrust)) ||
+                                 GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                 ? OriginalHook(Disembowel)
+                                 : OriginalHook(VorpalThrust);
                         }
 
                         if (lastComboMove == OriginalHook(Disembowel) && LevelChecked(ChaosThrust))
@@ -415,7 +416,8 @@ namespace XIVSlothCombo.Combos.PvE
                         if (lastComboMove is TrueThrust or RaidenThrust && LevelChecked(VorpalThrust))
                         {
                             return (LevelChecked(Disembowel) &&
-                                 ((ChaosDoTDebuff is null) || GetBuffRemainingTime(Buffs.PowerSurge) < 15))
+                                 (((ChaosDoTDebuff is null) && LevelChecked(ChaosThrust)) ||
+                                 GetBuffRemainingTime(Buffs.PowerSurge) < 15))
                                  ? OriginalHook(Disembowel)
                                  : OriginalHook(VorpalThrust);
                         }
