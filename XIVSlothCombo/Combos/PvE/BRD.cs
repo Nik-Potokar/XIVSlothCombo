@@ -135,10 +135,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 return BlastArrow;
                         }
 
-                    if (HasEffect(Buffs.HawksEye))
-                        return LevelChecked(RefulgentArrow)
-                            ? RefulgentArrow
-                            : StraightShot;
+                    if (HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage))
+                        return OriginalHook(StraightShot);
                 }
 
                 return actionID;
