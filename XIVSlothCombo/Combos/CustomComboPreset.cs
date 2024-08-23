@@ -2351,6 +2351,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Simple Mode - AoE", "Consolidates the AoE rotation into one button, ideal for newcomers.", PCT.JobID)]
         PCT_AoE_SimpleMode = 20001,
 
+        #region ST
+
+
         [ReplaceSkill(PCT.FireInRed)]
         [ConflictingCombos(CombinedAetherhues, PCT_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", $"Replaces Fire in Red with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", PCT.JobID)]
@@ -2603,9 +2606,6 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("One Button Paint", "Consolidates paint-consuming actions into one button.", PCT.JobID)]
         CombinedPaint = 20004,
 
-        #region ST
-
-       
 
         // Last value for AoE = 20067
         #endregion
