@@ -16,14 +16,14 @@ namespace XIVSlothCombo.Combos.JobHelpers
             internal static bool TrickDebuff => TargetHasTrickDebuff();
             private static bool TargetHasTrickDebuff()
             {
-                return CustomComboFunctions.TargetHasEffect(Debuffs.TrickAttack) || CustomComboFunctions.TargetHasEffect(Debuffs.Dokumori);
+                return CustomComboFunctions.TargetHasEffect(Debuffs.TrickAttack) || CustomComboFunctions.TargetHasEffect(Debuffs.KunaisBane);
             }
 
             internal static bool MugDebuff => TargetHasMugDebuff();
 
             private static bool TargetHasMugDebuff()
             {
-                return CustomComboFunctions.TargetHasEffect(Debuffs.Mug) || CustomComboFunctions.TargetHasEffect(Debuffs.KunaisBane);
+                return CustomComboFunctions.TargetHasEffect(Debuffs.Mug) || CustomComboFunctions.TargetHasEffect(Debuffs.Dokumori);
             }
 
             internal static bool InMudra => GetInMudra();
