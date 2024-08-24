@@ -334,7 +334,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Variant.VariantCure;
 
                     //Ranged Uptime
-                    if (IsEnabled(CustomComboPreset.GNB_ST_RangedUptime) && 
+                    if (IsEnabled(CustomComboPreset.GNB_ST_RangedUptime) &&
                         !InMeleeRange() && LevelChecked(LightningShot) && HasBattleTarget())
                         return LightningShot;
 
@@ -378,7 +378,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Bloodfest
                             if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Ammo is 0 && (JustUsed(NoMercy, 20f)))
-                                    return Bloodfest;
+                                return Bloodfest;
 
                             //Zone
                             if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone) && !JustUsed(NoMercy))
@@ -441,7 +441,7 @@ namespace XIVSlothCombo.Combos.PvE
                         //Lv90-Lv99
                         if (!LevelChecked(ReignOfBeasts) && LevelChecked(DoubleDown))
                         {
-                            if (JustUsed(NoMercy, 3f) && 
+                            if (JustUsed(NoMercy, 3f) &&
                                 ((!HasEffect(Buffs.ReadyToBlast) && Ammo == 3 && bfCD < GCD * 12 || ActionReady(Bloodfest)) //2min
                                 || (bfCD is < 90 and > 15 && Ammo == 3) //1min 3 carts
                                 || (JustUsed(Bloodfest, 2f) && JustUsed(BrutalShell)))) //opener
@@ -833,24 +833,17 @@ namespace XIVSlothCombo.Combos.PvE
                         //DoubleDown
                         if (Ammo >= 2 && ActionReady(DoubleDown) && HasEffect(Buffs.NoMercy)) //use on CD under NM
                             return DoubleDown;
+                        //Reign
+                        if (LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
+                        {
+                            if ((GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0) ||
+                                (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood)))
+                                return OriginalHook(ReignOfBeasts);
+                        }
                         //FatedCircle
                         if (Ammo > 0 && LevelChecked(FatedCircle) && (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
                             (bfCD < 6)) // Bloodfest prep
                             return FatedCircle;
-                        //Reign
-                        if (LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
-                        {
-                            if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0)
-                            {
-                                if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
-                                    return OriginalHook(ReignOfBeasts);
-                            }
-
-                            if (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood))
-                            {
-                                return OriginalHook(ReignOfBeasts);
-                            }
-                        }
                     }
 
                     //1-2
@@ -893,7 +886,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 IsEnabled(Variant.VariantSpiritDart) &&
                                 (sustainedDamage is null || sustainedDamage?.RemainingTime <= 3))
                                 return Variant.VariantSpiritDart;
-                            
+
                             //Variant Ultimatum
                             if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum) && ActionReady(Variant.VariantUltimatum))
                                 return Variant.VariantUltimatum;
@@ -921,24 +914,17 @@ namespace XIVSlothCombo.Combos.PvE
                         //DoubleDown
                         if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && Ammo >= 2 && ActionReady(DoubleDown) && HasEffect(Buffs.NoMercy)) //use on CD under NM
                             return DoubleDown;
+                        //Reign
+                        if (IsEnabled(CustomComboPreset.GNB_AoE_Reign) && LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
+                        {
+                            if ((GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0) ||
+                                (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood)))
+                                return OriginalHook(ReignOfBeasts);
+                        }
                         //FatedCircle
                         if (Ammo > 0 && LevelChecked(FatedCircle) && ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
                             (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD < 6))) // Bloodfest prep
                             return FatedCircle;
-                        //Reign
-                        if (IsEnabled(CustomComboPreset.GNB_AoE_Reign) && LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
-                        {
-                            if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0)
-                            {
-                                if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
-                                    return OriginalHook(ReignOfBeasts);
-                            }
-
-                            if (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood))
-                            {
-                                return OriginalHook(ReignOfBeasts);
-                            }
-                        }
                     }
 
                     //1-2
@@ -1045,7 +1031,6 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(GnashingFang) && !ActionReady(DoubleDown) && GunStep == 0)
                             {
-                                if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
                                     return OriginalHook(ReignOfBeasts);
                             }
 
