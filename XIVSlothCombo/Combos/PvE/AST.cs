@@ -523,7 +523,6 @@ namespace XIVSlothCombo.Combos.PvE
                         if ((ActionReady(AspectedHelios)
                                  && aspectedHeliosHoT is null
                                  && heliosConjunctionHoT is null)
-                             || HasEffect(Buffs.Horoscope)
                              || (HasEffect(Buffs.NeutralSect) && !HasEffect(Buffs.NeutralSectShield)))
                             return OriginalHook(AspectedHelios);
                     }
