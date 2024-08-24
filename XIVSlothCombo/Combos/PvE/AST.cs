@@ -312,12 +312,31 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                     //Play Card
-                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) &&
-                        ActionReady(Play1) &&
-                        Gauge.DrawnCards[0] is not CardType.NONE &&
-                        CanSpellWeave(actionID) &&
-                        spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting)
-                        return OriginalHook(Play1);
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay))
+                    {
+                        if (ActionReady(Play1) &&
+                            Gauge.DrawnCards[0] is not CardType.NONE &&
+                            CanSpellWeave(actionID) &&
+                            spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting)
+                            return OriginalHook(Play1);
+
+                    //Forbidden Knowledge
+
+                        if ((Gauge.DrawnCards[1] == CardType.ARROW || Gauge.DrawnCards[1] == CardType.BOLE) &&
+                            ActionReady(Play2) && CanSpellWeave(actionID))
+                            return OriginalHook(Play2);
+
+                        if ((Gauge.DrawnCards[2] == CardType.SPIRE || Gauge.DrawnCards[2] == CardType.EWER) &&
+                            ActionReady(Play3) && CanSpellWeave(actionID))
+                            return OriginalHook(Play3);
+
+                        if (ActionReady(CelestialIntersection) &&
+                        CanSpellWeave(actionID) && !WasLastAbility(actionID))
+                            return CelestialIntersection;
+
+                        if (ActionReady(Exaltation) && CanSpellWeave(actionID))
+                            return Exaltation;
+                    }
 
                     //Card Draw
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
@@ -430,11 +449,30 @@ namespace XIVSlothCombo.Combos.PvE
                         return All.LucidDreaming;
 
                     //Play Card
-                    if (IsEnabled(CustomComboPreset.AST_AOE_AutoPlay) &&
-                        ActionReady(Play1) &&
-                        Gauge.DrawnCards[0] is not CardType.NONE &&
-                        CanSpellWeave(actionID))
-                        return OriginalHook(Play1);
+                    if (IsEnabled(CustomComboPreset.AST_AOE_AutoPlay))
+                    {
+                        if (ActionReady(Play1) &&
+                            Gauge.DrawnCards[0] is not CardType.NONE &&
+                            CanSpellWeave(actionID))
+                            return OriginalHook(Play1);
+
+                        //Forbidden Knowledge
+
+                        if ((Gauge.DrawnCards[1] == CardType.ARROW || Gauge.DrawnCards[1] == CardType.BOLE) &&
+                            ActionReady(Play2) && CanSpellWeave(actionID))
+                            return OriginalHook(Play2);
+
+                        if ((Gauge.DrawnCards[2] == CardType.SPIRE || Gauge.DrawnCards[2] == CardType.EWER) &&
+                            ActionReady(Play3) && CanSpellWeave(actionID))
+                            return OriginalHook(Play3);
+
+                        if (ActionReady(CelestialIntersection) &&
+                        CanSpellWeave(actionID) && !WasLastAbility(actionID))
+                            return CelestialIntersection;
+
+                        if (ActionReady(Exaltation) && CanSpellWeave(actionID))
+                            return Exaltation;
+                    }
 
                     //Card Draw
                     if (IsEnabled(CustomComboPreset.AST_AOE_AutoDraw) &&
