@@ -840,16 +840,33 @@ namespace XIVSlothCombo.Combos.PvE
                                 (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood)))
                                 return OriginalHook(ReignOfBeasts);
                         }
-                        //FatedCircle
-                        if (Ammo > 0 && LevelChecked(FatedCircle) && (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
+                        //FatedCircle - if not unlocked, use BurstStrike
+                        if (Ammo > 0 && LevelChecked(FatedCircle) && 
+                            (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
                             (bfCD < 6)) // Bloodfest prep
                             return FatedCircle;
+                        if (Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
+                            (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0)) //use when under NM after DD & ignores GF
+                            return BurstStrike;
                     }
 
                     //1-2
-                    if (comboTime > 0 && lastComboMove == DemonSlice && LevelChecked(DemonSlaughter))
+                    if (comboTime > 0)
                     {
-                        return (LevelChecked(FatedCircle) && Ammo == MaxCartridges(level)) ? FatedCircle : DemonSlaughter;
+                        if (lastComboMove == DemonSlice && LevelChecked(DemonSlaughter))
+                        {
+                            if (Ammo == MaxCartridges(level))
+                            {
+                                if (LevelChecked(FatedCircle))
+                                    return FatedCircle;
+                                if (!LevelChecked(FatedCircle))
+                                    return BurstStrike;
+                            }
+                            if (Ammo != MaxCartridges(level))
+                            {
+                                return DemonSlaughter;
+                            }
+                        }
                     }
 
                     return DemonSlice;
@@ -921,16 +938,33 @@ namespace XIVSlothCombo.Combos.PvE
                                 (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood)))
                                 return OriginalHook(ReignOfBeasts);
                         }
-                        //FatedCircle
-                        if (Ammo > 0 && LevelChecked(FatedCircle) && ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
+                        //FatedCircle - if not unlocked, use BurstStrike
+                        if (Ammo > 0 && LevelChecked(FatedCircle) && 
+                            ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
                             (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD < 6))) // Bloodfest prep
                             return FatedCircle;
+                        if (Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
+                            (HasEffect(Buffs.NoMercy) && GunStep == 0)) // Bloodfest prep
+                            return BurstStrike;
                     }
 
                     //1-2
-                    if (comboTime > 0 && lastComboMove == DemonSlice && LevelChecked(DemonSlaughter))
+                    if (comboTime > 0)
                     {
-                        return (IsEnabled(CustomComboPreset.GNB_AoE_Overcap) && LevelChecked(FatedCircle) && Ammo == MaxCartridges(level)) ? FatedCircle : DemonSlaughter;
+                        if (lastComboMove == DemonSlice && LevelChecked(DemonSlaughter))
+                        {
+                            if (Ammo == MaxCartridges(level))
+                            {
+                                if (LevelChecked(FatedCircle))
+                                    return FatedCircle;
+                                if (!LevelChecked(FatedCircle))
+                                    return BurstStrike;
+                            }
+                            if (Ammo != MaxCartridges(level))
+                            {
+                                return DemonSlaughter;
+                            }
+                        }
                     }
 
                     return DemonSlice;
