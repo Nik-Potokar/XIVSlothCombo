@@ -387,7 +387,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if ((!NINHelper.MugDebuff) || (NINHelper.MugDebuff &&  gauge.Kazematoi == 0))
                             {
-                                if (gauge.Kazematoi < 4)
+                                if ((OnTargetsFlank() && gauge.Kazematoi < 4) || gauge.Kazematoi == 0)
                                     return OriginalHook(ArmorCrush);
                             }
                         }
