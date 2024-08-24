@@ -514,8 +514,8 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Only check for our own HoTs
-                    var aspectedHeliosHoT = FindEffect(Buffs.AspectedBenefic, LocalPlayer, LocalPlayer?.GameObjectId);
-                    var heliosConjunctionHoT = FindEffect(Buffs.AspectedBenefic, LocalPlayer, LocalPlayer?.GameObjectId);
+                    var aspectedHeliosHoT = FindEffect(Buffs.AspectedHelios, LocalPlayer, LocalPlayer?.GameObjectId);
+                    var heliosConjunctionHoT = FindEffect(Buffs.HeliosConjunction, LocalPlayer, LocalPlayer?.GameObjectId);
 
                     if ((IsEnabled(CustomComboPreset.AST_AoE_SimpleHeals_Aspected) && NonaspectedMode) || // Helios mode: option must be on
                         !NonaspectedMode) // Aspected mode: option is not required
