@@ -76,7 +76,7 @@ namespace XIVSlothCombo.Combos.PvE
         public static bool CanUseLucid(uint actionID, int MPThreshold, bool weave = true) =>
             CustomComboFunctions.ActionReady(LucidDreaming)
             && CustomComboFunctions.LocalPlayer.CurrentMp <= MPThreshold
-            && (weave && CustomComboFunctions.CanSpellWeave(actionID));
+            && (!weave || CustomComboFunctions.CanSpellWeave(actionID));
 
         internal class ALL_IslandSanctuary_Sprint : CustomCombo
         {
