@@ -5,6 +5,7 @@ using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
+using XIVSlothCombo.Extensions;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
@@ -15,7 +16,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
         {
             if (CustomComboFunctions.HasEffect(Buffs.OpoOpoForm) || CustomComboFunctions.HasEffect(Buffs.FormlessFist))
             {
-                if (Gauge.OpoOpoFury == 0)
+                if (Gauge.OpoOpoFury == 0 && DragonKick.LevelChecked())
                 {
                     if (CustomComboFunctions.LevelChecked(DragonKick))
                         return DragonKick;
@@ -28,7 +29,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CustomComboFunctions.HasEffect(Buffs.RaptorForm))
             {
-                if (Gauge.RaptorFury == 0)
+                if (Gauge.RaptorFury == 0 && TwinSnakes.LevelChecked())
                 {
                     if (CustomComboFunctions.LevelChecked(TwinSnakes))
                         return TwinSnakes;
@@ -42,7 +43,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             if (CustomComboFunctions.HasEffect(Buffs.CoeurlForm))
             {
-                if (Gauge.CoeurlFury == 0)
+                if (Gauge.CoeurlFury == 0 && Demolish.LevelChecked())
                 {
                     if (!CustomComboFunctions.OnTargetsRear()
                         && CustomComboFunctions.TargetNeedsPositionals()
