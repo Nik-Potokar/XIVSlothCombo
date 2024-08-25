@@ -207,7 +207,7 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     spellsSinceDraw = 1;
                 }
-                
+
                 bool AlternateMode = GetIntOptionAsBool(Config.AST_DPS_AltMode); //(0 or 1 radio values)
                 bool inOpener = IsEnabled(CustomComboPreset.AST_ST_DPS_Opener) && MaleficCount < 6;
 
@@ -215,11 +215,15 @@ namespace XIVSlothCombo.Combos.PvE
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
                     (AlternateMode && CombustList.ContainsKey(actionID)) &&
                     !InCombat()))
-
+                {
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         ActionReady(OriginalHook(AstralDraw)) && (Gauge.DrawnCards.All(x => x is CardType.NONE) || (DrawnCard == CardType.NONE && Config.AST_ST_DPS_OverwriteCards)))
                         return OriginalHook(AstralDraw);
 
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar))
+                        return EarthlyStar;
+                }
                 //In combat
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
                      (AlternateMode && CombustList.ContainsKey(actionID))) &&
@@ -312,31 +316,11 @@ namespace XIVSlothCombo.Combos.PvE
 
 
                     //Play Card
-                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay))
-                    {
-                        if (ActionReady(Play1) &&
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay) && (ActionReady(Play1) &&
                             Gauge.DrawnCards[0] is not CardType.NONE &&
                             CanSpellWeave(actionID) &&
-                            spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting)
-                            return OriginalHook(Play1);
-
-                    //Forbidden Knowledge
-
-                        if ((Gauge.DrawnCards[1] == CardType.ARROW || Gauge.DrawnCards[1] == CardType.BOLE) &&
-                            ActionReady(Play2) && CanSpellWeave(actionID))
-                            return OriginalHook(Play2);
-
-                        if ((Gauge.DrawnCards[2] == CardType.SPIRE || Gauge.DrawnCards[2] == CardType.EWER) &&
-                            ActionReady(Play3) && CanSpellWeave(actionID))
-                            return OriginalHook(Play3);
-
-                        if (ActionReady(CelestialIntersection) &&
-                        CanSpellWeave(actionID) && !WasLastAbility(actionID))
-                            return CelestialIntersection;
-
-                        if (ActionReady(Exaltation) && CanSpellWeave(actionID))
-                            return Exaltation;
-                    }
+                            spellsSinceDraw >= Config.AST_ST_DPS_Play_SpeedSetting))
+                            return OriginalHook(Play1);                                                           
 
                     //Card Draw
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
@@ -354,11 +338,17 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionWatching.NumberOfGcdsUsed >= 3)
                         return Divination;
 
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                     if (IsEnabled(CustomComboPreset.AST_DPS_Oracle) &&
                         HasEffect(Buffs.Divining) &&
                         CanSpellWeave(actionID))
                         return Oracle;
-
+                                        
                     //Minor Arcana / Lord of Crowns
                     if (ActionReady(OriginalHook(MinorArcana)) &&
                         IsEnabled(CustomComboPreset.AST_DPS_LazyLord) && Gauge.DrawnCrownCard is CardType.LORD &&
@@ -366,11 +356,25 @@ namespace XIVSlothCombo.Combos.PvE
                         CanDelayedWeave(actionID))
                         return OriginalHook(MinorArcana);
 
-                    //Earthly Star
-                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
-                        ActionReady(EarthlyStar) &&
-                        CanSpellWeave(actionID))
-                        return EarthlyStar;
+                    if (IsEnabled(CustomComboPreset.AST_DPS_AutoPlay)) //Forbidden Knowledge
+                    {
+                        if ((Gauge.DrawnCards[1] == CardType.ARROW || Gauge.DrawnCards[1] == CardType.BOLE) &&
+                            ActionReady(Play2) && CanSpellWeave(actionID))
+                            return OriginalHook(Play2);
+
+                        if ((Gauge.DrawnCards[2] == CardType.SPIRE || Gauge.DrawnCards[2] == CardType.EWER) &&
+                            ActionReady(Play3) && CanSpellWeave(actionID))
+                            return OriginalHook(Play3);
+
+                        if (ActionReady(CelestialIntersection) &&
+                        CanSpellWeave(actionID) && !WasLastAbility(actionID))
+                            return CelestialIntersection;
+
+                        if (ActionReady(Exaltation) && CanSpellWeave(actionID))
+                            return Exaltation;
+                    }
+
+
 
                     if (HasBattleTarget())
                     {
@@ -448,6 +452,12 @@ namespace XIVSlothCombo.Combos.PvE
                         CanSpellWeave(actionID))
                         return All.LucidDreaming;
 
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                     //Play Card
                     if (IsEnabled(CustomComboPreset.AST_AOE_AutoPlay))
                     {
@@ -500,13 +510,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.AST_AOE_LazyLord) && Gauge.DrawnCrownCard is CardType.LORD &&
                         HasBattleTarget() &&
                         CanDelayedWeave(actionID))
-                        return OriginalHook(MinorArcana);
-
-                    //Earthly Star
-                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
-                        ActionReady(EarthlyStar) &&
-                        CanSpellWeave(actionID))
-                        return EarthlyStar;
+                        return OriginalHook(MinorArcana);                    
 
                 }
                 return actionID;
