@@ -186,26 +186,26 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(Starcross) &&
                             AnimationLock.CanDRGWeave(Starcross) &&
                             HasEffect(Buffs.StarcrossReady))
-                            return OriginalHook(Stardiver);
+                            return Starcross;
 
                         //Rise of the Dragon Feature
                         if (LevelChecked(RiseOfTheDragon) &&
                             AnimationLock.CanDRGWeave(RiseOfTheDragon) &&
                             HasEffect(Buffs.DragonsFlight))
-                            return OriginalHook(DragonfireDive);
-
-                        //Mirage Feature
-                        if (LevelChecked(MirageDive) &&
-                            AnimationLock.CanDRGWeave(MirageDive) &&
-                            HasEffect(Buffs.DiveReady))
-                            return OriginalHook(HighJump);
+                            return RiseOfTheDragon;
 
                         //Nastrond Feature
                         if (LevelChecked(Nastrond) &&
                             AnimationLock.CanDRGWeave(Nastrond) &&
                             HasEffect(Buffs.NastrondReady) &&
                             gauge.IsLOTDActive)
-                            return OriginalHook(Geirskogul);
+                            return Nastrond;
+
+                        //Mirage Feature
+                        if (LevelChecked(MirageDive) &&
+                            AnimationLock.CanDRGWeave(MirageDive) &&
+                            HasEffect(Buffs.DiveReady))
+                            return MirageDive;
                     }
 
                     //1-2-3 Combo
@@ -375,13 +375,13 @@ namespace XIVSlothCombo.Combos.PvE
                                 LevelChecked(Starcross) &&
                                 AnimationLock.CanDRGWeave(Starcross) &&
                                 HasEffect(Buffs.StarcrossReady))
-                                return OriginalHook(Stardiver);
+                                return Starcross;
 
                             //Rise of the Dragon Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Dives_RiseOfTheDragon) &&
                                 AnimationLock.CanDRGWeave(RiseOfTheDragon) &&
                                 HasEffect(Buffs.DragonsFlight))
-                                return OriginalHook(DragonfireDive);
+                                return RiseOfTheDragon;
 
                             //Nastrond Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Nastrond) &&
@@ -389,14 +389,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 AnimationLock.CanDRGWeave(Nastrond) &&
                                 HasEffect(Buffs.NastrondReady) &&
                                 gauge.IsLOTDActive)
-                                return OriginalHook(Geirskogul);
+                                return Nastrond;
 
                             //Mirage Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Mirage) &&
                                 LevelChecked(MirageDive) &&
                                 AnimationLock.CanDRGWeave(MirageDive) &&
                                 HasEffect(Buffs.DiveReady))
-                                return OriginalHook(HighJump);
+                                return MirageDive;
                         }
                     }
 
