@@ -277,28 +277,46 @@ namespace XIVSlothCombo.Combos.JobHelpers
             {
                 int BSUsed = ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
 
-                if (!ActionWatching.HasDoubleWeaved() && CanWeave(OriginalHook(SplitShot)) &&
-                    !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) && !JustUsed(OriginalHook(Heatblast)) &&
-                    LevelChecked(OriginalHook(RookAutoturret)) && !gauge.IsRobotActive && gauge.Battery >= 50 &&
-                    ((LevelChecked(FullMetalField) && !JustUsed(FullMetalField)) || !LevelChecked(FullMetalField)))
+                if (!ActionWatching.HasDoubleWeaved() && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
+                    !JustUsed(OriginalHook(Heatblast)) && LevelChecked(OriginalHook(RookAutoturret)) &&
+                    !gauge.IsRobotActive && gauge.Battery >= 50)
                 {
-                    //1min
-                    if (BSUsed == 1 & gauge.Battery >= 90)
-                        return true;
+                    if (LevelChecked(FullMetalField))
+                    {
+                        //1min
+                        if (BSUsed == 1 & gauge.Battery >= 90)
+                            return true;
 
-                    //even mins
-                    if (BSUsed >= 2 && gauge.Battery >= 100)
-                        return true;
+                        //even mins
+                        if (BSUsed >= 2 && gauge.Battery == 100 && JustUsed(AirAnchor))
+                            return true;
 
-                    //odd mins 1st queen
-                    if (BSUsed >= 2 && gauge.Battery >= 50 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is >= 30 and <= 65)
-                        return true;
+                        //odd mins 1st queen
+                        if (BSUsed >= 2 && gauge.Battery == 50 &&
+                           gauge.LastSummonBatteryPower == 100)
+                            return true;
 
-                    //odd mins 2nd queen
-                    if (BSUsed >= 2 && gauge.Battery >= 60 &&
-                        GetCooldownRemainingTime(BarrelStabilizer) is >= 10 and <= 30)
-                        return true;
+                        //odd mins 2nd queen
+                        if ((BSUsed is 2 or 5 or 8) && gauge.Battery >= 60 &&
+                           gauge.LastSummonBatteryPower == 50)
+                            return true;
+
+                        //odd mins 2nd queen
+                        if ((BSUsed is 3 or 6 or 9) && gauge.Battery >= 70 &&
+                           gauge.LastSummonBatteryPower == 50)
+                            return true;
+
+                        //odd mins 2nd queen
+                        if ((BSUsed is 4 or 7 or 10) && gauge.Battery >= 80 &&
+                           gauge.LastSummonBatteryPower == 50)
+                            return true;
+                    }
+
+                    if (!LevelChecked(FullMetalField))
+                    {
+                        if (gauge.Battery == 100)
+                            return true;
+                    }
 
                     if (!LevelChecked(BarrelStabilizer))
                         return true;
