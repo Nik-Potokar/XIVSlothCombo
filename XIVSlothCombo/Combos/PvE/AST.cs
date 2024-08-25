@@ -215,11 +215,15 @@ namespace XIVSlothCombo.Combos.PvE
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
                     (AlternateMode && CombustList.ContainsKey(actionID)) &&
                     !InCombat()))
-
+                {
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         ActionReady(OriginalHook(AstralDraw)) && (Gauge.DrawnCards.All(x => x is CardType.NONE) || (DrawnCard == CardType.NONE && Config.AST_ST_DPS_OverwriteCards)))
                         return OriginalHook(AstralDraw);
 
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar))
+                        return EarthlyStar;
+                }
                 //In combat
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
                      (AlternateMode && CombustList.ContainsKey(actionID))) &&
@@ -335,6 +339,12 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionWatching.NumberOfGcdsUsed >= 3)
                         return Divination;
 
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
+
                     if (IsEnabled(CustomComboPreset.AST_DPS_Oracle) &&
                         HasEffect(Buffs.Divining) &&
                         CanSpellWeave(actionID))
@@ -345,13 +355,7 @@ namespace XIVSlothCombo.Combos.PvE
                         IsEnabled(CustomComboPreset.AST_DPS_LazyLord) && Gauge.DrawnCrownCard is CardType.LORD &&
                         HasBattleTarget() &&
                         CanDelayedWeave(actionID))
-                        return OriginalHook(MinorArcana);
-
-                    //Earthly Star
-                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
-                        ActionReady(EarthlyStar) &&
-                        CanSpellWeave(actionID))
-                        return EarthlyStar;
+                        return OriginalHook(MinorArcana);                                       
 
                     if (HasBattleTarget())
                     {
@@ -451,6 +455,11 @@ namespace XIVSlothCombo.Combos.PvE
                         CanDelayedWeave(actionID) &&
                         ActionWatching.NumberOfGcdsUsed >= 3)
                         return Divination;
+                    //Earthly Star
+                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
+                        ActionReady(EarthlyStar) &&
+                        CanSpellWeave(actionID))
+                        return EarthlyStar;
 
                     if (IsEnabled(CustomComboPreset.AST_AOE_Oracle) &&
                         HasEffect(Buffs.Divining) &&
@@ -463,13 +472,6 @@ namespace XIVSlothCombo.Combos.PvE
                         HasBattleTarget() &&
                         CanDelayedWeave(actionID))
                         return OriginalHook(MinorArcana);
-
-                    //Earthly Star
-                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
-                        ActionReady(EarthlyStar) &&
-                        CanSpellWeave(actionID))
-                        return EarthlyStar;
-
                 }
                 return actionID;
             }
