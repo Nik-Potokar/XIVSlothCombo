@@ -152,15 +152,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     return true;
                 }
 
-                if (lastComboMove is Resolution
-                    && TraitLevelChecked(Traits.EnhancedManaficationIII)
-                    && HasEffect(Buffs.PrefulugenceReady))
-                {
-                    actionID = Prefulgence;
-                    return true;
-                }
-                    
-
                 actionID = 0;
                 return false;
             }
@@ -178,6 +169,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 bool contra = SingleTarget ? Config.RDM_ST_oGCD_ContraSixte : Config.RDM_AoE_oGCD_ContraSixte;
                 bool engagement = SingleTarget ? Config.RDM_ST_oGCD_Engagement : Config.RDM_AoE_oGCD_Engagement;
                 bool vice = SingleTarget ? Config.RDM_ST_oGCD_ViceOfThorns : Config.RDM_AoE_oGCD_ViceOfThorns;
+                bool prefulg = SingleTarget ? Config.RDM_ST_oGCD_Prefulgence : Config.RDM_AoE_oGCD_Prefulgence;
                 int engagementPool = (SingleTarget && Config.RDM_ST_oGCD_Engagement_Pooling) || (!SingleTarget && Config.RDM_AoE_oGCD_Engagement_Pooling) ? 1 : 0;
 
                 bool corpacorps = SingleTarget ? Config.RDM_ST_oGCD_CorpACorps : Config.RDM_AoE_oGCD_CorpACorps;
@@ -219,6 +211,12 @@ namespace XIVSlothCombo.Combos.JobHelpers
                     && TraitLevelChecked(Traits.EnhancedEmbolden)
                     && HasEffect(Buffs.ThornedFlourish))
                     placeOGCD = ViceOfThorns;
+
+                if (placeOGCD == 0 
+                    && prefulg
+                    && TraitLevelChecked(Traits.EnhancedManaficationIII)
+                    && HasEffect(Buffs.PrefulugenceReady))
+                    placeOGCD = Prefulgence;
 
                 if (CanSpellWeave(actionID) && placeOGCD != 0)
                 {

@@ -108,6 +108,7 @@ namespace XIVSlothCombo.Combos.PvE
                 RDM_ST_oGCD_CorpACorps_Melee = new("RDM_ST_oGCD_CorpACorps_Melee"),
                 RDM_ST_oGCD_CorpACorps_Pooling = new("RDM_ST_oGCD_CorpACorps_Pooling"),
                 RDM_ST_oGCD_ViceOfThorns = new("RDM_ST_oGCD_ViceOfThorns"),
+                RDM_ST_oGCD_Prefulgence = new("RDM_ST_oGCD_Prefulgence"),
                 RDM_ST_MeleeCombo_Adv = new("RDM_ST_MeleeCombo_Adv"),
                 RDM_ST_MeleeFinisher_Adv = new("RDM_ST_MeleeFinisher_Adv"),
                 RDM_ST_MeleeEnforced = new("RDM_ST_MeleeEnforced"),
@@ -121,6 +122,7 @@ namespace XIVSlothCombo.Combos.PvE
                 RDM_AoE_oGCD_CorpACorps_Melee = new("RDM_AoE_oGCD_CorpACorps_Melee"),
                 RDM_AoE_oGCD_CorpACorps_Pooling = new("RDM_AoE_oGCD_CorpACorps_Pooling"),
                 RDM_AoE_oGCD_ViceOfThorns = new("RDM_AoE_oGCD_ViceOfThorns"),
+                RDM_AoE_oGCD_Prefulgence = new("RDM_AoE_oGCD_Prefulgence"),
                 RDM_AoE_MeleeCombo_Adv = new("RDM_AoE_MeleeCombo_Adv"),
                 RDM_AoE_MeleeFinisher_Adv = new("RDM_AoE_MeleeFinisher_Adv");
             public static UserBoolArray
