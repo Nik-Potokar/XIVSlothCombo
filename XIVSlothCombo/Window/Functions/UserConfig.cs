@@ -1676,6 +1676,12 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_ST_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
             }
+
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_HolyinWhite)
+            {
+                UserConfig.DrawSliderInt(0, 5, PCT.Config.PCT_AoE_AdvancedMode_HolyinWhiteOption, "How many charges to keep ready? (0 = Use all)");
+            }
+
             if(preset == CustomComboPreset.PCT_AoE_AdvancedMode_LucidDreaming)
             {
                 UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
