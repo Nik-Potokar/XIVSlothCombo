@@ -778,6 +778,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (WeaponMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= 8))
                                 return OriginalHook(WeaponMotif);
                     }
+                    //Saves one Charge of White paint for movement/Black paint.
+                    if (HolyInWhite.LevelChecked() && gauge.Paint >= 2)
+                        return OriginalHook(HolyInWhite);
 
                     if (All.LucidDreaming.LevelChecked() && ActionReady(All.LucidDreaming) && CanSpellWeave(actionID) && LocalPlayer.CurrentMp <= 6500)
                         return All.LucidDreaming;
