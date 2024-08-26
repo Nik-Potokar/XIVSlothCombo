@@ -4147,9 +4147,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Vicepit", "Adds Vicepit to the rotation.", VPR.JobID)]
         VPR_AoE_Vicepit = 30105,
 
+        [ParentCombo(VPR_AoE_Vicepit)]
+        [CustomComboInfo("Disable Range Check", "Disables the range check for Vicepit.", VPR.JobID)]
+        VPR_AoE_Vicepit_DisableRange = 30111,
+
         [ParentCombo(VPR_AoE_CDs)]
         [CustomComboInfo("Vicepit Combo", "Adds Swiftskin's Den and Hunter's Den to the rotation.", VPR.JobID)]
         VPR_AoE_VicepitCombo = 30106,
+
+        [ParentCombo(VPR_AoE_VicepitCombo)]
+        [CustomComboInfo("Disable Range Check", "Disables the range check for Swiftskin's Den and Hunter's Den.", VPR.JobID)]
+        VPR_AoE_VicepitCombo_DisableRange = 30113,
 
         #endregion
 
@@ -4169,6 +4177,10 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(VPR_ReawakenLegacy)]
         [CustomComboInfo("Reawaken", "Adds Reawaken to the rotation.", VPR.JobID)]
         VPR_AoE_Reawaken = 30110,
+
+        [ParentCombo(VPR_AoE_Reawaken)]
+        [CustomComboInfo("Disable Range Check", "Disables the range check for Reawaken.", VPR.JobID)]
+        VPR_AoE_Reawaken_DisableRange = 30114,
 
         [ParentCombo(VPR_AoE_AdvancedMode)]
         [ConflictingCombos(VPR_ReawakenLegacy)]
