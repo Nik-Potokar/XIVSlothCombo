@@ -429,9 +429,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // Movement Options
                         if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Movement) && InCombat() && IsMoving)
-                        {
-                            // Psyche
-                            if (Config.SGE_ST_DPS_Movement[3] && ActionReady(Psyche)) return Psyche;
+                        {                            
                             // Toxikon
                             if (Config.SGE_ST_DPS_Movement[0] && LevelChecked(Toxikon) && Gauge.HasAddersting()) return OriginalHook(Toxikon);
                             // Dyskrasia

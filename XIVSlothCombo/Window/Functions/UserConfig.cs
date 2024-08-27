@@ -1972,10 +1972,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset is CustomComboPreset.SGE_ST_DPS_Movement)
             {
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Toxikon.ActionName(), $"Use {SGE.Toxikon.ActionName()} when Addersting is available.", 4, 0);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Dyskrasia.ActionName(), $"Use {SGE.Dyskrasia.ActionName()} when in range of a selected enemy target.", 4, 1);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Eukrasia.ActionName(), $"Use {SGE.Eukrasia.ActionName()}.", 4, 2);
-                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Psyche.ActionName(), $"Use {SGE.Psyche.ActionName()}.", 4, 3);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Toxikon.ActionName(), $"Use {SGE.Toxikon.ActionName()} when Addersting is available.", 3, 0);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Dyskrasia.ActionName(), $"Use {SGE.Dyskrasia.ActionName()} when in range of a selected enemy target.", 3, 1);
+                UserConfig.DrawHorizontalMultiChoice(SGE.Config.SGE_ST_DPS_Movement, SGE.Eukrasia.ActionName(), $"Use {SGE.Eukrasia.ActionName()}.", 3, 2);
             }
 
             if (preset is CustomComboPreset.SGE_AoE_DPS_Lucid)
