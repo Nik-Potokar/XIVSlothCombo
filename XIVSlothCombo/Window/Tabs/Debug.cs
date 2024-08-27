@@ -202,16 +202,16 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Spacing();
                 ImGui.Text("Action Info");
                 ImGui.Separator();
-                CustomStyleText("Last Action:", ActionWatching.LastAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(ActionWatching.LastAction)) ? "Unknown" : ActionWatching.GetActionName(ActionWatching.LastAction))} (ID: {ActionWatching.LastAction})");
+                CustomStyleText("Last Action:", ActionWatching.LastAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(CustomComboFunctions.GetActionName(ActionWatching.LastAction)) ? "Unknown" : CustomComboFunctions.GetActionName(ActionWatching.LastAction))} (ID: {ActionWatching.LastAction})");
                 CustomStyleText("Last Action Cost:", CustomComboFunctions.GetResourceCost(ActionWatching.LastAction));
                 CustomStyleText("Last Action Type:", ActionWatching.GetAttackType(ActionWatching.LastAction));
-                CustomStyleText("Last Weaponskill:", ActionWatching.GetActionName(ActionWatching.LastWeaponskill));
-                CustomStyleText("Last Spell:", ActionWatching.GetActionName(ActionWatching.LastSpell));
-                CustomStyleText("Last Ability:", ActionWatching.GetActionName(ActionWatching.LastAbility));
+                CustomStyleText("Last Weaponskill:", CustomComboFunctions.GetActionName(ActionWatching.LastWeaponskill));
+                CustomStyleText("Last Spell:", CustomComboFunctions.GetActionName(ActionWatching.LastSpell));
+                CustomStyleText("Last Ability:", CustomComboFunctions.GetActionName(ActionWatching.LastAbility));
                 CustomStyleText("Combo Timer:", $"{CustomComboFunctions.ComboTimer:F1}");
-                CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(CustomComboFunctions.ComboAction)) ? "Unknown" : ActionWatching.GetActionName(CustomComboFunctions.ComboAction))} (ID: {CustomComboFunctions.ComboAction})");
+                CustomStyleText("Combo Action:", CustomComboFunctions.ComboAction == 0 ? string.Empty : $"{(string.IsNullOrEmpty(CustomComboFunctions.GetActionName(CustomComboFunctions.ComboAction)) ? "Unknown" : CustomComboFunctions.GetActionName(CustomComboFunctions.ComboAction))} (ID: {CustomComboFunctions.ComboAction})");
                 CustomStyleText("Cast Time:", $"{LocalPlayer.CurrentCastTime:F2} / {LocalPlayer.TotalCastTime:F2}");
-                CustomStyleText("Cast Action:", LocalPlayer.CastActionId == 0 ? string.Empty : $"{(string.IsNullOrEmpty(ActionWatching.GetActionName(LocalPlayer.CastActionId)) ? "Unknown" : ActionWatching.GetActionName(LocalPlayer.CastActionId))} (ID: {LocalPlayer.CastActionId})");
+                CustomStyleText("Cast Action:", LocalPlayer.CastActionId == 0 ? string.Empty : $"{(string.IsNullOrEmpty(CustomComboFunctions.GetActionName(LocalPlayer.CastActionId)) ? "Unknown" : CustomComboFunctions.GetActionName(LocalPlayer.CastActionId))} (ID: {LocalPlayer.CastActionId})");
                 ImGui.Spacing();
 
                 // Party Info
@@ -238,7 +238,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Separator();
                 if (ImGui.CollapsingHeader("Active Blue Mage Spells"))
                 {
-                    ImGui.TextUnformatted($"{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => ActionWatching.GetActionName(x)).OrderBy(x => x))}");
+                    ImGui.TextUnformatted($"{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(x => CustomComboFunctions.GetActionName(x)).OrderBy(x => x))}");
                 }
             }
 

@@ -2,6 +2,8 @@
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
+using ECommons.GameFunctions;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using System;
 using System.Linq;
@@ -389,7 +391,55 @@ namespace XIVSlothCombo.CustomComboNS.Functions
             }
         }
 
-        internal unsafe static bool OutOfRange(uint actionID, IGameObject target) => ActionWatching.OutOfRange(actionID, Svc.ClientState.LocalPlayer!, target);
+        /// <summary>
+        /// Checks if the Target is out of range of the supplied action.  Presumes LocalPlayer as source. Recommend using InActionRange
+        /// as InActionRange will handle 0 range X radius actions as well.
+        /// </summary>
+        /// <param name="actionID">ID of the Action</param>
+        /// <param name="target"></param>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public unsafe static bool OutOfRange(uint actionID, IGameObject target, IGameObject? source = null)
+        {
+            source ??= Svc.ClientState.LocalPlayer!;
+            return ActionManager.GetActionInRangeOrLoS(actionID, source.Struct(), target.Struct()) is 566;
+        }
+
+        /// <summary> Checks if the player is in range to use an action. Best used with actions with irregular ranges.</summary>
+        /// <param name="actionID"> ID of the action. </param>
+        /// <param name="target">Optional. Target to measure distance with for ranged actions. Presumes CurrentTarget</param>
+        /// <returns></returns>
+        public static bool InActionRange(uint actionID, IGameObject? target = null)
+        {
+            target ??= CurrentTarget;
+            if (ActionWatching.ActionSheet.TryGetValue(actionID, out var action))
+            {
+                switch (action.Range)
+                {
+                    case -1:
+                        return InMeleeRange();//In the Sheet, all Melee skills appear to be -1
+                    case 0: //Self Use Skills (Second Wind) or attacks (Art of War, Dyskrasia)
+                        {
+                            //NOTES: HOUSING DUMMIES ARE FUCKING CURSED BASTARDS THAT DON'T REGISTER ATTACKS CORRECTLY WITH SELF RADIUS ATTACKS
+                            //Use Explorer Mode dungeon, field map dummies, or let Thancred tank.
+
+                            //Check if there is a radius
+                            float radius = action.EffectRange;
+                            //Player has a 0.5y radius inside hitbox.
+                            //GetTargetDistance measures hitbox to hitbox (correct usage for ranged abilities so far)
+                            //But attacks from player must include personal space (0.5y).
+                            if (radius > 0)
+                            {   //Do not nest with above
+                                if (HasTarget()) return GetTargetDistance() <= (radius - 0.5f); else return false;
+                            }
+                            else return true; //Self use targets (Second Wind) have no radius
+                        }
+                    default:
+                        return (!OutOfRange(actionID, target!)); // GetTargetDistance() <= action.Range;
+                }
+            }
+            else return false;
+        }
 
     }
 }

@@ -30,55 +30,22 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Returns the name of an action from its ID. </summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static string GetActionName(uint id) => ActionWatching.GetActionName(id);
+        public static string GetActionName(uint id) => ActionWatching.ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
 
         /// <summary> Returns the level required for an action from its ID. </summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static int GetLevel(uint id) => ActionWatching.GetLevel(id);
+        public static int GetLevel(uint id) => ActionWatching.ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;
 
         /// <summary> Get the Cast time of an action. </summary>
         /// <param name="id"> Action ID to check. </param>
         /// <returns> Returns the cast time of an action. </returns>
-        internal static unsafe float GetActionCastTime(uint id) => ActionWatching.GetActionCastTime(id);
-
-        /// <summary> Checks if the player is in range to use an action. Best used with actions with irregular ranges.</summary>
-        /// <param name="id"> ID of the action. </param>
-        /// <returns></returns>
-        public static bool InActionRange(uint id)
-        {
-            int range = ActionWatching.GetActionRange(id);
-            switch (range)
-            {
-                case -2:
-                    return false; //Error catch, Doesn't exist in ActionWatching
-                case -1:
-                    return InMeleeRange();//In the Sheet, all Melee skills appear to be -1
-                case 0: //Self Use Skills (Second Wind) or attacks (Art of War, Dyskrasia)
-                    {
-                        //NOTES: HOUSING DUMMIES ARE FUCKING CURSED BASTARDS THAT DON'T REGISTER ATTACKS CORRECTLY WITH SELF RADIUS ATTACKS
-                        //Use Explorer Mode dungeon, field map dummies, or let Thancred tank.
-
-                        //Check if there is a radius
-                        float radius = ActionWatching.GetActionEffectRange(id);
-                        //Player has a 0.5y radius inside hitbox.
-                        //GetTargetDistance measures hitbox to hitbox (correct usage for ranged abilities so far)
-                        //But attacks from player must include personal space (0.5y).
-                        if (radius > 0)
-                        {   //Do not nest with above
-                            if (HasTarget()) return GetTargetDistance() <= (radius - 0.5f); else return false;
-                        }
-                        else return true; //Self use targets (Second Wind) have no radius
-                    }
-                default:
-                    return GetTargetDistance() <= range;
-            }
-        }
+        internal static unsafe float GetActionCastTime(uint id) => ActionWatching.ActionSheet.TryGetValue(id, out var action) ? action.Cast100ms / (float)10 : 0;
 
         /// <summary> Returns the level of a trait. </summary>
         /// <param name="id"> ID of the action. </param>
         /// <returns></returns>
-        public static int GetTraitLevel(uint id) => ActionWatching.GetTraitLevel(id);
+        public static int GetTraitLevel(uint id) => ActionWatching.TraitSheet.TryGetValue(id, out var trait) ? trait.Level : 255;
 
         /// <summary> Checks if the player can use an action based on the level required and off cooldown / has charges.</summary>
         /// <param name="id"> ID of the action. </param>
