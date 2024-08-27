@@ -127,6 +127,7 @@ namespace XIVSlothCombo.Combos.PvE
                 Advanced_Trick_Cooldown = "Advanced_Trick_Cooldown",
                 Advanced_DotonTimer = "Advanced_DotonTimer",
                 Advanced_DotonHP = "Advanced_DotonHP",
+                BurnKazematoi = "BurnKazematoi",
                 Advanced_TCJEnderAoE = "Advanced_TCJEnderAoe",
                 Advanced_ChargePool = "Advanced_ChargePool",
                 SecondWindThresholdST = "SecondWindThresholdST",
@@ -163,6 +164,7 @@ namespace XIVSlothCombo.Combos.PvE
                     bool suitonUptime = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Suiton_Uptime);
                     int bhavaPool = GetOptionValue(Config.Ninki_BhavaPooling);
                     int bunshinPool = GetOptionValue(Config.Ninki_BunshinPoolingST);
+                    int burnKazematoi = GetOptionValue(NIN.Config.BurnKazematoi);
                     int SecondWindThreshold = PluginConfiguration.GetCustomIntValue(Config.SecondWindThresholdST);
                     int ShadeShiftThreshold = PluginConfiguration.GetCustomIntValue(Config.ShadeShiftThresholdST);
                     int BloodbathThreshold = PluginConfiguration.GetCustomIntValue(Config.BloodbathThresholdST);
@@ -381,7 +383,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (lastComboMove == GustSlash && ArmorCrush.LevelChecked())
                         {
-                            if (!NINHelper.MugDebuff)
+                            if (!NINHelper.MugDebuff && GetTargetHPPercent() > burnKazematoi)
                             {
                                 if (gauge.Kazematoi < 4)
                                 {
@@ -398,7 +400,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return OriginalHook(AeolianEdge);
                                 }
                             }
-                            if (NINHelper.MugDebuff)
+                            if (NINHelper.MugDebuff  || GetTargetHPPercent() <= burnKazematoi)
                             {
                                 if (gauge.Kazematoi == 0)
                                 {
