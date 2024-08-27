@@ -385,6 +385,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (!NINHelper.MugDebuff && GetTargetHPPercent() > burnKazematoi)
                             {
+
                                 if (gauge.Kazematoi < 4)
                                 {
                                     if (trueNorthArmor)
@@ -415,7 +416,7 @@ namespace XIVSlothCombo.Combos.PvE
                                         return OriginalHook(All.TrueNorth);
                                     else
                                         return OriginalHook(AeolianEdge);
-                                }
+                                }                               
                             }
                         }                           
                         if (lastComboMove == GustSlash && !ArmorCrush.LevelChecked() && AeolianEdge.LevelChecked())
