@@ -2321,9 +2321,9 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Suiton Uptime Option", "Adds Suiton as an uptime feature.", NIN.JobID)]
         NIN_ST_AdvancedMode_Suiton_Uptime = 10067,
 
-        [ParentCombo(NIN_ST_AdvancedMode_TrueNorth_ArmorCrush)]
-        [CustomComboInfo("Dynamic True North Option", "Adds True North before Armor Crush when you are not in the correct position for the enhanced potency bonus.", NIN.JobID)]
-        NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic = 10068,
+        //[ParentCombo(NIN_ST_AdvancedMode_TrueNorth_ArmorCrush)] Removed because true north is going to be dynamic inherently. Armor crush happens far more often now. Can just elimite all AC with TN.
+        //[CustomComboInfo("Dynamic True North Option", "Adds True North before Armor Crush when you are not in the correct position for the enhanced potency bonus.", NIN.JobID)]
+        //NIN_ST_AdvancedMode_TrueNorth_ArmorCrush_Dynamic = 10068,
 
         [Variant]
         [VariantParent(NIN_ST_SimpleMode, NIN_ST_AdvancedMode, NIN_AoE_SimpleMode, NIN_AoE_AdvancedMode)]
