@@ -153,16 +153,16 @@ namespace XIVSlothCombo.Combos.PvE
                             (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust))))
                             return LifeSurge;
 
-                        //Wyrmwind Thrust Feature
-                        if (LevelChecked(WyrmwindThrust) &&
-                            AnimationLock.CanDRGWeave(WyrmwindThrust) &&
-                            gauge.FirstmindsFocusCount is 2)
-                            return WyrmwindThrust;
-
                         //Geirskogul Feature
                         if (ActionReady(Geirskogul) &&
                             AnimationLock.CanDRGWeave(Geirskogul))
                             return Geirskogul;
+
+                        //Dragonfire Dive Feature
+                        if (ActionReady(DragonfireDive) &&
+                            AnimationLock.CanDRGWeave(DragonfireDive) &&
+                            !IsMoving)
+                            return DragonfireDive;
 
                         //(High) Jump Feature   
                         if (ActionReady(OriginalHook(Jump)) &&
@@ -170,11 +170,11 @@ namespace XIVSlothCombo.Combos.PvE
                             !IsMoving)
                             return OriginalHook(Jump);
 
-                        //Dragonfire Dive Feature
-                        if (ActionReady(DragonfireDive) &&
-                            AnimationLock.CanDRGWeave(DragonfireDive) &&
-                            !IsMoving)
-                            return DragonfireDive;
+                        //Wyrmwind Thrust Feature
+                        if (LevelChecked(WyrmwindThrust) &&
+                            AnimationLock.CanDRGWeave(WyrmwindThrust) &&
+                            gauge.FirstmindsFocusCount is 2)
+                            return WyrmwindThrust;
 
                         //StarDiver Feature
                         if (ActionReady(Stardiver) &&
@@ -332,6 +332,12 @@ namespace XIVSlothCombo.Combos.PvE
                                 (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust))))
                                 return LifeSurge;
 
+                            //Geirskogul Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) &&
+                                ActionReady(Geirskogul) &&
+                                AnimationLock.CanDRGWeave(Geirskogul))
+                                return Geirskogul;
+
                             //Dragonfire Dive Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive) &&
                                 ActionReady(DragonfireDive) &&
@@ -339,15 +345,6 @@ namespace XIVSlothCombo.Combos.PvE
                                 (!IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) ||
                                 (IsEnabled(CustomComboPreset.DRG_ST_DragonfireDive_Movement) && !IsMoving)))
                                 return DragonfireDive;
-
-                            //StarDiver Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) &&
-                                ActionReady(Stardiver) &&
-                                AnimationLock.CanDRGWeave(Stardiver) &&
-                                gauge.IsLOTDActive &&
-                                (!IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) ||
-                                (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)))
-                                return Stardiver;
 
                             //(High) Jump Feature   
                             if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) &&
@@ -364,11 +361,14 @@ namespace XIVSlothCombo.Combos.PvE
                                 gauge.FirstmindsFocusCount is 2)
                                 return WyrmwindThrust;
 
-                            //Geirskogul Feature
-                            if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) &&
-                                ActionReady(Geirskogul) &&
-                                AnimationLock.CanDRGWeave(Geirskogul))
-                                return Geirskogul;
+                            //StarDiver Feature
+                            if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) &&
+                                ActionReady(Stardiver) &&
+                                AnimationLock.CanDRGWeave(Stardiver) &&
+                                gauge.IsLOTDActive &&
+                                (!IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) ||
+                                (IsEnabled(CustomComboPreset.DRG_ST_Stardiver_Movement) && !IsMoving)))
+                                return Stardiver;
 
                             //Starcross Feature
                             if (IsEnabled(CustomComboPreset.DRG_ST_Starcross) &&
