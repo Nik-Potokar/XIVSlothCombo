@@ -234,6 +234,16 @@ namespace XIVSlothCombo.Combos.PvE
                             CanSpellWeave(actionID))
                             return Variant.VariantSpiritDart;
 
+                        // Psyche
+                        if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Psyche))
+                        {
+                            if (ActionReady(Psyche) &&
+                                HasBattleTarget() &&
+                                InActionRange(Psyche) &&
+                                CanSpellWeave(actionID))
+                                return Psyche;
+                        }
+
                         // Lucid Dreaming
                         if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Lucid) &&
                             ActionReady(All.LucidDreaming) && CanSpellWeave(Dosis) &&
@@ -267,16 +277,7 @@ namespace XIVSlothCombo.Combos.PvE
                                     return Eukrasia;
                             }
                         }
-
-                        // Psyche
-                        if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Psyche))
-                        {
-                            if (ActionReady(Psyche) &&
-                                HasBattleTarget() &&
-                                InActionRange(Psyche) &&
-                                CanSpellWeave(actionID))
-                                return Psyche;
-                        }
+                                               
 
                         //Phlegma
                         if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma))
@@ -358,6 +359,13 @@ namespace XIVSlothCombo.Combos.PvE
                             return Dosis3;
                     }
 
+                    // Psyche
+                    if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) &&
+                        ActionReady(Psyche) &&
+                        InCombat() &&
+                        CanSpellWeave(actionID))
+                        return Psyche;
+
                     // Lucid Dreaming
                     if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Lucid) &&
                         All.CanUseLucid(actionID, Config.SGE_ST_DPS_Lucid))
@@ -418,14 +426,6 @@ namespace XIVSlothCombo.Combos.PvE
                             uint phlegma = OriginalHook(Phlegma);
                             if (InActionRange(phlegma) && ActionReady(phlegma)) return phlegma;
                         }
-
-                        // Psyche
-                        if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) &&
-                            ActionReady(Psyche) &&
-                            InCombat() &&
-                            CanSpellWeave(actionID))
-                            return Psyche;
-
 
                         // Movement Options
                         if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Movement) && InCombat() && IsMoving)
