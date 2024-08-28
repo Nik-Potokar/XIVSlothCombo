@@ -1365,7 +1365,7 @@ namespace XIVSlothCombo.Combos.PvE
                         };
 
                         if (ActionReady(IronJaws) && HasEffect(Buffs.RagingStrikes) &&
-                        !WasLastAction(IronJaws) && ragingStrikesDuration < ragingJawsRenewTime && poisonRecast(40) && windRecast(40))
+                        !WasLastAction(IronJaws) && ragingStrikesDuration < ragingJawsRenewTime && poisonRecast(35) && windRecast(35))
                         {
                             openerFinished = true;
                             return IronJaws;
