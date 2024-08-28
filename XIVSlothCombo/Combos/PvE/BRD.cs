@@ -84,7 +84,11 @@ namespace XIVSlothCombo.Combos.PvE
                 BRD_AoESecondWindThreshold = "BRD_AoESecondWindThreshold",
                 BRD_VariantCure = "BRD_VariantCure";
         }
-
+        internal static class Traits
+        {
+            internal const ushort
+                EnhancedBloodletter = 445;
+        }
         #region Song status
         internal static bool SongIsNotNone(Song value) => value != Song.NONE;
         internal static bool SongIsNone(Song value) => value == Song.NONE;
@@ -451,7 +455,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
-                            if (LevelChecked(WanderersMinuet))
+                            if (IsEnabled(CustomComboPreset.BRD_AoE_Pooling) && LevelChecked(WanderersMinuet) && TraitLevelChecked(Traits.EnhancedBloodletter))
                             {
                                 if (songWanderer)
                                 {
@@ -755,7 +759,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
-                            if (IsEnabled(CustomComboPreset.BRD_Adv_Pooling) && LevelChecked(WanderersMinuet))
+                            if (IsEnabled(CustomComboPreset.BRD_Adv_Pooling) && LevelChecked(WanderersMinuet) && TraitLevelChecked(Traits.EnhancedBloodletter))
                             {
                                 if (songWanderer)
                                 {
@@ -1076,7 +1080,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
-                            if (LevelChecked(WanderersMinuet))
+                            if (LevelChecked(WanderersMinuet) && TraitLevelChecked(Traits.EnhancedBloodletter))
                             {
                                 if (songWanderer)
                                 {
@@ -1305,7 +1309,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
-                            if (LevelChecked(WanderersMinuet))
+                            if (LevelChecked(WanderersMinuet) && TraitLevelChecked(Traits.EnhancedBloodletter))
                             {
                                 if (songWanderer)
                                 {
