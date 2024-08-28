@@ -598,7 +598,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool VicepitReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
-                bool in5y = GetTargetDistance() <= 5;
+                bool in5y = HasBattleTarget() && GetTargetDistance() <= 5;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
                 float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
