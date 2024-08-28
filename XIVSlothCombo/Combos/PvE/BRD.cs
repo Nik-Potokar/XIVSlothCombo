@@ -429,7 +429,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
-                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
+                            (gauge.Repertoire == 3 || (LevelChecked(EmpyrealArrow) && gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
                         if (ActionReady(Sidewinder))
@@ -730,7 +730,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
-                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
+                            (gauge.Repertoire == 3 || (LevelChecked(EmpyrealArrow) && gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
                         if (ActionReady(Sidewinder))
@@ -1055,7 +1055,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
-                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
+                            (gauge.Repertoire == 3 || (LevelChecked(EmpyrealArrow) && gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
                         if (ActionReady(Sidewinder))
@@ -1284,7 +1284,7 @@ namespace XIVSlothCombo.Combos.PvE
                             return EmpyrealArrow;
 
                         if (LevelChecked(PitchPerfect) && songWanderer &&
-                            (gauge.Repertoire == 3 || (gauge.Repertoire == 2 && empyrealCD < 2)))
+                            (gauge.Repertoire == 3 || (LevelChecked(EmpyrealArrow) && gauge.Repertoire == 2 && empyrealCD < 2)))
                             return OriginalHook(PitchPerfect);
 
                         if (ActionReady(Sidewinder))
