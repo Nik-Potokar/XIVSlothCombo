@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.JobHelpers;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -75,7 +76,14 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 CombinedAetherhueChoices = new("CombinedAetherhueChoices"),
                 PCT_ST_AdvancedMode_LucidOption = new("PCT_ST_AdvancedMode_LucidOption", 6500),
+                PCT_ST_CreatureStop = new("PCT_ST_CreatureStop"),
+                PCT_AoE_CreatureStop = new("PCT_AoE_CreatureStop"),
+                PCT_ST_WeaponStop = new("PCT_ST_WeaponStop"),
+                PCT_AoE_WeaponStop = new("PCT_AoE_WeaponStop"),
+                PCT_ST_LandscapeStop = new("PCT_ST_LandscapeStop"),
+                PCT_AoE_LandscapeStop = new("PCT_AoE_LandscapeStop"),
                 PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500);
+                
 
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
@@ -345,6 +353,10 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell) || CanSpellWeave(actionID);
+                    int creatureStop = PluginConfiguration.GetCustomIntValue(Config.PCT_ST_CreatureStop);
+                    int landscapeStop = PluginConfiguration.GetCustomIntValue(Config.PCT_ST_LandscapeStop);
+                    int weaponStop = PluginConfiguration.GetCustomIntValue(Config.PCT_ST_WeaponStop);
+                    
 
                     // Prepull logic
                     if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_PrePullMotifs))
@@ -488,11 +500,11 @@ namespace XIVSlothCombo.Combos.PvE
                     // Swiftcast Motifs
                     if (HasEffect(All.Buffs.Swiftcast))
                     {
-                        if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse) && GetTargetHPPercent() > creatureStop)
                             return OriginalHook(CreatureMotif);
-                        if (!gauge.WeaponMotifDrawn && HammerMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
-                            return OriginalHook(HammerMotif);
-                        if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.WeaponMotifDrawn && WeaponMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse) && GetTargetHPPercent() > weaponStop)
+                            return OriginalHook(WeaponMotif);
+                        if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse) && GetTargetHPPercent() > landscapeStop)
                             return OriginalHook(LandscapeMotif);
 
                     }
@@ -513,13 +525,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //Prepare for Burst
                     if (GetCooldownRemainingTime(ScenicMuse) <= 20)
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif) && LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif) && LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && GetTargetHPPercent() > landscapeStop)
                             return OriginalHook(LandscapeMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif) && CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif) && CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn && GetTargetHPPercent() > creatureStop)
                             return OriginalHook(CreatureMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif) && WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif) && WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime) && GetTargetHPPercent() > weaponStop)
                             return OriginalHook(WeaponMotif);
                     }
 
@@ -559,7 +571,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (!HasEffect(Buffs.StarryMuse))
                     {
                         // LandscapeMotif
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif) && GetTargetHPPercent() > landscapeStop)
                         {
                             if (LandscapeMotif.LevelChecked() &&
                                 !gauge.LandscapeMotifDrawn &&
@@ -570,7 +582,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // CreatureMotif
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif) && GetTargetHPPercent() > creatureStop)
                         {
                             if (CreatureMotif.LevelChecked() &&
                                 !gauge.CreatureMotifDrawn &&
@@ -581,7 +593,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // WeaponMotif
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif))
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif) && GetTargetHPPercent() > weaponStop)
                         {
                             if (WeaponMotif.LevelChecked() &&
                                 !HasEffect(Buffs.HammerTime) &&
@@ -802,6 +814,9 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
+                    int creatureStop = PluginConfiguration.GetCustomIntValue(Config.PCT_AoE_CreatureStop);
+                    int landscapeStop = PluginConfiguration.GetCustomIntValue(Config.PCT_AoE_LandscapeStop);
+                    int weaponStop = PluginConfiguration.GetCustomIntValue(Config.PCT_AoE_WeaponStop);
 
                     // Prepull logic
                     if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_PrePullMotifs))
@@ -906,11 +921,11 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (HasEffect(All.Buffs.Swiftcast))
                     {
-                        if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.CreatureMotifDrawn && CreatureMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse) && GetTargetHPPercent() > creatureStop)
                             return OriginalHook(CreatureMotif);
-                        if (!gauge.WeaponMotifDrawn && HammerMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.WeaponMotifDrawn && HammerMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !HasEffect(Buffs.StarryMuse) && GetTargetHPPercent() >weaponStop)
                             return OriginalHook(HammerMotif);
-                        if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse))
+                        if (!gauge.LandscapeMotifDrawn && LandscapeMotif.LevelChecked() && !HasEffect(Buffs.StarryMuse) && GetTargetHPPercent() > landscapeStop)
                             return OriginalHook(LandscapeMotif);
                     }
 
@@ -930,13 +945,13 @@ namespace XIVSlothCombo.Combos.PvE
                     //Prepare for Burst
                     if (GetCooldownRemainingTime(ScenicMuse) <= 20)
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif) && LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif) && LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && GetTargetHPPercent() > landscapeStop)
                             return OriginalHook(LandscapeMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif) && CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif) && CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn && GetTargetHPPercent() > creatureStop)
                             return OriginalHook(CreatureMotif);
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif) && WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif) && WeaponMotif.LevelChecked() && !gauge.WeaponMotifDrawn && !HasEffect(Buffs.HammerTime) && GetTargetHPPercent() > weaponStop)
                             return OriginalHook(WeaponMotif);
                     }
 
@@ -979,19 +994,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (!HasEffect(Buffs.StarryMuse))
                     {
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif) && GetTargetHPPercent() > landscapeStop)
                         {
                             if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && GetCooldownRemainingTime(ScenicMuse) <= 20)
                                 return OriginalHook(LandscapeMotif);
                         }
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif) && GetTargetHPPercent() > creatureStop)
                         {
                             if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn && (HasCharges(LivingMuse) || GetCooldownChargeRemainingTime(LivingMuse) <= 8))
                                 return OriginalHook(CreatureMotif);
                         }
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif))
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif) && GetTargetHPPercent() > weaponStop)
                         {
                             if (WeaponMotif.LevelChecked() && !HasEffect(Buffs.HammerTime) && !gauge.WeaponMotifDrawn && (HasCharges(SteelMuse) || GetCooldownChargeRemainingTime(SteelMuse) <= 8))
                                 return OriginalHook(WeaponMotif);

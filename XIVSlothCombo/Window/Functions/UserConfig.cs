@@ -1680,6 +1680,18 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
             }
+            if (preset == CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_ST_LandscapeStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_ST_CreatureStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_ST_WeaponStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_LandscapeStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_CreatureStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_WeaponStop, "Health % to stop Drawing Motif");
 
             // PvP
             if (preset == CustomComboPreset.PCTPvP_BurstControl)
