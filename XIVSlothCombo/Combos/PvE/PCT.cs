@@ -249,6 +249,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CometinBlack.LevelChecked() && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
 
+                        if (HasEffect(Buffs.RainbowBright) || HasEffect(Buffs.RainbowBright) && GetBuffRemainingTime(Buffs.StarryMuse) <= 3f)
+                            return RainbowDrip;
+
                         if (HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
                     }
@@ -518,6 +521,12 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_CometinBlack) && CometinBlack.LevelChecked() && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
 
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_Burst_RainbowDrip))
+                        {
+                            if (HasEffect(Buffs.RainbowBright) || HasEffect(Buffs.RainbowBright) && GetBuffRemainingTime(Buffs.StarryMuse) <= 3f)
+                                return RainbowDrip;
+                        }
+
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HolyInWhite) && HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
                     }
@@ -732,6 +741,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (CometinBlack.LevelChecked() && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
 
+                        if (HasEffect(Buffs.RainbowBright) || (HasEffect(Buffs.RainbowBright) && GetBuffRemainingTime(Buffs.StarryMuse) < 3))
+                            return RainbowDrip;
+
                         if (HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
 
@@ -936,6 +948,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_CometinBlack) && CometinBlack.LevelChecked() && gauge.Paint >= 1 && HasEffect(Buffs.MonochromeTones))
                             return OriginalHook(CometinBlack);
+
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_Burst_RainbowDrip))
+                        {
+                            if (HasEffect(Buffs.RainbowBright) || (HasEffect(Buffs.RainbowBright) && GetBuffRemainingTime(Buffs.StarryMuse) < 3))
+                                return RainbowDrip;
+                        }
 
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HolyInWhite) && HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
