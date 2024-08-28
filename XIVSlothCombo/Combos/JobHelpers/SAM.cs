@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
 
             return senCount;
         }
-        internal static bool ComboStarted => GetComboStarted(); 
+        internal static bool ComboStarted => GetComboStarted();
         private unsafe static bool GetComboStarted()
         {
             var comboAction = ActionManager.Instance()->Combo.Action;
@@ -30,40 +31,6 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return true;
             return false;
         }
-
-        internal static bool UseTsubame => GetUseTsubame();
-
-        private static bool GetUseTsubame()
-        {
-            int MeikyoUsed = ActionWatching.CombatActions.Count(x => x == MeikyoShisui);
-
-            if (CustomComboFunctions.ActionReady(TsubameGaeshi))
-            {
-                //Tendo
-                if (CustomComboFunctions.HasEffect(Buffs.TendoKaeshiSetsugekkaReady))
-                    return true;
-
-                if (CustomComboFunctions.HasEffect(Buffs.TsubameReady))
-                {
-                    var meikyoModulo = MeikyoUsed % 15;
-                    //1 and 2 min
-                    if ((meikyoModulo is 0 or 1 or 2 or 3 or 4 or 9 or 10))
-                        return true;
-
-                    // 3 and 4 min
-                    if ((meikyoModulo is 5 or 6 or 11 or 12) &&
-                        CustomComboFunctions.GetBuffStacks(Buffs.MeikyoShisui) is 2)
-                        return true;
-
-                    // 5 and 6 min
-                    if ((meikyoModulo is 7 or 8 or 13 or 14) &&
-                        CustomComboFunctions.GetBuffStacks(Buffs.MeikyoShisui) is 1)
-                        return true;
-                }
-            }
-            return false;
-        }
-
     }
 
 
@@ -195,50 +162,53 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 if (CustomComboFunctions.WasLastAction(MeikyoShisui) && OpenerStep == 8) OpenerStep++;
                 else if (OpenerStep == 8) actionID = MeikyoShisui;
 
-                if (CustomComboFunctions.WasLastAction(Gekko) && OpenerStep == 9) OpenerStep++;
-                else if (OpenerStep == 9) actionID = Gekko;
+                if (CustomComboFunctions.WasLastAction(All.TrueNorth) && OpenerStep == 9) OpenerStep++;
+                else if (OpenerStep == 9) actionID = All.TrueNorth;
 
-                if (CustomComboFunctions.WasLastAction(Zanshin) && OpenerStep == 10) OpenerStep++;
-                else if (OpenerStep == 10) actionID = Zanshin;
+                if (CustomComboFunctions.WasLastAction(Gekko) && OpenerStep == 10) OpenerStep++;
+                else if (OpenerStep == 10) actionID = Gekko;
 
-                if (CustomComboFunctions.WasLastAction(Higanbana) && OpenerStep == 11) OpenerStep++;
-                else if (OpenerStep == 11) actionID = Higanbana;
+                if (CustomComboFunctions.WasLastAction(Zanshin) && OpenerStep == 11) OpenerStep++;
+                else if (OpenerStep == 11) actionID = Zanshin;
 
-                if (CustomComboFunctions.WasLastAction(OgiNamikiri) && OpenerStep == 12) OpenerStep++;
-                else if (OpenerStep == 12) actionID = OgiNamikiri;
+                if (CustomComboFunctions.WasLastAction(Higanbana) && OpenerStep == 12) OpenerStep++;
+                else if (OpenerStep == 12) actionID = Higanbana;
 
-                if (CustomComboFunctions.WasLastAction(Shoha) && OpenerStep == 13) OpenerStep++;
-                else if (OpenerStep == 13) actionID = Shoha;
+                if (CustomComboFunctions.WasLastAction(OgiNamikiri) && OpenerStep == 13) OpenerStep++;
+                else if (OpenerStep == 13) actionID = OgiNamikiri;
 
-                if (CustomComboFunctions.WasLastAction(KaeshiNamikiri) && OpenerStep == 14) OpenerStep++;
-                else if (OpenerStep == 14) actionID = KaeshiNamikiri;
+                if (CustomComboFunctions.WasLastAction(Shoha) && OpenerStep == 14) OpenerStep++;
+                else if (OpenerStep == 14) actionID = Shoha;
 
-                if (CustomComboFunctions.WasLastAction(Kasha) && OpenerStep == 15) OpenerStep++;
-                else if (OpenerStep == 15) actionID = Kasha;
+                if (CustomComboFunctions.WasLastAction(KaeshiNamikiri) && OpenerStep == 15) OpenerStep++;
+                else if (OpenerStep == 15) actionID = KaeshiNamikiri;
 
-                if (CustomComboFunctions.WasLastAction(Shinten) && OpenerStep == 16) OpenerStep++;
-                else if (OpenerStep == 16) actionID = Shinten;
+                if (CustomComboFunctions.WasLastAction(Kasha) && OpenerStep == 16) OpenerStep++;
+                else if (OpenerStep == 16) actionID = Kasha;
 
-                if (CustomComboFunctions.WasLastAction(Gekko) && OpenerStep == 17) OpenerStep++;
-                else if (OpenerStep == 17) actionID = Gekko;
+                if (CustomComboFunctions.WasLastAction(Shinten) && OpenerStep == 17) OpenerStep++;
+                else if (OpenerStep == 17) actionID = Shinten;
 
-                if (CustomComboFunctions.WasLastAction(Gyoten) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = Gyoten;
+                if (CustomComboFunctions.WasLastAction(Gekko) && OpenerStep == 18) OpenerStep++;
+                else if (OpenerStep == 18) actionID = Gekko;
 
-                if (CustomComboFunctions.WasLastAction(Gyofu) && OpenerStep == 19) OpenerStep++;
-                else if (OpenerStep == 19) actionID = Gyofu;
+                if (CustomComboFunctions.WasLastAction(Gyoten) && OpenerStep == 19) OpenerStep++;
+                else if (OpenerStep == 19) actionID = Gyoten;
 
-                if (CustomComboFunctions.WasLastAction(Yukikaze) && OpenerStep == 20) OpenerStep++;
-                else if (OpenerStep == 20) actionID = Yukikaze;
+                if (CustomComboFunctions.WasLastAction(Gyofu) && OpenerStep == 20) OpenerStep++;
+                else if (OpenerStep == 20) actionID = Gyofu;
 
-                if (CustomComboFunctions.WasLastAction(Shinten) && OpenerStep == 21) OpenerStep++;
-                else if (OpenerStep == 21) actionID = Shinten;
+                if (CustomComboFunctions.WasLastAction(Yukikaze) && OpenerStep == 21) OpenerStep++;
+                else if (OpenerStep == 21) actionID = Yukikaze;
 
-                if (CustomComboFunctions.WasLastAction(TendoSetsugekka) && OpenerStep == 22) OpenerStep++;
-                else if (OpenerStep == 22) actionID = TendoSetsugekka;
+                if (CustomComboFunctions.WasLastAction(Shinten) && OpenerStep == 22) OpenerStep++;
+                else if (OpenerStep == 22) actionID = Shinten;
 
-                if (CustomComboFunctions.WasLastAction(TendoKaeshiSetsugekka) && OpenerStep == 23) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 23) actionID = TendoKaeshiSetsugekka;
+                if (CustomComboFunctions.WasLastAction(TendoSetsugekka) && OpenerStep == 23) OpenerStep++;
+                else if (OpenerStep == 23) actionID = TendoSetsugekka;
+
+                if (CustomComboFunctions.WasLastAction(TendoKaeshiSetsugekka) && OpenerStep == 24) CurrentState = OpenerState.OpenerFinished;
+                else if (OpenerStep == 24) actionID = TendoKaeshiSetsugekka;
 
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
