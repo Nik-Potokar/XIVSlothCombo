@@ -155,7 +155,8 @@ namespace XIVSlothCombo.Combos.PvE
                             !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                             !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
                             !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
-                            !RPRHelpers.IsComboExpiring(3) && GetCooldownRemainingTime(ArcaneCircle) > GCD * 3)
+                            ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 3) || !LevelChecked(ArcaneCircle)) &&
+                            !RPRHelpers.IsComboExpiring(3))
                         {
                             //Gluttony
                             if (!JustUsed(Perfectio) && ActionReady(Gluttony))
@@ -355,7 +356,8 @@ namespace XIVSlothCombo.Combos.PvE
                                 !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                                 !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
                                 !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
-                                !RPRHelpers.IsComboExpiring(3) && GetCooldownRemainingTime(ArcaneCircle) > GCD * 3)
+                                ((GetCooldownRemainingTime(ArcaneCircle) > GCD * 3) || !LevelChecked(ArcaneCircle)) &&
+                                !RPRHelpers.IsComboExpiring(3))
                             {
                                 //Gluttony
                                 if (IsEnabled(CustomComboPreset.RPR_ST_Gluttony) &&
