@@ -143,12 +143,15 @@ namespace XIVSlothCombo.Window.Tabs
                                 debugSpell = null;
                             }
 
-                            var classId = CustomComboFunctions.JobIDs.JobToClass(JobID.Value);
-                            foreach (var act in Svc.Data.GetExcelSheet<Action>().Where(x => x.IsPlayerAction && x.ClassJob.Row == classId || x.ClassJob.Row == JobID.Value).OrderBy(x => x.ClassJobLevel))
+                            if (JobID is not null)
                             {
-                                if (ImGui.Selectable($"({act.RowId}) Lv.{act.ClassJobLevel}. {act.Name} - {(act.IsPvP ? "PvP" : "Normal")}", debugSpell?.RowId == act.RowId))
+                                byte classId = CustomComboFunctions.JobIDs.JobToClass(JobID.Value);
+                                foreach (var act in Svc.Data.GetExcelSheet<Action>()!.Where(x => x.IsPlayerAction && x.ClassJob.Row == classId || x.ClassJob.Row == JobID.Value).OrderBy(x => x.ClassJobLevel))
                                 {
-                                    debugSpell = act;
+                                    if (ImGui.Selectable($"({act.RowId}) Lv.{act.ClassJobLevel}. {act.Name} - {(act.IsPvP ? "PvP" : "Normal")}", debugSpell?.RowId == act.RowId))
+                                    {
+                                        debugSpell = act;
+                                    }
                                 }
                             }
                         }

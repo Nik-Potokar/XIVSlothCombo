@@ -253,13 +253,6 @@ namespace XIVSlothCombo.Data
             Svc.Condition.ConditionChange -= ResetActions;
         }
 
-        public static string GetBLUIndex(uint id)
-        {
-            var aozKey = Svc.Data.GetExcelSheet<AozAction>()!.First(x => x.Action.Row == id).RowId;
-            var index = Svc.Data.GetExcelSheet<AozActionTransient>().GetRow(aozKey).Number;
-
-            return $"#{index} ";
-        }
         public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
 
         public static List<uint>? GetStatusesByName(string status)
