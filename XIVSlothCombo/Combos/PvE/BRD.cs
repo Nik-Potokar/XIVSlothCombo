@@ -817,7 +817,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.BRD_Adv_DoT))
                         {
                             if (ActionReady(IronJaws) && IsEnabled(CustomComboPreset.BRD_Adv_RagingJaws) && HasEffect(Buffs.RagingStrikes) && 
-                            !WasLastAction(IronJaws) && ragingStrikesDuration < ragingJawsRenewTime && poisonRecast(40) && windRecast(40))                         
+                            !WasLastAction(IronJaws) && ragingStrikesDuration < ragingJawsRenewTime && poisonRecast(35) && windRecast(35))                         
                             { 
                                  openerFinished = true;
                                  return IronJaws;
