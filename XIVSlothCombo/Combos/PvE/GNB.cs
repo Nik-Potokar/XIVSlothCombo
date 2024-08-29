@@ -70,9 +70,10 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 GNB_VariantCure = "GNB_VariantCure";
+
             public static UserInt
-                GNB_ST_NoMercyStop = new("GNB_ST_NoMercy"),
-                GNB_AoE_NoMercyStop = new ("GNB_AoE_NoMercy");
+                GNB_ST_NoMercyStop = new("GNB_ST_NoMercyStop"),
+                GNB_AoE_NoMercyStop = new ("GNB_AoE_NoMercyStop");
         }
     
 
