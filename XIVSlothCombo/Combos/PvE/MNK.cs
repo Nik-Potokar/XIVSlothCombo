@@ -175,7 +175,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     // Masterful Blitz
-                    if (MasterfulBlitz.LevelChecked() && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.RiddleOfFire) && !IsOriginal(MasterfulBlitz))
+                    if (MasterfulBlitz.LevelChecked() && !HasEffect(Buffs.PerfectBalance) && (HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 35) && !IsOriginal(MasterfulBlitz))
                     {
                         return OriginalHook(MasterfulBlitz);
                     }
@@ -295,29 +295,29 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood) 
                                 && Brotherhood.LevelChecked()
-                                && !IsOnCooldown(Brotherhood))
+                                && ActionReady(Brotherhood))
                             {
                                 return Brotherhood;
                             }
 
                             if (IsEnabled(CustomComboPreset.MNK_STUseROF) 
                                 && RiddleOfFire.LevelChecked()
-                                && !IsOnCooldown(RiddleOfFire))
+                                && ActionReady(RiddleOfFire))
                             {
                                 return RiddleOfFire;
                             }
 
                             if (IsEnabled(CustomComboPreset.MNK_STUseROW)
                                 && RiddleOfWind.LevelChecked()
-                                && !IsOnCooldown(RiddleOfWind))
+                                && ActionReady(RiddleOfWind))
                             {
                                 return RiddleOfWind;
                             }
                         }
 
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.SecondWind) && IsOffCooldown(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.SecondWind) && ActionReady(All.SecondWind))
                             return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && IsOffCooldown(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
 
                         if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
@@ -354,7 +354,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                         {
                             // Masterful Blitz
-                            if (MasterfulBlitz.LevelChecked() && !HasEffect(Buffs.PerfectBalance) && HasEffect(Buffs.RiddleOfFire) && OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                            if (MasterfulBlitz.LevelChecked() && !HasEffect(Buffs.PerfectBalance) && (HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 35) && !IsOriginal(MasterfulBlitz))
                             {
                                 return OriginalHook(MasterfulBlitz);
                             }
@@ -440,7 +440,7 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (gauge.Chakra < 5 && Meditation.LevelChecked())
                         {
-                            return OriginalHook(Meditation); ;
+                            return OriginalHook(Meditation);
                         }
                     }
 
@@ -681,7 +681,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is RiddleOfFire && Brotherhood.LevelChecked() && IsOnCooldown(RiddleOfFire) && IsOffCooldown(Brotherhood)
+                return actionID is RiddleOfFire && Brotherhood.LevelChecked() && !ActionReady(RiddleOfFire) && ActionReady(Brotherhood)
                     ? Brotherhood
                     : actionID;
             }
