@@ -621,11 +621,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("Bard Songs Option", "This option adds the Bard's Songs to the Advanced Bard Feature.", BRD.JobID)]
-        BRD_Adv_Song = 3011,
-
-        [ParentCombo(BRD_AoE_oGCD)]
-        [CustomComboInfo("Songs Option", "Adds Songs onto AoE oGCD Feature.", BRD.JobID)]
-        BRD_oGCDSongs = 3012,
+        BRD_Adv_Song = 3011,       
 
         [ReplaceSkill(BRD.Barrage)]
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID)]
