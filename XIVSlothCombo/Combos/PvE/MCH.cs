@@ -189,7 +189,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
                         // healing
-                        if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind) && !gauge.IsOverheated)
                             return All.SecondWind;
                     }
 
@@ -203,7 +203,7 @@ namespace XIVSlothCombo.Combos.PvE
                     if (gauge.IsOverheated && LevelChecked(OriginalHook(Heatblast)))
                         return OriginalHook(Heatblast);
 
-                    if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
+                    if (ReassembledTools(ref actionID, gauge))
                         return actionID;
 
                     if (LevelChecked(Excavator) &&
@@ -239,8 +239,8 @@ namespace XIVSlothCombo.Combos.PvE
 
                 // TOOLS!! Chainsaw Drill Air Anchor Excavator
                 if (!gauge.IsOverheated && !JustUsed(OriginalHook(Heatblast)) && !ActionWatching.HasDoubleWeaved() &&
-                    !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(actionID) || !InCombat()) &
-                    ((LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery && gauge.IsRobotActive) ||
+                    !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(ActionWatching.LastWeaponskill) || !InCombat()) &
+                    ((LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery && gauge.IsRobotActive && GetCooldownRemainingTime(Wildfire) > 3) ||
                     (LevelChecked(Chainsaw) && !LevelChecked(Excavator) && ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)) && !battery) ||
                     (LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(AirAnchor) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(AirAnchor)) && !battery) ||
                     (LevelChecked(Drill) && !LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))))
@@ -388,7 +388,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                         // healing
                         if (IsEnabled(CustomComboPreset.MCH_ST_Adv_SecondWind) &&
-                           PlayerHealthPercentageHp() <= Config.MCH_ST_SecondWindThreshold && ActionReady(All.SecondWind))
+                           PlayerHealthPercentageHp() <= Config.MCH_ST_SecondWindThreshold && ActionReady(All.SecondWind) && !gauge.IsOverheated)
                             return All.SecondWind;
                     }
 
@@ -404,7 +404,7 @@ namespace XIVSlothCombo.Combos.PvE
                        gauge.IsOverheated && LevelChecked(OriginalHook(Heatblast)))
                         return OriginalHook(Heatblast);
 
-                    if (ReassembledTools(ref actionID, gauge) && !gauge.IsOverheated)
+                    if (ReassembledTools(ref actionID, gauge))
                         return actionID;
 
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Excavator) &&
@@ -448,7 +448,7 @@ namespace XIVSlothCombo.Combos.PvE
                     !gauge.IsOverheated && !JustUsed(OriginalHook(Heatblast)) && !ActionWatching.HasDoubleWeaved() &&
                     !HasEffect(Buffs.Reassembled) && ActionReady(Reassemble) && (CanWeave(ActionWatching.LastWeaponskill) || !InCombat()) &&
                     GetRemainingCharges(Reassemble) > Config.MCH_ST_ReassemblePool &&
-                    ((Config.MCH_ST_Reassembled[0] && LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery && gauge.IsRobotActive) ||
+                    ((Config.MCH_ST_Reassembled[0] && LevelChecked(Excavator) && HasEffect(Buffs.ExcavatorReady) && !battery && gauge.IsRobotActive && GetCooldownRemainingTime(Wildfire) > 3) ||
                     (Config.MCH_ST_Reassembled[1] && LevelChecked(Chainsaw) && (!LevelChecked(Excavator) || !Config.MCH_ST_Reassembled[0]) && ((GetCooldownRemainingTime(Chainsaw) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Chainsaw)) && !battery) ||
                     (Config.MCH_ST_Reassembled[2] && LevelChecked(AirAnchor) && ((GetCooldownRemainingTime(AirAnchor) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(AirAnchor)) && !battery) ||
                     (Config.MCH_ST_Reassembled[3] && LevelChecked(Drill) && (!LevelChecked(AirAnchor) || !Config.MCH_ST_Reassembled[2]) && ((GetCooldownRemainingTime(Drill) <= GetCooldownRemainingTime(OriginalHook(SplitShot)) + 0.25) || ActionReady(Drill)))))
