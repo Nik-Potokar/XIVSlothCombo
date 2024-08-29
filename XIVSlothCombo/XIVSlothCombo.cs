@@ -80,7 +80,7 @@ namespace XIVSlothCombo
             {
                 if (jobID != value && value != null)
                 {
-                    Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember = null;
+                    Combos.JobHelpers.ASTHelper.AST_QuickTargetCards.SelectedRandomMember = null;
                     Svc.Log.Debug($"Switched to job {value}");
                     PvEFeatures.HasToOpenJob = true;
                 }
@@ -104,7 +104,7 @@ namespace XIVSlothCombo
             Service.ComboCache = new CustomComboCache();
             Service.IconReplacer = new IconReplacer();
             ActionWatching.Enable();
-            Combos.JobHelpers.AST.Init();
+            Combos.JobHelpers.ASTHelper.Init();
 
             ConfigWindow = new ConfigWindow();
             TargetHelper = new();
@@ -248,7 +248,7 @@ namespace XIVSlothCombo
             Service.IconReplacer?.Dispose();
             Service.ComboCache?.Dispose();
             ActionWatching.Dispose();
-            Combos.JobHelpers.AST.Dispose();
+            Combos.JobHelpers.ASTHelper.Dispose();
             DisposeOpeners();
 
             Svc.ClientState.Login -= PrintLoginMessage;

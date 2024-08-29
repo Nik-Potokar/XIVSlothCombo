@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using XIVSlothCombo.Combos.PvE;
+using XIVSlothCombo.Combos.JobHelpers;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 using XIVSlothCombo.Services;
 
@@ -111,28 +112,28 @@ namespace XIVSlothCombo.Data
         private unsafe static void CheckForChangedTarget(uint actionId, ref ulong targetObjectId)
         {
             if (actionId is AST.Balance or AST.Spear &&
-                Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null &&
-                !OutOfRange(actionId, Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember))
+                ASTHelper.AST_QuickTargetCards.SelectedRandomMember is not null &&
+                !OutOfRange(actionId, Svc.ClientState.LocalPlayer!, ASTHelper.AST_QuickTargetCards.SelectedRandomMember))
             {
                 int targetOptions = AST.Config.AST_QuickTarget_Override;
 
                 switch (targetOptions)
                 {
                     case 0:
-                        Svc.Log.Debug($"Switched to {Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.Name}");
-                        targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
+                        Svc.Log.Debug($"Switched to {ASTHelper.AST_QuickTargetCards.SelectedRandomMember.Name}");
+                        targetObjectId = ASTHelper.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                     case 1:
                         if (HasFriendlyTarget())
                             targetObjectId = Svc.ClientState.LocalPlayer.TargetObject.GameObjectId;
                         else
-                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
+                            targetObjectId = ASTHelper.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                     case 2:
                         if (GetHealTarget(true, true) is not null)
                             targetObjectId = GetHealTarget(true, true).GameObjectId;
                         else
-                            targetObjectId = Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
+                            targetObjectId = ASTHelper.AST_QuickTargetCards.SelectedRandomMember.GameObjectId;
                         break;
                 }
             }

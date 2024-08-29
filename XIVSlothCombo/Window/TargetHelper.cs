@@ -6,9 +6,9 @@ using ImGuiNET;
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
-
 
 namespace XIVSlothCombo.Window;
 
@@ -22,7 +22,7 @@ internal class TargetHelper : Dalamud.Interface.Windowing.Window
 
     internal unsafe void DrawTargetHelper()
     {
-        if (Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember is not null)
+        if (ASTHelper.AST_QuickTargetCards.SelectedRandomMember is not null)
         {
             IntPtr partyPTR = Svc.GameGui.GetAddonByName("_PartyList", 1);
             if (partyPTR == IntPtr.Zero)
@@ -34,7 +34,7 @@ internal class TargetHelper : Dalamud.Interface.Windowing.Window
             for (int i = 1; i <= 8; i++)
             {
                 if (CustomComboFunctions.GetPartySlot(i) is null) continue;
-                if (CustomComboFunctions.GetPartySlot(i).GameObjectId == Combos.JobHelpers.AST.AST_QuickTargetCards.SelectedRandomMember.GameObjectId)
+                if (CustomComboFunctions.GetPartySlot(i).GameObjectId == ASTHelper.AST_QuickTargetCards.SelectedRandomMember.GameObjectId)
                 {
                     var member = i switch
                     {

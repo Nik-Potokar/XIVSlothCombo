@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
-using ECommons.ExcelServices;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -12,7 +11,7 @@ using static XIVSlothCombo.Combos.PvE.AST;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
-    internal static class AST
+    internal static class ASTHelper
     {
         internal static void Init()
         {
