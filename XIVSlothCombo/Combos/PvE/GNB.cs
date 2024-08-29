@@ -1,7 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
+using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -68,7 +70,11 @@ namespace XIVSlothCombo.Combos.PvE
         {
             public const string
                 GNB_VariantCure = "GNB_VariantCure";
+            public static UserInt
+                GNB_ST_NoMercyStop = new("GNB_ST_NoMercy"),
+                GNB_AoE_NoMercyStop = new ("GNB_AoE_NoMercy");
         }
+    
 
         internal class GNB_ST_SimpleMode : CustomCombo
         {
@@ -327,6 +333,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var nmCD = GetCooldownRemainingTime(NoMercy); //NoMercy's cooldown; 60s total
                     var bfCD = GetCooldownRemainingTime(Bloodfest); // Bloodfest's cooldown; 120s total
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; //2.5 is base SkS, but can work with 2.4x
+                    int nmStop = PluginConfiguration.GetCustomIntValue(Config.GNB_ST_NoMercyStop);
 
                     //Variant Cure
                     if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure)
@@ -341,7 +348,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //NoMercy
                     if (IsEnabled(CustomComboPreset.GNB_ST_Advanced_CooldownsGroup) && IsEnabled(CustomComboPreset.GNB_ST_NoMercy))
                     {
-                        if (ActionReady(NoMercy))
+                        if (ActionReady(NoMercy) && GetTargetHPPercent() >= nmStop)
                         {
                             if (CanWeave(actionID))
                             {
@@ -888,6 +895,7 @@ namespace XIVSlothCombo.Combos.PvE
                     var GunStep = GetJobGauge<GNBGauge>().AmmoComboStep; // For GnashingFang & (possibly) ReignCombo purposes
                     var bfCD = GetCooldownRemainingTime(Bloodfest); // Bloodfest's cooldown; 120s total
                     float GCD = GetCooldown(KeenEdge).CooldownTotal; //2.5 is base SkS, but can work with 2.4x
+                    int nmStop = PluginConfiguration.GetCustomIntValue(Config.GNB_AoE_NoMercyStop);
 
                     //Variant Cure
                     if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_VariantCure))
@@ -909,7 +917,7 @@ namespace XIVSlothCombo.Combos.PvE
                                 return Variant.VariantUltimatum;
 
                             //NoMercy
-                            if (IsEnabled(CustomComboPreset.GNB_AoE_NoMercy) && ActionReady(NoMercy)) //use on CD
+                            if (IsEnabled(CustomComboPreset.GNB_AoE_NoMercy) && ActionReady(NoMercy) && GetTargetHPPercent() > nmStop) //use on CD
                                 return NoMercy;
                             //BowShock
                             if (IsEnabled(CustomComboPreset.GNB_AoE_BowShock) && ActionReady(BowShock) && LevelChecked(BowShock) && HasEffect(Buffs.NoMercy)) //use on CD under NM

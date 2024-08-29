@@ -1518,6 +1518,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.GNB_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
+            if (preset == CustomComboPreset.GNB_ST_NoMercy)
+                UserConfig.DrawSliderInt(0, 10, GNB.Config.GNB_ST_NoMercyStop, "Disable Usage if Target HP% is below set value.\nTo Disable this, set to 0.");
+            if (preset == CustomComboPreset.GNB_AoE_NoMercy)
+                UserConfig.DrawSliderInt(0, 10, GNB.Config.GNB_AoE_NoMercyStop, "Disable Usage if Target HP% is below set value.\nTo Disable this, set to 0.");
 
             #endregion
             // ====================================================================================

@@ -1594,7 +1594,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Continuation Option", "Adds Continuation to Gnashing Fang when available.", GNB.JobID)]
         GNB_GF_Continuation = 7301,
 
-        [ConflictingCombos(GNB_ST_NoMercy)]
+        [ConflictingCombos(GNB_NM_Features)]
         [ParentCombo(GNB_GF_Features)]
         [CustomComboInfo("No Mercy Option", "Adds No Mercy to Gnashing Fang when available.", GNB.JobID)]
         GNB_GF_NoMercy = 7302,
@@ -1652,7 +1652,7 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region No Mercy
-        [ConflictingCombos(GNB_ST_Simple, GNB_AoE_Simple, GNB_ST_NoMercy, GNB_AoE_NoMercy, GNB_GF_NoMercy)]
+        [ConflictingCombos(GNB_ST_Simple, GNB_AoE_Simple, GNB_GF_Features)]
         [ReplaceSkill(GNB.NoMercy)]
         [CustomComboInfo("No Mercy Features", "Collection of No Mercy related features.", GNB.JobID)]
         GNB_NM_Features = 7500,
