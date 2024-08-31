@@ -288,7 +288,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                             return true;
 
                         //even mins
-                        if (BSUsed >= 2 && gauge.Battery == 100 && JustUsed(AirAnchor))
+                        if (BSUsed >= 2 && gauge.Battery == 100)
                             return true;
 
                         //odd mins 1st queen
