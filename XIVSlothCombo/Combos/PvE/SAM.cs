@@ -945,12 +945,12 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Shoha) && gauge.MeditationStacks is 3 && CanWeave(actionID))
                         return Shoha;
 
-                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_OgiNamikiri) &&
-                        ActionReady(OgiNamikiri) && (gauge.Kaeshi is Kaeshi.NAMIKIRI || HasEffect(Buffs.OgiNamikiriReady)))
+                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_OgiNamikiri) && 
+                        LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady))
                         return OriginalHook(OgiNamikiri);
 
-                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_TsubameGaeshi) &&
-                        ActionReady(TsubameGaeshi) && (gauge.Kaeshi != Kaeshi.NONE || WasLastWeaponskill(TendoSetsugekka)))
+                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_TsubameGaeshi) && 
+                        ((LevelChecked(TsubameGaeshi) && HasEffect(Buffs.TsubameReady)) || (LevelChecked(TendoKaeshiSetsugekka) && HasEffect(Buffs.TendoKaeshiSetsugekkaReady))))
                         return OriginalHook(TsubameGaeshi);
                 }
                 return actionID;
