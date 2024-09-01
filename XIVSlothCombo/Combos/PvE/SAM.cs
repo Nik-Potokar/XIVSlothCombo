@@ -241,7 +241,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (OptimalMeikyo())
                                 return MeikyoShisui;
-                            if (GetCooldownRemainingTime(MeikyoShisui) <= GCD * 3 && ComboTimer is 0) //Overcap protection for scuffed runs
+                            if (GetCooldownRemainingTime(MeikyoShisui) <= GCD * 3 && ComboTimer is 0 && !HasEffect(Buffs.MeikyoShisui)) //Overcap protection for scuffed runs
                                 return MeikyoShisui;
                         }
 
@@ -450,7 +450,7 @@ namespace XIVSlothCombo.Combos.PvE
                             {
                                 if (OptimalMeikyo())
                                     return MeikyoShisui;
-                                if (GetCooldownRemainingTime(MeikyoShisui) <= GCD * 3 && ComboTimer is 0) //Overcap protection for scuffed runs
+                                if (GetCooldownRemainingTime(MeikyoShisui) <= GCD * 3 && ComboTimer is 0 && !HasEffect(Buffs.MeikyoShisui)) //Overcap protection for scuffed runs
                                     return MeikyoShisui;
                             }
 
