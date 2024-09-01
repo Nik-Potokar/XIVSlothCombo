@@ -952,7 +952,7 @@ namespace XIVSlothCombo.Combos.PvE
                             ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
                             (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD < 6))) // Bloodfest prep
                             return FatedCircle;
-                        if (Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
+                        if (IsEnabled(CustomComboPreset.GNB_AoE_noFatedCircle) && Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
                             (HasEffect(Buffs.NoMercy) && GunStep == 0)) // Bloodfest prep
                             return BurstStrike;
                     }
@@ -964,9 +964,9 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             if (Ammo == MaxCartridges(level))
                             {
-                                if (LevelChecked(FatedCircle))
+                                if (IsEnabled(CustomComboPreset.GNB_AoE_Overcap) && LevelChecked(FatedCircle))
                                     return FatedCircle;
-                                if (!LevelChecked(FatedCircle))
+                                if (IsEnabled(CustomComboPreset.GNB_AoE_BSOvercap) && !LevelChecked(FatedCircle))
                                     return BurstStrike;
                             }
                             if (Ammo != MaxCartridges(level))
