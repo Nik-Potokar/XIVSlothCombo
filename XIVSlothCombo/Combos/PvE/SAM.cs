@@ -1,8 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using Lumina.Excel.GeneratedSheets2;
 using System;
 using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers;
