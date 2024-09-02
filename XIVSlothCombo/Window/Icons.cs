@@ -4,6 +4,7 @@ using Dalamud.Utility;
 using ECommons.DalamudServices;
 using Lumina.Data.Files;
 using System.Collections.Generic;
+using XIVSlothCombo.Combos.PvE;
 
 namespace XIVSlothCombo.Window
 {
@@ -12,17 +13,21 @@ namespace XIVSlothCombo.Window
         public static Dictionary<uint, IDalamudTextureWrap> CachedModdedIcons = new();
         public static IDalamudTextureWrap? GetJobIcon(uint jobId)
         {
-            if (jobId == 0 || jobId > 42) return null;
-            var icon = GetTextureFromIconId(62100 + jobId);
-
-            return icon;
+            switch (jobId)
+            {
+                case All.JobID: jobId = 62146; break; //Adventurer / General
+                case > All.JobID and <= 42: jobId += 62100; break; //Classes
+                case DOL.JobID: jobId = 82096; break;
+                default: return null; //Unknown, return null
+            }
+            return GetTextureFromIconId(jobId);
         }
 
         private static string ResolvePath(string path) => Svc.TextureSubstitution.GetSubstitutedPath(path);
 
         public static IDalamudTextureWrap? GetTextureFromIconId(uint iconId, uint stackCount = 0, bool hdIcon = true)
         {
-            GameIconLookup lookup = new GameIconLookup(iconId + stackCount, false, hdIcon);
+            GameIconLookup lookup = new(iconId + stackCount, false, hdIcon);
             string path = Svc.Texture.GetIconPath(lookup);
             string resolvePath = ResolvePath(path);
 
@@ -32,7 +37,7 @@ namespace XIVSlothCombo.Window
 
             try
             {
-                if (CachedModdedIcons.ContainsKey(iconId)) return CachedModdedIcons[iconId];
+                if (CachedModdedIcons.TryGetValue(iconId, out IDalamudTextureWrap? cachedIcon)) return cachedIcon;
                 var tex = Svc.Data.GameData.GetFileFromDisk<TexFile>(resolvePath);
                 var output = Svc.Texture.CreateFromRaw(RawImageSpecification.Rgba32(tex.Header.Width, tex.Header.Width), tex.GetRgbaImageData());
                 if (output != null)
