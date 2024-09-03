@@ -647,9 +647,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Buffs Option", "Adds buffs onto the Advanced Bard feature.", BRD.JobID)]
         BRD_Adv_Buffs = 3017,
 
-        [ParentCombo(BRD_Adv_Buffs)]
-        [CustomComboInfo("Buffs - Radiant Option", "Adds Radiant Finale to theBuffs feature.", BRD.JobID)]
+        [ParentCombo(BRD_ST_AdvMode)]
+        [CustomComboInfo("Resonant Option", "Adds Resonant Arrow to the Rotation after Barrage.", BRD.JobID)]
+        BRD_Adv_BuffsResonant = 3041,
+
+        [ParentCombo(BRD_ST_AdvMode)]
+        [CustomComboInfo("Buffs - Radiant Option", "Adds Radiant Finale to the Advanced Bard feature.", BRD.JobID)]
         BRD_Adv_BuffsRadiant = 3018,
+
+        [ParentCombo(BRD_ST_AdvMode)]
+        [CustomComboInfo("Encore Option", "Adds Radiant Encore to the Rotation after Finale.", BRD.JobID)]
+        BRD_Adv_BuffsEncore = 3042,
 
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("No Waste Option", "Adds enemy health checking on mobs for buffs, DoTs and Songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
@@ -717,7 +725,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_AoE_AdvMode)]
         [CustomComboInfo("AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
         BRD_AoE_Adv_NoWaste = 3033,
-        // Last value = 3040
+        // Last value = 3042
 
         #endregion
 
