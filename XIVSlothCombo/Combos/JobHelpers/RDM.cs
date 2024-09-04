@@ -5,7 +5,7 @@ using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.PvE.RDM;
-using Config = XIVSlothCombo.Combos.Configs.RDMConfig;
+using Config = XIVSlothCombo.Combos.PvE.Configs.RDMConfig;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers

@@ -13,7 +13,7 @@ using System.Reflection.Emit;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
-using XIVSlothCombo.Combos.Configs;
+using XIVSlothCombo.Combos.PvE.Configs;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;

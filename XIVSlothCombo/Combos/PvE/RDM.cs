@@ -1,7 +1,7 @@
 using Dalamud.Game.ClientState.Conditions;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
-using Config = XIVSlothCombo.Combos.Configs.RDMConfig;
+using Config = XIVSlothCombo.Combos.PvE.Configs.RDMConfig;
 using static XIVSlothCombo.Combos.JobHelpers.RDMHelper;
 
 namespace XIVSlothCombo.Combos.PvE

@@ -521,7 +521,7 @@ namespace XIVSlothCombo
                                     32 => typeof(DRK.Config),
                                     33 => typeof(AST.Config),
                                     34 => typeof(SAM.Config),
-                                    35 => typeof(Combos.Configs.RDMConfig),
+                                    35 => typeof(XIVSlothCombo.Combos.PvE.Configs.RDMConfig),
                                     //36 => typeof(BLU.Config),
                                     37 => typeof(GNB.Config),
                                     38 => typeof(DNC.Config),

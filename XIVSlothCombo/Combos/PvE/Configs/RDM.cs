@@ -3,7 +3,7 @@ using ImGuiNET;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Window.Functions;
 
-namespace XIVSlothCombo.Combos.Configs
+namespace XIVSlothCombo.Combos.PvE.Configs
 {
     internal static class RDMConfig
     {
