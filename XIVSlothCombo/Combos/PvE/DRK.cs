@@ -245,18 +245,16 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LevelChecked(Delirium)
                     && IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller))
                 {
-                    //Regular Bloodspiller
+                    //Bloodspiller under Delirium
                     if (GetBuffStacks(Buffs.Delirium) > 0
                         || (TraitLevelChecked(Traits.EnhancedDelirium)
                             && GetBuffStacks(Buffs.OlderDelirium) > 0))
                         return Bloodspiller;
 
-                    //Blood management before Delirium
+                    //Blood management outside of Delirium
                     if (IsEnabled(CustomComboPreset.DRK_ST_Delirium)
-                        && (
-                            (gauge.Blood >= 60 && GetCooldownRemainingTime(Delirium) is > 0 and < 3)
-                            || (gauge.Blood >= 50 && GetCooldownRemainingTime(Delirium) > 37)
-                            ))
+                        && ((gauge.Blood >= 60 && GetCooldownRemainingTime(Delirium) is > 0 and < 3) // Prep for Delirium
+                            || (gauge.Blood >= 50 && GetCooldownRemainingTime(Delirium) > 37))) // Regular Bloodspiller
                         return Bloodspiller;
                 }
 
