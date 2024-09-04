@@ -221,11 +221,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Earthly Star Option", "Adds Earthly Star." +
                                                 "\nTo be used in conjunction with Redirect/Reaction/etc", AST.JobID, 11)]
         AST_ST_DPS_EarthlyStar = 1051,
-
-        [ParentCombo(AST_ST_DPS)]
-        [CustomComboInfo("Earthly Star Prepull Option", "Adds Earthly Star Prepull." +
-                                               "\nIf using redirect stack, suggest target > melee > self", AST.JobID, 12)]
-        AST_ST_DPS_EarthlyStarPrepull = 1054,
+               
         #endregion
 
         #region AOE DPS

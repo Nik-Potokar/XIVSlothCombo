@@ -219,10 +219,6 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.AST_DPS_AutoDraw) &&
                         ActionReady(OriginalHook(AstralDraw)) && (Gauge.DrawnCards.All(x => x is CardType.NONE) || (DrawnCard == CardType.NONE && Config.AST_ST_DPS_OverwriteCards)))
                         return OriginalHook(AstralDraw);
-
-                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStarPrepull) &&
-                        ActionReady(EarthlyStar))
-                        return EarthlyStar;
                 }
                 //In combat
                 if (((!AlternateMode && MaleficList.Contains(actionID)) ||
