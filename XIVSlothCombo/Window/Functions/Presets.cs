@@ -13,6 +13,7 @@ using System.Reflection.Emit;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
+using XIVSlothCombo.Combos.Configs;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
@@ -242,12 +243,19 @@ namespace XIVSlothCombo.Window.Functions
                 }
                 ImGui.PopStyleColor();
             }
-
-            UserConfigItems.Draw(preset, enabled);
+            if (enabled)
+            {
+                switch (info.JobID)
+                {
+                    case 35: RDMConfig.Draw(preset); break;
+                    default: UserConfigItems.Draw(preset, enabled); break;
+                }
+            }
 
             i++;
 
-            var children = presetChildren.ContainsKey(preset) ? presetChildren[preset] : null;
+            //var children = presetChildren.ContainsKey(preset) ? presetChildren[preset] : null
+            presetChildren.TryGetValue(preset, out var children);                
 
             if (children != null)
             {

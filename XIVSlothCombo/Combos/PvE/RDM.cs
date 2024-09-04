@@ -1,8 +1,7 @@
 using Dalamud.Game.ClientState.Conditions;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
-using XIVSlothCombo.CustomComboNS.Functions;
+using Config = XIVSlothCombo.Combos.Configs.RDMConfig;
 using static XIVSlothCombo.Combos.JobHelpers.RDMHelper;
 
 namespace XIVSlothCombo.Combos.PvE
@@ -89,50 +88,6 @@ namespace XIVSlothCombo.Combos.PvE
                 EnhancedManaficationII = 622,
                 EnhancedManaficationIII = 622,
                 EnhancedAccelerationII = 624;
-        }
-
-        public static class Config
-        {
-            public static UserInt
-                RDM_VariantCure = new("RDM_VariantCure"),
-                RDM_ST_Lucid_Threshold = new("RDM_LucidDreaming_Threshold", 6500),
-                RDM_AoE_Lucid_Threshold = new("RDM_AoE_Lucid_Threshold", 6500),
-                RDM_AoE_MoulinetRange = new("RDM_MoulinetRange");
-            public static UserBool
-                RDM_ST_oGCD_OnAction_Adv = new("RDM_ST_oGCD_OnAction_Adv"),
-                RDM_ST_oGCD_Fleche = new("RDM_ST_oGCD_Fleche"),
-                RDM_ST_oGCD_ContraSixte = new("RDM_ST_oGCD_ContraSixte"),
-                RDM_ST_oGCD_Engagement = new("RDM_ST_oGCD_Engagement"),
-                RDM_ST_oGCD_Engagement_Pooling = new("RDM_ST_oGCD_Engagement_Pooling"),
-                RDM_ST_oGCD_CorpACorps = new("RDM_ST_oGCD_CorpACorps"),
-                RDM_ST_oGCD_CorpACorps_Melee = new("RDM_ST_oGCD_CorpACorps_Melee"),
-                RDM_ST_oGCD_CorpACorps_Pooling = new("RDM_ST_oGCD_CorpACorps_Pooling"),
-                RDM_ST_oGCD_ViceOfThorns = new("RDM_ST_oGCD_ViceOfThorns"),
-                RDM_ST_oGCD_Prefulgence = new("RDM_ST_oGCD_Prefulgence"),
-                RDM_ST_MeleeCombo_Adv = new("RDM_ST_MeleeCombo_Adv"),
-                RDM_ST_MeleeFinisher_Adv = new("RDM_ST_MeleeFinisher_Adv"),
-                RDM_ST_MeleeEnforced = new("RDM_ST_MeleeEnforced"),
-
-                RDM_AoE_oGCD_OnAction_Adv = new("RDM_AoE_oGCD_OnAction_Adv"),
-                RDM_AoE_oGCD_Fleche = new("RDM_AoE_oGCD_Fleche"),
-                RDM_AoE_oGCD_ContraSixte = new("RDM_AoE_oGCD_ContraSixte"),
-                RDM_AoE_oGCD_Engagement = new("RDM_AoE_oGCD_Engagement"),
-                RDM_AoE_oGCD_Engagement_Pooling = new("RDM_AoE_oGCD_Engagement_Pooling"),
-                RDM_AoE_oGCD_CorpACorps = new("RDM_AoE_oGCD_CorpACorps"),
-                RDM_AoE_oGCD_CorpACorps_Melee = new("RDM_AoE_oGCD_CorpACorps_Melee"),
-                RDM_AoE_oGCD_CorpACorps_Pooling = new("RDM_AoE_oGCD_CorpACorps_Pooling"),
-                RDM_AoE_oGCD_ViceOfThorns = new("RDM_AoE_oGCD_ViceOfThorns"),
-                RDM_AoE_oGCD_Prefulgence = new("RDM_AoE_oGCD_Prefulgence"),
-                RDM_AoE_MeleeCombo_Adv = new("RDM_AoE_MeleeCombo_Adv"),
-                RDM_AoE_MeleeFinisher_Adv = new("RDM_AoE_MeleeFinisher_Adv");
-            public static UserBoolArray
-                RDM_ST_oGCD_OnAction = new("RDM_ST_oGCD_OnAction"),
-                RDM_ST_MeleeCombo_OnAction = new("RDM_ST_MeleeCombo_OnAction"),
-                RDM_ST_MeleeFinisher_OnAction = new("RDM_ST_MeleeFinisher_OnAction"),
-
-                RDM_AoE_oGCD_OnAction = new("RDM_AoE_oGCD_OnAction"),
-                RDM_AoE_MeleeCombo_OnAction = new("RDM_AoE_MeleeCombo_OnAction"),
-                RDM_AoE_MeleeFinisher_OnAction = new("RDM_AoE_MeleeFinisher_OnAction");
         }
 
         internal class RDM_VariantVerCure : CustomCombo

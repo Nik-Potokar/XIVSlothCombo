@@ -5,6 +5,7 @@ using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.PvE.RDM;
+using Config = XIVSlothCombo.Combos.Configs.RDMConfig;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers
@@ -166,7 +167,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 uint placeOGCD = 0;
 
                 bool fleche = SingleTarget ? Config.RDM_ST_oGCD_Fleche : Config.RDM_AoE_oGCD_Fleche;
-                bool contra = SingleTarget ? Config.RDM_ST_oGCD_ContraSixte : Config.RDM_AoE_oGCD_ContraSixte;
+                bool contra = SingleTarget ? Config.RDM_ST_oGCD_ContreSixte : Config.RDM_AoE_oGCD_ContreSixte;
                 bool engagement = SingleTarget ? Config.RDM_ST_oGCD_Engagement : Config.RDM_AoE_oGCD_Engagement;
                 bool vice = SingleTarget ? Config.RDM_ST_oGCD_ViceOfThorns : Config.RDM_AoE_oGCD_ViceOfThorns;
                 bool prefulg = SingleTarget ? Config.RDM_ST_oGCD_Prefulgence : Config.RDM_AoE_oGCD_Prefulgence;
