@@ -220,7 +220,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(OriginalHook(AstralDraw)) && (Gauge.DrawnCards.All(x => x is CardType.NONE) || (DrawnCard == CardType.NONE && Config.AST_ST_DPS_OverwriteCards)))
                         return OriginalHook(AstralDraw);
 
-                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) &&
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStarPrepull) &&
                         ActionReady(EarthlyStar))
                         return EarthlyStar;
                 }
