@@ -271,7 +271,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                 var needToTech =
                     IsEnabled(CustomComboPreset.DNC_ST_Adv_TS) && // Enabled
-                    GetCooldownRemainingTime(TechnicalStep) < 0.05f && // Up or about to be (some anti-drift)
+                    GetCooldownRemainingTime(TechnicalStep) < 0.3f && // Up or about to be (some anti-drift)
                     !HasEffect(Buffs.StandardStep) && // After Standard
                     IsOnCooldown(StandardStep) &&
                     GetTargetHPPercent() > targetHpThresholdTechnical &&// HP% check
