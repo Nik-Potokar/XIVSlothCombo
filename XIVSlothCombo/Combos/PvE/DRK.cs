@@ -59,6 +59,7 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 // Main Buffs
                 BloodWeapon = 742,
+                OlderDelirium = 1972,
                 Delirium = 3836,
 
                 // Periodic Buffs
@@ -70,10 +71,10 @@ namespace XIVSlothCombo.Combos.PvE
                 Scorn = 3837;
         }
 
-        public static class Debuffs
+        public static class Traits
         {
-            public const ushort
-                Placeholder = 1;
+            public const uint
+                EnhancedDelirium = 572;
         }
 
         public static class Config
@@ -245,7 +246,9 @@ namespace XIVSlothCombo.Combos.PvE
                     && IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller))
                 {
                     //Regular Bloodspiller
-                    if (GetBuffStacks(Buffs.Delirium) > 0)
+                    if (GetBuffStacks(Buffs.Delirium) > 0
+                        || (TraitLevelChecked(Traits.EnhancedDelirium)
+                            && GetBuffStacks(Buffs.OlderDelirium) > 0))
                         return Bloodspiller;
 
                     //Blood management before Delirium
