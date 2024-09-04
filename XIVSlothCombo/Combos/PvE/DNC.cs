@@ -269,13 +269,29 @@ namespace XIVSlothCombo.Combos.PvE
                 var targetHpThresholdTechnical = Config.DNC_ST_Adv_TSBurstPercent;
                 var gcd = GetCooldown(Fountain).CooldownTotal;
 
+                // Thresholds to wait for TS/SS to come off CD
+                var longAlignmentThreshold = 0.6f;
+                var shortAlignmentThreshold = 0.3f;
+                if (IsEnabled(CustomComboPreset.DNC_ST_Adv_Flourish_ForcedTripleWeave))
+                {
+                    longAlignmentThreshold = 0.3f;
+                    shortAlignmentThreshold = 0.1f;
+                }
+
                 var needToTech =
                     IsEnabled(CustomComboPreset.DNC_ST_Adv_TS) && // Enabled
-                    GetCooldownRemainingTime(TechnicalStep) < 0.3f && // Up or about to be (some anti-drift)
+                    GetCooldownRemainingTime(TechnicalStep) < longAlignmentThreshold && // Up or about to be (some anti-drift)
                     !HasEffect(Buffs.StandardStep) && // After Standard
                     IsOnCooldown(StandardStep) &&
                     GetTargetHPPercent() > targetHpThresholdTechnical &&// HP% check
                     LevelChecked(TechnicalStep);
+
+                // More Threshold, but only for SS
+                if (IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold))
+                {
+                    longAlignmentThreshold = gcd;
+                    shortAlignmentThreshold = gcd;
+                }
 
                 var needToStandardOrFinish =
                     IsEnabled(CustomComboPreset.DNC_ST_Adv_SS) && // Enabled
@@ -287,17 +303,13 @@ namespace XIVSlothCombo.Combos.PvE
                 var needToFinish =
                     HasEffect(Buffs.FinishingMoveReady) &&
                     !HasEffect(Buffs.LastDanceReady) &&
-                    ((GetCooldownRemainingTime(StandardStep) < 0.3f && // About to be up - some more aggressive anti-drift
+                    ((GetCooldownRemainingTime(StandardStep) < longAlignmentThreshold && // About to be up - some more aggressive anti-drift
                       HasEffect(Buffs.TechnicalFinish)) ||
                      (!HasEffect(Buffs.TechnicalFinish) && // Anti-Drift outside of Tech
-                      GetCooldownRemainingTime(StandardStep) < 0.05f));
+                      GetCooldownRemainingTime(StandardStep) < shortAlignmentThreshold));
 
                 var needToStandard =
-                    ((!IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold) &&
-                      GetCooldownRemainingTime(StandardStep) < 0.1f) || // Up or about to be (some anti-drift)
-                     IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold) &&
-                     GetCooldownRemainingTime(StandardStep) < gcd) // About to be up next GCD
-                    &&
+                    GetCooldownRemainingTime(StandardStep) < longAlignmentThreshold && // Up or about to be (some anti-drift)
                     !HasEffect(Buffs.FinishingMoveReady) &&
                     (IsOffCooldown(Flourish) ||
                      GetCooldownRemainingTime(Flourish) > 5) &&
