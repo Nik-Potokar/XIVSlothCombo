@@ -286,19 +286,19 @@ namespace XIVSlothCombo.Combos.PvE
                     GetTargetHPPercent() > targetHpThresholdTechnical &&// HP% check
                     LevelChecked(TechnicalStep);
 
-                // More Threshold, but only for SS
-                if (IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold))
-                {
-                    longAlignmentThreshold = gcd;
-                    shortAlignmentThreshold = gcd;
-                }
-
                 var needToStandardOrFinish =
                     IsEnabled(CustomComboPreset.DNC_ST_Adv_SS) && // Enabled
                     GetTargetHPPercent() > targetHpThresholdStandard && // HP% check
                     (IsOffCooldown(TechnicalStep) || // Checking burst is ready for standard
                      GetCooldownRemainingTime(TechnicalStep) > 5) && // Don't mangle
                     LevelChecked(StandardStep);
+
+                // More Threshold, but only for SS
+                if (IsEnabled(CustomComboPreset.DNC_ST_Adv_SS_Hold))
+                {
+                    longAlignmentThreshold = gcd;
+                    shortAlignmentThreshold = gcd;
+                }
 
                 var needToFinish =
                     HasEffect(Buffs.FinishingMoveReady) &&
