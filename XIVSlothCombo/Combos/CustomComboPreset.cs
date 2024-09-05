@@ -1484,59 +1484,61 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Advanced Mode - Single Target", "Replace Keen Edge with its combo chain.\nThis is the ideal selection for experienced users of the job.", GNB.JobID)]
         GNB_ST_Advanced = 7003,
 
-        #region Lightning Shot
-        [ParentCombo(GNB_ST_Advanced)]
-        [CustomComboInfo("Lightning Shot Uptime Option", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID)]
-        GNB_ST_RangedUptime = 7004,
-        #endregion
-
-        #region Gnashing Fang
-        [ParentCombo(GNB_ST_Advanced)]
-        [CustomComboInfo("Continuation Option", "Adds Continuation & Hypervelocity into the rotation.\n'Gnashing Fang' option must be enabled or started manually.", GNB.JobID)]
-        GNB_ST_Continuation = 7005,
-
-        [ParentCombo(GNB_ST_Continuation)]
-        [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang combo into the rotation.", GNB.JobID)]
-        GNB_ST_GnashingStarter = 7006,
-        #endregion
-
         #region Cooldowns
         [ParentCombo(GNB_ST_Advanced)]
         [CustomComboInfo("Cooldowns Option", "Adds various cooldowns into the rotation.", GNB.JobID)]
-        GNB_ST_Advanced_CooldownsGroup = 7007,
+        GNB_ST_Advanced_CooldownsGroup = 7004,
 
         [ConflictingCombos(GNB_NM_Features)]
         [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
         [CustomComboInfo("No Mercy Option", "Adds No Mercy into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_NoMercy = 7008,
-
-        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
-        [CustomComboInfo("Danger/Blasting Zone Option", "Adds Danger/Blasting Zone into the rotation when available.", GNB.JobID)]
-        GNB_ST_BlastingZone = 7009,
-
-        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
-        [CustomComboInfo("Bow Shock Option", "Adds Bow Shock into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_BowShock = 7010,
-
-        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
-        [CustomComboInfo("Bloodfest Option", "Adds Bloodfest into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_Bloodfest = 7011,
+        GNB_ST_NoMercy = 7005,
 
         [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
         [CustomComboInfo("Sonic Break Option", "Adds Sonic Break into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_SonicBreak = 7012,
+        GNB_ST_SonicBreak = 7006,
+
+        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
+        [CustomComboInfo("Danger/Blasting Zone Option", "Adds Danger/Blasting Zone into the rotation when available.", GNB.JobID)]
+        GNB_ST_BlastingZone = 7007,
+
+        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
+        [CustomComboInfo("Bow Shock Option", "Adds Bow Shock into the rotation when appropriate.", GNB.JobID)]
+        GNB_ST_BowShock = 7008,
+
+        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
+        [CustomComboInfo("Bloodfest Option", "Adds Bloodfest into the rotation when appropriate.", GNB.JobID)]
+        GNB_ST_Bloodfest = 7009,
+
+        [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
+        [CustomComboInfo("Gnashing Fang Option", "Adds Gnashing Fang combo into the rotation.", GNB.JobID)]
+        GNB_ST_Gnashing = 7010,
+
+        [ParentCombo(GNB_ST_Gnashing)]
+        [CustomComboInfo("Continuation Option", "Adds Continuation & Hypervelocity into the rotation.\n'Gnashing Fang' option must be enabled or started manually.", GNB.JobID)]
+        GNB_ST_Continuation = 7011,
 
         [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
         [CustomComboInfo("Double Down Option", "Adds Double Down into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_DoubleDown = 7013,
+        GNB_ST_DoubleDown = 7012,
 
         [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
-        [CustomComboInfo("Reign combo Option", "Adds Reign/Noble/Lionheart into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_Reign = 7014,
+        [CustomComboInfo("Reign Combo Option", "Adds Reign/Noble/Lionheart into the rotation when appropriate.", GNB.JobID)]
+        GNB_ST_Reign = 7013,
 
         [ParentCombo(GNB_ST_Advanced_CooldownsGroup)]
         [CustomComboInfo("Burst Strike Option", "Adds Burst Strike into the rotation when appropriate.", GNB.JobID)]
-        GNB_ST_BurstStrike = 7015,
+        GNB_ST_BurstStrike = 7014,
+
+        [ParentCombo(GNB_ST_Advanced)]
+        [CustomComboInfo("Ammo Overcap Option", "Adds Burst Strike into the AoE rotation if you have max cartridges & your last combo action was Brutal Shell.", GNB.JobID)]
+        GNB_ST_Overcap = 7015,
+        #endregion
+
+        #region Lightning Shot
+        [ParentCombo(GNB_ST_Advanced)]
+        [CustomComboInfo("Lightning Shot Uptime Option", "Adds Lightning Shot to the main combo when you are out of range.", GNB.JobID)]
+        GNB_ST_RangedUptime = 7016,
         #endregion
 
         #endregion 
@@ -1585,11 +1587,11 @@ namespace XIVSlothCombo.Combos
         GNB_AoE_noFatedCircle = 7209,
 
         [ParentCombo(GNB_AoE_Advanced)]
-        [CustomComboInfo("Ammo Overcap Option", "Adds Fated Circle into the AoE rotation if you have max cartridges & your last action was Demon Slice.", GNB.JobID)]
+        [CustomComboInfo("Ammo Overcap Option", "Adds Fated Circle into the AoE rotation if you have max cartridges & your last combo action was Demon Slice.", GNB.JobID)]
         GNB_AoE_Overcap = 7210,
 
         [ParentCombo(GNB_AoE_Overcap)]
-        [CustomComboInfo("Ammo Overcap Burst Strike Option", "Adds Burst Strike into the AoE rotation if you have max cartridges, your last action was Demon Slice, & you do not have Fated Circle unlocked yet.", GNB.JobID)]
+        [CustomComboInfo("Ammo Overcap Burst Strike Option", "Adds Burst Strike into the AoE rotation if you have max cartridges, your last combo action was Demon Slice, & you do not have Fated Circle unlocked yet.", GNB.JobID)]
         GNB_AoE_BSOvercap = 7211,
         #endregion
 
