@@ -1531,7 +1531,7 @@ namespace XIVSlothCombo.Combos
         GNB_ST_BurstStrike = 7014,
 
         [ParentCombo(GNB_ST_Advanced)]
-        [CustomComboInfo("Ammo Overcap Option", "Adds Burst Strike into the AoE rotation if you have max cartridges & your last combo action was Brutal Shell.", GNB.JobID)]
+        [CustomComboInfo("Ammo Overcap Option", "Adds Burst Strike into the rotation if you have max cartridges & your last combo action was Brutal Shell.", GNB.JobID)]
         GNB_ST_Overcap = 7015,
         #endregion
 
