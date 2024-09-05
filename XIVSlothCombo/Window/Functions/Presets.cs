@@ -13,7 +13,7 @@ using System.Reflection.Emit;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
-using XIVSlothCombo.Combos.PvE.Configs;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
@@ -247,7 +247,7 @@ namespace XIVSlothCombo.Window.Functions
             {
                 switch (info.JobID)
                 {
-                    case 35: RDMConfig.Draw(preset); break;
+                    case 35: RDM.Config.Draw(preset); break;
                     default: UserConfigItems.Draw(preset, enabled); break;
                 }
             }
