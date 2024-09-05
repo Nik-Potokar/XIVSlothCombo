@@ -1391,14 +1391,18 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Spacing();
             }
 
+            if (preset == CustomComboPreset.DNC_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNCVariantCurePercent, "HP% to be at or under", 200);
+
+            #region Multi-Button Sliders
+
             if (preset == CustomComboPreset.DNC_ST_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNCVariantCurePercent, "HP% to be at or under", 200);
+            #endregion
 
             #region Advanced ST Sliders
 
