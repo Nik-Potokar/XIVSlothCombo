@@ -264,14 +264,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(GnashingFang) && !ActionReady(DoubleDown) && GunStep == 0)
                         {
-                            if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
+                            if (JustUsed(WickedTalon, 6f) || (JustUsed(EyeGouge, 5f)))
                                 return OriginalHook(ReignOfBeasts);
                         }
 
-                        if (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood))
-                        {
+                        if (GunStep is 3 or 4)
                             return OriginalHook(ReignOfBeasts);
-                        }
                     }
 
                     //BurstStrike
@@ -517,14 +515,12 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(GnashingFang) && !ActionReady(DoubleDown) && GunStep == 0)
                         {
-                            if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
+                            if (JustUsed(WickedTalon, 6f) || (JustUsed(EyeGouge, 5f)))
                                 return OriginalHook(ReignOfBeasts);
                         }
 
-                        if (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood))
-                        {
+                        if (GunStep is 3 or 4)
                             return OriginalHook(ReignOfBeasts);
-                        }
                     }
 
                     //BurstStrike
@@ -748,15 +744,10 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.GNB_GF_Features) && IsEnabled(CustomComboPreset.GNB_GF_Reign) && (LevelChecked(ReignOfBeasts)))
                     {
                         if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(GnashingFang) && !ActionReady(DoubleDown) && GunStep == 0)
-                        {
-                            if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
-                                return OriginalHook(ReignOfBeasts);
-                        }
-
-                        if (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood))
-                        {
                             return OriginalHook(ReignOfBeasts);
-                        }
+
+                        if (GunStep is 3 or 4)
+                            return OriginalHook(ReignOfBeasts);
                     }
 
                     //Burst Strike
@@ -845,7 +836,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
                         {
                             if ((GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0) ||
-                                (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood)))
+                               (GunStep is 3 or 4))
                                 return OriginalHook(ReignOfBeasts);
                         }
                         //FatedCircle - if not unlocked, use BurstStrike
@@ -944,7 +935,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.GNB_AoE_Reign) && LevelChecked(ReignOfBeasts)) //because leaving this out anywhere is a waste
                         {
                             if ((GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0) ||
-                                (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood)))
+                               (GunStep is 3 or 4))
                                 return OriginalHook(ReignOfBeasts);
                         }
                         //FatedCircle - if not unlocked, use BurstStrike
@@ -1003,16 +994,9 @@ namespace XIVSlothCombo.Combos.PvE
                         return DoubleDown;
                     if (IsEnabled(CustomComboPreset.GNB_BS_Reign) && (LevelChecked(ReignOfBeasts)))
                     {
-                        if (HasEffect(Buffs.ReadyToReign) && GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0)
-                        {
-                            if (JustUsed(WickedTalon) || (JustUsed(EyeGouge)))
-                                return OriginalHook(ReignOfBeasts);
-                        }
-
-                        if (JustUsed(ReignOfBeasts, 10f) || JustUsed(NobleBlood, 10f))
-                        {
+                        if ((HasEffect(Buffs.ReadyToReign) && GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0) ||
+                            (GunStep is 3 or 4))
                             return OriginalHook(ReignOfBeasts);
-                        }
                     }
                 }
 
@@ -1070,17 +1054,11 @@ namespace XIVSlothCombo.Combos.PvE
                             return SonicBreak;
                         if (IsEnabled(CustomComboPreset.GNB_NM_DD) && LevelChecked(DoubleDown) && ActionReady(DoubleDown) && Ammo >= 2 && LevelChecked(DoubleDown))
                             return DoubleDown;
-                        if (IsEnabled(CustomComboPreset.GNB_NM_Reign) && LevelChecked(ReignOfBeasts))
+                        if (IsEnabled(CustomComboPreset.GNB_NM_Reign) && (LevelChecked(ReignOfBeasts)))
                         {
-                            if (GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(GnashingFang) && !ActionReady(DoubleDown) && GunStep == 0)
-                            {
-                                    return OriginalHook(ReignOfBeasts);
-                            }
-
-                            if (JustUsed(ReignOfBeasts) || JustUsed(NobleBlood))
-                            {
+                            if ((HasEffect(Buffs.ReadyToReign) && GetBuffRemainingTime(Buffs.ReadyToReign) > 0 && !ActionReady(DoubleDown) && GunStep == 0) ||
+                                (GunStep is 3 or 4))
                                 return OriginalHook(ReignOfBeasts);
-                            }
                         }
                     }
                 }
