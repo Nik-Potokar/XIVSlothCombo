@@ -4484,12 +4484,9 @@ namespace XIVSlothCombo.Combos
         WHM_AoEHeals_Lucid = 19204,
 
         [ParentCombo(WHM_AoEHeals)]
-        [CustomComboInfo("Medica II Option", "Uses Medica II when current target doesn't have Medica II buff.", WHM.JobID, 1)]
+        [CustomComboInfo("Medica II Option", "Uses Medica II when current target doesn't have Medica II buff." +
+                                             "\nUpgrades to Medica III when level allows.", WHM.JobID, 1)]
         WHM_AoEHeals_Medica2 = 19205,
-
-        [ParentCombo(WHM_AoEHeals_Medica2)]
-        [CustomComboInfo("Medica III Option", "Upgrades to Medica III when level allows.", WHM.JobID)]
-        WHM_AoEHeals_Medica3 = 19206,
 
         [ParentCombo(WHM_AoEHeals)]
         [CustomComboInfo("Divine Caress", "Uses Divine Caress when Divine Grace from Temperance is active.", WHM.JobID, 8)]
