@@ -678,7 +678,7 @@ namespace XIVSlothCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is RiddleOfFire && Brotherhood.LevelChecked() && !ActionReady(RiddleOfFire) && ActionReady(Brotherhood)
+                return actionID is RiddleOfFire && !ActionReady(RiddleOfFire) && ActionReady(Brotherhood)
                     ? Brotherhood
                     : actionID;
             }
