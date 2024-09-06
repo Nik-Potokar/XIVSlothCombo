@@ -222,6 +222,17 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Hakaze or Gyofu)
                 {
+                    if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= Config.SAM_VariantCure)
+                        return Variant.VariantCure;
+
+                    if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanSpellWeave(actionID))
+                        return Variant.VariantRampart;
+
                     // Opener for SAM
                     if (SAMOpener.DoFullOpener(ref actionID))
                         return actionID;
