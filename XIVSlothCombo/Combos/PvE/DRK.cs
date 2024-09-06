@@ -59,8 +59,8 @@ namespace XIVSlothCombo.Combos.PvE
             public const ushort
                 // Main Buffs
                 BloodWeapon = 742,
-                OlderDelirium = 1972,
-                Delirium = 3836,
+                Delirium = 1972,
+                EnhancedDelirium = 3836,
 
                 // Periodic Buffs
                 Darkside = 741,
@@ -237,7 +237,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LevelChecked(Delirium)
                     && LevelChecked(ScarletDelirium)
                     && IsEnabled(CustomComboPreset.DRK_ST_Delirium_Chain)
-                    && HasEffect(Buffs.Delirium)
+                    && HasEffect(Buffs.EnhancedDelirium)
                     && gauge.DarksideTimeRemaining > 0)
                     return OriginalHook(Bloodspiller);
 
@@ -246,9 +246,10 @@ namespace XIVSlothCombo.Combos.PvE
                     && IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller))
                 {
                     //Bloodspiller under Delirium
-                    if (GetBuffStacks(Buffs.Delirium) > 0
-                        || (TraitLevelChecked(Traits.EnhancedDelirium)
-                            && GetBuffStacks(Buffs.OlderDelirium) > 0))
+                    var deliriumBuff = TraitLevelChecked(Traits.EnhancedDelirium)
+                        ? Buffs.Delirium
+                        : Buffs.EnhancedDelirium;
+                    if (GetBuffStacks(deliriumBuff) > 0)
                         return Bloodspiller;
 
                     //Blood management outside of Delirium
@@ -382,7 +383,7 @@ namespace XIVSlothCombo.Combos.PvE
                 if (LevelChecked(Delirium)
                     && LevelChecked(Impalement)
                     && IsEnabled(CustomComboPreset.DRK_AoE_Delirium_Chain)
-                    && HasEffect(Buffs.Delirium)
+                    && HasEffect(Buffs.EnhancedDelirium)
                     && gauge.DarksideTimeRemaining > 1)
                     return OriginalHook(Quietus);
 
