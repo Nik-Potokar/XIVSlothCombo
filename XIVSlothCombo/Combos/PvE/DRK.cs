@@ -247,8 +247,8 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     //Bloodspiller under Delirium
                     var deliriumBuff = TraitLevelChecked(Traits.EnhancedDelirium)
-                        ? Buffs.Delirium
-                        : Buffs.EnhancedDelirium;
+                        ? Buffs.EnhancedDelirium
+                        : Buffs.Delirium;
                     if (GetBuffStacks(deliriumBuff) > 0)
                         return Bloodspiller;
 
