@@ -294,30 +294,27 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                         {
                             if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood) 
-                                && Brotherhood.LevelChecked()
                                 && ActionReady(Brotherhood))
                             {
                                 return Brotherhood;
                             }
 
-                            if (IsEnabled(CustomComboPreset.MNK_STUseROF) 
-                                && RiddleOfFire.LevelChecked()
+                            if (IsEnabled(CustomComboPreset.MNK_STUseROF)
                                 && ActionReady(RiddleOfFire))
                             {
                                 return RiddleOfFire;
                             }
 
                             if (IsEnabled(CustomComboPreset.MNK_STUseROW)
-                                && RiddleOfWind.LevelChecked()
                                 && ActionReady(RiddleOfWind))
                             {
                                 return RiddleOfWind;
                             }
                         }
 
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.SecondWind) && ActionReady(All.SecondWind))
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_SecondWind_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && ActionReady(All.SecondWind))
                             return All.SecondWind;
-                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && LevelChecked(All.Bloodbath) && ActionReady(All.Bloodbath))
+                        if (PlayerHealthPercentageHp() <= PluginConfiguration.GetCustomIntValue(Config.MNK_ST_Bloodbath_Threshold) && IsEnabled(CustomComboPreset.MNK_ST_ComboHeals) && ActionReady(All.Bloodbath))
                             return All.Bloodbath;
 
                         if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
