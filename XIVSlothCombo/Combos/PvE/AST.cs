@@ -452,7 +452,7 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionWatching.NumberOfGcdsUsed >= 3)
                         return Divination;
                     //Earthly Star
-                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) &&
+                    if (IsEnabled(CustomComboPreset.AST_AOE_DPS_EarthlyStar) && !IsMoving &&
                         ActionReady(EarthlyStar) &&
                         CanSpellWeave(actionID))
                         return EarthlyStar;
