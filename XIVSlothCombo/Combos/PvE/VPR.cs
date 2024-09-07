@@ -202,14 +202,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return UncoiledFury;
 
                     //Vicewinder Usage
-                    if (HasEffect(Buffs.Swiftscaled) &&
+                    if (HasEffect(Buffs.Swiftscaled) && !VPRCheckTimers.IsComboExpiring(3) &&
                         ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
                         ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                          !VPRCheckTimers.IsVenomExpiring(3) && !VPRCheckTimers.IsHoningExpiring(3))
                         return Vicewinder;
 
                     // Uncoiled Fury usage
-                    if (LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
+                    if (LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) && !VPRCheckTimers.IsComboExpiring(2) &&
                         RattlingCoils > 1 &&
                         !VicewinderReady && !HuntersCoilReady && !SwiftskinsCoilReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
