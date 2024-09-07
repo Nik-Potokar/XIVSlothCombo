@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.JobHelpers;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -75,7 +76,8 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 CombinedAetherhueChoices = new("CombinedAetherhueChoices"),
                 PCT_ST_AdvancedMode_LucidOption = new("PCT_ST_AdvancedMode_LucidOption", 6500),
-                PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500);
+                PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500),
+                PCT_VariantCure = new("PCT_VariantCure");
 
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
@@ -192,6 +194,19 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell) || CanSpellWeave(actionID);
+
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     // Prepull logic
                     if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_PrePullMotifs))
@@ -557,6 +572,19 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
+
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     // Prepull logic
                     if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_PrePullMotifs))

@@ -2606,6 +2606,15 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("One Button Paint", "Consolidates paint-consuming actions into one button.", PCT.JobID)]
         CombinedPaint = 20004,
 
+        [Variant]
+        [VariantParent(PCT_ST_AdvancedMode, PCT_AoE_AdvancedMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", PCT.JobID)]
+        PCT_Variant_Cure = 20100,
+
+        [Variant]
+        [VariantParent(PCT_ST_AdvancedMode, PCT_AoE_AdvancedMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", PCT.JobID)]
+        PCT_Variant_Rampart = 20101,
 
         // Last value for AoE = 20067
         #endregion
