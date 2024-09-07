@@ -495,9 +495,8 @@ namespace XIVSlothCombo.Combos.PvE
                         return Aetherflow;
 
                     // Lucid Dreaming
-                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Lucid) &&
-                        ActionReady(All.LucidDreaming) &&
-                        LocalPlayer.CurrentMp < Config.SCH_AoE_Heal_LucidOption)
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_Heal_Lucid)
+                        && All.CanUseLucid(actionID, Config.SCH_AoE_Heal_LucidOption, true))
                         return All.LucidDreaming;
 
                     // Indomitability
