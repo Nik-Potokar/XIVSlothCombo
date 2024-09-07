@@ -4218,6 +4218,16 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Include Twin Combo Actions", "Adds Twinfang and Twinblood to the button.", VPR.JobID)]
         VPR_VicepitDens_oGCDs = 30207,
 
+        [Variant]
+        [VariantParent(VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", VPR.JobID)]
+        VPR_Variant_Cure = 30300,
+
+        [Variant]
+        [VariantParent(VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", VPR.JobID)]
+        VPR_Variant_Rampart = 30301,
+
         #endregion
 
         #region WARRIOR

@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -104,7 +105,8 @@ namespace XIVSlothCombo.Combos.PvE
                 VPR_AoE_UncoiledFury_HoldCharges = new("VPR_AoE_UncoiledFury_HoldCharges", 0),
                 VPR_ST_UncoiledFury_Threshold = new("VPR_ST_UncoiledFury_Threshold", 1),
                 VPR_AoE_UncoiledFury_Threshold = new("VPR_AoE_UncoiledFury_Threshold", 1),
-                VPR_ReawakenLegacyButton = new("VPR_ReawakenLegacyButton");
+                VPR_ReawakenLegacyButton = new("VPR_ReawakenLegacyButton"),
+                VPR_VariantCure = new("VPR_VariantCure");
 
             public static UserFloat
                 VPR_ST_Reawaken_Usage = new("VPR_ST_Reawaken_Usage", 2),
@@ -351,6 +353,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelFangs)
                 {
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.VPR_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.VPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.VPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(ActionWatching.LastWeaponskill))
+                        return Variant.VariantRampart;
+
                     // Opener for VPR
                     if (IsEnabled(CustomComboPreset.VPR_ST_Opener))
                     {
@@ -775,6 +790,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is SteelMaw)
                 {
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.VPR_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.VPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.VPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(ActionWatching.LastWeaponskill))
+                        return Variant.VariantRampart;
+
                     if (CanWeave(ActionWatching.LastWeaponskill))
                     {
                         // Death Rattle

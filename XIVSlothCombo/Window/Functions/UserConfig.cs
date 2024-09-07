@@ -2401,6 +2401,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Steel Fangs", "Replaces Steel Fangs with Full Generation - Legacy combo.", 1);
             }
 
+            if (preset == CustomComboPreset.VPR_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, VPR.Config.VPR_VariantCure, "HP% to be at or under", 200);
+
             #endregion
             // ====================================================================================
             #region WARRIOR
