@@ -364,9 +364,6 @@ namespace XIVSlothCombo.Combos.PvE
                         : TechnicalFinish4;
                 #endregion
 
-                // Bail if not in combat
-                if (!InCombat()) return Cascade;
-
                 #region Weaves
                 // ST Devilment
                 if (IsEnabled(CustomComboPreset.DNC_ST_Adv_Devilment) &&
@@ -481,7 +478,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // ST Improvisation
                     if (IsEnabled(CustomComboPreset.DNC_ST_Adv_Improvisation) &&
                         ActionReady(Improvisation) &&
-                        !HasEffect(Buffs.TechnicalFinish))
+                        !HasEffect(Buffs.TechnicalFinish) &&
+                        InCombat())
                         return Improvisation;
                 }
                 #endregion
@@ -691,9 +689,6 @@ namespace XIVSlothCombo.Combos.PvE
                         : TechnicalFinish4;
                 #endregion
 
-                // Bail if not in combat
-                if (!InCombat()) return Windmill;
-
                 #region Weaves
                 // AoE Devilment
                 if (IsEnabled(CustomComboPreset.DNC_AoE_Adv_Devilment) &&
@@ -794,7 +789,8 @@ namespace XIVSlothCombo.Combos.PvE
                     // AoE Improvisation
                     if (IsEnabled(CustomComboPreset.DNC_AoE_Adv_Improvisation) &&
                         ActionReady(Improvisation) &&
-                        !HasEffect(Buffs.TechnicalStep))
+                        !HasEffect(Buffs.TechnicalStep) &&
+                        InCombat())
                         return Improvisation;
                 }
                 #endregion
