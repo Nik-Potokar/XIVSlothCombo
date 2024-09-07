@@ -364,6 +364,9 @@ namespace XIVSlothCombo.Combos.PvE
                         : TechnicalFinish4;
                 #endregion
 
+                // Bail if not in combat
+                if (!InCombat()) return Cascade;
+
                 #region Weaves
                 // ST Devilment
                 if (IsEnabled(CustomComboPreset.DNC_ST_Adv_Devilment) &&
@@ -687,6 +690,9 @@ namespace XIVSlothCombo.Combos.PvE
                         ? gauge.NextStep
                         : TechnicalFinish4;
                 #endregion
+
+                // Bail if not in combat
+                if (!InCombat()) return Windmill;
 
                 #region Weaves
                 // AoE Devilment
