@@ -1,415 +1,405 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using ECommons.DalamudServices;
-using System.Linq;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
-using XIVSlothCombo.Extensions;
+using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
-namespace XIVSlothCombo.Combos.JobHelpers
+namespace XIVSlothCombo.Combos.JobHelpers;
+
+internal abstract class MNKHelper : MNK
 {
-
-    internal class MNKHelper : MNK
+    public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
     {
-        public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
+        if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist))
+            return Gauge.OpoOpoFury == 0 && LevelChecked(DragonKick)
+                ? DragonKick
+                : OriginalHook(Bootshine);
+
+        if (HasEffect(Buffs.RaptorForm))
+            return Gauge.RaptorFury == 0 && LevelChecked(TwinSnakes)
+                ? TwinSnakes
+                : OriginalHook(TrueStrike);
+
+        if (HasEffect(Buffs.CoeurlForm))
         {
-            if (CustomComboFunctions.HasEffect(Buffs.OpoOpoForm) || CustomComboFunctions.HasEffect(Buffs.FormlessFist))
+            if (Gauge.CoeurlFury == 0 && LevelChecked(Demolish))
             {
-                if (Gauge.OpoOpoFury == 0 && DragonKick.LevelChecked())
-                {
-                    if (CustomComboFunctions.LevelChecked(DragonKick))
-                        return DragonKick;
-                }
-                else
-                {
-                    return CustomComboFunctions.OriginalHook(Bootshine);
-                }
-            }
-
-            if (CustomComboFunctions.HasEffect(Buffs.RaptorForm))
-            {
-                if (Gauge.RaptorFury == 0 && TwinSnakes.LevelChecked())
-                {
-                    if (CustomComboFunctions.LevelChecked(TwinSnakes))
-                        return TwinSnakes;
-                }
-                else
-                {
-                    if (CustomComboFunctions.LevelChecked(TrueStrike))
-                        return CustomComboFunctions.OriginalHook(TrueStrike);
-                }
-            }
-
-            if (CustomComboFunctions.HasEffect(Buffs.CoeurlForm))
-            {
-                if (Gauge.CoeurlFury == 0 && Demolish.LevelChecked())
-                {
-                    if (!CustomComboFunctions.OnTargetsRear()
-                        && CustomComboFunctions.TargetNeedsPositionals()
-                        && !CustomComboFunctions.HasEffect(Buffs.TrueNorth)
-                        && CustomComboFunctions.LevelChecked(TrueNorth)
-                        && CustomComboFunctions.HasCharges(TrueNorth)
-                        && useTrueNorthIfEnabled)
-                    {
-                        return TrueNorth;
-                    }
-                    else
-                    {
-                        if (CustomComboFunctions.LevelChecked(Demolish))
-                            return Demolish;
-                    }
-                }
-
-                if (!CustomComboFunctions.OnTargetsFlank()
-                        && CustomComboFunctions.TargetNeedsPositionals()
-                        && !CustomComboFunctions.HasEffect(Buffs.TrueNorth)
-                        && CustomComboFunctions.LevelChecked(TrueNorth)
-                        && CustomComboFunctions.HasCharges(TrueNorth)
-                        && useTrueNorthIfEnabled)
-                {
+                if (!OnTargetsRear() &&
+                    TargetNeedsPositionals() &&
+                    !HasEffect(Buffs.TrueNorth) &&
+                    ActionReady(TrueNorth) &&
+                    useTrueNorthIfEnabled)
                     return TrueNorth;
-                }
-                else
-                {
-                    if (CustomComboFunctions.LevelChecked(SnapPunch))
-                        return CustomComboFunctions.OriginalHook(SnapPunch);
-                }
+
+                return Demolish;
             }
 
-            return actionId;
+            if (LevelChecked(SnapPunch))
+            {
+                if (!OnTargetsFlank() &&
+                    TargetNeedsPositionals() &&
+                    !HasEffect(Buffs.TrueNorth) &&
+                    ActionReady(TrueNorth) &&
+                    useTrueNorthIfEnabled)
+                    return TrueNorth;
+
+                return OriginalHook(SnapPunch);
+            }
+        }
+
+        return actionId;
+    }
+}
+
+internal class MNKOpenerLogic : MNK
+{
+    private OpenerState currentState = OpenerState.PrePull;
+
+    public uint OpenerStep;
+
+    public uint PrePullStep;
+
+    private static uint OpenerLevel => 100;
+
+    public static bool LevelChecked => LocalPlayer.Level >= OpenerLevel;
+
+    private static bool CanOpener => HasCooldowns() && LevelChecked;
+
+    public OpenerState CurrentState
+    {
+        get => currentState;
+        set
+        {
+            if (value != currentState)
+            {
+                if (value == OpenerState.PrePull) Svc.Log.Debug("Entered PrePull Opener");
+                if (value == OpenerState.InOpener) OpenerStep = 1;
+
+                if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
+                {
+                    if (value == OpenerState.FailedOpener)
+                        Svc.Log.Information($"Opener Failed at step {OpenerStep}");
+
+                    ResetOpener();
+                }
+                if (value == OpenerState.OpenerFinished) Svc.Log.Information("Opener Finished");
+
+                currentState = value;
+            }
         }
     }
 
-    internal class MNKOpenerLogic : MNK
+    private static bool HasCooldowns()
     {
-        private static bool HasCooldowns()
+        if (GetRemainingCharges(PerfectBalance) < 2)
+            return false;
+
+        if (!ActionReady(Brotherhood))
+            return false;
+
+        if (!ActionReady(RiddleOfFire))
+            return false;
+
+        if (!ActionReady(RiddleOfWind))
+            return false;
+
+        if (!ActionReady(Meditation) && Gauge.Chakra < 5)
+            return false;
+
+        if (Gauge.Nadi != Nadi.NONE)
+            return false;
+
+        if (Gauge.RaptorFury != 0 || Gauge.CoeurlFury != 0)
+            return false;
+
+        return true;
+    }
+
+    private bool DoPrePullSteps(ref uint actionID)
+    {
+        if (!LevelChecked)
+            return false;
+
+        if (CanOpener && PrePullStep == 0) PrePullStep = 1;
+
+        if (!HasCooldowns()) PrePullStep = 0;
+
+        if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
         {
-            if (CustomComboFunctions.GetRemainingCharges(PerfectBalance) < 2)
-                return false;
+            if (Gauge.Chakra < 5 && PrePullStep == 1)
+            {
+                actionID = ForbiddenMeditation;
 
-            if (!CustomComboFunctions.ActionReady(Brotherhood))
-                return false;
+                return true;
+            }
 
-            if (!CustomComboFunctions.ActionReady(RiddleOfFire))
-                return false;
+            if (!HasEffect(Buffs.FormlessFist) &&
+                !HasEffect(Buffs.RaptorForm) && PrePullStep == 1)
+            {
+                actionID = FormShift;
 
-            if (!CustomComboFunctions.ActionReady(RiddleOfWind))
-                return false;
+                return true;
+            }
 
-            if (!CustomComboFunctions.ActionReady(Meditation) && Gauge.Chakra < 5)
-                return false;
+            if (WasLastAction(DragonKick) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+            else if (PrePullStep == 1) actionID = DragonKick;
 
-            if (Gauge.Nadi != Dalamud.Game.ClientState.JobGauge.Enums.Nadi.NONE)
-                return false;
+            if (ActionWatching.CombatActions.Count > 2 && InCombat())
+                CurrentState = OpenerState.FailedOpener;
 
-            if (Gauge.RaptorFury != 0) return false;
-            if (Gauge.CoeurlFury != 0) return false;
+            return true;
+        }
+        PrePullStep = 0;
+
+        return false;
+    }
+
+    private bool DoSlOpener(ref uint actionID)
+    {
+        if (!LevelChecked)
+            return false;
+
+        if (currentState == OpenerState.InOpener)
+        {
+            if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra) &&
+                Gauge.Chakra >= 5 &&
+                OpenerStep > 2)
+            {
+                actionID = TheForbiddenChakra;
+
+                return true;
+            }
+
+            if ((WasLastAction(PerfectBalance) ||
+                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
+            else if (OpenerStep == 1) actionID = PerfectBalance;
+
+            if (WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
+            else if (OpenerStep == 2) actionID = TheForbiddenChakra;
+
+            if (WasLastWeaponskill(TwinSnakes) && OpenerStep == 3) OpenerStep++;
+            else if (OpenerStep == 3) actionID = TwinSnakes;
+
+            if (WasLastWeaponskill(Demolish) && OpenerStep == 4) OpenerStep++;
+            else if (OpenerStep == 4) actionID = Demolish;
+
+            if (WasLastAbility(Brotherhood) && HasEffect(Buffs.Brotherhood) &&
+                OpenerStep == 5) OpenerStep++;
+            else if (OpenerStep == 5) actionID = Brotherhood;
+
+            if (WasLastAction(RiddleOfFire) &&
+                HasEffect(Buffs.RiddleOfFire) && OpenerStep == 6) OpenerStep++;
+            else if (OpenerStep == 6) actionID = RiddleOfFire;
+
+            // Pot
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 7) OpenerStep++;
+            else if (OpenerStep == 7) actionID = LeapingOpo;
+
+            if (WasLastAction(RiddleOfWind) &&
+                HasEffect(Buffs.RiddleOfWind) && OpenerStep == 8) OpenerStep++;
+            else if (OpenerStep == 8) actionID = RiddleOfWind;
+
+            if (WasLastWeaponskill(RisingPhoenix) && OpenerStep == 9) OpenerStep++;
+            else if (OpenerStep == 9) actionID = RisingPhoenix;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 10) OpenerStep++;
+            else if (OpenerStep == 10) actionID = DragonKick;
+
+            if ((WasLastWeaponskill(FiresReply) ||
+                 !HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
+            else if (OpenerStep == 11) actionID = FiresReply;
+
+            if ((WasLastWeaponskill(WindsReply) ||
+                 !HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
+            else if (OpenerStep == 12) actionID = WindsReply;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 13) OpenerStep++;
+            else if (OpenerStep == 13) actionID = LeapingOpo;
+
+            if ((WasLastAction(PerfectBalance) ||
+                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
+            else if (OpenerStep == 14) actionID = PerfectBalance;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 15) OpenerStep++;
+            else if (OpenerStep == 15) actionID = DragonKick;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 16) OpenerStep++;
+            else if (OpenerStep == 16) actionID = LeapingOpo;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 17) OpenerStep++;
+            else if (OpenerStep == 17) actionID = DragonKick;
+
+            if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 18) OpenerStep++;
+            else if (OpenerStep == 18) actionID = ElixirBurst;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 19)
+                CurrentState = OpenerState.OpenerFinished;
+            else if (OpenerStep == 19) actionID = LeapingOpo;
+
+            if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                CurrentState = OpenerState.FailedOpener;
+
+            if ((actionID == PerfectBalance && GetRemainingCharges(PerfectBalance) == 0 &&
+                 ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
+                (OpenerStep is 6 && HasEffect(Buffs.RiddleOfFire)) ||
+                (OpenerStep is 8 && HasEffect(Buffs.RiddleOfWind)) ||
+                (OpenerStep is 5 && HasEffect(Buffs.Brotherhood)
+                                 && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3))
+            {
+                Svc.Log.Debug($"Failed at {actionID}");
+                CurrentState = OpenerState.FailedOpener;
+
+                return false;
+            }
 
             return true;
         }
 
-        private static uint OpenerLevel => 100;
+        return false;
+    }
 
-        public uint PrePullStep = 0;
+    private bool DoLlOpener(ref uint actionID)
+    {
+        if (!LevelChecked)
+            return false;
 
-        public uint OpenerStep = 0;
-
-        public static bool LevelChecked => CustomComboFunctions.LocalPlayer.Level >= OpenerLevel;
-
-        private static bool CanOpener => HasCooldowns() && LevelChecked;
-
-        private OpenerState currentState = OpenerState.PrePull;
-
-        public OpenerState CurrentState
+        if (currentState == OpenerState.InOpener)
         {
-            get
+            if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
+                && Gauge.Chakra >= 5
+                && OpenerStep > 2)
             {
-                return currentState;
-            }
-            set
-            {
-                if (value != currentState)
-                {
-                    if (value == OpenerState.PrePull)
-                    {
-                        Svc.Log.Debug($"Entered PrePull Opener");
-                    }
-                    if (value == OpenerState.InOpener) OpenerStep = 1;
-                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
-                    {
-                        if (value == OpenerState.FailedOpener)
-                            Svc.Log.Information($"Opener Failed at step {OpenerStep}");
-
-                        ResetOpener();
-                    }
-                    if (value == OpenerState.OpenerFinished) Svc.Log.Information("Opener Finished");
-
-                    currentState = value;
-                }
-            }
-        }
-
-        private bool DoPrePullSteps(ref uint actionID)
-        {
-            if (!LevelChecked)
-                return false;
-
-            if (CanOpener && PrePullStep == 0)
-            {
-                PrePullStep = 1;
-            }
-
-            if (!HasCooldowns())
-            {
-                PrePullStep = 0;
-            }
-
-            if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
-            {
-                if (Gauge.Chakra < 5 && PrePullStep == 1)
-                {
-                    actionID = ForbiddenMeditation;
-                    return true;
-                }
-
-                if (!CustomComboFunctions.HasEffect(Buffs.FormlessFist) && !CustomComboFunctions.HasEffect(Buffs.RaptorForm) && PrePullStep == 1)
-                {
-                    actionID = FormShift;
-                    return true;
-                }
-
-                if (CustomComboFunctions.WasLastAction(DragonKick) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
-                else if (PrePullStep == 1) actionID = DragonKick;
-
-                if (ActionWatching.CombatActions.Count > 2 && CustomComboFunctions.InCombat())
-                    CurrentState = OpenerState.FailedOpener;
+                actionID = TheForbiddenChakra;
 
                 return true;
             }
-            PrePullStep = 0;
-            return false;
+
+            if ((WasLastAction(PerfectBalance) ||
+                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
+            else if (OpenerStep == 1) actionID = PerfectBalance;
+
+            if (WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
+            else if (OpenerStep == 2) actionID = TheForbiddenChakra;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 3) OpenerStep++;
+            else if (OpenerStep == 3) actionID = LeapingOpo;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 4) OpenerStep++;
+            else if (OpenerStep == 4) actionID = DragonKick;
+
+            if (WasLastAbility(Brotherhood) && HasEffect(Buffs.Brotherhood) &&
+                OpenerStep == 5) OpenerStep++;
+            else if (OpenerStep == 5) actionID = Brotherhood;
+
+            if (WasLastAction(RiddleOfFire) &&
+                HasEffect(Buffs.RiddleOfFire) && OpenerStep == 6) OpenerStep++;
+            else if (OpenerStep == 6) actionID = RiddleOfFire;
+
+            // Pot
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 7) OpenerStep++;
+            else if (OpenerStep == 7) actionID = LeapingOpo;
+
+            if (WasLastAction(RiddleOfWind) &&
+                HasEffect(Buffs.RiddleOfWind) && OpenerStep == 8) OpenerStep++;
+            else if (OpenerStep == 8) actionID = RiddleOfWind;
+
+            if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 9) OpenerStep++;
+            else if (OpenerStep == 9) actionID = ElixirBurst;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 10) OpenerStep++;
+            else if (OpenerStep == 10) actionID = DragonKick;
+
+            if ((WasLastWeaponskill(FiresReply) ||
+                 !HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
+            else if (OpenerStep == 11) actionID = FiresReply;
+
+            if ((WasLastWeaponskill(WindsReply) ||
+                 !HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
+            else if (OpenerStep == 12) actionID = WindsReply;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 13) OpenerStep++;
+            else if (OpenerStep == 13) actionID = LeapingOpo;
+
+            if ((WasLastAction(PerfectBalance) ||
+                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
+            else if (OpenerStep == 14) actionID = PerfectBalance;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 15) OpenerStep++;
+            else if (OpenerStep == 15) actionID = DragonKick;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 16) OpenerStep++;
+            else if (OpenerStep == 16) actionID = LeapingOpo;
+
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 17) OpenerStep++;
+            else if (OpenerStep == 17) actionID = DragonKick;
+
+            if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 18) OpenerStep++;
+            else if (OpenerStep == 18) actionID = ElixirBurst;
+
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 19)
+                CurrentState = OpenerState.OpenerFinished;
+            else if (OpenerStep == 19) actionID = LeapingOpo;
+
+            if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                CurrentState = OpenerState.FailedOpener;
+
+            if ((actionID == PerfectBalance && GetRemainingCharges(PerfectBalance) == 0 &&
+                 ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
+                (OpenerStep is 6 && HasEffect(Buffs.RiddleOfFire)) ||
+                (OpenerStep is 8 && HasEffect(Buffs.RiddleOfWind)) ||
+                (OpenerStep is 5 && HasEffect(Buffs.Brotherhood)
+                                 && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3))
+            {
+                Svc.Log.Debug($"Failed at {actionID}");
+                CurrentState = OpenerState.FailedOpener;
+
+                return false;
+            }
+
+            return true;
         }
 
-        private bool DoSLOpener(ref uint actionID)
-        {
-            if (!LevelChecked)
-                return false;
+        return false;
+    }
 
-            if (currentState == OpenerState.InOpener)
-            {
-                if (CustomComboFunctions.IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
-                    && Gauge.Chakra >= 5
-                    && OpenerStep > 2)
-                {
-                    actionID = TheForbiddenChakra;
-                    return true;
-                }
+    private void ResetOpener()
+    {
+        PrePullStep = 0;
+        OpenerStep = 0;
+    }
 
-                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
-                else if (OpenerStep == 1) actionID = PerfectBalance;
+    public bool DoFullOpener(ref uint actionID, int selectedOpener)
+    {
+        if (!LevelChecked)
+            return false;
 
-                if (CustomComboFunctions.WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
-                else if (OpenerStep == 2) actionID = TheForbiddenChakra;
-
-                if (CustomComboFunctions.WasLastWeaponskill(TwinSnakes) && OpenerStep == 3) OpenerStep++;
-                else if (OpenerStep == 3) actionID = TwinSnakes;
-
-                if (CustomComboFunctions.WasLastWeaponskill(Demolish) && OpenerStep == 4) OpenerStep++;
-                else if (OpenerStep == 4) actionID = Demolish;
-
-                if (CustomComboFunctions.WasLastAbility(Brotherhood) && CustomComboFunctions.HasEffect(Buffs.Brotherhood) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = Brotherhood;
-
-                if (CustomComboFunctions.WasLastAction(RiddleOfFire) && CustomComboFunctions.HasEffect(Buffs.RiddleOfFire) && OpenerStep == 6) OpenerStep++;
-                else if (OpenerStep == 6) actionID = RiddleOfFire;
-
-                // Pot
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 7) OpenerStep++;
-                else if (OpenerStep == 7) actionID = LeapingOpo;
-
-                if (CustomComboFunctions.WasLastAction(RiddleOfWind) && CustomComboFunctions.HasEffect(Buffs.RiddleOfWind) && OpenerStep == 8) OpenerStep++;
-                else if (OpenerStep == 8) actionID = RiddleOfWind;
-
-                if (CustomComboFunctions.WasLastWeaponskill(RisingPhoenix) && OpenerStep == 9) OpenerStep++;
-                else if (OpenerStep == 9) actionID = RisingPhoenix;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 10) OpenerStep++;
-                else if (OpenerStep == 10) actionID = DragonKick;
-
-                if ((CustomComboFunctions.WasLastWeaponskill(FiresReply) || !CustomComboFunctions.HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
-                else if (OpenerStep == 11) actionID = FiresReply;
-
-                if ((CustomComboFunctions.WasLastWeaponskill(WindsReply) || !CustomComboFunctions.HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
-                else if (OpenerStep == 12) actionID = WindsReply;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 13) OpenerStep++;
-                else if (OpenerStep == 13) actionID = LeapingOpo;
-
-                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
-                else if (OpenerStep == 14) actionID = PerfectBalance;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 15) OpenerStep++;
-                else if (OpenerStep == 15) actionID = DragonKick;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 16) OpenerStep++;
-                else if (OpenerStep == 16) actionID = LeapingOpo;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 17) OpenerStep++;
-                else if (OpenerStep == 17) actionID = DragonKick;
-
-                if (CustomComboFunctions.WasLastWeaponskill(ElixirBurst) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = ElixirBurst;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 19) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 19) actionID = LeapingOpo;
-
-                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
-                    CurrentState = OpenerState.FailedOpener;
-
-                if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
-                       (OpenerStep is 6 && CustomComboFunctions.HasEffect(Buffs.RiddleOfFire)) ||
-                       (OpenerStep is 8 && CustomComboFunctions.HasEffect(Buffs.RiddleOfWind)) ||
-                       (OpenerStep is 5 && CustomComboFunctions.HasEffect(Buffs.Brotherhood))
-                       && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                {
-                    Svc.Log.Debug($"Failed at {actionID}");
-                    CurrentState = OpenerState.FailedOpener;
-                    return false;
-                }
+        if (CurrentState == OpenerState.PrePull)
+            if (DoPrePullSteps(ref actionID))
                 return true;
-            }
-            return false;
-        }
 
-        private bool DoLLOpener(ref uint actionID)
+        if (CurrentState == OpenerState.InOpener)
         {
-            if (!LevelChecked)
-                return false;
-
-            if (currentState == OpenerState.InOpener)
+            if (selectedOpener == 1)
             {
-                if (CustomComboFunctions.IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
-                    && Gauge.Chakra >= 5
-                    && OpenerStep > 2)
-                {
-                    actionID = TheForbiddenChakra;
+                if (DoLlOpener(ref actionID))
                     return true;
-                }
-
-                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
-                else if (OpenerStep == 1) actionID = PerfectBalance;
-
-                if (CustomComboFunctions.WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
-                else if (OpenerStep == 2) actionID = TheForbiddenChakra;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 3) OpenerStep++;
-                else if (OpenerStep == 3) actionID = LeapingOpo;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 4) OpenerStep++;
-                else if (OpenerStep == 4) actionID = DragonKick;
-
-                if (CustomComboFunctions.WasLastAbility(Brotherhood) && CustomComboFunctions.HasEffect(Buffs.Brotherhood) && OpenerStep == 5) OpenerStep++;
-                else if (OpenerStep == 5) actionID = Brotherhood;
-
-                if (CustomComboFunctions.WasLastAction(RiddleOfFire) && CustomComboFunctions.HasEffect(Buffs.RiddleOfFire) && OpenerStep == 6) OpenerStep++;
-                else if (OpenerStep == 6) actionID = RiddleOfFire;
-
-                // Pot
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 7) OpenerStep++;
-                else if (OpenerStep == 7) actionID = LeapingOpo;
-
-                if (CustomComboFunctions.WasLastAction(RiddleOfWind) && CustomComboFunctions.HasEffect(Buffs.RiddleOfWind) && OpenerStep == 8) OpenerStep++;
-                else if (OpenerStep == 8) actionID = RiddleOfWind;
-
-                if (CustomComboFunctions.WasLastWeaponskill(ElixirBurst) && OpenerStep == 9) OpenerStep++;
-                else if (OpenerStep == 9) actionID = ElixirBurst;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 10) OpenerStep++;
-                else if (OpenerStep == 10) actionID = DragonKick;
-
-                if ((CustomComboFunctions.WasLastWeaponskill(FiresReply) || !CustomComboFunctions.HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
-                else if (OpenerStep == 11) actionID = FiresReply;
-
-                if ((CustomComboFunctions.WasLastWeaponskill(WindsReply) || !CustomComboFunctions.HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
-                else if (OpenerStep == 12) actionID = WindsReply;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 13) OpenerStep++;
-                else if (OpenerStep == 13) actionID = LeapingOpo;
-
-                if ((CustomComboFunctions.WasLastAction(PerfectBalance) || CustomComboFunctions.HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
-                else if (OpenerStep == 14) actionID = PerfectBalance;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 15) OpenerStep++;
-                else if (OpenerStep == 15) actionID = DragonKick;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 16) OpenerStep++;
-                else if (OpenerStep == 16) actionID = LeapingOpo;
-
-                if (CustomComboFunctions.WasLastWeaponskill(DragonKick) && OpenerStep == 17) OpenerStep++;
-                else if (OpenerStep == 17) actionID = DragonKick;
-
-                if (CustomComboFunctions.WasLastWeaponskill(ElixirBurst) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = ElixirBurst;
-
-                if (CustomComboFunctions.WasLastWeaponskill(LeapingOpo) && OpenerStep == 19) CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 19) actionID = LeapingOpo;
-
-                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
-                    CurrentState = OpenerState.FailedOpener;
-
-                if (((actionID == PerfectBalance && CustomComboFunctions.GetRemainingCharges(PerfectBalance) == 0) && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
-                       (OpenerStep is 6 && CustomComboFunctions.HasEffect(Buffs.RiddleOfFire)) ||
-                       (OpenerStep is 8 && CustomComboFunctions.HasEffect(Buffs.RiddleOfWind)) ||
-                       (OpenerStep is 5 && CustomComboFunctions.HasEffect(Buffs.Brotherhood))
-                       && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
-                {
-                    Svc.Log.Debug($"Failed at {actionID}");
-                    CurrentState = OpenerState.FailedOpener;
-                    return false;
-                }
-                return true;
             }
-            return false;
-        }
-
-        private void ResetOpener()
-        {
-            PrePullStep = 0;
-            OpenerStep = 0;
-        }
-
-        public bool DoFullOpener(ref uint actionID, int selectedOpener)
-        {
-            if (!LevelChecked)
-                return false;
-
-            if (CurrentState == OpenerState.PrePull)
-                if (DoPrePullSteps(ref actionID))
+            else if (selectedOpener == 2)
+            {
+                if (DoSlOpener(ref actionID))
                     return true;
-
-            if (CurrentState == OpenerState.InOpener)
-            {
-                if (selectedOpener == 1)
-                {
-                    if (DoLLOpener(ref actionID))
-                        return true;
-                }
-                else if (selectedOpener == 2)
-                {
-                    if (DoSLOpener(ref actionID))
-                        return true;
-                }
             }
-
-            if (!CustomComboFunctions.InCombat())
-            {
-                ResetOpener();
-                CurrentState = OpenerState.PrePull;
-            }
-            return false;
         }
+
+        if (!InCombat())
+        {
+            ResetOpener();
+            CurrentState = OpenerState.PrePull;
+        }
+
+        return false;
     }
 }
