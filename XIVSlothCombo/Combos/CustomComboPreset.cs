@@ -4416,6 +4416,11 @@ namespace XIVSlothCombo.Combos
         WHM_AoE_DPS = 19190,
 
         [ParentCombo(WHM_AoE_DPS)]
+        [CustomComboInfo("Swift Holy Pull 'Opener' Option", "Adds a Swiftcast->Holy at the beginning of your AoE rotation." +
+                                                "\nRequires you to already be in combat, to have stopped moving, and to not have used Assize yet.", WHM.JobID, 20, "", "")]
+        WHM_AoE_DPS_SwiftHoly = 19197,
+
+        [ParentCombo(WHM_AoE_DPS)]
         [CustomComboInfo("Assize Option", "Adds Assize to the AoE combo.", WHM.JobID, 21, "", "")]
         WHM_AoE_DPS_Assize = 19192,
 
