@@ -141,9 +141,9 @@ namespace XIVSlothCombo.Window.Tabs
 
         private static void DrawVariantContents(string jobName)
         {
+            int i = 0;
             foreach (var (preset, info) in groupedPresets[jobName].Where(x => PresetStorage.IsVariant(x.Preset)))
             {
-                int i = -1;
                 InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
                 presetBox.Draw();
                 ImGuiHelpers.ScaledDummy(12.0f);
