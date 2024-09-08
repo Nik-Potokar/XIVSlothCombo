@@ -170,8 +170,9 @@ internal class MNK
                         : OriginalHook(Bootshine);
 
                 // Masterful Blitz
-                if (MasterfulBlitz.LevelChecked() && !HasEffect(Buffs.PerfectBalance) &&
-                    HasEffect(Buffs.RiddleOfFire) && !IsOriginal(MasterfulBlitz))
+                if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
+                    (HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 35) &&
+                    !IsOriginal(MasterfulBlitz))
                     return OriginalHook(MasterfulBlitz);
 
                 // Perfect Balance
@@ -338,8 +339,8 @@ internal class MNK
                 {
                     // Masterful Blitz
                     if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
-                        HasEffect(Buffs.RiddleOfFire) &&
-                        OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                        (HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 35) &&
+                        !IsOriginal(MasterfulBlitz))
                         return OriginalHook(MasterfulBlitz);
 
                     // Perfect Balance
