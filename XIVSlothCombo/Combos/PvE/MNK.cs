@@ -110,7 +110,8 @@ internal class MNK
                     LevelChecked(Meditation))
                     return OriginalHook(Meditation);
 
-                if (!InCombat() && !HasEffect(Buffs.FormlessFist))
+                if (!InCombat() && LevelChecked(FormShift) &&
+                    !HasEffect(Buffs.FormlessFist))
                     return FormShift;
 
                 //Variant Cure
@@ -273,7 +274,8 @@ internal class MNK
                     return OriginalHook(Meditation);
 
                 if (IsEnabled(CustomComboPreset.MNK_STUseFormShift) &&
-                    !InCombat() && !HasEffect(Buffs.FormlessFist))
+                    !InCombat() && LevelChecked(FormShift) &&
+                    !HasEffect(Buffs.FormlessFist))
                     return FormShift;
 
                 //Variant Cure
