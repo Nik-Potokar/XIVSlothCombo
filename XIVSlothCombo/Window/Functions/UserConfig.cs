@@ -1572,12 +1572,16 @@ namespace XIVSlothCombo.Window.Functions
 
             #endregion
             // ====================================================================================
+
             #region MONK
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
             {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_SecondWind_Threshold,
+                    "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_Bloodbath_Threshold,
+                    "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.MNK_AoE_ComboHeals)
@@ -1591,8 +1595,11 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.MNK_STUseOpener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Double Lunar", "Uses Lunar/Lunar opener", 1);
-                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Solar Lunar", "Uses Solar/Lunar opener", 2);
+                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Double Lunar",
+                    "Uses Lunar/Lunar opener", 0);
+
+                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Solar Lunar",
+                    "Uses Solar/Lunar opener", 1);
             }
 
             if (preset == CustomComboPreset.MNK_Variant_Cure)

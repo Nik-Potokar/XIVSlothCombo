@@ -9,7 +9,7 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal abstract class MNKHelper : MNK
 {
-    public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled = true)
+    public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled)
     {
         if (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist))
             return Gauge.OpoOpoFury == 0 && LevelChecked(DragonKick)
@@ -381,18 +381,13 @@ internal class MNKOpenerLogic : MNK
                 return true;
 
         if (CurrentState == OpenerState.InOpener)
-        {
-            if (selectedOpener == 1)
+            switch (selectedOpener)
             {
-                if (DoLlOpener(ref actionID))
+                case 0 when DoLlOpener(ref actionID):
+
+                case 1 when DoSlOpener(ref actionID):
                     return true;
             }
-            else if (selectedOpener == 2)
-            {
-                if (DoSlOpener(ref actionID))
-                    return true;
-            }
-        }
 
         if (!InCombat())
         {

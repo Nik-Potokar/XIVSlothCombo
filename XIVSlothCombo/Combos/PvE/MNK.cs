@@ -102,20 +102,23 @@ internal class MNK
 
             if (actionID is Bootshine or LeapingOpo)
             {
-                if (MNKOpener.DoFullOpener(ref actionID, Config.MNK_SelectedOpener))
+                if (MNKOpener.DoFullOpener(ref actionID, 0))
                     return actionID;
+
+                if ((!InCombat() || !InMeleeRange()) &&
+                    Gauge.Chakra < 5 &&
+                    !HasEffect(Buffs.RiddleOfFire) &&
+                    LevelChecked(Meditation))
+                    return OriginalHook(Meditation);
+
+                if (!InCombat() && !HasEffect(Buffs.FormlessFist))
+                    return FormShift;
 
                 //Variant Cure
                 if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
                     IsEnabled(Variant.VariantCure) &&
                     PlayerHealthPercentageHp() <= Config.MNK_VariantCure)
                     return Variant.VariantCure;
-
-                if ((!InCombat() || !InMeleeRange()) &&
-                    Gauge.Chakra < 5 &&
-                    HasEffect(Buffs.RiddleOfFire) &&
-                    LevelChecked(Meditation))
-                    return OriginalHook(Meditation);
 
                 // OGCDs
                 if (CanWeave(ActionWatching.LastWeaponskill))
@@ -126,52 +129,64 @@ internal class MNK
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
-                    if (ActionReady(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) &&
-                        (((JustUsed(LeapingOpo) || JustUsed(DragonKick)) &&
-                          GetCooldownRemainingTime(RiddleOfFire) < 8 &&
-                          GetCooldownRemainingTime(Brotherhood) < 7) ||
-                         (GetBuffRemainingTime(Buffs.RiddleOfFire) >= 8 &&
-                          !HasEffect(Buffs.FiresRumination))))
-                        return PerfectBalance;
-
-                    if (ActionReady(Brotherhood))
+                    if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood) &&
+                        ActionReady(Brotherhood))
                         return Brotherhood;
 
-                    if (ActionReady(RiddleOfFire))
+                    if (IsEnabled(CustomComboPreset.MNK_STUseROF) &&
+                        ActionReady(RiddleOfFire))
                         return RiddleOfFire;
 
-                    if (ActionReady(RiddleOfWind))
+                    if (IsEnabled(CustomComboPreset.MNK_STUseROW) &&
+                        ActionReady(RiddleOfWind))
                         return RiddleOfWind;
 
-                    if (PlayerHealthPercentageHp() <= 25 && ActionReady(All.SecondWind))
+                    //Perfect Balance
+                    if (ActionReady(PerfectBalance) &&
+                        !HasEffect(Buffs.PerfectBalance))
+                    {
+                        // Odd window
+                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                            !JustUsed(PerfectBalance, 20) &&
+                            HasEffect(Buffs.RiddleOfFire) &&
+                            !HasEffect(Buffs.Brotherhood))
+                            return PerfectBalance;
+
+                        // Even window
+                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                            HasEffect(Buffs.Brotherhood) &&
+                            HasEffect(Buffs.RiddleOfFire))
+                            return PerfectBalance;
+
+                        // Low level
+                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                            ((HasEffect(Buffs.RiddleOfFire) && !LevelChecked(Brotherhood)) ||
+                             !LevelChecked(RiddleOfFire)))
+                            return PerfectBalance;
+                    }
+
+                    if (PlayerHealthPercentageHp() <= 25 &&
+                        ActionReady(All.SecondWind))
                         return All.SecondWind;
 
-                    if (PlayerHealthPercentageHp() <= 40 && ActionReady(All.Bloodbath))
+                    if (PlayerHealthPercentageHp() <= 40 &&
+                        ActionReady(All.Bloodbath))
                         return All.Bloodbath;
 
                     if (Gauge.Chakra >= 5 &&
-                        SteelPeak.LevelChecked())
-                        return OriginalHook(SteelPeak);
+                        LevelChecked(SteelPeak))
+                        return OriginalHook(Meditation);
                 }
 
                 // GCDs
-                // Ensure usage if buff is almost depleted.
-                if (HasEffect(Buffs.FiresRumination) &&
-                    GetBuffRemainingTime(Buffs.FiresRumination) < 4)
-                    return FiresReply;
-
-                if (HasEffect(Buffs.WindsRumination) &&
-                    GetBuffRemainingTime(Buffs.WindsRumination) < 4)
-                    return WindsReply;
-
                 if (HasEffect(Buffs.FormlessFist))
                     return Gauge.OpoOpoFury == 0
-                        ? OriginalHook(DragonKick)
+                        ? DragonKick
                         : OriginalHook(Bootshine);
 
                 // Masterful Blitz
-                if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
-                    (HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 35) &&
+                if (LevelChecked(MasterfulBlitz) &&
+                    !HasEffect(Buffs.PerfectBalance) &&
                     !IsOriginal(MasterfulBlitz))
                     return OriginalHook(MasterfulBlitz);
 
@@ -184,17 +199,17 @@ internal class MNK
                     {
                         if (coeurlChakra == 0)
                             return Gauge.CoeurlFury == 0
-                                ? OriginalHook(Demolish)
+                                ? Demolish
                                 : OriginalHook(SnapPunch);
 
                         if (raptorChakra == 0)
                             return Gauge.RaptorFury == 0
-                                ? OriginalHook(TwinSnakes)
+                                ? TwinSnakes
                                 : OriginalHook(TrueStrike);
 
                         if (opoOpoChakra == 0)
                             return Gauge.OpoOpoFury == 0
-                                ? OriginalHook(DragonKick)
+                                ? DragonKick
                                 : OriginalHook(Bootshine);
                     }
 
@@ -204,23 +219,28 @@ internal class MNK
 
                     if (solarNadi || lunarNadi || bothNadisOpen)
                         return Gauge.OpoOpoFury == 0
-                            ? OriginalHook(DragonKick)
+                            ? DragonKick
                             : OriginalHook(Bootshine);
 
                     #endregion
                 }
 
-                if (HasEffect(Buffs.WindsRumination))
-                    return WindsReply;
-
                 if (HasEffect(Buffs.FiresRumination) &&
                     !HasEffect(Buffs.PerfectBalance) &&
                     !HasEffect(Buffs.FormlessFist) &&
-                    (JustUsed(LeapingOpo) || JustUsed(DragonKick)))
+                    (JustUsed(OriginalHook(Bootshine)) ||
+                     JustUsed(DragonKick) ||
+                     GetBuffRemainingTime(Buffs.FiresRumination) < 4))
                     return FiresReply;
 
+                if (HasEffect(Buffs.WindsRumination) &&
+                    LevelChecked(WindsReply) &&
+                    (HasEffect(Buffs.RiddleOfFire) ||
+                     GetBuffRemainingTime(Buffs.WindsRumination) < 4))
+                    return WindsReply;
+
                 // Standard Beast Chakras
-                return MNKHelper.DetermineCoreAbility(actionID);
+                return MNKHelper.DetermineCoreAbility(actionID, true);
             }
 
             return actionID;
@@ -245,8 +265,10 @@ internal class MNK
             if (actionID is Bootshine or LeapingOpo)
             {
                 if (IsEnabled(CustomComboPreset.MNK_STUseOpener))
+                {
                     if (MNKOpener.DoFullOpener(ref actionID, Config.MNK_SelectedOpener))
                         return actionID;
+                }
 
                 if (IsEnabled(CustomComboPreset.MNK_STUseMeditation) &&
                     (!InCombat() || !InMeleeRange()) &&
@@ -254,6 +276,10 @@ internal class MNK
                     !HasEffect(Buffs.RiddleOfFire) &&
                     LevelChecked(Meditation))
                     return OriginalHook(Meditation);
+
+                if (IsEnabled(CustomComboPreset.MNK_STUseFormShift) &&
+                    !InCombat() && !HasEffect(Buffs.FormlessFist))
+                    return FormShift;
 
                 //Variant Cure
                 if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) &&
@@ -270,22 +296,6 @@ internal class MNK
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
-                    if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance) &&
-                        ActionReady(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance))
-                    {
-                        if ((JustUsed(LeapingOpo) || JustUsed(DragonKick)) &&
-                            GetCooldownRemainingTime(RiddleOfFire) < 7 &&
-                            GetCooldownRemainingTime(Brotherhood) < 7)
-                            return PerfectBalance;
-
-                        if ((JustUsed(LeapingOpo) || JustUsed(DragonKick)) &&
-                            HasEffect(Buffs.RiddleOfFire) &&
-                            GetBuffRemainingTime(Buffs.RiddleOfFire) > 8 &&
-                            !HasEffect(Buffs.FiresRumination))
-                            return PerfectBalance;
-                    }
-
                     if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
                     {
                         if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood) &&
@@ -299,6 +309,31 @@ internal class MNK
                         if (IsEnabled(CustomComboPreset.MNK_STUseROW) &&
                             ActionReady(RiddleOfWind))
                             return RiddleOfWind;
+                    }
+
+                    //Perfect Balance
+                    if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance) &&
+                        ActionReady(PerfectBalance) &&
+                        !HasEffect(Buffs.PerfectBalance))
+                    {
+                        // Odd window
+                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                            !JustUsed(PerfectBalance, 20) &&
+                            HasEffect(Buffs.RiddleOfFire) &&
+                            !HasEffect(Buffs.Brotherhood))
+                            return PerfectBalance;
+
+                        // Even window
+                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                            HasEffect(Buffs.Brotherhood) &&
+                            HasEffect(Buffs.RiddleOfFire))
+                            return PerfectBalance;
+
+                        // Low level
+                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                            ((HasEffect(Buffs.RiddleOfFire) && !LevelChecked(Brotherhood)) ||
+                             !LevelChecked(RiddleOfFire)))
+                            return PerfectBalance;
                     }
 
                     if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
@@ -319,27 +354,16 @@ internal class MNK
                 }
 
                 // GCDs
-                // Ensure usage if buff is almost depleted.
-                if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply) &&
-                    HasEffect(Buffs.FiresRumination) &&
-                    GetBuffRemainingTime(Buffs.FiresRumination) < 4)
-                    return FiresReply;
-
-                if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply) &&
-                    HasEffect(Buffs.WindsRumination) &&
-                    GetBuffRemainingTime(Buffs.WindsRumination) < 4)
-                    return WindsReply;
-
                 if (HasEffect(Buffs.FormlessFist))
                     return Gauge.OpoOpoFury == 0
-                        ? OriginalHook(DragonKick)
+                        ? DragonKick
                         : OriginalHook(Bootshine);
 
                 if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
                 {
                     // Masterful Blitz
-                    if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
-                        (HasEffect(Buffs.RiddleOfFire) || GetCooldownRemainingTime(RiddleOfFire) > 35) &&
+                    if (LevelChecked(MasterfulBlitz) &&
+                        !HasEffect(Buffs.PerfectBalance) &&
                         !IsOriginal(MasterfulBlitz))
                         return OriginalHook(MasterfulBlitz);
 
@@ -352,17 +376,17 @@ internal class MNK
                         {
                             if (coeurlChakra == 0)
                                 return Gauge.CoeurlFury == 0
-                                    ? OriginalHook(Demolish)
+                                    ? Demolish
                                     : OriginalHook(SnapPunch);
 
                             if (raptorChakra == 0)
                                 return Gauge.RaptorFury == 0
-                                    ? OriginalHook(TwinSnakes)
+                                    ? TwinSnakes
                                     : OriginalHook(TrueStrike);
 
                             if (opoOpoChakra == 0)
                                 return Gauge.OpoOpoFury == 0
-                                    ? OriginalHook(DragonKick)
+                                    ? DragonKick
                                     : OriginalHook(Bootshine);
                         }
 
@@ -372,25 +396,28 @@ internal class MNK
 
                         if (solarNadi || lunarNadi || bothNadisOpen)
                             return Gauge.OpoOpoFury == 0
-                                ? OriginalHook(DragonKick)
+                                ? DragonKick
                                 : OriginalHook(Bootshine);
 
                         #endregion
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply) &&
-                    HasEffect(Buffs.WindsRumination) &&
-                    LevelChecked(WindsReply))
-                    return WindsReply;
-
                 if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply) &&
                     HasEffect(Buffs.FiresRumination) &&
                     !HasEffect(Buffs.PerfectBalance) &&
                     !HasEffect(Buffs.FormlessFist) &&
-                    (JustUsed(LeapingOpo) || JustUsed(DragonKick)) &&
-                    LevelChecked(FiresReply))
+                    (JustUsed(OriginalHook(Bootshine)) ||
+                     JustUsed(DragonKick) ||
+                     GetBuffRemainingTime(Buffs.FiresRumination) < 4))
                     return FiresReply;
+
+                if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply) &&
+                    HasEffect(Buffs.WindsRumination) &&
+                    LevelChecked(WindsReply) &&
+                    (HasEffect(Buffs.RiddleOfFire) ||
+                     GetBuffRemainingTime(Buffs.WindsRumination) < 4))
+                    return WindsReply;
 
                 // Standard Beast Chakras
                 return MNKHelper.DetermineCoreAbility(actionID, IsEnabled(CustomComboPreset.MNK_STUseTrueNorth));
@@ -436,7 +463,7 @@ internal class MNK
                     if (LevelChecked(PerfectBalance) &&
                         !HasEffect(Buffs.PerfectBalance) &&
                         IsOriginal(MasterfulBlitz))
-                    {
+
                         // Use Perfect Balance if:
                         // 1. It's after Bootshine/Dragon Kick. - This doesn't apply to AoE
                         // 2. At max stacks / before overcap.
@@ -450,7 +477,6 @@ internal class MNK
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-                    }
 
                     if (ActionReady(Brotherhood))
                         return Brotherhood;
@@ -564,7 +590,7 @@ internal class MNK
                         LevelChecked(PerfectBalance) &&
                         !HasEffect(Buffs.PerfectBalance) &&
                         IsOriginal(MasterfulBlitz))
-                    {
+
                         // Use Perfect Balance if:
                         // 1. It's after Bootshine/Dragon Kick. - This doesn't apply to AoE
                         // 2. At max stacks / before overcap.
@@ -578,7 +604,6 @@ internal class MNK
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-                    }
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseBrotherhood) &&
                         ActionReady(Brotherhood))
@@ -701,7 +726,7 @@ internal class MNK
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
             if (IsEnabled(CustomComboPreset.MNK_BC_OPOOPO) &&
-                actionID is Bootshine or LeapingOpo && 
+                actionID is Bootshine or LeapingOpo &&
                 (HasEffect(Buffs.OpoOpoForm) || HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.PerfectBalance)))
                 return Gauge.OpoOpoFury == 0 && LevelChecked(DragonKick)
                     ? DragonKick
@@ -718,7 +743,7 @@ internal class MNK
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
             if (IsEnabled(CustomComboPreset.MNK_BC_RAPTOR) &&
-                actionID is TrueStrike or RisingRaptor && 
+                actionID is TrueStrike or RisingRaptor &&
                 (HasEffect(Buffs.RaptorForm) || HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.PerfectBalance)))
                 return Gauge.RaptorFury == 0 && LevelChecked(TwinSnakes)
                     ? TwinSnakes
@@ -735,7 +760,7 @@ internal class MNK
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
             if (IsEnabled(CustomComboPreset.MNK_BC_COEURL) &&
-                actionID is SnapPunch or PouncingCoeurl && 
+                actionID is SnapPunch or PouncingCoeurl &&
                 (HasEffect(Buffs.CoeurlForm) || HasEffect(Buffs.FormlessFist) || HasEffect(Buffs.PerfectBalance)))
                 return Gauge.CoeurlFury == 0 && LevelChecked(Demolish)
                     ? Demolish
