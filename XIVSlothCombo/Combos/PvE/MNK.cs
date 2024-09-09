@@ -456,31 +456,23 @@ internal class MNK
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
-
+                                      
+                    if (ActionReady(Brotherhood))                                     
+                        return Brotherhood;
+                    
                     if (ActionReady(RiddleOfFire))
                         return RiddleOfFire;
 
-                    if (LevelChecked(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance) &&
-                        IsOriginal(MasterfulBlitz))
-
-                        // Use Perfect Balance if:
-                        // 1. It's after Bootshine/Dragon Kick. - This doesn't apply to AoE
-                        // 2. At max stacks / before overcap.
-                        // 3. During Brotherhood.
-                        // 4. During Riddle of Fire.
-                        // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if ((HasCharges(PerfectBalance) &&
-                             GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance)) ||
+                    if (ActionReady(PerfectBalance) &&
+                        !HasEffect(Buffs.PerfectBalance))
+                        
+                        if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
                             GetCooldownRemainingTime(PerfectBalance) <= 4 ||
                             HasEffect(Buffs.Brotherhood) ||
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-
-                    if (ActionReady(Brotherhood))
-                        return Brotherhood;
-
+                    
                     if (ActionReady(RiddleOfWind))
                         return RiddleOfWind;
 
@@ -503,7 +495,7 @@ internal class MNK
                     return FiresReply;
 
                 // Masterful Blitz
-                if (MasterfulBlitz.LevelChecked() && !HasEffect(Buffs.PerfectBalance) &&
+                if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
                     OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                     return OriginalHook(MasterfulBlitz);
 
@@ -512,7 +504,7 @@ internal class MNK
                 {
                     if (nadiNone || !lunarNadi)
                         if (pbStacks?.StackCount > 0)
-                            return ShadowOfTheDestroyer.LevelChecked()
+                            return LevelChecked(ShadowOfTheDestroyer)
                                 ? ShadowOfTheDestroyer
                                 : Rockbreaker;
 
@@ -582,14 +574,17 @@ internal class MNK
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
+                    if (IsEnabled(CustomComboPreset.MNK_AoEUseBrotherhood) &&
+                        ActionReady(Brotherhood))
+                        return Brotherhood;
+
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseROF) &&
                         ActionReady(RiddleOfFire))
                         return RiddleOfFire;
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance) &&
-                        LevelChecked(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance) &&
-                        IsOriginal(MasterfulBlitz))
+                        ActionReady(PerfectBalance) &&
+                        !HasEffect(Buffs.PerfectBalance))
 
                         // Use Perfect Balance if:
                         // 1. It's after Bootshine/Dragon Kick. - This doesn't apply to AoE
@@ -597,18 +592,13 @@ internal class MNK
                         // 3. During Brotherhood.
                         // 4. During Riddle of Fire.
                         // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if ((HasCharges(PerfectBalance) &&
-                             GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance)) ||
+                        if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance)||
                             GetCooldownRemainingTime(PerfectBalance) <= 4 ||
                             HasEffect(Buffs.Brotherhood) ||
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-
-                    if (IsEnabled(CustomComboPreset.MNK_AoEUseBrotherhood) &&
-                        ActionReady(Brotherhood))
-                        return Brotherhood;
-
+                    
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseROW) &&
                         ActionReady(RiddleOfWind))
                         return RiddleOfWind;
@@ -642,7 +632,8 @@ internal class MNK
                 // Masterful Blitz
                 if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance))
                 {
-                    if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
+                    if (LevelChecked(MasterfulBlitz) && 
+                        !HasEffect(Buffs.PerfectBalance) &&
                         OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
 
@@ -651,7 +642,7 @@ internal class MNK
                     {
                         if (nadiNone || !lunarNadi)
                             if (pbStacks?.StackCount > 0)
-                                return ShadowOfTheDestroyer.LevelChecked()
+                                return LevelChecked(ShadowOfTheDestroyer)
                                     ? ShadowOfTheDestroyer
                                     : Rockbreaker;
 
@@ -697,9 +688,9 @@ internal class MNK
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            if (actionID == PerfectBalance)
-                if (OriginalHook(MasterfulBlitz) != MasterfulBlitz && MasterfulBlitz.LevelChecked())
-                    return OriginalHook(MasterfulBlitz);
+            if (actionID is PerfectBalance &&
+                OriginalHook(MasterfulBlitz) != MasterfulBlitz && LevelChecked(MasterfulBlitz))
+                return OriginalHook(MasterfulBlitz);
 
             return actionID;
         }
