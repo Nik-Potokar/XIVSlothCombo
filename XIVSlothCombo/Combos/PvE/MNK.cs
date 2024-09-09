@@ -7,7 +7,6 @@ using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
-using XIVSlothCombo.Extensions;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.PvE;
@@ -265,10 +264,8 @@ internal class MNK
             if (actionID is Bootshine or LeapingOpo)
             {
                 if (IsEnabled(CustomComboPreset.MNK_STUseOpener))
-                {
                     if (MNKOpener.DoFullOpener(ref actionID, Config.MNK_SelectedOpener))
                         return actionID;
-                }
 
                 if (IsEnabled(CustomComboPreset.MNK_STUseMeditation) &&
                     (!InCombat() || !InMeleeRange()) &&
@@ -456,23 +453,23 @@ internal class MNK
                         IsEnabled(Variant.VariantRampart) &&
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
-                                      
-                    if (ActionReady(Brotherhood))                                     
+
+                    if (ActionReady(Brotherhood))
                         return Brotherhood;
-                    
+
                     if (ActionReady(RiddleOfFire))
                         return RiddleOfFire;
 
                     if (ActionReady(PerfectBalance) &&
                         !HasEffect(Buffs.PerfectBalance))
-                        
+
                         if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
                             GetCooldownRemainingTime(PerfectBalance) <= 4 ||
                             HasEffect(Buffs.Brotherhood) ||
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-                    
+
                     if (ActionReady(RiddleOfWind))
                         return RiddleOfWind;
 
@@ -592,13 +589,13 @@ internal class MNK
                         // 3. During Brotherhood.
                         // 4. During Riddle of Fire.
                         // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance)||
+                        if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
                             GetCooldownRemainingTime(PerfectBalance) <= 4 ||
                             HasEffect(Buffs.Brotherhood) ||
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-                    
+
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseROW) &&
                         ActionReady(RiddleOfWind))
                         return RiddleOfWind;
@@ -632,7 +629,7 @@ internal class MNK
                 // Masterful Blitz
                 if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance))
                 {
-                    if (LevelChecked(MasterfulBlitz) && 
+                    if (LevelChecked(MasterfulBlitz) &&
                         !HasEffect(Buffs.PerfectBalance) &&
                         OriginalHook(MasterfulBlitz) != MasterfulBlitz)
                         return OriginalHook(MasterfulBlitz);
