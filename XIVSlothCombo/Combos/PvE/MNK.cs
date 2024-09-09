@@ -128,16 +128,14 @@ internal class MNK
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
-                    if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood) &&
-                        ActionReady(Brotherhood))
+                    if (ActionReady(Brotherhood))
                         return Brotherhood;
 
-                    if (IsEnabled(CustomComboPreset.MNK_STUseROF) &&
-                        ActionReady(RiddleOfFire))
+                    if (ActionReady(RiddleOfFire) &&
+                        CanDelayedWeave(ActionWatching.LastWeaponskill))
                         return RiddleOfFire;
 
-                    if (IsEnabled(CustomComboPreset.MNK_STUseROW) &&
-                        ActionReady(RiddleOfWind))
+                    if (ActionReady(RiddleOfWind))
                         return RiddleOfWind;
 
                     //Perfect Balance
@@ -284,6 +282,12 @@ internal class MNK
                     PlayerHealthPercentageHp() <= Config.MNK_VariantCure)
                     return Variant.VariantCure;
 
+                if (IsEnabled(CustomComboPreset.MNK_STUseBuffs) &&
+                    IsEnabled(CustomComboPreset.MNK_STUseROF) &&
+                    ActionReady(RiddleOfFire) &&
+                    CanDelayedWeave(ActionWatching.LastWeaponskill))
+                    return RiddleOfFire;
+
                 // OGCDs
                 if (CanWeave(ActionWatching.LastWeaponskill))
                 {
@@ -298,10 +302,6 @@ internal class MNK
                         if (IsEnabled(CustomComboPreset.MNK_STUseBrotherhood) &&
                             ActionReady(Brotherhood))
                             return Brotherhood;
-
-                        if (IsEnabled(CustomComboPreset.MNK_STUseROF) &&
-                            ActionReady(RiddleOfFire))
-                            return RiddleOfFire;
 
                         if (IsEnabled(CustomComboPreset.MNK_STUseROW) &&
                             ActionReady(RiddleOfWind))
@@ -400,21 +400,26 @@ internal class MNK
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.MNK_STUseFiresReply) &&
-                    HasEffect(Buffs.FiresRumination) &&
-                    !HasEffect(Buffs.PerfectBalance) &&
-                    !HasEffect(Buffs.FormlessFist) &&
-                    (JustUsed(OriginalHook(Bootshine)) ||
-                     JustUsed(DragonKick) ||
-                     GetBuffRemainingTime(Buffs.FiresRumination) < 4))
-                    return FiresReply;
+                if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
+                {
+                    if (IsEnabled(CustomComboPreset.MNK_STUseROF) &&
+                        IsEnabled(CustomComboPreset.MNK_STUseFiresReply) &&
+                        HasEffect(Buffs.FiresRumination) &&
+                        !HasEffect(Buffs.PerfectBalance) &&
+                        !HasEffect(Buffs.FormlessFist) &&
+                        (JustUsed(OriginalHook(Bootshine)) ||
+                         JustUsed(DragonKick) ||
+                         GetBuffRemainingTime(Buffs.FiresRumination) < 4))
+                        return FiresReply;
 
-                if (IsEnabled(CustomComboPreset.MNK_STUseWindsReply) &&
-                    HasEffect(Buffs.WindsRumination) &&
-                    LevelChecked(WindsReply) &&
-                    (HasEffect(Buffs.RiddleOfFire) ||
-                     GetBuffRemainingTime(Buffs.WindsRumination) < 4))
-                    return WindsReply;
+                    if (IsEnabled(CustomComboPreset.MNK_STUseROW) && 
+                        IsEnabled(CustomComboPreset.MNK_STUseWindsReply) &&
+                        HasEffect(Buffs.WindsRumination) &&
+                        LevelChecked(WindsReply) &&
+                        (HasEffect(Buffs.RiddleOfFire) ||
+                         GetBuffRemainingTime(Buffs.WindsRumination) < 4))
+                        return WindsReply;
+                }
 
                 // Standard Beast Chakras
                 return MNKHelper.DetermineCoreAbility(actionID, IsEnabled(CustomComboPreset.MNK_STUseTrueNorth));
@@ -445,6 +450,10 @@ internal class MNK
                     PlayerHealthPercentageHp() <= Config.MNK_VariantCure)
                     return Variant.VariantCure;
 
+                if (ActionReady(RiddleOfFire) &&
+                    CanDelayedWeave(ActionWatching.LastWeaponskill))
+                    return RiddleOfFire;
+
                 // Buffs
                 if (CanWeave(ActionWatching.LastWeaponskill))
                 {
@@ -456,9 +465,9 @@ internal class MNK
 
                     if (ActionReady(Brotherhood))
                         return Brotherhood;
-
-                    if (ActionReady(RiddleOfFire))
-                        return RiddleOfFire;
+                    
+                    if (ActionReady(RiddleOfWind))
+                        return RiddleOfWind;
 
                     if (ActionReady(PerfectBalance) &&
                         !HasEffect(Buffs.PerfectBalance))
@@ -469,9 +478,6 @@ internal class MNK
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-
-                    if (ActionReady(RiddleOfWind))
-                        return RiddleOfWind;
 
                     if (Gauge.Chakra >= 5 &&
                         LevelChecked(HowlingFist) &&
@@ -562,6 +568,12 @@ internal class MNK
                     PlayerHealthPercentageHp() <= Config.MNK_VariantCure)
                     return Variant.VariantCure;
 
+                if (IsEnabled(CustomComboPreset.MNK_AoEUseBuffs) &&
+                    IsEnabled(CustomComboPreset.MNK_AoEUseROF) &&
+                    ActionReady(RiddleOfFire) &&
+                    CanDelayedWeave(ActionWatching.LastWeaponskill))
+                    return RiddleOfFire;
+
                 // Buffs
                 if (CanWeave(ActionWatching.LastWeaponskill))
                 {
@@ -571,13 +583,16 @@ internal class MNK
                         IsOffCooldown(Variant.VariantRampart))
                         return Variant.VariantRampart;
 
-                    if (IsEnabled(CustomComboPreset.MNK_AoEUseBrotherhood) &&
-                        ActionReady(Brotherhood))
-                        return Brotherhood;
+                    if (IsEnabled(CustomComboPreset.MNK_AoEUseBuffs))
+                    {
+                        if (IsEnabled(CustomComboPreset.MNK_AoEUseBrotherhood) &&
+                            ActionReady(Brotherhood))
+                            return Brotherhood;
 
-                    if (IsEnabled(CustomComboPreset.MNK_AoEUseROF) &&
-                        ActionReady(RiddleOfFire))
-                        return RiddleOfFire;
+                        if (IsEnabled(CustomComboPreset.MNK_AoEUseROW) &&
+                            ActionReady(RiddleOfWind))
+                            return RiddleOfWind;
+                    }
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance) &&
                         ActionReady(PerfectBalance) &&
@@ -595,10 +610,6 @@ internal class MNK
                             (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
                             (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
                             return PerfectBalance;
-
-                    if (IsEnabled(CustomComboPreset.MNK_AoEUseROW) &&
-                        ActionReady(RiddleOfWind))
-                        return RiddleOfWind;
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseHowlingFist) &&
                         Gauge.Chakra >= 5 &&
@@ -618,13 +629,18 @@ internal class MNK
                     }
                 }
 
-                if (IsEnabled(CustomComboPreset.MNK_AoEUseWindsReply) &&
-                    HasEffect(Buffs.WindsRumination))
-                    return WindsReply;
+                if (IsEnabled(CustomComboPreset.MNK_AoEUseBuffs))
+                {
+                    if (IsEnabled(CustomComboPreset.MNK_AoEUseROF) &&
+                        IsEnabled(CustomComboPreset.MNK_AoEUseFiresReply) &&
+                        HasEffect(Buffs.FiresRumination))
+                        return FiresReply;
 
-                if (IsEnabled(CustomComboPreset.MNK_AoEUseFiresReply) &&
-                    HasEffect(Buffs.FiresRumination))
-                    return FiresReply;
+                    if (IsEnabled(CustomComboPreset.MNK_AoEUseROW) &&
+                        IsEnabled(CustomComboPreset.MNK_AoEUseWindsReply) &&
+                        HasEffect(Buffs.WindsRumination))
+                        return WindsReply;
+                }
 
                 // Masterful Blitz
                 if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance))
