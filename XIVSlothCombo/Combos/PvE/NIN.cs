@@ -173,7 +173,8 @@ namespace XIVSlothCombo.Combos.PvE
                     var comboLength = GetCooldown(GustSlash).CooldownTotal * 3;
                     bool trueNorthArmor = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) && TargetNeedsPositionals() && !OnTargetsFlank() && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) && canDelayedWeave;
                     bool trueNorthEdge = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth) && TargetNeedsPositionals() && IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_TrueNorth_ArmorCrush) && !OnTargetsRear() && GetRemainingCharges(All.TrueNorth) > 0 && All.TrueNorth.LevelChecked() && !HasEffect(All.Buffs.TrueNorth) && canDelayedWeave;
-                        
+                    bool dynamic = IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Dynamic);
+
 
                     if (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
@@ -380,28 +381,19 @@ namespace XIVSlothCombo.Combos.PvE
                     {
                         if (lastComboMove == SpinningEdge && GustSlash.LevelChecked())
                             return OriginalHook(GustSlash);
-
+                            
                         if (lastComboMove == GustSlash && ArmorCrush.LevelChecked())
                         {
-                            if (!NINHelper.MugDebuff && GetTargetHPPercent() > burnKazematoi)
-                            {
-                                if (gauge.Kazematoi < 4)
-                                {
-                                    if (trueNorthArmor)
-                                        return OriginalHook(All.TrueNorth);
-                                    else
-                                        return OriginalHook(ArmorCrush);
-                                }
-                                else
+                            if (dynamic)
+                            {                                
+                                if (gauge.Kazematoi > 3)
                                 {
                                     if (trueNorthEdge)
                                         return OriginalHook(All.TrueNorth);
                                     else
                                         return OriginalHook(AeolianEdge);
                                 }
-                            }
-                            if (NINHelper.MugDebuff  || GetTargetHPPercent() <= burnKazematoi)
-                            {
+                                
                                 if (gauge.Kazematoi == 0)
                                 {
                                     if (trueNorthArmor)
@@ -409,15 +401,54 @@ namespace XIVSlothCombo.Combos.PvE
                                     else
                                         return OriginalHook(ArmorCrush);
                                 }
-                                else
+                                if ((gauge.Kazematoi > 0) && (gauge.Kazematoi < 4))
                                 {
-                                    if (trueNorthEdge)
-                                        return OriginalHook(All.TrueNorth);
+                                    if (OnTargetsFlank())
+                                        return OriginalHook(ArmorCrush);
                                     else
                                         return OriginalHook(AeolianEdge);
                                 }
+
+
                             }
-                        }                           
+                            if (!dynamic)
+                            {
+                                if (!NINHelper.MugDebuff && GetTargetHPPercent() > burnKazematoi)
+                                {
+                                    if (gauge.Kazematoi < 4)
+                                    {
+                                        if (trueNorthArmor)
+                                            return OriginalHook(All.TrueNorth);
+                                        else
+                                            return OriginalHook(ArmorCrush);
+                                    }
+                                    else
+                                    {
+                                        if (trueNorthEdge)
+                                            return OriginalHook(All.TrueNorth);
+                                        else
+                                            return OriginalHook(AeolianEdge);
+                                    }
+                                }
+                                if (NINHelper.MugDebuff || GetTargetHPPercent() <= burnKazematoi)
+                                {
+                                    if (gauge.Kazematoi == 0)
+                                    {
+                                        if (trueNorthArmor)
+                                            return OriginalHook(All.TrueNorth);
+                                        else
+                                            return OriginalHook(ArmorCrush);
+                                    }
+                                    else
+                                    {
+                                        if (trueNorthEdge)
+                                            return OriginalHook(All.TrueNorth);
+                                        else
+                                            return OriginalHook(AeolianEdge);
+                                    }
+                                }
+                            }
+                        }
                         if (lastComboMove == GustSlash && !ArmorCrush.LevelChecked() && AeolianEdge.LevelChecked())
                         {
                             if (trueNorthEdge)
