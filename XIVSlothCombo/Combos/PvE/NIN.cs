@@ -178,12 +178,23 @@ namespace XIVSlothCombo.Combos.PvE
 
                     if (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus) || (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5 && !InCombat()))
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
-
+  
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) && IsOnCooldown(TrickAttack) && mudraState.CurrentMudra == MudraCasting.MudraState.CastingSuiton && !setupSuitonWindow)
                         mudraState.CurrentMudra = MudraCasting.MudraState.None;
 
                     if (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Suiton) && IsOnCooldown(TrickAttack) && mudraState.CurrentMudra != MudraCasting.MudraState.CastingSuiton && setupSuitonWindow)
                         mudraState.CurrentMudra = MudraCasting.MudraState.CastingSuiton;
+                   
+                    if (!Suiton.LevelChecked()) //For low level
+                    {
+                        if (Raiton.LevelChecked() && IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_Raiton)) //under 45 will only use Raiton
+                        {
+                            if (mudraState.CastRaiton(ref actionID))
+                            return actionID;
+                        }
+                        else if (!Raiton.LevelChecked() && mudraState.CastFumaShuriken(ref actionID) && IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Ninjitsus_FumaShuriken)) // 30-35 will use only fuma
+                            return actionID;
+                    }
 
                     if (OriginalHook(Ninjutsu) is Rabbit)
                         return OriginalHook(Ninjutsu);
