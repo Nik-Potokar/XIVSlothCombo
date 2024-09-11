@@ -127,23 +127,14 @@ internal class MNKOpenerLogic : MNK
 
         if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
         {
-            if (Gauge.Chakra < 5 && PrePullStep == 1)
-            {
-                actionID = ForbiddenMeditation;
+            if (Gauge.Chakra < 5 && PrePullStep == 1) PrePullStep++;
+            else if (PrePullStep == 1) actionID = Meditation;
 
-                return true;
-            }
+            if (!HasEffect(Buffs.FormlessFist) && Gauge.Chakra == 5 && PrePullStep == 2) PrePullStep++;
+            else if (PrePullStep == 2) actionID = FormShift;
 
-            if (!HasEffect(Buffs.FormlessFist) &&
-                !HasEffect(Buffs.RaptorForm) && PrePullStep == 1)
-            {
-                actionID = FormShift;
-
-                return true;
-            }
-
-            if (WasLastAction(DragonKick) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
-            else if (PrePullStep == 1) actionID = DragonKick;
+            if (WasLastAction(DragonKick) && PrePullStep == 3) CurrentState = OpenerState.InOpener;
+            else if (PrePullStep == 3) actionID = DragonKick;
 
             if (ActionWatching.CombatActions.Count > 2 && InCombat())
                 CurrentState = OpenerState.FailedOpener;
@@ -163,42 +154,38 @@ internal class MNKOpenerLogic : MNK
         if (currentState == OpenerState.InOpener)
         {
             if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra) &&
+                CanWeave(ActionWatching.LastWeaponskill) &&
                 Gauge.Chakra >= 5 &&
-                OpenerStep > 2)
+                OpenerStep > 9)
             {
                 actionID = TheForbiddenChakra;
 
                 return true;
             }
 
-            if ((WasLastAction(PerfectBalance) ||
-                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
+            if (WasLastAction(PerfectBalance) && GetRemainingCharges(PerfectBalance) is 1 && OpenerStep == 1)
+                OpenerStep++;
             else if (OpenerStep == 1) actionID = PerfectBalance;
 
-            if (WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
-            else if (OpenerStep == 2) actionID = TheForbiddenChakra;
+            if (WasLastWeaponskill(TwinSnakes) && OpenerStep == 2) OpenerStep++;
+            else if (OpenerStep == 2) actionID = TwinSnakes;
 
-            if (WasLastWeaponskill(TwinSnakes) && OpenerStep == 3) OpenerStep++;
-            else if (OpenerStep == 3) actionID = TwinSnakes;
+            if (WasLastWeaponskill(Demolish) && OpenerStep == 3) OpenerStep++;
+            else if (OpenerStep == 3) actionID = Demolish;
 
-            if (WasLastWeaponskill(Demolish) && OpenerStep == 4) OpenerStep++;
-            else if (OpenerStep == 4) actionID = Demolish;
+            if (WasLastAbility(Brotherhood) && OpenerStep == 4) OpenerStep++;
+            else if (OpenerStep == 4) actionID = Brotherhood;
 
-            if (WasLastAbility(Brotherhood) && HasEffect(Buffs.Brotherhood) &&
-                OpenerStep == 5) OpenerStep++;
-            else if (OpenerStep == 5) actionID = Brotherhood;
+            if (WasLastAction(RiddleOfFire) && OpenerStep == 5) OpenerStep++;
+            else if (OpenerStep == 5) actionID = RiddleOfFire;
 
-            if (WasLastAction(RiddleOfFire) &&
-                HasEffect(Buffs.RiddleOfFire) && OpenerStep == 6) OpenerStep++;
-            else if (OpenerStep == 6) actionID = RiddleOfFire;
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 6) OpenerStep++;
+            else if (OpenerStep == 6) actionID = LeapingOpo;
 
-            // Pot
+            if (WasLastAction(TheForbiddenChakra) && OpenerStep == 7) OpenerStep++;
+            else if (OpenerStep == 7) actionID = TheForbiddenChakra;
 
-            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 7) OpenerStep++;
-            else if (OpenerStep == 7) actionID = LeapingOpo;
-
-            if (WasLastAction(RiddleOfWind) &&
-                HasEffect(Buffs.RiddleOfWind) && OpenerStep == 8) OpenerStep++;
+            if (WasLastAction(RiddleOfWind) && OpenerStep == 8) OpenerStep++;
             else if (OpenerStep == 8) actionID = RiddleOfWind;
 
             if (WasLastWeaponskill(RisingPhoenix) && OpenerStep == 9) OpenerStep++;
@@ -207,19 +194,17 @@ internal class MNKOpenerLogic : MNK
             if (WasLastWeaponskill(DragonKick) && OpenerStep == 10) OpenerStep++;
             else if (OpenerStep == 10) actionID = DragonKick;
 
-            if ((WasLastWeaponskill(FiresReply) ||
-                 !HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
-            else if (OpenerStep == 11) actionID = FiresReply;
+            if (WasLastWeaponskill(WindsReply) && OpenerStep == 11) OpenerStep++;
+            else if (OpenerStep == 11) actionID = WindsReply;
 
-            if ((WasLastWeaponskill(WindsReply) ||
-                 !HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
-            else if (OpenerStep == 12) actionID = WindsReply;
+            if (WasLastWeaponskill(FiresReply) && OpenerStep == 12) OpenerStep++;
+            else if (OpenerStep == 12) actionID = FiresReply;
 
             if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 13) OpenerStep++;
             else if (OpenerStep == 13) actionID = LeapingOpo;
 
-            if ((WasLastAction(PerfectBalance) ||
-                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
+            if (WasLastAction(PerfectBalance) && GetRemainingCharges(PerfectBalance) is 0 && OpenerStep == 14)
+                OpenerStep++;
             else if (OpenerStep == 14) actionID = PerfectBalance;
 
             if (WasLastWeaponskill(DragonKick) && OpenerStep == 15) OpenerStep++;
@@ -234,19 +219,17 @@ internal class MNKOpenerLogic : MNK
             if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 18) OpenerStep++;
             else if (OpenerStep == 18) actionID = ElixirBurst;
 
-            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 19)
-                CurrentState = OpenerState.OpenerFinished;
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 19) CurrentState = OpenerState.OpenerFinished;
             else if (OpenerStep == 19) actionID = LeapingOpo;
 
             if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                 CurrentState = OpenerState.FailedOpener;
 
-            if ((actionID == PerfectBalance && GetRemainingCharges(PerfectBalance) == 0 &&
-                 ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
-                (OpenerStep is 6 && HasEffect(Buffs.RiddleOfFire)) ||
-                (OpenerStep is 8 && HasEffect(Buffs.RiddleOfWind)) ||
-                (OpenerStep is 5 && HasEffect(Buffs.Brotherhood)
-                                 && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3))
+            if (((actionID == PerfectBalance && GetRemainingCharges(PerfectBalance) == 0) ||
+                 (actionID is RiddleOfFire && IsOnCooldown(RiddleOfFire)) ||
+                 (actionID is RiddleOfWind && IsOnCooldown(RiddleOfWind)) ||
+                 (actionID is Brotherhood && IsOnCooldown(Brotherhood)))
+                && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
             {
                 Svc.Log.Debug($"Failed at {actionID}");
                 CurrentState = OpenerState.FailedOpener;
@@ -267,43 +250,39 @@ internal class MNKOpenerLogic : MNK
 
         if (currentState == OpenerState.InOpener)
         {
-            if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra)
-                && Gauge.Chakra >= 5
-                && OpenerStep > 2)
+            if (IsEnabled(CustomComboPreset.MNK_STUseTheForbiddenChakra) &&
+                CanWeave(ActionWatching.LastWeaponskill) &&
+                Gauge.Chakra >= 5 &&
+                OpenerStep > 9)
             {
                 actionID = TheForbiddenChakra;
 
                 return true;
             }
 
-            if ((WasLastAction(PerfectBalance) ||
-                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 1) OpenerStep++;
+            if (WasLastAction(PerfectBalance) && GetRemainingCharges(PerfectBalance) is 1 && OpenerStep == 1)
+                OpenerStep++;
             else if (OpenerStep == 1) actionID = PerfectBalance;
 
-            if (WasLastAction(TheForbiddenChakra) && OpenerStep == 2) OpenerStep++;
-            else if (OpenerStep == 2) actionID = TheForbiddenChakra;
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 2) OpenerStep++;
+            else if (OpenerStep == 2) actionID = LeapingOpo;
 
-            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 3) OpenerStep++;
-            else if (OpenerStep == 3) actionID = LeapingOpo;
+            if (WasLastWeaponskill(DragonKick) && OpenerStep == 3) OpenerStep++;
+            else if (OpenerStep == 3) actionID = DragonKick;
 
-            if (WasLastWeaponskill(DragonKick) && OpenerStep == 4) OpenerStep++;
-            else if (OpenerStep == 4) actionID = DragonKick;
+            if (WasLastAbility(Brotherhood) && OpenerStep == 4) OpenerStep++;
+            else if (OpenerStep == 4) actionID = Brotherhood;
 
-            if (WasLastAbility(Brotherhood) && HasEffect(Buffs.Brotherhood) &&
-                OpenerStep == 5) OpenerStep++;
-            else if (OpenerStep == 5) actionID = Brotherhood;
+            if (WasLastAction(RiddleOfFire) && OpenerStep == 5) OpenerStep++;
+            else if (OpenerStep == 5) actionID = RiddleOfFire;
 
-            if (WasLastAction(RiddleOfFire) &&
-                HasEffect(Buffs.RiddleOfFire) && OpenerStep == 6) OpenerStep++;
-            else if (OpenerStep == 6) actionID = RiddleOfFire;
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 6) OpenerStep++;
+            else if (OpenerStep == 6) actionID = LeapingOpo;
 
-            // Pot
+            if (WasLastAction(TheForbiddenChakra) && OpenerStep == 7) OpenerStep++;
+            else if (OpenerStep == 7) actionID = TheForbiddenChakra;
 
-            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 7) OpenerStep++;
-            else if (OpenerStep == 7) actionID = LeapingOpo;
-
-            if (WasLastAction(RiddleOfWind) &&
-                HasEffect(Buffs.RiddleOfWind) && OpenerStep == 8) OpenerStep++;
+            if (WasLastAction(RiddleOfWind) && OpenerStep == 8) OpenerStep++;
             else if (OpenerStep == 8) actionID = RiddleOfWind;
 
             if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 9) OpenerStep++;
@@ -312,19 +291,17 @@ internal class MNKOpenerLogic : MNK
             if (WasLastWeaponskill(DragonKick) && OpenerStep == 10) OpenerStep++;
             else if (OpenerStep == 10) actionID = DragonKick;
 
-            if ((WasLastWeaponskill(FiresReply) ||
-                 !HasEffect(Buffs.FiresRumination)) && OpenerStep == 11) OpenerStep++;
-            else if (OpenerStep == 11) actionID = FiresReply;
+            if (WasLastWeaponskill(WindsReply) && OpenerStep == 11) OpenerStep++;
+            else if (OpenerStep == 11) actionID = WindsReply;
 
-            if ((WasLastWeaponskill(WindsReply) ||
-                 !HasEffect(Buffs.WindsRumination)) && OpenerStep == 12) OpenerStep++;
-            else if (OpenerStep == 12) actionID = WindsReply;
+            if (WasLastWeaponskill(FiresReply) && OpenerStep == 12) OpenerStep++;
+            else if (OpenerStep == 12) actionID = FiresReply;
 
             if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 13) OpenerStep++;
             else if (OpenerStep == 13) actionID = LeapingOpo;
 
-            if ((WasLastAction(PerfectBalance) ||
-                 HasEffect(Buffs.PerfectBalance)) && OpenerStep == 14) OpenerStep++;
+            if (WasLastAction(PerfectBalance) && GetRemainingCharges(PerfectBalance) is 0 && OpenerStep == 14)
+                OpenerStep++;
             else if (OpenerStep == 14) actionID = PerfectBalance;
 
             if (WasLastWeaponskill(DragonKick) && OpenerStep == 15) OpenerStep++;
@@ -339,19 +316,17 @@ internal class MNKOpenerLogic : MNK
             if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 18) OpenerStep++;
             else if (OpenerStep == 18) actionID = ElixirBurst;
 
-            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 19)
-                CurrentState = OpenerState.OpenerFinished;
+            if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 19) CurrentState = OpenerState.OpenerFinished;
             else if (OpenerStep == 19) actionID = LeapingOpo;
 
             if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                 CurrentState = OpenerState.FailedOpener;
 
-            if ((actionID == PerfectBalance && GetRemainingCharges(PerfectBalance) == 0 &&
-                 ActionWatching.TimeSinceLastAction.TotalSeconds >= 3) ||
-                (OpenerStep is 6 && HasEffect(Buffs.RiddleOfFire)) ||
-                (OpenerStep is 8 && HasEffect(Buffs.RiddleOfWind)) ||
-                (OpenerStep is 5 && HasEffect(Buffs.Brotherhood)
-                                 && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3))
+            if (((actionID == PerfectBalance && GetRemainingCharges(PerfectBalance) == 0) ||
+                 (actionID is RiddleOfFire && IsOnCooldown(RiddleOfFire)) ||
+                 (actionID is RiddleOfWind && IsOnCooldown(RiddleOfWind)) ||
+                 (actionID is Brotherhood && IsOnCooldown(Brotherhood)))
+                && ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
             {
                 Svc.Log.Debug($"Failed at {actionID}");
                 CurrentState = OpenerState.FailedOpener;
