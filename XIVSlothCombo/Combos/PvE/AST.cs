@@ -248,7 +248,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (MaleficCount == 1 && CombustCount == 0)
                             return OriginalHook(Combust);
 
-                        if (MaleficCount == 1 && (CombustCount == 1) && ActionReady(Lightspeed) && CanDelayedWeave(actionID))
+                        if (MaleficCount == 1 && (CombustCount == 1) && ActionReady(Lightspeed) && CanDelayedWeave(actionID) && !HasEffect(Buffs.Lightspeed))
                             return OriginalHook(Lightspeed);
 
                         if (MaleficCount == 3 && CanWeave(actionID))
