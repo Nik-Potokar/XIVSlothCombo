@@ -127,14 +127,17 @@ internal class MNKOpenerLogic : MNK
 
         if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
         {
-            if (Gauge.Chakra < 5 && PrePullStep == 1) PrePullStep++;
-            else if (PrePullStep == 1) actionID = Meditation;
+            if (Gauge.Chakra == 5 && PrePullStep == 1) PrePullStep++;
+            else if (PrePullStep == 1) actionID = OriginalHook(Meditation);
 
-            if (!HasEffect(Buffs.FormlessFist) && Gauge.Chakra == 5 && PrePullStep == 2) PrePullStep++;
+            if (HasEffect(Buffs.FormlessFist) && Gauge.Chakra == 5 && PrePullStep == 2) PrePullStep++;
             else if (PrePullStep == 2) actionID = FormShift;
 
             if (WasLastAction(DragonKick) && PrePullStep == 3) CurrentState = OpenerState.InOpener;
             else if (PrePullStep == 3) actionID = DragonKick;
+
+            if (!HasEffect(Buffs.FormlessFist) && Gauge.Chakra == 5 && PrePullStep == 3)
+                currentState = OpenerState.FailedOpener;
 
             if (ActionWatching.CombatActions.Count > 2 && InCombat())
                 CurrentState = OpenerState.FailedOpener;
