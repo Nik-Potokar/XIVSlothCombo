@@ -4219,12 +4219,12 @@ namespace XIVSlothCombo.Combos
         VPR_VicepitDens_oGCDs = 30207,
 
         [Variant]
-        [VariantParent(VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
+        [VariantParent(VPR_ST_SimpleMode, VPR_AoE_SimpleMode, VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", VPR.JobID)]
         VPR_Variant_Cure = 30300,
 
         [Variant]
-        [VariantParent(VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
+        [VariantParent(VPR_ST_SimpleMode, VPR_AoE_SimpleMode, VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", VPR.JobID)]
         VPR_Variant_Rampart = 30301,
 
