@@ -97,6 +97,19 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+                    
                     if (HasEffect(Buffs.Starstruck))
                         return OriginalHook(StarPrism);
 
@@ -478,6 +491,19 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+                    
                     if (HasEffect(Buffs.Starstruck))
                         return OriginalHook(StarPrism);
 
