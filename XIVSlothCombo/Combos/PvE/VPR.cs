@@ -137,6 +137,19 @@ namespace XIVSlothCombo.Combos.PvE
                     if (VPROpener.DoFullOpener(ref actionID))
                         return actionID;
 
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.VPR_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.VPR_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.VPR_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        CanWeave(ActionWatching.LastWeaponskill))
+                        return Variant.VariantRampart;
+
                     //Serpents Ire - ForceWeave
                     if (InCombat() && CanWeave(UncoiledFury) && !CappedOnCoils && ActionReady(SerpentsIre))
                         return SerpentsIre;
@@ -620,6 +633,19 @@ namespace XIVSlothCombo.Combos.PvE
                 {
                     if (CanWeave(ActionWatching.LastWeaponskill))
                     {
+                        // Variant Cure
+                        if (IsEnabled(CustomComboPreset.VPR_Variant_Cure) &&
+                            IsEnabled(Variant.VariantCure) &&
+                            PlayerHealthPercentageHp() <= GetOptionValue(Config.VPR_VariantCure))
+                            return Variant.VariantCure;
+    
+                        // Variant Rampart
+                        if (IsEnabled(CustomComboPreset.VPR_Variant_Rampart) &&
+                            IsEnabled(Variant.VariantRampart) &&
+                            IsOffCooldown(Variant.VariantRampart) &&
+                            CanWeave(ActionWatching.LastWeaponskill))
+                            return Variant.VariantRampart;
+                        
                         // Death Rattle
                         if (LevelChecked(SerpentsTail) && OriginalHook(SerpentsTail) is LastLash)
                             return OriginalHook(SerpentsTail);
