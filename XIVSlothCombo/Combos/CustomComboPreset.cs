@@ -2101,12 +2101,12 @@ namespace XIVSlothCombo.Combos
         #region Variant
 
         [Variant]
-        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_SimpleMode)]
+        [VariantParent(MNK_ST_SimpleMode,MNK_ST_AdvancedMode, MNK_AOE_SimpleMode,MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9025,
 
         [Variant]
-        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_SimpleMode)]
+        [VariantParent(MNK_ST_SimpleMode, MNK_ST_AdvancedMode, MNK_AOE_SimpleMode, MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
         MNK_Variant_Cure = 9026,
 
