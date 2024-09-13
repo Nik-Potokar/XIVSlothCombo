@@ -180,7 +180,7 @@ internal class MNKOpenerLogic : MNK
             else if (OpenerStep == 4) actionID = Brotherhood;
 
             if (WasLastAction(RiddleOfFire) && OpenerStep == 5) OpenerStep++;
-            else if (OpenerStep == 5) actionID = RiddleOfFire;
+            else if (OpenerStep == 5 && CanDelayedWeave(ActionWatching.LastWeaponskill)) actionID = RiddleOfFire;
 
             if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 6) OpenerStep++;
             else if (OpenerStep == 6) actionID = LeapingOpo;
@@ -189,7 +189,7 @@ internal class MNKOpenerLogic : MNK
             else if (OpenerStep == 7) actionID = TheForbiddenChakra;
 
             if (WasLastAction(RiddleOfWind) && OpenerStep == 8) OpenerStep++;
-            else if (OpenerStep == 8) actionID = RiddleOfWind;
+            else if (OpenerStep == 8 && CanDelayedWeave(ActionWatching.LastWeaponskill)) actionID = RiddleOfWind;
 
             if (WasLastWeaponskill(RisingPhoenix) && OpenerStep == 9) OpenerStep++;
             else if (OpenerStep == 9) actionID = RisingPhoenix;
@@ -277,7 +277,7 @@ internal class MNKOpenerLogic : MNK
             else if (OpenerStep == 4) actionID = Brotherhood;
 
             if (WasLastAction(RiddleOfFire) && OpenerStep == 5) OpenerStep++;
-            else if (OpenerStep == 5) actionID = RiddleOfFire;
+            else if (OpenerStep == 5 && CanDelayedWeave(ActionWatching.LastWeaponskill)) actionID = RiddleOfFire;
 
             if (WasLastWeaponskill(LeapingOpo) && OpenerStep == 6) OpenerStep++;
             else if (OpenerStep == 6) actionID = LeapingOpo;
@@ -286,7 +286,7 @@ internal class MNKOpenerLogic : MNK
             else if (OpenerStep == 7) actionID = TheForbiddenChakra;
 
             if (WasLastAction(RiddleOfWind) && OpenerStep == 8) OpenerStep++;
-            else if (OpenerStep == 8) actionID = RiddleOfWind;
+            else if (OpenerStep == 8 && CanDelayedWeave(ActionWatching.LastWeaponskill)) actionID = RiddleOfWind;
 
             if (WasLastWeaponskill(ElixirBurst) && OpenerStep == 9) OpenerStep++;
             else if (OpenerStep == 9) actionID = ElixirBurst;
