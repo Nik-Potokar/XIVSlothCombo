@@ -861,18 +861,19 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_ST_AdvancedMode)]
         [ConflictingCombos(DNC_ST_Adv_StandardFill)]
-        [CustomComboInfo("Standard Dance Option", "Includes Standard Step (and all steps) in the rotation.", DNC.JobID, 1)]
+        [CustomComboInfo("Standard Dance Option", "Includes Standard Step, all dance steps, and Finish in the rotation." +
+                                                  "\nIt is recommended to use one of the two Anti-Drift options along with this.", DNC.JobID, 1)]
         DNC_ST_Adv_SS = 4052,
 
         [ParentCombo(DNC_ST_Adv_SS)]
-        [ConflictingCombos(DNC_ST_Adv_StandardFill)]
         [CustomComboInfo("Standard Dance Opener Option", "Starts Standard Step (and steps) before combat.", DNC.JobID)]
         DNC_ST_Adv_SS_Prepull = 4090,
 
         [ParentCombo(DNC_ST_Adv_SS)]
         [ConflictingCombos(DNC_ST_Adv_Flourish_ForcedTripleWeave)]
-        [CustomComboInfo("Hold Standard Dance Option", "Will hold GCDs for Standard Step if it is going to come off cooldown before your next GCD. This WILL give you down-time." +
-                                                       "\nThis is recommended by The Balance if you have any extra skill speed, but this can also just be a good anti-drift option.", DNC.JobID)]
+        [CustomComboInfo("Hold for Standard Option (Anti-Drift)", "Will hold GCDs for Standard Step if it is going to come off cooldown before your next GCD." +
+                                                    "\nThis WILL give you down-time." +
+                                                    "\nONLY recommended if you have extra skill speed, but can be used as an anti-drift option.", DNC.JobID)]
         DNC_ST_Adv_SS_Hold = 4091,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
@@ -888,7 +889,8 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_ST_AdvancedMode)]
         [ConflictingCombos(DNC_ST_Adv_TechFill)]
-        [CustomComboInfo("Technical Dance Option", "Includes Technical Step, all dance steps and Technical Finish in the rotation.", DNC.JobID, 4)]
+        [CustomComboInfo("Technical Dance Option", "Includes Technical Step, all dance steps, and Finish in the rotation." +
+                                                   "\nIt is recommended to use one of the two Anti-Drift options along with this.", DNC.JobID, 4)]
         DNC_ST_Adv_TS = 4053,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
@@ -909,8 +911,9 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(DNC_ST_Adv_Flourish)]
         [ConflictingCombos(DNC_ST_Adv_SS_Hold)]
-        [CustomComboInfo("Force Triple Weave for alignment", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." +
-                                                                    "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD.", DNC.JobID, 1)]
+        [CustomComboInfo("Force Triple Weave Option (Anti-Drift)", "Forces a triple weave of Flourish and Fan Dance 3 + 4 during non-opener burst windows." +
+                                                                    "\nFixes SS/FM drift where you use a gcd when SS/FM is on a 0.5sec CD." +
+                                                                    "\nRecommended to help prevent drift.", DNC.JobID, 1)]
         DNC_ST_Adv_Flourish_ForcedTripleWeave = 4088,
 
         [ParentCombo(DNC_ST_AdvancedMode)]
