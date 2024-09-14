@@ -3846,25 +3846,33 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Single Target Heal Feature", "Change Physick into Adloquium, Lustrate, then Physick with below options:", SCH.JobID, 4)]
         SCH_ST_Heal = 16023,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 1)]
-        SCH_ST_Heal_Lucid = 16024,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Lucid Dreaming Weave Option", "Adds Lucid Dreaming when MP drops below slider value:", SCH.JobID, 1)]
+            SCH_ST_Heal_Lucid = 16024,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
-        SCH_ST_Heal_Aetherflow = 16025,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Aetherflow Weave Option", "Use Aetherflow when out of Aetherflow stacks.", SCH.JobID, 2)]
+            SCH_ST_Heal_Aetherflow = 16025,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
-        SCH_ST_Heal_Esuna = 16026,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Esuna Option", "Applies Esuna to your target if there is a cleansable debuff.", SGE.JobID, 3)]
+            SCH_ST_Heal_Esuna = 16026,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
-        SCH_ST_Heal_Adloquium = 16027,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Adloquium Option", "Use Adloquium when missing Galvanize or target HP%% below:", SCH.JobID, 4)]
+            SCH_ST_Heal_Adloquium = 16027,
 
-        [ParentCombo(SCH_ST_Heal)]
-        [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
-        SCH_ST_Heal_Lustrate = 16028,
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Lustrate Option", "Use Lustrate when target HP%% below:", SCH.JobID, 5)]
+            SCH_ST_Heal_Lustrate = 16028,
+
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Excogitation Option", "Use Excogitation when target HP%% below:", SCH.JobID, 6)]
+            SCH_ST_Heal_Excogitation = 16038,
+
+            [ParentCombo(SCH_ST_Heal)]
+            [CustomComboInfo("Protraction Option", "Use Protraction when target HP%% below:", SCH.JobID, 7)]
+            SCH_ST_Heal_Protraction = 16039,
 
 
         #endregion
@@ -3911,7 +3919,7 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        // Last value = 16037
+        // Last value = 16039
 
         #endregion
 

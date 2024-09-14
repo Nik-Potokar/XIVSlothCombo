@@ -2249,7 +2249,22 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_AdloquiumOption, "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
+            {
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawPriorityInput(SCH.Config.SCH_ST_Heals_Priority, 3, 0, $"{SCH.Lustrate.ActionName()} Priority: ");
+            }
+
+            if (preset is CustomComboPreset.SCH_ST_Heal_Excogitation)
+            {
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_ExcogitationOption, "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawPriorityInput(SCH.Config.SCH_ST_Heals_Priority, 3, 1, $"{SCH.Excogitation.ActionName()} Priority: ");
+            }
+
+            if (preset is CustomComboPreset.SCH_ST_Heal_Protraction)
+            {
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_ProtractionOption, "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawPriorityInput(SCH.Config.SCH_ST_Heals_Priority, 3, 2, $"{SCH.Protraction.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Esuna)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_EsunaOption, "Stop using when below HP %. Set to Zero to disable this check");
