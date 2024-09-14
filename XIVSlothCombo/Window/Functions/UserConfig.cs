@@ -1580,18 +1580,34 @@ namespace XIVSlothCombo.Window.Functions
 
             #endregion
             // ====================================================================================
+
             #region MONK
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
             {
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_SecondWind_Threshold, "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
-                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_Bloodbath_Threshold, "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_SecondWind_Threshold,
+                    "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_ST_Bloodbath_Threshold,
+                    "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+            }
+
+            if (preset == CustomComboPreset.MNK_AoE_ComboHeals)
+            {
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoE_SecondWind_Threshold,
+                    "Second Wind HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
+
+                UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_AoE_Bloodbath_Threshold,
+                    "Bloodbath HP percentage threshold (0 = Disabled)", 150, SliderIncrements.Ones);
             }
 
             if (preset == CustomComboPreset.MNK_STUseOpener && enabled)
             {
-                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Double Lunar", "Uses Lunar/Lunar opener", 1);
-                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Solar Lunar", "Uses Solar/Lunar opener", 2);
+                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Double Lunar",
+                    "Uses Lunar/Lunar opener", 0);
+
+                UserConfig.DrawHorizontalRadioButton(MNK.Config.MNK_SelectedOpener, "Solar Lunar",
+                    "Uses Solar/Lunar opener", 1);
             }
 
             if (preset == CustomComboPreset.MNK_Variant_Cure)
@@ -1708,6 +1724,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_CreatureStop, "Health % to stop Drawing Motif");
             if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif)
                 UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_WeaponStop, "Health % to stop Drawing Motif");
+
+            if (preset == CustomComboPreset.PCT_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, PCT.Config.PCT_VariantCure, "HP% to be at or under", 200);
 
             // PvP
             if (preset == CustomComboPreset.PCTPvP_BurstControl)

@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Core;
+using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -79,6 +80,8 @@ namespace XIVSlothCombo.Combos.PvE
                 CombinedAetherhueChoices = new("CombinedAetherhueChoices"),
                 PCT_ST_AdvancedMode_LucidOption = new("PCT_ST_AdvancedMode_LucidOption", 6500),
                 PCT_AoE_AdvancedMode_HolyinWhiteOption = new("PCT_AoE_AdvancedMode_HolyinWhiteOption", 0),
+                PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500),
+                PCT_VariantCure = new("PCT_VariantCure");
                 PCT_ST_CreatureStop = new("PCT_ST_CreatureStop"),
                 PCT_AoE_CreatureStop = new("PCT_AoE_CreatureStop"),
                 PCT_ST_WeaponStop = new("PCT_ST_WeaponStop"),
@@ -111,8 +114,21 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell) || CanSpellWeave(actionID);
 
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+
                     // Prepull logic
-                    
+
                     if (!InCombat() || InCombat() && CurrentTarget == null)
                     {
                         if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
@@ -122,7 +138,7 @@ namespace XIVSlothCombo.Combos.PvE
                         if (LandscapeMotif.LevelChecked() && !gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse))
                             return OriginalHook(LandscapeMotif);
                     }
-                                                           
+
                     // Lvl 100 Opener
                     if (StarPrism.LevelChecked())
                     {
@@ -363,6 +379,19 @@ namespace XIVSlothCombo.Combos.PvE
                     int landscapeStop = PluginConfiguration.GetCustomIntValue(Config.PCT_ST_LandscapeStop);
                     int weaponStop = PluginConfiguration.GetCustomIntValue(Config.PCT_ST_WeaponStop);
                     
+
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     // Prepull logic
                     if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_PrePullMotifs))
@@ -632,10 +661,23 @@ namespace XIVSlothCombo.Combos.PvE
                     var gauge = GetJobGauge<PCTGauge>();
                     bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
+
                     // Prepull logic
-                   
-                    
-                        if (!InCombat() || InCombat() && CurrentTarget == null)
+
+
+                    if (!InCombat() || InCombat() && CurrentTarget == null)
                         {
                             if (CreatureMotif.LevelChecked() && !gauge.CreatureMotifDrawn)
                                 return OriginalHook(CreatureMotif);
@@ -824,6 +866,19 @@ namespace XIVSlothCombo.Combos.PvE
                     int creatureStop = PluginConfiguration.GetCustomIntValue(Config.PCT_AoE_CreatureStop);
                     int landscapeStop = PluginConfiguration.GetCustomIntValue(Config.PCT_AoE_LandscapeStop);
                     int weaponStop = PluginConfiguration.GetCustomIntValue(Config.PCT_AoE_WeaponStop);
+
+                    // Variant Cure
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) &&
+                        IsEnabled(Variant.VariantCure) &&
+                        PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_VariantCure))
+                        return Variant.VariantCure;
+
+                    // Variant Rampart
+                    if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) &&
+                        IsEnabled(Variant.VariantRampart) &&
+                        IsOffCooldown(Variant.VariantRampart) &&
+                        canWeave)
+                        return Variant.VariantRampart;
 
                     // Prepull logic
                     if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_PrePullMotifs))
