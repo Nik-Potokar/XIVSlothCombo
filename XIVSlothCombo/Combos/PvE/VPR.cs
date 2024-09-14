@@ -598,6 +598,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool VicepitReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
+                bool in5y = HasBattleTarget() && GetTargetDistance() <= 5;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
                 float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
@@ -624,10 +625,10 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!HasEffect(Buffs.Reawakened))
                         {
                             //Vicepit weaves
-                            if (HasEffect(Buffs.FellhuntersVenom) && InMeleeRange())
+                            if (HasEffect(Buffs.FellhuntersVenom) && in5y)
                                 return OriginalHook(Twinfang);
 
-                            if (HasEffect(Buffs.FellskinsVenom) && InMeleeRange())
+                            if (HasEffect(Buffs.FellskinsVenom) && in5y)
                                 return OriginalHook(Twinblood);
 
                             //Serpents Ire usage
@@ -637,7 +638,7 @@ namespace XIVSlothCombo.Combos.PvE
                     }
 
                     //Vicepit combo
-                    if (!HasEffect(Buffs.Reawakened) && InMeleeRange())
+                    if (!HasEffect(Buffs.Reawakened) && in5y)
                     {
                         if (SwiftskinsDenReady)
                             return HuntersDen;
@@ -649,7 +650,7 @@ namespace XIVSlothCombo.Combos.PvE
                     //Reawakend Usage
                     if ((HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) && LevelChecked(Reawaken) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
+                        !HasEffect(Buffs.Reawakened) && in5y &&
                         !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
                         !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                         return Reawaken;
@@ -661,7 +662,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Vicepit Usage
                     if (ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) &&
-                        ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) && InMeleeRange())
+                        ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) && in5y)
                         return Vicepit;
 
                     // Uncoiled Fury usage
@@ -770,6 +771,7 @@ namespace XIVSlothCombo.Combos.PvE
                 bool VicepitReady = gauge.DreadCombo == DreadCombo.PitOfDread;
                 bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
                 bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
+                bool in5y = HasBattleTarget() && GetTargetDistance() <= 5;
                 bool CappedOnCoils = (TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 2) || (!TraitLevelChecked(Traits.EnhancedVipersRattle) && RattlingCoils > 1);
                 float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
 
@@ -803,7 +805,7 @@ namespace XIVSlothCombo.Combos.PvE
                         {
                             //Vicepit weaves
                             if (IsEnabled(CustomComboPreset.VPR_AoE_VicepitCombo) &&
-                                InMeleeRange())
+                                (in5y || IsEnabled(CustomComboPreset.VPR_AoE_VicepitCombo_DisableRange)))
                             {
                                 if (HasEffect(Buffs.FellhuntersVenom))
                                     return OriginalHook(Twinfang);
@@ -822,7 +824,8 @@ namespace XIVSlothCombo.Combos.PvE
                     //Vicepit combo
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_AoE_VicepitCombo) &&
-                        !HasEffect(Buffs.Reawakened) && InMeleeRange())
+                        !HasEffect(Buffs.Reawakened) && 
+                        (in5y || IsEnabled(CustomComboPreset.VPR_AoE_VicepitCombo_DisableRange)))
                     {
                         if (SwiftskinsDenReady)
                             return HuntersDen;
@@ -835,7 +838,8 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) &&
                         (HasEffect(Buffs.ReadyToReawaken) || gauge.SerpentOffering >= 50) && LevelChecked(Reawaken) &&
                         HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
-                        !HasEffect(Buffs.Reawakened) && InActionRange(Reawaken) &&
+                        !HasEffect(Buffs.Reawakened) && 
+                        (in5y || IsEnabled(CustomComboPreset.VPR_AoE_Reawaken_DisableRange)) &&
                         !HasEffect(Buffs.FellhuntersVenom) && !HasEffect(Buffs.FellskinsVenom) &&
                         !HasEffect(Buffs.PoisedForTwinblood) && !HasEffect(Buffs.PoisedForTwinfang))
                         return Reawaken;
@@ -849,7 +853,8 @@ namespace XIVSlothCombo.Combos.PvE
                     //Vicepit Usage
                     if (IsEnabled(CustomComboPreset.VPR_AoE_CDs) &&
                         IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) &&
-                        ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
+                        ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) && 
+                        (in5y || IsEnabled(CustomComboPreset.VPR_AoE_Vicepit_DisableRange)) &&
                         ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)))
                         return Vicepit;
 
