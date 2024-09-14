@@ -202,14 +202,14 @@ namespace XIVSlothCombo.Combos.PvE
                         return UncoiledFury;
 
                     //Vicewinder Usage
-                    if (HasEffect(Buffs.Swiftscaled) &&
+                    if (HasEffect(Buffs.Swiftscaled) && !VPRCheckTimers.IsComboExpiring(3) &&
                         ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
                         ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                          !VPRCheckTimers.IsVenomExpiring(3) && !VPRCheckTimers.IsHoningExpiring(3))
                         return Vicewinder;
 
                     // Uncoiled Fury usage
-                    if (LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
+                    if (LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) && !VPRCheckTimers.IsComboExpiring(2) &&
                         RattlingCoils > 1 &&
                         !VicewinderReady && !HuntersCoilReady && !SwiftskinsCoilReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
@@ -419,7 +419,7 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Vicewinder Combo
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
-                        IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) &&
+                        IsEnabled(CustomComboPreset.VPR_ST_VicewinderCombo) && 
                         !HasEffect(Buffs.Reawakened) && LevelChecked(Vicewinder) && InMeleeRange())
                     {
                         // Swiftskin's Coil
@@ -443,20 +443,20 @@ namespace XIVSlothCombo.Combos.PvE
 
                     //Vicewinder Usage
                     if (IsEnabled(CustomComboPreset.VPR_ST_CDs) &&
-                        IsEnabled(CustomComboPreset.VPR_ST_Vicewinder) && HasEffect(Buffs.Swiftscaled) &&
+                        IsEnabled(CustomComboPreset.VPR_ST_Vicewinder) && HasEffect(Buffs.Swiftscaled) && !VPRCheckTimers.IsComboExpiring(3) &&
                         ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
                         ((ireCD >= GCD * 5) || !LevelChecked(SerpentsIre)) &&
                          !VPRCheckTimers.IsVenomExpiring(3) && !VPRCheckTimers.IsHoningExpiring(3))
                         return Vicewinder;
 
                     // Uncoiled Fury usage
-                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) &&
+                    if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) && !VPRCheckTimers.IsComboExpiring(2) && 
                         LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
                         ((RattlingCoils > Config.VPR_ST_UncoiledFury_HoldCharges) ||
                         (enemyHP < uncoiledThreshold && VPRCheckRattlingCoils.HasRattlingCoilStack(gauge))) &&
                         !VicewinderReady && !HuntersCoilReady && !SwiftskinsCoilReady &&
                         !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) && !WasLastWeaponskill(Ouroboros) &&
-                         !VPRCheckTimers.IsEmpowermentExpiring(6) && !VPRCheckTimers.IsVenomExpiring(3) && !VPRCheckTimers.IsHoningExpiring(3))
+                         !VPRCheckTimers.IsEmpowermentExpiring(3))
                         return UncoiledFury;
 
                     //Reawaken combo
