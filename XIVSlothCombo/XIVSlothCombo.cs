@@ -527,6 +527,8 @@ namespace XIVSlothCombo
                                     38 => typeof(DNC.Config),
                                     39 => typeof(RPR.Config),
                                     40 => typeof(SGE.Config),
+                                    41 => typeof(VPR.Config),
+                                    42 => typeof(PCT.Config),
                                     _ => throw new NotImplementedException(),
                                 };
 

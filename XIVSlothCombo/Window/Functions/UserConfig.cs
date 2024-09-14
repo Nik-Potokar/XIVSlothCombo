@@ -1347,7 +1347,7 @@ namespace XIVSlothCombo.Window.Functions
             #region BARD
 
             if (preset == CustomComboPreset.BRD_Adv_RagingJaws)
-                UserConfig.DrawSliderInt(3, 5, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds)");
+                UserConfig.DrawSliderInt(3, 10, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds). Recommended 5, increase little by little if refresh is outside of radiant window");
 
             if (preset == CustomComboPreset.BRD_Adv_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_NoWasteHPPercentage, "Remaining target HP percentage");
@@ -1391,14 +1391,18 @@ namespace XIVSlothCombo.Window.Functions
                 ImGui.Spacing();
             }
 
+            if (preset == CustomComboPreset.DNC_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNCVariantCurePercent, "HP% to be at or under", 200);
+
+            #region Multi-Button Sliders
+
             if (preset == CustomComboPreset.DNC_ST_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_ST, "Esprit", 150, SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DNC_AoE_EspritOvercap)
                 UserConfig.DrawSliderInt(50, 100, DNC.Config.DNCEspritThreshold_AoE, "Esprit", 150, SliderIncrements.Fives);
 
-            if (preset == CustomComboPreset.DNC_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DNC.Config.DNCVariantCurePercent, "HP% to be at or under", 200);
+            #endregion
 
             #region Advanced ST Sliders
 
@@ -1518,6 +1522,10 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.GNB_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, GNB.Config.GNB_VariantCure, "HP% to be at or under", 200);
+            if (preset == CustomComboPreset.GNB_ST_NoMercy)
+                UserConfig.DrawSliderInt(0, 25, GNB.Config.GNB_ST_NoMercyStop, "Stop Usage if Target HP% is below set value.\nTo Disable this option, set to 0.");
+            if (preset == CustomComboPreset.GNB_AoE_NoMercy)
+                UserConfig.DrawSliderInt(0, 25, GNB.Config.GNB_AoE_NoMercyStop, "Stop Usage if Target HP% is below set value.\nTo Disable this option, set to 0.");
 
             #endregion
             // ====================================================================================
@@ -1614,6 +1622,8 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(NIN.Config.NIN_SimpleMudra_Choice, "Mudra Path Set 1", $"1. Ten Mudras -> Fuma Shuriken, Raiton/Hyosho Ranryu, Suiton (Doton under Kassatsu).\nChi Mudras -> Fuma Shuriken, Hyoton, Huton.\nJin Mudras -> Fuma Shuriken, Katon/Goka Mekkyaku, Doton", 1);
                 UserConfig.DrawRadioButton(NIN.Config.NIN_SimpleMudra_Choice, "Mudra Path Set 2", $"2. Ten Mudras -> Fuma Shuriken, Hyoton/Hyosho Ranryu, Doton.\nChi Mudras -> Fuma Shuriken, Katon, Suiton.\nJin Mudras -> Fuma Shuriken, Raiton/Goka Mekkyaku, Huton (Doton under Kassatsu).", 2);
             }
+            if (preset == CustomComboPreset.NIN_ST_AdvancedMode)
+                UserConfig.DrawSliderInt(0, 10, NIN.Config.BurnKazematoi, "Target HP% to dump all pooled Kazematoi below");
 
             if (preset == CustomComboPreset.NIN_ST_AdvancedMode_Bhavacakra)
                 UserConfig.DrawSliderInt(50, 100, NIN.Config.Ninki_BhavaPooling, "Set the minimal amount of Ninki required to have before spending on Bhavacakra.");
@@ -1696,6 +1706,18 @@ namespace XIVSlothCombo.Window.Functions
             {
                 UserConfig.DrawSliderInt(0, 10000, PCT.Config.PCT_AoE_AdvancedMode_LucidOption, "Add Lucid Dreaming when below this MP", sliderIncrement: SliderIncrements.Hundreds);
             }
+            if (preset == CustomComboPreset.PCT_ST_AdvancedMode_LandscapeMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_ST_LandscapeStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_ST_AdvancedMode_CreatureMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_ST_CreatureStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_ST_AdvancedMode_WeaponMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_ST_WeaponStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_LandscapeMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_LandscapeStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_CreatureMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_CreatureStop, "Health % to stop Drawing Motif");
+            if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif)
+                UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_WeaponStop, "Health % to stop Drawing Motif");
 
             // PvP
             if (preset == CustomComboPreset.PCTPvP_BurstControl)
@@ -2247,7 +2269,22 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_AdloquiumOption, "Use Adloquium on targets at or below HP % even if they have Galvanize\n0 = Only ever use Adloquium on targets without Galvanize\n100 = Always use Adloquium");
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Lustrate)
+            {
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_LustrateOption, "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawPriorityInput(SCH.Config.SCH_ST_Heals_Priority, 3, 0, $"{SCH.Lustrate.ActionName()} Priority: ");
+            }
+
+            if (preset is CustomComboPreset.SCH_ST_Heal_Excogitation)
+            {
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_ExcogitationOption, "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawPriorityInput(SCH.Config.SCH_ST_Heals_Priority, 3, 1, $"{SCH.Excogitation.ActionName()} Priority: ");
+            }
+
+            if (preset is CustomComboPreset.SCH_ST_Heal_Protraction)
+            {
+                UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_ProtractionOption, "Start using when below HP %. Set to 100 to disable this check");
+                UserConfig.DrawPriorityInput(SCH.Config.SCH_ST_Heals_Priority, 3, 2, $"{SCH.Protraction.ActionName()} Priority: ");
+            }
 
             if (preset is CustomComboPreset.SCH_ST_Heal_Esuna)
                 UserConfig.DrawSliderInt(0, 100, SCH.Config.SCH_ST_Heal_EsunaOption, "Stop using when below HP %. Set to Zero to disable this check");
@@ -2416,6 +2453,9 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Reawaken", "Replaces Reawaken with Full Generation - Legacy combo.", 0);
                 UserConfig.DrawRadioButton(VPR.Config.VPR_ReawakenLegacyButton, "Replaces Steel Fangs", "Replaces Steel Fangs with Full Generation - Legacy combo.", 1);
             }
+
+            if (preset == CustomComboPreset.VPR_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, VPR.Config.VPR_VariantCure, "HP% to be at or under", 200);
 
             #endregion
             // ====================================================================================
