@@ -25,6 +25,7 @@ namespace XIVSlothCombo.Combos.PvE
             AeroInGreen = 34651,
             WaterInBlue = 34652,
             FireIIinRed = 34656,
+            AeroIIinGreen = 34657,
             HammerMotif = 34668,
             WingedMuse = 34671,
             StrikingMuse = 34674,
@@ -47,6 +48,7 @@ namespace XIVSlothCombo.Combos.PvE
             StarPrism = 34681,
             SteelMuse = 35348,
             SubtractivePalette = 34683,
+            StoneIIinYellow = 34660,
             ThunderIIinMagenta = 34661,
             ThunderinMagenta = 34655,
             WaterinBlue = 34652,
@@ -77,6 +79,7 @@ namespace XIVSlothCombo.Combos.PvE
             public static UserInt
                 CombinedAetherhueChoices = new("CombinedAetherhueChoices"),
                 PCT_ST_AdvancedMode_LucidOption = new("PCT_ST_AdvancedMode_LucidOption", 6500),
+                PCT_AoE_AdvancedMode_HolyinWhiteOption = new("PCT_AoE_AdvancedMode_HolyinWhiteOption", 0),
                 PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500),
                 PCT_VariantCure = new("PCT_VariantCure");
                 PCT_ST_CreatureStop = new("PCT_ST_CreatureStop"),
@@ -1037,6 +1040,13 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                     }
 
+                    if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_HolyinWhite) && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.MonochromeTones))
+                    {
+                        if (gauge.Paint > Config.PCT_AoE_AdvancedMode_HolyinWhiteOption ||
+                            (Config.PCT_AoE_AdvancedMode_HolyinWhiteOption == 5 && gauge.Paint == 5 && !HasEffect(Buffs.HammerTime) &&
+                            (HasEffect(Buffs.RainbowBright) || WasLastSpell(AeroIIinGreen) || WasLastSpell(StoneIIinYellow))))
+                            return OriginalHook(HolyInWhite);
+                    }
 
                     if (HasEffect(Buffs.RainbowBright) && !HasEffect(Buffs.StarryMuse))
                         return RainbowDrip;
