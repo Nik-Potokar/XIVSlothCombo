@@ -621,11 +621,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("Bard Songs Option", "This option adds the Bard's Songs to the Advanced Bard Feature.", BRD.JobID)]
-        BRD_Adv_Song = 3011,
-
-        [ParentCombo(BRD_AoE_oGCD)]
-        [CustomComboInfo("Songs Option", "Adds Songs onto AoE oGCD Feature.", BRD.JobID)]
-        BRD_oGCDSongs = 3012,
+        BRD_Adv_Song = 3011,       
 
         [ReplaceSkill(BRD.Barrage)]
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID)]
@@ -651,9 +647,17 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Buffs Option", "Adds buffs onto the Advanced Bard feature.", BRD.JobID)]
         BRD_Adv_Buffs = 3017,
 
-        [ParentCombo(BRD_Adv_Buffs)]
-        [CustomComboInfo("Buffs - Radiant Option", "Adds Radiant Finale to theBuffs feature.", BRD.JobID)]
+        [ParentCombo(BRD_ST_AdvMode)]
+        [CustomComboInfo("Resonant Option", "Adds Resonant Arrow to the Rotation after Barrage.", BRD.JobID)]
+        BRD_Adv_BuffsResonant = 3041,
+
+        [ParentCombo(BRD_ST_AdvMode)]
+        [CustomComboInfo("Buffs - Radiant Option", "Adds Radiant Finale to the Advanced Bard feature.", BRD.JobID)]
         BRD_Adv_BuffsRadiant = 3018,
+
+        [ParentCombo(BRD_ST_AdvMode)]
+        [CustomComboInfo("Encore Option", "Adds Radiant Encore to the Rotation after Finale.", BRD.JobID)]
+        BRD_Adv_BuffsEncore = 3042,
 
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("No Waste Option", "Adds enemy health checking on mobs for buffs, DoTs and Songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
@@ -677,8 +681,12 @@ namespace XIVSlothCombo.Combos
         //BardSimpleOpener = 3022,
 
         [ParentCombo(BRD_ST_AdvMode)]
-        [CustomComboInfo("Pooling Option", "Pools Bloodletter charges to allow for optimum burst phases, will also keep sidewinder in the buff window during wanderers.", BRD.JobID)]
+        [CustomComboInfo("Pooling Option", "84+ Pools Bloodletter charges to allow for optimum burst phases.", BRD.JobID)]
         BRD_Adv_Pooling = 3023,
+
+        [ParentCombo(BRD_AoE_AdvMode)]
+        [CustomComboInfo("Pooling Option", "84+ Pools Rain of death charges to allow for optimum burst phases.", BRD.JobID)]
+        BRD_AoE_Pooling = 3040,
 
         [ParentCombo(BRD_IronJaws)]
         [CustomComboInfo("Iron Jaws Apex Option", "Adds Apex and Blast Arrow to Iron Jaws when available.", BRD.JobID)]
@@ -717,7 +725,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(BRD_AoE_AdvMode)]
         [CustomComboInfo("AoE No Waste Option", "Adds enemy health checking on targetted mob for songs.\nThey will not be reapplied if less than specified.", BRD.JobID)]
         BRD_AoE_Adv_NoWaste = 3033,
-        // Last value = 3038
+        // Last value = 3042
 
         #endregion
 

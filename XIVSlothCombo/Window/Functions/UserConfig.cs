@@ -1347,7 +1347,7 @@ namespace XIVSlothCombo.Window.Functions
             #region BARD
 
             if (preset == CustomComboPreset.BRD_Adv_RagingJaws)
-                UserConfig.DrawSliderInt(3, 5, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds)");
+                UserConfig.DrawSliderInt(3, 10, BRD.Config.BRD_RagingJawsRenewTime, "Remaining time (In seconds). Recommended 5, increase little by little if refresh is outside of radiant window");
 
             if (preset == CustomComboPreset.BRD_Adv_NoWaste)
                 UserConfig.DrawSliderInt(1, 10, BRD.Config.BRD_NoWasteHPPercentage, "Remaining target HP percentage");
