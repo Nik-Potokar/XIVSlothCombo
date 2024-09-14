@@ -68,7 +68,7 @@ namespace XIVSlothCombo.Window.Functions
 
             ImGui.Spacing();
 
-            if (ImGui.Checkbox($"{info.FancyName}###{i}", ref enabled))
+            if (ImGui.Checkbox($"{info.FancyName}###{preset}{i}", ref enabled))
             {
                 if (enabled)
                 {

@@ -1,44 +1,44 @@
-﻿using XIVSlothCombo.Combos.PvE;
-using XIVSlothCombo.CustomComboNS.Functions;
+﻿using static XIVSlothCombo.Combos.PvE.SGE;
+using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers
 {
-    internal class SGE : CustomComboFunctions
+    internal class SGEHelper
     {
         public static int GetMatchingConfigST(int i, out uint action, out bool enabled)
         {
-            var healTarget = GetHealTarget(PvE.SGE.Config.SGE_ST_Heal_Adv && PvE.SGE.Config.SGE_ST_Heal_UIMouseOver);
+            var healTarget = GetHealTarget(Config.SGE_ST_Heal_Adv && Config.SGE_ST_Heal_UIMouseOver);
 
             switch (i)
             {
                 case 0:
-                    action = PvE.SGE.Soteria;
+                    action = Soteria;
                     enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Soteria);
-                    return PvE.SGE.Config.SGE_ST_Heal_Soteria;
+                    return Config.SGE_ST_Heal_Soteria;
                 case 1:
-                    action = PvE.SGE.Zoe;
+                    action = Zoe;
                     enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Zoe);
-                    return PvE.SGE.Config.SGE_ST_Heal_Zoe;
+                    return Config.SGE_ST_Heal_Zoe;
                 case 2:
-                    action = PvE.SGE.Pepsis;
-                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && FindEffect(PvE.SGE.Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.GameObjectId) is not null;
-                    return PvE.SGE.Config.SGE_ST_Heal_Pepsis;
+                    action = Pepsis;
+                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Pepsis) && FindEffect(Buffs.EukrasianDiagnosis, healTarget, LocalPlayer?.GameObjectId) is not null;
+                    return Config.SGE_ST_Heal_Pepsis;
                 case 3:
-                    action = PvE.SGE.Taurochole;
-                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && PvE.SGE.Gauge.HasAddersgall();
-                    return PvE.SGE.Config.SGE_ST_Heal_Taurochole;
+                    action = Taurochole;
+                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Taurochole) && Gauge.HasAddersgall();
+                    return Config.SGE_ST_Heal_Taurochole;
                 case 4:
-                    action = PvE.SGE.Haima;
+                    action = Haima;
                     enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Haima);
-                    return PvE.SGE.Config.SGE_ST_Heal_Haima;
+                    return Config.SGE_ST_Heal_Haima;
                 case 5:
-                    action = PvE.SGE.Krasis;
+                    action = Krasis;
                     enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Krasis);
-                    return PvE.SGE.Config.SGE_ST_Heal_Krasis;
+                    return Config.SGE_ST_Heal_Krasis;
                 case 6:
-                    action = PvE.SGE.Druochole;
-                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && PvE.SGE.Gauge.HasAddersgall();
-                    return PvE.SGE.Config.SGE_ST_Heal_Druochole;
+                    action = Druochole;
+                    enabled = IsEnabled(CustomComboPreset.SGE_ST_Heal_Druochole) && Gauge.HasAddersgall();
+                    return Config.SGE_ST_Heal_Druochole;
             }
 
             enabled = false;
@@ -51,31 +51,31 @@ namespace XIVSlothCombo.Combos.JobHelpers
             switch (i)
             {
                 case 0:
-                    action = PvE.SGE.Kerachole;
-                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && (!PvE.SGE.Config.SGE_AoE_Heal_KeracholeTrait || (PvE.SGE.Config.SGE_AoE_Heal_KeracholeTrait && TraitLevelChecked(PvE.SGE.Traits.EnhancedKerachole))) && PvE.SGE.Gauge.HasAddersgall();
+                    action = Kerachole;
+                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Kerachole) && (!Config.SGE_AoE_Heal_KeracholeTrait || (Config.SGE_AoE_Heal_KeracholeTrait && TraitLevelChecked(Traits.EnhancedKerachole))) && Gauge.HasAddersgall();
                     return 0;
                 case 1:
-                    action = PvE.SGE.Ixochole;
-                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && PvE.SGE.Gauge.HasAddersgall();
+                    action = Ixochole;
+                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Ixochole) && Gauge.HasAddersgall();
                     return 0;
                 case 2:
-                    action = OriginalHook(PvE.SGE.Physis);
+                    action = OriginalHook(Physis);
                     enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Physis);
                     return 0;
                 case 3:
-                    action = PvE.SGE.Holos;
+                    action = Holos;
                     enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Holos);
                     return 0;
                 case 4:
-                    action = PvE.SGE.Panhaima;
+                    action = Panhaima;
                     enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Panhaima);
                     return 0;
                 case 5:
-                    action = PvE.SGE.Pepsis;
-                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && FindEffect(PvE.SGE.Buffs.EukrasianPrognosis) is not null;
+                    action = Pepsis;
+                    enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Pepsis) && FindEffect(Buffs.EukrasianPrognosis) is not null;
                     return 0;
                 case 6:
-                    action = PvE.SGE.Philosophia;
+                    action = Philosophia;
                     enabled = IsEnabled(CustomComboPreset.SGE_AoE_Heal_Philosophia);
                     return 0;
             }
