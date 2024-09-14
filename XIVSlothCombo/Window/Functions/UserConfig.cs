@@ -1719,6 +1719,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.PCT_AoE_AdvancedMode_WeaponMotif)
                 UserConfig.DrawSliderInt(0, 10, PCT.Config.PCT_AoE_WeaponStop, "Health % to stop Drawing Motif");
 
+            if (preset == CustomComboPreset.PCT_Variant_Cure)
+                UserConfig.DrawSliderInt(1, 100, PCT.Config.PCT_VariantCure, "HP% to be at or under", 200);
+
             // PvP
             if (preset == CustomComboPreset.PCTPvP_BurstControl)
                 UserConfig.DrawSliderInt(1, 100, PCTPvP.Config.PCTPvP_BurstHP, "Target HP%", 200);
