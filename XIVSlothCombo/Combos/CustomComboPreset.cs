@@ -221,7 +221,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Earthly Star Option", "Adds Earthly Star." +
                                                 "\nTo be used in conjunction with Redirect/Reaction/etc", AST.JobID, 11)]
         AST_ST_DPS_EarthlyStar = 1051,
-
+               
         #endregion
 
         #region AOE DPS
@@ -359,7 +359,7 @@ namespace XIVSlothCombo.Combos
         AST_Cards_QuickTargetCards_TargetExtra = 1031,
         #endregion
 
-        // Last value = 1053
+        // Last value = 1054
 
         #endregion
 
