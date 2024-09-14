@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
 using System.Collections.Generic;
 using XIVSlothCombo.Combos.PvE.Content;
+using static XIVSlothCombo.Combos.JobHelpers.SCHHelper;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -28,6 +29,7 @@ namespace XIVSlothCombo.Combos.PvE
             Excogitation = 7434,
             Consolation = 16546,
             Resurrection = 173,
+            Protraction = 25867,
 
             // Offense
             Bio = 17864,
@@ -93,9 +95,9 @@ namespace XIVSlothCombo.Combos.PvE
 
         // Class Gauge
 
-        private static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
+        internal static SCHGauge Gauge => CustomComboFunctions.GetJobGauge<SCHGauge>();
 
-        private static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
+        internal static bool HasAetherflow(this SCHGauge gauge) => (gauge.Aetherflow > 0);
 
         internal enum OpenerState
         {
@@ -130,7 +132,11 @@ namespace XIVSlothCombo.Combos.PvE
                 SCH_ST_Heal_LucidOption = new("SCH_ST_Heal_LucidOption", 6500),
                 SCH_ST_Heal_AdloquiumOption = new("SCH_ST_Heal_AdloquiumOption"),
                 SCH_ST_Heal_LustrateOption = new("SCH_ST_Heal_LustrateOption"),
+                SCH_ST_Heal_ExcogitationOption = new("SCH_ST_Heal_ExcogitationOption"),
+                SCH_ST_Heal_ProtractionOption = new("SCH_ST_Heal_ProtractionOption"),
                 SCH_ST_Heal_EsunaOption = new("SCH_ST_Heal_EsunaOption");
+            public static UserIntArray
+                SCH_ST_Heals_Priority = new("SCH_ST_Heals_Priority");
             public static UserBool
                 SCH_ST_Heal_Adv = new("SCH_ST_Heal_Adv"),
                 SCH_ST_Heal_UIMouseOver = new("SCH_ST_Heal_UIMouseOver"),
@@ -572,21 +578,25 @@ namespace XIVSlothCombo.Combos.PvE
                         HasCleansableDebuff(healTarget))
                         return All.Esuna;
 
+                    foreach (var prio in Config.SCH_ST_Heals_Priority.Items.OrderBy(x => x))
+                    {
+                        var index = Config.SCH_ST_Heals_Priority.IndexOf(prio);
+                        var config = GetMatchingConfigST(index, out var spell, out bool enabled);
+
+                        if (enabled)
+                        {
+                            if (GetTargetHPPercent(healTarget) <= config &&
+                                ActionReady(spell))
+                                return spell;
+                        }
+                    }
+
                     //Check for the Galvanize shield buff. Start applying if it doesn't exist or Target HP is below %
                     if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Adloquium) &&
                         ActionReady(Adloquium) &&
                         (FindEffectOnMember(Buffs.Galvanize, healTarget) is null || GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_AdloquiumOption))
                     {
                         return OriginalHook(Adloquium);
-                    }
-
-                    //Cast Lustrate if you have Aetherflow and Target HP is below %
-                    if (IsEnabled(CustomComboPreset.SCH_ST_Heal_Lustrate) &&
-                        ActionReady(Lustrate) &&
-                        Gauge.HasAetherflow() &&
-                        GetTargetHPPercent(healTarget) <= Config.SCH_ST_Heal_LustrateOption)
-                    {
-                        return Lustrate;
                     }
                 }
                 return actionID;
