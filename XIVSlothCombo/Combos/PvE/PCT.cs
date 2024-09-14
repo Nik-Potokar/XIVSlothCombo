@@ -471,20 +471,6 @@ namespace XIVSlothCombo.Combos.PvE
                             }
                         }
 
-                        // Swiftcast
-                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SwitfcastOption))
-                        {
-                            if (IsMoving &&
-                                IsOffCooldown(All.Swiftcast) &&
-                                All.Swiftcast.LevelChecked() &&
-                                !HasEffect(Buffs.HammerTime) &&
-                                gauge.Paint < 1 &&
-                                (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
-                            {
-                                return All.Swiftcast;
-                            }
-                        }
-
                         // SubtractivePalette
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SubtractivePalette))
                         {
@@ -529,6 +515,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_MovementOption_HolyInWhite) && HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
+
+                        if (IsEnabled(CustomComboPreset.PCT_ST_AdvancedMode_SwitfcastOption) && ActionReady(All.Swiftcast) &&
+                            ((LevelChecked(CreatureMotif) && !gauge.CreatureMotifDrawn) || 
+                             (LevelChecked(WeaponMotif) && !gauge.WeaponMotifDrawn) || 
+                             (LevelChecked(LandscapeMotif) && !gauge.LandscapeMotifDrawn)))
+                            return All.Swiftcast;
                     }
 
                     //Prepare for Burst
@@ -905,20 +897,6 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SwitfcastOption))
-                        {
-                            if (IsMoving &&
-                                IsOffCooldown(All.Swiftcast) &&
-                                All.Swiftcast.LevelChecked() &&
-                                !HasEffect(Buffs.HammerTime) &&
-                                gauge.Paint < 1 &&
-                                (!gauge.CreatureMotifDrawn || !gauge.WeaponMotifDrawn || !gauge.LandscapeMotifDrawn))
-                            {
-                                return All.Swiftcast;
-                            }
-                        }
-
-
                         // Subtractive Palette
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SubtractivePalette) &&
                             SubtractivePalette.LevelChecked() &&
@@ -958,6 +936,11 @@ namespace XIVSlothCombo.Combos.PvE
                         if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_MovementOption_HolyInWhite) && HolyInWhite.LevelChecked() && gauge.Paint >= 1)
                             return OriginalHook(HolyInWhite);
 
+                        if (IsEnabled(CustomComboPreset.PCT_AoE_AdvancedMode_SwitfcastOption) && ActionReady(All.Swiftcast) &&
+                            ((LevelChecked(CreatureMotif) && !gauge.CreatureMotifDrawn) ||
+                             (LevelChecked(WeaponMotif) && !gauge.WeaponMotifDrawn) ||
+                             (LevelChecked(LandscapeMotif) && !gauge.LandscapeMotifDrawn)))
+                            return All.Swiftcast;
                     }
 
                     //Prepare for Burst
