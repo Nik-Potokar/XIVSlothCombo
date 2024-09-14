@@ -350,12 +350,9 @@ namespace XIVSlothCombo.Combos.PvE
                             || hasMedica3 != null && hasMedica3.RemainingTime <= Config.WHM_AoEHeals_MedicaTime) // ^
                         && (ActionReady(Medica2) || ActionReady(Medica3)))
                     {
-                        // Medica 3 upgrade
-                        if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica3)
-                            && LevelChecked(Medica3))
-                            return Medica3;
-
-                        return Medica2;
+                        return LevelChecked(Medica3)
+                            ? Medica3
+                            : Medica2;
                     }
 
                     if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Cure3)
