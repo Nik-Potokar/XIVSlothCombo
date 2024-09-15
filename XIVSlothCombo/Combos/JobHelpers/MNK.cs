@@ -110,7 +110,10 @@ internal class MNKOpenerLogic : MNK
         if (Gauge.Nadi != Nadi.NONE)
             return false;
 
-        if (Gauge.RaptorFury != 0 || Gauge.CoeurlFury != 0)
+        if (Gauge.RaptorFury != 0)
+            return false;
+
+        if (Gauge.CoeurlFury != 0)
             return false;
 
         return true;
@@ -118,8 +121,7 @@ internal class MNKOpenerLogic : MNK
 
     private bool DoPrePullSteps(ref uint actionID)
     {
-        if (!LevelChecked)
-            return false;
+        if (!LevelChecked) return false;
 
         if (CanOpener && PrePullStep == 0) PrePullStep = 1;
 
@@ -127,18 +129,24 @@ internal class MNKOpenerLogic : MNK
 
         if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
         {
-            if (Gauge.Chakra == 5 && PrePullStep == 1) PrePullStep++;
-            else if (PrePullStep == 1) actionID = OriginalHook(Meditation);
+            if (Gauge.Chakra < 5 && PrePullStep == 1)
+            {
+                actionID = ForbiddenMeditation;
 
-            if (HasEffect(Buffs.FormlessFist) && Gauge.Chakra == 5 && PrePullStep == 2) PrePullStep++;
-            else if (PrePullStep == 2) actionID = FormShift;
+                return true;
+            }
 
-            if (WasLastAction(DragonKick) && PrePullStep == 3) CurrentState = OpenerState.InOpener;
-            else if (PrePullStep == 3) actionID = DragonKick;
+            if (!HasEffect(Buffs.FormlessFist) &&
+                !HasEffect(Buffs.RaptorForm) && PrePullStep == 1)
+            {
+                actionID = FormShift;
 
-            if (!HasEffect(Buffs.FormlessFist) && Gauge.Chakra == 5 && PrePullStep == 3)
-                currentState = OpenerState.FailedOpener;
+                return true;
+            }
 
+            if (WasLastAction(DragonKick) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+            else if (PrePullStep == 1) actionID = DragonKick;
+            
             if (ActionWatching.CombatActions.Count > 2 && InCombat())
                 CurrentState = OpenerState.FailedOpener;
 
