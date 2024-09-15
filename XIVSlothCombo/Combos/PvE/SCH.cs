@@ -365,7 +365,7 @@ namespace XIVSlothCombo.Combos.PvE
                         return Dissipation;
 
                     // Aetherflow
-                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) &&
+                    if (IsEnabled(CustomComboPreset.SCH_DPS_Aetherflow) && !WasLastAction(Dissipation) &&
                         ActionReady(Aetherflow) && !Gauge.HasAetherflow() &&
                         InCombat() && CanSpellWeave(actionID))
                         return Aetherflow;
