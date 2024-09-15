@@ -81,15 +81,13 @@ namespace XIVSlothCombo.Combos.PvE
                 PCT_ST_AdvancedMode_LucidOption = new("PCT_ST_AdvancedMode_LucidOption", 6500),
                 PCT_AoE_AdvancedMode_HolyinWhiteOption = new("PCT_AoE_AdvancedMode_HolyinWhiteOption", 0),
                 PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500),
-                PCT_VariantCure = new("PCT_VariantCure");
+                PCT_VariantCure = new("PCT_VariantCure"),
                 PCT_ST_CreatureStop = new("PCT_ST_CreatureStop"),
                 PCT_AoE_CreatureStop = new("PCT_AoE_CreatureStop"),
                 PCT_ST_WeaponStop = new("PCT_ST_WeaponStop"),
                 PCT_AoE_WeaponStop = new("PCT_AoE_WeaponStop"),
                 PCT_ST_LandscapeStop = new("PCT_ST_LandscapeStop"),
-                PCT_AoE_LandscapeStop = new("PCT_AoE_LandscapeStop"),
-                PCT_AoE_AdvancedMode_LucidOption = new("PCT_AoE_AdvancedMode_LucidOption", 6500);
-                
+                PCT_AoE_LandscapeStop = new("PCT_AoE_LandscapeStop");                
 
             public static UserBool
                 CombinedMotifsMog = new("CombinedMotifsMog"),
