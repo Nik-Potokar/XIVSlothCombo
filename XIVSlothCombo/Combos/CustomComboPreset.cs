@@ -1967,19 +1967,21 @@ namespace XIVSlothCombo.Combos
 
         #region MONK
 
-        [ReplaceSkill([MNK.Bootshine])]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one - button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
+        [ReplaceSkill([MNK.Bootshine, MNK.LeapingOpo])]
         [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Bootshine with a one - button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
         MNK_ST_SimpleMode = 9004,
 
-        [ReplaceSkill([MNK.ArmOfTheDestroyer])]
+        [ReplaceSkill([MNK.ArmOfTheDestroyer,MNK.ShadowOfTheDestroyer])]
+        [ConflictingCombos(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Simple Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", MNK.JobID)]
         MNK_AOE_SimpleMode = 9003,
 
         #region Monk Advanced ST
+        
         [ReplaceSkill([MNK.Bootshine])]
-        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
         [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
         MNK_ST_AdvancedMode = 9005,
 
         [ParentCombo(MNK_ST_AdvancedMode)]
@@ -2036,6 +2038,55 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
+        #region Monk Advanced AOE
+
+        [ReplaceSkill([MNK.ArmOfTheDestroyer, MNK.ShadowOfTheDestroyer])]
+        [ConflictingCombos(MNK_AOE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
+        MNK_AOE_AdvancedMode = 9027,
+        
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Meditation Option", "Adds Meditation to the rotation", MNK.JobID)]
+        MNK_AoEUseMeditation = 9028,
+
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Buffs Option", "Adds selected buffs to the rotation", MNK.JobID)]
+        MNK_AoEUseBuffs = 9029,
+
+        [ParentCombo(MNK_AoEUseBuffs)]
+        [CustomComboInfo("Brotherhood Option", "Adds Brotherhood to the rotation", MNK.JobID)]
+        MNK_AoEUseBrotherhood = 9030,
+
+        [ParentCombo(MNK_AoEUseBuffs)]
+        [CustomComboInfo("Riddle of Wind Option", "Adds Riddle of Wind to the rotation", MNK.JobID)]
+        MNK_AoEUseROW = 9031,
+
+        [ParentCombo(MNK_AoEUseBuffs)]
+        [CustomComboInfo("Riddle of Fire Option", "Adds Riddle of Fire to the rotation", MNK.JobID)]
+        MNK_AoEUseROF = 9032,
+
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Howling Fist Option", "Adds Howling Fist to the rotation", MNK.JobID)]
+        MNK_AoEUseHowlingFist = 9033,
+
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Perfect Balance Option", "Adds Perfect Balance and Masterful Blitz to the rotation", MNK.JobID)]
+        MNK_AoEUsePerfectBalance = 9034,
+
+        [ParentCombo(MNK_AoEUseROW)]
+        [CustomComboInfo("Wind's Reply Option", "Adds Wind's Reply to the rotation", MNK.JobID)]
+        MNK_AoEUseWindsReply = 9035,
+
+        [ParentCombo(MNK_AoEUseROF)]
+        [CustomComboInfo("Fire's Reply Option", "Adds Fire's Reply to the rotation", MNK.JobID)]
+        MNK_AoEUseFiresReply = 9036,
+        
+        [ParentCombo(MNK_AOE_AdvancedMode)]
+        [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", MNK.JobID)]
+        MNK_AoE_ComboHeals = 9037,
+
+        #endregion
+
         #region Monk Beast Chakras
 
         [ConflictingCombos(MNK_ST_AdvancedMode, MNK_ST_SimpleMode)]
@@ -2070,18 +2121,20 @@ namespace XIVSlothCombo.Combos
         #region Variant
 
         [Variant]
-        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_SimpleMode)]
+        [VariantParent(MNK_ST_SimpleMode,MNK_ST_AdvancedMode, MNK_AOE_SimpleMode,MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", MNK.JobID)]
         MNK_Variant_Rampart = 9025,
 
         [Variant]
-        [VariantParent(MNK_ST_AdvancedMode, MNK_AOE_SimpleMode)]
+        [VariantParent(MNK_ST_SimpleMode, MNK_ST_AdvancedMode, MNK_AOE_SimpleMode, MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", MNK.JobID)]
         MNK_Variant_Cure = 9026,
 
         #endregion
-
+        
+        // last value = 9037
         // End Monk
+        
         #endregion
 
         #region NINJA
@@ -2508,7 +2561,7 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode = 20040,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Prepull Motifs Feature", "Adds missing Motifs to the combo while out of combat.", PCT.JobID)]
+        [CustomComboInfo("Prepull Motifs Feature", "Adds missing Motifs to the combo while out of combat.", PCT.JobID, 1)]
         PCT_AoE_AdvancedMode_PrePullMotifs = 20041,
 
         [ParentCombo(PCT_AoE_AdvancedMode_PrePullMotifs)]
@@ -2516,7 +2569,7 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode_NoTargetMotifs = 20042,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Starry Muse Burst Feature", $"Adds selected spells below to the burst phase.", PCT.JobID)]
+        [CustomComboInfo("Starry Muse Burst Feature", $"Adds selected spells below to the burst phase.", PCT.JobID, 2)]
         PCT_AoE_AdvancedMode_Burst_Phase = 20043,
 
         [ParentCombo(PCT_AoE_AdvancedMode_Burst_Phase)]
@@ -2540,7 +2593,7 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode_Burst_BlizzardInCyan = 20048,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Motif Selection Feature", $"Add Selected Motifs to the combo.", PCT.JobID)]
+        [CustomComboInfo("Motif Selection Feature", $"Add Selected Motifs to the combo.", PCT.JobID, 3)]
         PCT_AoE_AdvancedMode_MotifFeature = 20049,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MotifFeature)]
@@ -2556,7 +2609,7 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode_WeaponMotif = 20052,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Muse Selection Feature", $"Adds Selected Muses to the combo.", PCT.JobID)]
+        [CustomComboInfo("Muse Selection Feature", $"Adds Selected Muses to the combo.", PCT.JobID, 4)]
         PCT_AoE_AdvancedMode_MuseFeature = 20053,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MuseFeature)]
@@ -2572,23 +2625,27 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode_SteelMuse = 20056,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Mog/Madeen Feature", $"Adds Mog/Madeen to the combo.", PCT.JobID)]
+        [CustomComboInfo("Mog/Madeen Feature", $"Adds Mog/Madeen to the combo.", PCT.JobID, 5)]
         PCT_AoE_AdvancedMode_MogOfTheAges = 20057,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Subtractive Palette Feature", $"Adds Subtractive Palette to the combo.", PCT.JobID)]
+        [CustomComboInfo("Subtractive Palette Feature", $"Adds Subtractive Palette to the combo.", PCT.JobID, 6)]
         PCT_AoE_AdvancedMode_SubtractivePalette = 20058,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the combo.", PCT.JobID)]
+        [CustomComboInfo("Comet in Black Option", $"Adds Comet in Black to the combo.", PCT.JobID, 7)]
         PCT_AoE_AdvancedMode_CometinBlack = 20059,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp combo.", PCT.JobID)]
+        [CustomComboInfo("Hammer Stamp Combo Option", $"Adds Hammer Stamp combo.", PCT.JobID, 8)]
         PCT_AoE_AdvancedMode_HammerStampCombo = 20060,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Movement Features", $"Adds selected features to the combo while moving.", PCT.JobID)]
+        [CustomComboInfo("Holy in White Option", $"Adds Holy in White to the combo.", PCT.JobID, 9)]
+        PCT_AoE_AdvancedMode_HolyinWhite = 20068,
+
+        [ParentCombo(PCT_AoE_AdvancedMode)]
+        [CustomComboInfo("Movement Features", $"Adds selected features to the combo while moving.", PCT.JobID, 10)]
         PCT_AoE_AdvancedMode_MovementFeature = 20061,
 
         [ParentCombo(PCT_AoE_AdvancedMode_MovementFeature)]
@@ -2608,11 +2665,11 @@ namespace XIVSlothCombo.Combos
         PCT_AoE_AdvancedMode_SwitfcastOption = 20065,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Blizzard in Cyan Option", $"Adds Blizzard in Cyan to the combo.", PCT.JobID)]
+        [CustomComboInfo("Blizzard in Cyan Option", $"Adds Blizzard in Cyan to the combo.", PCT.JobID, 11)]
         PCT_AoE_AdvancedMode_BlizzardInCyan = 20066,
 
         [ParentCombo(PCT_AoE_AdvancedMode)]
-        [CustomComboInfo("Lucid Dreaming Option", $"Adds Lucid Dreaming to the combo.", PCT.JobID)]
+        [CustomComboInfo("Lucid Dreaming Option", $"Adds Lucid Dreaming to the combo.", PCT.JobID, 12)]
         PCT_AoE_AdvancedMode_LucidDreaming = 20067,
 
         [ReplaceSkill(PCT.FireInRed, PCT.FireIIinRed)]
@@ -2628,8 +2685,20 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("One Button Paint", "Consolidates paint-consuming actions into one button.", PCT.JobID)]
         CombinedPaint = 20004,
 
+        #endregion
 
-        // Last value for AoE = 20067
+        #region Variant
+
+        [Variant]
+        [VariantParent(PCT_ST_SimpleMode, PCT_AoE_SimpleMode, PCT_ST_AdvancedMode, PCT_AoE_AdvancedMode)]
+        [CustomComboInfo("Cure Option", "Use Variant Cure when HP is below set threshold.", PCT.JobID)]
+        PCT_Variant_Cure = 20100,
+
+        [Variant]
+        [VariantParent(PCT_ST_SimpleMode, PCT_AoE_SimpleMode, PCT_ST_AdvancedMode, PCT_AoE_AdvancedMode)]
+        [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", PCT.JobID)]
+        PCT_Variant_Rampart = 20101,
+
         #endregion
 
         #endregion
