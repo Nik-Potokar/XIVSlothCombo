@@ -186,8 +186,7 @@ namespace XIVSlothCombo.Combos.PvE
 
         /*
          * Druo/Tauro
-         * Druochole Upgrade to Taurochole (like a trait upgrade)
-         * Replaces Druocole with Taurochole when Taurochole is available
+         * Replaces Taurochole with druochole when Taurochole is not available
          * (As of 6.0) Taurochole (single target massive insta heal w/ cooldown), Druochole (Single target insta heal)
          */
         internal class SGE_DruoTauro : CustomCombo
@@ -199,13 +198,13 @@ namespace XIVSlothCombo.Combos.PvE
 
         /*
          * SGE_ZoePneuma (Zoe to Pneuma Combo)
-         * Places Zoe on top of Pneuma when both are available.
+         * Places Zoe on top of Pneuma when both are available. When below 90, will only display Zoe for downscaling dungeons.
          */
         internal class SGE_ZoePneuma : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneuma;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => actionID is Pneuma && ActionReady(Pneuma) && IsOffCooldown(Zoe) ? Zoe : actionID;
+                => (actionID is Pneuma && ActionReady(Pneuma) && IsOffCooldown(Zoe)) || (actionID is Pneuma && !LevelChecked(Pneuma)) ? Zoe : actionID;
         }
 
         /*
