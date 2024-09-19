@@ -3495,8 +3495,8 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Taurochole to Druochole Feature", "Turns Taurochole to Druochole when Taurochole is on cooldown.", SGE.JobID, 700, "", "")]
         SGE_TauroDruo = 14038,
 
-        [ReplaceSkill(SGE.Zoe)]
-        [CustomComboInfo("Zoe to Pneuma Feature", "Replaces Zoe with Pnuema when zoe is on cd and Pnuema is available.", SGE.JobID, 701, "", "")] //Temporary to keep the order
+        [ReplaceSkill(SGE.Pneuma)]
+        [CustomComboInfo("Zoe Pnuema Feature", "Adds Zoe to Pnuema when Pnuema is on cd or below 90.", SGE.JobID, 701, "", "")]
         SGE_ZoePneuma = 14039,
         #endregion
 
