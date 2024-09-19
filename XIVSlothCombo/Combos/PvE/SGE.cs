@@ -198,13 +198,13 @@ namespace XIVSlothCombo.Combos.PvE
 
         /*
          * SGE_ZoePneuma (Zoe to Pneuma Combo)
-         * Places Zoe on top of Pneuma when both are available. When below 90, will only display Zoe for downscaling dungeons.
+         * rePlaces Zoe with Pneuma when zoe is on cd. When below 90, will only display Zoe for downscaling dungeons.
          */
         internal class SGE_ZoePneuma : CustomCombo
         {
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ZoePneuma;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-                => (actionID is Pneuma && ActionReady(Pneuma) && IsOffCooldown(Zoe)) || (actionID is Pneuma && !LevelChecked(Pneuma)) ? Zoe : actionID;
+                => actionID is Zoe && ActionReady(Pneuma) && IsOnCooldown(Zoe) ? Pneuma : actionID;
         }
 
         /*
