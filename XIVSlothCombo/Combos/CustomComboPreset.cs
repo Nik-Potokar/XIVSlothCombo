@@ -3496,7 +3496,7 @@ namespace XIVSlothCombo.Combos
         SGE_TauroDruo = 14038,
 
         [ReplaceSkill(SGE.Pneuma)]
-        [CustomComboInfo("Zoe Pnuema Feature", "Adds Zoe to Pnuema when Pnuema is on cd or below 90.", SGE.JobID, 701, "", "")]
+        [CustomComboInfo("Zoe Pnuema Feature", "Places Zoe on top of Pneuma when both actions are off cooldown.", SGE.JobID, 701, "", "")]
         SGE_ZoePneuma = 14039,
         #endregion
 
