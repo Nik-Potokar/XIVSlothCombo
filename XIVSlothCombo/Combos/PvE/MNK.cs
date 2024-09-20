@@ -124,7 +124,7 @@ internal class MNK
                 if (ActionReady(RiddleOfFire) &&
                     CanDelayedWeave(ActionWatching.LastWeaponskill))
                     return RiddleOfFire;
-                
+
                 // OGCDs
                 if (CanWeave(ActionWatching.LastWeaponskill))
                 {
@@ -136,7 +136,7 @@ internal class MNK
 
                     if (ActionReady(Brotherhood))
                         return Brotherhood;
-                    
+
                     if (ActionReady(RiddleOfWind))
                         return RiddleOfWind;
 
@@ -164,6 +164,7 @@ internal class MNK
                              !LevelChecked(RiddleOfFire)))
                             return PerfectBalance;
                     }
+
                     if (PlayerHealthPercentageHp() <= 25 &&
                         ActionReady(All.SecondWind))
                         return All.SecondWind;
@@ -234,8 +235,8 @@ internal class MNK
 
                 if (HasEffect(Buffs.WindsRumination) &&
                     LevelChecked(WindsReply) &&
-                    (HasEffect(Buffs.RiddleOfWind) ||
-                     GetBuffRemainingTime(Buffs.WindsRumination) < 4))
+                    HasEffect(Buffs.RiddleOfWind) &&
+                    GetBuffRemainingTime(Buffs.WindsRumination) < 4)
                     return WindsReply;
 
                 // Standard Beast Chakras
@@ -417,12 +418,12 @@ internal class MNK
                          GetBuffRemainingTime(Buffs.FiresRumination) < 4))
                         return FiresReply;
 
-                    if (IsEnabled(CustomComboPreset.MNK_STUseROW) && 
+                    if (IsEnabled(CustomComboPreset.MNK_STUseROW) &&
                         IsEnabled(CustomComboPreset.MNK_STUseWindsReply) &&
                         HasEffect(Buffs.WindsRumination) &&
                         LevelChecked(WindsReply) &&
-                        (HasEffect(Buffs.RiddleOfWind) ||
-                         GetBuffRemainingTime(Buffs.WindsRumination) < 4))
+                        HasEffect(Buffs.RiddleOfWind) &&
+                        GetBuffRemainingTime(Buffs.WindsRumination) < 4)
                         return WindsReply;
                 }
 
@@ -470,7 +471,7 @@ internal class MNK
 
                     if (ActionReady(Brotherhood))
                         return Brotherhood;
-                    
+
                     if (ActionReady(RiddleOfWind))
                         return RiddleOfWind;
 
