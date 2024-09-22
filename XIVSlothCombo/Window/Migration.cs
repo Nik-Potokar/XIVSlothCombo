@@ -16,7 +16,7 @@ using ImGuiNET;
 
 namespace XIVSlothCombo.Window;
 
-internal class MigrationWindow : Dalamud.Interface.Windowing.Window
+public class MigrationWindow : Dalamud.Interface.Windowing.Window
 {
     /// <summary>
     ///     The repository URL for WrathCombo.
@@ -36,7 +36,9 @@ internal class MigrationWindow : Dalamud.Interface.Windowing.Window
     /// </remarks>
     public MigrationWindow() : base("XIVSlothCombo to WrathCombo Migration")
     {
-        IsOpen = true;
+        if (Svc.PluginInterface.InternalName == "XIVSlothCombo")
+            IsOpen = true;
+
         BringToFront();
 
         Flags = ImGuiWindowFlags.NoMove

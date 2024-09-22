@@ -34,7 +34,7 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow ConfigWindow;
-        private readonly MigrationWindow MigrationWindow;
+        public readonly MigrationWindow MigrationWindow;
         private readonly TargetHelper TargetHelper;
         internal readonly AboutUs AboutUs;
         internal static XIVSlothCombo? P = null!;
@@ -195,8 +195,7 @@ namespace XIVSlothCombo
         }
 
         private void DrawUI() {
-            if (Svc.PluginInterface.InternalName == "XIVSlothCombo")
-                MigrationWindow.Draw();
+            MigrationWindow.Draw();
             ConfigWindow.Draw();
         }
 
