@@ -785,6 +785,10 @@ internal class RPR
                     }
                 }
 
+                if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Sacrificium) &&
+                    HasEffect(Buffs.Enshrouded) && HasEffect(Buffs.Oblatio))
+                    return OriginalHook(Gluttony);
+
                 if (ActionReady(Gluttony) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver))
                     return Gluttony;
 
@@ -796,7 +800,7 @@ internal class RPR
             if (actionID is BloodStalk)
             {
                 if (IsEnabled(CustomComboPreset.RPR_TrueNorthGluttony) &&
-                    trueNorthReady && CanWeave(actionID))
+                    trueNorthReady)
                     return All.TrueNorth;
 
                 if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud))
@@ -818,16 +822,18 @@ internal class RPR
                         if (HasEffect(Buffs.EnhancedVoidReaping))
                             return OriginalHook(Gibbet);
 
-                        if (HasEffect(Buffs.EnhancedCrossReaping))
-                            return OriginalHook(Gallows);
-
-                        if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
+                        if (HasEffect(Buffs.EnhancedCrossReaping) ||
+                            (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping)))
                             return OriginalHook(Gallows);
                     }
                 }
 
                 if (ActionReady(Gluttony) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver))
                     return Gluttony;
+                
+                if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Sacrificium) &&
+                    HasEffect(Buffs.Enshrouded) &&  HasEffect(Buffs.Oblatio))
+                    return OriginalHook(Gluttony);
 
                 if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_BloodSwatheCombo) &&
                     (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) && LevelChecked(Gibbet))
