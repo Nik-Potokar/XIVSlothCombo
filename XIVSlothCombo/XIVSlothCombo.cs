@@ -34,6 +34,7 @@ namespace XIVSlothCombo
         private const string Command = "/scombo";
 
         private readonly ConfigWindow ConfigWindow;
+        private readonly MigrationWindow MigrationWindow;
         private readonly TargetHelper TargetHelper;
         internal readonly AboutUs AboutUs;
         internal static XIVSlothCombo? P = null!;
@@ -106,10 +107,12 @@ namespace XIVSlothCombo
             ActionWatching.Enable();
             Combos.JobHelpers.AST.Init();
 
+            MigrationWindow = new MigrationWindow();
             ConfigWindow = new ConfigWindow();
             TargetHelper = new();
             AboutUs = new();
             ws = new();
+            ws.AddWindow(MigrationWindow);
             ws.AddWindow(ConfigWindow);
             ws.AddWindow(TargetHelper);
 
@@ -191,7 +194,10 @@ namespace XIVSlothCombo
             Service.Configuration.ResetFeatures("v3.1.1.0_DRGRework", Enumerable.Range(6000, 800).ToArray());
         }
 
-        private void DrawUI() => ConfigWindow.Draw();
+        private void DrawUI() {
+            MigrationWindow.Draw();
+            ConfigWindow.Draw();
+        }
 
         private void PrintLoginMessage()
         {
