@@ -195,7 +195,8 @@ namespace XIVSlothCombo
         }
 
         private void DrawUI() {
-            MigrationWindow.Draw();
+            if (Svc.PluginInterface.InternalName == "XIVSlothCombo")
+                MigrationWindow.Draw();
             ConfigWindow.Draw();
         }
 
