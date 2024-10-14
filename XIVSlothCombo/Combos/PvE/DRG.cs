@@ -232,7 +232,7 @@ internal class DRG
                         return OriginalHook(ChaosThrust);
                     }
 
-                    if (lastComboMove == OriginalHook(ChaosThrust) && LevelChecked(WheelingThrust))
+                    if (lastComboMove is ChaosThrust && LevelChecked(WheelingThrust))
                     {
                         if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                             !OnTargetsRear())
@@ -244,7 +244,7 @@ internal class DRG
                     if (lastComboMove == OriginalHook(VorpalThrust) && LevelChecked(FullThrust))
                         return OriginalHook(FullThrust);
 
-                    if (lastComboMove == OriginalHook(FullThrust) && LevelChecked(FangAndClaw))
+                    if (lastComboMove is HeavensThrust && LevelChecked(FangAndClaw))
                     {
                         if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                             !OnTargetsFlank())
@@ -435,7 +435,7 @@ internal class DRG
                         return OriginalHook(ChaosThrust);
                     }
 
-                    if (lastComboMove == OriginalHook(ChaosThrust) && LevelChecked(WheelingThrust))
+                    if (lastComboMove is ChaoticSpring && LevelChecked(WheelingThrust))
                     {
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
                             trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
@@ -448,7 +448,7 @@ internal class DRG
                     if (lastComboMove == OriginalHook(VorpalThrust) && LevelChecked(FullThrust))
                         return OriginalHook(FullThrust);
 
-                    if (lastComboMove == OriginalHook(FullThrust) && LevelChecked(FangAndClaw))
+                    if (lastComboMove is HeavensThrust && LevelChecked(FangAndClaw))
                     {
                         if (IsEnabled(CustomComboPreset.DRG_TrueNorthDynamic) &&
                             trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
