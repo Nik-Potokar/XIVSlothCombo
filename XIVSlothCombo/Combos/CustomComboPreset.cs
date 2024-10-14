@@ -1398,7 +1398,7 @@ namespace XIVSlothCombo.Combos
         DRG_AoE_DragonfireDive_Movement = 6208,
 
         [ParentCombo(DRG_AoE_CDs)]
-        [CustomComboInfo("Rise of the Dragon Option", "Adds Rise of the Dragonj to the rotation.", DRG.JobID)]
+        [CustomComboInfo("Rise of the Dragon Option", "Adds Rise of the Dragon to the rotation.", DRG.JobID)]
         DRG_AoE_RiseOfTheDragon = 6209,
 
         [ParentCombo(DRG_AoE_CDs)]
