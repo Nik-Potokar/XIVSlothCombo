@@ -132,7 +132,7 @@ namespace XIVSlothCombo.Window.Functions
                         var subpar = PresetStorage.GetParent(par2);
                         if (subpar != null)
                         {
-                            conflictBuilder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo : subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName)} -> ");
+                            conflictBuilder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.FancyName : subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName)} -> ");
                             par2 = subpar!.Value;
                         }
 
