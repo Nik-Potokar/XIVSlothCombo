@@ -34,6 +34,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
             ///<summary> Checks if the player is in a state to be able to cast a ninjitsu.</summary>
             private static bool CanCast()
             {
+                if (NINHelper.InMudra) return true;
                 var gcd = CustomComboFunctions.GetCooldown(GustSlash).CooldownTotal;
 
                 if (gcd == 0.5) return true;
