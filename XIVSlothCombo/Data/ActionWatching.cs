@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Services;
+using static XIVSlothCombo.Combos.JobHelpers.NIN;
 
 namespace XIVSlothCombo.Data
 {
@@ -101,6 +102,8 @@ namespace XIVSlothCombo.Data
                 TimeLastActionUsed = DateTime.Now;
                 ActionType = actionType;
 
+                UpdateHelpers(actionId);
+
                 //Dalamud.Logging.PluginLog.Debug($"{actionId} {sequence} {a5} {a6} {a7} {a8} {a9}");
             }
             catch (Exception ex)
@@ -108,6 +111,14 @@ namespace XIVSlothCombo.Data
                 Svc.Log.Error(ex, "SendActionDetour");
                 SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
             }
+        }
+
+        private static void UpdateHelpers(uint actionId)
+        {
+            if (actionId is NIN.Ten or NIN.Chi or NIN.Jin or NIN.TenCombo or NIN.ChiCombo or NIN.JinCombo)
+                NINHelper.InMudra = true;
+            else
+                NINHelper.InMudra = false;
         }
 
         private unsafe static void CheckForChangedTarget(uint actionId, ref ulong targetObjectId)

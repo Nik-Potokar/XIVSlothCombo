@@ -26,12 +26,7 @@ namespace XIVSlothCombo.Combos.JobHelpers
                 return CustomComboFunctions.TargetHasEffect(Debuffs.Mug) || CustomComboFunctions.TargetHasEffect(Debuffs.Dokumori);
             }
 
-            internal static bool InMudra => GetInMudra();
-
-            private static bool GetInMudra()
-            {
-                return !CustomComboFunctions.IsOriginal(Ninjutsu);
-            }
+            internal static bool InMudra = false;
         }
 
         internal class MudraCasting : PvE.NIN
