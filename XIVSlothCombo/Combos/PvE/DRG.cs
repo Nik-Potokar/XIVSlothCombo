@@ -232,7 +232,7 @@ internal class DRG
                         return OriginalHook(ChaosThrust);
                     }
 
-                    if (lastComboMove is ChaosThrust && LevelChecked(WheelingThrust))
+                    if (lastComboMove is ChaoticSpring && LevelChecked(WheelingThrust))
                     {
                         if (trueNorthReady && AnimationLock.CanDRGWeave(All.TrueNorth) &&
                             !OnTargetsRear())
