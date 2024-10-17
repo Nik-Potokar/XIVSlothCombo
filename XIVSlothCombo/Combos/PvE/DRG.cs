@@ -151,11 +151,12 @@ internal class DRG
                     if (ActionReady(LifeSurge) &&
                         (GetCooldownRemainingTime(LifeSurge) < 40 || GetCooldownRemainingTime(BattleLitany) > 50) &&
                         AnimationLock.CanDRGWeave(LifeSurge) &&
-                        HasEffect(Buffs.LanceCharge) &&
-                        !HasEffect(Buffs.LifeSurge) &&
-                        ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                         (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                         (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust))))
+                        ((HasEffect(Buffs.LanceCharge) &&
+                          !HasEffect(Buffs.LifeSurge) &&
+                          ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                           (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                           (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust)))) ||
+                         (!LevelChecked(LanceCharge) && JustUsed(VorpalThrust))))
                         return LifeSurge;
 
                     //Geirskogul Feature
@@ -330,13 +331,14 @@ internal class DRG
                             ActionReady(LifeSurge) &&
                             (GetCooldownRemainingTime(LifeSurge) < 40 || GetCooldownRemainingTime(BattleLitany) > 50) &&
                             AnimationLock.CanDRGWeave(LifeSurge) &&
-                            HasEffect(Buffs.LanceCharge) &&
-                            !HasEffect(Buffs.LifeSurge) &&
-                            ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                             (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                             (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust))))
+                            ((HasEffect(Buffs.LanceCharge) &&
+                              !HasEffect(Buffs.LifeSurge) &&
+                              ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                               (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                               (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust)))) ||
+                             (!LevelChecked(LanceCharge) && JustUsed(VorpalThrust))))
                             return LifeSurge;
-
+                        
                         //Geirskogul Feature
                         if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) &&
                             ActionReady(Geirskogul) &&
