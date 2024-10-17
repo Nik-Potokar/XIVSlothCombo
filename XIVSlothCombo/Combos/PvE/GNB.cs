@@ -242,6 +242,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (ActionReady(DangerZone) && !LevelChecked(SonicBreak) && HasEffect(Buffs.NoMercy) || nmCD < 30)  //subLv54
                                 return OriginalHook(DangerZone);
                         }
+
+                        //if all else fails
+                        if (ActionReady(DoubleDown))
+                            return DoubleDown;
                     }
 
                     //GnashingFang
@@ -256,6 +260,10 @@ namespace XIVSlothCombo.Combos.PvE
                             || (!LevelChecked(ReignOfBeasts) && !LevelChecked(DoubleDown) && LevelChecked(Bloodfest) && Ammo == 1 && JustUsed(NoMercy, 3f) && ActionReady(Bloodfest)) //Lv80 Opener/Reopener
                             || (!LevelChecked(ReignOfBeasts) && !LevelChecked(DoubleDown) && !LevelChecked(Bloodfest) && JustUsed(NoMercy, 3f)) //<=Lv79 use
                             || (nmCD > GCD * 7 && nmCD < GCD * 14)) //30s use
+                            return GnashingFang;
+
+                        //if all else fails
+                        if (HasEffect(Buffs.NoMercy) && ActionReady(GnashingFang))
                             return GnashingFang;
                     }
 
@@ -493,6 +501,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(DangerZone) && !LevelChecked(SonicBreak) && HasEffect(Buffs.NoMercy) || nmCD < 30)  //subLv54
                                 return OriginalHook(DangerZone);
                         }
+
+                        //if all else fails
+                        if (ActionReady(DoubleDown))
+                            return DoubleDown;
                     }
 
                     //GnashingFang
@@ -507,6 +519,10 @@ namespace XIVSlothCombo.Combos.PvE
                             || (!LevelChecked(ReignOfBeasts) && !LevelChecked(DoubleDown) && LevelChecked(Bloodfest) && Ammo == 1 && JustUsed(NoMercy, 3f) && ActionReady(Bloodfest)) //Lv80 Opener/Reopener
                             || (!LevelChecked(ReignOfBeasts) && !LevelChecked(DoubleDown) && !LevelChecked(Bloodfest) && JustUsed(NoMercy, 3f)) //<=Lv79 use
                             || (nmCD > GCD * 7 && nmCD < GCD * 14)) //30s use
+                            return GnashingFang;
+
+                        //if all else fails
+                        if (HasEffect(Buffs.NoMercy) && ActionReady(GnashingFang))
                             return GnashingFang;
                     }
 
@@ -723,6 +739,10 @@ namespace XIVSlothCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.GNB_GF_Zone) && ActionReady(DangerZone) && !LevelChecked(SonicBreak) && HasEffect(Buffs.NoMercy) || nmCD < 30)  //subLv54
                                 return OriginalHook(DangerZone);
                         }
+
+                        //if all else fails
+                        if (ActionReady(DoubleDown))
+                            return DoubleDown;
                     }
 
                     //Gnashing Fang
@@ -737,6 +757,10 @@ namespace XIVSlothCombo.Combos.PvE
                             || (!LevelChecked(ReignOfBeasts) && !LevelChecked(DoubleDown) && LevelChecked(Bloodfest) && Ammo == 1 && JustUsed(NoMercy, 3f) && ActionReady(Bloodfest)) //Lv80 Opener/Reopener
                             || (!LevelChecked(ReignOfBeasts) && !LevelChecked(DoubleDown) && !LevelChecked(Bloodfest) && JustUsed(NoMercy, 3f)) //<=Lv79 use
                             || (nmCD > GCD * 7 && nmCD < GCD * 14)) //30s use
+                            return GnashingFang;
+
+                        //if all else fails
+                        if (HasEffect(Buffs.NoMercy) && ActionReady(GnashingFang))
                             return GnashingFang;
                     }
 
@@ -841,8 +865,8 @@ namespace XIVSlothCombo.Combos.PvE
                         }
                         //FatedCircle - if not unlocked, use BurstStrike
                         if (Ammo > 0 && LevelChecked(FatedCircle) && 
-                            (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
-                            (bfCD < 6)) // Bloodfest prep
+                            ((HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
+                            (bfCD < (level >= 88 ? GCD * 3 : GCD * 2)))) // Bloodfest prep
                             return FatedCircle;
                         if (Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
                             (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0)) //use when under NM after DD & ignores GF
@@ -941,11 +965,12 @@ namespace XIVSlothCombo.Combos.PvE
                         //FatedCircle - if not unlocked, use BurstStrike
                         if (Ammo > 0 && LevelChecked(FatedCircle) && 
                             ((IsEnabled(CustomComboPreset.GNB_AoE_FatedCircle) && HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
-                            (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD < 6))) // Bloodfest prep
+                            (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && bfCD <= (level >= 88 ? GCD * 3 : GCD * 2)))) // Bloodfest prep
                             return FatedCircle;
                         if (IsEnabled(CustomComboPreset.GNB_AoE_noFatedCircle) && Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
                             (HasEffect(Buffs.NoMercy) && GunStep == 0)) // Bloodfest prep
                             return BurstStrike;
+
                     }
 
                     //1-2
