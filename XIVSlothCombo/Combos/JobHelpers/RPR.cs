@@ -259,7 +259,7 @@ internal abstract class RPR
 
                 //2nd part of Double Enshroud
                 if (LevelChecked(PlentifulHarvest) &&
-                    WasLastWeaponskill(PlentifulHarvest))
+                    JustUsed(PlentifulHarvest, 5))
                     return true;
 
                 //Natural Odd Minute Shrouds
@@ -282,25 +282,35 @@ internal abstract class RPR
 
             if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
                 !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
-                !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(1) && !JustUsed(Perfectio) &&
+                !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(3) &&
                 !JustUsed(ShadowOfDeath))
             {
+                //1st part double enshroud
                 if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
                     GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 + 1.5 && JustUsed(Enshroud))
                     return true;
 
+                //2nd part double enshroud
                 if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
                     (GetCooldownRemainingTime(ArcaneCircle) <= GCD || IsOffCooldown(ArcaneCircle)) &&
                     (JustUsed(VoidReaping) || JustUsed(CrossReaping)))
                     return true;
 
-                if (!HasEffect(Buffs.Enshrouded) &&
+                //lvl 88+ general use
+                if (LevelChecked(PlentifulHarvest) && !HasEffect(Buffs.Enshrouded) &&
                     ((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) &&
                       GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 8) ||
                      (IsEnabled(CustomComboPreset.RPR_ST_AdvancedMode) &&
                       GetDebuffRemainingTime(Debuffs.DeathsDesign) <= Config.RPR_SoDRefreshRange)) &&
-                    (GetCooldownRemainingTime(ArcaneCircle) > GCD * 8 || IsOffCooldown(ArcaneCircle) ||
-                     !LevelChecked(ArcaneCircle)))
+                    (GetCooldownRemainingTime(ArcaneCircle) > GCD * 8 || IsOffCooldown(ArcaneCircle)))
+                    return true;
+
+                //below lvl 88 use
+                if (!LevelChecked(PlentifulHarvest) &&
+                    ((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) &&
+                      GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 8) ||
+                     (IsEnabled(CustomComboPreset.RPR_ST_AdvancedMode) &&
+                      GetDebuffRemainingTime(Debuffs.DeathsDesign) <= Config.RPR_SoDRefreshRange)))
                     return true;
             }
 
