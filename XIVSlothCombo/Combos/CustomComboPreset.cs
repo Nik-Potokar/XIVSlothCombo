@@ -363,15 +363,63 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region BLACK MAGE
-
+        
         [ReplaceSkill(BLM.Fire)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10, "", "")]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10)]
         BLM_ST_SimpleMode = 2012,
-
+        
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -8, "", "")]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -8)]
         BLM_AoE_SimpleMode = 2008,
+        
+        [ReplaceSkill(BLM.Fire)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID, -10)]
+        BLM_ST_AdvancedMode = 2058,
 
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", BLM.JobID)]
+        BLM_ST_Opener = 2059,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Foul / Xenoglossy", "Add Foul / Xenoglossy to the rotation.", BLM.JobID)]
+        BLM_ST_UsePolyglot = 2060,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Foul / Xenoglossy for movement", "Add Foul / Xenoglossy to the rotation as movement option.", BLM.JobID)]
+        BLM_ST_UsePolyglotMoving = 2061,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Amplifier", "Add Amplifier to the rotation.", BLM.JobID)]
+        BLM_ST_Amplifier = 2062,
+        
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Leylines", "Add Leylines to the rotation.", BLM.JobID)]
+        BLM_ST_LeyLines = 2063,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Despair", "Add Despair to the rotation.", BLM.JobID)]
+        BLM_ST_Despair = 2064,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Swiftcast", "Add Swiftcast to the rotation.", BLM.JobID)]
+        BLM_ST_Swiftcast = 2065,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Triplecast", "Add Triplecast to the rotation.", BLM.JobID)]
+        BLM_ST_Triplecast = 2066,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Flarestar", "Add Flarestar to the rotation.", BLM.JobID)]
+        BLM_ST_Flarestar = 2067,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Manafont", "Add Manafont to the rotation.", BLM.JobID)]
+        BLM_ST_Manafont = 2068,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Use Transpose", "Add Transpose to the rotation.", BLM.JobID)]
+        BLM_ST_Transpose = 2069,
+        
         #region Variant
 
         [Variant]
@@ -417,7 +465,7 @@ namespace XIVSlothCombo.Combos
         BLM_Aetherial_Manipulation = 2046,
         #endregion
 
-        // Last value = 2057
+        // Last value = 2069
 
         #endregion
 
