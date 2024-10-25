@@ -269,6 +269,12 @@ namespace XIVSlothCombo.Combos.PvE
                             HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
                             return Senei;
 
+                        //Guren if no Senei
+                        if (!LevelChecked(Senei) &&
+                            gauge.Kenki >= 25 && ActionReady(Guren) &&
+                            HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                            return Guren;
+
                         //Zanshin Usage
                         if (LevelChecked(Zanshin) && gauge.Kenki >= 50 &&
                             CanWeave(actionID) && HasEffect(Buffs.ZanshinReady) &&
@@ -481,10 +487,19 @@ namespace XIVSlothCombo.Combos.PvE
                             }
 
                             //Senei Features
-                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei) &&
-                                gauge.Kenki >= 25 && ActionReady(Senei) &&
-                                HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
-                                return Senei;
+                            if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Senei))
+                            {
+                                if (gauge.Kenki >= 25 && ActionReady(Senei) &&
+                                    HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                                    return Senei;
+
+                                //Guren if no Senei
+                                if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Guren) &&
+                                    !LevelChecked(Senei) &&
+                                    gauge.Kenki >= 25 && ActionReady(Guren) &&
+                                    HasEffect(Buffs.Fugetsu) && HasEffect(Buffs.Fuka))
+                                    return Guren;
+                            }
 
                             //Zanshin Usage
                             if (IsEnabled(CustomComboPreset.SAM_ST_CDs_Zanshin) &&
