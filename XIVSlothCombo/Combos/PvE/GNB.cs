@@ -866,7 +866,7 @@ namespace XIVSlothCombo.Combos.PvE
                         //FatedCircle - if not unlocked, use BurstStrike
                         if (Ammo > 0 && LevelChecked(FatedCircle) && 
                             ((HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0) || //use when under NM after DD & ignores GF
-                            (bfCD < (level >= 88 ? GCD * 3 : GCD * 2)))) // Bloodfest prep
+                            (bfCD <= (level >= 88 ? GCD * 3 : GCD * 2)))) // Bloodfest prep
                             return FatedCircle;
                         if (Ammo > 0 && !LevelChecked(FatedCircle) && LevelChecked(BurstStrike) &&
                             (HasEffect(Buffs.NoMercy) && !ActionReady(DoubleDown) && GunStep == 0)) //use when under NM after DD & ignores GF
