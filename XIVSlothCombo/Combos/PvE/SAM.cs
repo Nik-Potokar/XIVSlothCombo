@@ -955,17 +955,25 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Iaijutsu)
                 {
-                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_Shoha) &&
-                        ActionReady(Shoha) && gauge.MeditationStacks is 3 && CanWeave(actionID))
+                    bool canAddShoha = IsEnabled(CustomComboPreset.SAM_Iaijutsu_Shoha) &&
+                        ActionReady(Shoha) &&
+                        gauge.MeditationStacks is 3;
+
+                    if (canAddShoha && CanWeave(actionID))
                         return Shoha;
 
-                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_OgiNamikiri) && 
-                        LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady))
+                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_OgiNamikiri) && (
+                        (LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady)) ||
+                        gauge.Kaeshi == Kaeshi.NAMIKIRI))
                         return OriginalHook(OgiNamikiri);
 
-                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_TsubameGaeshi) && 
-                        ((LevelChecked(TsubameGaeshi) && HasEffect(Buffs.TsubameReady)) || (LevelChecked(TendoKaeshiSetsugekka) && HasEffect(Buffs.TendoKaeshiSetsugekkaReady))))
+                    if (IsEnabled(CustomComboPreset.SAM_Iaijutsu_TsubameGaeshi) && (
+                        (LevelChecked(TsubameGaeshi) && (HasEffect(Buffs.TsubameReady) || HasEffect(Buffs.KaeshiGokenReady))) ||
+                        (LevelChecked(TendoKaeshiSetsugekka) && (HasEffect(Buffs.TendoKaeshiSetsugekkaReady) || HasEffect(Buffs.TendoKaeshiGokenReady)))))
                         return OriginalHook(TsubameGaeshi);
+
+                    if (canAddShoha)
+                        return Shoha;
                 }
                 return actionID;
             }
