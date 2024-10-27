@@ -993,6 +993,9 @@ namespace XIVSlothCombo.Combos.PvE
                         ActionReady(Senei))
                         return Senei;
 
+                    if (IsEnabled(CustomComboPreset.SAM_Shinten_Shoha_Zanshin) && HasEffect(Buffs.ZanshinReady))
+                        return Zanshin;
+
                     if (gauge.MeditationStacks is 3 && ActionReady(Shoha))
                         return Shoha;
                 }
@@ -1013,6 +1016,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SAM_Kyuten_Shoha_Guren) &&
                         ActionReady(Guren))
                         return Guren;
+
+                    if (IsEnabled(CustomComboPreset.SAM_Kyuten_Shoha_Zanshin) && HasEffect(Buffs.ZanshinReady))
+                        return Zanshin;
 
                     if (gauge.MeditationStacks is 3 && ActionReady(Shoha))
                         return Shoha;
