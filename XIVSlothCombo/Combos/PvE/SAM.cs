@@ -1038,6 +1038,12 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ikishoten)
                 {
+                    if (IsEnabled(CustomComboPreset.SAM_Ikishoten_OgiNamikiri_Shoha) &&
+                        LevelChecked(Shoha) &&
+                        HasEffect(Buffs.OgiNamikiriReady) &&
+                        gauge.MeditationStacks is 3)
+                        return Shoha;
+
                     if ((LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady)) || gauge.Kaeshi == Kaeshi.NAMIKIRI)
                         return OriginalHook(OgiNamikiri);
                 }

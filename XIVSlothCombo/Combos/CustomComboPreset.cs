@@ -3803,8 +3803,12 @@ namespace XIVSlothCombo.Combos
         SAM_GyotenYaten = 15211,
 
         [ReplaceSkill(SAM.Ikishoten)]
-        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID)]
+        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.", SAM.JobID)]
         SAM_Ikishoten_OgiNamikiri = 15212,
+
+        [ParentCombo(SAM_Ikishoten_OgiNamikiri)]
+        [CustomComboInfo("Ikishoten to Shoha", "Replace Ikishoten with Shoha when Meditation is full before Ogi Namikiri.", SAM.JobID)]
+        SAM_Ikishoten_OgiNamikiri_Shoha = 15213,
 
         #endregion
 
