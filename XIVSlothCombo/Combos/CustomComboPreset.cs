@@ -442,11 +442,11 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_LeyLines = 2202,
         
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Foul / Xenoglossy", "Add Foul / Xenoglossy to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Use Foul", "Add Foul to the rotation.", BLM.JobID)]
         BLM_AoE_UsePolyglot = 2203,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Foul / Xenoglossy for movement", "Add Foul / Xenoglossy to the rotation as movement option.", BLM.JobID)]
+        [CustomComboInfo("Use Foul for movement", "Add Foul to the rotation as movement option.", BLM.JobID)]
         BLM_AoE_UsePolyglotMoving = 2204,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
