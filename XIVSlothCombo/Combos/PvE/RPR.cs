@@ -167,16 +167,15 @@ internal class RPR
                         !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                         !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
                         !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
-                        !RPRHelpers.IsComboExpiring(3) &&
-                        (GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 || !LevelChecked(ArcaneCircle)))
+                        !RPRHelpers.IsComboExpiring(3))
                     {
                         //Gluttony
-                        if (ActionReady(Gluttony))
+                        if (ActionReady(Gluttony) && 
+                            (GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 || !LevelChecked(ArcaneCircle)))
                         {
-                            if (trueNorthReady)
-                                return All.TrueNorth;
-
-                            return Gluttony;
+                            return trueNorthReady 
+                                ? All.TrueNorth 
+                                : Gluttony;
                         }
 
                         //Bloodstalk
@@ -373,12 +372,12 @@ internal class RPR
                             !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                             !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
                             !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
-                            !RPRHelpers.IsComboExpiring(3) &&
-                            (GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 || !LevelChecked(ArcaneCircle)))
+                            !RPRHelpers.IsComboExpiring(3))
                         {
                             //Gluttony
                             if (IsEnabled(CustomComboPreset.RPR_ST_Gluttony) &&
-                                ActionReady(Gluttony))
+                                ActionReady(Gluttony) &&
+                                (GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 || !LevelChecked(ArcaneCircle)))
                             {
                                 if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
                                     trueNorthReady)
