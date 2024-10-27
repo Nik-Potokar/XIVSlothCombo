@@ -228,9 +228,9 @@ internal class BLM
                 if (gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
                     return Paradox;
 
-                if (HasEffect(Buffs.Firestarter))
-                    if (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose))
-                        return Fire3;
+                if (HasEffect(Buffs.Firestarter) && curMp > 0 &&
+                    (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose)))
+                    return Fire3;
 
                 if (curMp < MP.FireI && Despair.LevelChecked() && curMp >= MP.Despair)
                 {
@@ -283,7 +283,8 @@ internal class BLM
                 if (gauge.HasPolyglotStacks())
                     return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
 
-                if (curMp + nextMpGain >= 7500 && (LocalPlayer.CastActionId == Blizzard || WasLastSpell(Blizzard) ||
+                if (curMp + nextMpGain >= 7500 && (LocalPlayer.CastActionId == Blizzard ||
+                                                   WasLastSpell(Blizzard) ||
                                                    WasLastSpell(Blizzard4)))
                 {
                     if (Fire3.LevelChecked())
@@ -295,7 +296,8 @@ internal class BLM
                 if (curMp + nextMpGain <= 10000 || curMp < 7500)
                     return Blizzard;
 
-                if (ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell))
+                if (ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell) &&
+                    curMp is MP.MaxMP && HasEffect(Buffs.Firestarter))
                     return Transpose;
 
                 if (Fire3.LevelChecked())
@@ -394,9 +396,9 @@ internal class BLM
                 if (gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
                     return Paradox;
 
-                if (HasEffect(Buffs.Firestarter))
-                    if (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose))
-                        return Fire3;
+                if (HasEffect(Buffs.Firestarter) && curMp > 0 &&
+                    (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose)))
+                    return Fire3;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
                     curMp < MP.FireI && Despair.LevelChecked() && curMp >= MP.Despair)
@@ -471,7 +473,8 @@ internal class BLM
                     return Blizzard;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Transpose) &&
-                    ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell))
+                    ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell) &&
+                    curMp is MP.MaxMP && HasEffect(Buffs.Firestarter))
                     return Transpose;
 
                 if (Fire3.LevelChecked())
