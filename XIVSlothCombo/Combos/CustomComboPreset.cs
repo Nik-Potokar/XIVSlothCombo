@@ -442,7 +442,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Use Amplifier", "Add Amplifier to the rotation.", BLM.JobID)]
         BLM_AoE_Amplifier = 2201,
 
-        [ParentCombo(BLM_ST_AdvancedMode)] 
+        [ParentCombo(BLM_AoE_AdvancedMode)] 
         [CustomComboInfo("Use Leylines", "Add Leylines to the rotation.", BLM.JobID)]
         BLM_AoE_LeyLines = 2202,
         
