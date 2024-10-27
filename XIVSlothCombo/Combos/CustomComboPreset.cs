@@ -500,28 +500,28 @@ namespace XIVSlothCombo.Combos
         #region Miscellaneous
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID)]
-        BLM_UmbralSoul = 2001,
+        BLM_UmbralSoul = 2050,
 
         [ReplaceSkill(BLM.LeyLines)]
         [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Lines when Ley Lines is active.", BLM.JobID)]
-        BLM_Between_The_LeyLines = 2002,
+        BLM_Between_The_LeyLines = 2051,
 
         [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
         [CustomComboInfo("Blizzard I/III Feature", "Replaces Blizzard I with Blizzard III when out of Umbral Ice." +
             "\nReplaces Freeze with Blizzard II when synced below Lv.40.", BLM.JobID)]
-        BLM_Blizzard_1to3 = 2003,
+        BLM_Blizzard_1to3 = 2052,
 
         [ReplaceSkill(BLM.Scathe)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID)]
-        BLM_Scathe_Xeno = 2004,
+        BLM_Scathe_Xeno = 2053,
 
         [ReplaceSkill(BLM.Fire)]
         [CustomComboInfo("Fire I/III Feature", "Replaces Fire I with Fire III outside of Astral Fire or when Firestarter is up.", BLM.JobID)]
-        BLM_Fire_1to3 = 2005,
+        BLM_Fire_1to3 = 2054,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when you are out of active Ley Lines and standing still.", BLM.JobID)]
-        BLM_Aetherial_Manipulation = 2046,
+        BLM_Aetherial_Manipulation = 2055,
         #endregion
 
         // Last value ST = 2112
