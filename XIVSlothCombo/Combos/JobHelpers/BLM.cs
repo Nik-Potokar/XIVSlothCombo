@@ -18,10 +18,7 @@ internal static class BLM
 
     public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
 
-    public static bool HasPolyglotStacks(this BLMGauge gauge)
-    {
-        return gauge.PolyglotStacks > 0;
-    }
+    public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
 
     internal class BLMOpenerLogic
     {

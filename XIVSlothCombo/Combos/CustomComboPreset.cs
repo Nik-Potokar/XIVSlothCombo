@@ -365,16 +365,20 @@ namespace XIVSlothCombo.Combos
         #region BLACK MAGE
         
         [ReplaceSkill(BLM.Fire)]
+        [ConflictingCombos(BLM_ST_AdvancedMode)]
         [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID)]
         BLM_ST_SimpleMode = 2001,
-        
+
+
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
+        [ConflictingCombos(BLM_AoE_AdvancedMode)]
         [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID)]
         BLM_AoE_SimpleMode = 2002,
        
         #region Single Target - Advanced
         
         [ReplaceSkill(BLM.Fire)]
+        [ConflictingCombos(BLM_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID)]
         BLM_ST_AdvancedMode = 2100,
 
@@ -430,6 +434,7 @@ namespace XIVSlothCombo.Combos
         #region AoE - Advanced
         
         [ReplaceSkill(BLM.Fire)]
+        [ConflictingCombos(BLM_AoE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID)]
         BLM_AoE_AdvancedMode = 2200,
 
