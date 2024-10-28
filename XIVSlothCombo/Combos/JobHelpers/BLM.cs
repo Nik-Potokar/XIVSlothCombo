@@ -16,7 +16,7 @@ internal static class BLM
     // BLM Gauge & Extensions
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
-    public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
+
 
     public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
 

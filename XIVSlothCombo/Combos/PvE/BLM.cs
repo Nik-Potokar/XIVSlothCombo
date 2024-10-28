@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -50,7 +51,9 @@ internal class BLM
         HighThunder2 = 36987,
         FlareStar = 36989;
 
-    internal static int nextMpGain => Gauge.UmbralIceStacks switch
+    public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
+    
+    public static int nextMpGain => Gauge.UmbralIceStacks switch
     {
         0 => 0,
         1 => 2500,
