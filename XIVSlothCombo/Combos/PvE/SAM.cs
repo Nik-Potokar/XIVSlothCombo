@@ -979,9 +979,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class SAM_Shinten_Shoha : CustomCombo
+        internal class SAM_Shinten : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Shinten_Shoha;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Shinten;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -989,23 +989,28 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Shinten)
                 {
-                    if (IsEnabled(CustomComboPreset.SAM_Shinten_Shoha_Senei) &&
-                        ActionReady(Senei))
-                        return Senei;
+                    if (IsEnabled(CustomComboPreset.SAM_Shinten))
+                    {
+                        if (IsEnabled(CustomComboPreset.SAM_Shinten_Senei) &&
+                            ActionReady(Senei))
+                            return Senei;
 
-                    if (IsEnabled(CustomComboPreset.SAM_Shinten_Shoha_Zanshin) && HasEffect(Buffs.ZanshinReady))
-                        return Zanshin;
+                        if (IsEnabled(CustomComboPreset.SAM_Shinten_Zanshin) && 
+                            HasEffect(Buffs.ZanshinReady))
+                            return Zanshin;
 
-                    if (gauge.MeditationStacks is 3 && ActionReady(Shoha))
-                        return Shoha;
+                        if (IsEnabled(CustomComboPreset.SAM_Shinten_Shoha) &&
+                            ActionReady(Shoha) && gauge.MeditationStacks is 3)
+                            return Shoha;
+                    }
                 }
                 return actionID;
             }
         }
 
-        internal class SAM_Kyuten_Shoha_Guren : CustomCombo
+        internal class SAM_Kyuten : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Kyuten_Shoha;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Kyuten;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -1013,14 +1018,16 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Kyuten)
                 {
-                    if (IsEnabled(CustomComboPreset.SAM_Kyuten_Shoha_Guren) &&
+                    if (IsEnabled(CustomComboPreset.SAM_Kyuten_Guren) &&
                         ActionReady(Guren))
                         return Guren;
 
-                    if (IsEnabled(CustomComboPreset.SAM_Kyuten_Shoha_Zanshin) && HasEffect(Buffs.ZanshinReady))
+                    if (IsEnabled(CustomComboPreset.SAM_Kyuten_Zanshin) && 
+                        HasEffect(Buffs.ZanshinReady))
                         return Zanshin;
 
-                    if (gauge.MeditationStacks is 3 && ActionReady(Shoha))
+                    if (IsEnabled(CustomComboPreset.SAM_Kyuten_Shoha) && 
+                        gauge.MeditationStacks is 3 && ActionReady(Shoha))
                         return Shoha;
                 }
 
@@ -1028,9 +1035,9 @@ namespace XIVSlothCombo.Combos.PvE
             }
         }
 
-        internal class SAM_Ikishoten_OgiNamikiri : CustomCombo
+        internal class SAM_Ikishoten : CustomCombo
         {
-            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Ikishoten_OgiNamikiri;
+            protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Ikishoten;
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
@@ -1038,14 +1045,19 @@ namespace XIVSlothCombo.Combos.PvE
 
                 if (actionID is Ikishoten)
                 {
-                    if (IsEnabled(CustomComboPreset.SAM_Ikishoten_OgiNamikiri_Shoha) &&
-                        LevelChecked(Shoha) &&
-                        HasEffect(Buffs.OgiNamikiriReady) &&
-                        gauge.MeditationStacks is 3)
-                        return Shoha;
+                    if (IsEnabled(CustomComboPreset.SAM_Ikishoten))
+                    {
+                        if (IsEnabled(CustomComboPreset.SAM_Ikishoten_Shoha) &&
+                            ActionReady(Shoha) &&
+                            HasEffect(Buffs.OgiNamikiriReady) &&
+                            gauge.MeditationStacks is 3)
+                            return Shoha;
 
-                    if ((LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady)) || gauge.Kaeshi == Kaeshi.NAMIKIRI)
-                        return OriginalHook(OgiNamikiri);
+                        if (IsEnabled(CustomComboPreset.SAM_Ikishoten_Namikiri) && 
+                            (LevelChecked(OgiNamikiri) && HasEffect(Buffs.OgiNamikiriReady)) || 
+                            gauge.Kaeshi == Kaeshi.NAMIKIRI)
+                            return OriginalHook(OgiNamikiri);
+                    }
                 }
                 return actionID;
             }
