@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
@@ -14,14 +15,29 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal static class BLM
 {
     // BLM Gauge & Extensions
+    public static uint curMp = LocalPlayer.CurrentMp;
+    
+    public static int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+
+    public static int remainingPolyglotCD = Math.Max(0, (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
+
+    public static Status? thunderDebuffST = FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
+
+    public static Status? thunderDebuffAoE = FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
+
+    public static float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+    
+    public static double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
+    public static bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) || GetBuffStacks(Buffs.Triplecast) > 0;
+
+    public static bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) && (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) || GetBuffStacks(Buffs.Triplecast) > 0);
+
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
     public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
 
-    public static bool HasPolyglotStacks(this BLMGauge gauge)
-    {
-        return gauge.PolyglotStacks > 0;
-    }
+    public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
 
     internal class BLMOpenerLogic
     {
@@ -247,16 +263,16 @@ internal static class BLM
                 _ => 0
             };
 
-            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2 
-                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain) 
+            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2
+                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain)
                 : Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
         }
 
         public static bool DoubleBlizz()
         {
             List<uint> spells = ActionWatching.CombatActions.Where(x =>
-                    ActionWatching.GetAttackType(x) == ActionWatching.ActionAttackType.Spell &&
-                    x != OriginalHook(Thunder) && x != OriginalHook(Thunder2)).ToList();
+                ActionWatching.GetAttackType(x) == ActionWatching.ActionAttackType.Spell &&
+                x != OriginalHook(Thunder) && x != OriginalHook(Thunder2)).ToList();
 
             if (spells.Count < 1) return false;
 
