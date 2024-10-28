@@ -53,7 +53,7 @@ internal class BLM
 
     public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
     
-    public static int nextMpGain => Gauge.UmbralIceStacks switch
+    protected static int nextMpGain => Gauge.UmbralIceStacks switch
     {
         0 => 0,
         1 => 2500,
