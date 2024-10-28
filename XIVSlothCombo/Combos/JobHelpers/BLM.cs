@@ -15,24 +15,6 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal static class BLM
 {
     // BLM Gauge & Extensions
-    public static uint curMp = LocalPlayer.CurrentMp;
-    
-    public static int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
-
-    public static int remainingPolyglotCD = Math.Max(0, (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
-
-    public static Status? thunderDebuffST = FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
-
-    public static Status? thunderDebuffAoE = FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
-
-    public static float elementTimer = Gauge.ElementTimeRemaining / 1000f;
-    
-    public static double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
-
-    public static bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) || GetBuffStacks(Buffs.Triplecast) > 0;
-
-    public static bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) && (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) || GetBuffStacks(Buffs.Triplecast) > 0);
-
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
     public static BLMGauge Gauge => GetJobGauge<BLMGauge>();

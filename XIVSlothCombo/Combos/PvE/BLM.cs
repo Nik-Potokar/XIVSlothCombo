@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -48,7 +50,7 @@ internal class BLM
         HighThunder2 = 36987,
         FlareStar = 36989;
 
-    internal static BLMOpenerLogic BLMOpener = new();
+
 
     // Debuff Pairs of Actions and Debuff
     public static readonly Dictionary<uint, ushort>
@@ -62,6 +64,8 @@ internal class BLM
             { HighThunder2, Debuffs.HighThunder2 }
         };
 
+    
+    
     public static class Buffs
     {
         public const ushort
@@ -143,12 +147,22 @@ internal class BLM
     internal class BLM_ST_SimpleMode : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ST_SimpleMode;
-
+        internal static BLMOpenerLogic BLMOpener = new();
+        
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            uint curMp = LocalPlayer.CurrentMp;
+            int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+            int remainingPolyglotCD = Math.Max(0, (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
+            Status? thunderDebuffST = FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+            bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
+                              GetBuffStacks(Buffs.Triplecast) > 0;
+            
             if (actionID is not Fire) 
                 return actionID;
-
+            
             if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                 IsEnabled(Variant.VariantCure) &&
                 PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
@@ -274,10 +288,19 @@ internal class BLM
     internal class BLM_ST_AdvancedMode : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ST_AdvancedMode;
-
+        internal static BLMOpenerLogic BLMOpener = new();
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is not Fire) 
+            uint curMp = LocalPlayer.CurrentMp;
+            int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+            int remainingPolyglotCD = Math.Max(0, (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
+            Status? thunderDebuffST = FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+            bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
+                              GetBuffStacks(Buffs.Triplecast) > 0;
+
+            if (actionID is not Fire)
                 return actionID;
 
             if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
@@ -431,9 +454,19 @@ internal class BLM
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            uint curMp = LocalPlayer.CurrentMp;
+            int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+            int remainingPolyglotCD = Math.Max(0, (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
+            Status? thunderDebuffAoE = FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+            bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
+                             (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
+                              GetBuffStacks(Buffs.Triplecast) > 0);
+
             if (actionID is not (Blizzard2 or HighBlizzard2))
                 return actionID;
-
+            
             if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                 IsEnabled(Variant.VariantCure) &&
                 PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
@@ -563,9 +596,20 @@ internal class BLM
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
+            uint curMp = LocalPlayer.CurrentMp;
+            int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 : TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+            int remainingPolyglotCD = Math.Max(0, (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
+            Status? thunderDebuffAoE = FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
+            bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
+                             (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
+                              GetBuffStacks(Buffs.Triplecast) > 0);
+            
             if (actionID is not (Blizzard2 or HighBlizzard2)) 
                 return actionID;
-
+            
             if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) &&
                 IsEnabled(Variant.VariantCure) &&
                 PlayerHealthPercentageHp() <= Config.BLM_VariantCure)
