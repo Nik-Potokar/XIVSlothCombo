@@ -88,14 +88,9 @@ internal static class BLM
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (LocalPlayer.CastActionId == Fire3 && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+                if (WasLastAction(Fire3) && HasEffect(Buffs.Thunderhead) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 1) actionID = Fire3;
-
-                if (PrePullStep > 1 &&
-                    GetResourceCost(actionID) > LocalPlayer.CurrentMp &&
-                    ActionWatching.TimeSinceLastAction.TotalSeconds >= 2)
-                    CurrentState = OpenerState.FailedOpener;
-
+                
                 if (ActionWatching.CombatActions.Count > 2 && InCombat())
                     CurrentState = OpenerState.FailedOpener;
 
@@ -181,6 +176,9 @@ internal static class BLM
 
                 if (WasLastAction(Despair) && OpenerStep == 23) CurrentState = OpenerState.OpenerFinished;
                 else if (OpenerStep == 23) actionID = Despair;
+
+                if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
+                    CurrentState = OpenerState.FailedOpener;
 
                 if (((actionID == Triplecast && GetRemainingCharges(Triplecast) == 0) ||
                      (actionID == Amplifier && IsOnCooldown(Amplifier)) ||
