@@ -50,7 +50,14 @@ internal class BLM
         HighThunder2 = 36987,
         FlareStar = 36989;
 
-
+    internal static int nextMpGain => Gauge.UmbralIceStacks switch
+    {
+        0 => 0,
+        1 => 2500,
+        2 => 5000,
+        3 => 10000,
+        _ => 0
+    };
 
     // Debuff Pairs of Actions and Debuff
     public static readonly Dictionary<uint, ushort>
@@ -259,7 +266,7 @@ internal class BLM
                 if (Gauge.HasPolyglotStacks())
                     return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
 
-                if (BLMHelper.MPAfterCast() >= 7500 &&
+                if (curMp + nextMpGain >= 7500 &&
                     (LocalPlayer.CastActionId == Blizzard ||
                      WasLastSpell(Blizzard) ||
                      WasLastSpell(Blizzard4)))
@@ -267,7 +274,7 @@ internal class BLM
                         ? Fire3
                         : Fire;
 
-                if (BLMHelper.MPAfterCast() <= 10000 || curMp < 7500)
+                if (curMp + nextMpGain <= 10000 || curMp < 7500)
                     return Blizzard;
 
                 if (ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell) &&
@@ -422,7 +429,7 @@ internal class BLM
                         ? Xenoglossy
                         : Foul;
 
-                if (BLMHelper.MPAfterCast() >= 7500 &&
+                if (curMp + nextMpGain >= 7500 &&
                     (LocalPlayer.CastActionId == Blizzard ||
                      WasLastSpell(Blizzard) ||
                      WasLastSpell(Blizzard4)))
@@ -430,7 +437,7 @@ internal class BLM
                         ? Fire3
                         : Fire;
 
-                if (BLMHelper.MPAfterCast() <= 10000 || curMp < 7500)
+                if (curMp + nextMpGain <= 10000 || curMp < 7500)
                     return Blizzard;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Transpose) &&

@@ -233,9 +233,7 @@ internal static class BLM
         public static float MPAfterCast()
         {
             uint castedSpell = LocalPlayer.CastActionId;
-            BLMGauge gauge = Svc.Gauges.Get<BLMGauge>();
-
-            int nextMpGain = gauge.UmbralIceStacks switch
+            int nextMpGain = Gauge.UmbralIceStacks switch
             {
                 0 => 0,
                 1 => 2500,
@@ -244,9 +242,10 @@ internal static class BLM
                 _ => 0
             };
 
-            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2
-                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain)
-                : Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
+            if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
+                return Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain);
+
+            return Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
         }
 
         public static bool DoubleBlizz()
