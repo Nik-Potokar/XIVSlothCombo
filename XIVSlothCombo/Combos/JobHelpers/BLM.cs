@@ -18,7 +18,10 @@ internal static class BLM
 
     public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
 
-    public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
+    public static bool HasPolyglotStacks(this BLMGauge gauge)
+    {
+        return gauge.PolyglotStacks > 0;
+    }
 
     internal class BLMOpenerLogic
     {
@@ -88,9 +91,10 @@ internal static class BLM
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (WasLastAction(Fire3) && HasEffect(Buffs.Thunderhead) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
+                if (WasLastAction(Fire3) && HasEffect(Buffs.Thunderhead) && PrePullStep == 1)
+                    CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 1) actionID = Fire3;
-                
+
                 if (ActionWatching.CombatActions.Count > 2 && InCombat())
                     CurrentState = OpenerState.FailedOpener;
 
@@ -243,20 +247,16 @@ internal static class BLM
                 _ => 0
             };
 
-            if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
-                return Math.Max(LocalPlayer.MaxMp,
-                    LocalPlayer.CurrentMp + nextMpGain);
-
-            return Math.Max(0,
-                LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
+            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2 
+                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain) 
+                : Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
         }
 
         public static bool DoubleBlizz()
         {
             List<uint> spells = ActionWatching.CombatActions.Where(x =>
                     ActionWatching.GetAttackType(x) == ActionWatching.ActionAttackType.Spell &&
-                    x != OriginalHook(Thunder) && x != OriginalHook(Thunder2))
-                .ToList();
+                    x != OriginalHook(Thunder) && x != OriginalHook(Thunder2)).ToList();
 
             if (spells.Count < 1) return false;
 

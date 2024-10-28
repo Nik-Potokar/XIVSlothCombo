@@ -62,18 +62,7 @@ internal class BLM
             { HighThunder, Debuffs.HighThunder },
             { HighThunder2, Debuffs.HighThunder2 }
         };
-
-    protected static BLMGauge gauge = GetJobGauge<BLMGauge>();
-
-    protected static int nextMpGain = gauge.UmbralIceStacks switch
-    {
-        0 => 0,
-        1 => 2500,
-        2 => 5000,
-        3 => 10000,
-        _ => 0
-    };
-
+    
     public static class Buffs
     {
         public const ushort
@@ -176,12 +165,12 @@ internal class BLM
             int maxPolyglotCD = maxPolyglot * 30000;
 
             int remainingPolyglotCD = Math.Max(0,
-                (maxPolyglot - gauge.PolyglotStacks) * 30000 + (gauge.EnochianTimer - 30000));
+                (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
             uint curMp = LocalPlayer.CurrentMp;
 
             Status? thunderDebuff =
                 FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
-            float elementTimer = gauge.ElementTimeRemaining / 1000f;
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(Fire));
 
             bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
@@ -208,24 +197,24 @@ internal class BLM
             if (ActionReady(Amplifier) && remainingPolyglotCD >= 20000 && CanSpellWeave(ActionWatching.LastSpell))
                 return Amplifier;
 
-            if (remainingPolyglotCD < 6000 && gcdsInTimer > 2 && gauge.HasPolyglotStacks())
+            if (remainingPolyglotCD < 6000 && gcdsInTimer > 2 && Gauge.HasPolyglotStacks())
                 return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
 
             if (IsMoving)
             {
-                if (ActionReady(Amplifier) && gauge.PolyglotStacks < maxPolyglot)
+                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < maxPolyglot)
                     return Amplifier;
 
-                if (gauge.HasPolyglotStacks())
+                if (Gauge.HasPolyglotStacks())
                     return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
             }
 
             if (CanSpellWeave(actionID) && ActionReady(LeyLines))
                 return LeyLines;
 
-            if (gauge.InAstralFire)
+            if (Gauge.InAstralFire)
             {
-                if (gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
+                if (Gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
                     return Paradox;
 
                 if (HasEffect(Buffs.Firestarter) && curMp > 0 &&
@@ -240,7 +229,7 @@ internal class BLM
                     return Despair;
                 }
 
-                if (curMp == 0 && FlareStar.LevelChecked() && gauge.AstralSoulStacks == 6)
+                if (curMp == 0 && FlareStar.LevelChecked() && Gauge.AstralSoulStacks == 6)
                     return FlareStar;
 
                 if (Fire4.LevelChecked())
@@ -260,9 +249,9 @@ internal class BLM
                     return Transpose;
             }
 
-            if (gauge.InUmbralIce)
+            if (Gauge.InUmbralIce)
             {
-                if (ActionReady(Blizzard3) && gauge.UmbralIceStacks < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (ActionReady(Blizzard3) && Gauge.UmbralIceStacks < 3 && TraitLevelChecked(Traits.UmbralHeart))
                 {
                     if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
                         return Triplecast;
@@ -274,16 +263,16 @@ internal class BLM
                         return Blizzard3;
                 }
 
-                if (Blizzard4.LevelChecked() && gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (Blizzard4.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Blizzard4;
 
-                if (gauge.IsParadoxActive)
+                if (Gauge.IsParadoxActive)
                     return Paradox;
 
-                if (gauge.HasPolyglotStacks())
+                if (Gauge.HasPolyglotStacks())
                     return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
 
-                if (curMp + nextMpGain >= 7500 && (LocalPlayer.CastActionId == Blizzard ||
+                if (BLMHelper.MPAfterCast() >= 7500 && (LocalPlayer.CastActionId == Blizzard ||
                                                    WasLastSpell(Blizzard) ||
                                                    WasLastSpell(Blizzard4)))
                 {
@@ -293,7 +282,7 @@ internal class BLM
                     return Fire;
                 }
 
-                if (curMp + nextMpGain <= 10000 || curMp < 7500)
+                if (BLMHelper.MPAfterCast() <= 10000 || curMp < 7500)
                     return Blizzard;
 
                 if (ActionReady(Transpose) && CanSpellWeave(ActionWatching.LastSpell) &&
@@ -325,11 +314,11 @@ internal class BLM
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
             int maxPolyglotCD = maxPolyglot * 30000;
             int remainingPolyglotCD = Math.Max(0,
-                (maxPolyglot - gauge.PolyglotStacks) * 30000 + (gauge.EnochianTimer - 30000));
+                (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
             uint curMp = LocalPlayer.CurrentMp;
             Status? thunderDebuff =
                 FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
-            float elementTimer = gauge.ElementTimeRemaining / 1000f;
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(Fire));
             bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
                               GetBuffStacks(Buffs.Triplecast) > 0;
@@ -360,7 +349,7 @@ internal class BLM
                 return Amplifier;
 
             if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                remainingPolyglotCD < 6000 && gcdsInTimer > 2 && gauge.HasPolyglotStacks())
+                remainingPolyglotCD < 6000 && gcdsInTimer > 2 && Gauge.HasPolyglotStacks())
                 return Xenoglossy.LevelChecked()
                     ? Xenoglossy
                     : Foul;
@@ -368,11 +357,11 @@ internal class BLM
             if (IsMoving)
             {
                 if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) &&
-                    ActionReady(Amplifier) && gauge.PolyglotStacks < maxPolyglot)
+                    ActionReady(Amplifier) && Gauge.PolyglotStacks < maxPolyglot)
                     return Amplifier;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglotMoving) &&
-                    gauge.HasPolyglotStacks())
+                    Gauge.HasPolyglotStacks())
                     return Xenoglossy.LevelChecked()
                         ? Xenoglossy
                         : Foul;
@@ -382,9 +371,9 @@ internal class BLM
                 CanSpellWeave(actionID) && ActionReady(LeyLines))
                 return LeyLines;
 
-            if (gauge.InAstralFire)
+            if (Gauge.InAstralFire)
             {
-                if (gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
+                if (Gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
                     return Paradox;
 
                 if (HasEffect(Buffs.Firestarter) && curMp > 0 &&
@@ -402,7 +391,7 @@ internal class BLM
                 }
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Flarestar) &&
-                    curMp == 0 && FlareStar.LevelChecked() && gauge.AstralSoulStacks == 6)
+                    curMp == 0 && FlareStar.LevelChecked() && Gauge.AstralSoulStacks == 6)
                     return FlareStar;
 
                 if (Fire4.LevelChecked())
@@ -424,9 +413,9 @@ internal class BLM
                     return Transpose;
             }
 
-            if (gauge.InUmbralIce)
+            if (Gauge.InUmbralIce)
             {
-                if (ActionReady(Blizzard3) && gauge.UmbralIceStacks < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (ActionReady(Blizzard3) && Gauge.UmbralIceStacks < 3 && TraitLevelChecked(Traits.UmbralHeart))
                 {
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
                         ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
@@ -440,19 +429,19 @@ internal class BLM
                         return Blizzard3;
                 }
 
-                if (Blizzard4.LevelChecked() && gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (Blizzard4.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Blizzard4;
 
-                if (gauge.IsParadoxActive)
+                if (Gauge.IsParadoxActive)
                     return Paradox;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                    gauge.HasPolyglotStacks())
+                    Gauge.HasPolyglotStacks())
                     return Xenoglossy.LevelChecked()
                         ? Xenoglossy
                         : Foul;
 
-                if (curMp + nextMpGain >= 7500 &&
+                if (BLMHelper.MPAfterCast() >= 7500 &&
                     (LocalPlayer.CastActionId == Blizzard ||
                      WasLastSpell(Blizzard) ||
                      WasLastSpell(Blizzard4)))
@@ -460,7 +449,7 @@ internal class BLM
                         ? Fire3
                         : Fire;
 
-                if (curMp + nextMpGain <= 10000 || curMp < 7500)
+                if (BLMHelper.MPAfterCast() <= 10000 || curMp < 7500)
                     return Blizzard;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Transpose) &&
@@ -491,11 +480,11 @@ internal class BLM
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
             int maxPolyglotCD = maxPolyglot * 30000;
             int remainingPolyglotCD = Math.Max(0,
-                (maxPolyglot - gauge.PolyglotStacks) * 30000 + (gauge.EnochianTimer - 30000));
+                (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
             uint curMp = LocalPlayer.CurrentMp;
             Status? thunderDebuff =
                 FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
-            float elementTimer = gauge.ElementTimeRemaining / 1000f;
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
             bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) && 
                              (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) || GetBuffStacks(Buffs.Triplecast) > 0);
@@ -521,23 +510,23 @@ internal class BLM
 
             if (IsMoving)
             {
-                if (ActionReady(Amplifier) && gauge.PolyglotStacks < maxPolyglot)
+                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < maxPolyglot)
                     return Amplifier;
 
-                if (gauge.HasPolyglotStacks())
+                if (Gauge.HasPolyglotStacks())
                     return Foul;
             }
 
             if (canWeave && ActionReady(LeyLines))
                 return LeyLines;
 
-            if (gauge.InAstralFire)
+            if (Gauge.InAstralFire)
             {
-                if (curMp == 0 && FlareStar.LevelChecked() && gauge.AstralSoulStacks == 6)
+                if (curMp == 0 && FlareStar.LevelChecked() && Gauge.AstralSoulStacks == 6)
                     return FlareStar;
 
                 if (!FlareStar.LevelChecked() && Fire2.LevelChecked() && curMp >= MP.FireAoE &&
-                    (gauge.UmbralHearts > 1 || !TraitLevelChecked(Traits.UmbralHeart)))
+                    (Gauge.UmbralHearts > 1 || !TraitLevelChecked(Traits.UmbralHeart)))
                     return OriginalHook(Fire2);
 
                 if (Flare.LevelChecked() && curMp >= MP.FlareAoE)
@@ -564,7 +553,7 @@ internal class BLM
                     return OriginalHook(Blizzard2);
             }
 
-            if (gauge.InUmbralIce)
+            if (Gauge.InUmbralIce)
             {
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
                         OriginalHook(Flare), OriginalHook(FlareStar)) == OriginalHook(Freeze) &&
@@ -576,7 +565,7 @@ internal class BLM
                     return OriginalHook(Fire2);
                 }
 
-                if (ActionReady(OriginalHook(Blizzard2)) && gauge.UmbralIceStacks < 3 &&
+                if (ActionReady(OriginalHook(Blizzard2)) && Gauge.UmbralIceStacks < 3 &&
                     TraitLevelChecked(Traits.AspectMasteryIII))
                 {
                     if (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0 && canWeave)
@@ -589,13 +578,13 @@ internal class BLM
                         return OriginalHook(Blizzard2);
                 }
 
-                if (gauge.UmbralIceStacks < 3 && ActionReady(OriginalHook(Blizzard2)))
+                if (Gauge.UmbralIceStacks < 3 && ActionReady(OriginalHook(Blizzard2)))
                     return OriginalHook(Blizzard2);
 
-                if (Freeze.LevelChecked() && gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (Freeze.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Freeze;
 
-                if (gauge.HasPolyglotStacks())
+                if (Gauge.HasPolyglotStacks())
                     return Foul;
 
                 if (BLMHelper.DoubleBlizz())
@@ -632,11 +621,11 @@ internal class BLM
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
             int maxPolyglotCD = maxPolyglot * 30000;
             int remainingPolyglotCD = Math.Max(0,
-                (maxPolyglot - gauge.PolyglotStacks) * 30000 + (gauge.EnochianTimer - 30000));
+                (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
             uint curMp = LocalPlayer.CurrentMp;
             Status? thunderDebuff =
                 FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
-            float elementTimer = gauge.ElementTimeRemaining / 1000f;
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
             bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
                              (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) || GetBuffStacks(Buffs.Triplecast) > 0);
@@ -665,11 +654,11 @@ internal class BLM
             if (IsMoving)
             {
                 if (IsEnabled(CustomComboPreset.BLM_AoE_Amplifier) && 
-                    ActionReady(Amplifier) && gauge.PolyglotStacks < maxPolyglot)
+                    ActionReady(Amplifier) && Gauge.PolyglotStacks < maxPolyglot)
                     return Amplifier;
 
                 if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglotMoving) && 
-                    gauge.HasPolyglotStacks())
+                    Gauge.HasPolyglotStacks())
                     return Foul;
             }
 
@@ -677,14 +666,14 @@ internal class BLM
                 canWeave && ActionReady(LeyLines))
                 return LeyLines;
 
-            if (gauge.InAstralFire)
+            if (Gauge.InAstralFire)
             {
                 if (IsEnabled(CustomComboPreset.BLM_AoE_Flarestar) && 
-                    curMp == 0 && FlareStar.LevelChecked() && gauge.AstralSoulStacks == 6)
+                    curMp == 0 && FlareStar.LevelChecked() && Gauge.AstralSoulStacks == 6)
                     return FlareStar;
 
                 if (!FlareStar.LevelChecked() && Fire2.LevelChecked() && curMp >= MP.FireAoE &&
-                    (gauge.UmbralHearts > 1 || !TraitLevelChecked(Traits.UmbralHeart)))
+                    (Gauge.UmbralHearts > 1 || !TraitLevelChecked(Traits.UmbralHeart)))
                     return OriginalHook(Fire2);
 
                 if (IsEnabled(CustomComboPreset.BLM_AoE_Flare) && 
@@ -712,7 +701,7 @@ internal class BLM
                     return OriginalHook(Blizzard2);
             }
 
-            if (gauge.InUmbralIce)
+            if (Gauge.InUmbralIce)
             {
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
                         OriginalHook(Flare), OriginalHook(FlareStar)) == OriginalHook(Freeze) &&
@@ -725,7 +714,7 @@ internal class BLM
                     return OriginalHook(Fire2);
                 }
 
-                if (ActionReady(OriginalHook(Blizzard2)) && gauge.UmbralIceStacks < 3 &&
+                if (ActionReady(OriginalHook(Blizzard2)) && Gauge.UmbralIceStacks < 3 &&
                     TraitLevelChecked(Traits.AspectMasteryIII))
                 {
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) && 
@@ -740,14 +729,14 @@ internal class BLM
                         return OriginalHook(Blizzard2);
                 }
 
-                if (gauge.UmbralIceStacks < 3 && ActionReady(OriginalHook(Blizzard2)))
+                if (Gauge.UmbralIceStacks < 3 && ActionReady(OriginalHook(Blizzard2)))
                     return OriginalHook(Blizzard2);
 
-                if (Freeze.LevelChecked() && gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (Freeze.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Freeze;
 
                 if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglot) && 
-                    gauge.HasPolyglotStacks())
+                    Gauge.HasPolyglotStacks())
                     return Foul;
 
                 if (BLMHelper.DoubleBlizz())
