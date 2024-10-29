@@ -219,7 +219,7 @@ internal class BLM
                     return Paradox;
 
                 if ((HasEffect(Buffs.Firestarter) && gcdsInTimer < 2 &&
-                     curMp >= MP.Despair) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
+                     curMp >= MP.FireI) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
                     return Fire3; 
 
                 if (curMp < MP.FireI && Despair.LevelChecked() && curMp >= MP.Despair)
@@ -241,7 +241,9 @@ internal class BLM
                     return Fire;
 
                 if (ActionReady(Manafont))
-                    return Manafont;
+                    return HasEffect(Buffs.Firestarter)
+                        ? Fire3
+                        : Manafont;
 
                 if (ActionReady(Blizzard3) && !canSwiftB3)
                     return Blizzard3;
@@ -374,7 +376,7 @@ internal class BLM
                     return Paradox;
 
                 if ((HasEffect(Buffs.Firestarter) && gcdsInTimer < 2 &&
-                     curMp >= MP.Despair) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
+                     curMp >= MP.FireI) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
                     return Fire3; 
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
@@ -400,7 +402,9 @@ internal class BLM
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) &&
                     ActionReady(Manafont))
-                    return Manafont;
+                    return HasEffect(Buffs.Firestarter)
+                        ? Fire3
+                        : Manafont;
 
                 if (ActionReady(Blizzard3) && !canSwiftB3)
                     return Blizzard3;
