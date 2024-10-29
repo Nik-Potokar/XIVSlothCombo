@@ -52,6 +52,7 @@ internal class BLM
         FlareStar = 36989;
 
     public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
+    internal static BLMOpenerLogic BLMOpener = new();
     
     protected static int nextMpGain => Gauge.UmbralIceStacks switch
     {
@@ -157,7 +158,6 @@ internal class BLM
     internal class BLM_ST_SimpleMode : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ST_SimpleMode;
-        internal static BLMOpenerLogic BLMOpener = new();
         
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -167,8 +167,7 @@ internal class BLM
             Status? thunderDebuffST = FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
             float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(Fire));
-            bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
-                              GetBuffStacks(Buffs.Triplecast) > 0;
+            bool canSwiftB3 = IsOffCooldown(All.Swiftcast);
             
             if (actionID is not Fire) 
                 return actionID;
@@ -183,19 +182,22 @@ internal class BLM
                 IsOffCooldown(Variant.VariantRampart) &&
                 CanSpellWeave(actionID))
                 return Variant.VariantRampart;
-
+            
             if (BLMOpener.DoFullOpener(ref actionID))
-                return actionID;
+                    return actionID;
 
-            if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1)
-                if (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3)
-                    return OriginalHook(Thunder);
+            if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+                (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                return OriginalHook(Thunder);
 
-            if (ActionReady(Amplifier) && remainingPolyglotCD >= 20000 && CanSpellWeave(ActionWatching.LastSpell))
+            if (ActionReady(Amplifier) &&
+                remainingPolyglotCD >= 20000 && CanSpellWeave(ActionWatching.LastSpell))
                 return Amplifier;
 
             if (remainingPolyglotCD < 6000 && gcdsInTimer > 2 && Gauge.HasPolyglotStacks())
-                return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
+                return Xenoglossy.LevelChecked()
+                    ? Xenoglossy
+                    : Foul;
 
             if (IsMoving)
             {
@@ -203,7 +205,9 @@ internal class BLM
                     return Amplifier;
 
                 if (Gauge.HasPolyglotStacks())
-                    return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
+                    return Xenoglossy.LevelChecked()
+                        ? Xenoglossy
+                        : Foul;
             }
 
             if (CanSpellWeave(actionID) && ActionReady(LeyLines))
@@ -214,9 +218,9 @@ internal class BLM
                 if (Gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
                     return Paradox;
 
-                if (HasEffect(Buffs.Firestarter) && curMp > 0 &&
-                    (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose)))
-                    return Fire3;
+                if ((HasEffect(Buffs.Firestarter) && gcdsInTimer < 2 &&
+                     curMp >= MP.Despair) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
+                    return Fire3; 
 
                 if (curMp < MP.FireI && Despair.LevelChecked() && curMp >= MP.Despair)
                 {
@@ -267,7 +271,9 @@ internal class BLM
                     return Paradox;
 
                 if (Gauge.HasPolyglotStacks())
-                    return Xenoglossy.LevelChecked() ? Xenoglossy : Foul;
+                    return Xenoglossy.LevelChecked()
+                        ? Xenoglossy
+                        : Foul;
 
                 if (curMp + nextMpGain >= 7500 &&
                     (LocalPlayer.CastActionId == Blizzard ||
@@ -295,10 +301,11 @@ internal class BLM
         }
     }
 
+
     internal class BLM_ST_AdvancedMode : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_ST_AdvancedMode;
-        internal static BLMOpenerLogic BLMOpener = new();
+
         
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
@@ -308,8 +315,7 @@ internal class BLM
             Status? thunderDebuffST = FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
             float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(Fire));
-            bool canSwiftB3 = IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
-                              GetBuffStacks(Buffs.Triplecast) > 0;
+            bool canSwiftB3 = IsOffCooldown(All.Swiftcast);
             
             if (actionID is not Fire) 
                 return actionID;
@@ -367,9 +373,9 @@ internal class BLM
                 if (Gauge.IsParadoxActive && gcdsInTimer < 2 && curMp >= MP.FireI)
                     return Paradox;
 
-                if (HasEffect(Buffs.Firestarter) && curMp > 0 &&
-                    (gcdsInTimer < 2 || curMp < MP.FireI || WasLastAbility(Transpose)))
-                    return Fire3;
+                if ((HasEffect(Buffs.Firestarter) && gcdsInTimer < 2 &&
+                     curMp >= MP.Despair) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
+                    return Fire3; 
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
                     curMp < MP.FireI && Despair.LevelChecked() && curMp >= MP.Despair)
@@ -400,6 +406,7 @@ internal class BLM
                     return Blizzard3;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Transpose) &&
+                    IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) &&
                     ActionReady(Transpose))
                     return Transpose;
             }
