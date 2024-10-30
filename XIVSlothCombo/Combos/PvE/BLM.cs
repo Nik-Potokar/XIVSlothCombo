@@ -185,15 +185,13 @@ internal class BLM
                 IsOffCooldown(Variant.VariantRampart) && canWeave)
                 return Variant.VariantRampart;
 
-            if (IsEnabled(CustomComboPreset.BLM_ST_Opener))
-                if (BLMOpener.DoFullOpener(ref actionID))
-                    return actionID;
+            if (BLMOpener.DoFullOpener(ref actionID))
+                return actionID;
 
             //Weaves
             if (canWeave)
             {
-                if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) &&
-                    ActionReady(Amplifier) &&
+                if (ActionReady(Amplifier) &&
                     remainingPolyglotCD >= 20000)
                     return Amplifier;
 
@@ -202,19 +200,16 @@ internal class BLM
                     return LeyLines;
             }
 
-            if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
-                HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+            if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
                 (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
                 return OriginalHook(Thunder);
 
             if (IsMoving)
             {
-                if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) &&
-                    ActionReady(Amplifier) && Gauge.PolyglotStacks < maxPolyglot)
+                if (ActionReady(Amplifier) && Gauge.PolyglotStacks < maxPolyglot)
                     return Amplifier;
 
-                if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglotMoving) &&
-                    Gauge.HasPolyglotStacks())
+                if (Gauge.HasPolyglotStacks())
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
                         : Foul;
@@ -229,12 +224,28 @@ internal class BLM
                      curMp >= MP.FireI) || (HasEffect(Buffs.Firestarter) && Gauge.AstralFireStacks < 3))
                     return Fire3;
 
-                if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
-                    curMp < MP.FireI && LevelChecked(Despair) && curMp >= MP.Despair)
+                if (curMp < MP.FireI && LevelChecked(Despair) && curMp >= MP.Despair)
                 {
-                    if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
-                        ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
+                    if (canWeave && ActionReady(All.Swiftcast))
+                        return All.Swiftcast;
+
+                    if (canWeave && ActionReady(Triplecast) &&
+                        GetBuffStacks(Buffs.Triplecast) == 0 &&
+                        GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))
                         return Triplecast;
+
+                    if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+                        (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                        return OriginalHook(Thunder);
+
+                    if (Gauge.HasPolyglotStacks() && gcdsInTimer >= 1 &&
+                        (ActionReady(All.Swiftcast) ||
+                         (ActionReady(Triplecast) &&
+                          GetBuffStacks(Buffs.Triplecast) == 0 &&
+                          GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))))
+                        return Xenoglossy.LevelChecked()
+                            ? Xenoglossy
+                            : Foul;
 
                     return Despair;
                 }
@@ -291,7 +302,8 @@ internal class BLM
                         return Blizzard3;
                 }
 
-                if (LevelChecked(Blizzard4) && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
+                if (LevelChecked(Blizzard4) &&
+                    Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Blizzard4;
 
                 if (Gauge.IsParadoxActive)
@@ -407,9 +419,32 @@ internal class BLM
                 if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
                     curMp < MP.FireI && LevelChecked(Despair) && curMp >= MP.Despair)
                 {
+                    if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) &&
+                        canWeave && ActionReady(All.Swiftcast))
+                        return All.Swiftcast;
+
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
-                        ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
+                        canWeave && ActionReady(Triplecast) &&
+                        GetBuffStacks(Buffs.Triplecast) == 0 &&
+                        GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))
                         return Triplecast;
+
+                    if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
+                        HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+                        (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                        return OriginalHook(Thunder);
+
+                    if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
+                        (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) ||
+                         IsEnabled(CustomComboPreset.BLM_ST_Triplecast)) &&
+                        Gauge.HasPolyglotStacks() && gcdsInTimer >= 1 &&
+                        (ActionReady(All.Swiftcast) ||
+                         (ActionReady(Triplecast) &&
+                          GetBuffStacks(Buffs.Triplecast) == 0 &&
+                          GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))))
+                        return Xenoglossy.LevelChecked()
+                            ? Xenoglossy
+                            : Foul;
 
                     return Despair;
                 }
@@ -435,7 +470,7 @@ internal class BLM
                     ((IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast)) ||
                      HasEffect(Buffs.Triplecast)))
                 {
-                    if (IsEnabled(CustomComboPreset.BLM_ST_Transpose) && 
+                    if (IsEnabled(CustomComboPreset.BLM_ST_Transpose) &&
                         canWeave && ActionReady(Transpose))
                         return Transpose;
 
