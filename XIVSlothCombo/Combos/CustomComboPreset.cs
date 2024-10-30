@@ -4264,7 +4264,7 @@ namespace XIVSlothCombo.Combos
 
         [ParentCombo(VPR_AoE_CDs)]
         [CustomComboInfo("Vicepit Weaves", "Adds Twinfang and Twinblood to the rotation.", VPR.JobID)]
-        VPR_AoE_VicepitWeaves = 30114,
+        VPR_AoE_VicepitWeaves = 30115,
         
 
         #endregion
