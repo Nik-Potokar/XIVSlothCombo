@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Combos.PvP;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -144,6 +143,10 @@ internal class BLM
             BLM_AoE_Triplecast_HoldCharges = new("BLM_AoE_Triplecast_HoldCharges"),
             BLM_AoE_UsePolyglot_HoldCharges = new("BLM_AoE_UsePolyglot_HoldCharges"),
             BLM_AoE_UsePolyglotMoving_HoldCharges = new("BLM_AoE_UsePolyglotMoving_HoldCharges");
+
+        public static UserFloat
+            BLM_ST_Triplecast_ChargeTime = new("BLM_ST_Triplecast_ChargeTime"),
+            BLM_AoE_Triplecast_ChargeTime = new("BLM_AoE_Triplecast_ChargeTime");
     }
 
     internal class BLM_ST_SimpleMode : CustomCombo
@@ -352,6 +355,7 @@ internal class BLM
             float elementTimer = Gauge.ElementTimeRemaining / 1000f;
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(Fire));
             int PolyglotStacks = Gauge.PolyglotStacks;
+            float TriplecastChargetime = GetCooldownChargeRemainingTime(Triplecast);
 
             if (actionID is not Fire)
                 return actionID;
@@ -416,7 +420,8 @@ internal class BLM
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
                         canWeave && ActionReady(Triplecast) &&
                         GetBuffStacks(Buffs.Triplecast) == 0 &&
-                        GetRemainingCharges(Triplecast) >= Config.BLM_ST_Triplecast_HoldCharges)
+                        (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
+                         TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
                         return Triplecast;
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) &&
@@ -434,9 +439,8 @@ internal class BLM
                          IsEnabled(CustomComboPreset.BLM_ST_Triplecast)) &&
                         PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && gcdsInTimer >= 1 &&
                         (ActionReady(All.Swiftcast) ||
-                         (LevelChecked(Triplecast) &&
-                          GetBuffStacks(Buffs.Triplecast) == 0 &&
-                          GetRemainingCharges(Triplecast) >= Config.BLM_ST_Triplecast_HoldCharges)))
+                         (ActionReady(Triplecast) &&
+                          GetBuffStacks(Buffs.Triplecast) == 0)))
                         return Xenoglossy.LevelChecked()
                             ? Xenoglossy
                             : Foul;
@@ -498,7 +502,8 @@ internal class BLM
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
                         LevelChecked(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0 &&
-                       GetRemainingCharges(Triplecast) >= Config.BLM_ST_Triplecast_HoldCharges)
+                        (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
+                         TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
                         return Triplecast;
                 }
 
@@ -509,7 +514,7 @@ internal class BLM
                     return Paradox;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                    Gauge.HasPolyglotStacks())
+                    PolyglotStacks >= Config.BLM_ST_UsePolyglot_HoldCharges)
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
                         : Foul;
@@ -578,9 +583,9 @@ internal class BLM
 
             if (WasLastSpell(UmbralSoul))
                 return OriginalHook(Fire2);
-            
+
             if ((HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && Thunder2.LevelChecked() &&
-                thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
+                 thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
                 return OriginalHook(Thunder2);
 
             if (ActionReady(Amplifier) && remainingPolyglotCD >= 20000 && CanSpellWeave(ActionWatching.LastSpell))
@@ -634,7 +639,7 @@ internal class BLM
             {
                 if (Gauge.HasPolyglotStacks())
                     return Foul;
-                
+
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
                         OriginalHook(Flare), OriginalHook(FlareStar)) == OriginalHook(Freeze) &&
                     FlareStar.LevelChecked())
@@ -652,7 +657,7 @@ internal class BLM
                         CanSpellWeave(ActionWatching.LastSpell))
                         return Triplecast;
 
-                    if ( GetBuffStacks(Buffs.Triplecast) == 0 && IsOffCooldown(All.Swiftcast) &&
+                    if (GetBuffStacks(Buffs.Triplecast) == 0 && IsOffCooldown(All.Swiftcast) &&
                         CanSpellWeave(ActionWatching.LastSpell))
                         return All.Swiftcast;
 
@@ -666,9 +671,8 @@ internal class BLM
                 if (Freeze.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Freeze;
 
-
                 if (BLMHelper.DoubleBlizz() && Fire2.LevelChecked())
-                        return OriginalHook(Fire2);
+                    return OriginalHook(Fire2);
 
                 if (curMp < LocalPlayer.MaxMp)
                     return Freeze.LevelChecked()
@@ -691,7 +695,7 @@ internal class BLM
             return actionID;
         }
     }
-    
+
     internal class BLM_AoE_AdvancedMode : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AoE_AdvancedMode;
@@ -713,6 +717,7 @@ internal class BLM
             bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
                              IsOffCooldown(All.Swiftcast);
             int PolyglotStacks = Gauge.PolyglotStacks;
+            float TriplecastChargetime = GetCooldownChargeRemainingTime(Triplecast);
 
             if (actionID is not (Blizzard2 or HighBlizzard2))
                 return actionID;
@@ -730,7 +735,7 @@ internal class BLM
 
             if (WasLastSpell(UmbralSoul))
                 return OriginalHook(Fire2);
-            
+
             if ((IsEnabled(CustomComboPreset.BLM_AoE_Thunder) &&
                  HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && Thunder2.LevelChecked() &&
                  thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
@@ -770,7 +775,8 @@ internal class BLM
                 {
                     if (LevelChecked(Triplecast) && CanSpellWeave(ActionWatching.LastSpell) &&
                         GetBuffStacks(Buffs.Triplecast) == 0 &&
-                        GetRemainingCharges(Triplecast) >= Config.BLM_AoE_Triplecast_HoldCharges)
+                        (GetRemainingCharges(Triplecast) > Config.BLM_AoE_Triplecast_HoldCharges ||
+                         TriplecastChargetime <= Config.BLM_AoE_Triplecast_ChargeTime))
                         return Triplecast;
 
                     return Flare;
@@ -797,7 +803,7 @@ internal class BLM
                 if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglot) &&
                     PolyglotStacks >= Config.BLM_AoE_UsePolyglot_HoldCharges)
                     return Foul;
-                
+
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
                         OriginalHook(Flare), OriginalHook(FlareStar)) == OriginalHook(Freeze) &&
                     FlareStar.LevelChecked())
@@ -815,7 +821,8 @@ internal class BLM
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) &&
                         LevelChecked(Triplecast) && CanSpellWeave(ActionWatching.LastSpell) &&
                         GetBuffStacks(Buffs.Triplecast) == 0 &&
-                        GetRemainingCharges(Triplecast) >= Config.BLM_AoE_Triplecast_HoldCharges)
+                        (GetRemainingCharges(Triplecast) > Config.BLM_AoE_Triplecast_HoldCharges ||
+                         TriplecastChargetime <= Config.BLM_AoE_Triplecast_ChargeTime))
                         return Triplecast;
 
                     if (IsEnabled(CustomComboPreset.BLM_AoE_Swiftcast) &&
@@ -833,9 +840,8 @@ internal class BLM
                 if (Freeze.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Freeze;
 
-
                 if (BLMHelper.DoubleBlizz() && Fire2.LevelChecked())
-                        return OriginalHook(Fire2);
+                    return OriginalHook(Fire2);
 
                 if (curMp < LocalPlayer.MaxMp)
                     return Freeze.LevelChecked()

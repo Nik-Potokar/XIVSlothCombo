@@ -1341,6 +1341,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.BLM_ST_Triplecast && enabled)
                 UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_ST_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
+            if (preset == CustomComboPreset.BLM_ST_Triplecast && enabled)
+                UserConfig.DrawSliderInt(10, 20, BLM.Config.BLM_ST_Triplecast_ChargeTime, "Set the amount of time remaining on Triplecast charge before using.(Only when at threshold)");
+
             if (preset == CustomComboPreset.BLM_ST_UsePolyglot && enabled)
                 UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_ST_UsePolyglot_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
@@ -1349,6 +1352,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.BLM_AoE_Triplecast && enabled)
                 UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_AoE_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_Triplecast && enabled)
+                UserConfig.DrawSliderInt(10, 20, BLM.Config.BLM_AoE_Triplecast_ChargeTime, "Set the amount of time remaining on Triplecast charge before using.(Only when at threshold)");
             
             if (preset == CustomComboPreset.BLM_AoE_UsePolyglot && enabled)
                 UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_AoE_UsePolyglot_HoldCharges, "How many charges to keep ready? (0 = Use all)");
