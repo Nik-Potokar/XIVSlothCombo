@@ -475,7 +475,7 @@ internal class BLM
                         return OriginalHook(Thunder);
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                        Gauge.HasPolyglotStacks())
+                        PolyglotStacks >= Config.BLM_ST_UsePolyglot_HoldCharges)
                         return LevelChecked(Xenoglossy)
                             ? Xenoglossy
                             : Foul;
