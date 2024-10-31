@@ -1338,6 +1338,24 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.BLM_ST_Triplecast && enabled)
+                UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_ST_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_ST_UsePolyglot && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_ST_UsePolyglot_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_ST_UsePolyglotMoving && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_ST_UsePolyglotMoving_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_Triplecast && enabled)
+                UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_AoE_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+            
+            if (preset == CustomComboPreset.BLM_AoE_UsePolyglot && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_AoE_UsePolyglot_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_UsePolyglotMoving && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_AoE_UsePolyglotMoving_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+                
             #endregion
             // ====================================================================================
             #region BLUE MAGE
@@ -1580,7 +1598,6 @@ namespace XIVSlothCombo.Window.Functions
 
             #endregion
             // ====================================================================================
-
             #region MONK
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
@@ -2415,13 +2432,7 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region VIPER
-
-           /* if ((preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled) || (preset == CustomComboPreset.VPR_VicewinderCoils && enabled))
-            {
-                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
-                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
-            }*/
-
+            
             if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
             {
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
@@ -2433,7 +2444,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
                 UserConfig.DrawSliderInt(0, 5, VPR.Config.VPR_AoE_UncoiledFury_Threshold, "Set a HP% Threshold to use all charges.");
             }
-
 
             if (preset is CustomComboPreset.VPR_ST_Reawaken)
             {
