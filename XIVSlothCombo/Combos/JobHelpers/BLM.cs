@@ -14,11 +14,11 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal static class BLM
 {
     // BLM Gauge & Extensions
+    public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
+    
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
-
-
-    public static bool HasPolyglotStacks(this BLMGauge gauge) => gauge.PolyglotStacks > 0;
+    public static bool HasPolyglotStacks(this BLMGauge gauge) =>gauge.PolyglotStacks > 0;
 
     internal class BLMOpenerLogic
     {
@@ -233,6 +233,7 @@ internal static class BLM
         public static float MPAfterCast()
         {
             uint castedSpell = LocalPlayer.CastActionId;
+
             int nextMpGain = Gauge.UmbralIceStacks switch
             {
                 0 => 0,
@@ -250,7 +251,9 @@ internal static class BLM
 
         public static bool DoubleBlizz()
         {
-            List<uint> spells = ActionWatching.CombatActions.Where(x => ActionWatching.GetAttackType(x) == ActionWatching.ActionAttackType.Spell && x != OriginalHook(Thunder) && x != OriginalHook(Thunder2)).ToList();
+            List<uint> spells = ActionWatching.CombatActions.Where(x =>
+                ActionWatching.GetAttackType(x) == ActionWatching.ActionAttackType.Spell &&
+                x != OriginalHook(Thunder) && x != OriginalHook(Thunder2)).ToList();
 
             if (spells.Count < 1) return false;
 

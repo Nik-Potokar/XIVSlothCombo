@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
@@ -51,7 +50,6 @@ internal class BLM
         HighThunder2 = 36987,
         FlareStar = 36989;
 
-    public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
     internal static BLMOpenerLogic BLMOpener = new();
 
     // Debuff Pairs of Actions and Debuff
