@@ -209,31 +209,22 @@ internal abstract class RPR
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
-            if (ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD)
-                return true;
-
-            return false;
+            return ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD;
         }
 
         public static bool IsBuffExpiring(float Times)
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
-            if ((HasEffect(Buffs.EnhancedGallows) && GetBuffRemainingTime(Buffs.EnhancedGallows) < GCD) ||
-                (HasEffect(Buffs.EnhancedGibbet) && GetBuffRemainingTime(Buffs.EnhancedGibbet) < GCD))
-                return true;
-
-            return false;
+            return (HasEffect(Buffs.EnhancedGallows) && GetBuffRemainingTime(Buffs.EnhancedGallows) < GCD) ||
+                   (HasEffect(Buffs.EnhancedGibbet) && GetBuffRemainingTime(Buffs.EnhancedGibbet) < GCD);
         }
 
         public static bool IsDebuffExpiring(float Times)
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
-            if (TargetHasEffect(Debuffs.DeathsDesign) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD)
-                return true;
-
-            return false;
+            return TargetHasEffect(Debuffs.DeathsDesign) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD;
         }
 
         public static bool UseEnshroud(RPRGauge gauge)

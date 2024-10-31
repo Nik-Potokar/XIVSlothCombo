@@ -123,8 +123,6 @@ internal class RPR
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            double enemyHP = GetTargetHPPercent();
-
             bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
                                   !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
             int PositionalChoice = Config.RPR_Positional;
@@ -170,13 +168,11 @@ internal class RPR
                         !RPRHelpers.IsComboExpiring(3))
                     {
                         //Gluttony
-                        if (ActionReady(Gluttony) && 
+                        if (ActionReady(Gluttony) &&
                             (GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 || !LevelChecked(ArcaneCircle)))
-                        {
-                            return trueNorthReady 
-                                ? All.TrueNorth 
+                            return trueNorthReady
+                                ? All.TrueNorth
                                 : Gluttony;
-                        }
 
                         //Bloodstalk
                         if (LevelChecked(BloodStalk) &&
@@ -792,6 +788,10 @@ internal class RPR
                 if (ActionReady(Gluttony) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver))
                     return Gluttony;
 
+                if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Sacrificium) &&
+                    HasEffect(Buffs.Enshrouded) && HasEffect(Buffs.Oblatio))
+                    return OriginalHook(Gluttony);
+
                 if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_BloodSwatheCombo) &&
                     (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) && LevelChecked(Guillotine))
                     return Guillotine;
@@ -800,7 +800,7 @@ internal class RPR
             if (actionID is BloodStalk)
             {
                 if (IsEnabled(CustomComboPreset.RPR_TrueNorthGluttony) &&
-                    trueNorthReady && CanWeave(actionID))
+                    trueNorthReady)
                     return All.TrueNorth;
 
                 if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Enshroud))
@@ -822,16 +822,18 @@ internal class RPR
                         if (HasEffect(Buffs.EnhancedVoidReaping))
                             return OriginalHook(Gibbet);
 
-                        if (HasEffect(Buffs.EnhancedCrossReaping))
-                            return OriginalHook(Gallows);
-
-                        if (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping))
+                        if (HasEffect(Buffs.EnhancedCrossReaping) ||
+                            (!HasEffect(Buffs.EnhancedCrossReaping) && !HasEffect(Buffs.EnhancedVoidReaping)))
                             return OriginalHook(Gallows);
                     }
                 }
 
                 if (ActionReady(Gluttony) && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver))
                     return Gluttony;
+
+                if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_Sacrificium) &&
+                    HasEffect(Buffs.Enshrouded) && HasEffect(Buffs.Oblatio))
+                    return OriginalHook(Gluttony);
 
                 if (IsEnabled(CustomComboPreset.RPR_GluttonyBloodSwathe_BloodSwatheCombo) &&
                     (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)) && LevelChecked(Gibbet))

@@ -3075,7 +3075,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, Lemure's Slice, Sacrificium and Perfectio) on Blood Stalk and Grim Swathe.", RPR.JobID)]
         RPR_GluttonyBloodSwathe_Enshroud = 12202,
 
-        // Last value = 12202
+        [ParentCombo(RPR_GluttonyBloodSwathe)]
+        [CustomComboInfo("Sacrificium only Option", "Adds only Sacrificium on Blood Stalk and Grim Swathe while enshrouded.", RPR.JobID)]
+        RPR_GluttonyBloodSwathe_Sacrificium = 12203,
+
+        // Last value = 12203
 
         #endregion
 
