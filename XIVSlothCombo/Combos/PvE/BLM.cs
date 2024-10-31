@@ -419,15 +419,16 @@ internal class BLM
                 if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
                     curMp < MP.FireI && LevelChecked(Despair) && curMp >= MP.Despair)
                 {
-                    if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) &&
-                        canWeave && ActionReady(All.Swiftcast))
-                        return All.Swiftcast;
-
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
                         canWeave && ActionReady(Triplecast) &&
                         GetBuffStacks(Buffs.Triplecast) == 0 &&
                         GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))
                         return Triplecast;
+
+                    if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) &&
+                        canWeave && ActionReady(All.Swiftcast) &&
+                        GetBuffStacks(Buffs.Triplecast) == 0)
+                        return All.Swiftcast;
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
                         HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
@@ -494,16 +495,16 @@ internal class BLM
             {
                 if (ActionReady(Blizzard3) && Gauge.UmbralIceStacks < 3 && TraitLevelChecked(Traits.UmbralHeart))
                 {
-                    if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
-                        ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
-                        return Triplecast;
+                    if (HasEffect(All.Buffs.Swiftcast) || HasEffect(Buffs.Triplecast))
+                        return Blizzard3;
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) &&
                         GetBuffStacks(Buffs.Triplecast) == 0 && IsOffCooldown(All.Swiftcast))
                         return All.Swiftcast;
 
-                    if (HasEffect(All.Buffs.Swiftcast) || GetBuffStacks(Buffs.Triplecast) > 0)
-                        return Blizzard3;
+                    if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
+                        ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)
+                        return Triplecast;
                 }
 
                 if (LevelChecked(Blizzard4) && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
@@ -564,8 +565,7 @@ internal class BLM
             double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
 
             bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
-                             (IsOffCooldown(All.Swiftcast) || ActionReady(Triplecast) ||
-                              GetBuffStacks(Buffs.Triplecast) > 0);
+                             IsOffCooldown(All.Swiftcast);
 
             if (actionID is not (Blizzard2 or HighBlizzard2))
                 return actionID;
@@ -581,8 +581,11 @@ internal class BLM
                 CanSpellWeave(ActionWatching.LastSpell))
                 return Variant.VariantRampart;
 
+            if (WasLastSpell(UmbralSoul))
+                return OriginalHook(Fire2);
+            
             if ((HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && Thunder2.LevelChecked() &&
-                 thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
+                thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
                 return OriginalHook(Thunder2);
 
             if (ActionReady(Amplifier) && remainingPolyglotCD >= 20000 && CanSpellWeave(ActionWatching.LastSpell))
@@ -625,17 +628,18 @@ internal class BLM
                 if (ActionReady(Manafont))
                     return Manafont;
 
-                if (ActionReady(Transpose) &&
-                    (!TraitLevelChecked(Traits.AspectMasteryIII) || canSwiftF))
+                if (ActionReady(Transpose) && (!TraitLevelChecked(Traits.AspectMasteryIII) || canSwiftF))
                     return Transpose;
 
-                if (ActionReady(Blizzard2) &&
-                    TraitLevelChecked(Traits.AspectMasteryIII))
+                if (ActionReady(Blizzard2) && TraitLevelChecked(Traits.AspectMasteryIII))
                     return OriginalHook(Blizzard2);
             }
 
             if (Gauge.InUmbralIce)
             {
+                if (Gauge.HasPolyglotStacks())
+                    return Foul;
+                
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
                         OriginalHook(Flare), OriginalHook(FlareStar)) == OriginalHook(Freeze) &&
                     FlareStar.LevelChecked())
@@ -653,7 +657,7 @@ internal class BLM
                         CanSpellWeave(ActionWatching.LastSpell))
                         return Triplecast;
 
-                    if (GetBuffStacks(Buffs.Triplecast) == 0 && IsOffCooldown(All.Swiftcast) &&
+                    if ( GetBuffStacks(Buffs.Triplecast) == 0 && IsOffCooldown(All.Swiftcast) &&
                         CanSpellWeave(ActionWatching.LastSpell))
                         return All.Swiftcast;
 
@@ -667,17 +671,17 @@ internal class BLM
                 if (Freeze.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Freeze;
 
-                if (Gauge.HasPolyglotStacks())
-                    return Foul;
 
-                if (BLMHelper.DoubleBlizz())
-                    if (Fire2.LevelChecked())
+                if (BLMHelper.DoubleBlizz() && Fire2.LevelChecked())
                         return OriginalHook(Fire2);
 
                 if (curMp < LocalPlayer.MaxMp)
-                    return Freeze.LevelChecked() ? OriginalHook(Freeze) : OriginalHook(Blizzard2);
+                    return Freeze.LevelChecked()
+                        ? OriginalHook(Freeze)
+                        : OriginalHook(Blizzard2);
 
-                if (ActionReady(Transpose) &&
+                if (IsEnabled(CustomComboPreset.BLM_AoE_Transpose) &&
+                    ActionReady(Transpose) &&
                     ((CanSpellWeave(ActionWatching.LastSpell) && Flare.LevelChecked()) ||
                      !TraitLevelChecked(Traits.AspectMasteryIII)))
                     return Transpose;
@@ -692,7 +696,6 @@ internal class BLM
             return actionID;
         }
     }
-
     internal class BLM_AoE_AdvancedMode : CustomCombo
     {
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLM_AoE_AdvancedMode;
@@ -729,6 +732,9 @@ internal class BLM
                 CanSpellWeave(ActionWatching.LastSpell))
                 return Variant.VariantRampart;
 
+            if (WasLastSpell(UmbralSoul))
+                return OriginalHook(Fire2);
+            
             if ((IsEnabled(CustomComboPreset.BLM_AoE_Thunder) &&
                  HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && Thunder2.LevelChecked() &&
                  thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
@@ -791,6 +797,10 @@ internal class BLM
 
             if (Gauge.InUmbralIce)
             {
+                if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglot) &&
+                    Gauge.HasPolyglotStacks())
+                    return Foul;
+                
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
                         OriginalHook(Flare), OriginalHook(FlareStar)) == OriginalHook(Freeze) &&
                     FlareStar.LevelChecked())
@@ -825,12 +835,8 @@ internal class BLM
                 if (Freeze.LevelChecked() && Gauge.UmbralHearts < 3 && TraitLevelChecked(Traits.UmbralHeart))
                     return Freeze;
 
-                if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglot) &&
-                    Gauge.HasPolyglotStacks())
-                    return Foul;
 
-                if (BLMHelper.DoubleBlizz())
-                    if (Fire2.LevelChecked())
+                if (BLMHelper.DoubleBlizz() && Fire2.LevelChecked())
                         return OriginalHook(Fire2);
 
                 if (curMp < LocalPlayer.MaxMp)
