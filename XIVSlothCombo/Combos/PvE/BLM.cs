@@ -753,7 +753,7 @@ internal class BLM
                     return Amplifier;
 
                 if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglotMoving) &&
-                    PolyglotStacks >= Config.BLM_AoE_UsePolyglotMoving_HoldCharges)
+                    PolyglotStacks > Config.BLM_AoE_UsePolyglotMoving_HoldCharges)
                     return Foul;
             }
 
@@ -802,7 +802,7 @@ internal class BLM
             if (Gauge.InUmbralIce)
             {
                 if (IsEnabled(CustomComboPreset.BLM_AoE_UsePolyglot) &&
-                    PolyglotStacks >= Config.BLM_AoE_UsePolyglot_HoldCharges)
+                    PolyglotStacks > Config.BLM_AoE_UsePolyglot_HoldCharges)
                     return Foul;
 
                 if (ActionWatching.WhichOfTheseActionsWasLast(OriginalHook(Fire2), OriginalHook(Freeze),
