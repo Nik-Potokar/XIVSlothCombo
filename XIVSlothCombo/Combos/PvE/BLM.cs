@@ -135,16 +135,18 @@ internal class BLM
     {
         public static UserInt
             BLM_VariantCure = new("BLM_VariantCure"),
-            BLM_ST_Triplecast_HoldCharges = new("BLM_ST_Triplecast_HoldCharges"),
-            BLM_ST_UsePolyglot_HoldCharges = new("BLM_ST_UsePolyglot_HoldCharges"),
-            BLM_ST_UsePolyglotMoving_HoldCharges = new("BLM_ST_UsePolyglotMoving_HoldCharges"),
-            BLM_AoE_Triplecast_HoldCharges = new("BLM_AoE_Triplecast_HoldCharges"),
-            BLM_AoE_UsePolyglot_HoldCharges = new("BLM_AoE_UsePolyglot_HoldCharges"),
-            BLM_AoE_UsePolyglotMoving_HoldCharges = new("BLM_AoE_UsePolyglotMoving_HoldCharges");
+            BLM_ST_Triplecast_HoldCharges = new("BLM_ST_Triplecast_HoldCharges",0),
+            BLM_ST_UsePolyglot_HoldCharges = new("BLM_ST_UsePolyglot_HoldCharges",1),
+            BLM_ST_UsePolyglotMoving_HoldCharges = new("BLM_ST_UsePolyglotMoving_HoldCharges",0),
+            BLM_ST_ThunderHP = new("BHP", 0),
+            BLM_AoE_Triplecast_HoldCharges = new("BLM_AoE_Triplecast_HoldCharges",0),
+            BLM_AoE_UsePolyglot_HoldCharges = new("BLM_AoE_UsePolyglot_HoldCharges",1),
+            BLM_AoE_UsePolyglotMoving_HoldCharges = new("BLM_AoE_UsePolyglotMoving_HoldCharges",0),
+            BLM_AoE_ThunderHP = new("BLM_AoE_ThunderHP", 5);
 
         public static UserFloat
-            BLM_ST_Triplecast_ChargeTime = new("BLM_ST_Triplecast_ChargeTime"),
-            BLM_AoE_Triplecast_ChargeTime = new("BLM_AoE_Triplecast_ChargeTime");
+            BLM_ST_Triplecast_ChargeTime = new("BLM_ST_Triplecast_ChargeTime",20),
+            BLM_AoE_Triplecast_ChargeTime = new("BLM_AoE_Triplecast_ChargeTime",20);
     }
 
     internal class BLM_ST_SimpleMode : CustomCombo
@@ -386,7 +388,8 @@ internal class BLM
             }
 
             if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
-                HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+                HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && LevelChecked(Thunder) &&
+                GetTargetHPPercent() >= Config.BLM_ST_ThunderHP &&
                 (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
                 return OriginalHook(Thunder);
 
@@ -437,8 +440,7 @@ internal class BLM
                          IsEnabled(CustomComboPreset.BLM_ST_Triplecast)) &&
                         PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && gcdsInTimer >= 1 &&
                         (ActionReady(All.Swiftcast) ||
-                         (ActionReady(Triplecast) &&
-                          GetBuffStacks(Buffs.Triplecast) == 0)))
+                         (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)))
                         return Xenoglossy.LevelChecked()
                             ? Xenoglossy
                             : Foul;
@@ -477,7 +479,7 @@ internal class BLM
                         return OriginalHook(Thunder);
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                        PolyglotStacks >= Config.BLM_ST_UsePolyglot_HoldCharges)
+                        PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges)
                         return LevelChecked(Xenoglossy)
                             ? Xenoglossy
                             : Foul;
@@ -512,7 +514,7 @@ internal class BLM
                     return Paradox;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                    PolyglotStacks >= Config.BLM_ST_UsePolyglot_HoldCharges)
+                    PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges)
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
                         : Foul;
@@ -735,7 +737,8 @@ internal class BLM
                 return OriginalHook(Fire2);
 
             if ((IsEnabled(CustomComboPreset.BLM_AoE_Thunder) &&
-                 HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && Thunder2.LevelChecked() &&
+                 HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && LevelChecked(Thunder2) &&
+                 GetTargetHPPercent() >= Config.BLM_AoE_ThunderHP &&
                  thunderDebuffAoE is null) || thunderDebuffAoE.RemainingTime < 3)
                 return OriginalHook(Thunder2);
 

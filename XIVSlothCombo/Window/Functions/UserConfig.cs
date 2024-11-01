@@ -1350,6 +1350,9 @@ namespace XIVSlothCombo.Window.Functions
             if (preset == CustomComboPreset.BLM_ST_UsePolyglotMoving && enabled)
                 UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_ST_UsePolyglotMoving_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
+            if (preset == CustomComboPreset.BLM_ST_Thunder)
+                UserConfig.DrawSliderInt(0, 10, BLM.Config.BLM_ST_ThunderHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
             if (preset == CustomComboPreset.BLM_AoE_Triplecast && enabled)
                 UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_AoE_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
 
@@ -1361,6 +1364,9 @@ namespace XIVSlothCombo.Window.Functions
 
             if (preset == CustomComboPreset.BLM_AoE_UsePolyglotMoving && enabled)
                 UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_AoE_UsePolyglotMoving_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_Thunder && enabled)
+                UserConfig.DrawSliderInt(0, 10, BLM.Config.BLM_AoE_ThunderHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
                 
             #endregion
             // ====================================================================================
