@@ -135,18 +135,18 @@ internal class BLM
     {
         public static UserInt
             BLM_VariantCure = new("BLM_VariantCure"),
-            BLM_ST_Triplecast_HoldCharges = new("BLM_ST_Triplecast_HoldCharges",0),
-            BLM_ST_UsePolyglot_HoldCharges = new("BLM_ST_UsePolyglot_HoldCharges",1),
-            BLM_ST_UsePolyglotMoving_HoldCharges = new("BLM_ST_UsePolyglotMoving_HoldCharges",0),
+            BLM_ST_Triplecast_HoldCharges = new("BLM_ST_Triplecast_HoldCharges", 0),
+            BLM_ST_UsePolyglot_HoldCharges = new("BLM_ST_UsePolyglot_HoldCharges", 1),
+            BLM_ST_UsePolyglotMoving_HoldCharges = new("BLM_ST_UsePolyglotMoving_HoldCharges", 0),
             BLM_ST_ThunderHP = new("BHP", 0),
-            BLM_AoE_Triplecast_HoldCharges = new("BLM_AoE_Triplecast_HoldCharges",0),
-            BLM_AoE_UsePolyglot_HoldCharges = new("BLM_AoE_UsePolyglot_HoldCharges",1),
-            BLM_AoE_UsePolyglotMoving_HoldCharges = new("BLM_AoE_UsePolyglotMoving_HoldCharges",0),
+            BLM_AoE_Triplecast_HoldCharges = new("BLM_AoE_Triplecast_HoldCharges", 0),
+            BLM_AoE_UsePolyglot_HoldCharges = new("BLM_AoE_UsePolyglot_HoldCharges", 1),
+            BLM_AoE_UsePolyglotMoving_HoldCharges = new("BLM_AoE_UsePolyglotMoving_HoldCharges", 0),
             BLM_AoE_ThunderHP = new("BLM_AoE_ThunderHP", 5);
 
         public static UserFloat
-            BLM_ST_Triplecast_ChargeTime = new("BLM_ST_Triplecast_ChargeTime",20),
-            BLM_AoE_Triplecast_ChargeTime = new("BLM_AoE_Triplecast_ChargeTime",20);
+            BLM_ST_Triplecast_ChargeTime = new("BLM_ST_Triplecast_ChargeTime", 20),
+            BLM_AoE_Triplecast_ChargeTime = new("BLM_AoE_Triplecast_ChargeTime", 20);
     }
 
     internal class BLM_ST_SimpleMode : CustomCombo
@@ -896,13 +896,12 @@ internal class BLM
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is Blizzard && LevelChecked(Freeze) && !Gauge.InUmbralIce)
-                return Blizzard3;
-
-            if (actionID is Freeze && !LevelChecked(Freeze))
-                return Blizzard2;
-
-            return actionID;
+            return actionID switch
+            {
+                Blizzard when LevelChecked(Freeze) && !Gauge.InUmbralIce => Blizzard3,
+                Freeze when !LevelChecked(Freeze) => Blizzard2,
+                var _ => actionID
+            };
         }
     }
 
@@ -966,10 +965,9 @@ internal class BLM
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is Triplecast && HasEffect(Buffs.Triplecast))
-                return OriginalHook(11);
-
-            return actionID;
+            return actionID is Triplecast && HasEffect(Buffs.Triplecast) && LevelChecked(Triplecast)
+                ? OriginalHook(11)
+                : actionID;
         }
     }
 }
