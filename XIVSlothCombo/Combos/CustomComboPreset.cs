@@ -528,6 +528,11 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when you are out of active Ley Lines and standing still.", BLM.JobID)]
         BLM_Aetherial_Manipulation = 2055,
+
+        [ReplaceSkill(BLM.Triplecast)]
+        [CustomComboInfo("Triplecast Protection", "Replaces Triplecast with Savage Blade when u already have triplecast active.", BLM.JobID)]
+        BLM_TriplecastProtection = 2056,
+        
         #endregion
 
         // Last value ST = 2112
