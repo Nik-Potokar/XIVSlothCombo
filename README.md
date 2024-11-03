@@ -17,7 +17,7 @@
     <img src="https://img.shields.io/github/issues-raw/Nik-Potokar/XIVSlothCombo?color=EA9C0A&style=for-the-badge" /></a>
   <a href="https://github.com/Nik-Potokar/XIVSlothCombo/graphs/contributors" alt="Contributors">
     <img src="https://img.shields.io/github/contributors/Nik-Potokar/XIVSlothCombo?color=009009&style=for-the-badge" /></a>
-  <a href="https://discord.gg/punishxiv" alt="Discord">
+  <a href="https://discord.gg/Zzrcc8kmvy" alt="Discord">
     <img src="https://img.shields.io/discord/1001823907193552978?color=5865F2&label=&logo=Discord&logoColor=ffffff&style=for-the-badge" /></a>
   <br> <!-- Version -->
   <a href="https://github.com/Nik-Potokar/XIVSlothCombo/tags" alt="Release">
