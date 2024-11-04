@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Types;
+﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
@@ -10,6 +11,20 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class VPR
 {
+    public static VPRGauge gauge = GetJobGauge<VPRGauge>();
+
+    public static float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
+    public static float ireCD = GetCooldownRemainingTime(SerpentsIre);
+
+    public static bool VicewinderReady = gauge.DreadCombo == DreadCombo.Dreadwinder;
+    public static bool HuntersCoilReady = gauge.DreadCombo == DreadCombo.HuntersCoil;
+    public static bool SwiftskinsCoilReady = gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
+    public static bool VicepitReady = gauge.DreadCombo == DreadCombo.PitOfDread;
+    public static bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
+    public static bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
+
+    public static bool HasRattlingCoilStack(VPRGauge gauge) => gauge.RattlingCoilStacks > 0;
+
     internal class VPROpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
@@ -250,8 +265,6 @@ internal class VPR
 
     internal class VPRHelpers
     {
-        public static bool HasRattlingCoilStack(VPRGauge gauge) => gauge.RattlingCoilStacks > 0;
-
         public static bool UseReawaken(VPRGauge gauge)
         {
             float ireCD = GetCooldownRemainingTime(SerpentsIre);
