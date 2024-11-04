@@ -9,7 +9,7 @@ using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers;
 
-internal abstract class MCH
+internal class MCH
 {
     public static MCHGauge Gauge = GetJobGauge<MCHGauge>();
     public static float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
