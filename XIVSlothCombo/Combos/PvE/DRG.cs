@@ -1,11 +1,9 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
-using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
+using static XIVSlothCombo.Combos.JobHelpers.DRG;
 
 namespace XIVSlothCombo.Combos.PvE;
 
@@ -48,8 +46,6 @@ internal class DRG
         LanceBarrage = 36954,
         SpiralBlow = 36955,
         Starcross = 36956;
-
-    protected static DRGGauge? Gauge = GetJobGauge<DRGGauge>();
 
     public static class Buffs
     {
@@ -338,7 +334,7 @@ internal class DRG
                                (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust)))) ||
                              (!LevelChecked(LanceCharge) && JustUsed(VorpalThrust))))
                             return LifeSurge;
-                        
+
                         //Geirskogul Feature
                         if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) &&
                             ActionReady(Geirskogul) &&
@@ -772,11 +768,9 @@ internal class DRG
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is LanceCharge)
-                if (IsOnCooldown(LanceCharge) && ActionReady(BattleLitany))
-                    return BattleLitany;
-
-            return actionID;
+            return actionID is LanceCharge && IsOnCooldown(LanceCharge) && ActionReady(BattleLitany)
+                ? BattleLitany
+                : actionID;
         }
     }
 }
