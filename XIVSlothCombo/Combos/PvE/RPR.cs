@@ -177,7 +177,7 @@ internal class RPR
                     if (HasEffect(Buffs.Enshrouded))
                     {
                         //Sacrificium
-                        if (Gauge.LemureShroud is 2 && Gauge.VoidShroud is 1 &&
+                        if (Gauge.LemureShroud is 2 && GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 &&
                             HasEffect(Buffs.Oblatio) && LevelChecked(Sacrificium))
                             return OriginalHook(Gluttony);
 
@@ -192,7 +192,7 @@ internal class RPR
                     !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.SoulReaver))
                 {
                     //Communio
-                    if (HasEffect(Buffs.Enshrouded) && Gauge.LemureShroud is 1 && Gauge.VoidShroud is 0 &&
+                    if (HasEffect(Buffs.Enshrouded) && Gauge.LemureShroud is 1 &&
                         LevelChecked(Communio))
                         return Communio;
 
@@ -226,8 +226,7 @@ internal class RPR
 
                         //Gallows
                         if (HasEffect(Buffs.EnhancedGallows) ||
-                            (!HasEffect(Buffs.EnhancedGibbet) &&
-                             !HasEffect(Buffs.EnhancedGallows)))
+                            (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
                         {
                             if (trueNorthReady && !OnTargetsRear())
                                 return All.TrueNorth;
@@ -247,7 +246,7 @@ internal class RPR
                     if (HasEffect(Buffs.Enshrouded))
                     {
                         //Communio
-                        if (Gauge.LemureShroud is 1 && Gauge.VoidShroud is 0 && LevelChecked(Communio))
+                        if (Gauge.LemureShroud is 1 && LevelChecked(Communio))
                             return Communio;
 
                         //Void Reaping
@@ -385,7 +384,7 @@ internal class RPR
                     {
                         //Sacrificium
                         if (IsEnabled(CustomComboPreset.RPR_ST_Sacrificium) &&
-                            Gauge.LemureShroud is 2 && Gauge.VoidShroud is 1 &&
+                            Gauge.LemureShroud is 2 && GetCooldownRemainingTime(ArcaneCircle) > GCD * 3 &&
                             HasEffect(Buffs.Oblatio) && LevelChecked(Sacrificium))
                             return OriginalHook(Gluttony);
 
@@ -402,7 +401,7 @@ internal class RPR
                     !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.SoulReaver))
                 {
                     //Communio
-                    if (HasEffect(Buffs.Enshrouded) && Gauge.LemureShroud is 1 && Gauge.VoidShroud is 0 &&
+                    if (HasEffect(Buffs.Enshrouded) && Gauge.LemureShroud is 1 &&
                         LevelChecked(Communio))
                         return Communio;
 
@@ -468,7 +467,7 @@ internal class RPR
                     {
                         //Communio
                         if (IsEnabled(CustomComboPreset.RPR_ST_Communio) &&
-                            Gauge.LemureShroud is 1 && Gauge.VoidShroud is 0 && LevelChecked(Communio))
+                            Gauge.LemureShroud is 1 && LevelChecked(Communio))
                             return Communio;
 
                         //Void Reaping
