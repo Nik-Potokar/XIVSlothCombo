@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Combos.PvE;
@@ -11,14 +12,23 @@ using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers;
 
-internal static class BLM
+internal class BLM
 {
     // BLM Gauge & Extensions
     public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
-    
+
+    public static Status? thunderDebuffST =
+        FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
+
+    public static Status? thunderDebuffAoE =
+        FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
+
+    public static float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+    public static double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
-    public static bool HasPolyglotStacks(this BLMGauge gauge) =>gauge.PolyglotStacks > 0;
+    public static bool HasPolyglotStacks(BLMGauge Gauge) => Gauge.PolyglotStacks > 0;
 
     internal class BLMOpenerLogic
     {
@@ -186,7 +196,7 @@ internal static class BLM
                      (actionID == LeyLines && IsOnCooldown(LeyLines)) ||
                      (actionID == Manafont && IsOnCooldown(Manafont)) ||
                      (actionID == All.Swiftcast && IsOnCooldown(All.Swiftcast)) ||
-                     (actionID == Xenoglossy && !Gauge.HasPolyglotStacks())) &&
+                     (actionID == Xenoglossy && Gauge.PolyglotStacks == 0)) &&
                     ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
