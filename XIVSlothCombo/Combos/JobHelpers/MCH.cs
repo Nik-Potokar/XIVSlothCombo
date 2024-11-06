@@ -11,7 +11,6 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class MCH
 {
-    public static MCHGauge Gauge = GetJobGauge<MCHGauge>();
     public static float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
     public static float heatblastRC = GetCooldown(Heatblast).CooldownTotal;
 
@@ -26,6 +25,8 @@ internal class MCH
 
     public static bool sawCD = !LevelChecked(Chainsaw) ||
                                (LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
+
+    public static MCHGauge Gauge => GetJobGauge<MCHGauge>();
 
     public static int BSUsed => ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
 
