@@ -10,8 +10,9 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal abstract class RPR
 {
-    public static RPRGauge Gauge = GetJobGauge<RPRGauge>();
     public static float GCD = GetCooldown(Slice).CooldownTotal;
+
+    public static RPRGauge Gauge => GetJobGauge<RPRGauge>();
 
     internal class RPROpenerLogic
     {
