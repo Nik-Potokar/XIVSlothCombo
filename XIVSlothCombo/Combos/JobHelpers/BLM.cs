@@ -15,7 +15,7 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal class BLM
 {
     // BLM Gauge & Extensions
-    public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
+    public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
 
     public static Status? thunderDebuffST =
         FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
@@ -28,7 +28,7 @@ internal class BLM
 
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
-    public static bool HasPolyglotStacks(BLMGauge Gauge) => Gauge.PolyglotStacks > 0;
+    public static bool HasPolyglotStacks(BLMGauge gauge) => gauge.PolyglotStacks > 0;
 
     internal class BLMOpenerLogic
     {
