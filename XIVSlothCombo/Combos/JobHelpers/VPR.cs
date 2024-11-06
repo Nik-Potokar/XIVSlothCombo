@@ -11,8 +11,6 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class VPR
 {
-    public static VPRGauge gauge = GetJobGauge<VPRGauge>();
-
     public static float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
     public static float ireCD = GetCooldownRemainingTime(SerpentsIre);
 
@@ -23,7 +21,9 @@ internal class VPR
     public static bool SwiftskinsDenReady = gauge.DreadCombo == DreadCombo.SwiftskinsDen;
     public static bool HuntersDenReady = gauge.DreadCombo == DreadCombo.HuntersDen;
 
-    public static bool HasRattlingCoilStack(VPRGauge gauge) => gauge.RattlingCoilStacks > 0;
+    public static VPRGauge gauge => GetJobGauge<VPRGauge>();
+
+    public static bool HasRattlingCoilStack(VPRGauge Gauge) => Gauge.RattlingCoilStacks > 0;
 
     internal class VPROpenerLogic
     {
