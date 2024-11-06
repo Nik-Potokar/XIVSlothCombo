@@ -13,7 +13,7 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class DRG
 {
-    public static DRGGauge Gauge = GetJobGauge<DRGGauge>();
+    public static DRGGauge Gauge => GetJobGauge<DRGGauge>();
 
     internal class DRGOpenerLogic
     {
