@@ -452,7 +452,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (LevelChecked(RainOfDeath) && !JustUsed(RainOfDeath, 3F) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
+                        if (LevelChecked(RainOfDeath) && !WasLastAction(RainOfDeath) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
@@ -756,7 +756,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (ActionReady(Bloodletter) && !JustUsed(Bloodletter, 3F) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
+                        if (ActionReady(Bloodletter) && !(WasLastAction(Bloodletter) || WasLastAction(HeartbreakShot)) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
@@ -1077,7 +1077,7 @@ namespace XIVSlothCombo.Combos.PvE
                             else return Sidewinder;
                         }
 
-                        if (LevelChecked(RainOfDeath) && !JustUsed(RainOfDeath, 3F) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
+                        if (LevelChecked(RainOfDeath) && !WasLastAction(RainOfDeath) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint rainOfDeathCharges = LevelChecked(RainOfDeath) ? GetRemainingCharges(RainOfDeath) : 0;
 
@@ -1306,7 +1306,7 @@ namespace XIVSlothCombo.Combos.PvE
                         }
 
 
-                        if (ActionReady(Bloodletter) && !JustUsed(Bloodletter, 3F) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
+                        if (ActionReady(Bloodletter) && !(WasLastAction(Bloodletter) || WasLastAction(HeartbreakShot)) && (empyrealCD > 1 || !LevelChecked(EmpyrealArrow)))
                         {
                             uint bloodletterCharges = GetRemainingCharges(Bloodletter);
 
