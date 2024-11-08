@@ -16,16 +16,7 @@ internal class BLM
 {
     // BLM Gauge & Extensions
     public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
-
-    public static Status? thunderDebuffST =
-        FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
-
-    public static Status? thunderDebuffAoE =
-        FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
-
-    public static float elementTimer = Gauge.ElementTimeRemaining / 1000f;
-    public static double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
-
+    
     public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
 
     public static bool HasPolyglotStacks(BLMGauge gauge) => gauge.PolyglotStacks > 0;

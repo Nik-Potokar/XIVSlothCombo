@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -158,8 +159,14 @@ internal class BLM
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
             bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
             int remainingPolyglotCD = Math.Max(0,
                 (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
+
+            Status? thunderDebuffST =
+                FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
 
             uint curMp = LocalPlayer.CurrentMp;
 
@@ -341,9 +348,15 @@ internal class BLM
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
             bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
 
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
             int remainingPolyglotCD = Math.Max(0,
                 (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
             uint curMp = LocalPlayer.CurrentMp;
+
+            Status? thunderDebuffST =
+                FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
 
             int PolyglotStacks = Gauge.PolyglotStacks;
             float TriplecastChargetime = GetCooldownChargeRemainingTime(Triplecast);
@@ -546,9 +559,15 @@ internal class BLM
             int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 :
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
 
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
             int remainingPolyglotCD = Math.Max(0,
                 (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
             uint curMp = LocalPlayer.CurrentMp;
+
+            Status? thunderDebuffAoE =
+                FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
 
             bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
                              IsOffCooldown(All.Swiftcast);
@@ -690,6 +709,12 @@ internal class BLM
         {
             int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 :
                 TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
+
+            float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+            double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
+            Status? thunderDebuffAoE =
+                FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
 
             int remainingPolyglotCD = Math.Max(0,
                 (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
