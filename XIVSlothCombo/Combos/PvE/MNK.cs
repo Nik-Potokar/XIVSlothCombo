@@ -2,11 +2,11 @@ using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
+using static XIVSlothCombo.Combos.JobHelpers.MNK;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.PvE;
@@ -54,9 +54,12 @@ internal class MNK
         ElixirBurst = 36948,
         FiresReply = 36950;
 
-    protected static MNKGauge Gauge => GetJobGauge<MNKGauge>();
+    protected static float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
+    protected static MNKOpenerLogic MNKOpener = new();
 
-    protected static class Buffs
+    public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
+
+    public static class Buffs
     {
         public const ushort
             TwinSnakes = 101,
@@ -86,8 +89,6 @@ internal class MNK
 
     internal class MNK_ST_SimpleMode : CustomCombo
     {
-        internal static MNKOpenerLogic MNKOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_SimpleMode;
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
@@ -98,7 +99,6 @@ internal class MNK
             int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
             int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
             int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-            float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
 
             if (actionID is Bootshine or LeapingOpo)
             {
@@ -249,8 +249,6 @@ internal class MNK
 
     internal class MNK_ST_AdvancedMode : CustomCombo
     {
-        internal static MNKOpenerLogic MNKOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
@@ -261,7 +259,6 @@ internal class MNK
             int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
             int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
             int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-            float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
 
             if (actionID is Bootshine or LeapingOpo)
             {
@@ -362,48 +359,45 @@ internal class MNK
                         ? DragonKick
                         : OriginalHook(Bootshine);
 
-                if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance))
+                // Masterful Blitz
+                if (LevelChecked(MasterfulBlitz) &&
+                    !HasEffect(Buffs.PerfectBalance) &&
+                    !IsOriginal(MasterfulBlitz))
+                    return OriginalHook(MasterfulBlitz);
+
+                // Perfect Balance
+                if (HasEffect(Buffs.PerfectBalance))
                 {
-                    // Masterful Blitz
-                    if (LevelChecked(MasterfulBlitz) &&
-                        !HasEffect(Buffs.PerfectBalance) &&
-                        !IsOriginal(MasterfulBlitz))
-                        return OriginalHook(MasterfulBlitz);
+                    #region Open Solar
 
-                    // Perfect Balance
-                    if (HasEffect(Buffs.PerfectBalance))
+                    if (!solarNadi && !bothNadisOpen)
                     {
-                        #region Open Solar
+                        if (coeurlChakra == 0)
+                            return Gauge.CoeurlFury == 0
+                                ? Demolish
+                                : OriginalHook(SnapPunch);
 
-                        if (!solarNadi && !bothNadisOpen)
-                        {
-                            if (coeurlChakra == 0)
-                                return Gauge.CoeurlFury == 0
-                                    ? Demolish
-                                    : OriginalHook(SnapPunch);
+                        if (raptorChakra == 0)
+                            return Gauge.RaptorFury == 0
+                                ? TwinSnakes
+                                : OriginalHook(TrueStrike);
 
-                            if (raptorChakra == 0)
-                                return Gauge.RaptorFury == 0
-                                    ? TwinSnakes
-                                    : OriginalHook(TrueStrike);
-
-                            if (opoOpoChakra == 0)
-                                return Gauge.OpoOpoFury == 0
-                                    ? DragonKick
-                                    : OriginalHook(Bootshine);
-                        }
-
-                        #endregion
-
-                        #region Open Lunar
-
-                        if (solarNadi || lunarNadi || bothNadisOpen)
+                        if (opoOpoChakra == 0)
                             return Gauge.OpoOpoFury == 0
                                 ? DragonKick
                                 : OriginalHook(Bootshine);
-
-                        #endregion
                     }
+
+                    #endregion
+
+                    #region Open Lunar
+
+                    if (solarNadi || lunarNadi || bothNadisOpen)
+                        return Gauge.OpoOpoFury == 0
+                            ? DragonKick
+                            : OriginalHook(Bootshine);
+
+                    #endregion
                 }
 
                 if (IsEnabled(CustomComboPreset.MNK_STUseBuffs))
@@ -707,11 +701,10 @@ internal class MNK
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            if (actionID is PerfectBalance &&
-                OriginalHook(MasterfulBlitz) != MasterfulBlitz && LevelChecked(MasterfulBlitz))
-                return OriginalHook(MasterfulBlitz);
-
-            return actionID;
+            return actionID is PerfectBalance && OriginalHook(MasterfulBlitz) != MasterfulBlitz &&
+                   LevelChecked(MasterfulBlitz)
+                ? OriginalHook(MasterfulBlitz)
+                : actionID;
         }
     }
 
