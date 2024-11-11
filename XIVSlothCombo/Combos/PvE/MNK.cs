@@ -420,11 +420,17 @@ internal class MNK
                         return All.Bloodbath;
                 }
 
-                if (HasEffect(Buffs.WindsRumination))
-                    return WindsReply;
-
-                if (HasEffect(Buffs.FiresRumination))
+                if (LevelChecked(FiresReply) &&
+                    HasEffect(Buffs.FiresRumination) &&
+                    !HasEffect(Buffs.PerfectBalance) &&
+                    !HasEffect(Buffs.FormlessFist))
                     return FiresReply;
+
+                if (HasEffect(Buffs.WindsRumination) &&
+                    LevelChecked(WindsReply) &&
+                    HasEffect(Buffs.RiddleOfWind) &&
+                    GetBuffRemainingTime(Buffs.WindsRumination) < 4)
+                    return WindsReply;
 
                 // Masterful Blitz
                 if (LevelChecked(MasterfulBlitz) && !HasEffect(Buffs.PerfectBalance) &&
@@ -434,11 +440,7 @@ internal class MNK
                 // Perfect Balance
                 if (HasEffect(Buffs.PerfectBalance))
                 {
-                    if (solarNadi || lunarNadi || bothNadisOpen)
-                        if (HasEffect(Buffs.PerfectBalance))
-                            return LevelChecked(ShadowOfTheDestroyer)
-                                ? ShadowOfTheDestroyer
-                                : Rockbreaker;
+                    #region Open Solar
 
                     if (!solarNadi && !bothNadisOpen)
                         switch (GetBuffStacks(Buffs.PerfectBalance))
@@ -452,6 +454,17 @@ internal class MNK
                             case 1:
                                 return Rockbreaker;
                         }
+
+                    #endregion
+
+                    #region Open Lunar
+
+                    if (solarNadi || lunarNadi || bothNadisOpen)
+                        return LevelChecked(ShadowOfTheDestroyer)
+                            ? ShadowOfTheDestroyer
+                            : Rockbreaker;
+
+                    #endregion
                 }
 
                 // Monk Rotation
@@ -551,12 +564,18 @@ internal class MNK
                 {
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseROF) &&
                         IsEnabled(CustomComboPreset.MNK_AoEUseFiresReply) &&
-                        HasEffect(Buffs.FiresRumination))
+                        LevelChecked(FiresReply) &&
+                        HasEffect(Buffs.FiresRumination) &&
+                        !HasEffect(Buffs.PerfectBalance) &&
+                        !HasEffect(Buffs.FormlessFist))
                         return FiresReply;
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseROW) &&
                         IsEnabled(CustomComboPreset.MNK_AoEUseWindsReply) &&
-                        HasEffect(Buffs.WindsRumination))
+                        HasEffect(Buffs.WindsRumination) &&
+                        LevelChecked(WindsReply) &&
+                        HasEffect(Buffs.RiddleOfWind) &&
+                        GetBuffRemainingTime(Buffs.WindsRumination) < 4)
                         return WindsReply;
                 }
 
@@ -569,11 +588,7 @@ internal class MNK
                 // Perfect Balance
                 if (HasEffect(Buffs.PerfectBalance))
                 {
-                    if (solarNadi || lunarNadi || bothNadisOpen)
-                        if (HasEffect(Buffs.PerfectBalance))
-                            return LevelChecked(ShadowOfTheDestroyer)
-                                ? ShadowOfTheDestroyer
-                                : Rockbreaker;
+                    #region Open Solar
 
                     if (!solarNadi && !bothNadisOpen)
                         switch (GetBuffStacks(Buffs.PerfectBalance))
@@ -587,6 +602,17 @@ internal class MNK
                             case 1:
                                 return Rockbreaker;
                         }
+
+                    #endregion
+
+                    #region Open Lunar
+
+                    if (solarNadi || lunarNadi || bothNadisOpen)
+                        return LevelChecked(ShadowOfTheDestroyer)
+                            ? ShadowOfTheDestroyer
+                            : Rockbreaker;
+
+                    #endregion
                 }
 
                 // Monk Rotation

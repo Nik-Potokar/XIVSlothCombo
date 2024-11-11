@@ -11,16 +11,14 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class MNK
 {
-    public static float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
-    public static bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
-    public static bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
-    public static bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-    public static int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
-    public static int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
-    public static int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-
+    public static float GCD => GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
+    public static bool bothNadisOpen => Gauge.Nadi.ToString() == "LUNAR, SOLAR";
+    public static bool solarNadi => Gauge.Nadi == Nadi.SOLAR;
+    public static bool lunarNadi => Gauge.Nadi == Nadi.LUNAR;
+    public static int opoOpoChakra => Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
+    public static int raptorChakra => Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
+    public static int coeurlChakra => Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
     public static MNKOpenerLogic MNKOpener => new();
-
     public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
 
     internal class MNKHelper
