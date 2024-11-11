@@ -1,13 +1,8 @@
-using System.Linq;
-using Dalamud.Game.ClientState.JobGauge.Enums;
-using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.JobHelpers.MNK;
-using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.PvE;
 
@@ -53,17 +48,6 @@ internal class MNK
         TrueNorth = 7546,
         ElixirBurst = 36948,
         FiresReply = 36950;
-
-    protected static float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
-    protected static bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
-    protected static bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
-    protected static bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-    protected static int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
-    protected static int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
-    protected static int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-    protected static MNKOpenerLogic MNKOpener = new();
-
-    public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
 
     public static class Buffs
     {
@@ -140,29 +124,8 @@ internal class MNK
                         return RiddleOfWind;
 
                     //Perfect Balance
-                    if (ActionReady(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance) &&
-                        !HasEffect(Buffs.FormlessFist))
-                    {
-                        // Odd window
-                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
-                            !JustUsed(PerfectBalance, 20) &&
-                            HasEffect(Buffs.RiddleOfFire) &&
-                            !HasEffect(Buffs.Brotherhood))
-                            return PerfectBalance;
-
-                        // Even window
-                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
-                            (GetCooldownRemainingTime(Brotherhood) <= GCD * 3 || HasEffect(Buffs.Brotherhood)) &&
-                            (GetCooldownRemainingTime(RiddleOfFire) <= GCD * 3 || HasEffect(Buffs.RiddleOfFire)))
-                            return PerfectBalance;
-
-                        // Low level
-                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
-                            ((HasEffect(Buffs.RiddleOfFire) && !LevelChecked(Brotherhood)) ||
-                             !LevelChecked(RiddleOfFire)))
-                            return PerfectBalance;
-                    }
+                    if (MNKHelper.UsePerfectBalance())
+                        return PerfectBalance;
 
                     if (PlayerHealthPercentageHp() <= 25 &&
                         ActionReady(All.SecondWind))
@@ -304,29 +267,8 @@ internal class MNK
 
                     //Perfect Balance
                     if (IsEnabled(CustomComboPreset.MNK_STUsePerfectBalance) &&
-                        ActionReady(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance) &&
-                        !HasEffect(Buffs.FormlessFist))
-                    {
-                        // Odd window
-                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
-                            !JustUsed(PerfectBalance, 20) &&
-                            HasEffect(Buffs.RiddleOfFire) &&
-                            !HasEffect(Buffs.Brotherhood))
-                            return PerfectBalance;
-
-                        // Even window
-                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
-                            (GetCooldownRemainingTime(Brotherhood) <= GCD * 3 || HasEffect(Buffs.Brotherhood)) &&
-                            (GetCooldownRemainingTime(RiddleOfFire) <= GCD * 3 || HasEffect(Buffs.RiddleOfFire)))
-                            return PerfectBalance;
-
-                        // Low level
-                        if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
-                            ((HasEffect(Buffs.RiddleOfFire) && !LevelChecked(Brotherhood)) ||
-                             !LevelChecked(RiddleOfFire)))
-                            return PerfectBalance;
-                    }
+                        MNKHelper.UsePerfectBalance())
+                        return PerfectBalance;
 
                     if (IsEnabled(CustomComboPreset.MNK_ST_ComboHeals))
                     {
@@ -427,8 +369,6 @@ internal class MNK
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-
             if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
             {
                 if (!InCombat() && Gauge.Chakra < 5 && LevelChecked(Meditation))
@@ -460,14 +400,13 @@ internal class MNK
                         return RiddleOfWind;
 
                     if (ActionReady(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance))
-
-                        if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
-                            GetCooldownRemainingTime(PerfectBalance) <= 4 ||
-                            HasEffect(Buffs.Brotherhood) ||
-                            (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
-                            (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
-                            return PerfectBalance;
+                        !HasEffect(Buffs.PerfectBalance) &&
+                        (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
+                         GetCooldownRemainingTime(PerfectBalance) <= 4 ||
+                         HasEffect(Buffs.Brotherhood) ||
+                         (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                         (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8)))
+                        return PerfectBalance;
 
                     if (Gauge.Chakra >= 5 &&
                         LevelChecked(HowlingFist) &&
@@ -542,10 +481,6 @@ internal class MNK
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-            bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-            bool nadiNone = Gauge.Nadi == Nadi.NONE;
-
             if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
             {
                 if (IsEnabled(CustomComboPreset.MNK_AoEUseMeditation) &&
@@ -586,20 +521,13 @@ internal class MNK
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance) &&
                         ActionReady(PerfectBalance) &&
-                        !HasEffect(Buffs.PerfectBalance))
-
-                        // Use Perfect Balance if:
-                        // 1. It's after Bootshine/Dragon Kick. - This doesn't apply to AoE
-                        // 2. At max stacks / before overcap.
-                        // 3. During Brotherhood.
-                        // 4. During Riddle of Fire.
-                        // 5. Prepare Masterful Blitz for the Riddle of Fire & Brotherhood window.
-                        if (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
-                            GetCooldownRemainingTime(PerfectBalance) <= 4 ||
-                            HasEffect(Buffs.Brotherhood) ||
-                            (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
-                            (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8))
-                            return PerfectBalance;
+                        !HasEffect(Buffs.PerfectBalance) &&
+                        (GetRemainingCharges(PerfectBalance) == GetMaxCharges(PerfectBalance) ||
+                         GetCooldownRemainingTime(PerfectBalance) <= 4 ||
+                         HasEffect(Buffs.Brotherhood) ||
+                         (HasEffect(Buffs.RiddleOfFire) && GetBuffRemainingTime(Buffs.RiddleOfFire) < 10) ||
+                         (GetCooldownRemainingTime(RiddleOfFire) < 4 && GetCooldownRemainingTime(Brotherhood) < 8)))
+                        return PerfectBalance;
 
                     if (IsEnabled(CustomComboPreset.MNK_AoEUseHowlingFist) &&
                         Gauge.Chakra >= 5 &&

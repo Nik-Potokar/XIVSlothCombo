@@ -1,4 +1,7 @@
-﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+﻿using System.Linq;
+using Dalamud.Game.ClientState.JobGauge.Enums;
+using Dalamud.Game.ClientState.JobGauge.Types;
+using Dalamud.Game.ClientState.Statuses;
 using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Data;
@@ -9,6 +12,20 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class MNK
 {
+    public static float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
+    public static bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
+    public static bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
+    public static bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+    public static int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
+    public static int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
+    public static int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
+
+    public static MNKOpenerLogic MNKOpener => new();
+
+    public static Status? pbStacks => FindEffectAny(Buffs.PerfectBalance);
+
+    public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
+
     internal class MNKHelper
     {
         public static uint DetermineCoreAbility(uint actionId, bool useTrueNorthIfEnabled)
@@ -51,6 +68,33 @@ internal class MNK
             }
 
             return actionId;
+        }
+
+        public static bool UsePerfectBalance()
+        {
+            if (ActionReady(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) && !HasEffect(Buffs.FormlessFist))
+            {
+                // Odd window
+                if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                    !JustUsed(PerfectBalance, 20) &&
+                    HasEffect(Buffs.RiddleOfFire) &&
+                    !HasEffect(Buffs.Brotherhood))
+                    return true;
+
+                // Even window
+                if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                    (GetCooldownRemainingTime(Brotherhood) <= GCD * 3 || HasEffect(Buffs.Brotherhood)) &&
+                    (GetCooldownRemainingTime(RiddleOfFire) <= GCD * 3 || HasEffect(Buffs.RiddleOfFire)))
+                    return true;
+
+                // Low level
+                if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
+                    ((HasEffect(Buffs.RiddleOfFire) && !LevelChecked(Brotherhood)) ||
+                     !LevelChecked(RiddleOfFire)))
+                    return true;
+            }
+
+            return false;
         }
     }
 
@@ -105,7 +149,7 @@ internal class MNK
 
             if (!ActionReady(RiddleOfWind))
                 return false;
-            
+
             if (Gauge.Nadi != Nadi.NONE)
                 return false;
 
@@ -173,7 +217,8 @@ internal class MNK
                     return true;
                 }
 
-                if (WasLastAction(PerfectBalance) && GetRemainingCharges(PerfectBalance) is 1 && OpenerStep == 1) OpenerStep++;
+                if (WasLastAction(PerfectBalance) && GetRemainingCharges(PerfectBalance) is 1 && OpenerStep == 1)
+                    OpenerStep++;
                 else if (OpenerStep == 1) actionID = PerfectBalance;
 
                 if (WasLastWeaponskill(TwinSnakes) && OpenerStep == 2) OpenerStep++;
