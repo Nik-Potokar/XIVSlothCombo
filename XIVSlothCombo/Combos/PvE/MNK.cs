@@ -55,6 +55,12 @@ internal class MNK
         FiresReply = 36950;
 
     protected static float GCD = GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
+    protected static bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
+    protected static bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
+    protected static bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
+    protected static int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
+    protected static int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
+    protected static int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
     protected static MNKOpenerLogic MNKOpener = new();
 
     public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
@@ -93,13 +99,6 @@ internal class MNK
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
-            bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
-            bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-            int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
-            int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
-            int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-
             if (actionID is Bootshine or LeapingOpo)
             {
                 if (MNKOpener.DoFullOpener(ref actionID, 0))
@@ -253,13 +252,6 @@ internal class MNK
 
         protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
         {
-            bool bothNadisOpen = Gauge.Nadi.ToString() == "LUNAR, SOLAR";
-            bool solarNadi = Gauge.Nadi == Nadi.SOLAR;
-            bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-            int opoOpoChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
-            int raptorChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
-            int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-
             if (actionID is Bootshine or LeapingOpo)
             {
                 if (IsEnabled(CustomComboPreset.MNK_STUseOpener))
@@ -436,8 +428,6 @@ internal class MNK
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             Status? pbStacks = FindEffectAny(Buffs.PerfectBalance);
-            bool lunarNadi = Gauge.Nadi == Nadi.LUNAR;
-            bool nadiNone = Gauge.Nadi == Nadi.NONE;
 
             if (actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer)
             {
@@ -505,7 +495,7 @@ internal class MNK
                 // Perfect Balance
                 if (HasEffect(Buffs.PerfectBalance))
                 {
-                    if (nadiNone || !lunarNadi)
+                    if (solarNadi || lunarNadi || bothNadisOpen)
                         if (pbStacks?.StackCount > 0)
                             return LevelChecked(ShadowOfTheDestroyer)
                                 ? ShadowOfTheDestroyer
@@ -643,35 +633,32 @@ internal class MNK
                 }
 
                 // Masterful Blitz
-                if (IsEnabled(CustomComboPreset.MNK_AoEUsePerfectBalance))
+                if (LevelChecked(MasterfulBlitz) &&
+                    !HasEffect(Buffs.PerfectBalance) &&
+                    OriginalHook(MasterfulBlitz) != MasterfulBlitz)
+                    return OriginalHook(MasterfulBlitz);
+
+                // Perfect Balance
+                if (HasEffect(Buffs.PerfectBalance))
                 {
-                    if (LevelChecked(MasterfulBlitz) &&
-                        !HasEffect(Buffs.PerfectBalance) &&
-                        OriginalHook(MasterfulBlitz) != MasterfulBlitz)
-                        return OriginalHook(MasterfulBlitz);
+                    if (solarNadi || lunarNadi || bothNadisOpen)
+                        if (pbStacks?.StackCount > 0)
+                            return LevelChecked(ShadowOfTheDestroyer)
+                                ? ShadowOfTheDestroyer
+                                : Rockbreaker;
 
-                    // Perfect Balance
-                    if (HasEffect(Buffs.PerfectBalance))
-                    {
-                        if (nadiNone || !lunarNadi)
-                            if (pbStacks?.StackCount > 0)
-                                return LevelChecked(ShadowOfTheDestroyer)
-                                    ? ShadowOfTheDestroyer
-                                    : Rockbreaker;
+                    if (lunarNadi)
+                        switch (pbStacks?.StackCount)
+                        {
+                            case 3:
+                                return OriginalHook(ArmOfTheDestroyer);
 
-                        if (lunarNadi)
-                            switch (pbStacks?.StackCount)
-                            {
-                                case 3:
-                                    return OriginalHook(ArmOfTheDestroyer);
+                            case 2:
+                                return FourPointFury;
 
-                                case 2:
-                                    return FourPointFury;
-
-                                case 1:
-                                    return Rockbreaker;
-                            }
-                    }
+                            case 1:
+                                return Rockbreaker;
+                        }
                 }
 
                 // Monk Rotation
