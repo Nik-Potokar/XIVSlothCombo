@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
 using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
 using XIVSlothCombo.Data;
@@ -21,8 +20,6 @@ internal class MNK
     public static int coeurlChakra = Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
 
     public static MNKOpenerLogic MNKOpener => new();
-
-    public static Status? pbStacks => FindEffectAny(Buffs.PerfectBalance);
 
     public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
 
@@ -77,8 +74,7 @@ internal class MNK
                 // Odd window
                 if ((JustUsed(OriginalHook(Bootshine)) || JustUsed(DragonKick)) &&
                     !JustUsed(PerfectBalance, 20) &&
-                    HasEffect(Buffs.RiddleOfFire) &&
-                    !HasEffect(Buffs.Brotherhood))
+                    HasEffect(Buffs.RiddleOfFire) && !HasEffect(Buffs.Brotherhood))
                     return true;
 
                 // Even window

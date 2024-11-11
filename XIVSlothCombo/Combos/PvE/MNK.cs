@@ -435,13 +435,13 @@ internal class MNK
                 if (HasEffect(Buffs.PerfectBalance))
                 {
                     if (solarNadi || lunarNadi || bothNadisOpen)
-                        if (pbStacks?.StackCount > 0)
+                        if (HasEffect(Buffs.PerfectBalance))
                             return LevelChecked(ShadowOfTheDestroyer)
                                 ? ShadowOfTheDestroyer
                                 : Rockbreaker;
 
-                    if (lunarNadi)
-                        switch (pbStacks?.StackCount)
+                    if (!solarNadi && !bothNadisOpen)
+                        switch (GetBuffStacks(Buffs.PerfectBalance))
                         {
                             case 3:
                                 return OriginalHook(ArmOfTheDestroyer);
@@ -570,13 +570,13 @@ internal class MNK
                 if (HasEffect(Buffs.PerfectBalance))
                 {
                     if (solarNadi || lunarNadi || bothNadisOpen)
-                        if (pbStacks?.StackCount > 0)
+                        if (HasEffect(Buffs.PerfectBalance))
                             return LevelChecked(ShadowOfTheDestroyer)
                                 ? ShadowOfTheDestroyer
                                 : Rockbreaker;
 
-                    if (lunarNadi)
-                        switch (pbStacks?.StackCount)
+                    if (!solarNadi && !bothNadisOpen)
+                        switch (GetBuffStacks(Buffs.PerfectBalance))
                         {
                             case 3:
                                 return OriginalHook(ArmOfTheDestroyer);
