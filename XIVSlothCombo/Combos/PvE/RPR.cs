@@ -1,5 +1,4 @@
 using XIVSlothCombo.Combos.PvE.Content;
-using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
@@ -110,15 +109,10 @@ internal class RPR
 
     internal class RPR_ST_SimpleMode : CustomCombo
     {
-        internal static RPROpenerLogic RPROpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_ST_SimpleMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
-
             if (actionID is Slice)
             {
                 //Variant Cure
@@ -218,7 +212,8 @@ internal class RPR
                         //Gibbet
                         if (HasEffect(Buffs.EnhancedGibbet))
                         {
-                            if (trueNorthReady && !OnTargetsFlank())
+                            if (trueNorthReady && !OnTargetsFlank() &&
+                                CanDelayedWeave(ActionWatching.LastWeaponskill))
                                 return All.TrueNorth;
 
                             return OriginalHook(Gibbet);
@@ -228,7 +223,8 @@ internal class RPR
                         if (HasEffect(Buffs.EnhancedGallows) ||
                             (!HasEffect(Buffs.EnhancedGibbet) && !HasEffect(Buffs.EnhancedGallows)))
                         {
-                            if (trueNorthReady && !OnTargetsRear())
+                            if (trueNorthReady && !OnTargetsRear() &&
+                                CanDelayedWeave(ActionWatching.LastWeaponskill))
                                 return All.TrueNorth;
 
                             return OriginalHook(Gallows);
@@ -294,16 +290,10 @@ internal class RPR
 
     internal class RPR_ST_AdvancedMode : CustomCombo
     {
-        internal static RPROpenerLogic RPROpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            double enemyHP = GetTargetHPPercent();
-
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth) && CanDelayedWeave(actionID);
             bool trueNorthDynReady = trueNorthReady;
             int PositionalChoice = Config.RPR_Positional;
 
@@ -413,7 +403,7 @@ internal class RPR
 
                 //Shadow Of Death
                 if (IsEnabled(CustomComboPreset.RPR_ST_SoD) &&
-                    RPRHelpers.UseShadowOfDeath() && enemyHP > Config.RPR_SoDThreshold)
+                    RPRHelpers.UseShadowOfDeath() && GetTargetHPPercent() > Config.RPR_SoDThreshold)
                     return ShadowOfDeath;
 
                 if (TargetHasEffect(Debuffs.DeathsDesign))
@@ -434,7 +424,8 @@ internal class RPR
                              !HasEffect(Buffs.EnhancedGallows)))
                         {
                             if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
-                                trueNorthDynReady && !OnTargetsFlank())
+                                trueNorthDynReady && !OnTargetsFlank() &&
+                                CanDelayedWeave(ActionWatching.LastWeaponskill))
                                 return All.TrueNorth;
 
                             return OriginalHook(Gibbet);
@@ -446,7 +437,8 @@ internal class RPR
                              !HasEffect(Buffs.EnhancedGallows)))
                         {
                             if (IsEnabled(CustomComboPreset.RPR_ST_TrueNorthDynamic) &&
-                                trueNorthDynReady && !OnTargetsRear())
+                                trueNorthDynReady && !OnTargetsRear() &&
+                                CanDelayedWeave(ActionWatching.LastWeaponskill))
                                 return All.TrueNorth;
 
                             return OriginalHook(Gallows);
@@ -741,9 +733,6 @@ internal class RPR
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth);
-
             switch (actionID)
             {
                 case GrimSwathe:
@@ -878,7 +867,7 @@ internal class RPR
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool[] soulSowOptions = PluginConfiguration.GetCustomBoolArrayValue(Config.RPR_SoulsowOptions);
+            bool[] soulSowOptions = Config.RPR_SoulsowOptions;
             bool soulsowReady = LevelChecked(Soulsow) && !HasEffect(Buffs.Soulsow);
 
             return (soulSowOptions.Length > 0 && ((actionID is Harpe && soulSowOptions[0]) ||
@@ -899,9 +888,6 @@ internal class RPR
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth);
-
             switch (actionID)
             {
                 case Enshroud when IsEnabled(CustomComboPreset.RPR_TrueNorthEnshroud) &&

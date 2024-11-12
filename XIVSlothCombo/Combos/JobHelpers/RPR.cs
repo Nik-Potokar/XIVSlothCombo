@@ -2,16 +2,20 @@
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.PvE.RPR;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers;
 
-internal abstract class RPR
+internal class RPR
 {
-    public static float GCD = GetCooldown(Slice).CooldownTotal;
-
+    // RPR Gauge & Extensions
+    public static float GCD => GetCooldown(Slice).CooldownTotal;
+    public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
+                                         !HasEffect(All.Buffs.TrueNorth);
+    public static RPROpenerLogic RPROpener => new();
     public static RPRGauge Gauge => GetJobGauge<RPRGauge>();
 
     internal class RPROpenerLogic
@@ -233,8 +237,6 @@ internal abstract class RPR
 
         public static bool UseEnshroud(RPRGauge gauge)
         {
-            float GCD = GetCooldown(Slice).CooldownTotal;
-
             if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
                 !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
                 !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.Enshrouded))
@@ -273,8 +275,6 @@ internal abstract class RPR
 
         public static bool UseShadowOfDeath()
         {
-            float GCD = GetCooldown(Slice).CooldownTotal;
-
             if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
                 !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
                 !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(3) &&
