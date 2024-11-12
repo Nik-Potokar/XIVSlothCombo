@@ -390,6 +390,10 @@ internal class BLM
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_Despair) &&
                     curMp < MP.FireI && LevelChecked(Despair) && curMp >= MP.Despair)
+                    return Despair;
+
+                if (IsEnabled(CustomComboPreset.BLM_ST_Flarestar) &&
+                    curMp == 0 && LevelChecked(FlareStar) && Gauge.AstralSoulStacks == 6)
                 {
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
                         canWeave && ActionReady(Triplecast) &&
@@ -402,33 +406,36 @@ internal class BLM
                         canWeave && ActionReady(All.Swiftcast) &&
                         GetBuffStacks(Buffs.Triplecast) == 0)
                         return All.Swiftcast;
-
-                    if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
-                        HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
-                        (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
-                        return OriginalHook(Thunder);
-
-                    if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                        (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) ||
-                         IsEnabled(CustomComboPreset.BLM_ST_Triplecast)) &&
-                        PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && gcdsInTimer >= 1 &&
-                        (ActionReady(All.Swiftcast) ||
-                         (ActionReady(Triplecast) && GetBuffStacks(Buffs.Triplecast) == 0)))
-                        return Xenoglossy.LevelChecked()
-                            ? Xenoglossy
-                            : Foul;
-
-                    return Despair;
-                }
-
-                if (IsEnabled(CustomComboPreset.BLM_ST_Flarestar) &&
-                    curMp == 0 && LevelChecked(FlareStar) && Gauge.AstralSoulStacks == 6)
+                    
                     return FlareStar;
+                }
 
                 if (LevelChecked(Fire4))
                     if (gcdsInTimer > 1 && curMp >= MP.FireI)
-                        return Fire4;
+                    {
+                        if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
+                            canWeave && ActionReady(Triplecast) &&
+                            GetBuffStacks(Buffs.Triplecast) == 0 &&
+                            (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
+                             TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
+                            return Triplecast;
+                        
+                        if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+                            (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                            return OriginalHook(Thunder);
 
+                        if (HasPolyglotStacks(Gauge) && gcdsInTimer >= 1 &&
+                            (ActionReady(All.Swiftcast) ||
+                             (ActionReady(Triplecast) &&
+                              GetBuffStacks(Buffs.Triplecast) == 0 &&
+                              GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))))
+                            return Xenoglossy.LevelChecked()
+                                ? Xenoglossy
+                                : Foul;
+                        
+                        return Fire4;
+                    }
+                
                 if (curMp >= MP.FireI)
                     return Fire;
 
