@@ -412,8 +412,30 @@ internal class BLM
 
                 if (LevelChecked(Fire4))
                     if (gcdsInTimer > 1 && curMp >= MP.FireI)
-                        return Fire4;
+                    {
+                        if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
+                            canWeave && ActionReady(Triplecast) &&
+                            GetBuffStacks(Buffs.Triplecast) == 0 &&
+                            (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
+                             TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
+                            return Triplecast;
+                        
+                        if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
+                            (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                            return OriginalHook(Thunder);
 
+                        if (HasPolyglotStacks(Gauge) && gcdsInTimer >= 1 &&
+                            (ActionReady(All.Swiftcast) ||
+                             (ActionReady(Triplecast) &&
+                              GetBuffStacks(Buffs.Triplecast) == 0 &&
+                              GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))))
+                            return Xenoglossy.LevelChecked()
+                                ? Xenoglossy
+                                : Foul;
+                        
+                        return Fire4;
+                    }
+                
                 if (curMp >= MP.FireI)
                     return Fire;
 
