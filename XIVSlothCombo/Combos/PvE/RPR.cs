@@ -142,7 +142,7 @@ internal class RPR
                         return ArcaneCircle;
 
                     //Enshroud
-                    if (RPRHelpers.UseEnshroud(Gauge))
+                    if (RPRHelper.UseEnshroud(Gauge))
                         return Enshroud;
 
                     //Gluttony/Bloodstalk
@@ -150,7 +150,7 @@ internal class RPR
                         !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                         !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
                         !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
-                        !RPRHelpers.IsComboExpiring(3))
+                        !RPRHelper.IsComboExpiring(3))
                     {
                         //Gluttony
                         if (ActionReady(Gluttony) &&
@@ -196,13 +196,13 @@ internal class RPR
                 }
 
                 //Shadow Of Death
-                if (RPRHelpers.UseShadowOfDeath())
+                if (RPRHelper.UseShadowOfDeath())
                     return ShadowOfDeath;
 
                 if (TargetHasEffect(Debuffs.DeathsDesign))
                 {
                     //Perfectio
-                    if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio) && !RPRHelpers.IsComboExpiring(1))
+                    if (HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio) && !RPRHelper.IsComboExpiring(1))
                         return OriginalHook(Communio);
 
                     //Gibbet/Gallows
@@ -257,7 +257,7 @@ internal class RPR
 
                     //Soul Slice
                     if (Gauge.Soul <= 50 && ActionReady(SoulSlice) &&
-                        !RPRHelpers.IsComboExpiring(3) &&
+                        !RPRHelper.IsComboExpiring(3) &&
                         !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                         !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.Executioner) &&
                         !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.ImmortalSacrifice))
@@ -337,7 +337,7 @@ internal class RPR
 
                         //Enshroud
                         if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) &&
-                            RPRHelpers.UseEnshroud(Gauge))
+                            RPRHelper.UseEnshroud(Gauge))
                             return Enshroud;
 
                         //Gluttony/Bloodstalk
@@ -345,7 +345,7 @@ internal class RPR
                             !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                             !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.ImmortalSacrifice) &&
                             !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.PerfectioParata) &&
-                            !RPRHelpers.IsComboExpiring(3))
+                            !RPRHelper.IsComboExpiring(3))
                         {
                             //Gluttony
                             if (IsEnabled(CustomComboPreset.RPR_ST_Gluttony) &&
@@ -403,14 +403,14 @@ internal class RPR
 
                 //Shadow Of Death
                 if (IsEnabled(CustomComboPreset.RPR_ST_SoD) &&
-                    RPRHelpers.UseShadowOfDeath() && GetTargetHPPercent() > Config.RPR_SoDThreshold)
+                    RPRHelper.UseShadowOfDeath() && GetTargetHPPercent() > Config.RPR_SoDThreshold)
                     return ShadowOfDeath;
 
                 if (TargetHasEffect(Debuffs.DeathsDesign))
                 {
                     //Perfectio
                     if (IsEnabled(CustomComboPreset.RPR_ST_Perfectio) &&
-                        HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio) && !RPRHelpers.IsComboExpiring(1))
+                        HasEffect(Buffs.PerfectioParata) && LevelChecked(Perfectio) && !RPRHelper.IsComboExpiring(1))
                         return OriginalHook(Communio);
 
                     //Gibbet/Gallows
@@ -477,7 +477,7 @@ internal class RPR
                     //Soul Slice
                     if (IsEnabled(CustomComboPreset.RPR_ST_SoulSlice) &&
                         Gauge.Soul <= 50 && ActionReady(SoulSlice) &&
-                        !RPRHelpers.IsComboExpiring(3) &&
+                        !RPRHelper.IsComboExpiring(3) &&
                         !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) &&
                         !HasEffect(Buffs.IdealHost) && !HasEffect(Buffs.Executioner) &&
                         !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.ImmortalSacrifice))
@@ -554,7 +554,7 @@ internal class RPR
                         if (!HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
                             !HasEffect(Buffs.Executioner) &&
                             ActionReady(Enshroud) && (Gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
-                            !RPRHelpers.IsComboExpiring(6))
+                            !RPRHelper.IsComboExpiring(6))
                             return Enshroud;
 
                         if (LevelChecked(Gluttony) && Gauge.Soul >= 50 && !HasEffect(Buffs.Enshrouded) &&
@@ -656,7 +656,7 @@ internal class RPR
                             if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) &&
                                 !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Enshrouded) &&
                                 ActionReady(Enshroud) && (Gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
-                                !RPRHelpers.IsComboExpiring(6))
+                                !RPRHelper.IsComboExpiring(6))
                                 return Enshroud;
 
                             if (IsEnabled(CustomComboPreset.RPR_AoE_Gluttony) &&

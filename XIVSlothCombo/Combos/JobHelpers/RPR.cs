@@ -211,7 +211,7 @@ internal class RPR
         }
     }
 
-    internal class RPRHelpers
+    internal class RPRHelper
     {
         public static unsafe bool IsComboExpiring(float Times)
         {
