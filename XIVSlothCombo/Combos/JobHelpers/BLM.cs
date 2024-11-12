@@ -140,7 +140,7 @@ internal class BLM
                 if (WasLastAction(Triplecast) && OpenerStep == 7) OpenerStep++;
                 else if (OpenerStep == 7) actionID = Triplecast;
 
-                if ((WasLastAction(LeyLines) || IsOnCooldown(LeyLines)) && OpenerStep == 8) OpenerStep++;
+                if (HasEffect(Buffs.LeyLines) && OpenerStep == 8) OpenerStep++;
                 else if (OpenerStep == 8) actionID = LeyLines;
 
                 if (WasLastAction(Fire4) && Fire4Count is 3 && OpenerStep == 9) OpenerStep++;

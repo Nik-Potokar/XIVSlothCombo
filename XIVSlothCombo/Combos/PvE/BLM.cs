@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -178,8 +176,8 @@ internal class BLM
                     remainingPolyglotCD >= 20000)
                     return Amplifier;
 
-                if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) &&
-                    ActionReady(LeyLines))
+                if (ActionReady(LeyLines) && 
+                    !HasEffect(Buffs.LeyLines))
                     return LeyLines;
             }
 
@@ -358,7 +356,7 @@ internal class BLM
                     return Amplifier;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) &&
-                    ActionReady(LeyLines))
+                    ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
                     return LeyLines;
             }
 
@@ -560,7 +558,8 @@ internal class BLM
                     return Foul;
             }
 
-            if (CanSpellWeave(ActionWatching.LastSpell) && ActionReady(LeyLines))
+            if (CanSpellWeave(ActionWatching.LastSpell) && 
+                ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
                 return LeyLines;
 
             if (Gauge.InAstralFire)
@@ -704,7 +703,8 @@ internal class BLM
             }
 
             if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) &&
-                CanSpellWeave(ActionWatching.LastSpell) && ActionReady(LeyLines))
+                CanSpellWeave(ActionWatching.LastSpell) &&
+                ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
                 return LeyLines;
 
             if (Gauge.InAstralFire)
