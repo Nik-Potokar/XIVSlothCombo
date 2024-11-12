@@ -137,7 +137,7 @@ internal class MCH
                         return BarrelStabilizer;
 
                     // Hypercharge
-                    if ((Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHExtensions.IsComboExpiring(6) &&
+                    if ((Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHHelper.IsComboExpiring(6) &&
                         LevelChecked(Hypercharge) && !Gauge.IsOverheated)
                     {
                         // Ensures Hypercharge is double weaved with WF
@@ -155,7 +155,7 @@ internal class MCH
                     }
 
                     //Queen
-                    if (MCHExtensions.UseQueen(Gauge) &&
+                    if (MCHHelper.UseQueen(Gauge) &&
                         (GetCooldownRemainingTime(Wildfire) > GCD || !LevelChecked(Wildfire)))
                         return OriginalHook(RookAutoturret);
 
@@ -355,7 +355,7 @@ internal class MCH
 
                     // Hypercharge
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                        (Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHExtensions.IsComboExpiring(6) &&
+                        (Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHHelper.IsComboExpiring(6) &&
                         LevelChecked(Hypercharge) && !Gauge.IsOverheated &&
                         GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
@@ -375,7 +375,7 @@ internal class MCH
 
                     // Queen
                     if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
-                        MCHExtensions.UseQueen(Gauge) &&
+                        MCHHelper.UseQueen(Gauge) &&
                         (GetCooldownRemainingTime(Wildfire) > GCD || !LevelChecked(Wildfire)))
                         return OriginalHook(RookAutoturret);
 

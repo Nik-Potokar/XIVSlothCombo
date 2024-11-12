@@ -272,7 +272,7 @@ internal class MCH
         }
     }
 
-    internal static class MCHExtensions
+    internal static class MCHHelper
     {
         public static unsafe bool IsComboExpiring(float Times)
         {
