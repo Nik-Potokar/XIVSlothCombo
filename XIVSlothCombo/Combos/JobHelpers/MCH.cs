@@ -12,6 +12,7 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class MCH
 {
+    // MCH Gauge & Extensions
     public static float GCD => GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
     public static float heatblastRC => GetCooldown(Heatblast).CooldownTotal;
     public static bool drillCD => !LevelChecked(Drill) || (!TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
