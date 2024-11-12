@@ -32,7 +32,7 @@ internal class BLM
                                     IsOffCooldown(All.Swiftcast);
     public static uint curMp => LocalPlayer.CurrentMp;
     public static bool HasPolyglotStacks(BLMGauge gauge) => gauge.PolyglotStacks > 0;
-
+    
     internal class BLMOpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
@@ -196,7 +196,7 @@ internal class BLM
                      (actionID == LeyLines && IsOnCooldown(LeyLines)) ||
                      (actionID == Manafont && IsOnCooldown(Manafont)) ||
                      (actionID == All.Swiftcast && IsOnCooldown(All.Swiftcast)) ||
-                     (actionID == Xenoglossy && Gauge.PolyglotStacks == 0)) &&
+                     (actionID == Xenoglossy && !HasPolyglotStacks(Gauge))) &&
                     ActionWatching.TimeSinceLastAction.TotalSeconds >= 3)
                 {
                     CurrentState = OpenerState.FailedOpener;
@@ -253,10 +253,9 @@ internal class BLM
                 _ => 0
             };
 
-            if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
-                return Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain);
-
-            return Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
+            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2 
+                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain) 
+                : Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
         }
 
         public static bool DoubleBlizz()
@@ -269,19 +268,27 @@ internal class BLM
 
             uint firstSpell = spells[^1];
 
-            if (firstSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
+            switch (firstSpell)
             {
-                uint castedSpell = LocalPlayer.CastActionId;
-
-                if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
-                    return true;
-
-                if (spells.Count >= 2)
+                case Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2:
                 {
-                    uint secondSpell = spells[^2];
+                    uint castedSpell = LocalPlayer.CastActionId;
 
-                    if (secondSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
+                    if (castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2)
                         return true;
+
+                    if (spells.Count >= 2)
+                    {
+                        uint secondSpell = spells[^2];
+
+                        switch (secondSpell)
+                        {
+                            case Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2:
+                                return true;
+                        }
+                    }
+
+                    break;
                 }
             }
 

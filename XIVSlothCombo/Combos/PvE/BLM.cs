@@ -176,7 +176,7 @@ internal class BLM
                     remainingPolyglotCD >= 20000)
                     return Amplifier;
 
-                if (ActionReady(LeyLines) && 
+                if (ActionReady(LeyLines) &&
                     !HasEffect(Buffs.LeyLines))
                     return LeyLines;
             }
@@ -558,7 +558,7 @@ internal class BLM
                     return Foul;
             }
 
-            if (CanSpellWeave(ActionWatching.LastSpell) && 
+            if (CanSpellWeave(ActionWatching.LastSpell) &&
                 ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
                 return LeyLines;
 
