@@ -11,6 +11,7 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 
 internal class MNK
 {
+    // MNK Gauge & Extensions
     public static float GCD => GetCooldown(OriginalHook(Bootshine)).CooldownTotal;
     public static bool bothNadisOpen => Gauge.Nadi.ToString() == "LUNAR, SOLAR";
     public static bool solarNadi => Gauge.Nadi == Nadi.SOLAR;
