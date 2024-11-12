@@ -103,8 +103,6 @@ internal class MCH
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() && CanDelayedWeave(actionID);
-
             if (actionID is SplitShot or HeatedSplitShot)
             {
                 if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
@@ -305,8 +303,6 @@ internal class MCH
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() && CanDelayedWeave(actionID);
-
             bool reassembledExcavator =
                 (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[0] &&
                  (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) ||
