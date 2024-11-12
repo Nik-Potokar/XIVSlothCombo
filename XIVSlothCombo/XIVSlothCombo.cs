@@ -160,7 +160,7 @@ namespace XIVSlothCombo
         private void OnFrameworkUpdate(IFramework framework)
         {
             if (Svc.ClientState.LocalPlayer is not null)
-                JobID = Svc.ClientState.LocalPlayer?.ClassJob?.Id;
+                JobID = Svc.ClientState.LocalPlayer?.ClassJob.RowId;
 
             BlueMageService.PopulateBLUSpells();
             TargetHelper.Draw();
@@ -434,10 +434,10 @@ namespace XIVSlothCombo
                                 $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +                                // - Client Name
                                 $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +                         // - EN Name
                                 $"{Svc.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");                           // - Abbreviation
-                            file.WriteLine($"Current Job Index: {Svc.ClientState.LocalPlayer.ClassJob.Id}");                // Job Index
+                            file.WriteLine($"Current Job Index: {Svc.ClientState.LocalPlayer.ClassJob.RowId}");                // Job Index
                             file.WriteLine($"Current Job Level: {Svc.ClientState.LocalPlayer.Level}");                      // Job Level
                             file.WriteLine("");
-                            file.WriteLine($"Current Zone: {Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name}");   // Current zone location
+                            file.WriteLine($"Current Zone: {Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name}");   // Current zone location
                             file.WriteLine($"Current Party Size: {Svc.Party.Length}");                                  // Current party size
                             file.WriteLine("");
                             file.WriteLine($"START ENABLED FEATURES");
@@ -500,7 +500,7 @@ namespace XIVSlothCombo
                             else
                             {
                                 var jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(specificJob.ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
-                                var jobID = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.ClassJob>()?
+                                var jobID = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.ClassJob>()?
                                     .Where(x => x.Name.RawString.Equals(jobname, StringComparison.CurrentCultureIgnoreCase))
                                     .First()
                                     .RowId;

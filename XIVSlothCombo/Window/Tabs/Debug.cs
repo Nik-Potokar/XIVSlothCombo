@@ -7,7 +7,7 @@ using ECommons.ImGuiMethods;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using ImGuiNET;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using System;
 using System.Linq;
 using XIVSlothCombo.Combos;
@@ -15,8 +15,7 @@ using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
-using static XIVSlothCombo.Combos.JobHelpers.NIN;
-using Action = Lumina.Excel.GeneratedSheets.Action;
+using Action = Lumina.Excel.Sheets.Action;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Window.Tabs
@@ -176,7 +175,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Spacing();
                 ImGui.Text("Player Info");
                 ImGui.Separator();
-                CustomStyleText("Job:", $"{LocalPlayer.ClassJob.GameData.NameEnglish} (ID: {LocalPlayer.ClassJob.Id})");
+                CustomStyleText("Job:", $"{LocalPlayer.ClassJob.GameData.NameEnglish} (ID: {LocalPlayer.ClassJob.RowId})");
                 CustomStyleText("Zone:", $"{Svc.Data.GetExcelSheet<TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name} (ID: {Svc.ClientState.TerritoryType})");
                 CustomStyleText("In PvP:", CustomComboFunctions.InPvP());
                 CustomStyleText("In Combat:", CustomComboFunctions.InCombat());

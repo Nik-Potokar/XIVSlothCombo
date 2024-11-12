@@ -4,7 +4,7 @@ using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +18,11 @@ namespace XIVSlothCombo.Data
 {
     public static class ActionWatching
     {
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
+        internal static Dictionary<uint, Lumina.Excel.Sheets.Action> ActionSheet = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.Action>()!
             .Where(i => i.RowId is not 7)
             .ToDictionary(i => i.RowId, i => i);
 
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
+        internal static Dictionary<uint, Lumina.Excel.Sheets.Status> StatusSheet = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.Status>()!
             .ToDictionary(i => i.RowId, i => i);
 
         internal static Dictionary<uint, Trait> TraitSheet = Svc.Data.GetExcelSheet<Trait>()!
@@ -302,7 +302,7 @@ namespace XIVSlothCombo.Data
         {
             if (!ActionSheet.TryGetValue(id, out var action)) return ActionAttackType.Unknown;
 
-            return action.ActionCategory.Row switch
+            return action.ActionCategory.RowId switch
             {
                 2 => ActionAttackType.Spell,
                 3 => ActionAttackType.Weaponskill,

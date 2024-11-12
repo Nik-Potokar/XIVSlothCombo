@@ -2,7 +2,7 @@
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
