@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.Statuses;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
@@ -80,12 +79,10 @@ internal class DRG
         public static UserInt
             DRG_Variant_Cure = new("DRG_VariantCure"),
             DRG_ST_LitanyHP = new("DRG_ST_LitanyHP", 2),
-            DRG_ST_SightHP = new("DRG_ST_SightHP", 2),
             DRG_ST_LanceChargeHP = new("DRG_ST_LanceChargeHP", 2),
             DRG_ST_SecondWind_Threshold = new("DRG_STSecondWindThreshold", 25),
             DRG_ST_Bloodbath_Threshold = new("DRG_STBloodbathThreshold", 40),
             DRG_AoE_LitanyHP = new("DRG_AoE_LitanyHP", 5),
-            DRG_AoE_SightHP = new("DRG_AoE_SightHP", 5),
             DRG_AoE_LanceChargeHP = new("DRG_AoE_LanceChargeHP", 5),
             DRG_AoE_SecondWind_Threshold = new("DRG_AoE_SecondWindThreshold", 25),
             DRG_AoE_Bloodbath_Threshold = new("DRG_AoE_BloodbathThreshold", 40);
@@ -93,21 +90,10 @@ internal class DRG
 
     internal class DRG_ST_SimpleMode : CustomCombo
     {
-        internal static DRGOpenerLogic DRGOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            Status? ChaosDoTDebuff;
-
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth);
-
-            if (LevelChecked(ChaoticSpring))
-                ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
-            else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
-
             if (actionID is TrueThrust)
             {
                 if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
@@ -263,21 +249,10 @@ internal class DRG
 
     internal class DRG_ST_AdvancedMode : CustomCombo
     {
-        internal static DRGOpenerLogic DRGOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            Status? ChaosDoTDebuff;
-
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth);
-
-            if (LevelChecked(ChaoticSpring))
-                ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
-            else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
-
             if (actionID is TrueThrust)
             {
                 if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
