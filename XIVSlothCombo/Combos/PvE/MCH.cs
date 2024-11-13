@@ -97,8 +97,6 @@ internal class MCH
 
     internal class MCH_ST_SimpleMode : CustomCombo
     {
-        internal static MCHOpenerLogic MCHOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
@@ -297,8 +295,6 @@ internal class MCH
 
     internal class MCH_ST_AdvancedMode : CustomCombo
     {
-        internal static MCHOpenerLogic MCHOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
