@@ -1,6 +1,5 @@
 ﻿using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
-using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Utility;
 using ECommons.DalamudServices;
@@ -9,7 +8,6 @@ using ImGuiNET;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Reflection.Emit;
 using System.Text;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
