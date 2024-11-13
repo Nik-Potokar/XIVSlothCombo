@@ -49,7 +49,7 @@ namespace XIVSlothCombo.CustomComboNS
             if (!IsEnabled(Preset))
                 return false;
 
-            uint classJobID = LocalPlayer!.ClassJob.Id;
+            uint classJobID = LocalPlayer!.ClassJob.RowId;
 
             if (classJobID is >= 8 and <= 15)
                 classJobID = DOH.JobID;
