@@ -9,7 +9,6 @@ using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using static XIVSlothCombo.Combos.JobHelpers.SGEHelper;
 using XIVSlothCombo.Data;
-using XIVSlothCombo.Combos.JobHelpers;
 
 namespace XIVSlothCombo.Combos.PvE
 {

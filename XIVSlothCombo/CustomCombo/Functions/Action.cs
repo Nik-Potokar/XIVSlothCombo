@@ -20,7 +20,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <summary> Checks if the player is high enough level to use the passed Action ID. </summary>
         /// <param name="actionid"> ID of the action. </param>
         /// <returns></returns>
-        public static bool LevelChecked(uint actionid) => LocalPlayer.Level >= GetLevel(actionid) && NoBlockingStatuses(actionid) && IsActionUnlocked(actionid);
+        public static bool LevelChecked(uint actionid) =>  LocalPlayer.Level >= GetLevel(actionid) && NoBlockingStatuses(actionid) && IsActionUnlocked(actionid);
 
         /// <summary> Checks if the player is high enough level to use the passed Trait ID. </summary>
         /// <param name="traitid"> ID of the action. </param>

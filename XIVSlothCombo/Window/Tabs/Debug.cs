@@ -4,10 +4,11 @@ using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
+using ECommons.Reflection;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using ImGuiNET;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using System;
 using System.Linq;
 using XIVSlothCombo.Combos;
@@ -15,8 +16,6 @@ using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Services;
-using static XIVSlothCombo.Combos.JobHelpers.NIN;
-using Action = Lumina.Excel.GeneratedSheets.Action;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace XIVSlothCombo.Window.Tabs
@@ -31,7 +30,7 @@ namespace XIVSlothCombo.Window.Tabs
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level) => actionID;
         }
 
-        internal static Action? debugSpell;
+        internal static Lumina.Excel.Sheets.Action? debugSpell;
         internal unsafe static new void Draw()
         {
             DebugCombo? comboClass = new();
@@ -132,7 +131,7 @@ namespace XIVSlothCombo.Window.Tabs
                 }
                 if (ImGui.CollapsingHeader("Action Info"))
                 {
-                    string prev = debugSpell == null ? "Select Action" : $"({debugSpell.RowId}) Lv.{debugSpell.ClassJobLevel}. {debugSpell.Name} - {(debugSpell.IsPvP ? "PvP" : "Normal")}";
+                    string prev = debugSpell == null ? "Select Action" : $"({debugSpell.Value.RowId}) Lv.{debugSpell.Value.ClassJobLevel}. {debugSpell.Value.Name} - {(debugSpell.Value.IsPvP ? "PvP" : "Normal")}";
                     ImGuiEx.SetNextItemFullWidth();
                     using (var comboBox = ImRaii.Combo("###ActionCombo", prev))
                     {
@@ -144,7 +143,7 @@ namespace XIVSlothCombo.Window.Tabs
                             }
 
                             var classId = CustomComboFunctions.JobIDs.JobToClass(JobID.Value);
-                            foreach (var act in Svc.Data.GetExcelSheet<Action>().Where(x => x.IsPlayerAction && x.ClassJob.Row == classId || x.ClassJob.Row == JobID.Value).OrderBy(x => x.ClassJobLevel))
+                            foreach (var act in Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.Action>().Where(x => x.IsPlayerAction && x.ClassJob.RowId == classId || x.ClassJob.RowId == JobID.Value).OrderBy(x => x.ClassJobLevel))
                             {
                                 if (ImGui.Selectable($"({act.RowId}) Lv.{act.ClassJobLevel}. {act.Name} - {(act.IsPvP ? "PvP" : "Normal")}", debugSpell?.RowId == act.RowId))
                                 {
@@ -156,19 +155,19 @@ namespace XIVSlothCombo.Window.Tabs
 
                     if (debugSpell != null)
                     {
-                        var actionStatus = ActionManager.Instance()->GetActionStatus(ActionType.Action, debugSpell.RowId);
-                        var icon = Svc.Texture.GetFromGameIcon(new(debugSpell.Icon)).GetWrapOrEmpty().ImGuiHandle;
+                        var actionStatus = ActionManager.Instance()->GetActionStatus(ActionType.Action, debugSpell.Value.RowId);
+                        var icon = Svc.Texture.GetFromGameIcon(new(debugSpell.Value.Icon)).GetWrapOrEmpty().ImGuiHandle;
                         ImGui.Image(icon, new System.Numerics.Vector2(60f.Scale(), 60f.Scale()));
                         ImGui.SameLine();
                         ImGui.Image(icon, new System.Numerics.Vector2(30f.Scale(), 30f.Scale()));
                         CustomStyleText($"Action Status:", $"{actionStatus} ({Svc.Data.GetExcelSheet<LogMessage>().GetRow(actionStatus).Text})");
-                        CustomStyleText($"Action Type:", debugSpell.ActionCategory.Value.Name);
-                        if (debugSpell.UnlockLink != 0)
-                        CustomStyleText($"Quest:", $"{Svc.Data.GetExcelSheet<Quest>().GetRow(debugSpell.UnlockLink).Name} ({(UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(debugSpell.UnlockLink) ? "Completed" : "Not Completed")})");
-                        CustomStyleText($"Base Recast:", $"{debugSpell.Recast100ms / 10f}s");
-                        CustomStyleText($"Max Charges:", $"{debugSpell.MaxCharges}");
-                        if (ActionWatching.ActionTimestamps.ContainsKey(debugSpell.RowId))
-                            CustomStyleText($"Time Since Last Use:", $"{(Environment.TickCount64 - ActionWatching.ActionTimestamps[debugSpell.RowId])/1000f:F2}");
+                        CustomStyleText($"Action Type:", debugSpell.Value.ActionCategory.Value.Name);
+                        if (debugSpell.Value.UnlockLink.RowId != 0)
+                        CustomStyleText($"Quest:", $"{Svc.Data.GetExcelSheet<Quest>().GetRow(debugSpell.Value.UnlockLink.RowId).Name} ({(UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(debugSpell.Value.UnlockLink.RowId) ? "Completed" : "Not Completed")})");
+                        CustomStyleText($"Base Recast:", $"{debugSpell.Value.Recast100ms / 10f}s");
+                        CustomStyleText($"Max Charges:", $"{debugSpell.Value.MaxCharges}");
+                        if (ActionWatching.ActionTimestamps.ContainsKey(debugSpell.Value.RowId))
+                            CustomStyleText($"Time Since Last Use:", $"{(Environment.TickCount64 - ActionWatching.ActionTimestamps[debugSpell.Value.RowId])/1000f:F2}");
                     }
                 }
 
@@ -176,7 +175,7 @@ namespace XIVSlothCombo.Window.Tabs
                 ImGui.Spacing();
                 ImGui.Text("Player Info");
                 ImGui.Separator();
-                CustomStyleText("Job:", $"{LocalPlayer.ClassJob.GameData.NameEnglish} (ID: {LocalPlayer.ClassJob.Id})");
+                CustomStyleText("Job:", $"{LocalPlayer.ClassJob.Value.NameEnglish} (ID: {LocalPlayer.ClassJob.RowId})");
                 CustomStyleText("Zone:", $"{Svc.Data.GetExcelSheet<TerritoryType>()?.FirstOrDefault(x => x.RowId == Svc.ClientState.TerritoryType).PlaceName.Value.Name} (ID: {Svc.ClientState.TerritoryType})");
                 CustomStyleText("In PvP:", CustomComboFunctions.InPvP());
                 CustomStyleText("In Combat:", CustomComboFunctions.InCombat());
@@ -227,7 +226,7 @@ namespace XIVSlothCombo.Window.Tabs
                         if (CustomComboFunctions.GetPartySlot(i) is not IBattleChara member || member is null) continue;
                         ImGui.TextUnformatted($"Slot {i} ->");
                         ImGui.SameLine(0, 4f);
-                        CustomStyleText($"{CustomComboFunctions.GetPartySlot(i).Name}", $"({member.ClassJob.GameData.Abbreviation})");
+                        CustomStyleText($"{CustomComboFunctions.GetPartySlot(i).Name}", $"({member.ClassJob.Value.Abbreviation})");
                     }
                 }
                 ImGui.Spacing();
