@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Core
@@ -64,8 +65,8 @@ namespace XIVSlothCombo.Core
                     return OriginalHook(actionID);
 
                 if (ClassLocked() ||
-                    (DisabledJobsPVE.Any(x => x == Svc.ClientState.LocalPlayer.ClassJob.Id) && !Svc.ClientState.IsPvP) ||
-                    (DisabledJobsPVP.Any(x => x == Svc.ClientState.LocalPlayer.ClassJob.Id) && Svc.ClientState.IsPvP))
+                    (DisabledJobsPVE.Any(x => x == Svc.ClientState.LocalPlayer.ClassJob.RowId) && !Svc.ClientState.IsPvP) ||
+                    (DisabledJobsPVP.Any(x => x == Svc.ClientState.LocalPlayer.ClassJob.RowId) && Svc.ClientState.IsPvP))
                     return OriginalHook(actionID);
 
                 uint lastComboMove = ActionManager.Instance()->Combo.Action;
@@ -76,6 +77,7 @@ namespace XIVSlothCombo.Core
                 {
                     if (combo.TryInvoke(actionID, level, lastComboMove, comboTime, out uint newActionID))
                         return newActionID;
+                    
                 }
 
                 return OriginalHook(actionID);
@@ -95,14 +97,14 @@ namespace XIVSlothCombo.Core
 
             if (Svc.ClientState.LocalPlayer.Level <= 35) return false;
 
-            if (Svc.ClientState.LocalPlayer.ClassJob.Id is
+            if (Svc.ClientState.LocalPlayer.ClassJob.RowId is
                 (>= 8 and <= 25) or 27 or 28 or >= 30)
                 return false;
 
             if (!UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(66049))
                 return false;
 
-            if ((Svc.ClientState.LocalPlayer.ClassJob.Id is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
+            if ((Svc.ClientState.LocalPlayer.ClassJob.RowId is 1 or 2 or 3 or 4 or 5 or 6 or 7 or 26 or 29) &&
                 Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.BoundByDuty] &&
                 Svc.ClientState.LocalPlayer.Level > 35) return true;
 

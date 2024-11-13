@@ -757,6 +757,9 @@ namespace XIVSlothCombo.Combos.PvE
                         if (!IsMoving && (OriginalHook(Iaijutsu) is TenkaGoken or TendoGoken))
                             return OriginalHook(Iaijutsu);
 
+                        if (!IsMoving && LevelChecked(TendoGoken) && (OriginalHook(Iaijutsu) is TendoGoken))
+                            return OriginalHook(Iaijutsu);
+
                         if (LevelChecked(TsubameGaeshi) && (HasEffect(Buffs.KaeshiGokenReady) || HasEffect(Buffs.TendoKaeshiGokenReady)))
                             return OriginalHook(TsubameGaeshi);
                     }
@@ -865,6 +868,9 @@ namespace XIVSlothCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.SAM_AoE_TenkaGoken) && LevelChecked(TenkaGoken))
                     {
                         if (!IsMoving && (OriginalHook(Iaijutsu) is TenkaGoken))
+                            return OriginalHook(Iaijutsu);
+
+                        if (!IsMoving && LevelChecked(TendoGoken) && (OriginalHook(Iaijutsu) is TendoGoken))
                             return OriginalHook(Iaijutsu);
 
                         if (LevelChecked(TsubameGaeshi) && (HasEffect(Buffs.KaeshiGokenReady) || HasEffect(Buffs.TendoKaeshiGokenReady)))

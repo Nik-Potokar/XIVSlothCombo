@@ -231,9 +231,9 @@ internal class MCH
                 if (LevelChecked(Excavator) &&
                     HasEffect(Buffs.ExcavatorReady) &&
                     (BSUsed is 1 ||
-                     (BSUsed is 2 or 5 or 8 && Gauge.Battery <= 40) ||
-                     (BSUsed is 3 or 6 or 9 && Gauge.Battery <= 50) ||
-                     (BSUsed is 4 or 7 or 10 && Gauge.Battery <= 60) ||
+                     (BSUsed % 3 is 2 && Gauge.Battery <= 40) ||
+                     (BSUsed % 3 is 0 && Gauge.Battery <= 50) ||
+                     (BSUsed % 3 is 1 && Gauge.Battery <= 60) ||
                      GetBuffRemainingTime(Buffs.ExcavatorReady) < 6))
                     return OriginalHook(Chainsaw);
 
@@ -476,9 +476,9 @@ internal class MCH
                     LevelChecked(Excavator) &&
                     HasEffect(Buffs.ExcavatorReady) &&
                     (BSUsed is 1 ||
-                     (BSUsed is 2 or 5 or 8 && Gauge.Battery <= 40) ||
-                     (BSUsed is 3 or 6 or 9 && Gauge.Battery <= 50) ||
-                     (BSUsed is 4 or 7 or 10 && Gauge.Battery <= 60) ||
+                     (BSUsed % 3 is 2 && Gauge.Battery <= 40) ||
+                     (BSUsed % 3 is 0 && Gauge.Battery <= 50) ||
+                     (BSUsed % 3 is 1 && Gauge.Battery <= 60) ||
                      GetBuffRemainingTime(Buffs.ExcavatorReady) < 6))
                     return OriginalHook(Chainsaw);
 
