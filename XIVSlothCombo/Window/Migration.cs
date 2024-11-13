@@ -174,6 +174,9 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
                     {
                         AutomaticInstallStatus = MigrationAutoInstallStatus.Installed;
                         Svc.Commands.ProcessCommand("/wrath"); // Open WrathCombo
+                        object localPlugin;
+                        DalamudReflector.TryGetLocalPlugin(out localPlugin, out _, out _);
+                        localPlugin.Call("ScheduleDeletion", [true]);
                     }
                     else
                     {
@@ -204,16 +207,19 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
             var successText = "Wrath Combo has been installed successfully!";
             ImGuiHelpers.CenterCursorForText(successText);
             ImGui.TextColored(ImGuiColors.HealerGreen, successText);
+            CenterDisabledText("(XIVSlothCombo has been marked for deletion next restart)");
         }
         if (!_wrathInstalled)
             ImGui.Dummy(new Vector2(0, 30));
 
         #region Final Step
 
-        CenterButtonAndText("Open the Plugin Installer",
-            "and disable then uninstall XIVSlothCombo",
+        CenterButtonAndTextAndButton("Open the Plugin Installer",
+            "and disable then",
             () => Svc.PluginInterface.OpenPluginInstallerTo(
-                PluginInstallerOpenKind.InstalledPlugins, "XIVSlothCombo"));
+                PluginInstallerOpenKind.InstalledPlugins, "XIVSlothCombo"),
+            "uninstall XIVSlothCombo",
+            DalamudReflector.RemoveCurrentPlugin);
 
         CenterDisabledText("XIVSlothCombo will not receive any further updates.");
 
@@ -240,11 +246,13 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
         ImGui.TextDisabled(text);
     }
 
-    private static void CenterButtonAndText(string buttonText, string text,
-        Action onClick)
+    private static void CenterButtonAndTextAndButton(string buttonText, string text,
+        Action onClick, string button2Text, Action onClick2)
     {
         var offset = (ImGui.GetContentRegionAvail().X
                       - ImGuiHelpers.GetButtonSize(buttonText).X
+                      - ImGuiHelpers.GetButtonSize(button2Text).X
+                      - ImGui.GetStyle().ItemSpacing.X
                       - ImGui.GetStyle().ItemSpacing.X
                       - ImGui.CalcTextSize(text).X)
                      / 2;
@@ -253,6 +261,8 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
         if (ImGui.Button(buttonText + "##" + buttonText + text)) onClick();
         ImGui.SameLine();
         ImGui.Text(text);
+        ImGui.SameLine();
+        if (ImGui.Button(button2Text + "##" + button2Text + text)) onClick2();
     }
 
     #endregion
