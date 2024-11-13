@@ -4,7 +4,7 @@ using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,18 +18,15 @@ namespace XIVSlothCombo.Data
 {
     public static class ActionWatching
     {
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Action> ActionSheet = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.Action>()!
+        internal static Dictionary<uint, Lumina.Excel.Sheets.Action> ActionSheet = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.Action>()!
             .Where(i => i.RowId is not 7)
             .ToDictionary(i => i.RowId, i => i);
 
-        internal static Dictionary<uint, Lumina.Excel.GeneratedSheets.Status> StatusSheet = Svc.Data.GetExcelSheet<Lumina.Excel.GeneratedSheets.Status>()!
+        internal static Dictionary<uint, Lumina.Excel.Sheets.Status> StatusSheet = Svc.Data.GetExcelSheet<Lumina.Excel.Sheets.Status>()!
             .ToDictionary(i => i.RowId, i => i);
 
         internal static Dictionary<uint, Trait> TraitSheet = Svc.Data.GetExcelSheet<Trait>()!
-            .Where(i => i.ClassJobCategory is not null) //All player traits are assigned to a category. Chocobo and other garbage lacks this, thus excluded.
-            .ToDictionary(i => i.RowId, i => i);
-
-        internal static Dictionary<uint, BNpcBase> BNpcSheet = Svc.Data.GetExcelSheet<BNpcBase>()!
+            .Where(i => i.ClassJobCategory.IsValid) //All player traits are assigned to a category. Chocobo and other garbage lacks this, thus excluded.
             .ToDictionary(i => i.RowId, i => i);
 
         private static readonly Dictionary<string, List<uint>> statusCache = [];
@@ -61,9 +58,8 @@ namespace XIVSlothCombo.Data
 
                 LastAction = header.ActionId;
 
-                ActionSheet.TryGetValue(header.ActionId, out var sheet);
-                if (sheet != null)
-                {
+                if (ActionSheet.TryGetValue(header.ActionId, out var sheet))
+                { 
                     switch (sheet.ActionCategory.Value.RowId)
                     {
                         case 2: //Spell
@@ -271,21 +267,21 @@ namespace XIVSlothCombo.Data
             Svc.Condition.ConditionChange -= ResetActions;
         }
 
-        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory is not null ? action.ClassJobLevel : 255;
+        public static int GetLevel(uint id) => ActionSheet.TryGetValue(id, out var action) && action.ClassJobCategory.IsValid ? action.ClassJobLevel : 255;
         public static float GetActionCastTime(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.Cast100ms / (float)10 : 0;
         public static int GetActionRange(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.Range : -2; // 0 & -1 are valid numbers. -2 is our failure code for InActionRange
         public static int GetActionEffectRange(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.EffectRange : -1;
         public static int GetTraitLevel(uint id) => TraitSheet.TryGetValue(id, out var trait) ? trait.Level : 255;
-        public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? (string)action.Name : "UNKNOWN ABILITY";
+        public static string GetActionName(uint id) => ActionSheet.TryGetValue(id, out var action) ? action.Name.ToString() : "UNKNOWN ABILITY";
 
         public static string GetBLUIndex(uint id)
         {
-            var aozKey = Svc.Data.GetExcelSheet<AozAction>()!.First(x => x.Action.Row == id).RowId;
+            var aozKey = Svc.Data.GetExcelSheet<AozAction>()!.First(x => x.Action.RowId == id).RowId;
             var index = Svc.Data.GetExcelSheet<AozActionTransient>().GetRow(aozKey).Number;
 
             return $"#{index} ";
         }
-        public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? (string)status.Name : "Unknown Status";
+        public static string GetStatusName(uint id) => StatusSheet.TryGetValue(id, out var status) ? status.Name.ToString() : "Unknown Status";
 
         public static List<uint>? GetStatusesByName(string status)
         {
@@ -302,7 +298,7 @@ namespace XIVSlothCombo.Data
         {
             if (!ActionSheet.TryGetValue(id, out var action)) return ActionAttackType.Unknown;
 
-            return action.ActionCategory.Row switch
+            return action.ActionCategory.RowId switch
             {
                 2 => ActionAttackType.Spell,
                 3 => ActionAttackType.Weaponskill,

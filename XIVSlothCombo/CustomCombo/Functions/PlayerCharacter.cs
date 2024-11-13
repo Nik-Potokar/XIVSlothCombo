@@ -2,7 +2,7 @@
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
 namespace XIVSlothCombo.CustomComboNS.Functions
@@ -37,7 +37,7 @@ namespace XIVSlothCombo.CustomComboNS.Functions
         /// <returns> A value indicating a quest has been completed for a job action.</returns>
         public static unsafe bool IsActionUnlocked(uint id)
         {
-            var unlockLink = Svc.Data.GetExcelSheet<Action>().GetRow(id).UnlockLink;
+            var unlockLink = Svc.Data.GetExcelSheet<Action>().GetRow(id).UnlockLink.RowId;
             if (unlockLink == 0) return true;
             return UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(unlockLink);
         }

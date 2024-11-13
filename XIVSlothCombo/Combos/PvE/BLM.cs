@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using ECommons.DalamudServices;
 using System;
 using System.Collections.Generic;
 using XIVSlothCombo.Combos.JobHelpers;
