@@ -1,5 +1,4 @@
-﻿using System;
-using XIVSlothCombo.CustomComboNS;
+﻿using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.Data;
 
 namespace XIVSlothCombo.Combos.PvP

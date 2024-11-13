@@ -1,7 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Statuses;
-using ECommons.DalamudServices;
-using System;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.Core;
 using XIVSlothCombo.CustomComboNS;
@@ -215,7 +213,7 @@ namespace XIVSlothCombo.Combos.PvE
                         (IsNotEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) || (IsEnabled(CustomComboPreset.NIN_ST_AdvancedMode_Mug) && IsOnCooldown(Mug))))
                         mudraState.CurrentMudra = MudraCasting.MudraState.CastingHyoshoRanryu;
 
-                    if (NINHelper.InMudra)
+                    if (NINHelper.InMudra || mudraState.CurrentMudra != MudraCasting.MudraState.None)
                     {
                         if (mudraState.ContinueCurrentMudra(ref actionID))
                             return actionID;
@@ -488,7 +486,7 @@ namespace XIVSlothCombo.Combos.PvE
                     NINGauge? gauge = GetJobGauge<NINGauge>();
                     bool canWeave = CanWeave(GustSlash);
                     bool chargeCheck = IsNotEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_ChargeHold) || (IsEnabled(CustomComboPreset.NIN_AoE_AdvancedMode_Ninjitsus_ChargeHold) && GetRemainingCharges(Ten) == 2);
-                    bool inMudraState = HasEffect(Buffs.Mudra);
+                    bool inMudraState = NINHelper.InMudra;
                     int hellfrogPool = GetOptionValue(Config.Ninki_HellfrogPooling);
                     int dotonTimer = GetOptionValue(Config.Advanced_DotonTimer);
                     int dotonThreshold = GetOptionValue(Config.Advanced_DotonHP);
