@@ -201,7 +201,7 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
 
         if (AutomaticInstallStatus == MigrationAutoInstallStatus.Installed)
         {
-            var successText = "WrathCombo has been installed successfully!";
+            var successText = "Wrath Combo has been installed successfully!";
             ImGuiHelpers.CenterCursorForText(successText);
             ImGui.TextColored(ImGuiColors.HealerGreen, successText);
         }
