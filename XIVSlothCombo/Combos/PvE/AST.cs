@@ -2,7 +2,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using XIVSlothCombo.Combos.PvE.Content;
