@@ -7,6 +7,8 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Dalamud.Interface;
+using Dalamud.Interface.Colors;
+using Dalamud.Interface.Style;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.DalamudServices;
@@ -16,6 +18,14 @@ using ImGuiNET;
 #endregion
 
 namespace XIVSlothCombo.Window;
+
+public class MigrationAutoInstallStatus
+{
+    public const string None = "";
+    public const string Installing = "Being installed...";
+    public const string Installed = "Installed Successfully";
+    public const string Failed = "Installation Failed";
+}
 
 public class MigrationWindow : Dalamud.Interface.Windowing.Window
 {
@@ -27,7 +37,7 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
     /// <summary>
     ///     The status of the automatic installation process.
     /// </summary>
-    public static string AutomaticInstallStatus = "";
+    public static string AutomaticInstallStatus = MigrationAutoInstallStatus.None;
 
     /// <summary>
     ///     The task for the automatic installation process,
@@ -92,7 +102,7 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
 
         #region Installation Steps
 
-        if (!_wrathInstalled)
+        if (!_wrathInstalled && AutomaticInstallStatus != MigrationAutoInstallStatus.Installed)
             using (ImRaii.Table("WrathMigrationSteps", 3))
             {
                 ImGui.TableNextRow();
@@ -111,7 +121,6 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
                 ImGui.Dummy(new Vector2(40, 0));
                 ImGui.SameLine();
                 ImGui.TextDisabled($"({RepoURL})");
-                //ImGuiHelpers.ClickToCopyText($"({RepoURL})", RepoURL);
 
                 #endregion
 
@@ -149,8 +158,8 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
 
                 if (ImGui.Button("\u002B Install WrathCombo for me"))
                 {
-                    DalamudReflector.AddPlugin(RepoURL, "WrathCombo");
-                    AutomaticInstallStatus = "Being installed...";
+                    _automaticInstallTask = DalamudReflector.AddPlugin(RepoURL, "WrathCombo");
+                    AutomaticInstallStatus = MigrationAutoInstallStatus.Installing;
                 }
 
                 #region Installation Status
@@ -163,18 +172,23 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
                     // Give the user feedback
                     if (success)
                     {
-                        AutomaticInstallStatus = "Installed!";
+                        AutomaticInstallStatus = MigrationAutoInstallStatus.Installed;
                         Svc.Commands.ProcessCommand("/wrath"); // Open WrathCombo
                     }
                     else
                     {
-                        AutomaticInstallStatus = "Installation Failed.";
+                        AutomaticInstallStatus = MigrationAutoInstallStatus.Failed;
                     }
 
                     _automaticInstallTask = null; // Allow retrying
                 }
 
-                ImGui.Text(AutomaticInstallStatus);
+                ImGui.Dummy(new Vector2(40, 0));
+                ImGui.SameLine();
+                if (AutomaticInstallStatus != MigrationAutoInstallStatus.Failed)
+                    ImGui.Text(AutomaticInstallStatus);
+                else
+                    ImGui.TextColored(ImGuiColors.DalamudRed, AutomaticInstallStatus);
 
                 #endregion
 
@@ -185,6 +199,12 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
 
         #endregion
 
+        if (AutomaticInstallStatus == MigrationAutoInstallStatus.Installed)
+        {
+            var successText = "WrathCombo has been installed successfully!";
+            ImGuiHelpers.CenterCursorForText(successText);
+            ImGui.TextColored(ImGuiColors.HealerGreen, successText);
+        }
         if (!_wrathInstalled)
             ImGui.Dummy(new Vector2(0, 30));
 
