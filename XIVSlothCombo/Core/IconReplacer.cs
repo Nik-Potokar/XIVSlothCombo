@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using XIVSlothCombo.CustomComboNS;
+using XIVSlothCombo.Extensions;
 using XIVSlothCombo.Services;
 
 namespace XIVSlothCombo.Core
@@ -76,6 +77,7 @@ namespace XIVSlothCombo.Core
                 {
                     if (combo.TryInvoke(actionID, level, lastComboMove, comboTime, out uint newActionID))
                         return newActionID;
+                    
                 }
 
                 return OriginalHook(actionID);

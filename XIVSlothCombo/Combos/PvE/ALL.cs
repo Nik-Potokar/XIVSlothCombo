@@ -134,7 +134,7 @@ namespace XIVSlothCombo.Combos.PvE
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
                 if ((actionID is WHM.Raise or AST.Ascend or SGE.Egeiro)
-                    || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.RowId is SCH.JobID))
+                    || (actionID is SCH.Resurrection && LocalPlayer.ClassJob.Value.RowId is SCH.JobID))
                 {
                     if (ActionReady(Swiftcast))
                         return Swiftcast;

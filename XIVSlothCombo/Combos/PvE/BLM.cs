@@ -519,12 +519,11 @@ internal class BLM
                     return Fire3;
             }
 
-            if (LevelChecked(Blizzard3))
-                return Blizzard3;
-
-            return actionID;
+                if (Blizzard3.LevelChecked())
+                    return Blizzard3;
+                return actionID;
+            }
         }
-    }
 
     internal class BLM_AoE_SimpleMode : CustomCombo
     {
