@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Dalamud.Interface;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
@@ -22,6 +23,18 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
     ///     The repository URL for WrathCombo.
     /// </summary>
     private const string RepoURL = "https://love.puni.sh/ment.json";
+
+    /// <summary>
+    ///     The status of the automatic installation process.
+    /// </summary>
+    public static string AutomaticInstallStatus = "";
+
+    /// <summary>
+    ///     The task for the automatic installation process,
+    ///     or null after its result is read to update <see cref="AutomaticInstallStatus" />
+    ///     .
+    /// </summary>
+    private static Task? _automaticInstallTask;
 
     /// <summary>
     ///     Whether WrathCombo is installed.
@@ -98,6 +111,7 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
                 ImGui.Dummy(new Vector2(40, 0));
                 ImGui.SameLine();
                 ImGui.TextDisabled($"({RepoURL})");
+                //ImGuiHelpers.ClickToCopyText($"({RepoURL})", RepoURL);
 
                 #endregion
 
@@ -126,6 +140,8 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
 
                 #endregion
 
+                #region "Automatic" Install
+
                 // A larger padding for the big, easy button
                 ImGui.PushStyleVar(ImGuiStyleVar.FramePadding,
                     new Vector2(ImGui.CalcTextSize("W").X * 2,
@@ -133,17 +149,38 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
 
                 if (ImGui.Button("\u002B Install WrathCombo for me"))
                 {
-                    // Add the repository if it doesn't exist
-                    if (!DalamudReflector.HasRepo(RepoURL))
-                    {
-                        DalamudReflector.AddRepo(RepoURL, true);
-                        DalamudReflector.ReloadPluginMasters();
-                    }
-
-                    //todo: use ECommons to install WrathCombo
+                    DalamudReflector.AddPlugin(RepoURL, "WrathCombo");
+                    AutomaticInstallStatus = "Being installed...";
                 }
 
+                #region Installation Status
+
+                if (_automaticInstallTask is { IsCompleted: true })
+                {
+                    // Get the result of the task
+                    var success = ((Task<bool>)_automaticInstallTask).Result;
+
+                    // Give the user feedback
+                    if (success)
+                    {
+                        AutomaticInstallStatus = "Installed!";
+                        Svc.Commands.ProcessCommand("/wrath"); // Open WrathCombo
+                    }
+                    else
+                    {
+                        AutomaticInstallStatus = "Installation Failed.";
+                    }
+
+                    _automaticInstallTask = null; // Allow retrying
+                }
+
+                ImGui.Text(AutomaticInstallStatus);
+
+                #endregion
+
                 ImGui.PopStyleVar();
+
+                #endregion
             }
 
         #endregion
