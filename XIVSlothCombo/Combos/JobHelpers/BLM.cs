@@ -154,12 +154,12 @@ internal class BLM
 
                 if (WasLastAction(Manafont) && OpenerStep == 12) OpenerStep++;
                 else if (OpenerStep == 12) actionID = Manafont;
+                
+                if (WasLastAction(Fire4) && Fire4Count is 5 && OpenerStep == 13) OpenerStep++;
+                else if (OpenerStep == 13) actionID = Fire4;
 
-                if (WasLastAction(Triplecast) && OpenerStep == 13) OpenerStep++;
-                else if (OpenerStep == 13) actionID = Triplecast;
-
-                if (WasLastAction(Fire4) && Fire4Count is 5 && OpenerStep == 14) OpenerStep++;
-                else if (OpenerStep == 14) actionID = Fire4;
+                if (WasLastAction(Triplecast) && OpenerStep == 14) OpenerStep++;
+                else if (OpenerStep == 14) actionID = Triplecast;
 
                 if (WasLastAction(Fire4) && Fire4Count is 6 && OpenerStep == 15) OpenerStep++;
                 else if (OpenerStep == 15) actionID = Fire4;
