@@ -16,12 +16,16 @@ internal class DRG
 {
     // DRG Gauge & Extensions
     public static DRGGauge Gauge => GetJobGauge<DRGGauge>();
+
     public static DRGOpenerLogic DRGOpener => new();
+
     public static Status? ChaosDoTDebuff => FindTargetEffect(LevelChecked(ChaoticSpring)
         ? Debuffs.ChaoticSpring
         : Debuffs.ChaosThrust);
+
     public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
                                          !HasEffect(All.Buffs.TrueNorth);
+
     internal class DRGOpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
@@ -46,7 +50,7 @@ internal class DRG
                     if (value == OpenerState.PrePull) Svc.Log.Debug("Entered PrePull Opener");
                     if (value == OpenerState.InOpener) OpenerStep = 1;
 
-                    if (value == OpenerState.OpenerFinished || value == OpenerState.FailedOpener)
+                    if (value is OpenerState.OpenerFinished or OpenerState.FailedOpener)
                     {
                         if (value == OpenerState.FailedOpener)
                             Svc.Log.Information($"Opener Failed at step {OpenerStep}");
@@ -87,8 +91,7 @@ internal class DRG
 
             if (CurrentState == OpenerState.PrePull && PrePullStep > 0)
             {
-                if (WasLastAction(TrueThrust) && PrePullStep == 1)
-                    CurrentState = OpenerState.InOpener;
+                if (WasLastAction(TrueThrust) && PrePullStep == 1) CurrentState = OpenerState.InOpener;
                 else if (PrePullStep == 1) actionID = TrueThrust;
 
                 if (ActionWatching.CombatActions.Count > 2 && InCombat())
@@ -159,33 +162,23 @@ internal class DRG
                 if (WasLastAction(HeavensThrust) && OpenerStep == 17) OpenerStep++;
                 else if (OpenerStep == 17) actionID = HeavensThrust;
 
-                if (WasLastAction(Nastrond) && OpenerStep == 18) OpenerStep++;
-                else if (OpenerStep == 18) actionID = Nastrond;
+                if (WasLastAction(RiseOfTheDragon) && OpenerStep == 18) OpenerStep++;
+                else if (OpenerStep == 18) actionID = RiseOfTheDragon;
 
-                if (WasLastAction(RiseOfTheDragon) && OpenerStep == 19) OpenerStep++;
-                else if (OpenerStep == 19) actionID = RiseOfTheDragon;
+                if (WasLastAction(MirageDive) && OpenerStep == 19) OpenerStep++;
+                else if (OpenerStep == 19) actionID = MirageDive;
 
                 if (WasLastAction(FangAndClaw) && OpenerStep == 20) OpenerStep++;
                 else if (OpenerStep == 20) actionID = FangAndClaw;
 
-                if (WasLastAction(Nastrond) && OpenerStep == 21) OpenerStep++;
-                else if (OpenerStep == 21) actionID = Nastrond;
+                if (WasLastAction(Drakesbane) && OpenerStep == 21) OpenerStep++;
+                else if (OpenerStep == 21) actionID = Drakesbane;
 
-                if (WasLastAction(MirageDive) && OpenerStep == 22) OpenerStep++;
-                else if (OpenerStep == 22) actionID = MirageDive;
+                if (WasLastAction(RaidenThrust) && OpenerStep == 22) OpenerStep++;
+                else if (OpenerStep == 22) actionID = RaidenThrust;
 
-                if (WasLastAction(Drakesbane) && OpenerStep == 23) OpenerStep++;
-                else if (OpenerStep == 23) actionID = Drakesbane;
-
-                if (WasLastAction(RaidenThrust) && OpenerStep == 24) OpenerStep++;
-                else if (OpenerStep == 24) actionID = RaidenThrust;
-
-                if (WasLastAction(WyrmwindThrust) && OpenerStep == 25) OpenerStep++;
-                else if (OpenerStep == 25) actionID = WyrmwindThrust;
-
-                if (WasLastAction(SpiralBlow) && OpenerStep == 26)
-                    CurrentState = OpenerState.OpenerFinished;
-                else if (OpenerStep == 26) actionID = SpiralBlow;
+                if (WasLastAction(WyrmwindThrust) && OpenerStep == 23) CurrentState = OpenerState.OpenerFinished;
+                else if (OpenerStep == 23) actionID = WyrmwindThrust;
 
                 if (ActionWatching.TimeSinceLastAction.TotalSeconds >= 5)
                     CurrentState = OpenerState.FailedOpener;
