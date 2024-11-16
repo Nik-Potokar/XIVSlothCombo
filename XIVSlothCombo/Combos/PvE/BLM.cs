@@ -497,6 +497,7 @@ internal class BLM
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
                     PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges &&
+                     HasEffect(Buffs.Firestarter) && 
                     GetBuffRemainingTime(Buffs.Firestarter) > 3)
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
