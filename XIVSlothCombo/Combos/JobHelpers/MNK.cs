@@ -19,7 +19,7 @@ internal class MNK
     public static int opoOpoChakra => Gauge.BeastChakra.Count(x => x == BeastChakra.OPOOPO);
     public static int raptorChakra => Gauge.BeastChakra.Count(x => x == BeastChakra.RAPTOR);
     public static int coeurlChakra => Gauge.BeastChakra.Count(x => x == BeastChakra.COEURL);
-    public static MNKOpenerLogic MNKOpener => new();
+    public static MNKOpenerLogic MNKOpener = new();
     public static MNKGauge Gauge => GetJobGauge<MNKGauge>();
 
     internal class MNKHelper
