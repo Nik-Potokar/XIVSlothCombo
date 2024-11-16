@@ -15,24 +15,33 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal class BLM
 {
     // BLM Gauge & Extensions
-    public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
-    public static int Fire4Count => ActionWatching.CombatActions.Count(x => x == Fire4);
-    public static int maxPolyglot => TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 :
+    public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
+    public static int Fire4Count = ActionWatching.CombatActions.Count(x => x == Fire4);
+
+    public static int maxPolyglot = TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 :
         TraitLevelChecked(Traits.EnhancedPolyglot) ? 2 : 1;
-    public static bool canWeave => CanSpellWeave(ActionWatching.LastSpell);
-    public static float elementTimer => Gauge.ElementTimeRemaining / 1000f;
-    public static double gcdsInTimer => Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
-    public static int remainingPolyglotCD => Math.Max(0,
+
+    public static bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
+    public static float elementTimer = Gauge.ElementTimeRemaining / 1000f;
+    public static double gcdsInTimer = Math.Floor(elementTimer / GetActionCastTime(ActionWatching.LastSpell));
+
+    public static int remainingPolyglotCD = Math.Max(0,
         (maxPolyglot - Gauge.PolyglotStacks) * 30000 + (Gauge.EnochianTimer - 30000));
-    public static Status? thunderDebuffST =>
+
+    public static Status? thunderDebuffST =
         FindEffect(ThunderList[OriginalHook(Thunder)], CurrentTarget, LocalPlayer.GameObjectId);
-    public static Status? thunderDebuffAoE =>
+
+    public static Status? thunderDebuffAoE =
         FindEffect(ThunderList[OriginalHook(Thunder2)], CurrentTarget, LocalPlayer.GameObjectId);
-    public static bool canSwiftF => TraitLevelChecked(Traits.AspectMasteryIII) &&
-                                    IsOffCooldown(All.Swiftcast);
-    public static uint curMp => LocalPlayer.CurrentMp;
+
+    public static bool canSwiftF = TraitLevelChecked(Traits.AspectMasteryIII) &&
+                                   IsOffCooldown(All.Swiftcast);
+
+    public static uint curMp = LocalPlayer.CurrentMp;
+    public static BLMOpenerLogic BLMOpener = new();
+
     public static bool HasPolyglotStacks(BLMGauge gauge) => gauge.PolyglotStacks > 0;
-    
+
     internal class BLMOpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
@@ -154,7 +163,7 @@ internal class BLM
 
                 if (WasLastAction(Manafont) && OpenerStep == 12) OpenerStep++;
                 else if (OpenerStep == 12) actionID = Manafont;
-                
+
                 if (WasLastAction(Fire4) && Fire4Count is 5 && OpenerStep == 13) OpenerStep++;
                 else if (OpenerStep == 13) actionID = Fire4;
 
@@ -250,11 +259,11 @@ internal class BLM
                 1 => 2500,
                 2 => 5000,
                 3 => 10000,
-                _ => 0
+                var _ => 0
             };
 
-            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2 
-                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain) 
+            return castedSpell is Blizzard or Blizzard2 or Blizzard3 or Blizzard4 or Freeze or HighBlizzard2
+                ? Math.Max(LocalPlayer.MaxMp, LocalPlayer.CurrentMp + nextMpGain)
                 : Math.Max(0, LocalPlayer.CurrentMp - GetResourceCost(castedSpell));
         }
 

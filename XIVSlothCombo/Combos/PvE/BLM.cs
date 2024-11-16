@@ -11,124 +11,6 @@ namespace XIVSlothCombo.Combos.PvE;
 
 internal class BLM
 {
-    public const byte ClassID = 7;
-    public const byte JobID = 25;
-
-    public const uint
-        Fire = 141,
-        Blizzard = 142,
-        Thunder = 144,
-        Fire2 = 147,
-        Transpose = 149,
-        Fire3 = 152,
-        Thunder3 = 153,
-        Blizzard3 = 154,
-        AetherialManipulation = 155,
-        Scathe = 156,
-        Manafont = 158,
-        Freeze = 159,
-        Flare = 162,
-        LeyLines = 3573,
-        Blizzard4 = 3576,
-        Fire4 = 3577,
-        BetweenTheLines = 7419,
-        Thunder4 = 7420,
-        Triplecast = 7421,
-        Foul = 7422,
-        Thunder2 = 7447,
-        Despair = 16505,
-        UmbralSoul = 16506,
-        Xenoglossy = 16507,
-        Blizzard2 = 25793,
-        HighFire2 = 25794,
-        HighBlizzard2 = 25795,
-        Amplifier = 25796,
-        Paradox = 25797,
-        HighThunder = 36986,
-        HighThunder2 = 36987,
-        FlareStar = 36989;
-
-    internal static BLMOpenerLogic BLMOpener = new();
-
-    // Debuff Pairs of Actions and Debuff
-    public static readonly Dictionary<uint, ushort>
-        ThunderList = new()
-        {
-            { Thunder, Debuffs.Thunder },
-            { Thunder2, Debuffs.Thunder2 },
-            { Thunder3, Debuffs.Thunder3 },
-            { Thunder4, Debuffs.Thunder4 },
-            { HighThunder, Debuffs.HighThunder },
-            { HighThunder2, Debuffs.HighThunder2 }
-        };
-
-    protected static int nextMpGain => Gauge.UmbralIceStacks switch
-    {
-        0 => 0,
-        1 => 2500,
-        2 => 5000,
-        3 => 10000,
-        var _ => 0
-    };
-
-    public static class Buffs
-    {
-        public const ushort
-            Thundercloud = 164,
-            Firestarter = 165,
-            LeyLines = 737,
-            CircleOfPower = 738,
-            Sharpcast = 867,
-            Triplecast = 1211,
-            Thunderhead = 3870;
-    }
-
-    public static class Debuffs
-    {
-        public const ushort
-            Thunder = 161,
-            Thunder2 = 162,
-            Thunder3 = 163,
-            Thunder4 = 1210,
-            HighThunder = 3871,
-            HighThunder2 = 3872;
-    }
-
-    public static class Traits
-    {
-        public const uint
-            UmbralHeart = 295,
-            EnhancedPolyglot = 297,
-            AspectMasteryIII = 459,
-            EnhancedFoul = 461,
-            EnhancedManafont = 463,
-            Enochian = 460,
-            EnhancedPolyglotII = 615;
-    }
-
-    public static class MP
-    {
-        public const int MaxMP = 10000;
-
-        public const int AllMPSpells = 800; //"ALL MP" spell. Only caring about the absolute minimum.
-
-        public static int FireI => GetResourceCost(OriginalHook(Fire));
-
-        public static int FlareAoE => GetResourceCost(OriginalHook(Flare));
-
-        public static int FireAoE => GetResourceCost(OriginalHook(Fire2));
-
-        public static int FireIII => GetResourceCost(OriginalHook(Fire3));
-
-        public static int BlizzardAoE => GetResourceCost(OriginalHook(Blizzard2));
-
-        public static int BlizzardI => GetResourceCost(OriginalHook(Blizzard));
-
-        public static int Freeze => GetResourceCost(OriginalHook(BLM.Freeze));
-
-        public static int Despair => GetResourceCost(OriginalHook(BLM.Despair));
-    }
-
     public static class Config
     {
         public static UserInt
@@ -406,7 +288,7 @@ internal class BLM
                         canWeave && ActionReady(All.Swiftcast) &&
                         GetBuffStacks(Buffs.Triplecast) == 0)
                         return All.Swiftcast;
-                    
+
                     return FlareStar;
                 }
 
@@ -419,13 +301,13 @@ internal class BLM
                             (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
                              TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
                             return Triplecast;
-                        
+
                         if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
                             (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
                             return OriginalHook(Thunder);
 
                         if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                            PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && 
+                            PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges &&
                             IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
                             canWeave && ActionReady(Triplecast) &&
                             GetBuffStacks(Buffs.Triplecast) == 0 &&
@@ -434,10 +316,10 @@ internal class BLM
                             return Xenoglossy.LevelChecked()
                                 ? Xenoglossy
                                 : Foul;
-                        
+
                         return Fire4;
                     }
-                
+
                 if (curMp >= MP.FireI)
                     return Fire;
 
@@ -497,7 +379,7 @@ internal class BLM
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
                     PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges &&
-                     HasEffect(Buffs.Firestarter) && 
+                    HasEffect(Buffs.Firestarter) &&
                     GetBuffRemainingTime(Buffs.Firestarter) > 3)
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
@@ -523,11 +405,12 @@ internal class BLM
                     return Fire3;
             }
 
-                if (Blizzard3.LevelChecked())
-                    return Blizzard3;
-                return actionID;
-            }
+            if (Blizzard3.LevelChecked())
+                return Blizzard3;
+
+            return actionID;
         }
+    }
 
     internal class BLM_AoE_SimpleMode : CustomCombo
     {
@@ -926,4 +809,124 @@ internal class BLM
                 : actionID;
         }
     }
+
+    #region ID's
+
+    public const byte ClassID = 7;
+    public const byte JobID = 25;
+
+    public const uint
+        Fire = 141,
+        Blizzard = 142,
+        Thunder = 144,
+        Fire2 = 147,
+        Transpose = 149,
+        Fire3 = 152,
+        Thunder3 = 153,
+        Blizzard3 = 154,
+        AetherialManipulation = 155,
+        Scathe = 156,
+        Manafont = 158,
+        Freeze = 159,
+        Flare = 162,
+        LeyLines = 3573,
+        Blizzard4 = 3576,
+        Fire4 = 3577,
+        BetweenTheLines = 7419,
+        Thunder4 = 7420,
+        Triplecast = 7421,
+        Foul = 7422,
+        Thunder2 = 7447,
+        Despair = 16505,
+        UmbralSoul = 16506,
+        Xenoglossy = 16507,
+        Blizzard2 = 25793,
+        HighFire2 = 25794,
+        HighBlizzard2 = 25795,
+        Amplifier = 25796,
+        Paradox = 25797,
+        HighThunder = 36986,
+        HighThunder2 = 36987,
+        FlareStar = 36989;
+
+    // Debuff Pairs of Actions and Debuff
+    public static readonly Dictionary<uint, ushort>
+        ThunderList = new()
+        {
+            { Thunder, Debuffs.Thunder },
+            { Thunder2, Debuffs.Thunder2 },
+            { Thunder3, Debuffs.Thunder3 },
+            { Thunder4, Debuffs.Thunder4 },
+            { HighThunder, Debuffs.HighThunder },
+            { HighThunder2, Debuffs.HighThunder2 }
+        };
+
+    protected static int nextMpGain => Gauge.UmbralIceStacks switch
+    {
+        0 => 0,
+        1 => 2500,
+        2 => 5000,
+        3 => 10000,
+        var _ => 0
+    };
+
+    public static class Buffs
+    {
+        public const ushort
+            Thundercloud = 164,
+            Firestarter = 165,
+            LeyLines = 737,
+            CircleOfPower = 738,
+            Sharpcast = 867,
+            Triplecast = 1211,
+            Thunderhead = 3870;
+    }
+
+    public static class Debuffs
+    {
+        public const ushort
+            Thunder = 161,
+            Thunder2 = 162,
+            Thunder3 = 163,
+            Thunder4 = 1210,
+            HighThunder = 3871,
+            HighThunder2 = 3872;
+    }
+
+    public static class Traits
+    {
+        public const uint
+            UmbralHeart = 295,
+            EnhancedPolyglot = 297,
+            AspectMasteryIII = 459,
+            EnhancedFoul = 461,
+            EnhancedManafont = 463,
+            Enochian = 460,
+            EnhancedPolyglotII = 615;
+    }
+
+    public static class MP
+    {
+        public const int MaxMP = 10000;
+
+        public const int AllMPSpells = 800; //"ALL MP" spell. Only caring about the absolute minimum.
+
+        public static int FireI => GetResourceCost(OriginalHook(Fire));
+
+        public static int FlareAoE => GetResourceCost(OriginalHook(Flare));
+
+        public static int FireAoE => GetResourceCost(OriginalHook(Fire2));
+
+        public static int FireIII => GetResourceCost(OriginalHook(Fire3));
+
+        public static int BlizzardAoE => GetResourceCost(OriginalHook(Blizzard2));
+
+        public static int BlizzardI => GetResourceCost(OriginalHook(Blizzard));
+
+        public static int Freeze => GetResourceCost(OriginalHook(BLM.Freeze));
+
+        public static int Despair => GetResourceCost(OriginalHook(BLM.Despair));
+    }
+
+    #endregion
 }
