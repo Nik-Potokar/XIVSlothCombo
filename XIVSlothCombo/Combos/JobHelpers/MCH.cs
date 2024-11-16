@@ -28,7 +28,7 @@ internal class MCH
                                          CanDelayedWeave(ActionWatching.LastWeaponskill);
     public static MCHGauge Gauge => GetJobGauge<MCHGauge>();
     public static int BSUsed => ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
-    public static MCHOpenerLogic MCHOpener => new();
+    public static MCHOpenerLogic MCHOpener = new();
 
     internal class MCHOpenerLogic
     {
