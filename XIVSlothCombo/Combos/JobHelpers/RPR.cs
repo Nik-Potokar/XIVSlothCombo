@@ -12,11 +12,13 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal class RPR
 {
     // RPR Gauge & Extensions
-    public static float GCD => GetCooldown(Slice).CooldownTotal;
-    public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                         !HasEffect(All.Buffs.TrueNorth);
+    public static float GCD = GetCooldown(Slice).CooldownTotal;
+
+    public static bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
+                                        !HasEffect(All.Buffs.TrueNorth);
+
     public static RPROpenerLogic RPROpener = new();
-    public static RPRGauge Gauge => GetJobGauge<RPRGauge>();
+    public static RPRGauge Gauge = GetJobGauge<RPRGauge>();
 
     internal class RPROpenerLogic
     {
