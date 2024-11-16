@@ -5,6 +5,7 @@ using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
 using System.Collections.Concurrent;
+using System.Reflection;
 using DalamudStatus = Dalamud.Game.ClientState.Statuses; // conflicts with structs if not defined
 
 namespace XIVSlothCombo.Data
@@ -26,6 +27,8 @@ namespace XIVSlothCombo.Data
 
         private delegate IntPtr GetActionCooldownSlotDelegate(IntPtr actionManager, int cooldownGroup);
 
+        private unsafe IntPtr CSAddress => (nint)(JobGaugeManager.Instance()->CurrentGauge);
+
         /// <inheritdoc/>
         public void Dispose() => Svc.Framework.Update -= Framework_Update;
 
@@ -34,8 +37,11 @@ namespace XIVSlothCombo.Data
         /// <returns> The job gauge. </returns>
         internal T GetJobGauge<T>() where T : JobGaugeBase
         {
-            if (!jobGaugeCache.TryGetValue(typeof(T), out JobGaugeBase? gauge))
-                gauge = jobGaugeCache[typeof(T)] = Svc.Gauges.Get<T>();
+            //Lifted from Dalamud, using our own cache instead of theirs
+            if (!this.jobGaugeCache.TryGetValue(typeof(T), out var gauge) || gauge.Address != this.CSAddress)
+            {
+                gauge = this.jobGaugeCache[typeof(T)] = (T)Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, new object[] { this.CSAddress }, null);
+            }
 
             return (T)gauge;
         }
