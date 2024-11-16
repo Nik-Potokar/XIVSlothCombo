@@ -426,7 +426,11 @@ internal class BLM
 
                         if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
                             PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && 
-                            GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))
+                            IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
+                            canWeave && ActionReady(Triplecast) &&
+                            GetBuffStacks(Buffs.Triplecast) == 0 &&
+                            (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
+                             TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
                             return Xenoglossy.LevelChecked()
                                 ? Xenoglossy
                                 : Foul;
@@ -492,7 +496,8 @@ internal class BLM
                     return Paradox;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                    PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges)
+                    PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges &&
+                    GetBuffRemainingTime(Buffs.Firestarter) > 3)
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
                         : Foul;
