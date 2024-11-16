@@ -12,10 +12,19 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal class SGE
 {
     // SGE Gauge & Extensions
-    public static SGEGauge Gauge => GetJobGauge<SGEGauge>();
+    public static SGEGauge Gauge = GetJobGauge<SGEGauge>();
+
     public static int Dosis3Count => ActionWatching.CombatActions.Count(x => x == Dosis3);
-    public static bool HasAddersgall(SGEGauge gauge) => gauge.Addersgall > 0;
-    public static bool HasAddersting(SGEGauge gauge) => gauge.Addersting > 0;
+
+    public static bool HasAddersgall(SGEGauge gauge)
+    {
+        return gauge.Addersgall > 0;
+    }
+
+    public static bool HasAddersting(SGEGauge gauge)
+    {
+        return gauge.Addersting > 0;
+    }
 
     internal class SGEOpenerLogic
     {
