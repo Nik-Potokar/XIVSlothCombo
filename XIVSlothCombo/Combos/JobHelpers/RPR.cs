@@ -15,7 +15,7 @@ internal class RPR
     public static float GCD => GetCooldown(Slice).CooldownTotal;
     public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
                                          !HasEffect(All.Buffs.TrueNorth);
-    public static RPROpenerLogic RPROpener => new();
+    public static RPROpenerLogic RPROpener = new();
     public static RPRGauge Gauge => GetJobGauge<RPRGauge>();
 
     internal class RPROpenerLogic
