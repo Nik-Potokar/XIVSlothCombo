@@ -424,11 +424,13 @@ internal class BLM
                             (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
                             return OriginalHook(Thunder);
 
-                        if (HasPolyglotStacks(Gauge) && gcdsInTimer >= 1 &&
-                            (ActionReady(All.Swiftcast) ||
-                             (ActionReady(Triplecast) &&
-                              GetBuffStacks(Buffs.Triplecast) == 0 &&
-                              GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))))
+                        if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
+                            PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && 
+                            IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
+                            canWeave && ActionReady(Triplecast) &&
+                            GetBuffStacks(Buffs.Triplecast) == 0 &&
+                            (GetRemainingCharges(Triplecast) > Config.BLM_ST_Triplecast_HoldCharges ||
+                             TriplecastChargetime <= Config.BLM_ST_Triplecast_ChargeTime))
                             return Xenoglossy.LevelChecked()
                                 ? Xenoglossy
                                 : Foul;
@@ -494,7 +496,9 @@ internal class BLM
                     return Paradox;
 
                 if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
-                    PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges)
+                    PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges &&
+                     HasEffect(Buffs.Firestarter) && 
+                    GetBuffRemainingTime(Buffs.Firestarter) > 3)
                     return LevelChecked(Xenoglossy)
                         ? Xenoglossy
                         : Foul;
