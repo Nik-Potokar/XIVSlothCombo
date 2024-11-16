@@ -16,13 +16,10 @@ internal class DRG
 {
     // DRG Gauge & Extensions
     public static DRGGauge Gauge => GetJobGauge<DRGGauge>();
-
-    public static DRGOpenerLogic DRGOpener => new();
-
+    public static DRGOpenerLogic DRGOpener = new();
     public static Status? ChaosDoTDebuff => FindTargetEffect(LevelChecked(ChaoticSpring)
         ? Debuffs.ChaoticSpring
         : Debuffs.ChaosThrust);
-
     public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
                                          !HasEffect(All.Buffs.TrueNorth);
 
