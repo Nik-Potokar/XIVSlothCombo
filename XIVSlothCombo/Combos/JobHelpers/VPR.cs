@@ -27,7 +27,7 @@ internal class VPR
     public static bool CappedOnCoils =>
         (TraitLevelChecked(Traits.EnhancedVipersRattle) && gauge.RattlingCoilStacks > 2) ||
         (!TraitLevelChecked(Traits.EnhancedVipersRattle) && gauge.RattlingCoilStacks > 1);
-    public static VPROpenerLogic VPROpener => new();
+    public static VPROpenerLogic VPROpener = new();
     public static VPRGauge gauge => GetJobGauge<VPRGauge>();
     public static bool HasRattlingCoilStack(VPRGauge Gauge) => Gauge.RattlingCoilStacks > 0;
     
