@@ -424,11 +424,9 @@ internal class BLM
                             (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
                             return OriginalHook(Thunder);
 
-                        if (HasPolyglotStacks(Gauge) && gcdsInTimer >= 1 &&
-                            (ActionReady(All.Swiftcast) ||
-                             (ActionReady(Triplecast) &&
-                              GetBuffStacks(Buffs.Triplecast) == 0 &&
-                              GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))))
+                        if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
+                            PolyglotStacks > Config.BLM_ST_UsePolyglot_HoldCharges && 
+                            GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast))
                             return Xenoglossy.LevelChecked()
                                 ? Xenoglossy
                                 : Foul;
