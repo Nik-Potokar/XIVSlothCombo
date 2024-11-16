@@ -8,90 +8,6 @@ namespace XIVSlothCombo.Combos.PvE;
 
 internal class VPR
 {
-    public const byte JobID = 41;
-
-    public const uint
-        ReavingFangs = 34607,
-        ReavingMaw = 34615,
-        Vicewinder = 34620,
-        HuntersCoil = 34621,
-        HuntersDen = 34624,
-        HuntersSnap = 39166,
-        Vicepit = 34623,
-        RattlingCoil = 39189,
-        Reawaken = 34626,
-        SerpentsIre = 34647,
-        SerpentsTail = 35920,
-        Slither = 34646,
-        SteelFangs = 34606,
-        SteelMaw = 34614,
-        SwiftskinsCoil = 34622,
-        SwiftskinsDen = 34625,
-        Twinblood = 35922,
-        Twinfang = 35921,
-        UncoiledFury = 34633,
-        WrithingSnap = 34632,
-        SwiftskinsSting = 34609,
-        TwinfangBite = 34636,
-        TwinbloodBite = 34637,
-        UncoiledTwinfang = 34644,
-        UncoiledTwinblood = 34645,
-        HindstingStrike = 34612,
-        DeathRattle = 34634,
-        HuntersSting = 34608,
-        HindsbaneFang = 34613,
-        FlankstingStrike = 34610,
-        FlanksbaneFang = 34611,
-        HuntersBite = 34616,
-        JaggedMaw = 34618,
-        SwiftskinsBite = 34617,
-        BloodiedMaw = 34619,
-        FirstGeneration = 34627,
-        FirstLegacy = 34640,
-        SecondGeneration = 34628,
-        SecondLegacy = 34641,
-        ThirdGeneration = 34629,
-        ThirdLegacy = 34642,
-        FourthGeneration = 34630,
-        FourthLegacy = 34643,
-        Ouroboros = 34631,
-        LastLash = 34635;
-
-    public static class Buffs
-    {
-        public const ushort
-            FellhuntersVenom = 3659,
-            FellskinsVenom = 3660,
-            FlanksbaneVenom = 3646,
-            FlankstungVenom = 3645,
-            HindstungVenom = 3647,
-            HindsbaneVenom = 3648,
-            GrimhuntersVenom = 3649,
-            GrimskinsVenom = 3650,
-            HuntersVenom = 3657,
-            SwiftskinsVenom = 3658,
-            HuntersInstinct = 3668,
-            Swiftscaled = 3669,
-            Reawakened = 3670,
-            ReadyToReawaken = 3671,
-            PoisedForTwinfang = 3665,
-            PoisedForTwinblood = 3666,
-            HonedReavers = 3772,
-            HonedSteel = 3672;
-    }
-
-    public static class Debuffs
-    {
-    }
-
-    public static class Traits
-    {
-        public const uint
-            EnhancedVipersRattle = 530,
-            EnhancedSerpentsLineage = 533,
-            SerpentsLegacy = 534;
-    }
-
     public static class Config
     {
         public static UserInt
@@ -118,7 +34,7 @@ internal class VPR
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             bool in5y = GetTargetDistance() <= 5;
-          
+
             if (actionID is SteelFangs)
             {
                 // Opener for VPR
@@ -196,7 +112,7 @@ internal class VPR
 
                 //Overcap protection
                 if (CappedOnCoils &&
-                    ((HasCharges(Vicewinder) && !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) && 
+                    ((HasCharges(Vicewinder) && !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) &&
                       !HasEffect(Buffs.Reawakened)) || //spend if Vicewinder is up, after Reawaken
                      ireCD <= GCD * 5)) //spend in case under Reawaken right as Ire comes up
                     return UncoiledFury;
@@ -333,9 +249,8 @@ internal class VPR
             int uncoiledThreshold = Config.VPR_ST_UncoiledFury_Threshold;
 
             float enemyHP = GetTargetHPPercent();
-            
+
             bool in5y = GetTargetDistance() <= 5;
-            
 
             if (actionID is SteelFangs)
             {
@@ -582,7 +497,7 @@ internal class VPR
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             bool in5y = HasBattleTarget() && GetTargetDistance() <= 5;
-            
+
             if (actionID is SteelMaw)
             {
                 if (CanWeave(ActionWatching.LastWeaponskill))
@@ -865,8 +780,9 @@ internal class VPR
                 // Uncoiled Fury usage
                 if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFury) &&
                     LevelChecked(UncoiledFury) &&
-                    (gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges || (GetTargetHPPercent() < uncoiledThreshold &&
-                        HasRattlingCoilStack(gauge))) &&
+                    (gauge.RattlingCoilStacks > Config.VPR_AoE_UncoiledFury_HoldCharges ||
+                     (GetTargetHPPercent() < uncoiledThreshold &&
+                      HasRattlingCoilStack(gauge))) &&
                     HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
                     !VicepitReady && !HuntersDenReady && !SwiftskinsDenReady &&
                     !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.FellskinsVenom) &&
@@ -1161,4 +1077,92 @@ internal class VPR
             }
         }
     }
+
+    #region ID's
+
+    public const byte JobID = 41;
+
+    public const uint
+        ReavingFangs = 34607,
+        ReavingMaw = 34615,
+        Vicewinder = 34620,
+        HuntersCoil = 34621,
+        HuntersDen = 34624,
+        HuntersSnap = 39166,
+        Vicepit = 34623,
+        RattlingCoil = 39189,
+        Reawaken = 34626,
+        SerpentsIre = 34647,
+        SerpentsTail = 35920,
+        Slither = 34646,
+        SteelFangs = 34606,
+        SteelMaw = 34614,
+        SwiftskinsCoil = 34622,
+        SwiftskinsDen = 34625,
+        Twinblood = 35922,
+        Twinfang = 35921,
+        UncoiledFury = 34633,
+        WrithingSnap = 34632,
+        SwiftskinsSting = 34609,
+        TwinfangBite = 34636,
+        TwinbloodBite = 34637,
+        UncoiledTwinfang = 34644,
+        UncoiledTwinblood = 34645,
+        HindstingStrike = 34612,
+        DeathRattle = 34634,
+        HuntersSting = 34608,
+        HindsbaneFang = 34613,
+        FlankstingStrike = 34610,
+        FlanksbaneFang = 34611,
+        HuntersBite = 34616,
+        JaggedMaw = 34618,
+        SwiftskinsBite = 34617,
+        BloodiedMaw = 34619,
+        FirstGeneration = 34627,
+        FirstLegacy = 34640,
+        SecondGeneration = 34628,
+        SecondLegacy = 34641,
+        ThirdGeneration = 34629,
+        ThirdLegacy = 34642,
+        FourthGeneration = 34630,
+        FourthLegacy = 34643,
+        Ouroboros = 34631,
+        LastLash = 34635;
+
+    public static class Buffs
+    {
+        public const ushort
+            FellhuntersVenom = 3659,
+            FellskinsVenom = 3660,
+            FlanksbaneVenom = 3646,
+            FlankstungVenom = 3645,
+            HindstungVenom = 3647,
+            HindsbaneVenom = 3648,
+            GrimhuntersVenom = 3649,
+            GrimskinsVenom = 3650,
+            HuntersVenom = 3657,
+            SwiftskinsVenom = 3658,
+            HuntersInstinct = 3668,
+            Swiftscaled = 3669,
+            Reawakened = 3670,
+            ReadyToReawaken = 3671,
+            PoisedForTwinfang = 3665,
+            PoisedForTwinblood = 3666,
+            HonedReavers = 3772,
+            HonedSteel = 3672;
+    }
+
+    public static class Debuffs
+    {
+    }
+
+    public static class Traits
+    {
+        public const uint
+            EnhancedVipersRattle = 530,
+            EnhancedSerpentsLineage = 533,
+            SerpentsLegacy = 534;
+    }
+
+    #endregion
 }
