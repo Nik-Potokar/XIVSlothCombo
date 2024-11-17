@@ -274,7 +274,7 @@ internal class BLM
                     curMp < MP.FireI && LevelChecked(Despair) && curMp >= MP.Despair)
                     return Despair;
 
-                if (IsEnabled(CustomComboPreset.BLM_ST_Flarestar) &&
+                if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) &&
                     curMp == 0 && LevelChecked(FlareStar) && Gauge.AstralSoulStacks == 6)
                 {
                     if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) &&
@@ -602,7 +602,7 @@ internal class BLM
 
             if (Gauge.InAstralFire)
             {
-                if (IsEnabled(CustomComboPreset.BLM_AoE_Flarestar) &&
+                if (IsEnabled(CustomComboPreset.BLM_AoE_FlareStar) &&
                     curMp == 0 && FlareStar.LevelChecked() && Gauge.AstralSoulStacks == 6)
                     return FlareStar;
 

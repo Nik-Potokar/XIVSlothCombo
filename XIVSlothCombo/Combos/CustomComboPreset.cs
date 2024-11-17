@@ -387,48 +387,48 @@ namespace XIVSlothCombo.Combos
         BLM_ST_Opener = 2101,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Amplifier", "Add Amplifier to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Amplifier Option", "Add Amplifier to the rotation.", BLM.JobID)]
         BLM_ST_Amplifier = 2102,
 
         [ParentCombo(BLM_ST_AdvancedMode)] 
-        [CustomComboInfo("Use Leylines", "Add Leylines to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Leylines Option", "Add Leylines to the rotation.", BLM.JobID)]
         BLM_ST_LeyLines = 2103,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Foul / Xenoglossy", "Add Foul / Xenoglossy to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Foul/Xenoglossy Option", "Add Foul/Xenoglossy to the rotation.", BLM.JobID)]
         BLM_ST_UsePolyglot = 2104,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Foul / Xenoglossy for movement", "Add Foul / Xenoglossy to the rotation as movement option.", BLM.JobID)]
+        [CustomComboInfo("Foul/Xenoglossy for Movement Option", "Add Foul / Xenoglossy to the rotation as movement option.", BLM.JobID)]
         BLM_ST_UsePolyglotMoving = 2105,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Swiftcast", "Add Swiftcast to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Swiftcast Option", "Add Swiftcast to the rotation.", BLM.JobID)]
         BLM_ST_Swiftcast = 2106,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Triplecast", "Add Triplecast to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Triplecast Option", "Add Triplecast to the rotation.", BLM.JobID)]
         BLM_ST_Triplecast = 2107,
 
         [ParentCombo(BLM_ST_AdvancedMode)] 
-        [CustomComboInfo("Use Manafont", "Add Manafont to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Manafont Option", "Add Manafont to the rotation.", BLM.JobID)]
         BLM_ST_Manafont = 2108,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Transpose", "Add Transpose to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Transpose Option", "Add Transpose to the rotation.", BLM.JobID)]
         BLM_ST_Transpose = 2109,
         
         [ParentCombo(BLM_ST_AdvancedMode)] 
-        [CustomComboInfo("Use Thunder", "Add Thunder to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Thunder Option", "Add Thunder to the rotation.", BLM.JobID)]
         BLM_ST_Thunder = 2110,
 
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Despair", "Add Despair to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Despair Option", "Add Despair to the rotation.", BLM.JobID)]
         BLM_ST_Despair = 2111,
         
         [ParentCombo(BLM_ST_AdvancedMode)]
-        [CustomComboInfo("Use Flarestar", "Add Flarestar to the rotation.", BLM.JobID)]
-        BLM_ST_Flarestar = 2112,
+        [CustomComboInfo("Flare Star Option", "Add Flare Star to the rotation.", BLM.JobID)]
+        BLM_ST_FlareStar = 2112,
         
         #endregion
         
@@ -440,48 +440,48 @@ namespace XIVSlothCombo.Combos
         BLM_AoE_AdvancedMode = 2200,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Amplifier", "Add Amplifier to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Amplifier Option", "Add Amplifier to the rotation.", BLM.JobID)]
         BLM_AoE_Amplifier = 2201,
 
         [ParentCombo(BLM_AoE_AdvancedMode)] 
-        [CustomComboInfo("Use Leylines", "Add Leylines to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Leylines Option", "Add Leylines to the rotation.", BLM.JobID)]
         BLM_AoE_LeyLines = 2202,
         
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Foul", "Add Foul to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Foul Option", "Add Foul to the rotation.", BLM.JobID)]
         BLM_AoE_UsePolyglot = 2203,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Foul for movement", "Add Foul to the rotation as movement option.", BLM.JobID)]
+        [CustomComboInfo("Foul for Movement Option", "Add Foul to the rotation as movement option.", BLM.JobID)]
         BLM_AoE_UsePolyglotMoving = 2204,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Swiftcast", "Add Swiftcast to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Swiftcast Option", "Add Swiftcast to the rotation.", BLM.JobID)]
         BLM_AoE_Swiftcast = 2205,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Triplecast", "Add Triplecast to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Triplecast Option", "Add Triplecast to the rotation.", BLM.JobID)]
         BLM_AoE_Triplecast = 2206,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Manafont", "Add Manafont to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Manafont Option", "Add Manafont to the rotation.", BLM.JobID)]
         BLM_AoE_Manafont = 2207,
 
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Transpose", "Add Transpose to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Transpose Option", "Add Transpose to the rotation.", BLM.JobID)]
         BLM_AoE_Transpose = 2208,
         
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Thunder", "Add Thunder to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Thunder Option", "Add Thunder to the rotation.", BLM.JobID)]
         BLM_AoE_Thunder = 2209,
         
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Flare", "Add Flare to the rotation.", BLM.JobID)]
+        [CustomComboInfo("Flare Option", "Add Flare to the rotation.", BLM.JobID)]
         BLM_AoE_Flare = 2210,
         
         [ParentCombo(BLM_AoE_AdvancedMode)]
-        [CustomComboInfo("Use Flarestar", "Add Flarestar to the rotation.", BLM.JobID)]
-        BLM_AoE_Flarestar = 2211,
+        [CustomComboInfo("Flare Star Option", "Add Flare Star to the rotation.", BLM.JobID)]
+        BLM_AoE_FlareStar = 2211,
         
         #endregion
         
