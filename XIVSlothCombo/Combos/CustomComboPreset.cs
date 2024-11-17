@@ -4178,12 +4178,16 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.\nWill automatically swap depending on your position.", VPR.JobID)]
         VPR_ST_VicewinderCombo = 30007,
 
+        [ParentCombo(VPR_ST_CDs)]
+        [CustomComboInfo("Vicewinder Weaves", "Adds Twinfang and Bloodfang to the rotation.", VPR.JobID)]
+        VPR_ST_VicewinderWeaves = 30013,
+
         #endregion
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
         VPR_ST_SerpentsTail = 30008,
-
+        
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
         VPR_ST_UncoiledFury = 30009,
@@ -4257,6 +4261,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(VPR_AoE_VicepitCombo)]
         [CustomComboInfo("Disable Range Check", "Disables the range check for Swiftskin's Den and Hunter's Den, so they will be used even without a target selected.", VPR.JobID)]
         VPR_AoE_VicepitCombo_DisableRange = 30113,
+
+        [ParentCombo(VPR_AoE_CDs)]
+        [CustomComboInfo("Vicepit Weaves", "Adds Twinfang and Twinblood to the rotation.", VPR.JobID)]
+        VPR_AoE_VicepitWeaves = 30115,
+        
 
         #endregion
 
@@ -4338,6 +4347,9 @@ namespace XIVSlothCombo.Combos
         [VariantParent(VPR_ST_SimpleMode, VPR_AoE_SimpleMode, VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", VPR.JobID)]
         VPR_Variant_Rampart = 30301,
+        
+        //Last Value ST = 30012
+        //Last Value AoE = 30112
 
         #endregion
 
