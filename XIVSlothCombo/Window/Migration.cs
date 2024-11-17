@@ -93,7 +93,7 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
         CenterText("XIVSlothCombo is now WrathCombo!");
         CenterText(
             "Please follow the steps below to migrate to WrathCombo to continue receiving updates.");
-        CenterDisabledText("(WrathCombo will automatically import your settings)");
+        //CenterDisabledText("(WrathCombo will automatically import your settings)");
 
         #endregion
 
