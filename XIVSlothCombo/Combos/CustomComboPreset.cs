@@ -183,7 +183,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Combust Uptime Option", "Adds Combust to the DPS feature if it's not present on current target, or is about to expire.", AST.JobID)]
         AST_ST_DPS_CombustUptime = 1018,
-              
+
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
         AST_DPS_LightSpeed = 1020,
@@ -220,13 +220,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Earthly Star Option", "Adds Earthly Star." +
                                                 "\nTo be used in conjunction with Redirect/Reaction/etc", AST.JobID, 11)]
         AST_ST_DPS_EarthlyStar = 1051,
-               
+
         #endregion
 
         #region AOE DPS
         [ReplaceSkill(AST.Gravity, AST.Gravity2)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Gravity with options below", AST.JobID, 2)]
-        AST_AOE_DPS = 1041,    
+        AST_AOE_DPS = 1041,
 
         [ParentCombo(AST_AOE_DPS)]
         [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
@@ -319,7 +319,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
         [CustomComboInfo("Horoscope Option", "Adds Horoscope.", AST.JobID)]
         AST_AoE_SimpleHeals_Horoscope = 1026,
-               
+
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
         [CustomComboInfo("Aspected Helios Option", "In Helios mode: Will Cast Aspected Helios when the HoT is missing on yourself."
                                                    + "\nIn Aspected Helios mode: Is considered enabled regardless.", AST.JobID)]
@@ -578,7 +578,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(BRD_ST_AdvMode, BRD_ST_SimpleMode)]
         [CustomComboInfo("Heavy Shot into Straight Shot Feature", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID)]
         BRD_StraightShotUpgrade = 3001,
-                
+
         [ParentCombo(BRD_StraightShotUpgrade)]
         [CustomComboInfo("DoT Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID)]
         BRD_DoTMaintainance = 3002,
@@ -605,7 +605,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter/Heartbreakshot (+ Songs rotation) depending on their CD.", BRD.JobID)]
         BRD_ST_oGCD = 3006,
 
-        [ReplaceSkill(BRD.RainOfDeath)]       
+        [ReplaceSkill(BRD.RainOfDeath)]
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on Rain of Death depending on their CD.", BRD.JobID)]
         BRD_AoE_oGCD = 3007,
 
@@ -613,14 +613,14 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(BRD_AoE_AdvMode, BRD_AoE_SimpleMode)]
         [CustomComboInfo("Quick Nock Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID)]
         BRD_AoE_Combo = 3008,
-                
+
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("Bard DoTs Option", "This option will make Bard apply DoTs if none are present on the target.", BRD.JobID)]
         BRD_Adv_DoT = 3010,
 
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("Bard Songs Option", "This option adds the Bard's Songs to the Advanced Bard Feature.", BRD.JobID)]
-        BRD_Adv_Song = 3011,       
+        BRD_Adv_Song = 3011,
 
         [ReplaceSkill(BRD.Barrage)]
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID)]
@@ -629,7 +629,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(BRD.WanderersMinuet)]
         [CustomComboInfo("One Button Songs Feature", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID)]
         BRD_OneButtonSongs = 3014,
-                
+
         [ParentCombo(BRD_AoE_AdvMode)]
         [CustomComboInfo("Bard Song Option", "Weave Songs on the Advanced AoE.", BRD.JobID)]
         BRD_AoE_Adv_Songs = 3016,
@@ -1551,7 +1551,7 @@ namespace XIVSlothCombo.Combos
         GNB_ST_RangedUptime = 7004,
         #endregion
 
-        #endregion 
+        #endregion
 
         #region Advanced AoE
         [ConflictingCombos(GNB_AoE_Simple)]
@@ -1978,7 +1978,7 @@ namespace XIVSlothCombo.Combos
         MNK_AOE_SimpleMode = 9003,
 
         #region Monk Advanced ST
-        
+
         [ReplaceSkill([MNK.Bootshine])]
         [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
@@ -2044,7 +2044,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(MNK_AOE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
         MNK_AOE_AdvancedMode = 9027,
-        
+
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Meditation Option", "Adds Meditation to the rotation", MNK.JobID)]
         MNK_AoEUseMeditation = 9028,
@@ -2080,7 +2080,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_AoEUseROF)]
         [CustomComboInfo("Fire's Reply Option", "Adds Fire's Reply to the rotation", MNK.JobID)]
         MNK_AoEUseFiresReply = 9036,
-        
+
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", MNK.JobID)]
         MNK_AoE_ComboHeals = 9037,
@@ -2131,10 +2131,10 @@ namespace XIVSlothCombo.Combos
         MNK_Variant_Cure = 9026,
 
         #endregion
-        
+
         // last value = 9037
         // End Monk
-        
+
         #endregion
 
         #region NINJA
@@ -2550,7 +2550,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lucid Dreaming Option", $"Adds Lucid Dreaming to the combo.", PCT.JobID)]
         PCT_ST_AdvancedMode_LucidDreaming = 20034,
 
-        // Last value for ST = 20034 
+        // Last value for ST = 20034
         #endregion
 
         #region AoE
@@ -2986,7 +2986,7 @@ namespace XIVSlothCombo.Combos
 
         #endregion
 
-        #region Advanced AoE 
+        #region Advanced AoE
 
         [ReplaceSkill(RPR.SpinningScythe)]
         [ConflictingCombos(RPR_AoE_SimpleMode)]
@@ -3751,7 +3751,7 @@ namespace XIVSlothCombo.Combos
         SAM_Iaijutsu = 15201,
 
         [ParentCombo(SAM_Iaijutsu)]
-        [CustomComboInfo("Iaijutsu to Tsubame-Gaeshi", "Replace Iaijutsu with  Tsubame-gaeshi when Sen is empty.", SAM.JobID)]
+        [CustomComboInfo("Iaijutsu to Tsubame-Gaeshi", "Replace Iaijutsu with Tsubame-gaeshi when appropriate.", SAM.JobID)]
         SAM_Iaijutsu_TsubameGaeshi = 15202,
 
         [ParentCombo(SAM_Iaijutsu)]
@@ -3767,24 +3767,56 @@ namespace XIVSlothCombo.Combos
         #region Shinten Features
 
         [ReplaceSkill(SAM.Shinten)]
+        [CustomComboInfo("Shinten Features", "Collection of Hissatsu: Shinten Features.", SAM.JobID)]
+        SAM_Shinten = 15251,
+
+        [ParentCombo(SAM_Shinten)]
         [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID)]
         SAM_Shinten_Shoha = 15205,
 
-        [ParentCombo(SAM_Shinten_Shoha)]
+        [ParentCombo(SAM_Shinten)]
         [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID)]
-        SAM_Shinten_Shoha_Senei = 15206,
+        SAM_Shinten_Senei = 15206,
+
+        [ParentCombo(SAM_Shinten)]
+        [CustomComboInfo("Shinten to Zanshin", "Replace Hissatsu: Shinten with Zanshin when usable.", SAM.JobID)]
+        SAM_Shinten_Zanshin = 15207,
 
         #endregion
 
         #region Kyuten Features
 
         [ReplaceSkill(SAM.Kyuten)]
-        [CustomComboInfo("Kyuten to Shoha", "Replace Hissatsu: Kyuten with Shoha when Meditation is full.", SAM.JobID)]
-        SAM_Kyuten_Shoha = 15207,
+        [CustomComboInfo("Kyuten Features", "Collection of Hissatsu: Kyuten Features.", SAM.JobID)]
+        SAM_Kyuten = 15252,
 
-        [ParentCombo(SAM_Kyuten_Shoha)]
+        [ParentCombo(SAM_Kyuten)]
+        [CustomComboInfo("Kyuten to Shoha", "Replace Hissatsu: Kyuten with Shoha when Meditation is full.", SAM.JobID)]
+        SAM_Kyuten_Shoha = 15208,
+
+        [ParentCombo(SAM_Kyuten)]
         [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID)]
-        SAM_Kyuten_Shoha_Guren = 15208,
+        SAM_Kyuten_Guren = 15209,
+
+        [ParentCombo(SAM_Kyuten)]
+        [CustomComboInfo("Kyuten to Zanshin", "Replace Hissatsu: Kyuten with Zanshin when usable.", SAM.JobID)]
+        SAM_Kyuten_Zanshin = 15210,
+
+        #endregion
+
+        #region Ikishoten Features
+
+        [ReplaceSkill(SAM.Ikishoten)]
+        [CustomComboInfo("Ikishoten Features", "Collection of Ikishoten Features.", SAM.JobID)]
+        SAM_Ikishoten = 15253,
+
+        [ParentCombo(SAM_Ikishoten)]
+        [CustomComboInfo("Ikishoten to Namikiri", "Replace Ikishoten with Ogi Namikiri & Kaeshi Namikiri when available.", SAM.JobID)]
+        SAM_Ikishoten_Namikiri = 15212,
+
+        [ParentCombo(SAM_Ikishoten)]
+        [CustomComboInfo("Ikishoten to Shoha", "Replace Ikishoten with Shoha when Meditation is full before Ogi Namikiri.", SAM.JobID)]
+        SAM_Ikishoten_Shoha = 15213,
 
         #endregion
 
@@ -3792,15 +3824,11 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(SAM.Gyoten)]
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID)]
-        SAM_GyotenYaten = 15209,
-
-        [ReplaceSkill(SAM.Ikishoten)]
-        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID)]
-        SAM_Ikishoten_OgiNamikiri = 15210,
+        SAM_GyotenYaten = 15211,
 
         #endregion
 
-        #region variant 
+        #region variant
 
         [Variant]
         [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
