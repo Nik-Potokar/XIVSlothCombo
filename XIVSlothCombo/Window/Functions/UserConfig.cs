@@ -1338,6 +1338,36 @@ namespace XIVSlothCombo.Window.Functions
             if (preset is CustomComboPreset.BLM_Variant_Cure)
                 UserConfig.DrawSliderInt(1, 100, BLM.Config.BLM_VariantCure, "HP% to be at or under", 200);
 
+            if (preset == CustomComboPreset.BLM_ST_Triplecast && enabled)
+                UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_ST_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_ST_Triplecast && enabled)
+                UserConfig.DrawSliderInt(10, 20, BLM.Config.BLM_ST_Triplecast_ChargeTime, "Set the amount of time remaining on Triplecast charge before using.(Only when at threshold)");
+
+            if (preset == CustomComboPreset.BLM_ST_UsePolyglot && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_ST_UsePolyglot_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_ST_UsePolyglotMoving && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_ST_UsePolyglotMoving_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_ST_Thunder)
+                UserConfig.DrawSliderInt(0, 10, BLM.Config.BLM_ST_ThunderHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+
+            if (preset == CustomComboPreset.BLM_AoE_Triplecast && enabled)
+                UserConfig.DrawSliderInt(0, 1, BLM.Config.BLM_AoE_Triplecast_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_Triplecast && enabled)
+                UserConfig.DrawSliderInt(10, 20, BLM.Config.BLM_AoE_Triplecast_ChargeTime, "Set the amount of time remaining on Triplecast charge before using.(Only when at threshold)");
+            
+            if (preset == CustomComboPreset.BLM_AoE_UsePolyglot && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_AoE_UsePolyglot_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_UsePolyglotMoving && enabled)
+                UserConfig.DrawSliderInt(0, 2, BLM.Config.BLM_AoE_UsePolyglotMoving_HoldCharges, "How many charges to keep ready? (0 = Use all)");
+
+            if (preset == CustomComboPreset.BLM_AoE_Thunder && enabled)
+                UserConfig.DrawSliderInt(0, 10, BLM.Config.BLM_AoE_ThunderHP, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)");
+                
             #endregion
             // ====================================================================================
             #region BLUE MAGE
@@ -1457,19 +1487,39 @@ namespace XIVSlothCombo.Window.Functions
             #region DARK KNIGHT
 
             if (preset == CustomComboPreset.DRK_ST_ManaSpenderPooling && enabled)
-                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_ST_ManaSpenderPooling, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
+                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_ST_ManaSpenderPooling,
+                    "How much MP to save (0 = Use All)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Thousands);
 
             if (preset == CustomComboPreset.DRK_ST_CDs_LivingShadow && enabled)
-                UserConfig.DrawSliderInt(0, 30, DRK.Config.DRK_ST_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)", 150, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 30, DRK.Config.DRK_ST_LivingDeadThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
+
+            if (preset == CustomComboPreset.DRK_ST_Delirium && enabled)
+                UserConfig.DrawSliderInt(0, 30, DRK.Config.DRK_ST_DeliriumThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DRK_AoE_CDs_LivingShadow && enabled)
-                UserConfig.DrawSliderInt(0, 60, DRK.Config.DRK_AoE_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)", 150, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 60, DRK.Config.DRK_AoE_LivingDeadThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
+
+            if (preset == CustomComboPreset.DRK_AoE_Delirium && enabled)
+                UserConfig.DrawSliderInt(0, 60, DRK.Config.DRK_AoE_DeliriumThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DRKPvP_Burst)
-                UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
+                UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold,
+                    "HP% to be at or Above to use (Set to 0 to Disable)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DRK_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DRK.Config.DRK_VariantCure, "HP% to be at or under", 200);
+                UserConfig.DrawSliderInt(1, 100, DRK.Config.DRK_VariantCure,
+                    "HP% to be at or Below",
+                    itemWidth: 200, sliderIncrement:SliderIncrements.Fives);
 
             #endregion
             // ====================================================================================
@@ -1580,7 +1630,6 @@ namespace XIVSlothCombo.Window.Functions
 
             #endregion
             // ====================================================================================
-
             #region MONK
 
             if (preset == CustomComboPreset.MNK_ST_ComboHeals)
@@ -2415,13 +2464,7 @@ namespace XIVSlothCombo.Window.Functions
             #endregion
             // ====================================================================================
             #region VIPER
-
-           /* if ((preset == CustomComboPreset.VPR_ST_AdvancedMode && enabled) || (preset == CustomComboPreset.VPR_VicewinderCoils && enabled))
-            {
-                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Rear First", "First positional: Swiftskin's Coil.", 0);
-                UserConfig.DrawHorizontalRadioButton(VPR.Config.VPR_Positional, "Flank First", "First positional: Hunter's Coil.", 1);
-            }*/
-
+            
             if (preset == CustomComboPreset.VPR_ST_UncoiledFury && enabled)
             {
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_ST_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
@@ -2433,7 +2476,6 @@ namespace XIVSlothCombo.Window.Functions
                 UserConfig.DrawSliderInt(0, 3, VPR.Config.VPR_AoE_UncoiledFury_HoldCharges, "How many charges to keep ready? (0 = Use all)");
                 UserConfig.DrawSliderInt(0, 5, VPR.Config.VPR_AoE_UncoiledFury_Threshold, "Set a HP% Threshold to use all charges.");
             }
-
 
             if (preset is CustomComboPreset.VPR_ST_Reawaken)
             {

@@ -2,14 +2,24 @@
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.PvE.RPR;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers;
 
-internal abstract class RPR
+internal class RPR
 {
+    // RPR Gauge & Extensions
+    public static float GCD = GetCooldown(Slice).CooldownTotal;
+
+    public static bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
+                                        !HasEffect(All.Buffs.TrueNorth);
+
+    public static RPROpenerLogic RPROpener = new();
+    public static RPRGauge Gauge = GetJobGauge<RPRGauge>();
+
     internal class RPROpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
@@ -203,43 +213,32 @@ internal abstract class RPR
         }
     }
 
-    internal class RPRHelpers
+    internal class RPRHelper
     {
         public static unsafe bool IsComboExpiring(float Times)
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
-            if (ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD)
-                return true;
-
-            return false;
+            return ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD;
         }
 
         public static bool IsBuffExpiring(float Times)
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
-            if ((HasEffect(Buffs.EnhancedGallows) && GetBuffRemainingTime(Buffs.EnhancedGallows) < GCD) ||
-                (HasEffect(Buffs.EnhancedGibbet) && GetBuffRemainingTime(Buffs.EnhancedGibbet) < GCD))
-                return true;
-
-            return false;
+            return (HasEffect(Buffs.EnhancedGallows) && GetBuffRemainingTime(Buffs.EnhancedGallows) < GCD) ||
+                   (HasEffect(Buffs.EnhancedGibbet) && GetBuffRemainingTime(Buffs.EnhancedGibbet) < GCD);
         }
 
         public static bool IsDebuffExpiring(float Times)
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;
 
-            if (TargetHasEffect(Debuffs.DeathsDesign) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD)
-                return true;
-
-            return false;
+            return TargetHasEffect(Debuffs.DeathsDesign) && GetDebuffRemainingTime(Debuffs.DeathsDesign) < GCD;
         }
 
         public static bool UseEnshroud(RPRGauge gauge)
         {
-            float GCD = GetCooldown(Slice).CooldownTotal;
-
             if (LevelChecked(Enshroud) && (gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost)) &&
                 !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) &&
                 !HasEffect(Buffs.PerfectioParata) && !HasEffect(Buffs.Enshrouded))
@@ -259,7 +258,7 @@ internal abstract class RPR
 
                 //2nd part of Double Enshroud
                 if (LevelChecked(PlentifulHarvest) &&
-                    WasLastWeaponskill(PlentifulHarvest))
+                    JustUsed(PlentifulHarvest, 5))
                     return true;
 
                 //Natural Odd Minute Shrouds
@@ -278,29 +277,37 @@ internal abstract class RPR
 
         public static bool UseShadowOfDeath()
         {
-            float GCD = GetCooldown(Slice).CooldownTotal;
-
             if (LevelChecked(ShadowOfDeath) && !HasEffect(Buffs.SoulReaver) &&
                 !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.PerfectioParata) &&
-                !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(1) && !JustUsed(Perfectio) &&
+                !HasEffect(Buffs.ImmortalSacrifice) && !IsComboExpiring(3) &&
                 !JustUsed(ShadowOfDeath))
             {
+                //1st part double enshroud
                 if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
                     GetCooldownRemainingTime(ArcaneCircle) <= GCD * 2 + 1.5 && JustUsed(Enshroud))
                     return true;
 
+                //2nd part double enshroud
                 if (LevelChecked(PlentifulHarvest) && HasEffect(Buffs.Enshrouded) &&
                     (GetCooldownRemainingTime(ArcaneCircle) <= GCD || IsOffCooldown(ArcaneCircle)) &&
                     (JustUsed(VoidReaping) || JustUsed(CrossReaping)))
                     return true;
 
-                if (!HasEffect(Buffs.Enshrouded) &&
+                //lvl 88+ general use
+                if (LevelChecked(PlentifulHarvest) && !HasEffect(Buffs.Enshrouded) &&
                     ((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) &&
                       GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 8) ||
                      (IsEnabled(CustomComboPreset.RPR_ST_AdvancedMode) &&
                       GetDebuffRemainingTime(Debuffs.DeathsDesign) <= Config.RPR_SoDRefreshRange)) &&
-                    (GetCooldownRemainingTime(ArcaneCircle) > GCD * 8 || IsOffCooldown(ArcaneCircle) ||
-                     !LevelChecked(ArcaneCircle)))
+                    (GetCooldownRemainingTime(ArcaneCircle) > GCD * 8 || IsOffCooldown(ArcaneCircle)))
+                    return true;
+
+                //below lvl 88 use
+                if (!LevelChecked(PlentifulHarvest) &&
+                    ((IsEnabled(CustomComboPreset.RPR_ST_SimpleMode) &&
+                      GetDebuffRemainingTime(Debuffs.DeathsDesign) <= 8) ||
+                     (IsEnabled(CustomComboPreset.RPR_ST_AdvancedMode) &&
+                      GetDebuffRemainingTime(Debuffs.DeathsDesign) <= Config.RPR_SoDRefreshRange)))
                     return true;
             }
 

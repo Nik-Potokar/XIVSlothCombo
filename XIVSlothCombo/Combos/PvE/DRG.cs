@@ -1,95 +1,22 @@
-using Dalamud.Game.ClientState.JobGauge.Types;
-using Dalamud.Game.ClientState.Statuses;
-using XIVSlothCombo.Combos.JobHelpers;
 using XIVSlothCombo.Combos.PvE.Content;
 using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Extensions;
-using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
+using static XIVSlothCombo.Combos.JobHelpers.DRG;
 
 namespace XIVSlothCombo.Combos.PvE;
 
 internal class DRG
 {
-    public const byte ClassID = 4;
-    public const byte JobID = 22;
-
-    public const uint
-        PiercingTalon = 90,
-        ElusiveJump = 94,
-        LanceCharge = 85,
-        BattleLitany = 3557,
-        Jump = 92,
-        LifeSurge = 83,
-        HighJump = 16478,
-        MirageDive = 7399,
-        BloodOfTheDragon = 3553,
-        Stardiver = 16480,
-        CoerthanTorment = 16477,
-        DoomSpike = 86,
-        SonicThrust = 7397,
-        ChaosThrust = 88,
-        RaidenThrust = 16479,
-        TrueThrust = 75,
-        Disembowel = 87,
-        FangAndClaw = 3554,
-        WheelingThrust = 3556,
-        FullThrust = 84,
-        VorpalThrust = 78,
-        WyrmwindThrust = 25773,
-        DraconianFury = 25770,
-        ChaoticSpring = 25772,
-        DragonfireDive = 96,
-        Geirskogul = 3555,
-        Nastrond = 7400,
-        HeavensThrust = 25771,
-        Drakesbane = 36952,
-        RiseOfTheDragon = 36953,
-        LanceBarrage = 36954,
-        SpiralBlow = 36955,
-        Starcross = 36956;
-
-    protected static DRGGauge? Gauge = GetJobGauge<DRGGauge>();
-
-    public static class Buffs
-    {
-        public const ushort
-            LanceCharge = 1864,
-            BattleLitany = 786,
-            DiveReady = 1243,
-            RaidenThrustReady = 1863,
-            PowerSurge = 2720,
-            LifeSurge = 116,
-            DraconianFire = 1863,
-            NastrondReady = 3844,
-            StarcrossReady = 3846,
-            DragonsFlight = 3845;
-    }
-
-    public static class Debuffs
-    {
-        public const ushort
-            ChaosThrust = 118,
-            ChaoticSpring = 2719;
-    }
-
-    public static class Traits
-    {
-        public const uint
-            EnhancedLifeSurge = 438;
-    }
-
     public static class Config
     {
         public static UserInt
             DRG_Variant_Cure = new("DRG_VariantCure"),
             DRG_ST_LitanyHP = new("DRG_ST_LitanyHP", 2),
-            DRG_ST_SightHP = new("DRG_ST_SightHP", 2),
             DRG_ST_LanceChargeHP = new("DRG_ST_LanceChargeHP", 2),
             DRG_ST_SecondWind_Threshold = new("DRG_STSecondWindThreshold", 25),
             DRG_ST_Bloodbath_Threshold = new("DRG_STBloodbathThreshold", 40),
             DRG_AoE_LitanyHP = new("DRG_AoE_LitanyHP", 5),
-            DRG_AoE_SightHP = new("DRG_AoE_SightHP", 5),
             DRG_AoE_LanceChargeHP = new("DRG_AoE_LanceChargeHP", 5),
             DRG_AoE_SecondWind_Threshold = new("DRG_AoE_SecondWindThreshold", 25),
             DRG_AoE_Bloodbath_Threshold = new("DRG_AoE_BloodbathThreshold", 40);
@@ -97,21 +24,10 @@ internal class DRG
 
     internal class DRG_ST_SimpleMode : CustomCombo
     {
-        internal static DRGOpenerLogic DRGOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_SimpleMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            Status? ChaosDoTDebuff;
-
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth);
-
-            if (LevelChecked(ChaoticSpring))
-                ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
-            else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
-
             if (actionID is TrueThrust)
             {
                 if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
@@ -151,11 +67,12 @@ internal class DRG
                     if (ActionReady(LifeSurge) &&
                         (GetCooldownRemainingTime(LifeSurge) < 40 || GetCooldownRemainingTime(BattleLitany) > 50) &&
                         AnimationLock.CanDRGWeave(LifeSurge) &&
-                        HasEffect(Buffs.LanceCharge) &&
-                        !HasEffect(Buffs.LifeSurge) &&
-                        ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                         (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                         (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust))))
+                        ((HasEffect(Buffs.LanceCharge) &&
+                          !HasEffect(Buffs.LifeSurge) &&
+                          ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                           (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                           (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust)))) ||
+                         (!LevelChecked(LanceCharge) && JustUsed(VorpalThrust))))
                         return LifeSurge;
 
                     //Geirskogul Feature
@@ -266,21 +183,10 @@ internal class DRG
 
     internal class DRG_ST_AdvancedMode : CustomCombo
     {
-        internal static DRGOpenerLogic DRGOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRG_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            Status? ChaosDoTDebuff;
-
-            bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                  !HasEffect(All.Buffs.TrueNorth);
-
-            if (LevelChecked(ChaoticSpring))
-                ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaoticSpring);
-            else ChaosDoTDebuff = FindTargetEffect(Debuffs.ChaosThrust);
-
             if (actionID is TrueThrust)
             {
                 if (IsEnabled(CustomComboPreset.DRG_Variant_Cure) &&
@@ -330,11 +236,12 @@ internal class DRG
                             ActionReady(LifeSurge) &&
                             (GetCooldownRemainingTime(LifeSurge) < 40 || GetCooldownRemainingTime(BattleLitany) > 50) &&
                             AnimationLock.CanDRGWeave(LifeSurge) &&
-                            HasEffect(Buffs.LanceCharge) &&
-                            !HasEffect(Buffs.LifeSurge) &&
-                            ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
-                             (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
-                             (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust))))
+                            ((HasEffect(Buffs.LanceCharge) &&
+                              !HasEffect(Buffs.LifeSurge) &&
+                              ((JustUsed(WheelingThrust) && LevelChecked(Drakesbane)) ||
+                               (JustUsed(FangAndClaw) && LevelChecked(Drakesbane)) ||
+                               (JustUsed(OriginalHook(VorpalThrust)) && LevelChecked(FullThrust)))) ||
+                             (!LevelChecked(LanceCharge) && JustUsed(VorpalThrust))))
                             return LifeSurge;
 
                         //Geirskogul Feature
@@ -770,11 +677,79 @@ internal class DRG
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            if (actionID is LanceCharge)
-                if (IsOnCooldown(LanceCharge) && ActionReady(BattleLitany))
-                    return BattleLitany;
-
-            return actionID;
+            return actionID is LanceCharge && IsOnCooldown(LanceCharge) && ActionReady(BattleLitany)
+                ? BattleLitany
+                : actionID;
         }
     }
+
+    #region ID's
+
+    public const byte ClassID = 4;
+    public const byte JobID = 22;
+
+    public const uint
+        PiercingTalon = 90,
+        ElusiveJump = 94,
+        LanceCharge = 85,
+        BattleLitany = 3557,
+        Jump = 92,
+        LifeSurge = 83,
+        HighJump = 16478,
+        MirageDive = 7399,
+        BloodOfTheDragon = 3553,
+        Stardiver = 16480,
+        CoerthanTorment = 16477,
+        DoomSpike = 86,
+        SonicThrust = 7397,
+        ChaosThrust = 88,
+        RaidenThrust = 16479,
+        TrueThrust = 75,
+        Disembowel = 87,
+        FangAndClaw = 3554,
+        WheelingThrust = 3556,
+        FullThrust = 84,
+        VorpalThrust = 78,
+        WyrmwindThrust = 25773,
+        DraconianFury = 25770,
+        ChaoticSpring = 25772,
+        DragonfireDive = 96,
+        Geirskogul = 3555,
+        Nastrond = 7400,
+        HeavensThrust = 25771,
+        Drakesbane = 36952,
+        RiseOfTheDragon = 36953,
+        LanceBarrage = 36954,
+        SpiralBlow = 36955,
+        Starcross = 36956;
+
+    public static class Buffs
+    {
+        public const ushort
+            LanceCharge = 1864,
+            BattleLitany = 786,
+            DiveReady = 1243,
+            RaidenThrustReady = 1863,
+            PowerSurge = 2720,
+            LifeSurge = 116,
+            DraconianFire = 1863,
+            NastrondReady = 3844,
+            StarcrossReady = 3846,
+            DragonsFlight = 3845;
+    }
+
+    public static class Debuffs
+    {
+        public const ushort
+            ChaosThrust = 118,
+            ChaoticSpring = 2719;
+    }
+
+    public static class Traits
+    {
+        public const uint
+            EnhancedLifeSurge = 438;
+    }
+
+    #endregion
 }

@@ -183,7 +183,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Combust Uptime Option", "Adds Combust to the DPS feature if it's not present on current target, or is about to expire.", AST.JobID)]
         AST_ST_DPS_CombustUptime = 1018,
-              
+
         [ParentCombo(AST_ST_DPS)]
         [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
         AST_DPS_LightSpeed = 1020,
@@ -220,13 +220,13 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Earthly Star Option", "Adds Earthly Star." +
                                                 "\nTo be used in conjunction with Redirect/Reaction/etc", AST.JobID, 11)]
         AST_ST_DPS_EarthlyStar = 1051,
-               
+
         #endregion
 
         #region AOE DPS
         [ReplaceSkill(AST.Gravity, AST.Gravity2)]
         [CustomComboInfo("AoE DPS Feature", "Replaces Gravity with options below", AST.JobID, 2)]
-        AST_AOE_DPS = 1041,    
+        AST_AOE_DPS = 1041,
 
         [ParentCombo(AST_AOE_DPS)]
         [CustomComboInfo("Lightspeed Weave Option", "Adds Lightspeed when moving", AST.JobID, 2, "", "")]
@@ -319,7 +319,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
         [CustomComboInfo("Horoscope Option", "Adds Horoscope.", AST.JobID)]
         AST_AoE_SimpleHeals_Horoscope = 1026,
-               
+
         [ParentCombo(AST_AoE_SimpleHeals_AspectedHelios)]
         [CustomComboInfo("Aspected Helios Option", "In Helios mode: Will Cast Aspected Helios when the HoT is missing on yourself."
                                                    + "\nIn Aspected Helios mode: Is considered enabled regardless.", AST.JobID)]
@@ -363,15 +363,128 @@ namespace XIVSlothCombo.Combos
         #endregion
 
         #region BLACK MAGE
-
+        
         [ReplaceSkill(BLM.Fire)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -10, "", "")]
-        BLM_ST_SimpleMode = 2012,
+        [ConflictingCombos(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID)]
+        BLM_ST_SimpleMode = 2001,
+
 
         [ReplaceSkill(BLM.Blizzard2, BLM.HighBlizzard2)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID, -8, "", "")]
-        BLM_AoE_SimpleMode = 2008,
+        [ConflictingCombos(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThis is the ideal option for newcomers to the job.", BLM.JobID)]
+        BLM_AoE_SimpleMode = 2002,
+       
+        #region Single Target - Advanced
+        
+        [ReplaceSkill(BLM.Fire)]
+        [ConflictingCombos(BLM_ST_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - Single Target", "Replaces Fire with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID)]
+        BLM_ST_AdvancedMode = 2100,
 
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Level 100 Opener", "Adds the Balance opener to the rotation.", BLM.JobID)]
+        BLM_ST_Opener = 2101,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Amplifier Option", "Add Amplifier to the rotation.", BLM.JobID)]
+        BLM_ST_Amplifier = 2102,
+
+        [ParentCombo(BLM_ST_AdvancedMode)] 
+        [CustomComboInfo("Leylines Option", "Add Leylines to the rotation.", BLM.JobID)]
+        BLM_ST_LeyLines = 2103,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Foul/Xenoglossy Option", "Add Foul/Xenoglossy to the rotation.", BLM.JobID)]
+        BLM_ST_UsePolyglot = 2104,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Foul/Xenoglossy for Movement Option", "Add Foul / Xenoglossy to the rotation as movement option.", BLM.JobID)]
+        BLM_ST_UsePolyglotMoving = 2105,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Swiftcast Option", "Add Swiftcast to the rotation.", BLM.JobID)]
+        BLM_ST_Swiftcast = 2106,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Triplecast Option", "Add Triplecast to the rotation.", BLM.JobID)]
+        BLM_ST_Triplecast = 2107,
+
+        [ParentCombo(BLM_ST_AdvancedMode)] 
+        [CustomComboInfo("Manafont Option", "Add Manafont to the rotation.", BLM.JobID)]
+        BLM_ST_Manafont = 2108,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Transpose Option", "Add Transpose to the rotation.", BLM.JobID)]
+        BLM_ST_Transpose = 2109,
+        
+        [ParentCombo(BLM_ST_AdvancedMode)] 
+        [CustomComboInfo("Thunder Option", "Add Thunder to the rotation.", BLM.JobID)]
+        BLM_ST_Thunder = 2110,
+
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Despair Option", "Add Despair to the rotation.", BLM.JobID)]
+        BLM_ST_Despair = 2111,
+        
+        [ParentCombo(BLM_ST_AdvancedMode)]
+        [CustomComboInfo("Flare Star Option", "Add Flare Star to the rotation.", BLM.JobID)]
+        BLM_ST_FlareStar = 2112,
+        
+        #endregion
+        
+        #region AoE - Advanced
+        
+        [ReplaceSkill(BLM.Fire)]
+        [ConflictingCombos(BLM_AoE_SimpleMode)]
+        [CustomComboInfo("Advanced Mode - AoE", "Replaces Blizzard II with a full one-button AoE rotation.\nThese features are ideal if you want to customize the rotation.", BLM.JobID)]
+        BLM_AoE_AdvancedMode = 2200,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Amplifier Option", "Add Amplifier to the rotation.", BLM.JobID)]
+        BLM_AoE_Amplifier = 2201,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)] 
+        [CustomComboInfo("Leylines Option", "Add Leylines to the rotation.", BLM.JobID)]
+        BLM_AoE_LeyLines = 2202,
+        
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Foul Option", "Add Foul to the rotation.", BLM.JobID)]
+        BLM_AoE_UsePolyglot = 2203,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Foul for Movement Option", "Add Foul to the rotation as movement option.", BLM.JobID)]
+        BLM_AoE_UsePolyglotMoving = 2204,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Swiftcast Option", "Add Swiftcast to the rotation.", BLM.JobID)]
+        BLM_AoE_Swiftcast = 2205,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Triplecast Option", "Add Triplecast to the rotation.", BLM.JobID)]
+        BLM_AoE_Triplecast = 2206,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Manafont Option", "Add Manafont to the rotation.", BLM.JobID)]
+        BLM_AoE_Manafont = 2207,
+
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Transpose Option", "Add Transpose to the rotation.", BLM.JobID)]
+        BLM_AoE_Transpose = 2208,
+        
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Thunder Option", "Add Thunder to the rotation.", BLM.JobID)]
+        BLM_AoE_Thunder = 2209,
+        
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Flare Option", "Add Flare to the rotation.", BLM.JobID)]
+        BLM_AoE_Flare = 2210,
+        
+        [ParentCombo(BLM_AoE_AdvancedMode)]
+        [CustomComboInfo("Flare Star Option", "Add Flare Star to the rotation.", BLM.JobID)]
+        BLM_AoE_FlareStar = 2211,
+        
+        #endregion
+        
         #region Variant
 
         [Variant]
@@ -393,31 +506,37 @@ namespace XIVSlothCombo.Combos
         #region Miscellaneous
         [ReplaceSkill(BLM.Transpose)]
         [CustomComboInfo("Umbral Soul/Transpose Feature", "Replaces Transpose with Umbral Soul when Umbral Soul is available.", BLM.JobID)]
-        BLM_UmbralSoul = 2001,
+        BLM_UmbralSoul = 2050,
 
         [ReplaceSkill(BLM.LeyLines)]
         [CustomComboInfo("Between the Ley Lines Feature", "Replaces Ley Lines with Between the Lines when Ley Lines is active.", BLM.JobID)]
-        BLM_Between_The_LeyLines = 2002,
+        BLM_Between_The_LeyLines = 2051,
 
         [ReplaceSkill(BLM.Blizzard, BLM.Freeze)]
         [CustomComboInfo("Blizzard I/III Feature", "Replaces Blizzard I with Blizzard III when out of Umbral Ice." +
             "\nReplaces Freeze with Blizzard II when synced below Lv.40.", BLM.JobID)]
-        BLM_Blizzard_1to3 = 2003,
+        BLM_Blizzard_1to3 = 2052,
 
         [ReplaceSkill(BLM.Scathe)]
         [CustomComboInfo("Xenoglossy Feature", "Replaces Scathe with Xenoglossy when available.", BLM.JobID)]
-        BLM_Scathe_Xeno = 2004,
+        BLM_Scathe_Xeno = 2053,
 
         [ReplaceSkill(BLM.Fire)]
         [CustomComboInfo("Fire I/III Feature", "Replaces Fire I with Fire III outside of Astral Fire or when Firestarter is up.", BLM.JobID)]
-        BLM_Fire_1to3 = 2005,
+        BLM_Fire_1to3 = 2054,
 
         [ReplaceSkill(BLM.AetherialManipulation)]
         [CustomComboInfo("Aetherial Manipulation Feature", "Replaces Aetherial Manipulation with Between the Lines when you are out of active Ley Lines and standing still.", BLM.JobID)]
-        BLM_Aetherial_Manipulation = 2046,
+        BLM_Aetherial_Manipulation = 2055,
+
+        [ReplaceSkill(BLM.Triplecast)]
+        [CustomComboInfo("Triplecast Protection", "Replaces Triplecast with Savage Blade when u already have triplecast active.", BLM.JobID)]
+        BLM_TriplecastProtection = 2056,
+        
         #endregion
 
-        // Last value = 2057
+        // Last value ST = 2112
+        //Last Value AoE = 2211
 
         #endregion
 
@@ -578,7 +697,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(BRD_ST_AdvMode, BRD_ST_SimpleMode)]
         [CustomComboInfo("Heavy Shot into Straight Shot Feature", "Replaces Heavy Shot/Burst Shot with Straight Shot/Refulgent Arrow when procced.", BRD.JobID)]
         BRD_StraightShotUpgrade = 3001,
-                
+
         [ParentCombo(BRD_StraightShotUpgrade)]
         [CustomComboInfo("DoT Maintenance Option", "Enabling this option will make Heavy Shot into Straight Shot refresh your DoTs on your current.", BRD.JobID)]
         BRD_DoTMaintainance = 3002,
@@ -605,7 +724,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Single Target oGCD Feature", "All oGCD's on Bloodletter/Heartbreakshot (+ Songs rotation) depending on their CD.", BRD.JobID)]
         BRD_ST_oGCD = 3006,
 
-        [ReplaceSkill(BRD.RainOfDeath)]       
+        [ReplaceSkill(BRD.RainOfDeath)]
         [CustomComboInfo("AoE oGCD Feature", "All AoE oGCD's on Rain of Death depending on their CD.", BRD.JobID)]
         BRD_AoE_oGCD = 3007,
 
@@ -613,14 +732,14 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(BRD_AoE_AdvMode, BRD_AoE_SimpleMode)]
         [CustomComboInfo("Quick Nock Feature", "Replaces Quick Nock/Ladonsbite with Shadowbite when ready.", BRD.JobID)]
         BRD_AoE_Combo = 3008,
-                
+
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("Bard DoTs Option", "This option will make Bard apply DoTs if none are present on the target.", BRD.JobID)]
         BRD_Adv_DoT = 3010,
 
         [ParentCombo(BRD_ST_AdvMode)]
         [CustomComboInfo("Bard Songs Option", "This option adds the Bard's Songs to the Advanced Bard Feature.", BRD.JobID)]
-        BRD_Adv_Song = 3011,       
+        BRD_Adv_Song = 3011,
 
         [ReplaceSkill(BRD.Barrage)]
         [CustomComboInfo("Bard Buffs Feature", "Adds Raging Strikes and Battle Voice onto Barrage.", BRD.JobID)]
@@ -629,7 +748,7 @@ namespace XIVSlothCombo.Combos
         [ReplaceSkill(BRD.WanderersMinuet)]
         [CustomComboInfo("One Button Songs Feature", "Add Mage's Ballad and Army's Paeon to Wanderer's Minuet depending on cooldowns.", BRD.JobID)]
         BRD_OneButtonSongs = 3014,
-                
+
         [ParentCombo(BRD_AoE_AdvMode)]
         [CustomComboInfo("Bard Song Option", "Weave Songs on the Advanced AoE.", BRD.JobID)]
         BRD_AoE_Adv_Songs = 3016,
@@ -1551,7 +1670,7 @@ namespace XIVSlothCombo.Combos
         GNB_ST_RangedUptime = 7004,
         #endregion
 
-        #endregion 
+        #endregion
 
         #region Advanced AoE
         [ConflictingCombos(GNB_AoE_Simple)]
@@ -1978,7 +2097,7 @@ namespace XIVSlothCombo.Combos
         MNK_AOE_SimpleMode = 9003,
 
         #region Monk Advanced ST
-        
+
         [ReplaceSkill([MNK.Bootshine])]
         [ConflictingCombos(MNK_ST_BeastChakras, MNK_ST_SimpleMode)]
         [CustomComboInfo("Advanced Mode - Single Target", "Replaces Bootshine with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
@@ -2044,7 +2163,7 @@ namespace XIVSlothCombo.Combos
         [ConflictingCombos(MNK_AOE_SimpleMode)]
         [CustomComboInfo("Advanced Mode - AoE", "Replaces Arm of the Destroyer with a one-button full single target rotation.\nThese features are ideal if you want to customize the rotation.", MNK.JobID)]
         MNK_AOE_AdvancedMode = 9027,
-        
+
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Meditation Option", "Adds Meditation to the rotation", MNK.JobID)]
         MNK_AoEUseMeditation = 9028,
@@ -2080,7 +2199,7 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(MNK_AoEUseROF)]
         [CustomComboInfo("Fire's Reply Option", "Adds Fire's Reply to the rotation", MNK.JobID)]
         MNK_AoEUseFiresReply = 9036,
-        
+
         [ParentCombo(MNK_AOE_AdvancedMode)]
         [CustomComboInfo("Combo Heals Option", "Adds Bloodbath and Second Wind to the rotation.", MNK.JobID)]
         MNK_AoE_ComboHeals = 9037,
@@ -2131,10 +2250,10 @@ namespace XIVSlothCombo.Combos
         MNK_Variant_Cure = 9026,
 
         #endregion
-        
+
         // last value = 9037
         // End Monk
-        
+
         #endregion
 
         #region NINJA
@@ -2550,7 +2669,7 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Lucid Dreaming Option", $"Adds Lucid Dreaming to the combo.", PCT.JobID)]
         PCT_ST_AdvancedMode_LucidDreaming = 20034,
 
-        // Last value for ST = 20034 
+        // Last value for ST = 20034
         #endregion
 
         #region AoE
@@ -2878,7 +2997,7 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(RPR.Slice)]
         [ConflictingCombos(RPR_ST_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - Single Target", "Replaces Slice with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
+        [CustomComboInfo("Simple Mode - Single Target", "Replaces Slice with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID,1)]
         RPR_ST_SimpleMode = 12000,
 
         #endregion
@@ -2981,12 +3100,12 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(RPR.SpinningScythe)]
         [ConflictingCombos(RPR_AoE_AdvancedMode)]
-        [CustomComboInfo("Simple Mode - AoE", "Replaces Spinning Scythe with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID)]
+        [CustomComboInfo("Simple Mode - AoE", "Replaces Spinning Scythe with a one-button full single target rotation.\nThis is ideal for newcomers to the job.", RPR.JobID,2)]
         RPR_AoE_SimpleMode = 12100,
 
         #endregion
 
-        #region Advanced AoE 
+        #region Advanced AoE
 
         [ReplaceSkill(RPR.SpinningScythe)]
         [ConflictingCombos(RPR_AoE_SimpleMode)]
@@ -3075,7 +3194,11 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Enshroud Combo Option", "Adds Enshroud combo (Void/Cross Reaping, Communio, Lemure's Slice, Sacrificium and Perfectio) on Blood Stalk and Grim Swathe.", RPR.JobID)]
         RPR_GluttonyBloodSwathe_Enshroud = 12202,
 
-        // Last value = 12202
+        [ParentCombo(RPR_GluttonyBloodSwathe)]
+        [CustomComboInfo("Sacrificium only Option", "Adds only Sacrificium on Blood Stalk and Grim Swathe while enshrouded.", RPR.JobID)]
+        RPR_GluttonyBloodSwathe_Sacrificium = 12203,
+
+        // Last value = 12203
 
         #endregion
 
@@ -3625,6 +3748,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Senei Option", "Adds Senei to the rotation.", SAM.JobID)]
         SAM_ST_CDs_Senei = 15020,
 
+        [ParentCombo(SAM_ST_CDs_Senei)]
+        [CustomComboInfo("Guren Option", "Adds Guren to the rotation if Senei is not unlocked.", SAM.JobID)]
+        SAM_ST_CDs_Guren = 15021,
+
         #endregion
 
         [ParentCombo(SAM_ST_AdvancedMode)]
@@ -3751,7 +3878,7 @@ namespace XIVSlothCombo.Combos
         SAM_Iaijutsu = 15201,
 
         [ParentCombo(SAM_Iaijutsu)]
-        [CustomComboInfo("Iaijutsu to Tsubame-Gaeshi", "Replace Iaijutsu with  Tsubame-gaeshi when Sen is empty.", SAM.JobID)]
+        [CustomComboInfo("Iaijutsu to Tsubame-Gaeshi", "Replace Iaijutsu with Tsubame-gaeshi when appropriate.", SAM.JobID)]
         SAM_Iaijutsu_TsubameGaeshi = 15202,
 
         [ParentCombo(SAM_Iaijutsu)]
@@ -3767,24 +3894,56 @@ namespace XIVSlothCombo.Combos
         #region Shinten Features
 
         [ReplaceSkill(SAM.Shinten)]
+        [CustomComboInfo("Shinten Features", "Collection of Hissatsu: Shinten Features.", SAM.JobID)]
+        SAM_Shinten = 15251,
+
+        [ParentCombo(SAM_Shinten)]
         [CustomComboInfo("Shinten to Shoha", "Replace Hissatsu: Shinten with Shoha when Meditation is full.", SAM.JobID)]
         SAM_Shinten_Shoha = 15205,
 
-        [ParentCombo(SAM_Shinten_Shoha)]
+        [ParentCombo(SAM_Shinten)]
         [CustomComboInfo("Shinten to Senei", "Replace Hissatsu: Shinten with Senei when its cooldown is up.", SAM.JobID)]
-        SAM_Shinten_Shoha_Senei = 15206,
+        SAM_Shinten_Senei = 15206,
+
+        [ParentCombo(SAM_Shinten)]
+        [CustomComboInfo("Shinten to Zanshin", "Replace Hissatsu: Shinten with Zanshin when usable.", SAM.JobID)]
+        SAM_Shinten_Zanshin = 15207,
 
         #endregion
 
         #region Kyuten Features
 
         [ReplaceSkill(SAM.Kyuten)]
-        [CustomComboInfo("Kyuten to Shoha", "Replace Hissatsu: Kyuten with Shoha when Meditation is full.", SAM.JobID)]
-        SAM_Kyuten_Shoha = 15207,
+        [CustomComboInfo("Kyuten Features", "Collection of Hissatsu: Kyuten Features.", SAM.JobID)]
+        SAM_Kyuten = 15252,
 
-        [ParentCombo(SAM_Kyuten_Shoha)]
+        [ParentCombo(SAM_Kyuten)]
+        [CustomComboInfo("Kyuten to Shoha", "Replace Hissatsu: Kyuten with Shoha when Meditation is full.", SAM.JobID)]
+        SAM_Kyuten_Shoha = 15208,
+
+        [ParentCombo(SAM_Kyuten)]
         [CustomComboInfo("Kyuten to Guren", "Replace Hissatsu: Kyuten with Guren when its cooldown is up.", SAM.JobID)]
-        SAM_Kyuten_Shoha_Guren = 15208,
+        SAM_Kyuten_Guren = 15209,
+
+        [ParentCombo(SAM_Kyuten)]
+        [CustomComboInfo("Kyuten to Zanshin", "Replace Hissatsu: Kyuten with Zanshin when usable.", SAM.JobID)]
+        SAM_Kyuten_Zanshin = 15210,
+
+        #endregion
+
+        #region Ikishoten Features
+
+        [ReplaceSkill(SAM.Ikishoten)]
+        [CustomComboInfo("Ikishoten Features", "Collection of Ikishoten Features.", SAM.JobID)]
+        SAM_Ikishoten = 15253,
+
+        [ParentCombo(SAM_Ikishoten)]
+        [CustomComboInfo("Ikishoten to Namikiri", "Replace Ikishoten with Ogi Namikiri & Kaeshi Namikiri when available.", SAM.JobID)]
+        SAM_Ikishoten_Namikiri = 15212,
+
+        [ParentCombo(SAM_Ikishoten)]
+        [CustomComboInfo("Ikishoten to Shoha", "Replace Ikishoten with Shoha when Meditation is full before Ogi Namikiri.", SAM.JobID)]
+        SAM_Ikishoten_Shoha = 15213,
 
         #endregion
 
@@ -3792,15 +3951,11 @@ namespace XIVSlothCombo.Combos
 
         [ReplaceSkill(SAM.Gyoten)]
         [CustomComboInfo("Gyoten Feature", "Hissatsu: Gyoten becomes Yaten/Gyoten depending on the distance from your target.", SAM.JobID)]
-        SAM_GyotenYaten = 15209,
-
-        [ReplaceSkill(SAM.Ikishoten)]
-        [CustomComboInfo("Ikishoten Namikiri Feature", "Replace Ikishoten with Ogi Namikiri and then Kaeshi Namikiri when available.\nIf you have full Meditation stacks, Ikishoten becomes Shoha while you have Ogi Namikiri ready.", SAM.JobID)]
-        SAM_Ikishoten_OgiNamikiri = 15210,
+        SAM_GyotenYaten = 15211,
 
         #endregion
 
-        #region variant 
+        #region variant
 
         [Variant]
         [VariantParent(SAM_ST_AdvancedMode, SAM_AoE_AdvancedMode)]
@@ -4178,12 +4333,16 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Vicewinder Combo", "Adds Swiftskin's Coil and Hunter's Coil to the rotation.\nWill automatically swap depending on your position.", VPR.JobID)]
         VPR_ST_VicewinderCombo = 30007,
 
+        [ParentCombo(VPR_ST_CDs)]
+        [CustomComboInfo("Vicewinder Weaves", "Adds Twinfang and Bloodfang to the rotation.", VPR.JobID)]
+        VPR_ST_VicewinderWeaves = 30013,
+
         #endregion
 
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Serpents Tail", "Adds Serpents Tail to the rotation.", VPR.JobID)]
         VPR_ST_SerpentsTail = 30008,
-
+        
         [ParentCombo(VPR_ST_AdvancedMode)]
         [CustomComboInfo("Uncoiled Fury", "Adds Uncoiled Fury to the rotation.", VPR.JobID)]
         VPR_ST_UncoiledFury = 30009,
@@ -4257,6 +4416,11 @@ namespace XIVSlothCombo.Combos
         [ParentCombo(VPR_AoE_VicepitCombo)]
         [CustomComboInfo("Disable Range Check", "Disables the range check for Swiftskin's Den and Hunter's Den, so they will be used even without a target selected.", VPR.JobID)]
         VPR_AoE_VicepitCombo_DisableRange = 30113,
+
+        [ParentCombo(VPR_AoE_CDs)]
+        [CustomComboInfo("Vicepit Weaves", "Adds Twinfang and Twinblood to the rotation.", VPR.JobID)]
+        VPR_AoE_VicepitWeaves = 30115,
+        
 
         #endregion
 
@@ -4338,6 +4502,9 @@ namespace XIVSlothCombo.Combos
         [VariantParent(VPR_ST_SimpleMode, VPR_AoE_SimpleMode, VPR_ST_AdvancedMode, VPR_AoE_AdvancedMode)]
         [CustomComboInfo("Rampart Option", "Use Variant Rampart on cooldown.", VPR.JobID)]
         VPR_Variant_Rampart = 30301,
+        
+        //Last Value ST = 30012
+        //Last Value AoE = 30112
 
         #endregion
 
