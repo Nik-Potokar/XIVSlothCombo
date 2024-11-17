@@ -17,11 +17,11 @@ internal class VPR
     public static float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
     public static float ireCD = GetCooldownRemainingTime(SerpentsIre);
 
-    public static bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                        !HasEffect(All.Buffs.TrueNorth);
-
     public static VPROpenerLogic VPROpener = new();
     public static VPRGauge gauge = GetJobGauge<VPRGauge>();
+
+    public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
+                                         !HasEffect(All.Buffs.TrueNorth);
 
     public static bool VicewinderReady => gauge.DreadCombo == DreadCombo.Dreadwinder;
 

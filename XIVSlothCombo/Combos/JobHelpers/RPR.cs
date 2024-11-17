@@ -14,11 +14,11 @@ internal class RPR
     // RPR Gauge & Extensions
     public static float GCD = GetCooldown(Slice).CooldownTotal;
 
-    public static bool trueNorthReady = TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
-                                        !HasEffect(All.Buffs.TrueNorth);
-
     public static RPROpenerLogic RPROpener = new();
     public static RPRGauge Gauge = GetJobGauge<RPRGauge>();
+
+    public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
+                                         !HasEffect(All.Buffs.TrueNorth);
 
     internal class RPROpenerLogic
     {
