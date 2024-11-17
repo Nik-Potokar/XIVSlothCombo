@@ -1457,19 +1457,39 @@ namespace XIVSlothCombo.Window.Functions
             #region DARK KNIGHT
 
             if (preset == CustomComboPreset.DRK_ST_ManaSpenderPooling && enabled)
-                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_ST_ManaSpenderPooling, "How much MP to save (0 = Use All)", 150, SliderIncrements.Thousands);
+                UserConfig.DrawSliderInt(0, 3000, DRK.Config.DRK_ST_ManaSpenderPooling,
+                    "How much MP to save (0 = Use All)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Thousands);
 
             if (preset == CustomComboPreset.DRK_ST_CDs_LivingShadow && enabled)
-                UserConfig.DrawSliderInt(0, 30, DRK.Config.DRK_ST_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)", 150, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 30, DRK.Config.DRK_ST_LivingDeadThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
+
+            if (preset == CustomComboPreset.DRK_ST_Delirium && enabled)
+                UserConfig.DrawSliderInt(0, 30, DRK.Config.DRK_ST_DeliriumThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DRK_AoE_CDs_LivingShadow && enabled)
-                UserConfig.DrawSliderInt(0, 60, DRK.Config.DRK_AoE_LivingDeadThreshold, "Stop Using When Target HP% is at or Below (Set to 0 to Disable This Check)", 150, SliderIncrements.Fives);
+                UserConfig.DrawSliderInt(0, 60, DRK.Config.DRK_AoE_LivingDeadThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
+
+            if (preset == CustomComboPreset.DRK_AoE_Delirium && enabled)
+                UserConfig.DrawSliderInt(0, 60, DRK.Config.DRK_AoE_DeliriumThreshold,
+                    "Stop Using When Target HP% is at or Below (Set to 0 to Disable check)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DRKPvP_Burst)
-                UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold, "HP% to be at or above to use Shadowbringer");
+                UserConfig.DrawSliderInt(1, 100, DRKPvP.Config.ShadowbringerThreshold,
+                    "HP% to be at or Above to use (Set to 0 to Disable)",
+                    itemWidth: 150f, sliderIncrement:SliderIncrements.Fives);
 
             if (preset == CustomComboPreset.DRK_Variant_Cure)
-                UserConfig.DrawSliderInt(1, 100, DRK.Config.DRK_VariantCure, "HP% to be at or under", 200);
+                UserConfig.DrawSliderInt(1, 100, DRK.Config.DRK_VariantCure,
+                    "HP% to be at or Below",
+                    itemWidth: 200, sliderIncrement:SliderIncrements.Fives);
 
             #endregion
             // ====================================================================================
