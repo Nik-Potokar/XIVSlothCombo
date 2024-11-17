@@ -3629,6 +3629,10 @@ namespace XIVSlothCombo.Combos
         [CustomComboInfo("Senei Option", "Adds Senei to the rotation.", SAM.JobID)]
         SAM_ST_CDs_Senei = 15020,
 
+        [ParentCombo(SAM_ST_CDs_Senei)]
+        [CustomComboInfo("Guren Option", "Adds Guren to the rotation if Senei is not unlocked.", SAM.JobID)]
+        SAM_ST_CDs_Guren = 15021,
+
         #endregion
 
         [ParentCombo(SAM_ST_AdvancedMode)]
