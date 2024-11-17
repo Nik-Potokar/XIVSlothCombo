@@ -3,14 +3,34 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using XIVSlothCombo.Combos.JobHelpers.Enums;
+using XIVSlothCombo.Combos.PvE;
 using XIVSlothCombo.Data;
 using static XIVSlothCombo.Combos.PvE.MCH;
 using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
 
 namespace XIVSlothCombo.Combos.JobHelpers;
 
-internal abstract class MCHHelpers
+internal class MCH
 {
+    // MCH Gauge & Extensions
+    public static MCHOpenerLogic MCHOpener = new();
+
+    public static float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
+    public static float heatblastRC = GetCooldown(Heatblast).CooldownTotal;
+    public static bool drillCD = !LevelChecked(Drill) || (!TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
+                                                          GetCooldownRemainingTime(Drill) > heatblastRC * 6) ||
+                                 (TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
+                                  GetRemainingCharges(Drill) < GetMaxCharges(Drill) &&
+                                  GetCooldownRemainingTime(Drill) > heatblastRC * 6);
+    public static bool anchorCD = !LevelChecked(AirAnchor) ||
+                                  (LevelChecked(AirAnchor) && GetCooldownRemainingTime(AirAnchor) > heatblastRC * 6);
+    public static bool sawCD = !LevelChecked(Chainsaw) ||
+                               (LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
+    public static bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() &&
+                                        CanDelayedWeave(ActionWatching.LastWeaponskill);
+    public static MCHGauge Gauge = GetJobGauge<MCHGauge>();
+    public static int BSUsed => ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
+
     internal class MCHOpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
@@ -254,25 +274,20 @@ internal abstract class MCHHelpers
         }
     }
 
-    internal static class MCHExtensions
+    internal static class MCHHelper
     {
         public static unsafe bool IsComboExpiring(float Times)
         {
             float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal * Times;
 
-            if (ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD)
-                return true;
-
-            return false;
+            return ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD;
         }
 
         public static bool UseQueen(MCHGauge gauge)
         {
-            int BSUsed = ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
-
             if (!ActionWatching.HasDoubleWeaved() && !gauge.IsOverheated && !HasEffect(Buffs.Wildfire) &&
                 !JustUsed(OriginalHook(Heatblast)) && LevelChecked(OriginalHook(RookAutoturret)) &&
-                !gauge.IsRobotActive && gauge.Battery >= 50)
+                gauge is { IsRobotActive: false, Battery: >= 50 })
             {
                 if (LevelChecked(FullMetalField))
                 {

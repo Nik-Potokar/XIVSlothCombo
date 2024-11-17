@@ -1,4 +1,3 @@
-using System.Linq;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using ECommons.DalamudServices;
 using XIVSlothCombo.Combos.PvE.Content;
@@ -6,78 +5,12 @@ using XIVSlothCombo.CustomComboNS;
 using XIVSlothCombo.CustomComboNS.Functions;
 using XIVSlothCombo.Data;
 using XIVSlothCombo.Extensions;
-using static XIVSlothCombo.Combos.JobHelpers.MCHHelpers;
-using static XIVSlothCombo.CustomComboNS.Functions.CustomComboFunctions;
+using static XIVSlothCombo.Combos.JobHelpers.MCH;
 
 namespace XIVSlothCombo.Combos.PvE;
 
 internal class MCH
 {
-    public const byte JobID = 31;
-
-    public const uint
-        CleanShot = 2873,
-        HeatedCleanShot = 7413,
-        SplitShot = 2866,
-        HeatedSplitShot = 7411,
-        SlugShot = 2868,
-        HeatedSlugShot = 7412,
-        GaussRound = 2874,
-        Ricochet = 2890,
-        Reassemble = 2876,
-        Drill = 16498,
-        HotShot = 2872,
-        AirAnchor = 16500,
-        Hypercharge = 17209,
-        Heatblast = 7410,
-        SpreadShot = 2870,
-        Scattergun = 25786,
-        AutoCrossbow = 16497,
-        RookAutoturret = 2864,
-        RookOverdrive = 7415,
-        AutomatonQueen = 16501,
-        QueenOverdrive = 16502,
-        Tactician = 16889,
-        Chainsaw = 25788,
-        BioBlaster = 16499,
-        BarrelStabilizer = 7414,
-        Wildfire = 2878,
-        Dismantle = 2887,
-        Flamethrower = 7418,
-        BlazingShot = 36978,
-        DoubleCheck = 36979,
-        CheckMate = 36980,
-        Excavator = 36981,
-        FullMetalField = 36982;
-
-    protected static MCHGauge? Gauge = GetJobGauge<MCHGauge>();
-
-    public static class Buffs
-    {
-        public const ushort
-            Reassembled = 851,
-            Tactician = 1951,
-            Wildfire = 1946,
-            Overheated = 2688,
-            Flamethrower = 1205,
-            Hypercharged = 3864,
-            ExcavatorReady = 3865,
-            FullMetalMachinist = 3866;
-    }
-
-    public static class Debuffs
-    {
-        public const ushort
-            Dismantled = 2887,
-            Bioblaster = 1866;
-    }
-
-    public static class Traits
-    {
-        public const ushort
-            EnhancedMultiWeapon = 605;
-    }
-
     public static class Config
     {
         public static UserInt
@@ -101,29 +34,10 @@ internal class MCH
 
     internal class MCH_ST_SimpleMode : CustomCombo
     {
-        internal static MCHOpenerLogic MCHOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_SimpleMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() && CanDelayedWeave(actionID);
-            float heatblastRC = GetCooldown(Heatblast).CooldownTotal;
-
-            bool drillCD = !LevelChecked(Drill) || (!TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
-                                                    GetCooldownRemainingTime(Drill) > heatblastRC * 6) ||
-                           (TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
-                            GetRemainingCharges(Drill) < GetMaxCharges(Drill) &&
-                            GetCooldownRemainingTime(Drill) > heatblastRC * 6);
-
-            bool anchorCD = !LevelChecked(AirAnchor) ||
-                            (LevelChecked(AirAnchor) && GetCooldownRemainingTime(AirAnchor) > heatblastRC * 6);
-
-            bool sawCD = !LevelChecked(Chainsaw) ||
-                         (LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
-            float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
-            int BSUsed = ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
-
             if (actionID is SplitShot or HeatedSplitShot)
             {
                 if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
@@ -158,7 +72,7 @@ internal class MCH
                         return BarrelStabilizer;
 
                     // Hypercharge
-                    if ((Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHExtensions.IsComboExpiring(6) &&
+                    if ((Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHHelper.IsComboExpiring(6) &&
                         LevelChecked(Hypercharge) && !Gauge.IsOverheated)
                     {
                         // Ensures Hypercharge is double weaved with WF
@@ -176,8 +90,8 @@ internal class MCH
                     }
 
                     //Queen
-                    if (MCHExtensions.UseQueen(Gauge) &&
-                        GetCooldownRemainingTime(Wildfire) > GCD)
+                    if (MCHHelper.UseQueen(Gauge) &&
+                        (GetCooldownRemainingTime(Wildfire) > GCD || !LevelChecked(Wildfire)))
                         return OriginalHook(RookAutoturret);
 
                     // Gauss Round and Ricochet during HC
@@ -318,28 +232,10 @@ internal class MCH
 
     internal class MCH_ST_AdvancedMode : CustomCombo
     {
-        internal static MCHOpenerLogic MCHOpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MCH_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            bool interruptReady = ActionReady(All.HeadGraze) && CanInterruptEnemy() && CanDelayedWeave(actionID);
-            float heatblastRC = GetCooldown(Heatblast).CooldownTotal;
-
-            bool drillCD = !LevelChecked(Drill) || (!TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
-                                                    GetCooldownRemainingTime(Drill) > heatblastRC * 6) ||
-                           (TraitLevelChecked(Traits.EnhancedMultiWeapon) &&
-                            GetRemainingCharges(Drill) < GetMaxCharges(Drill) &&
-                            GetCooldownRemainingTime(Drill) > heatblastRC * 6);
-
-            bool anchorCD = !LevelChecked(AirAnchor) ||
-                            (LevelChecked(AirAnchor) && GetCooldownRemainingTime(AirAnchor) > heatblastRC * 6);
-
-            bool sawCD = !LevelChecked(Chainsaw) ||
-                         (LevelChecked(Chainsaw) && GetCooldownRemainingTime(Chainsaw) > heatblastRC * 6);
-            float GCD = GetCooldown(OriginalHook(SplitShot)).CooldownTotal;
-
             bool reassembledExcavator =
                 (IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble) && Config.MCH_ST_Reassembled[0] &&
                  (HasEffect(Buffs.Reassembled) || !HasEffect(Buffs.Reassembled))) ||
@@ -347,7 +243,6 @@ internal class MCH
                  !HasEffect(Buffs.Reassembled)) ||
                 (!HasEffect(Buffs.Reassembled) && GetRemainingCharges(Reassemble) <= Config.MCH_ST_ReassemblePool) ||
                 !IsEnabled(CustomComboPreset.MCH_ST_Adv_Reassemble);
-            int BSUsed = ActionWatching.CombatActions.Count(x => x == BarrelStabilizer);
 
             if (actionID is SplitShot or HeatedSplitShot)
             {
@@ -393,7 +288,7 @@ internal class MCH
 
                     // Hypercharge
                     if (IsEnabled(CustomComboPreset.MCH_ST_Adv_Hypercharge) &&
-                        (Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHExtensions.IsComboExpiring(6) &&
+                        (Gauge.Heat >= 50 || HasEffect(Buffs.Hypercharged)) && !MCHHelper.IsComboExpiring(6) &&
                         LevelChecked(Hypercharge) && !Gauge.IsOverheated &&
                         GetTargetHPPercent() >= Config.MCH_ST_HyperchargeHP)
                     {
@@ -413,8 +308,8 @@ internal class MCH
 
                     // Queen
                     if (IsEnabled(CustomComboPreset.MCH_Adv_TurretQueen) &&
-                        MCHExtensions.UseQueen(Gauge) &&
-                        GetCooldownRemainingTime(Wildfire) > GCD)
+                        MCHHelper.UseQueen(Gauge) &&
+                        (GetCooldownRemainingTime(Wildfire) > GCD || !LevelChecked(Wildfire)))
                         return OriginalHook(RookAutoturret);
 
                     // Gauss Round and Ricochet during HC
@@ -602,8 +497,6 @@ internal class MCH
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            float GCD = GetCooldown(OriginalHook(SpreadShot)).CooldownTotal;
-
             if (actionID is SpreadShot or Scattergun)
             {
                 if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) &&
@@ -691,8 +584,6 @@ internal class MCH
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
-            float GCD = GetCooldown(OriginalHook(SpreadShot)).CooldownTotal;
-
             bool reassembledScattergun = IsEnabled(CustomComboPreset.MCH_AoE_Adv_Reassemble) &&
                                          Config.MCH_AoE_Reassembled[0] && HasEffect(Buffs.Reassembled);
 
@@ -997,4 +888,71 @@ internal class MCH
             return actionID;
         }
     }
+
+    #region ID's
+
+    public const byte JobID = 31;
+
+    public const uint
+        CleanShot = 2873,
+        HeatedCleanShot = 7413,
+        SplitShot = 2866,
+        HeatedSplitShot = 7411,
+        SlugShot = 2868,
+        HeatedSlugShot = 7412,
+        GaussRound = 2874,
+        Ricochet = 2890,
+        Reassemble = 2876,
+        Drill = 16498,
+        HotShot = 2872,
+        AirAnchor = 16500,
+        Hypercharge = 17209,
+        Heatblast = 7410,
+        SpreadShot = 2870,
+        Scattergun = 25786,
+        AutoCrossbow = 16497,
+        RookAutoturret = 2864,
+        RookOverdrive = 7415,
+        AutomatonQueen = 16501,
+        QueenOverdrive = 16502,
+        Tactician = 16889,
+        Chainsaw = 25788,
+        BioBlaster = 16499,
+        BarrelStabilizer = 7414,
+        Wildfire = 2878,
+        Dismantle = 2887,
+        Flamethrower = 7418,
+        BlazingShot = 36978,
+        DoubleCheck = 36979,
+        CheckMate = 36980,
+        Excavator = 36981,
+        FullMetalField = 36982;
+
+    public static class Buffs
+    {
+        public const ushort
+            Reassembled = 851,
+            Tactician = 1951,
+            Wildfire = 1946,
+            Overheated = 2688,
+            Flamethrower = 1205,
+            Hypercharged = 3864,
+            ExcavatorReady = 3865,
+            FullMetalMachinist = 3866;
+    }
+
+    public static class Debuffs
+    {
+        public const ushort
+            Dismantled = 2887,
+            Bioblaster = 1866;
+    }
+
+    public static class Traits
+    {
+        public const ushort
+            EnhancedMultiWeapon = 605;
+    }
+
+    #endregion
 }
