@@ -15,32 +15,22 @@ internal class VPR
     // VPR Gauge & Extensions
 
     public static float GCD = GetCooldown(OriginalHook(ReavingFangs)).CooldownTotal;
-    public static float ireCD = GetCooldownRemainingTime(SerpentsIre);
-
     public static VPROpenerLogic VPROpener = new();
     public static VPRGauge gauge = GetJobGauge<VPRGauge>();
-
     public static bool trueNorthReady => TargetNeedsPositionals() && ActionReady(All.TrueNorth) &&
                                          !HasEffect(All.Buffs.TrueNorth);
-
     public static bool VicewinderReady => gauge.DreadCombo == DreadCombo.Dreadwinder;
-
     public static bool HuntersCoilReady => gauge.DreadCombo == DreadCombo.HuntersCoil;
-
     public static bool SwiftskinsCoilReady => gauge.DreadCombo == DreadCombo.SwiftskinsCoil;
-
     public static bool VicepitReady => gauge.DreadCombo == DreadCombo.PitOfDread;
-
     public static bool SwiftskinsDenReady => gauge.DreadCombo == DreadCombo.SwiftskinsDen;
-
     public static bool HuntersDenReady => gauge.DreadCombo == DreadCombo.HuntersDen;
-
     public static bool CappedOnCoils =>
         (TraitLevelChecked(Traits.EnhancedVipersRattle) && gauge.RattlingCoilStacks > 2) ||
         (!TraitLevelChecked(Traits.EnhancedVipersRattle) && gauge.RattlingCoilStacks > 1);
 
     public static bool HasRattlingCoilStack(VPRGauge Gauge) => Gauge.RattlingCoilStacks > 0;
-
+    
     internal class VPROpenerLogic
     {
         private OpenerState currentState = OpenerState.PrePull;
