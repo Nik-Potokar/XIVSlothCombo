@@ -222,14 +222,6 @@ internal class RPR
             return ActionManager.Instance()->Combo.Timer != 0 && ActionManager.Instance()->Combo.Timer < GCD;
         }
 
-        public static bool IsBuffExpiring(float Times)
-        {
-            float GCD = GetCooldown(Slice).CooldownTotal * Times;
-
-            return (HasEffect(Buffs.EnhancedGallows) && GetBuffRemainingTime(Buffs.EnhancedGallows) < GCD) ||
-                   (HasEffect(Buffs.EnhancedGibbet) && GetBuffRemainingTime(Buffs.EnhancedGibbet) < GCD);
-        }
-
         public static bool IsDebuffExpiring(float Times)
         {
             float GCD = GetCooldown(Slice).CooldownTotal * Times;

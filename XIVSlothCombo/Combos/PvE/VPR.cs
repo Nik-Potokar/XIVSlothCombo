@@ -114,13 +114,14 @@ internal class VPR
                 if (CappedOnCoils &&
                     ((HasCharges(Vicewinder) && !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) &&
                       !HasEffect(Buffs.Reawakened)) || //spend if Vicewinder is up, after Reawaken
-                     ireCD <= GCD * 5)) //spend in case under Reawaken right as Ire comes up
+                     GetCooldownRemainingTime(SerpentsIre) <=
+                     GCD * 5)) //spend in case under Reawaken right as Ire comes up
                     return UncoiledFury;
 
                 //Vicewinder Usage
                 if (HasEffect(Buffs.Swiftscaled) && !VPRHelper.IsComboExpiring(3) &&
                     ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
-                    (ireCD >= GCD * 5 || !LevelChecked(SerpentsIre)) &&
+                    (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5 || !LevelChecked(SerpentsIre)) &&
                     !VPRHelper.IsVenomExpiring(3) && !VPRHelper.IsHoningExpiring(3))
                     return Vicewinder;
 
@@ -240,16 +241,11 @@ internal class VPR
 
     internal class VPR_ST_AdvancedMode : CustomCombo
     {
-        internal static VPROpenerLogic VPROpener = new();
-
         protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.VPR_ST_AdvancedMode;
 
         protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
         {
             int uncoiledThreshold = Config.VPR_ST_UncoiledFury_Threshold;
-
-            float enemyHP = GetTargetHPPercent();
-
             bool in5y = GetTargetDistance() <= 5;
 
             if (actionID is SteelFangs)
@@ -349,7 +345,8 @@ internal class VPR
                 if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) && CappedOnCoils &&
                     ((HasCharges(Vicewinder) && !HasEffect(Buffs.SwiftskinsVenom) && !HasEffect(Buffs.HuntersVenom) &&
                       !HasEffect(Buffs.Reawakened)) || //spend if Vicewinder is up, after Reawaken
-                     ireCD <= GCD * 5)) //spend in case under Reawaken right as Ire comes up
+                     GetCooldownRemainingTime(SerpentsIre) <=
+                     GCD * 5)) //spend in case under Reawaken right as Ire comes up
                     return UncoiledFury;
 
                 //Vicewinder Usage
@@ -357,7 +354,7 @@ internal class VPR
                     IsEnabled(CustomComboPreset.VPR_ST_Vicewinder) && HasEffect(Buffs.Swiftscaled) &&
                     !VPRHelper.IsComboExpiring(3) &&
                     ActionReady(Vicewinder) && !HasEffect(Buffs.Reawakened) && InMeleeRange() &&
-                    (ireCD >= GCD * 5 || !LevelChecked(SerpentsIre)) &&
+                    (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5 || !LevelChecked(SerpentsIre)) &&
                     !VPRHelper.IsVenomExpiring(3) && !VPRHelper.IsHoningExpiring(3))
                     return Vicewinder;
 
@@ -365,7 +362,7 @@ internal class VPR
                 if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledFury) && !VPRHelper.IsComboExpiring(2) &&
                     LevelChecked(UncoiledFury) && HasEffect(Buffs.Swiftscaled) && HasEffect(Buffs.HuntersInstinct) &&
                     (gauge.RattlingCoilStacks > Config.VPR_ST_UncoiledFury_HoldCharges ||
-                     (enemyHP < uncoiledThreshold && HasRattlingCoilStack(gauge))) &&
+                     (GetTargetHPPercent() < uncoiledThreshold && HasRattlingCoilStack(gauge))) &&
                     !VicewinderReady && !HuntersCoilReady && !SwiftskinsCoilReady &&
                     !HasEffect(Buffs.Reawakened) && !HasEffect(Buffs.ReadyToReawaken) &&
                     !WasLastWeaponskill(Ouroboros) &&
@@ -566,12 +563,12 @@ internal class VPR
 
                 //Overcap protection
                 if (((HasCharges(Vicepit) && !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom)) ||
-                     ireCD <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
+                     GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
                     return UncoiledFury;
 
                 //Vicepit Usage
                 if (ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) &&
-                    (ireCD >= GCD * 5 || !LevelChecked(SerpentsIre)) && in5y)
+                    (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5 || !LevelChecked(SerpentsIre)) && in5y)
                     return Vicepit;
 
                 // Uncoiled Fury usage
@@ -766,7 +763,7 @@ internal class VPR
                 //Overcap protection
                 if (IsEnabled(CustomComboPreset.VPR_AoE_UncoiledFury) &&
                     ((HasCharges(Vicepit) && !HasEffect(Buffs.FellskinsVenom) && !HasEffect(Buffs.FellhuntersVenom)) ||
-                     ireCD <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
+                     GetCooldownRemainingTime(SerpentsIre) <= GCD * 2) && !HasEffect(Buffs.Reawakened) && CappedOnCoils)
                     return UncoiledFury;
 
                 //Vicepit Usage
@@ -774,7 +771,7 @@ internal class VPR
                     IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) &&
                     ActionReady(Vicepit) && !HasEffect(Buffs.Reawakened) &&
                     (in5y || IsEnabled(CustomComboPreset.VPR_AoE_Vicepit_DisableRange)) &&
-                    (ireCD >= GCD * 5 || !LevelChecked(SerpentsIre)))
+                    (GetCooldownRemainingTime(SerpentsIre) >= GCD * 5 || !LevelChecked(SerpentsIre)))
                     return Vicepit;
 
                 // Uncoiled Fury usage
