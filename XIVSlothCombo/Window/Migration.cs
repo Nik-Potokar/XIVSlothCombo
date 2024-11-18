@@ -93,7 +93,23 @@ public class MigrationWindow : Dalamud.Interface.Windowing.Window
         CenterText("XIVSlothCombo is now WrathCombo!");
         CenterText(
             "Please follow the steps below to migrate to WrathCombo to continue receiving updates.");
-        //CenterDisabledText("(WrathCombo will automatically import your settings)");
+        CenterButtonAndTextAndButton(
+            "Join our Discord",
+            "for any questions or issues",
+            () =>
+            {
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = "https://discord.gg/Zzrcc8kmvy",
+                    UseShellExecute = true
+                });
+            },
+            "(ask in #combo-general)",
+            () => Process.Start(new ProcessStartInfo()
+            {
+                FileName = "https://discord.com/channels/1001823907193552978/1271175781569003590",
+                UseShellExecute = true
+            }));
 
         #endregion
 
