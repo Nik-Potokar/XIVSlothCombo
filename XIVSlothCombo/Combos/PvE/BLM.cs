@@ -64,7 +64,7 @@ internal class BLM
             }
 
             if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
-                (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                (thunderDebuffST is null || thunderDebuffST?.RemainingTime < 3))
                 return OriginalHook(Thunder);
 
             if (IsMoving)
@@ -98,7 +98,7 @@ internal class BLM
                         return Triplecast;
 
                     if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
-                        (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                        (thunderDebuffST is null || thunderDebuffST?.RemainingTime < 3))
                         return OriginalHook(Thunder);
 
                     if (HasPolyglotStacks(Gauge) && gcdsInTimer >= 1 &&
@@ -138,7 +138,7 @@ internal class BLM
                         return Transpose;
 
                     if (HasEffect(Buffs.Thunderhead) &&
-                        (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                        (thunderDebuffST is null || thunderDebuffST?.RemainingTime < 3))
                         return OriginalHook(Thunder);
 
                     if (HasPolyglotStacks(Gauge))
@@ -245,7 +245,7 @@ internal class BLM
             if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
                 HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 && LevelChecked(Thunder) &&
                 GetTargetHPPercent() >= Config.BLM_ST_ThunderHP &&
-                (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                (thunderDebuffST is null || thunderDebuffST?.RemainingTime < 3))
                 return OriginalHook(Thunder);
 
             if (IsMoving)
@@ -303,7 +303,7 @@ internal class BLM
                             return Triplecast;
 
                         if (HasEffect(Buffs.Thunderhead) && gcdsInTimer > 1 &&
-                            (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                            (thunderDebuffST is null || thunderDebuffST?.RemainingTime < 3))
                             return OriginalHook(Thunder);
 
                         if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&
@@ -339,7 +339,7 @@ internal class BLM
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) &&
                         HasEffect(Buffs.Thunderhead) &&
-                        (thunderDebuffST is null || thunderDebuffST.RemainingTime < 3))
+                        (thunderDebuffST is null || thunderDebuffST?.RemainingTime < 3))
                         return OriginalHook(Thunder);
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_UsePolyglot) &&

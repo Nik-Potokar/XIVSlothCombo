@@ -15,11 +15,11 @@ namespace XIVSlothCombo.Combos.JobHelpers;
 internal class BLM
 {
     // BLM Gauge & Extensions
-    public static BLMGauge Gauge = GetJobGauge<BLMGauge>();
+    public static BLMGauge Gauge => GetJobGauge<BLMGauge>();
 
-    public static bool canWeave = CanSpellWeave(ActionWatching.LastSpell);
+    public static bool canWeave => CanSpellWeave(ActionWatching.LastSpell);
 
-    public static uint curMp = LocalPlayer.CurrentMp;
+    public static uint curMp => LocalPlayer.CurrentMp;
     public static BLMOpenerLogic BLMOpener = new();
 
     public static int maxPolyglot => TraitLevelChecked(Traits.EnhancedPolyglotII) ? 3 :

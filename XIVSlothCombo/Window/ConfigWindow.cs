@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Interface.Colors;
 using XIVSlothCombo.Attributes;
 using XIVSlothCombo.Combos;
 using XIVSlothCombo.Combos.PvE;
@@ -149,6 +150,24 @@ namespace XIVSlothCombo.Window
                 }
                 ImGui.Spacing();
 #endif
+
+
+                if (Svc.PluginInterface.InternalName == "XIVSlothCombo")
+                {
+                    ImGui.Spacing();
+                    ImGui.Spacing();
+
+                    var smoothChangeColor = GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudYellow, 1500);
+                    ImGui.PushStyleColor(ImGuiCol.Text, smoothChangeColor);
+                    if (ImGui.Selectable("No Longer Updated!"))
+                    {
+                        if (P.MigrationWindow.IsOpen)
+                            P.MigrationWindow.BringToFront();
+                        else
+                            P.MigrationWindow.IsOpen = true;
+                    }
+                    ImGui.PopStyleColor();
+                }
 
             }
 
